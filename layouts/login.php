@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <div class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background-image: url('https://img.besthqwallpapers.com/Uploads/16-10-2020/143990/orange-abstract-lines-4k-artwork-gray-backgrounds-motion-concepts.jpg');">
+    <div class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background: url('../src/img/wallpaper.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
         <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
             <div class="md:flex w-full">
                 <div class="hidden md:block w-1/2 bg-indigo-500 py-10 px-10">
