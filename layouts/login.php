@@ -1,3 +1,43 @@
+<?php
+include_once ("../config/conexion.php");
+$object = new connection_database();
+session_start();
+
+if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
+	header('Location: dashboard.php');
+	die();
+}else{
+
+if(isset($_POST['username']) && isset($_POST['password']))
+{
+$user=$_POST['username'];
+$password=$_POST['password'];
+
+$data = $object -> _db->prepare("SELECT * FROM usuarios WHERE username= :user AND password= :password");
+$data->bindParam("user", $user,PDO::PARAM_STR);
+$data->bindParam("password", $password,PDO::PARAM_STR);
+$data->execute();
+$count=$data->rowCount();
+$row=$data->fetch(PDO::FETCH_OBJ);
+if($count > 0){
+    $_SESSION['loggedin'] = true;
+	$_SESSION['id']=$row->id;
+	$_SESSION['nombre']=$row->nombre;
+	$_SESSION['usuario']=$row->username;
+	$_SESSION['apellidopat']=$row->apellido_pat;
+	$_SESSION['apellidomat']=$row->apellido_mat;
+	$_SESSION['correo']=$row->correo;
+	$_SESSION['rol']=$row->rol;
+
+	exit("success");
+	
+} else{
+	exit('failed');
+}
+}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,34 +92,103 @@
                         <h1 class="font-bold text-3xl text-gray-900">INTRANET</h1>
                         <p>Ingresa tus credenciales</p>
                     </div>
-                    <div>
-                        <div class="flex -mx-3">
-                            <div class="w-full px-3 mb-5">
-                                <label for="" class="text-xs font-semibold px-1">Usuario</label>
-                                <div class="flex">
-                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                    <input type="text" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="alberto.martinez">
+                    <form id="Acceder" action="Login.php" method="post">
+                        <div>
+                            <div class="flex -mx-3">
+                                <div class="w-full px-3 mb-5">
+                                    <label for="" class="text-xs font-semibold px-1">Usuario</label>
+                                    <div class="flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                        <input type="text" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" name="user" id="user" placeholder="alberto.martinez">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex -mx-3">
+                                <div class="w-full px-3 mb-12">
+                                    <label for="" class="text-xs font-semibold px-1">Contraseña</label>
+                                    <div class="flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                        <input type="password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" name="passwordLogin" id="passwordLogin" placeholder="************">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex -mx-3">
+                                <div class="w-full px-3 mb-5">
+                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Ingresar</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex -mx-3">
-                            <div class="w-full px-3 mb-12">
-                                <label for="" class="text-xs font-semibold px-1">Contraseña</label>
-                                <div class="flex">
-                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input type="password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex -mx-3">
-                            <div class="w-full px-3 mb-5">
-                                <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Ingresar</button>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+	    $( document ).ready(function() {
+         if($('#Acceder').length > 0 ){
+         $('#Acceder').validate({
+        rules:{
+        	user:{
+         		required:true
+            },
+			passwordLogin:{
+         		required:true
+         	}
+        },
+        messages:{
+        	user:{
+        		required : 'Por favor, ingresa un usuario ó correo electrónico'
+            },
+			passwordLogin:{
+         		required: 'Por favor, ingresa una contraseña'
+         	}			
+        },
+        submitHandler: function(form) {
+			var fd =new FormData();
+			var user    = $("input[name=user]").val();
+        	var password = $("input[name=passwordLogin]").val();
+			fd.append('username', user);
+			fd.append('password', password);
+
+        	$.ajax({
+        		url:'Login.php',
+            	type:'POST',
+            	data: fd,
+            	processData: false,
+            	contentType: false,
+            	success:function(data){
+            		if(data=="success"){
+						Swal.fire({
+                    	title: "Autentificación exitosa",
+                    	text: "Bienvenido!",
+                    	icon: "success"
+						}).then(function() {
+							<?php if (isset($_SESSION['redirectURL'])){ 
+								$link = $_SESSION['redirectURL'];
+								unset($_SESSION['redirectURL']);
+								echo "window.location.href='".$link."';";
+								?>								
+								<?php }else{ ?> 
+								window.location.href = "dashboard.php";
+								<?php } ?>		
+                  			});
+					}else{
+			   			Swal.fire({
+                    		title: "Error",
+                    		text: "El username ó la contraseña son incorrectos",
+                    		icon: "error"
+                  		});
+			  		}
+            	},
+            	error: function (data) {
+              		$("#ajax-error").text('Fail to send request');
+            	}
+         	});         
+         return false;          
+         }		          
+         });
+         }
+         });	
+	</script>
 </body>
 </html>
