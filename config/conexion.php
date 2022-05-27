@@ -4,7 +4,7 @@ class connection_database {
 	public function __construct() {
 		try {			
 			$host		= "localhost";
-			$database	= "recursos_humanos";
+			$database	= "Intranetpuro";
 			$user		= "root";
 			$passwd		= "";
 			
