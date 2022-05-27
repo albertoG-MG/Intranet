@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['loggedin'] == true)
+if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)
 {
 unset($_SESSION['loggedin']);
 session_destroy();
