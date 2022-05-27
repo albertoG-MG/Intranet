@@ -1,3 +1,4 @@
+<?php include($dashboardphp); ?>
 <!DOCTYPE html>
 <html lang="en">
 
