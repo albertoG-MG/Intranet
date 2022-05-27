@@ -123,6 +123,7 @@ if($count > 0){
             </div>
         </div>
     </div>
+    <script src="../src/js/bundle.js"></script>
     <script>
 	    $( document ).ready(function() {
          if($('#Acceder').length > 0 ){
