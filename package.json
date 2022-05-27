@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "esbuild": "^0.14.41",
+    "flowbite": "^1.4.7",
     "formBuilder": "^3.8.3",
     "jquery": "^3.6.0",
     "jquery-ui-sortable": "^1.0.0",
