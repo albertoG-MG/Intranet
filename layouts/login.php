@@ -141,7 +141,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     },
                     messages: {
                         user: {
-                            required: 'Por favor, ingresa un usuario ó correo electrónico'
+                            required: 'Por favor, ingresa un usuario'
                         },
                         passwordLogin: {
                             required: 'Por favor, ingresa una contraseña'
