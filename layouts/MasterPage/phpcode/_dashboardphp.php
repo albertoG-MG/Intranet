@@ -3,7 +3,7 @@
     $object = new connection_database();
     
     session_start();
-    if (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    if ($_SESSION['loggedin'] != true) {
         header('Location: Login.php');
         die();
     }
