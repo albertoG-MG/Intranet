@@ -1,5 +1,5 @@
 <?php
-$title = 'Vista usuarios';
+$title = 'Usuarios';
 $sidebar = 'components/sidebar.php';
 $navbar = 'components/navbar.php';
 $content = 'content/_users.php';

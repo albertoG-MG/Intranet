@@ -9,7 +9,7 @@
 </div>
 
 <nav class="mt-10">
-    <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="/">
+    <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="dashboard.php">
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
@@ -31,8 +31,8 @@
 
     <ul id="catalogos" class="hidden py-2 space-y-2">
         <li>
-            <a href="#" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                <p class="ml-4">Crear usuarios</p>
+            <a href="users.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <p class="ml-4">Usuarios</p>
             </a>
         </li>
     </ul>
