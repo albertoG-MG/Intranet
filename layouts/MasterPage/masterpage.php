@@ -1,4 +1,4 @@
-<?php include($dashboardphp); ?>
+<?php include($codigophp); ?>
 <!DOCTYPE html>
 <html lang="en">
 
