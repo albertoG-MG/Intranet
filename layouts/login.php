@@ -11,6 +11,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $user = $_POST['username'];
         $password = $_POST['password'];
+        $password = sha1($password);
 
         $data = $object->_db->prepare("SELECT * FROM usuarios WHERE username= :user AND password= :password");
         $data->bindParam("user", $user, PDO::PARAM_STR);
@@ -26,7 +27,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $_SESSION['apellidopat'] = $row->apellido_pat;
             $_SESSION['apellidomat'] = $row->apellido_mat;
             $_SESSION['correo'] = $row->correo;
-            $_SESSION['rol'] = $row->rol;
+            $_SESSION['rol'] = $row->roles_id;
 
             exit("success");
         } else {
