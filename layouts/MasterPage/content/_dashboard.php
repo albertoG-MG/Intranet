@@ -61,8 +61,8 @@
                             </div>
 
                             <div class="mx-5">
-                                <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
-                                <div class="text-gray-500">New Users</div>
+                                <h4 class="text-2xl font-semibold text-gray-700"><?php print_r($countusers->total); ?></h4>
+                                <div class="text-gray-500">Usuario(s)</div>
                             </div>
                         </div>
                     </div>
