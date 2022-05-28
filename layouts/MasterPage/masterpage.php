@@ -31,7 +31,6 @@
         </div>
     </div>
     <script src="../src/js/bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <?php include($scripts); ?>
 </body>
 
