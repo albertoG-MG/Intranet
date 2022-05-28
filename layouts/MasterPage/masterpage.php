@@ -8,9 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="../src/css/style.css">
-    <style>
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css');
-    </style>
+    <link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
 </head>
 
 <body>
