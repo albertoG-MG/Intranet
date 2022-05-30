@@ -6,12 +6,23 @@ document.addEventListener("DOMContentLoaded", function() {
         "sPaginationType": "listboxWithButtons",
         language: {
 					search: ""
-		}
+		},
+        dom: '<"top"fB>rt<"bottom"ip><"clear">',
+        buttons: [{
+					text: "<i class='mdi mdi-account-outline text-white font-semibold text-lg'></i> Agregar usuario",
+					attr: {
+						id: 'Usuario'
+					},
+					className: 'Agregar bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg font-semibold',
+					action: function(e, dt, node, config) {
+						window.location.href = "crear_usuarios.php";
+					}
+				}]
     });
 });
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
-    attr('placeholder', 'Search').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
+    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
 });
 <?php
 if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
