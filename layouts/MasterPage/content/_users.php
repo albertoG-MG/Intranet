@@ -5,7 +5,7 @@
             <div class="overflow-x-auto">
                 <div class="min-w-screen bg-transparent flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
                     <div class="w-full">
-                        <div class="bg-white shadow-md rounded">
+                        <div class="bg-white p-3 shadow-md rounded">
                             <table class="w-full" id="datatable">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
