@@ -27,6 +27,15 @@ if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
         padding-top:5px;
     }
 
+    .dataTables_paginate{
+        font-size:12px;
+        display:flex;
+        align-items:center;
+        justify-content: center;
+        position:relative;
+        right: 7px;
+    }
+
     #datatable{
         width: 100% !important;
     }
