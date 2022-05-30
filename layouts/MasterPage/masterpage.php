@@ -9,6 +9,7 @@
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="../src/css/style.css">
     <link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../src/css/datatables.min.css">
 </head>
 
 <body>
@@ -29,6 +30,7 @@
         </div>
     </div>
     <script src="../src/js/bundle.js"></script>
+    <script src="../src/js/datatables.min.js"></script>
     <?php include($scripts); ?>
 </body>
 
