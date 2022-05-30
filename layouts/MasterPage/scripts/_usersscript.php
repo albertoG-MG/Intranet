@@ -36,10 +36,6 @@ if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
         right: 7px;
     }
 
-    #datatable{
-        width: 100% !important;
-    }
-
     .search{
         margin:auto !important;
     }
