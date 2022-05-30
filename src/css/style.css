@@ -1246,6 +1246,14 @@ select {
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1) !important;
 }
+.odd\:bg-white:nth-child(odd) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+.even\:bg-gray-100:nth-child(even) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity)) !important;
+}
 .hover\:scale-125:hover {
   --tw-scale-x: 1.25 !important;
   --tw-scale-y: 1.25 !important;

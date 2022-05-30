@@ -17,7 +17,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-600 text-sm font-light">
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -70,7 +70,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -118,7 +118,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -166,7 +166,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -214,7 +214,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -262,7 +262,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -310,7 +310,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
@@ -358,7 +358,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+                                    <tr class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100 odd:bg-white even:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex items-center">
                                                 <div class="mr-2">
