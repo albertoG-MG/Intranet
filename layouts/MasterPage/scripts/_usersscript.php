@@ -47,6 +47,11 @@ if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
         right: 7px;
     }
 
+    .dt-buttons{
+        float:right !important;
+        text-align: right;
+    }
+
     #datatable{
         border-collapse: collapse !important;
     }
