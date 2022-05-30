@@ -31,6 +31,7 @@
     </div>
     <script src="../src/js/bundle.js"></script>
     <script src="../src/js/datatables.min.js"></script>
+    <script src="../src/js/select.js"></script>
     <?php include($scripts); ?>
 </body>
 

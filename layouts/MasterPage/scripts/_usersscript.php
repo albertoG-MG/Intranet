@@ -1,7 +1,9 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     $("#datatable").DataTable({
-        responsive:true
+        responsive:true,
+        "lengthChange": false,
+        "sPaginationType": "listboxWithButtons"
     });
 });
 <?php
