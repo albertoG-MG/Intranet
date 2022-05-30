@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
-    attr('placeholder', 'Search').attr('class', 'search w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium')
+    attr('placeholder', 'Search').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
 });
 <?php
 if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
@@ -23,6 +23,8 @@ if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
+        padding-bottom:5px;
+        padding-top:5px;
     }
 
     div.dataTables_filter .search{
