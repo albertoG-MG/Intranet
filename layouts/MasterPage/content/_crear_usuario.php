@@ -3,7 +3,7 @@
   <div class="mt-4">
     <div class="flex flex-col mt-8">
       <div class="flex bg-gray-200 items-center justify-center mb-32">
-        <div class="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12 lg:w-1/2">
+        <div class="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12">
           <div class="flex justify-center py-4">
             <div class="flex bg-purple-200 rounded-full md:p-4 p-2 border-2 border-purple-300">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
