@@ -1015,10 +1015,6 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity)) !important;
 }
-.bg-purple-500 {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity)) !important;
-}
 .bg-\[\#FF9119\] {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 145 25 / var(--tw-bg-opacity)) !important;
@@ -1375,10 +1371,6 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity)) !important;
 }
-.hover\:bg-purple-700:hover {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(126 34 206 / var(--tw-bg-opacity)) !important;
-}
 .hover\:bg-\[\#FF9119\]\/80:hover {
   background-color: rgb(255 145 25 / 0.8) !important;
 }
@@ -1489,8 +1481,8 @@ select {
     width: 75% !important;
   }
 
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   .md\:gap-8 {
@@ -1531,10 +1523,6 @@ select {
 
   .lg\:hidden {
     display: none !important;
-  }
-
-  .lg\:w-1\/2 {
-    width: 50% !important;
   }
 
   .lg\:translate-x-0 {
