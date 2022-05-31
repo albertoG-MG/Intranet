@@ -1,4 +1,4 @@
-<div class="flex h-screen bg-gray-200 items-center justify-center mb-32">
+<div class="flex bg-gray-200 items-center justify-center mt-6 mb-32">
   <div class="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12 lg:w-1/2">
     <div class="flex justify-center py-4">
       <div class="flex bg-purple-200 rounded-full md:p-4 p-2 border-2 border-purple-300">
@@ -8,7 +8,7 @@
 
     <div class="flex justify-center">
       <div class="flex">
-        <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Crear usuario</h1>
+        <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Formulario</h1>
       </div>
     </div>
 
