@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function() {
         buttons: [{
 					text: "<i class='mdi mdi-account-outline text-white font-semibold text-lg'></i> Agregar usuario",
 					attr: {
-						id: 'Usuario'
+						'id': 'Usuario'
 					},
 					className: 'Agregar bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg font-semibold',
 					action: function(e, dt, node, config) {
-						window.location.href = "crear_usuarios.php";
+						window.location.href = "crear_usuario.php";
 					}
 				}]
     });
