@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
         buttons: [{
 					text: "<i class='mdi mdi-account-outline text-white font-semibold text-lg'></i> Agregar usuario",
 					attr: {
-						'id': 'Usuario'
+						'id': 'Usuario',
+                        'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
 					className: 'Agregar bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 					action: function(e, dt, node, config) {
