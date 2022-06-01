@@ -23,6 +23,7 @@
                         var apellido_pat = $("input[name=apellido_pat]").val();
                         var apellido_mat = $("input[name=apellido_mat]").val();
                         var correo = $("input[name=correo]").val();
+                        var foto = $('#foto')[0].files[0];
                         var method = "store";
                         var app = "usuario";
                         fd.append('usuario', usuario);
@@ -31,6 +32,7 @@
                         fd.append('apellido_pat', apellido_pat);
                         fd.append('apellido_mat', apellido_mat);
                         fd.append('correo', correo);
+                        fd.append('foto', foto);
                         fd.append('method', method);
                         fd.append('app', app);
                         $.ajax({
