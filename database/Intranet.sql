@@ -24,15 +24,15 @@ INSERT INTO `roles` (`id`, `nombre`) VALUES
 
 CREATE TABLE `usuarios` (
   `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(30) COLLATE latin1_spanish_ci NOT NULL,
-  `nombre` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
-  `apellido_pat` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
-  `apellido_mat` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
-  `correo` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
-  `password` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
-  `roles_id` int NOT NULL,
-  `foto` longtext COLLATE latin1_spanish_ci DEFAULT NULL,
-   FOREIGN KEY (roles_id) REFERENCES roles(id)
+  `username` varchar(30) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido_pat` varchar(100) NOT NULL,
+  `apellido_mat` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `roles_id` int DEFAULT NULL,
+  `foto` longtext DEFAULT NULL,
+   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
