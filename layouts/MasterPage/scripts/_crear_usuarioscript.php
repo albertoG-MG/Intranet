@@ -98,5 +98,12 @@
                     }
                 });
             }
+
+            $('input[name="foto"]').change(function(e) {
+                var file = e.target.files[0].name;
+                $('#archivo').text(file);
+            });
+
+
         });
     </script>
