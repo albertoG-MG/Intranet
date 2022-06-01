@@ -8,11 +8,57 @@
                     rules: {
                         usuario: {
                             required: true
+                        },
+                        password:{
+                            required: true
+                        },
+                        cpassword:{
+                            required: true,
+                            equalTo: "input[name=\"password\"]"
+                        },
+                        nombre: {
+                            required: true
+                        },
+                        apellido_pat: {
+                            required: true
+                        },
+                        apellido_mat: {
+                            required: true
+                        },
+                        correo: {
+                            required: true,
+                            email: true
+                        },
+                        foto: {
+                            extension: "jpg|jpeg|png"
                         }
                     },
                     messages: {
                         usuario: {
                             required: 'Por favor, ingresa un usuario'
+                        },
+                        password:{
+                            required: 'Por favor, ingresa una contraseña'
+                        },
+                        cpassword:{
+                            required: 'Por favor, confirme su contraseña',
+                            equalTo: 'Las contraseñas no coinciden'
+                        },
+                        nombre: {
+                            required: 'Por favor, ingrese un nombre'
+                        },
+                        apellido_pat: {
+                            required: 'Por favor, ingrese un apellido paterno'
+                        },
+                        apellido_mat: {
+                            required: 'Por favor, ingrese un apellido materno'
+                        },
+                        correo: {
+                            required: 'Por favor, ingrese un correo electrónico',
+                            email: 'Asegúrese que el texto ingresado este en formato de email'
+                        },
+                        foto: {
+                            extension: 'Solo se permite jpg, jpeg y pngs'
                         }
                     },
                     submitHandler: function(form) {
