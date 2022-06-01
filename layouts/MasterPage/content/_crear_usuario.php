@@ -71,7 +71,7 @@
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Rol</label>
               <div class="group flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
-                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent">
+                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent" id="rol" name="rol">
                   <option>Option 1</option>
                   <option>Option 2</option>
                   <option>Option 3</option>
@@ -89,7 +89,7 @@
                     </svg>
                     <p class='lowercase text-sm text-gray-400 group-hover:text-indigo-800 pt-1 tracking-wider'>Selecciona una fotografía</p>
                   </div>
-                  <input type='file' class="hidden" />
+                  <input type='file' id="foto" name="foto" class="hidden" />
                 </label>
               </div>
             </div>
