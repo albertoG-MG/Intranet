@@ -1,5 +1,6 @@
 import "../src/js/jquery"
 import 'jquery-validation'
+import "jquery-validation/dist/additional-methods.js"
 import 'jquery-ui-sortable'
 import sweetalert2 from 'sweetalert2'
 import formBuilder from 'formBuilder'

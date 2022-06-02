@@ -2,8 +2,13 @@
         $(document).ready(function() {
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
+                    ignore: [],
                     errorPlacement: function(error, element) {
+                        if((element.attr('name') === 'foto')){
+                            error.appendTo("div#error");  
+                        }else{
                             error.insertAfter(element.parent('.group.flex'));
+                        }
                     },
                     rules: {
                         usuario: {

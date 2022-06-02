@@ -103,6 +103,7 @@
                   <input type='file' id="foto" name="foto" class="hidden" />
                 </label>
               </div>
+              <div id="error"></div>
             </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
