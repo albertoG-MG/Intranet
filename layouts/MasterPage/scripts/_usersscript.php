@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 return (
 								"<div class='py-3 px-6 text-left'>" +
 								    "<div class='flex items-center'>" +
-                                        "<div class='mr-2'>"+
+                                        "<div class='mr-2 shrink-0'>"+
                                             "<img class='w-6 h-6 rounded-full' src='https://randomuser.me/api/portraits/men/1.jpg'>"+
                                         "</div>"+
                                         "<span>"+row[2]+ ' ' +row[3]+ ' ' +row[4]+"</span>"+
