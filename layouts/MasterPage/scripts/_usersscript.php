@@ -39,13 +39,14 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         {
             "render": function(data, type, row) {
+                var email = row[5].split("@");
                 return(
-                    "<div class='py-3 text-left break-all'>"+
+                    "<div class='py-3 text-left'>"+
                         "<div class='flex items-center'>"+
                             "<div class='mr-2'>"+
                                 "<i class='w-6 h-6 mdi mdi-email text-gray-400 text-lg'></i>"+
                             "</div>"+
-                            "<span class='font-medium'>"+row[5]+"</span>"+
+                            "<span class='font-medium'>"+email[0]+ ' @ ' +email[1]+"</span>"+
                         "</div>"+
                     "</div>");
             },
