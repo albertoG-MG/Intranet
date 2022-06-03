@@ -118,6 +118,12 @@ if(basename($_SERVER['PHP_SELF']) == 'users.php'){?>
         padding-top:5px;
     }
 
+    @media (max-width: 640px){
+        .dataTables_filter{
+            width:100%;
+        }
+    }
+
     .dataTables_paginate{
         font-size:12px;
         display:flex;
