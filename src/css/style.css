@@ -920,6 +920,9 @@ select {
 .whitespace-nowrap {
   white-space: nowrap !important;
 }
+.break-all {
+  word-break: break-all !important;
+}
 .rounded-3xl {
   border-radius: 1.5rem !important;
 }

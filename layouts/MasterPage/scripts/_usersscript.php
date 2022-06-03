@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "render": function(data, type, row) {
                 return(
-                    "<div class='py-3 text-left whitespace-nowrap'>"+
+                    "<div class='py-3 text-left break-all'>"+
                         "<div class='flex items-center'>"+
                             "<div class='mr-2'>"+
                                 "<i class='w-6 h-6 mdi mdi-email text-gray-400 text-lg'></i>"+
