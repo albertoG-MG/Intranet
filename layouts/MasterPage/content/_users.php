@@ -11,7 +11,8 @@
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 px-6 text-left">Nombre</th>
                                         <th class="py-3 px-6 text-left">Correo</th>
-                                        <th class="py-3 px-6 text-left">Rol</th>
+                                        <th class="py-3 px-6 text-left">Estatus</th>
+                                        <th class="py-3 px-6 text-center">Rol</th>
                                         <th class="py-3 px-6 text-center">Acciones</th>
                                     </tr>
                                 </thead>
