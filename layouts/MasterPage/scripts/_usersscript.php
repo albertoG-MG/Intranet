@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "render": function(data, type, row) {
                 return(
-                    "<div class='py-3 text-center'>"+
+                    "<div class='text-left lg:text-center py-3'>"+
                         "<span>"+row[8]+"</span>"+
                     "</div>");
             },
