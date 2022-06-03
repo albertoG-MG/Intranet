@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "processing": true,
 		"serverSide": true,
 		"sAjaxSource": '../config/serverside_user.php',
+        "initComplete": () => {$("#datatable").show();},
         "columnDefs": [{
             "render": function(data, type, row) {
                 return (

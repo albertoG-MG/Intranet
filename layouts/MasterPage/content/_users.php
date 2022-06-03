@@ -6,7 +6,7 @@
                 <div class="min-w-screen bg-transparent flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
                     <div class="w-full">
                         <div class="bg-white p-3 shadow-md rounded">
-                            <table class="w-full" id="datatable">
+                            <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Nombre</th>
