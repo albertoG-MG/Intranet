@@ -29,10 +29,29 @@ class crud {
         /* Para insertar datos es: instancia -> store('users', [ 'name' => $_POST['name']]);*/
 	}
 	
-	public function read(){
-		
-	}
-	public function update(){
+	public function update($table, $parameters, $condition, $pdoparam){
+			$cols = array();
+
+			foreach($parameters as $key => $val) {
+				$cols[] = "$key = :$key";
+			}
+
+			$sql = sprintf(
+			'UPDATE %s SET %s WHERE %s',
+			$table,
+			implode(', ', $cols),
+			$condition);
+			
+			$array = $parameters+$pdoparam;
+			
+			try {
+
+				$statement = $this->conn->_db->prepare($sql);
+				$statement->execute($array);
+	
+			} catch (Exception $e) {
+				die('Algo salio mal al momento de insertar los datos');
+			}
 		
 	}
 

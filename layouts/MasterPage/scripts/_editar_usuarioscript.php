@@ -75,6 +75,7 @@
                         var apellido_mat = $("input[name=apellido_mat]").val();
                         var correo = $("input[name=correo]").val();
                         var foto = $('#foto')[0].files[0];
+                        var editarid = <?php echo $editarid; ?>;
                         var method = "edit";
                         var app = "usuario";
                         fd.append('usuario', usuario);
@@ -84,6 +85,7 @@
                         fd.append('apellido_mat', apellido_mat);
                         fd.append('correo', correo);
                         fd.append('foto', foto);
+                        fd.append('editarid', editarid);
                         fd.append('method', method);
                         fd.append('app', app);
                         $.ajax({

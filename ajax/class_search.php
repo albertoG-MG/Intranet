@@ -44,9 +44,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 break;
             
             case "edit":
+                if(isset($_POST["editarid"])){
+                    $ideditar = $_POST["editarid"];
                     $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $roles, $filename, $foto);
-                    $user->EditarUsuarios();
+                    $user->EditarUsuarios($ideditar);
                     exit("success");
+                }
                 break;
             
         }
