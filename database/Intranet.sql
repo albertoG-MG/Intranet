@@ -36,3 +36,10 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_user`
+--
+DROP TABLE IF EXISTS `serverside_user`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`CURRENT_USER` SQL SECURITY DEFINER VIEW `serverside_user`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `roles`.`nombre` AS `rolnom` FROM (`usuarios` join `roles` on((`usuarios`.`roles_id` = `usuarios`.`roles_id`)))  ;
