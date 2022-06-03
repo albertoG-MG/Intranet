@@ -75,7 +75,7 @@
                         var apellido_mat = $("input[name=apellido_mat]").val();
                         var correo = $("input[name=correo]").val();
                         var foto = $('#foto')[0].files[0];
-                        var method = "store";
+                        var method = "edit";
                         var app = "usuario";
                         fd.append('usuario', usuario);
                         fd.append('password', password);
