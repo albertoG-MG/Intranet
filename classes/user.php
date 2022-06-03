@@ -34,6 +34,11 @@ class user {
 		$crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
 		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'roles_id' => $this->roles_id,
 		'nombre_foto' => $this->filename, 'foto' => $this->foto]);
-	}    
+	}
+    
+    public function EditarUsuarios(){
+		$crud = new crud();
+		
+	} 
 }
 ?>
