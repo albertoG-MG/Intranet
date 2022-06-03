@@ -9,11 +9,11 @@
                             <table class="w-full" id="datatable">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 px-6 text-left">Nombre</th>
-                                        <th class="py-3 px-6 text-left">Correo</th>
-                                        <th class="py-3 px-6 text-left">Estatus</th>
-                                        <th class="py-3 px-6 text-center">Rol</th>
-                                        <th class="py-3 px-6 text-center">Acciones</th>
+                                        <th class="py-3 px-6 text-left all">Nombre</th>
+                                        <th class="py-3 px-6 text-left desktop">Correo</th>
+                                        <th class="py-3 px-6 text-left desktop">Estatus</th>
+                                        <th class="py-3 px-6 text-center desktop">Rol</th>
+                                        <th class="py-3 px-6 text-center min-tablet">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
