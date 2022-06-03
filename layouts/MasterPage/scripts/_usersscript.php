@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "columnDefs": [{
             "render": function(data, type, row) {
                 return (
-								"<div class='py-3 px-6 text-left'>" +
+								"<div class='py-3 px-3 text-left'>" +
 								    "<div class='flex items-center'>" +
                                         "<div class='mr-2 shrink-0'>"+
                                             "<img class='w-6 h-6 rounded-full' src='https://randomuser.me/api/portraits/men/1.jpg'>"+
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "render": function(data, type, row) {
                 return(
-                    "<div class='py-3 px-6 text-left whitespace-nowrap'>"+
+                    "<div class='py-3 px-3 text-left whitespace-nowrap'>"+
                         "<div class='flex items-center'>"+
                             "<div class='mr-2'>"+
                                 "<i class='w-6 h-6 mdi mdi-email text-gray-400 text-lg'></i>"+
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "render": function(data, type, row) {
                 return (
-                    "<div class='py-3 px-6 text-left'>"+
+                    "<div class='py-3 px-4 text-left'>"+
                         "<span class='bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs'>Active</span>"+
                     "</div>");
             },
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "render": function(data, type, row) {
                 return(
-                    "<div class='py-3 px-6 text-left'>"+
+                    "<div class='py-3 px-6 text-center'>"+
                         "<span>"+row[8]+"</span>"+
                     "</div>");
             },
