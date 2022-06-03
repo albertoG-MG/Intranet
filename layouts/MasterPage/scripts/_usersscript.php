@@ -18,7 +18,16 @@ document.addEventListener("DOMContentLoaded", function() {
 					action: function(e, dt, node, config) {
 						window.location.href = "crear_usuario.php";
 					}
-				}]
+				}],
+        "processing": true,
+		"serverSide": true,
+		"sAjaxSource": '../config/serverside_user.php',
+        "columnDefs": [{
+            "render": function(data, type, row) {
+                return row[0];
+            },
+            "targets": 0
+        }]
     });
 });
 $(document).ready(function() {
