@@ -11,11 +11,12 @@ class user {
     public $correo;
     public $password;
     private $roles_id;
+    private $filename;
     private $foto;
 
 
 	
-	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $rolesid, $photo){
+	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $rolesid, $filenom, $photo){
 		$this->conn = new connection_database();
         $this->username = $user;
         $this->nombre = $nom;
@@ -24,6 +25,7 @@ class user {
         $this->correo = $email;
         $this->password = $contraseña;
         $this->roles_id = $rolesid;
+        $this->filename = $filenom;
         $this->foto = $photo;
 	}
 	
@@ -31,7 +33,7 @@ class user {
 		$crud = new crud();
 		$crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
 		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'roles_id' => $this->roles_id,
-		'foto' => $this->foto]);
+		'nombre_foto' => $this->filename, 'foto' => $this->foto]);
 	}    
 }
 ?>

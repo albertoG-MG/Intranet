@@ -14,6 +14,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                     $apellido_mat = $_POST["apellido_mat"];
                     $correo = $_POST["correo"];
                     $roles=null;
+                    $filename=null;
                     $foto=null;
 
                     if(isset($_POST["roles_id"])){
@@ -38,7 +39,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                         }
                     }
 
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $roles, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $roles, $filename, $foto);
                     $user->CrearUsuarios();
                     exit("success");
                 break;
