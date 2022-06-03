@@ -50,12 +50,24 @@ class crud {
 				$statement->execute($array);
 	
 			} catch (Exception $e) {
-				die('Algo salio mal al momento de insertar los datos');
+				die('Algo salio mal al momento de editar los datos');
 			}
 		
 	}
 
-	public function delete(){
-		
+	public function delete($table, $condition, $pdoparam){
+		$sql = sprintf(
+			'DELETE FROM %s WHERE %s',
+			$table,
+			$condition); 
+
+		try {
+
+			$statement = $this->conn->_db->prepare($sql);
+			$statement->execute($pdoparam);
+
+		} catch (Exception $e) {
+			die('Algo salio mal al momento de eliminar los datos');
+		}
 	}
 }

@@ -42,5 +42,10 @@ class user {
 		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'roles_id' => $this->roles_id,
 		'nombre_foto' => $this->filename, 'foto' => $this->foto], "id=:iduser", ['iduser' => $id]);
 	} 
+
+    public function EliminarUsuarios($id){
+		$crud = new crud();
+		$crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
+	} 
 }
 ?>
