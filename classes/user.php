@@ -43,7 +43,7 @@ class user {
 		'nombre_foto' => $this->filename, 'foto' => $this->foto], "id=:iduser", ['iduser' => $id]);
 	} 
 
-    public function EliminarUsuarios($id){
+    public static function EliminarUsuarios($id){
 		$crud = new crud();
 		$crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
 	} 
