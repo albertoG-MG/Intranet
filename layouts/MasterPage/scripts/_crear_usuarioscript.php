@@ -93,7 +93,16 @@
                             processData: false,
                             contentType: false,
                             success: function(data) {
-                                console.log("success");
+                                data = data.replace(/[\r\n]/gm, '');
+                                if(data == "success"){
+                                    Swal.fire({
+                                        title: "Usuario Creado",
+                                        text: "Se ha creado un usuario exitosamente!",
+                                        icon: "success"
+                                    }).then(function() {
+                                        window.location.href = "users.php";	
+                                        });
+                                }
                             },
                             error: function(data) {
                                 $("#ajax-error").text('Fail to send request');
