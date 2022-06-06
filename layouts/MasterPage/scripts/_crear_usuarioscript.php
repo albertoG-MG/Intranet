@@ -113,6 +113,12 @@
                 });
             }
 
+            <?php
+            if(basename($_SERVER['PHP_SELF']) == 'crear_usuario.php'){?>
+                var dropdown = document.getElementById('catalogos');
+                dropdown.classList.remove("hidden");
+            <?php } ?>
+
             $('input[name="foto"]').change(function(e) {
                 var file = e.target.files[0].name;
                 const archivo = this.files[0];
