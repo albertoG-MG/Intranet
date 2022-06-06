@@ -39,6 +39,12 @@ $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
     attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
 });
+
+<?php
+if(basename($_SERVER['PHP_SELF']) == 'roles.php'){?>
+    var dropdown = document.getElementById('catalogos');
+    dropdown.classList.remove("hidden");
+<?php } ?>
 </script>
 <style>
     .dataTables_wrapper .dataTables_filter{
