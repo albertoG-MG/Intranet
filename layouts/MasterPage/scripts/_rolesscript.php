@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", function() {
 					}
                 }
 				],
+        "processing": true,
+		"serverSide": true,
+		"sAjaxSource": '../config/serverside_rol.php',
         "initComplete": () => {$("#datatable").show();},
     });
 });
