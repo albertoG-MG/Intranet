@@ -73,7 +73,23 @@ $(document).ready(function() {
                         }
                     },
                     submitHandler: function(form) {
-                        
+                        var fd = new FormData();
+                        var permisos = $("input[name=permiso]").val();
+                        var app = "permisos";
+                        var method = "store";
+                        fd.append('permisos', permisos);
+                        fd.append('app', app);
+                        fd.append('method', method);
+                        $.ajax({
+                            type: "post",
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                
+                            }
+                        });
                         return false;
                     }
                 });

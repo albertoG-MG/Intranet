@@ -64,5 +64,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "permisos"){
+    var_dump($_POST);
 }
 ?>
