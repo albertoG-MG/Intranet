@@ -83,6 +83,7 @@ $(document).ready(function() {
                         fd.append('permisos', permisos);
                         fd.append('app', app);
                         fd.append('method', method);
+                        var table = $('#datatable').DataTable();
                         $.ajax({
                             type: "post",
                             url: "../ajax/class_search.php",
@@ -96,7 +97,9 @@ $(document).ready(function() {
                                         title: "Permiso Creado",
                                         text: "Se ha creado un permiso exitosamente!",
                                         icon: "success"
-                                    });
+                                    }).then(function() {
+                                        table.ajax.reload(null, false);
+                                        });
                                 }
                             }
                         });
