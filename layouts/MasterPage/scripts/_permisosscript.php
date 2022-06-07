@@ -87,7 +87,14 @@ $(document).ready(function() {
                             processData: false,
                             contentType: false,
                             success: function (response) {
-                                
+                                response = response.replace(/[\r\n]/gm, '');
+                                if(response == "success"){
+                                    Swal.fire({
+                                        title: "Permiso Creado",
+                                        text: "Se ha creado un permiso exitosamente!",
+                                        icon: "success"
+                                    });
+                                }
                             }
                         });
                         return false;
