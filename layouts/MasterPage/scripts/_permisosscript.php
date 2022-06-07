@@ -12,17 +12,45 @@ document.addEventListener("DOMContentLoaded", function() {
 				{
 					text: "<i class='mdi mdi-lock-outline text-white font-semibold text-lg'></i> Crear Permiso",
 					attr: {
-						'id': 'Permiso',
+						'id': 'open-modal',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
-					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-					action: function(e, dt, node, config) {
-						window.location.href = "crear_rol.php";
-					}
+					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
 				}
 				],
         "initComplete": () => {$("#datatable").show();},
     });
+    const closeButton = document.querySelector("#close-modal");
+    const openButton = document.querySelector("#open-modal");
+    const modalContainer = document.querySelector(
+        "#modal-component-container"
+    );
+    const modal = document.querySelector("#modal-container");
+
+    openButton.addEventListener("click", () => {
+        openModal();
+    });
+
+    closeButton.addEventListener("click", () => {
+        closeModal();
+    });
+
+
+    function openModal(){
+            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+        }
+
+    function closeModal(){
+            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+        }
+
+    function showAndHide(element, classesToAdd, classessToRemove){
+        element.classList.remove( ...classessToRemove);
+        element.classList.add( ...classesToAdd);
+    }
 });
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
