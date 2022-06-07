@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", function() {
 					}
 				},
                 {
-                    text: "<i class='mdi mdi-lock-outline text-white font-semibold text-lg'></i> Crear Permisos",
+                    text: "<i class='mdi mdi-lock-outline text-white font-semibold text-lg'></i> Ver Permisos",
 					attr: {
 						'id': 'Rol',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
 					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 					action: function(e, dt, node, config) {
-						window.location.href = "crear_permisos.php";
+						window.location.href = "permisos.php";
 					}
                 }
 				],
