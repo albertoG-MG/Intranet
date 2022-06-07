@@ -1146,17 +1146,17 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(219 39 119 / var(--tw-bg-opacity)) !important;
 }
-.bg-red-100 {
+.bg-indigo-100 {
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(224 231 255 / var(--tw-bg-opacity)) !important;
 }
 .bg-gray-50 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
 }
-.bg-red-700 {
+.bg-indigo-700 {
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(185 28 28 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity)) !important;
 }
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25 !important;
@@ -1471,10 +1471,6 @@ select {
 .hover\:bg-\[\#FF9119\]\/80:hover {
   background-color: rgb(255 145 25 / 0.8) !important;
 }
-.hover\:bg-red-600:hover {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity)) !important;
-}
 .hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
@@ -1530,9 +1526,9 @@ select {
 .focus\:ring-\[\#FF9119\]\/50:focus {
   --tw-ring-color: rgb(255 145 25 / 0.5) !important;
 }
-.focus\:ring-red-200:focus {
+.focus\:ring-indigo-200:focus {
   --tw-ring-opacity: 1 !important;
-  --tw-ring-color: rgb(254 202 202 / var(--tw-ring-opacity)) !important;
+  --tw-ring-color: rgb(199 210 254 / var(--tw-ring-opacity)) !important;
 }
 .focus\:ring-blue-200:focus {
   --tw-ring-opacity: 1 !important;
