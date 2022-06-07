@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
 					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
 				}
 				],
+        "processing": true,
+		"serverSide": true,
+		"sAjaxSource": '../config/serverside_permiso.php',
         "initComplete": () => {$("#datatable").show();},
     });
     const closeButton = document.querySelector("#close-modal");
