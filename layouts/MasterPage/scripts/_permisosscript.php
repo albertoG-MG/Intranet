@@ -54,7 +54,30 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
-    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
+    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+
+    if ($('#Guardar').length > 0) {
+                $('#Guardar').validate({
+                    ignore: [],
+                    errorPlacement: function(error, element) {
+                            error.insertAfter(element.parent('.group.flex'));
+                    },
+                    rules: {
+                        permiso: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        permiso: {
+                            required: 'Por favor, ingresa un permiso'
+                        }
+                    },
+                    submitHandler: function(form) {
+                        
+                        return false;
+                    }
+                });
+            }
 });
 </script>
 <style>
