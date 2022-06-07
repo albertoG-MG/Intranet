@@ -1,5 +1,6 @@
 <?php
 include_once("../classes/user.php");
+include_once("../classes/permissions.php");
 include_once("../config/conexion.php");
 $object = new connection_database();
 
@@ -65,6 +66,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
     }
 }else if(isset($_POST["app"]) && $_POST["app"] == "permisos"){
-    var_dump($_POST);
+    if(isset($_POST["permisos"]) && isset($_POST["method"])){
+        $permisos = $_POST["permisos"];
+        switch($_POST["method"]){
+            case "store":
+            $permiso = new Permissions($permisos);
+            $permiso ->CrearPermisos();
+            exit("success");
+            break;
+        }
+    }
 }
 ?>
