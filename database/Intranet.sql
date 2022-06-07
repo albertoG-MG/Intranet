@@ -8,7 +8,7 @@
 
 CREATE TABLE `roles` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL
+  `nombre` varchar(100) DEFAULT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -26,7 +26,7 @@ INSERT INTO `roles` (`id`, `nombre`) VALUES
 
 CREATE TABLE `permisos` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL
+  `nombre` varchar(100) DEFAULT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
