@@ -111,7 +111,16 @@
                             processData: false,
                             contentType: false,
                             success: function(data) {
-                                console.log("success");
+                                data = data.replace(/[\r\n]/gm, '');
+                                if(data == "success"){
+                                    Swal.fire({
+                                        title: "Usuario Editado",
+                                        text: "Se ha editado un usuario exitosamente!",
+                                        icon: "success"
+                                    }).then(function() {
+                                        window.location.href = "users.php";	
+                                        });
+                                }
                             },
                             error: function(data) {
                                 $("#ajax-error").text('Fail to send request');
