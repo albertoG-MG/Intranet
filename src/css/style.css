@@ -709,6 +709,10 @@ select {
   margin-left: 1.25rem !important;
   margin-right: 1.25rem !important;
 }
+.mx-6 {
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
+}
 .mb-10 {
   margin-bottom: 2.5rem !important;
 }
@@ -998,6 +1002,9 @@ select {
 }
 .items-center {
   align-items: center !important;
+}
+.justify-end {
+  justify-content: flex-end !important;
 }
 .justify-center {
   justify-content: center !important;

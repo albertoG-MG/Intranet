@@ -11,6 +11,7 @@
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Id</th>
                                         <th class="py-3 text-left all">Permiso</th>
+                                        <th class="py-3 text-left all"></th>
                                     </tr>
                                 </thead>
                             </table>
