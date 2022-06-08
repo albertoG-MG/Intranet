@@ -39,7 +39,14 @@
                         },
                         correo: {
                             required: true,
-                            email: true
+                            email: true,
+                            remote: {
+                                url: "../ajax/checkeditemail.php",
+                                type: "post",
+                                data: {
+                                    session: "<?php echo $_SESSION["id"];  ?>"
+                                }
+                            }
                         },
                         foto: {
                             extension: "jpg|jpeg|png"
@@ -68,7 +75,8 @@
                         },
                         correo: {
                             required: 'Por favor, ingrese un correo electrónico',
-                            email: 'Asegúrese que el texto ingresado este en formato de email'
+                            email: 'Asegúrese que el texto ingresado este en formato de email',
+                            remote: 'Ese correo ya existe, por favor, escriba otro'
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs'
