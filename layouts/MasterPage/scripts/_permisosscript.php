@@ -67,12 +67,14 @@ $(document).ready(function() {
                     },
                     rules: {
                         permiso: {
-                            required: true
+                            required: true,
+                            remote: "../ajax/checkpermiso.php"
                         }
                     },
                     messages: {
                         permiso: {
-                            required: 'Por favor, ingresa un permiso'
+                            required: 'Por favor, ingresa un permiso',
+                            remote: 'Ese permiso ya existe, por favor escriba otro'
                         }
                     },
                     submitHandler: function(form) {
