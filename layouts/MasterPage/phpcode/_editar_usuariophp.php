@@ -16,6 +16,14 @@
 
     $editarid = $_GET['idUser'];
 
+    //Validacion - Si se quiere acceder a editar usuario sin id, regresa
+
+    if($editarid == null){
+        header('Location: users.php');
+        die();
+    }
+    //Fin de la validacion
+
     $editar = $object -> _db->prepare("SELECT * FROM usuarios WHERE id=:editarid");
     $editar->bindParam("editarid", $editarid,PDO::PARAM_INT);
     $editar->execute();
