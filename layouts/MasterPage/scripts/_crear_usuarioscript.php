@@ -12,7 +12,8 @@
                     },
                     rules: {
                         usuario: {
-                            required: true
+                            required: true,
+                            remote: '../ajax/checkusername.php'
                         },
                         password:{
                             required: true
@@ -32,7 +33,8 @@
                         },
                         correo: {
                             required: true,
-                            email: true
+                            email: true,
+                            remote: '../ajax/checkemail.php'
                         },
                         foto: {
                             extension: "jpg|jpeg|png"
@@ -40,7 +42,8 @@
                     },
                     messages: {
                         usuario: {
-                            required: 'Por favor, ingresa un usuario'
+                            required: 'Por favor, ingresa un usuario',
+                            remote: 'Ese usuario ya existe, por favor escriba otro'
                         },
                         password:{
                             required: 'Por favor, ingresa una contraseña'
@@ -60,7 +63,8 @@
                         },
                         correo: {
                             required: 'Por favor, ingrese un correo electrónico',
-                            email: 'Asegúrese que el texto ingresado este en formato de email'
+                            email: 'Asegúrese que el texto ingresado este en formato de email',
+                            remote: 'Ese correo ya existe, por favor escriba otro'
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs'
