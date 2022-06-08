@@ -12,7 +12,14 @@
                     },
                     rules: {
                         usuario: {
-                            required: true
+                            required: true,
+                            remote: {
+                                url: "../ajax/checkeditusername.php",
+                                type: "post",
+                                data: {
+                                    "session": "<?php echo $_SESSION["id"] ?>"
+                                }
+                            }
                         },
                         password:{
                             required: true
@@ -40,7 +47,8 @@
                     },
                     messages: {
                         usuario: {
-                            required: 'Por favor, ingresa un usuario'
+                            required: 'Por favor, ingresa un usuario',
+                            remote: 'Ese usuario ya existe, por favor, escribe otro'
                         },
                         password:{
                             required: 'Por favor, ingresa una contraseña'
