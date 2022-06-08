@@ -13,7 +13,7 @@
                                         <th class="py-3 text-left desktop">Correo</th>
                                         <th class="py-3 text-left desktop">Estatus</th>
                                         <th class="py-3 text-center desktop">Rol</th>
-                                        <th class="py-3 text-center min-tablet">Acciones</th>
+                                        <th class="py-3 text-center min-tablet"></th>
                                     </tr>
                                 </thead>
                             </table>

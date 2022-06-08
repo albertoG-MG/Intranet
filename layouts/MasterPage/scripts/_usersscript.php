@@ -23,8 +23,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		"serverSide": true,
 		"sAjaxSource": '../config/serverside_user.php',
         "initComplete": () => {$("#datatable").show();},
-        "columnDefs": [{
-            "render": function(data, type, row) {
+        "columns": [
+            { 
+                data: null, render: function ( data, type, row ) {
                 return (
 								"<div class='py-3 text-left'>" +
 								    "<div class='flex items-center'>" +
@@ -34,12 +35,11 @@ document.addEventListener("DOMContentLoaded", function() {
                                         "<span>"+row[2]+ ' ' +row[3]+ ' ' +row[4]+"</span>"+
 								    "</div>" +
 								"</div>");
+                }
             },
-            "targets": 0
-        },
-        {
-            "render": function(data, type, row) {
-                var email = row[5].split("@");
+            { 
+                data: null, render: function ( data, type, row ) {
+		var email = row[5].split("@");
                 return(
                     "<div class='py-3 text-left'>"+
                         "<div class='flex items-center'>"+
@@ -49,30 +49,27 @@ document.addEventListener("DOMContentLoaded", function() {
                             "<span class='font-medium'>"+email[0]+ ' @ ' +email[1]+"</span>"+
                         "</div>"+
                     "</div>");
+                }
             },
-            "targets": 1
-        },
-        {
-            "render": function(data, type, row) {
+	    {
+ 		data: null, render: function ( data, type, row ) {
                 return (
                     "<div class='py-3 text-left'>"+
                         "<span class='bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs'>Active</span>"+
                     "</div>");
-            },
-            "targets": 2
-        },
-        {
-            "render": function(data, type, row) {
+                }
+	    },
+	    {
+ 		data: null, render: function ( data, type, row ) {
                 return(
                     "<div class='text-left lg:text-center py-3'>"+
                         "<span>"+row[8]+"</span>"+
                     "</div>");
-            },
-            "targets": 3
-        },
-        {
-            "render": function(data, type, row) {
-               return  (
+                }
+	    },
+            {
+                data: null, render: function ( data, type, row ) {
+                   return  (
                    "<div class='py-3 text-left'>"+
                         "<div class='flex item-center justify-center'>"+
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer' onclick='Editaruser("+row[0]+"); return false;'>"+
@@ -87,9 +84,9 @@ document.addEventListener("DOMContentLoaded", function() {
                             "</div>"+
                         "</div>"+
                    "</div>");
+                },
+                orderable: false
             },
-            "targets": 4
-        }
         ]
     });
 });
