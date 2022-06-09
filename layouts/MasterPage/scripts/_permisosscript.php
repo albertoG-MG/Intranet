@@ -55,9 +55,6 @@ document.addEventListener("DOMContentLoaded", function() {
             },
         ]
     });
-
-    var idedit;
-
     const modalContainer = document.querySelector(
         "#modal-component-container"
     );
@@ -65,63 +62,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('.modal-actions').on('click', '#close-modal', function(){
         closeModal();
-    });
-
-    $('.modal-actions').on('click', '#editar-permiso', function(){
-       alert(idedit); 
-    });
-
-    $('.modal-actions').on('click', '#crear-permiso', function(){
-        if ($('#Guardar').length > 0) {
-                $('#Guardar').validate({
-                    ignore: [],
-                    errorPlacement: function(error, element) {
-                            error.insertAfter(element.parent('.group.flex'));
-                    },
-                    rules: {
-                        crearpermiso: {
-                            required: true,
-                            remote: "../ajax/checkpermiso.php"
-                        }
-                    },
-                    messages: {
-                        crearpermiso: {
-                            required: 'Por favor, ingresa un permiso',
-                            remote: 'Ese permiso ya existe, por favor escriba otro'
-                        }
-                    },
-                    submitHandler: function(form) {
-                        var fd = new FormData();
-                        var permisos = $("input[name=crearpermiso]").val();
-                        var app = "permisos";
-                        var method = "store";
-                        fd.append('permisos', permisos);
-                        fd.append('app', app);
-                        fd.append('method', method);
-                        var table = $('#datatable').DataTable();
-                        $.ajax({
-                            type: "post",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                response = response.replace(/[\r\n]/gm, '');
-                                if(response == "success"){
-                                    Swal.fire({
-                                        title: "Permiso Creado",
-                                        text: "Se ha creado un permiso exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        table.ajax.reload(null, false);
-                                        });
-                                }
-                            }
-                        });
-                        return false;
-                    }
-                });
-            }
     });
 
     $('.dt-buttons').on('click', '.dt-button', function(){
@@ -146,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
         var data = row.data();
-        idedit=data[0];
         $('.modal-content').html(
             "<h3 class='text-lg font-medium text-gray-900'>Editar permiso</h3>"+
             "<div class='grid grid-cols-1 mt-5 mx-6'>"+
@@ -157,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 "</div>"+
             "</div>");
         $('.modal-actions').html(
-            "<button id='editar-permiso' type='button' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
+            "<button id='editar-permiso' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
             "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
         );
         openModal();
