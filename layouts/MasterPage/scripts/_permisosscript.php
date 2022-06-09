@@ -64,6 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
         closeModal();
     });
 
+    function resetFormValidator(formId) {
+    $(formId).removeData('validator');
+    $(formId).removeData('unobtrusiveValidation');
+    $.validator.unobtrusive.parse(formId);
+    }
+
     $('.dt-buttons').on('click', '.dt-button', function(){
         $('.modal-content').html(
             "<h3 class='text-lg font-medium text-gray-900'>Crear permiso</h3>"+
@@ -79,6 +85,56 @@ document.addEventListener("DOMContentLoaded", function() {
             "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
         );
         openModal();
+        resetFormValidator("#Guardar");
+        $('#Guardar').unbind('submit');
+        $('#Guardar').validate({
+            ignore: [],
+            errorPlacement: function(error, element) {
+                error.insertAfter(element.parent('.group.flex'));
+            },
+                    rules: {
+                        crearpermiso: {
+                            required: true,
+                            remote: "../ajax/checkpermiso.php"
+                        }
+                    },
+                    messages: {
+                        crearpermiso: {
+                            required: 'Por favor, ingresa un permiso',
+                            remote: 'Ese permiso ya existe, por favor escriba otro'
+                        }
+                    },
+                    submitHandler: function(form) {
+                        var fd = new FormData();
+                        var permisos = $("input[name=crearpermiso]").val();
+                        var app = "permisos";
+                        var method = "store";
+                        fd.append('permisos', permisos);
+                        fd.append('app', app);
+                        fd.append('method', method);
+                        var table = $('#datatable').DataTable();
+                        $.ajax({
+                            type: "post",
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                response = response.replace(/[\r\n]/gm, '');
+                                if(response == "success"){
+                                    Swal.fire({
+                                        title: "Permiso Creado",
+                                        text: "Se ha creado un permiso exitosamente!",
+                                        icon: "success"
+                                    }).then(function() {
+                                        table.ajax.reload(null, false);
+                                        });
+                                }
+                            }
+                        });
+                        return false;
+                    }
+        });
     });
 
     $('#datatable').on( 'click', 'tr .Edit', function () {
