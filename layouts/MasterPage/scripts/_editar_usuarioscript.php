@@ -17,7 +17,7 @@
                                 url: "../ajax/checkeditusername.php",
                                 type: "post",
                                 data: {
-                                    "session": "<?php echo $_SESSION["id"] ?>"
+                                    "editarid": "<?php echo $editarid; ?>"
                                 }
                             }
                         },
@@ -44,7 +44,7 @@
                                 url: "../ajax/checkeditemail.php",
                                 type: "post",
                                 data: {
-                                    session: "<?php echo $_SESSION["id"];  ?>"
+                                    "editarid": "<?php echo $editarid; ?>"
                                 }
                             }
                         },

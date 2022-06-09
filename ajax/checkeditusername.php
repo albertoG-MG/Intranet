@@ -3,9 +3,9 @@ include_once("../config/conexion.php");
 $object = new connection_database();
 
 $username = $_POST["usuario"];
-$session = $_POST["session"];
+$editarid = $_POST["editarid"];
 $query = $object ->_db->prepare("SELECT username from usuarios where username=:username and id!=:iduser");
-$query -> execute(array(":username" => $username, ":iduser" => $session));
+$query -> execute(array(":username" => $username, ":iduser" => $editarid));
 $usernamecount = $query->rowCount();
 if($usernamecount > 0){
     $output = false;
