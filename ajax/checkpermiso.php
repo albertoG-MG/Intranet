@@ -2,7 +2,7 @@
 include_once("../config/conexion.php");
 $object = new connection_database();
 
-$permiso = $_GET["permiso"];
+$permiso = $_GET["crearpermiso"];
 $query = $object ->_db->prepare("SELECT nombre from permisos where nombre=:nombre");
 $query -> execute(array(":nombre" => $permiso));
 $permisocount = $query->rowCount();

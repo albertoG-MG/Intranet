@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     return  (
                    "<div class='py-3 text-left'>"+
                         "<div class='flex item-center justify-end'>"+
-                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer'>"+
+                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Edit'>"+
                                 "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>"+
                                 "</svg>"+
@@ -55,63 +55,41 @@ document.addEventListener("DOMContentLoaded", function() {
             },
         ]
     });
-    const closeButton = document.querySelector("#close-modal");
-    const openButton = document.querySelector("#open-modal");
     const modalContainer = document.querySelector(
         "#modal-component-container"
     );
     const modal = document.querySelector("#modal-container");
 
-    openButton.addEventListener("click", () => {
-        openModal();
-    });
-
-    closeButton.addEventListener("click", () => {
+    $('.modal-actions').on('click', '#close-modal', function(){
         closeModal();
     });
 
+    $('.modal-actions').on('click', '#editar-permiso', function(){
+       alert("Editar permiso"); 
+    });
 
-    function openModal(){
-            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
-            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
-        }
-
-    function closeModal(){
-            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
-            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
-            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
-        }
-
-    function showAndHide(element, classesToAdd, classessToRemove){
-        element.classList.remove( ...classessToRemove);
-        element.classList.add( ...classesToAdd);
-    }
-});
-$(document).ready(function() {
-    $('.dataTables_filter input[type="search"]').
-    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
-
-    if ($('#Guardar').length > 0) {
+    $('.modal-actions').on('click', '#crear-permiso', function(){
+        if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
                     ignore: [],
                     errorPlacement: function(error, element) {
                             error.insertAfter(element.parent('.group.flex'));
                     },
                     rules: {
-                        permiso: {
+                        crearpermiso: {
                             required: true,
                             remote: "../ajax/checkpermiso.php"
                         }
                     },
                     messages: {
-                        permiso: {
+                        crearpermiso: {
                             required: 'Por favor, ingresa un permiso',
                             remote: 'Ese permiso ya existe, por favor escriba otro'
                         }
                     },
                     submitHandler: function(form) {
                         var fd = new FormData();
-                        var permisos = $("input[name=permiso]").val();
+                        var permisos = $("input[name=crearpermiso]").val();
                         var app = "permisos";
                         var method = "store";
                         fd.append('permisos', permisos);
@@ -141,6 +119,66 @@ $(document).ready(function() {
                     }
                 });
             }
+    });
+
+    $('.dt-buttons').on('click', '.dt-button', function(){
+        $('.modal-content').html(
+            "<h3 class='text-lg font-medium text-gray-900'>Crear permiso</h3>"+
+            "<div class='grid grid-cols-1 mt-5 mx-6'>"+
+                "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del permiso</label>"+
+                "<div class='group flex'>"+
+                    "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-lock-outline text-gray-400 text-lg'></i></div>"+
+                    "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='crearpermiso' name='crearpermiso' placeholder='Input 1'>"+
+                "</div>"+
+            "</div>");
+        $('.modal-actions').html(
+            "<button id='crear-permiso' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
+            "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
+        );
+        openModal();
+    });
+
+    $('#datatable').on( 'click', 'tr .Edit', function () {
+        var table = $('#datatable').DataTable();
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+        var data = row.data();
+        $('.modal-content').html(
+            "<h3 class='text-lg font-medium text-gray-900'>Editar permiso</h3>"+
+            "<div class='grid grid-cols-1 mt-5 mx-6'>"+
+                "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el permiso</label>"+
+                "<div class='group flex'>"+
+                    "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-lock-outline text-gray-400 text-lg'></i></div>"+
+                    "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editpermiso' name='editpermiso' value='"+data[1]+"'>"+
+                "</div>"+
+            "</div>");
+        $('.modal-actions').html(
+            "<button id='editar-permiso' type='button' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
+            "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
+        );
+        openModal();
+    });
+
+
+    function openModal(){
+            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+        }
+
+    function closeModal(){
+            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+        }
+
+    function showAndHide(element, classesToAdd, classessToRemove){
+        element.classList.remove( ...classessToRemove);
+        element.classList.add( ...classesToAdd);
+    }
+});
+$(document).ready(function() {
+    $('.dataTables_filter input[type="search"]').
+    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
 });
 </script>
 <style>
