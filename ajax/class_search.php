@@ -70,9 +70,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         $permisos = $_POST["permisos"];
         switch($_POST["method"]){
             case "store":
-            $permiso = new Permissions($permisos);
-            $permiso ->CrearPermisos();
-            exit("success");
+                $permiso = new Permissions($permisos);
+                $permiso ->CrearPermisos();
+                exit("success");
+            break;
+            case "edit":
+                var_dump($_POST);
             break;
         }
     }
