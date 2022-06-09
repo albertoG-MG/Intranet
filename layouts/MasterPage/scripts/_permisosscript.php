@@ -55,6 +55,9 @@ document.addEventListener("DOMContentLoaded", function() {
             },
         ]
     });
+
+    var idedit;
+
     const modalContainer = document.querySelector(
         "#modal-component-container"
     );
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     $('.modal-actions').on('click', '#editar-permiso', function(){
-       alert("Editar permiso"); 
+       alert(idedit); 
     });
 
     $('.modal-actions').on('click', '#crear-permiso', function(){
@@ -143,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
         var data = row.data();
+        idedit=data[0];
         $('.modal-content').html(
             "<h3 class='text-lg font-medium text-gray-900'>Editar permiso</h3>"+
             "<div class='grid grid-cols-1 mt-5 mx-6'>"+
