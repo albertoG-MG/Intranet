@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     rules: {
                         crearpermiso: {
                             required: true,
-                            remote: "../ajax/validacion/checkpermiso.php"
+                            remote: "../ajax/validacion/permisos/checkpermiso.php"
                         }
                     },
                     messages: {

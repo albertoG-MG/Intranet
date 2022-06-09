@@ -14,7 +14,7 @@
                         usuario: {
                             required: true,
                             remote: {
-                                url: "../ajax/validacion/checkeditusername.php",
+                                url: "../ajax/validacion/editar_usuarios/checkeditusername.php",
                                 type: "post",
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"
@@ -41,7 +41,7 @@
                             required: true,
                             email: true,
                             remote: {
-                                url: "../ajax/validacion/checkeditemail.php",
+                                url: "../ajax/validacion/editar_usuarios/checkeditemail.php",
                                 type: "post",
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"

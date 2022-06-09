@@ -13,7 +13,7 @@
                     rules: {
                         usuario: {
                             required: true,
-                            remote: '../ajax/validacion/checkusername.php'
+                            remote: '../ajax/validacion/crear_usuarios/checkusername.php'
                         },
                         password:{
                             required: true
@@ -34,7 +34,7 @@
                         correo: {
                             required: true,
                             email: true,
-                            remote: '../ajax/validacion/checkemail.php'
+                            remote: '../ajax/validacion/crear_usuarios/checkemail.php'
                         },
                         foto: {
                             extension: "jpg|jpeg|png"

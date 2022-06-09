@@ -1,5 +1,5 @@
 <?php
-include_once("../../config/conexion.php");
+include_once("../../../config/conexion.php");
 $object = new connection_database();
 
 $username = $_GET["usuario"];
