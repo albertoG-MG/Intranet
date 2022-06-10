@@ -125,7 +125,7 @@ $('#datatable').on( 'click', 'tr .Eliminar', function () {
                 var fd = new FormData();
                 fd.append('id', eliminarid);
                 $.ajax({
-                    url: "../ajax/eliminaruser.php",
+                    url: "../ajax/eliminar/tabla_users/eliminaruser.php",
                     type: "post",
                     data: fd,
                     processData: false,
