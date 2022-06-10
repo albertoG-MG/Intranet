@@ -1,7 +1,7 @@
 <?php
-include_once("../classes/user.php");
-include_once("../classes/permissions.php");
-include_once("../config/conexion.php");
+include_once __DIR__ . "/../classes/user.php";
+include_once __DIR__ . "/../classes/permissions.php";
+include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
 

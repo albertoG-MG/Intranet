@@ -1,6 +1,6 @@
 <?php
-include_once("../config/conexion.php");
-include_once("crud.php");
+include_once __DIR__ . "/../config/conexion.php";
+include_once __DIR__ . "/crud.php";
 class user {
 	
 	private $conn;
