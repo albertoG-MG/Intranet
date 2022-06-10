@@ -19,7 +19,8 @@ class permissions {
 	}
     
     public function EditarPermisos($id){
-		
+		$crud = new crud();
+		$crud -> update('permisos', ['nombre' => $this->permisos], "id=:idpermiso", ['idpermiso' => $id]);
 	}
     
     public static function FetchPermisos(){
