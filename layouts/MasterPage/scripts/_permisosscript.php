@@ -165,12 +165,20 @@ document.addEventListener("DOMContentLoaded", function() {
             },
                     rules: {
                         editpermiso: {
-                            required: true
+                            required: true,
+                            remote: {
+                                url: "../ajax/validacion/permisos/checkeditpermiso.php",
+                                type: "post",
+                                data: {
+                                    "editarid": data[0]
+                                }
+                            }
                         }
                     },
                     messages: {
                         editpermiso: {
-                            required: 'Por favor, ingresa un permiso'
+                            required: 'Por favor, ingresa un permiso',
+                            remote: 'Ese permiso ya existe, por favor, escriba otro'
                         }
                     },
                     submitHandler: function(form) {
@@ -178,9 +186,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         var permisos = $("input[name=editpermiso]").val();
                         var app = "permisos";
                         var method = "edit";
+                        var id = data[0];
                         fd.append('permisos', permisos);
                         fd.append('app', app);
                         fd.append('method', method);
+                        fd.append('editarid', id);
                         var table = $('#datatable').DataTable();
                         $.ajax({
                             type: "post",
