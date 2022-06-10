@@ -237,6 +237,48 @@ $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
     attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
 });
+
+$('#datatable').on( 'click', 'tr .Eliminar', function () {
+    var table = $('#datatable').DataTable();
+    var tr = $(this).closest('tr');
+    var row = table.row(tr);
+    var data = row.data();
+    Swal.fire({
+    title: '¿Estas seguro?',
+    text: "No podras recuperar la información!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí!',
+    cancelButtonText: 'cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'éxito',
+                text: 'La fila ha sido eliminada!'
+            }).then(function() {
+                var eliminarid = data[0];
+                var fd = new FormData();
+                fd.append('id', eliminarid);
+                $.ajax({
+                    url: "../ajax/eliminar/tabla_permisos/eliminarpermiso.php",
+                    type: "post",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function(result) {
+                            table
+                            .row($(this).parents('tr'))
+                            .remove()
+                            .draw();
+                    }
+                });
+            });
+        }
+    })
+});
 </script>
 <style>
     .dataTables_wrapper .dataTables_filter{

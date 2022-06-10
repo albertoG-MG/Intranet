@@ -28,7 +28,8 @@ class permissions {
     }
 
     public static function EliminarPermisos($id){
-		
+		$crud = new crud();
+		$crud->delete('permisos', 'id=:idpermiso', ['idpermiso' => $id]);
 	} 
 }
 ?>
