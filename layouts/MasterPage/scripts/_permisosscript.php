@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     $("#datatable").DataTable({
         responsive:true,
         "lengthChange": false,
+        "ordering": false,
         "sPaginationType": "listboxWithButtons",
         language: {
 					search: ""
@@ -50,8 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             "</div>"+
                         "</div>"+
                    "</div>");
-                },
-                orderable: false
+                }
             },
         ]
     });
