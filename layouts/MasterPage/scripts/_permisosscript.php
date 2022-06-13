@@ -71,9 +71,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     $('.dt-buttons').on('click', '.dt-button', function(){
-        $('.modal-content').html(
+        $('.modal-wrapper-flex').html(
+            "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
+            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-lock-outline text-black font-semibold text-lg'></i></div>"+
             "<h3 class='text-lg font-medium text-gray-900'>Crear permiso</h3>"+
-            "<div class='grid grid-cols-1 mt-5 mx-6'>"+
+            "</div>"+
+            "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
+            "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
                 "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del permiso</label>"+
                 "<div class='group flex'>"+
                     "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-lock-outline text-gray-400 text-lg'></i></div>"+

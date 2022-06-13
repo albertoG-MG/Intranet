@@ -1018,6 +1018,9 @@ select {
 .gap-4 {
   gap: 1rem !important;
 }
+.gap-3 {
+  gap: 0.75rem !important;
+}
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0 !important;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse))) !important;
@@ -1622,6 +1625,10 @@ select {
 
   .sm\:flex-row-reverse {
     flex-direction: row-reverse !important;
+  }
+
+  .sm\:flex-col {
+    flex-direction: column !important;
   }
 
   .sm\:flex-wrap {
