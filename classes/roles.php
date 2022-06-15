@@ -21,8 +21,12 @@ class roles {
 
     protected static function Asignarpermisos($rol_id, $permissions){
         $crud = new crud();
-        for($i = 0; $i < count($permissions); $i++){
-            $crud -> store('rolesxpermisos', ["roles_id" => $rol_id, "permisos_id" => $permissions[$i]]);
+        if($permissions == null){
+            exit("success");
+        }else{
+            for($i = 0; $i < count($permissions); $i++){
+                $crud -> store('rolesxpermisos', ["roles_id" => $rol_id, "permisos_id" => $permissions[$i]]);
+            }
         }
     }
     

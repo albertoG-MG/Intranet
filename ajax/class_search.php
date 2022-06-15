@@ -96,6 +96,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "store":
                 $rol = new Roles($roles, $permissions);
                 $rol->CrearRol();
+                exit("success");
                 break;
             case "edit":
                 break;

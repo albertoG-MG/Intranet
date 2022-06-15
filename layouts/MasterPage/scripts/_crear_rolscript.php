@@ -42,7 +42,7 @@ $("#Guardar").validate({
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    
+                    console.log(response);
                 }
             });
         return false;
