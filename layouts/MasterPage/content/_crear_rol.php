@@ -34,7 +34,7 @@
               $permisos = permissions::FetchPermisos();
               foreach ($permisos as $row){
                 echo "<div class='flex gap-3 items-center' style='flex: 1 0 21%'>";
-                echo "<input type='checkbox' value='".$row->nombre."'>" .$row->nombre. "</>";
+                echo "<input type='checkbox' value='".$row->id."'>" .$row->nombre. "</>";
                 echo "</div>";
               }
               ?>
