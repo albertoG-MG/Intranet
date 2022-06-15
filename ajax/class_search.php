@@ -84,5 +84,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "roles"){
+    if(isset($_POST["roles"]) && isset($_POST["method"])){
+        $roles = $_POST["roles"];
+        switch($_POST["method"]){
+            case "store":
+                var_dump($_POST);
+                break;
+            case "edit":
+                break;
+        }
+    }
 }
 ?>
