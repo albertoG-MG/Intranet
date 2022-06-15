@@ -17,12 +17,14 @@ $("#Guardar").validate({
         },
         rules: {
             rol: {
-                required:true
+                required:true,
+                remote: '../ajax/validacion/crear_roles/checkrol.php'
             }
         },
         messages: {
             rol: {
-                required: 'Por favor, escriba un rol'
+                required: 'Por favor, escriba un rol',
+                remote: 'Ese rol ya existe, por favor, escriba otro'
             }
         },
         submitHandler: function(form) {
