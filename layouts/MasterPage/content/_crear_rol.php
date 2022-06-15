@@ -29,7 +29,16 @@
 
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Permisos</label>
-              
+              <div class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
+              <?php 
+              $permisos = permissions::FetchPermisos();
+              foreach ($permisos as $row){
+                echo "<div class='flex gap-3 items-center' style='flex: 1 0 21%'>";
+                echo "<input type='checkbox' value='".$row->nombre."'>" .$row->nombre. "</>";
+                echo "</div>";
+              }
+              ?>
+            </div>
             </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>

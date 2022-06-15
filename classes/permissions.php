@@ -3,13 +3,9 @@ include_once __DIR__ . "/../config/conexion.php";
 include_once __DIR__ . "/crud.php";
 class permissions {
 	
-	private $conn;
     public $permisos;
-
-
 	
 	public function __construct($nompermisos){
-		$this->conn = new connection_database();
         $this->permisos = $nompermisos;
 	}
 	
@@ -24,7 +20,13 @@ class permissions {
 	}
     
     public static function FetchPermisos(){
+		$object = new connection_database();
+		$sql = "SELECT * FROM permisos";
+        $fetchpermisos = $object->_db->prepare($sql);
+        $fetchpermisos->execute();
 
+        $permisos = $fetchpermisos->fetchAll(PDO::FETCH_OBJ);
+		return $permisos;
     }
 
     public static function EliminarPermisos($id){
