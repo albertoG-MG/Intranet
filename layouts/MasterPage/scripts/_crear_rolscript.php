@@ -42,7 +42,16 @@ $("#Guardar").validate({
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    console.log(response);
+                    response = response.replace(/[\r\n]/gm, '');
+                    if(response == "success"){
+                            Swal.fire({
+                            title: "Rol Creado",
+                            text: "Se ha creado un rol exitosamente!",
+                            icon: "success"
+                    }).then(function() {
+                            window.location.href = "roles.php";	
+                        });
+                    }
                 }
             });
         return false;
