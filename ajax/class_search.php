@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . "/../classes/user.php";
 include_once __DIR__ . "/../classes/permissions.php";
+include_once __DIR__ . "/../classes/roles.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
@@ -87,9 +88,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 }else if(isset($_POST["app"]) && $_POST["app"] == "roles"){
     if(isset($_POST["roles"]) && isset($_POST["method"])){
         $roles = $_POST["roles"];
+        $permissions = null;
+        if(isset($_POST["permisos"])){
+        $permissions = json_decode($_POST["permisos"]);
+        }
         switch($_POST["method"]){
             case "store":
-                var_dump($_POST);
+                $rol = new Roles($roles, $permissions);
+                $rol->CrearRol();
                 break;
             case "edit":
                 break;
