@@ -11,7 +11,7 @@
                 </div>
                 <div class="text flex flex-col flex-grow text-white py-0 px-15">
                     <h1><?php print_r($profile->nombre . " " . $profile->apellido_pat . " " . $profile->apellido_mat); ?></h1>
-                    <p><?php print_r($profile->rolnom); ?></p>
+                    <p><?php if($profile->rolnom == null){print_r("Sin rol");}else{print_r($profile->rolnom);} ?></p>
                 </div>
                 <div class="button py-15 px-3">
                     <a href="http://localhost:8000/user/profile"><button class="text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" style="width:100%; height:40px;">Editar perfil</button></a>
