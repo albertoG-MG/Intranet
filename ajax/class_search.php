@@ -18,7 +18,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         $filename=null;
         $foto=null;
 
-        if(isset($_POST["roles_id"])){
+        if(!(empty($_POST["roles_id"]))){
             $roles = $_POST["roles_id"];
         }
 
