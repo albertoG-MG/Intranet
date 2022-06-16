@@ -246,6 +246,11 @@ document.addEventListener("DOMContentLoaded", function() {
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
     attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+    <?php
+    if(basename($_SERVER['PHP_SELF']) == 'permisos.php'){?>
+        var dropdown = document.getElementById('catalogos');
+        dropdown.classList.remove("hidden");
+    <?php } ?>
 });
 
 $('#datatable').on( 'click', 'tr .Eliminar', function () {
