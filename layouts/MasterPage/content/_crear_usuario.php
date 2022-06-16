@@ -1,9 +1,9 @@
 <div class="container mx-auto px-6 py-8">
-<div class="flex items-center justify-center">
+  <div class="flex items-center justify-center">
     <div class="grid w-11/12 md:w-9/12">
-  <h3 class="text-gray-700 text-3xl font-medium">Crear usuarios</h3>
-</div>
-</div>
+      <h3 class="text-gray-700 text-3xl font-medium">Crear usuarios</h3>
+    </div>
+  </div>
   <div class="mt-4">
     <div class="flex flex-col mt-8">
       <div class="flex bg-gray-200 items-center justify-center mb-32">
