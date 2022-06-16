@@ -29,7 +29,7 @@
 
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Permisos</label>
-              <div class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
+              <div id="permissionarray" class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
               <?php 
               $permisos = permissions::FetchPermisos();
               foreach ($permisos as $row){
