@@ -29,6 +29,16 @@ class roles {
             }
         }
     }
+
+    public static function FetchRol(){
+        $object = new connection_database();
+		$sql = "SELECT * FROM roles";
+        $fetchroles = $object->_db->prepare($sql);
+        $fetchroles->execute();
+
+        $roles = $fetchroles->fetchAll(PDO::FETCH_OBJ);
+		return $roles;
+    }
     
     public function EditarRol($id){
 		
