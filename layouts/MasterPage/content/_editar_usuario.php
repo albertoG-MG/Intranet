@@ -84,7 +84,7 @@
                   <?php 
                   $roles = roles::FetchRol();
                   foreach ($roles as $rq){
-                  echo "<option value='".$rq->id."'>";
+                  echo "<option value='".$rq->id."'"; if($row->roles_id==$rq->id) echo 'selected="selected"'; echo">";
                   echo "".$rq->nombre."";
                   echo "</option>";
                   }
