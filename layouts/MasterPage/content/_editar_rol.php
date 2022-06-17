@@ -36,9 +36,9 @@
               <div id="permissionarray" class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
               <?php 
               $permisos = permissions::FetchPermisos();
-              foreach ($permisos as $row){
+              for($i=0; $i<count($permisos); $i++){
                 echo "<div class='flex gap-3 items-center' style='flex: 1 0 21%'>";
-                echo "<input type='checkbox'"; if($row->id == $checkpermiso[$contador]){ echo "checked"; $contador++;} echo" value='".$row->id."'>" .$row->nombre. "</>";
+                echo "<input type='checkbox'"; for($j=0; $j<count($checkpermiso); $j++){  if($permisos[$i]->id == $checkpermiso[$j]){ echo "checked";}} echo" value='".$permisos[$i]->id."'>" .$permisos[$i]->nombre. "</>";
                 echo "</div>";
               }
               ?>
