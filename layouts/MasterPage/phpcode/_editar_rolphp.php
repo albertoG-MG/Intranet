@@ -34,7 +34,11 @@ $editar->execute();
  $check_rol=$editar->rowCount();
 
  if($check_rol > 0){
-   
+    $contador = 0;
+    $editarpermiso = $object -> _db->prepare("SELECT * FROM rolesxpermisos WHERE roles_id=:editarid");
+    $editarpermiso->bindParam("editarid", $editarid,PDO::PARAM_INT);
+    $editarpermiso->execute();
+    $checkpermiso=$editarpermiso->fetchAll(PDO::FETCH_COLUMN);  
  }else{
     header('Location: roles.php');
     die();
