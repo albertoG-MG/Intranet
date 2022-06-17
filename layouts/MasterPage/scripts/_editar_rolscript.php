@@ -14,7 +14,7 @@
                 rol: {
                     required:true,
                     remote: {
-                                url: "../ajax/validacion/editar_rol/checkeditrol.php",
+                                url: "../ajax/validacion/editar_roles/checkeditrol.php",
                                 type: "post",
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"
