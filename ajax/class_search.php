@@ -99,7 +99,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 exit("success");
                 break;
             case "edit":
-                var_dump($_POST);
+                if(isset($_POST["editarid"])){
+                    $id = $_POST["editarid"];
+                    $rol = new Roles($roles, $permissions);
+                    $rol ->EditarRol($id);
+                    exit("success");
+                }
                 break;
         }
     }
