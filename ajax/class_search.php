@@ -99,6 +99,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 exit("success");
                 break;
             case "edit":
+                var_dump($_POST);
                 break;
         }
     }

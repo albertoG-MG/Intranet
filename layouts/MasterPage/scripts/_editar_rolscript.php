@@ -32,10 +32,12 @@
                 var fd = new FormData();
                 var roles = $("input[name=rol]").val();
                 var permisos = JSON.stringify(array);
+                var editar = <?php echo $editarid; ?>;
                 var method="edit";
                 var app="roles";
                 fd.append("roles", roles);
                 fd.append("permisos", permisos);
+                fd.append("editarid", editar);
                 fd.append("method", method);
                 fd.append("app", app);
                 $.ajax({
