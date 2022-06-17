@@ -72,6 +72,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         ]
     });
+    $('#datatable').on('click', 'tr .Editar', function () {
+        var table = $('#datatable').DataTable();
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+        var data = row.data();
+        window.location.href = "editar_rol.php?idRol="+data[0]+""; 
+    });
+
+
 });
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
