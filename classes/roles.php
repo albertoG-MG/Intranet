@@ -16,17 +16,15 @@ class roles {
 		$crud = new crud();
         $crud -> store('roles', ["nombre" => $this->roles]);
         $rol_id = $object -> _db->lastInsertId();
+        if($this->rolpermissions != null){
         roles::Asignarpermisos($rol_id, $this->rolpermissions);
+        }
 	}
 
     protected static function Asignarpermisos($rol_id, $permissions){
         $crud = new crud();
-        if($permissions == null){
-            exit("success");
-        }else{
-            for($i = 0; $i < count($permissions); $i++){
-                $crud -> store('rolesxpermisos', ["roles_id" => $rol_id, "permisos_id" => $permissions[$i]]);
-            }
+        for($i = 0; $i < count($permissions); $i++){
+            $crud -> store('rolesxpermisos', ["roles_id" => $rol_id, "permisos_id" => $permissions[$i]]);
         }
     }
 
