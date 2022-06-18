@@ -68,7 +68,22 @@ class roles {
 
         $crud->delete('rolesxpermisos', 'roles_id=:rolid AND permisos_id IN('.$in.')', array_merge($params,$in_params));
         }else if($countdatabase < $countselected){
-            print_r("Agregar");
+            for($i=0; $i<$countselected; $i++){
+                for($j=0; $j<$countdatabase; $j++){
+                    if($fetchroles[$j] == $this->rolpermissions[$i]){
+                        unset($this->rolpermissions[$i]);
+                        break;
+                    }
+                }
+            }
+            $params = ["roles_id" => $id];
+            foreach ($this->rolpermissions as $item)
+            {
+                $key = "permisos_id";
+                $in_params[$key] = $item; // collecting values into a key-value array
+                $crud -> store('rolesxpermisos', array_merge($params, $in_params));
+            }
+            
         }
 	}
 
