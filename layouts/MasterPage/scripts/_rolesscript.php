@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     var fd = new FormData();
                     fd.append('id', eliminarid);
                     $.ajax({
-                        url: "../ajax/eliminar/tabla_roles/eliminarroles.php",
+                        url: "../ajax/eliminar/tabla_roles/eliminarrol.php",
                         type: "post",
                         data: fd,
                         processData: false,
