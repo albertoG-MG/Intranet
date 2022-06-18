@@ -39,7 +39,37 @@ class roles {
     }
     
     public function EditarRol($id){
-		
+		$object = new connection_database();
+        $crud = new crud();
+        $checkrolesxpermisos = $object -> _db -> prepare("SELECT permisos_id FROM rolesxpermisos WHERE roles_id=:idrol");
+        $checkrolesxpermisos -> execute(array(":idrol" => $id));
+        $fetchroles = $checkrolesxpermisos -> fetchAll(PDO::FETCH_COLUMN);
+        $countdatabase = count($fetchroles);
+        $countselected = count($this->rolpermissions);
+
+        if($countdatabase > $countselected){
+            for($i=0; $i<$countdatabase; $i++){
+                for($j=0; $j<$countselected; $j++){
+                    if($fetchroles[$i] == $this->rolpermissions[$j]){
+                        unset($fetchroles[$i]);
+                        break;
+                    }
+                }
+            }
+            $params = ["rolid" => $id];
+            $in = "";
+            $i = 0;
+            foreach ($fetchroles as $item)
+            {
+                $key = ":id".$i++;
+                $in .= ($in ? "," : "") . $key; // :id0,:id1,:id2
+                $in_params[$key] = $item; // collecting values into a key-value array
+            }
+
+        $crud->delete('rolesxpermisos', 'roles_id=:rolid AND permisos_id IN('.$in.')', array_merge($params,$in_params));
+        }else if($countdatabase < $countselected){
+            print_r("Agregar");
+        }
 	}
 
     public static function EliminarRol($id){
