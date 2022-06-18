@@ -41,6 +41,7 @@ class roles {
     public function EditarRol($id){
 		$object = new connection_database();
         $crud = new crud();
+        $crud -> update('roles', ['nombre' => $this->roles], 'id=:id', ['id' => $id]);
         $checkrolesxpermisos = $object -> _db -> prepare("SELECT permisos_id FROM rolesxpermisos WHERE roles_id=:idrol");
         $checkrolesxpermisos -> execute(array(":idrol" => $id));
         $fetchroles = $checkrolesxpermisos -> fetchAll(PDO::FETCH_COLUMN);
