@@ -80,6 +80,10 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "editar_rol.php?idRol="+data[0]+""; 
     });
 
+    $('#datatable').on('click', 'tr .Eliminar', function(){
+        alert("hola");
+    });
+
 
 });
 $(document).ready(function() {
