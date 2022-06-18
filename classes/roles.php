@@ -89,7 +89,8 @@ class roles {
 	}
 
     public static function EliminarRol($id){
-		
+		$crud = new crud();
+		$crud->delete('roles', 'id=:idrol', ['idrol' => $id]);
 	} 
 }
 ?>
