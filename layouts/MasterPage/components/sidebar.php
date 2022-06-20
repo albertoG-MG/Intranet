@@ -42,7 +42,7 @@
             <?php } ?>
                 <p class="ml-4">Usuarios</p>
             </a>
-            <?php if(basename($_SERVER['PHP_SELF']) == 'roles.php' || basename($_SERVER['PHP_SELF']) == 'permisos.php' || basename($_SERVER['PHP_SELF']) == 'crear_rol.php'){?>
+            <?php if(basename($_SERVER['PHP_SELF']) == 'roles.php' || basename($_SERVER['PHP_SELF']) == 'permisos.php' || basename($_SERVER['PHP_SELF']) == 'crear_rol.php' || basename($_SERVER['PHP_SELF']) == 'editar_rol.php'){?>
                 <a href="roles.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
             <?php }else{ ?>
             <a href="roles.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">

@@ -62,6 +62,11 @@
             return false;
             }
         });
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'editar_rol.php'){?>
+            var dropdown = document.getElementById('catalogos');
+            dropdown.classList.remove("hidden");
+        <?php } ?>
     });
     
     $("input[type=checkbox]").on("click", function () {
