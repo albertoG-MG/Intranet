@@ -8,7 +8,7 @@
 
 CREATE TABLE `roles` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL UNIQUE
+  `nombre` varchar(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -26,7 +26,7 @@ INSERT INTO `roles` (`id`, `nombre`) VALUES
 
 CREATE TABLE `permisos` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL UNIQUE
+  `nombre` varchar(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -46,6 +46,17 @@ CREATE TABLE `rolesxpermisos` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `departamentos`
+--
+
+CREATE TABLE `departamentos` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `departamento` varchar(100) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -58,9 +69,11 @@ CREATE TABLE `usuarios` (
   `correo` varchar(100) NOT NULL UNIQUE,
   `password` varchar(100) NOT NULL,
   `roles_id` int DEFAULT NULL,
+  `departamento_id` int DEFAULT NULL,
   `nombre_foto` longtext DEFAULT NULL,
   `foto` longtext DEFAULT NULL,
-   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL
+   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL,
+   FOREIGN KEY (departamento_id) REFERENCES departamentos(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
