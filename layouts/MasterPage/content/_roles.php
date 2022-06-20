@@ -9,7 +9,6 @@
                             <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
-										<th class="py-3 text-left all">Id</th>
                                         <th class="py-3 text-left all">Rol</th>
                                         <th class="py-3 text-center min-tablet"></th>
                                     </tr>
