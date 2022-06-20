@@ -102,12 +102,14 @@
                 },
                 rules: {
                     creardepartamento: {
-                        required: true
+                        required: true,
+                        remote: "../ajax/validacion/departamentos/checkdepartamento.php"
                     }
                 },
                 messages: {
                     creardepartamento: {
-                        required: 'Por favor, ingresa un departamento'
+                        required: 'Por favor, ingresa un departamento',
+                        remote: 'Ese departamento ya existe, por favor, ingrese otro'
                     }
                 },
                 submitHandler: function(form) {
