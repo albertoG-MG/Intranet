@@ -178,12 +178,20 @@
                 },
                 rules: {
                     editdepartamento: {
-                        required: true
+                        required: true,
+                        remote: {
+                            url: "../ajax/validacion/departamentos/checkeditdepartamento.php",
+                            type: "post",
+                            data: {
+                                "editarid": data[0]
+                            }
+                        }
                     }
                 },
                 messages: {
                     editdepartamento: {
-                        required: 'Por favor, ingresa un departamento'
+                        required: 'Por favor, ingresa un departamento',
+                        remote: 'Ese departamento ya existe, por favor, ingrese otro'
                     }
                 },
                 submitHandler: function(form) {
