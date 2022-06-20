@@ -108,5 +108,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "departamentos"){
+    if(isset($_POST["departamentos"]) && isset($_POST["method"])){
+        $departamentos = $_POST["departamentos"];
+        switch($_POST["method"]){
+            case "store":
+                
+            break;
+            case "edit":
+            break;
+        }
+    }
 }
 ?>
