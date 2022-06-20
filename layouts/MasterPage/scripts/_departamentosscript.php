@@ -21,6 +21,40 @@
 				],
         "initComplete": () => {$("#datatable").show();},
         });
+        const modalContainer = document.querySelector(
+        "#modal-component-container"
+        );
+        const modal = document.querySelector("#modal-container");
+
+        $('.modal-actions').on('click', '#close-modal', function(){
+            closeModal();
+        });
+
+        function resetFormValidator(formId) {
+        $(formId).removeData('validator');
+        $(formId).removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse(formId);
+        }
+
+        $('.dt-buttons').on('click', '.dt-button', function(){
+        openModal();
+        });
+
+        function openModal(){
+            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+        }
+
+        function closeModal(){
+            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+        }
+
+        function showAndHide(element, classesToAdd, classessToRemove){
+            element.classList.remove( ...classessToRemove);
+            element.classList.add( ...classesToAdd);
+        }
     });
     $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
