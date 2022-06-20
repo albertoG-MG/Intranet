@@ -19,7 +19,8 @@ class departamentos {
     }
     
     public function EditarDepartamento($id){
-		
+		$crud = new crud();
+        $crud -> update ('departamentos', ['departamento' => $this->departamentos], 'id=:id', ['id' => $id]);
 	}
 
     public static function EliminarDepartamento($id){

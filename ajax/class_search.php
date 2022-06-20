@@ -119,6 +119,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 exit("success");
             break;
             case "edit":
+                if(isset($_POST["editarid"])){
+                    $id = $_POST["editarid"];
+                    $departamento = new Departamentos($departamentos);
+                    $departamento ->EditarDepartamento($id);
+                    exit("success");
+                }
             break;
         }
     }
