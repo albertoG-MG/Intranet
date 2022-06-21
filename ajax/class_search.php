@@ -15,9 +15,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         $apellido_pat = $_POST["apellido_pat"];
         $apellido_mat = $_POST["apellido_mat"];
         $correo = $_POST["correo"];
+        $departamento = null;
         $roles=null;
         $filename=null;
         $foto=null;
+
+        if(!(empty($_POST["departamento"]))){
+            $departamento = $_POST["departamento"];
+        }
 
         if(!(empty($_POST["roles_id"]))){
             $roles = $_POST["roles_id"];
@@ -43,7 +48,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         switch($_POST["method"]){
 
             case "store":
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $roles, $filename, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $filename, $foto);
                     $user->CrearUsuarios();
                     exit("success");
                 break;
@@ -59,7 +64,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                         $foto = $row->foto;
                         $filename = $row->nombre_foto;
                     }
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $roles, $filename, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $filename, $foto);
                     $user->EditarUsuarios($ideditar);
                     exit("success");
                 }

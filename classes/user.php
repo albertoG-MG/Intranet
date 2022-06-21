@@ -10,13 +10,14 @@ class user {
     public $apellido_mat;
     public $correo;
     public $password;
+    private $departamento;
     private $roles_id;
     private $filename;
     private $foto;
 
 
 	
-	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $rolesid, $filenom, $photo){
+	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $department, $rolesid, $filenom, $photo){
 		$this->conn = new connection_database();
         $this->username = $user;
         $this->nombre = $nom;
@@ -24,6 +25,7 @@ class user {
         $this->apellido_mat = $apellidomat;
         $this->correo = $email;
         $this->password = $contraseña;
+        $this->departamento = $department;
         $this->roles_id = $rolesid;
         $this->filename = $filenom;
         $this->foto = $photo;
@@ -32,7 +34,7 @@ class user {
 	public function CrearUsuarios(){
 		$crud = new crud();
 		$crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
-		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'roles_id' => $this->roles_id,
+		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
 		'nombre_foto' => $this->filename, 'foto' => $this->foto]);
 	}
     
