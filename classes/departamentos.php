@@ -15,7 +15,13 @@ class departamentos {
 	}
 
     public static function FetchDepartamento(){
-        
+        $object = new connection_database();
+		$sql = "SELECT * FROM departamentos";
+        $fetchdepartamentos = $object->_db->prepare($sql);
+        $fetchdepartamentos->execute();
+
+        $departamentos = $fetchdepartamentos->fetchAll(PDO::FETCH_OBJ);
+		return $departamentos;
     }
     
     public function EditarDepartamento($id){
