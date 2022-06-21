@@ -26,9 +26,9 @@
                                     <div class="flex flex-col sm:flex-row p-3  border-l-8 border-green-600">
                                         <div class="flex-1">
                                             <div class="ml-3 space-y-1 pr-3">
-                                                <div class="text-base leading-6 font-normal">KROGER MEMPHIS</div>
-                                                <div class="text-sm leading-4 font-normal"><span class="text-xs leading-4 flex flex-col font-normal text-gray-500"> Carrier</span> PAPER TRANSPORT INC.</div>
-                                                <div class="text-sm leading-4 font-normal"><span class="text-xs leading-4 flex flex-col font-normal text-gray-500"> Destination</span> WestRock Jacksonville - 9469 Eastport Rd, Jacksonville, FL 32218</div>
+                                                <div class="text-base leading-6 font-normal">Empleado (operaciones)</div>
+                                                <div class="text-sm leading-4 font-normal"><span class="text-xs leading-4 flex flex-col font-normal text-gray-500"> Autoriza</span> Gerente</div>
+                                                <div class="text-sm leading-4 font-normal"><span class="text-xs leading-4 flex flex-col font-normal text-gray-500"> Notifica</span> Empleado, Gerente RH, Gerente Finanzas</div>
                                             </div>
                                         </div>
                                         <div class="flex justify-center">
