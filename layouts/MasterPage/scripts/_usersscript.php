@@ -67,6 +67,22 @@
                 {
                     data: null,
                     render: function(data, type, row) {
+                        if(row[10] == null){
+                        return (
+                            "<div class='text-left lg:text-center py-3'>" +
+                            "<span>Sin departamento</span>" +
+                            "</div>");
+                        }else{
+                        return (
+                            "<div class='text-left lg:text-center py-3'>" +
+                            "<span>" + row[10] + "</span>" +
+                            "</div>");
+                        }
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
                         if(row[8] == null){
                         return (
                             "<div class='text-left lg:text-center py-3'>" +
