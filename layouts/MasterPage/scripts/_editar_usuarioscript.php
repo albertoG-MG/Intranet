@@ -90,6 +90,7 @@
                         var apellido_pat = $("input[name=apellido_pat]").val();
                         var apellido_mat = $("input[name=apellido_mat]").val();
                         var correo = $("input[name=correo]").val();
+                        var departamento = $('#departamento').val();
                         var rol = $("#rol").val();
                         var foto = $('#foto')[0].files[0];
                         var editarid = <?php echo $editarid; ?>;
@@ -101,6 +102,7 @@
                         fd.append('apellido_pat', apellido_pat);
                         fd.append('apellido_mat', apellido_mat);
                         fd.append('correo', correo);
+                        fd.append('departamento', departamento);
                         fd.append('roles_id', rol);
                         fd.append('foto', foto);
                         fd.append('editarid', editarid);
