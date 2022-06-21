@@ -68,9 +68,11 @@ CREATE TABLE `usuarios` (
   `apellido_mat` varchar(100) NOT NULL,
   `correo` varchar(100) NOT NULL UNIQUE,
   `password` varchar(100) NOT NULL,
+  `departamento_id` int DEFAULT NULL,
   `roles_id` int DEFAULT NULL,
   `nombre_foto` longtext DEFAULT NULL,
   `foto` longtext DEFAULT NULL,
+   FOREIGN KEY (departamento_id) REFERENCES departamentos(id) ON DELETE SET NULL,
    FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
