@@ -24,7 +24,8 @@ class departamentos {
 	}
 
     public static function EliminarDepartamento($id){
-		
+		$crud = new crud();
+        $crud -> delete ('departamentos', 'id=:id', ['id' => $id]);
 	} 
 }
 ?>

@@ -229,6 +229,48 @@
             });
         });
 
+        $('#datatable').on( 'click', 'tr .Eliminar', function () {
+            var table = $('#datatable').DataTable();
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+            var data = row.data();
+            Swal.fire({
+            title: '¿Estas seguro?',
+            text: "No podras recuperar la información!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí!',
+            cancelButtonText: 'cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'éxito',
+                        text: 'La fila ha sido eliminada!'
+                    }).then(function() {
+                        var eliminarid = data[0];
+                        var fd = new FormData();
+                        fd.append('id', eliminarid);
+                        $.ajax({
+                            url: "../ajax/eliminar/tabla_departamentos/eliminardepartamento.php",
+                            type: "post",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function(result) {
+                                    table
+                                    .row($(this).parents('tr'))
+                                    .remove()
+                                    .draw();
+                            }
+                        });
+                    });
+                }
+            })
+        });
+
         function openModal(){
             showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
             showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
