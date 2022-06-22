@@ -5,6 +5,29 @@
             <div class="overflow-x-auto">
                 <div class="min-w-screen bg-transparent flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
                     <div class="w-full">
+                        <div class="bg-gray-50 shadow-md rounded-t">
+                            <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
+                                <a href="dashboard.php" class="text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                    </svg>
+                                </a>
+
+                                <span class="mx-5 rotate-90 sm:rotate-0 text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+
+                                <a href="departamentos.php" class="flex items-center text-blue-600 -px-2 hover:underline">
+                                    <svg class="w-6 h-6 mx-2" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H8A2,2 0 0,1 6,16V4A2,2 0 0,1 8,2H20M17,7A3,3 0 0,0 14,4A3,3 0 0,0 11,7A3,3 0 0,0 14,10A3,3 0 0,0 17,7M8,15V16H20V15C20,13 16,11.9 14,11.9C12,11.9 8,13 8,15Z" />
+                                    </svg>
+
+                                    <span class="mx-2">Departamentos</span>
+                                </a>
+                            </div>
+                        </div>
                         <div class="bg-white p-3 shadow-md rounded">
                             <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
