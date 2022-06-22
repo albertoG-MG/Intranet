@@ -767,6 +767,9 @@ select {
 .mt-1 {
   margin-top: 0.25rem !important;
 }
+.-mr-10 {
+  margin-right: -2.5rem !important;
+}
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
@@ -830,14 +833,14 @@ select {
 .h-12 {
   height: 3rem !important;
 }
+.h-5 {
+  height: 1.25rem !important;
+}
 .h-32 {
   height: 8rem !important;
 }
 .h-10 {
   height: 2.5rem !important;
-}
-.h-5 {
-  height: 1.25rem !important;
 }
 .min-h-screen {
   min-height: 100vh !important;
@@ -1099,6 +1102,10 @@ select {
   border-top-left-radius: 0.5rem !important;
   border-top-right-radius: 0.5rem !important;
 }
+.rounded-t {
+  border-top-left-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+}
 .rounded-l {
   border-top-left-radius: 0.25rem !important;
   border-bottom-left-radius: 0.25rem !important;
@@ -1106,10 +1113,6 @@ select {
 .rounded-r {
   border-top-right-radius: 0.25rem !important;
   border-bottom-right-radius: 0.25rem !important;
-}
-.rounded-t {
-  border-top-left-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
 }
 .rounded-b {
   border-bottom-right-radius: 0.25rem !important;
@@ -1236,13 +1239,13 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(219 39 119 / var(--tw-bg-opacity)) !important;
 }
-.bg-indigo-100 {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(224 231 255 / var(--tw-bg-opacity)) !important;
-}
 .bg-gray-50 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
+}
+.bg-indigo-100 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(224 231 255 / var(--tw-bg-opacity)) !important;
 }
 .bg-indigo-700 {
   --tw-bg-opacity: 1 !important;
@@ -1362,6 +1365,9 @@ select {
 }
 .pb-5 {
   padding-bottom: 1.25rem !important;
+}
+.pr-10 {
+  padding-right: 2.5rem !important;
 }
 .pt-7 {
   padding-top: 1.75rem !important;
