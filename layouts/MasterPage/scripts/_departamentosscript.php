@@ -11,7 +11,7 @@
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
 				{
-					text: "<i class='mdi mdi-account-lock-outline text-white font-semibold text-lg'></i> Crear Departamento",
+					text: "<i class='mdi mdi-account-box-multiple text-white font-semibold text-lg'></i> Crear Departamento",
 					attr: {
 						'id': 'Departamento',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -76,14 +76,14 @@
         $('.dt-buttons').on('click', '.dt-button', function(){
             $('.modal-wrapper-flex').html(
             "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-lock-outline text-black font-semibold text-lg'></i></div>"+
+            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
             "<h3 class='text-lg font-medium text-gray-900'>Crear departamento</h3>"+
             "</div>"+
             "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
                 "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del departamento</label>"+
                     "<div class='group flex'>"+
-                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-lock-outline text-gray-400 text-lg'></i></div>"+
+                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
                         "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='creardepartamento' name='creardepartamento' placeholder='Input 1'>"+
                     "</div>"+
                 "</div>"+
@@ -152,14 +152,14 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-lock-outline text-black font-semibold text-lg'></i></div>"+
+                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Editar departamento</h3>"+
                 "</div>"+
                 "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
                     "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
                         "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el departamento</label>"+
                         "<div class='group flex'>"+
-                            "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-lock-outline text-gray-400 text-lg'></i></div>"+
+                            "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
                             "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editdepartamento' name='editdepartamento' value='"+data[1]+"'>"+
                         "</div>"+
                     "</div>"+
