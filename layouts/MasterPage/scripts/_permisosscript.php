@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
 				{
-					text: "<i class='mdi mdi-lock-outline text-white font-semibold text-lg'></i> Crear Permiso",
+					text: "<i class='mdi mdi-account-lock text-white font-semibold text-lg'></i> Crear Permiso",
 					attr: {
 						'id': 'open-modal',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
