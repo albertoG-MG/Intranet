@@ -10,7 +10,21 @@ $object = new connection_database();
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     if(isset($_POST["usuario"]) && isset($_POST["password"]) && isset($_POST["nombre"]) && isset($_POST["apellido_pat"]) && isset($_POST["apellido_mat"]) && isset($_POST["correo"]) && isset($_POST["method"])){
         $username = $_POST["usuario"];
-        $password = sha1($_POST["password"]);
+        
+        if($_POST["method"] == "store"){
+            $password = sha1($_POST["password"]);
+        }else if ($_POST["method"] == "edit"){
+            if(!(empty($_POST["password"]))){
+                $password = sha1($_POST["password"]); 
+            }else{
+                $retrieve_password = $object -> _db -> prepare("SELECT * FROM usuarios where id=:editarid");
+                $retrieve_password -> bindParam('editarid', $_POST["editarid"], PDO::PARAM_INT);
+                $retrieve_password -> execute();
+                $retrieved = $retrieve_password -> fetch(PDO::FETCH_OBJ);
+                $password = $retrieved -> password;
+            }
+        }
+
         $nombre = $_POST["nombre"];
         $apellido_pat = $_POST["apellido_pat"];
         $apellido_mat = $_POST["apellido_mat"];

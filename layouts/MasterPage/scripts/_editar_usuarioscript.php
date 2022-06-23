@@ -21,11 +21,7 @@
                                 }
                             }
                         },
-                        password:{
-                            required: true
-                        },
                         cpassword:{
-                            required: true,
                             equalTo: "input[name=\"password\"]"
                         },
                         nombre: {
