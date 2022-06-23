@@ -1121,11 +1121,11 @@ select {
 .border-2 {
   border-width: 2px !important;
 }
-.border-4 {
-  border-width: 4px !important;
-}
 .border {
   border-width: 1px !important;
+}
+.border-4 {
+  border-width: 4px !important;
 }
 .border-0 {
   border-width: 0px !important;
@@ -1664,6 +1664,10 @@ select {
 .focus\:ring-indigo-800:focus {
   --tw-ring-opacity: 1 !important;
   --tw-ring-color: rgb(55 48 163 / var(--tw-ring-opacity)) !important;
+}
+.focus\:ring-black:focus {
+  --tw-ring-opacity: 1 !important;
+  --tw-ring-color: rgb(0 0 0 / var(--tw-ring-opacity)) !important;
 }
 .focus\:ring-\[\#FF9119\]\/50:focus {
   --tw-ring-color: rgb(255 145 25 / 0.5) !important;
