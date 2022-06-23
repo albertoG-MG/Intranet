@@ -1157,6 +1157,10 @@ select {
   --tw-border-opacity: 1 !important;
   border-color: rgb(216 180 254 / var(--tw-border-opacity)) !important;
 }
+.border-black {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity)) !important;
+}
 .border-blue-600 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(37 99 235 / var(--tw-border-opacity)) !important;
