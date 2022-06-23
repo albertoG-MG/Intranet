@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
 				{
-					text: "<i class='mdi mdi-account-lock-outline text-white font-semibold text-lg'></i> Crear Rol",
+					text: "<i class='mdi mdi-account-eye text-white font-semibold text-lg'></i> Crear Rol",
 					attr: {
 						'id': 'Rol',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					}
 				},
                 {
-                    text: "<i class='mdi mdi-lock-outline text-white font-semibold text-lg'></i> Ver Permisos",
+                    text: "<i class='mdi mdi-account-lock text-white font-semibold text-lg'></i> Ver Permisos",
 					attr: {
 						'id': 'Rol',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
