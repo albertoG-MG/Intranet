@@ -56,6 +56,13 @@
             <?php } ?>
                 <p class="ml-4">Departamentos</p>
             </a>
+            <?php if(basename($_SERVER['PHP_SELF']) == 'expedientes.php'){?>
+                <a href="expedientes.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+            <?php }else{ ?>
+                <a href="expedientes.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+            <?php } ?>
+                <p class="ml-4">Expedientes</p>
+            </a>
         </li>
     </ul>
 
