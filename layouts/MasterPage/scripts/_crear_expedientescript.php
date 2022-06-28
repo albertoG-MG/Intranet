@@ -45,6 +45,11 @@
         $('.select2-selection__arrow').addClass('rotate-180 mb-1');
 
         $("#selectprueba").show();
+
+        $('#prueba').on('change', function () {
+            var x = $('#prueba').val();
+            alert(x);
+        });
         
         <?php
         if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
