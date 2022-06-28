@@ -47,8 +47,19 @@
         $("#selectprueba").show();
 
         $('#prueba').on('change', function () {
+            var fd =new FormData();
             var x = $('#prueba').val();
-            alert(x);
+            fd.append('id', x);
+            $.ajax({
+                type: 'post',
+                url: '../ajax/expedientes/checkuserdepartamento.php',
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+             
+                }
+            });
         });
         
         <?php
