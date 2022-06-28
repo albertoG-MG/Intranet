@@ -57,7 +57,8 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-             
+                    data = JSON.parse(data);
+                    $("#departamento").val(data);
                 }
             });
         });
