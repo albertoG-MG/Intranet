@@ -37,9 +37,9 @@
                             </span>
 
                             <a href="crear_expediente.php" class="flex items-center text-blue-600 -px-2 hover:underline">
-                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M22,4H14V7H10V4H2A2,2 0 0,0 0,6V20A2,2 0 0,0 2,22H22A2,2 0 0,0 24,20V6A2,2 0 0,0 22,4M8,9A2,2 0 0,1 10,11A2,2 0 0,1 8,13A2,2 0 0,1 6,11A2,2 0 0,1 8,9M12,17H4V16C4,14.67 6.67,14 8,14C9.33,14 12,14.67 12,16V17M20,18H14V16H20V18M20,14H14V12H20V14M20,10H14V8H20V10M13,6H11V2H13V6Z" />
-                            </svg>
+                                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M22,4H14V7H10V4H2A2,2 0 0,0 0,6V20A2,2 0 0,0 2,22H22A2,2 0 0,0 24,20V6A2,2 0 0,0 22,4M8,9A2,2 0 0,1 10,11A2,2 0 0,1 8,13A2,2 0 0,1 6,11A2,2 0 0,1 8,9M12,17H4V16C4,14.67 6.67,14 8,14C9.33,14 12,14.67 12,16V17M20,18H14V16H20V18M20,14H14V12H20V14M20,10H14V8H20V10M13,6H11V2H13V6Z" />
+                                </svg>
 
                                 <span class="mx-2">Crear Expedientes</span>
                             </a>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="flex justify-center">
                         <div class="flex">
-                        <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Expediente</h1>
+                            <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Expediente</h1>
                         </div>
                     </div>
                     <ul id='tabs' class='flex flex-col items-center sm:flex-row w-full px-11 pt-2 '>
@@ -68,17 +68,33 @@
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Vincular usuario al expediente</label>
                                     <div class="group flex" id="selectprueba" style="display:none !important;">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                            <select id="prueba">
-                                                <option></option>
-                                                <?php
-                                                    $usuarios = user::FetchUsuarios();
-                                                    foreach ($usuarios as $row) {
-                                                        echo "<option value='" . $row->id . "'>";
-                                                        echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                        echo "</option>";
-                                                    }
-                                                ?>
-                                            </select>
+                                        <select id="prueba">
+                                            <option></option>
+                                            <?php
+                                            $usuarios = user::FetchUsuarios();
+                                            foreach ($usuarios as $row) {
+                                                echo "<option value='" . $row->id . "'>";
+                                                echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                echo "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Departamento</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-box-multiple text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="departamento" name="departamento" placeholder="Input 2">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Puesto</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-hard-hat text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="puesto" name="puesto" placeholder="Input 3">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
