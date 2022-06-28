@@ -9,6 +9,10 @@ if(isset($_POST["id"])){
     $select_user_departamento -> bindParam('userid', $id, PDO::PARAM_INT);
     $select_user_departamento -> execute();
     $fetch_user_departamento = $select_user_departamento -> fetch(PDO::FETCH_OBJ);
-    echo json_encode($fetch_user_departamento -> departamento);
+    if($fetch_user_departamento -> departamento == null){
+        echo json_encode("Sin departamento");
+    }else{
+        echo json_encode($fetch_user_departamento -> departamento);
+    }
 }
 ?>
