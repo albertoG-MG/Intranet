@@ -57,7 +57,7 @@
                         <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Expediente</h1>
                         </div>
                     </div>
-                    <ul id='tabs' class='inline-flex w-full px-5 pt-2 '>
+                    <ul id='tabs' class='flex flex-col sm:flex-row w-full px-5 pt-2 '>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 border-blue-400 rounded-t opacity-50'><a id='default-tab' href='#first'>Datos generales</a></li>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 rounded-t opacity-50'><a href='#second'>Datos adicionales</a></li>
                     </ul>
@@ -66,9 +66,19 @@
                             <div id='first' class='p-4'>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Vincular usuario al expediente</label>
-                                    <div class="group flex">
+                                    <div class="group flex" id="selectprueba" style="display:none !important;">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="usuario" name="usuario" placeholder="Input 1">
+                                            <select id="prueba">
+                                                <option></option>
+                                                <?php
+                                                    $usuarios = user::FetchUsuarios();
+                                                    foreach ($usuarios as $row) {
+                                                        echo "<option value='" . $row->id . "'>";
+                                                        echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                        echo "</option>";
+                                                    }
+                                                ?>
+                                            </select>
                                     </div>
                                 </div>
                             </div>

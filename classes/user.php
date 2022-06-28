@@ -37,6 +37,16 @@ class user {
 		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
 		'nombre_foto' => $this->filename, 'foto' => $this->foto]);
 	}
+
+    public static function FetchUsuarios(){
+        $object = new connection_database();
+		$sql = "SELECT * FROM usuarios";
+        $fetchusuarios = $object->_db->prepare($sql);
+        $fetchusuarios->execute();
+
+        $usuarios = $fetchusuarios->fetchAll(PDO::FETCH_OBJ);
+		return $usuarios;
+    } 
     
     public function EditarUsuarios($id){
 		$crud = new crud();

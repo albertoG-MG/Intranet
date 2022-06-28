@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../src/css/select2.min.css">
+<script src="../src/js/select2.min.js"></script>
 <script>
     $(document).ready(function () {
         let tabsContainer = document.querySelector("#tabs");
@@ -26,6 +28,24 @@
         });
 
         document.getElementById("default-tab").click();
+
+        $('#prueba').select2({
+            theme: ["tailwind"],
+            placeholder: '-- Seleccione --'
+        });
+
+        $('#prueba').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent')
+
+        $('.select2-selection--single').addClass("flex");
+
+        $('.select2-selection__rendered').addClass("flex-1");
+
+        $('.select2-selection__arrow').append('<i class="mdi mdi-apple-keyboard-control"></i>');
+
+        $('.select2-selection__arrow').addClass('rotate-180 mb-1');
+
+        $("#selectprueba").show();
+        
         <?php
         if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
             var dropdown = document.getElementById('catalogos');
@@ -33,3 +53,17 @@
         <?php } ?>
     });
 </script>
+<style>
+    .select2-results__option--selectable:hover{
+        background: #5897fb;
+        color:white;
+    }
+
+    .select2-results__option--selected{
+        background: #ddd;
+    }
+
+    .select2-dropdown{
+        border: 1px solid #e5e7eb;
+    }
+</style>
