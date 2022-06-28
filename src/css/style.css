@@ -1340,6 +1340,10 @@ select {
   padding-top: 2rem !important;
   padding-bottom: 2rem !important;
 }
+.px-11 {
+  padding-left: 2.75rem !important;
+  padding-right: 2.75rem !important;
+}
 .py-1 {
   padding-top: 0.25rem !important;
   padding-bottom: 0.25rem !important;
