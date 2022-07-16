@@ -10,4 +10,9 @@
         header('Location: Login.php');
         die();
     }
+
+    $estado = $object->_db->prepare("select * from estados");
+    $estado->execute();
+    $contestado=0;
+
 ?>
