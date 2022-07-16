@@ -97,6 +97,59 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nivel de estudios</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-school text-gray-400 text-lg"></i></div>
+                                        <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="estudios" name="estudios">
+                                            <option value="">--Selecciona--</option>
+                                            <option value="PRIMARIA">Primaria</option>
+                                            <option value="SECUNDARIA">Secundaria</option>
+                                            <option value="BACHILLERATO">Bachillerato</option>
+                                            <option value="CARRERA TECNICA">Carrera técnica</option>
+                                            <option value="LICENCIATURA">Licenciatura</option>
+                                            <option value="ESPECIALIDAD">Especialidad</option>
+                                            <option value="MAESTRIA">Maestría</option>
+                                            <option value="DOCTORADO">Doctorado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Datos de ubicación</label>
+                                    <hr>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Calle</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-map-marker text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="calle" name="calle" placeholder="Input 4">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número interior</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="ninterior" name="ninterior" placeholder="Input 5">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número exterior</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nexterior" name="nexterior" placeholder="Input 6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Colonia</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-map-marker text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="colonia" name="colonia" placeholder="Input 7">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id='second' class='hidden p-4'>
 
