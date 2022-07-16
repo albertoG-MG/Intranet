@@ -62,6 +62,29 @@
                 }
             });
         });
+
+        $('#estado').on('change', function(event) {
+            event.preventDefault();
+            var state = $(this).val();
+
+            var data = {
+                id: state
+            };
+
+            $.ajax({
+                url: 'ajax/expedientes/municipios.php',
+                type: 'POST',
+                data: data,
+                dataType: 'html',
+                success: function(data) {
+                $('#imunicipio').html(data);
+                },
+                error: function(data) {
+                $("#ajax-error").text('Fail to send request');
+                }
+            });
+        });
+
         
         <?php
         if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
