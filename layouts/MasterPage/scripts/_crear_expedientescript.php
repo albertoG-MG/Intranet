@@ -72,7 +72,7 @@
             };
 
             $.ajax({
-                url: 'ajax/expedientes/municipios.php',
+                url: '../ajax/expedientes/municipios.php',
                 type: 'POST',
                 data: data,
                 dataType: 'html',
