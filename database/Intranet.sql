@@ -2491,7 +2491,8 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 (2371, 32, 'VILLANUEVA', ''),
 (2372, 32, 'ZACATECAS', ''),
 (2373, 32, 'TRANCOSO', ''),
-(2374, 32, 'SANTA MARÍA DE LA PAZ', '');
+(2374, 32, 'SANTA MARÍA DE LA PAZ', ''),
+(2375, 25, 'SIN LOCALIDAD', '');
 
 -- --------------------------------------------------------
 
