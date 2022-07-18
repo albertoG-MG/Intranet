@@ -199,6 +199,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Casa propia?</label>
+                                    <div class="group flex mt-3 items-center">
+                                        <input id="option-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        Sí
+                                        </label>
+                                        <input id="option-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        No
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div id='second' class='hidden p-4'>
 
