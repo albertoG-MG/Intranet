@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <ul id='tabs' class='flex flex-col items-center sm:flex-row w-full px-11 pt-2 '>
-                        <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 border-blue-400 rounded-t opacity-50'><a id='default-tab' href='#first'>Datos generales</a></li>
+                        <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 border-blue-400 rounded-t opacity-50'><a id='default-tab' class='active' href='#first'>Datos generales</a></li>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 rounded-t opacity-50'><a href='#second'>Datos adicionales</a></li>
                     </ul>
                     <form id="Guardar" method="post">
