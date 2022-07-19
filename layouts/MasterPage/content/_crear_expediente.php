@@ -290,7 +290,13 @@
                                 </div>
                             </div>
                             <div id='second' class='hidden p-4'>
-
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de referencias laborales</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="reflab" name="reflab" maxlength="1" value="" placeholder="Input 16">
+                                    </div>
+                                </div>              
                             </div>
                         </div>
                     </form>
