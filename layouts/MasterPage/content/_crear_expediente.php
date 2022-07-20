@@ -60,6 +60,8 @@
                     <ul id='tabs' class='flex flex-col items-center sm:flex-row w-full px-11 pt-2 '>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 border-blue-400 rounded-t opacity-50'><a id='default-tab' class='active' href='#first'>Datos generales</a></li>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 rounded-t opacity-50'><a href='#second'>Datos adicionales</a></li>
+                        <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 rounded-t opacity-50'><a href='#third'>Datos bancarios</a></li>
+                        <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 rounded-t opacity-50'><a href='#fourth'>Papelería</a></li>
                     </ul>
                     <form id="Guardar" method="post">
                         <div id='tab-contents'>
@@ -395,6 +397,10 @@
                                     <button type="button" id="anterior" name="anterior" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Anterior</button>
                                     <button type="button" id="siguiente2" name="siguiente2" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Siguiente</button>
                                 </div>           
+                            </div>
+                            <div id='third' class='hidden p-4'>
+                            </div>
+                            <div id='fourth' class='hidden p-4'>
                             </div>
                         </div>
                     </form>
