@@ -213,7 +213,7 @@
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">OTROS DATOS</label>
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">DATOS RELEVANTES DEL USUARIO</label>
                                     <hr>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -298,7 +298,103 @@
                                     </div>
                                 </div>
                                 <div id="referencias" class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                </div>              
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Capacitación</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-hard-hat text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="capacitacion" name="capacitacion" placeholder="Input 17">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">UNIFORMES</label>
+                                    <hr>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de entrega de uniforme</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-blank text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechauniforme" name="fechauniforme" placeholder="Input 18">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cantidad (camisa)</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-tshirt-crew text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cantidadpolo" name="cantidadpolo" placeholder="Input 19">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Talla (camisa)</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-tshirt-crew text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="tallapolo" name="tallapolo" placeholder="Input 20">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CONTACTO DE EMERGENCIA</label>
+                                    <hr>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergencianom" name="emergencianom" placeholder="Input 21">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-cellphone text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciatel" name="emergenciatel" placeholder="Input 22">
+                                        </div>
+                                    </div>
+                                </div>    
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">OTROS DATOS</label>
+                                        <hr>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Resultado antidoping</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-hospital-box text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="antidoping" name="antidoping" placeholder="Input 23">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cómo se entero de la vacante?</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-hard-hat text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="vacante" name="vacante" placeholder="Input 24">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tiene familiares dentro de la empresa?</label>
+                                    <div class="group flex mt-3 items-center">
+                                        <input id="option-1" type="radio" name="empresa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        Sí
+                                        </label>
+                                        <input id="option-2" type="radio" name="empresa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo del familiar</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nomfam" name="nomfam" placeholder="Input 25">
+                                    </div>
+                                </div>
+                                <div class="mt-5 mx-7 flex justify-end gap-3">
+                                    <button type="button" id="anterior" name="anterior" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Anterior</button>
+                                    <button type="button" id="siguiente2" name="siguiente2" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Siguiente</button>
+                                </div>           
                             </div>
                         </div>
                     </form>
