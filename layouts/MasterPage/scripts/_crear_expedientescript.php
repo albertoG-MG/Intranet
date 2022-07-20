@@ -141,7 +141,8 @@
                input.type = "text";
                input.name = "infa_rnombre" + i;
                input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
-               input.setAttribute("data-msg", "Este campo es requerido"); 
+               input.setAttribute("data-msg", "Este campo es requerido");
+               input.setAttribute("placeholder", "Nombre " +i); 
                grupo.appendChild(input);
                div2.appendChild(document.createTextNode("Parentesco " + (i+1) + " *"));
                var grupo2 = document.createElement("div");
@@ -158,6 +159,7 @@
                input2.name = "infa_rparentesco" + i;
                input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
                input2.setAttribute("data-msg", "Este campo es requerido");
+               input2.setAttribute("placeholder", "Parentesco " +i);
                grupo2.appendChild(input2);
                div3.appendChild(document.createTextNode("Teléfono " + (i+1) + " *"));
                var grupo3 = document.createElement("div");
@@ -174,6 +176,7 @@
                input3.name = "infa_rtelefono" + i;
                input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
                input3.setAttribute("data-msg", "Este campo es requerido");
+               input3.setAttribute("placeholder", "Teléfono " +i);
                grupo3.appendChild(input3);
             }
          }
