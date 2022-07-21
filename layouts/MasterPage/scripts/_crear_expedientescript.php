@@ -63,6 +63,22 @@
             currentTab.parentElement.nextElementSibling.classList.add("border-blue-400", "opacity-100");
         });
 
+        $("#anterior").on("click", function () {
+            let tabContents = document.querySelector("#tab-contents");
+            let currentTab = document.querySelector(".active");
+            let tabName = currentTab.parentElement.parentElement.children[0].firstChild.getAttribute("href");
+            for (let i = 0; i < tabContents.children.length; i++) {
+                    tabTogglers[i].parentElement.classList.remove("border-blue-400", "opacity-100");  tabContents.children[i].classList.remove("hidden");
+                    tabTogglers[i].classList.remove('active');
+                    if ("#" + tabContents.children[i].id === tabName) {
+                    tabTogglers[i].className="active";
+                    continue;
+                    }
+                    tabContents.children[i].classList.add("hidden");
+            }
+            currentTab.parentElement.parentElement.children[0].classList.add("border-blue-400", "opacity-100");
+        });
+
         $('#prueba').select2({
             theme: ["tailwind"],
             placeholder: '-- Seleccione --'
