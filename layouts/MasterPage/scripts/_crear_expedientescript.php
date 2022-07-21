@@ -220,21 +220,24 @@
                 container.removeChild(container.lastChild);
             }
             for (i=0;i<number;i++){
+               var divcontainer = document.createElement("div");
+               divcontainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
+               container.appendChild(divcontainer);
                var div = document.createElement("div");
                div.classList.add('grid', 'grid-cols-1');
-               container.appendChild(div);
+               divcontainer.appendChild(div);
                var div2 = document.createElement("div");
                div2.classList.add('grid', 'grid-cols-1');
-               container.appendChild(div2);
+               divcontainer.appendChild(div2);
                var div3 = document.createElement("div");
                div3.classList.add('grid', 'grid-cols-1');
-               container.appendChild(div3);
+               divcontainer.appendChild(div3);
                var div7 = document.createElement("div");
                div7.classList.add('grid', 'grid-cols-1');
-               container.appendChild(div7);
+               divcontainer.appendChild(div7);
                var div9 = document.createElement("div");
                div9.classList.add('grid', 'grid-cols-1');
-               container.appendChild(div9);
+               divcontainer.appendChild(div9);
                div.appendChild(document.createTextNode("Nombre completo" + (i+1) + " *"));
                var grupo = document.createElement("div");
                grupo.classList.add('group', 'flex');

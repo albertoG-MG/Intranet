@@ -406,7 +406,7 @@
                                         <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" value="" placeholder="Input 26">
                                     </div>
                                 </div>
-                                <div id="ref" class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                <div id="ref">
                                 </div>
                             </div>
                             <div id='fourth' class='hidden p-4'>
