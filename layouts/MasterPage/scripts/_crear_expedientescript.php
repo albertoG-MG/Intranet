@@ -236,8 +236,8 @@
                div7.classList.add('grid', 'grid-cols-1');
                divcontainer.appendChild(div7);
                var div9 = document.createElement("div");
-               div9.classList.add('grid', 'grid-cols-1');
-               divcontainer.appendChild(div9);
+               div9.classList.add('grid', 'grid-cols-1', 'mt-5', 'mx-7');
+               container.appendChild(div9);
                div.appendChild(document.createTextNode("Nombre completo" + (i+1) + " *"));
                var grupo = document.createElement("div");
                grupo.classList.add('group', 'flex');
