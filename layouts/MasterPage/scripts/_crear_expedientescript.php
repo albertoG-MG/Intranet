@@ -212,6 +212,116 @@
                grupo3.appendChild(input3);
             }
          }
+    
+         function AgregarBanco(){
+            var number = document.getElementById("refban").value;
+            var container = document.getElementById("ref");
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            for (i=0;i<number;i++){
+               var div = document.createElement("div");
+               div.classList.add('grid', 'grid-cols-1');
+               container.appendChild(div);
+               var div2 = document.createElement("div");
+               div2.classList.add('grid', 'grid-cols-1');
+               container.appendChild(div2);
+               var div3 = document.createElement("div");
+               div3.classList.add('grid', 'grid-cols-1');
+               container.appendChild(div3);
+               var div7 = document.createElement("div");
+               div7.classList.add('grid', 'grid-cols-1');
+               container.appendChild(div7);
+               var div9 = document.createElement("div");
+               div9.classList.add('grid', 'grid-cols-1');
+               container.appendChild(div9);
+               div.appendChild(document.createTextNode("Nombre completo" + (i+1) + " *"));
+               var grupo = document.createElement("div");
+               grupo.classList.add('group', 'flex');
+               div.appendChild(grupo);
+               var div4 = document.createElement("div");
+               div4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+               var icon = document.createElement("i");
+               icon.classList.add('mdi', 'mdi-account', 'text-gray-400', 'text-lg');
+               div4.appendChild(icon);
+               grupo.appendChild(div4);
+               var input = document.createElement("input");
+               input.type = "text";
+               input.name = "infb_rnombre" + i;
+               input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+               input.setAttribute("data-msg", "Este campo es requerido"); 
+               input.setAttribute("placeholder", "Nombre " +(i+1)); 
+               grupo.appendChild(input);
+               div2.appendChild(document.createTextNode("Parentesco " + (i+1) + " *"));
+               var grupo2 = document.createElement("div");
+               grupo2.classList.add('group', 'flex');
+               div2.appendChild(grupo2);
+               var div5 = document.createElement("div");
+               div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+               var icon2 = document.createElement("i");
+               icon2.classList.add('mdi', 'mdi-account-group', 'text-gray-400', 'text-lg');
+               div5.appendChild(icon2);
+               grupo2.appendChild(div5);
+               var input2 = document.createElement("input");
+               input2.type = "text";
+               input2.name = "infb_rparentesco" + i;
+               input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+               input2.setAttribute("data-msg", "Este campo es requerido");
+               input2.setAttribute("placeholder", "Parentesco " +(i+1)); 
+               grupo2.appendChild(input2);
+               div3.appendChild(document.createTextNode("RFC " + (i+1) + " *"));
+               var grupo3 = document.createElement("div");
+               grupo3.classList.add('group', 'flex');
+               div3.appendChild(grupo3);
+               var div6 = document.createElement("div");
+               div6.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+               var icon3 = document.createElement("i");
+               icon3.classList.add('mdi', 'mdi-file-document-edit-outline', 'text-gray-400', 'text-lg');
+               div6.appendChild(icon3);
+               grupo3.appendChild(div6);
+               var input3 = document.createElement("input");
+               input3.type = "text";
+               input3.name = "infb_rrfc" + i;
+               input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+               input3.setAttribute("data-msg", "Este campo es requerido");
+               input3.setAttribute("placeholder", "RFC " +(i+1)); 
+               grupo3.appendChild(input3);
+               div7.appendChild(document.createTextNode("CURP " + (i+1) + " *"));
+               var grupo4 = document.createElement("div");
+               grupo4.classList.add('group', 'flex');
+               div7.appendChild(grupo4);
+               var div8 = document.createElement("div");
+               div8.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+               var icon4 = document.createElement("i");
+               icon4.classList.add('mdi', 'mdi-format-list-numbered', 'text-gray-400', 'text-lg');
+               div8.appendChild(icon4);
+               grupo4.appendChild(div8);
+               var input4 = document.createElement("input");
+               input4.type = "text";
+               input4.name = "infb_rcurp" + i;
+               input4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+               input4.setAttribute("data-msg", "Este campo es requerido");
+               input4.setAttribute("placeholder", "CURP " +(i+1));  
+               grupo4.appendChild(input4);
+               div9.appendChild(document.createTextNode("Porcentaje de derecho " + (i+1) + " *"));
+               var grupo5 = document.createElement("div");
+               grupo5.classList.add('group', 'flex');
+               div9.appendChild(grupo5);  
+               var div10 = document.createElement("div");
+               div10.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+               var icon5 = document.createElement("i");
+               icon5.classList.add('mdi', 'mdi-percent-box', 'text-gray-400', 'text-lg');
+               div10.appendChild(icon5);
+               grupo5.appendChild(div10);
+               var input5 = document.createElement("input");
+               input5.type = "text";
+               input5.name = "infb_rporcentaje" + i;
+               input5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+               input5.setAttribute("data-msg", "Este campo es requerido");
+               input5.setAttribute("placeholder", "Porcentaje de derecho " +(i+1)); 
+               grupo5.appendChild(input5);     
+            }
+         }
 
 </script>
 <style>
