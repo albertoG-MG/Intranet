@@ -532,6 +532,30 @@
                                                     <input class="hidden" name="infp_cartap" id="infp_cartap" type="file" />
                                                 </td>
                                             </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>10</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Aviso de retención crédito infonavit</p></td>
+                                                <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_retencion" class="inline-block px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text10">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_retencion" id="infp_retencion" type="file" />
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>11</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de segundo trabajo</p></td>
+                                                <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_strabajo" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text11">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_strabajo" id="infp_strabajo" type="file" />
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
