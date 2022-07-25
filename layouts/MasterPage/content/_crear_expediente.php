@@ -496,6 +496,30 @@
                                                     <input class="hidden" name="infp_comprobante" id="infp_comprobante" type="file" />
                                                 </td>
                                             </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>7</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>RFC</p></td>
+                                                <td width="70% class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_rfc" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text7">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_rfc" id="infp_rfc" type="file" />
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>8</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación laboral</p></td>
+                                                <td width="70% class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_cartal" class="inline-block px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text8">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_cartal" id="infp_cartal" type="file" />
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
