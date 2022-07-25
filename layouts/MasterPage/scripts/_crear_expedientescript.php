@@ -111,6 +111,20 @@
             currentTab.parentElement.parentElement.children[1].classList.add("border-blue-400", "opacity-100");
         });
 
+        $("#infp_curriculum").on('change', function (e) {
+            var file = e.target.files[0].name;
+            const archivo = this.files[0];
+            $('#file-text').text(file);
+            if (archivo){
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    console.log(event.target.result);
+                    $('#preview').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(archivo);
+            }
+	    });
+
         $('#prueba').select2({
             theme: ["tailwind"],
             placeholder: '-- Seleccione --'

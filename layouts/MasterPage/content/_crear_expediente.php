@@ -414,6 +414,31 @@
                                 </div>
                             </div>
                             <div id='fourth' class='hidden p-4'>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <table class="min-w-full border-collapse block md:table">
+                                        <thead class="block md:table-header-group">
+                                            <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                                                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">id</th>
+                                                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Nombre</th>
+                                                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="block md:table-row-group">
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>1</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curriculum y/o solicitud</p></td>
+                                                <td width="70% class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_curriculum" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_curriculum" id="infp_curriculum" type="file" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </form>
