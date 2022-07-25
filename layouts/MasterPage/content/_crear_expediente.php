@@ -556,6 +556,18 @@
                                                     <input class="hidden" name="infp_strabajo" id="infp_strabajo" type="file" />
                                                 </td>
                                             </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>12</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Alta del IMSS</p></td>
+                                                <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_imss" class="inline-block px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text12">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_imss" id="infp_imss" type="file" />
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
