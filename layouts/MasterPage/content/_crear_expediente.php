@@ -442,7 +442,7 @@
                                                     <input class="hidden" name="infp_curriculum" id="infp_curriculum" type="file" />
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>2</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Evaluación psicométrica</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -466,7 +466,7 @@
                                                     <input class="hidden" name="infp_nacimiento" id="infp_nacimiento" type="file" />
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>4</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curp</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -490,7 +490,7 @@
                                                     <input class="hidden" name="infp_identificacion" id="infp_identificacion" type="file" />
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>6</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Comprobante de domicilio</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -514,7 +514,7 @@
                                                     <input class="hidden" name="infp_rfc" id="infp_rfc" type="file" />
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>8</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación laboral</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -538,7 +538,7 @@
                                                     <input class="hidden" name="infp_cartap" id="infp_cartap" type="file" />
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>10</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Aviso de retención crédito infonavit</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -562,7 +562,7 @@
                                                     <input class="hidden" name="infp_strabajo" id="infp_strabajo" type="file" />
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>12</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Alta del IMSS</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
