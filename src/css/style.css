@@ -1188,6 +1188,10 @@ select {
   --tw-border-opacity: 1 !important;
   border-color: rgb(147 51 234 / var(--tw-border-opacity)) !important;
 }
+.border-red-600 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(220 38 38 / var(--tw-border-opacity)) !important;
+}
 .border-blue-600 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(37 99 235 / var(--tw-border-opacity)) !important;
@@ -1549,6 +1553,10 @@ select {
 .text-purple-600 {
   --tw-text-opacity: 1 !important;
   color: rgb(147 51 234 / var(--tw-text-opacity)) !important;
+}
+.text-red-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(220 38 38 / var(--tw-text-opacity)) !important;
 }
 .text-black {
   --tw-text-opacity: 1 !important;
