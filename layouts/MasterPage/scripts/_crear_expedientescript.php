@@ -129,16 +129,67 @@
 
         $("#infp_curriculum").on('change', function (e) {
             var file = e.target.files[0].name;
-            const archivo = this.files[0];
             $('#file-text').text(file);
-            if (archivo){
-                let reader = new FileReader();
-                reader.onload = function(event){
-                    console.log(event.target.result);
-                    $('#preview').attr('src', event.target.result);
-                }
-                reader.readAsDataURL(archivo);
-            }
+	    });
+
+        $("#infp_evaluacion").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text2').text(file);
+	    });
+
+        $("#infp_nacimiento").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text3').text(file);
+	    });
+
+        $("#infp_curp").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text4').text(file);
+	    });
+
+        $("#infp_identificacion").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text5').text(file);
+	    });
+
+        $("#infp_comprobante").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text6').text(file);
+	    });
+
+        $("#infp_rfc").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text7').text(file);
+	    });
+
+        $("#infp_cartal").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text8').text(file);
+	    });
+
+        $("#infp_cartap").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text9').text(file);
+	    });
+
+        $("#infp_retencion").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text10').text(file);
+	    });
+
+        $("#infp_strabajo").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text11').text(file);
+	    });
+
+        $("#infp_imss").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text12').text(file);
+	    });
+
+        $("#infp_nomina").on('change', function (e) {
+            var file = e.target.files[0].name;
+            $('#file-text13').text(file);
 	    });
 
         $('#prueba').select2({
