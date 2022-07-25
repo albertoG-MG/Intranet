@@ -460,6 +460,42 @@
                                                     <input class="hidden" name="infp_nacimiento" id="infp_nacimiento" type="file" />
                                                 </td>
                                             </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>4</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curp</p></td>
+                                                <td width="70% class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_curp" class="inline-block px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text4">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_curp" id="infp_curp" type="file" />
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>5</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Identificación oficial</p></td>
+                                                <td width="70% class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_identificacion" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text5">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_identificacion" id="infp_identificacion" type="file" />
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>6</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Comprobante de domicilio</p></td>
+                                                <td width="70% class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                                    <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                                    <label for="infp_comprobante" class="inline-block px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                    <p>Subir archivo</p>
+                                                    </label>
+                                                    <p id="file-text6">No hay ningún archivo seleccionado</p>
+                                                    <input class="hidden" name="infp_comprobante" id="infp_comprobante" type="file" />
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
