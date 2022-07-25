@@ -70,7 +70,7 @@
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Vincular usuario al expediente</label>
                                     <div class="group flex" id="selectprueba" style="display:none !important;">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                        <select id="prueba">
+                                        <select id="prueba" name="prueba">
                                             <option></option>
                                             <?php
                                             $usuarios = user::FetchUsuarios();

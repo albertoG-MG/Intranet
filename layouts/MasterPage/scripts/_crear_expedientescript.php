@@ -254,6 +254,30 @@
             var dropdown = document.getElementById('catalogos');
             dropdown.classList.remove("hidden");
         <?php } ?>
+
+        if($('#Guardar').length > 0 ){
+            $('#Guardar').validate({
+                ignore: [],
+                    errorPlacement: function(error, element) {
+                        error.insertAfter(element.parent('.group.flex'));
+                    },
+                rules:{
+                    prueba: {
+                        required:true
+                    }
+                },
+                messages:{
+                    prueba:{
+                        required: 'Este campo es requerido'
+                    }
+                },
+                submitHandler: function(form) {
+					var fd = new FormData();
+                    alert("hola");
+					return false;
+                }
+            });
+        }
     });
 
     function AgregarReferencias(){
