@@ -255,6 +255,11 @@
             dropdown.classList.remove("hidden");
         <?php } ?>
 
+        $.validator.addMethod('filesize', function(value, element, param) {
+         return this.optional(element) || (element.files[0].size <= param * 1000000)
+      }, 'File size must be less than {0} MB');
+
+
         if($('#Guardar').length > 0 ){
             $('#Guardar').validate({
                 ignore: [],
@@ -264,11 +269,115 @@
                 rules:{
                     prueba: {
                         required:true
+                    },
+                    infp_curriculum: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_evaluacion: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_nacimiento: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_curp: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_identificacion: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_comprobante: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_rfc: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_cartal: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_cartap: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_retencion: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_strabajo: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_imms: {
+                        extension: "pdf",
+                        filesize: 10
+                    },
+                    infp_nomina: {
+                        extension: "pdf",
+                        filesize: 10
                     }
                 },
                 messages:{
                     prueba:{
                         required: 'Este campo es requerido'
+                    },
+                    infp_curriculum: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_evaluacion: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_nacimiento: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_curp: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_identificacion: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_comprobante: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_rfc: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_cartal: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_cartap: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_retencion: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_strabajo: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_imms: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                    },
+                    infp_nomina: {
+                        extension: 'Solo se permiten pdf',
+                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
                     }
                 },
                 submitHandler: function(form) {
