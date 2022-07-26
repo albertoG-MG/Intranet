@@ -273,7 +273,144 @@
                 },
                 submitHandler: function(form) {
 					var fd = new FormData();
-                    alert("hola");
+
+                    /*Inputs*/
+                    var select2 = $("#prueba").val();
+                    var puesto = $("#puesto").val();
+                    var estudios = $("#estudios").val();
+                    var calle = $("#calle").val();
+                    var ninterior = $("#ninterior").val();
+                    var nexterior = $("#nexterior").val();
+                    var colonia = $("#colonia").val();
+                    var estado = $("#estado").val();
+                    var municipio = $("#municipio").val();
+                    var codigo = $("#codigo").val();
+                    var teldom = $("#teldom").val();
+                    var telmov = $("#telmov").val();
+                    var radio = $("input[name=casa]:checked", "#Guardar").val();
+                    var fechanac = $("#fechanac").val();
+                    var fechacon = $("#fechacon").val();
+                    var fechaalta = $("#fechaalta").val();
+                    var curp = $("#curp").val();
+                    var nss = $("#nss").val();
+                    var rfc = $("#rfc").val();
+                    var tipoidentificacion = $("#identificacion").val();
+                    var numeroidentificacion = $("#numeroidentificacion").val();
+                    var capacitacion = $("#capacitacion").val();
+                    var fechauniforme = $("#fechauniforme").val();
+                    var cantidadpolo = $("#cantidadpolo").val();
+                    var tallapolo = $("#tallapolo").val();
+                    var emergencianom = $("#emergencianom").val();
+                    var emergenciatel = $("#emergenciatel").val();
+                    var antidoping = $("#antidoping").val();
+                    var vacante = $("#vacante").val();
+                    var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+                    var nomfam = $("#nomfam").val();
+
+                    /*Referencias laborales*/
+                    var nreflab =  $("input[name=infa_ref]").val();
+                    var reflab = [];
+                    for(var i=0; i <nreflab; i++){
+                        var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
+                        var rparentesco = $("input[name=infa_rparentesco" +i+ "]").val();
+                        var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
+                        reflab[i] = {nombre: rnombre, parentesco: rparentesco, telefono: rtelefono};
+                    }
+
+                    /*Referencias bancarias*/
+                    var nrefbanc =  $("input[name=infb_ref]").val();
+                    var refbanc = [];
+                    for(var i=0; i <nrefbanc; i++){
+                        var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
+                        var brparentesco = $("input[name=infb_rparentesco" +i+ "]").val();
+                        var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
+                        var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
+                        var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
+                        refbanc[i] = {nombre: brnombre, parentesco: brparentesco, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+                    }
+
+                    /*File uploads*/
+                    var curriculum = $('#infp_curriculum')[0].files[0];
+                    var evaluacion = $('#infp_evaluacion')[0].files[0];
+                    var nacimiento = $('#infp_nacimiento')[0].files[0];
+                    var infpcurp = $('#infp_curp')[0].files[0];
+                    var identificacion = $('#infp_identificacion')[0].files[0];
+                    var comprobante = $('#infp_comprobante')[0].files[0];
+                    var infprfc = $('#infp_rfc')[0].files[0];
+                    var cartal = $('#infp_cartal')[0].files[0];
+                    var cartap = $('#infp_cartap')[0].files[0];
+                    var retencion = $('#infp_retencion')[0].files[0];
+                    var strabajo = $('#infp_strabajo')[0].files[0];
+                    var imss = $('#infp_imss')[0].files[0];
+                    var nomina = $('#infp_nomina')[0].files[0];
+
+                    /*FD appends*/
+
+                    /*Inputs*/
+                    fd.append('select2', select2);
+                    fd.append('puesto', puesto);
+                    fd.append('estudios', estudios);
+                    fd.append('calle', calle);
+                    fd.append('ninterior', ninterior);
+                    fd.append('nexterior', nexterior);
+                    fd.append('colonia', colonia);
+                    fd.append('estado', estado);
+                    fd.append('municipio', municipio);
+                    fd.append('codigo', codigo);
+                    fd.append('teldom', teldom);
+                    fd.append('telmov', telmov);
+                    fd.append('radio', radio);
+                    fd.append('fechanac', fechanac);
+                    fd.append('fechacon', fechacon);
+                    fd.append('fechaalta', fechaalta);
+                    fd.append('curp', curp);
+                    fd.append('nss', nss);
+                    fd.append('rfc', rfc);
+                    fd.append('identificacion', tipoidentificacion);
+                    fd.append('numeroidentificacion', numeroidentificacion);
+                    fd.append('capacitacion', capacitacion);
+                    fd.append('fechauniforme', fechauniforme);
+                    fd.append('cantidadpolo', cantidadpolo);
+                    fd.append('tallapolo', tallapolo);
+                    fd.append('emergencianom', emergencianom);
+                    fd.append('emergenciatel', emergenciatel);
+                    fd.append('antidoping', antidoping);
+                    fd.append('vacante', vacante);
+                    fd.append('radio2', radio2);
+                    fd.append('nomfam', nomfam);
+                    
+
+                    /*Referencias*/
+                    fd.append('referencias', JSON.stringify(reflab));
+                    fd.append('refbanc', JSON.stringify(refbanc));
+
+                    /*File uploads*/
+                    fd.append('infp_curriculum', curriculum);
+                    fd.append('infp_evaluacion', evaluacion);
+                    fd.append('infp_nacimiento', nacimiento);
+                    fd.append('infp_curp', infpcurp);
+                    fd.append('infp_identificacion', identificacion);
+                    fd.append('infp_comprobante', comprobante);
+                    fd.append('infp_rfc', infprfc);
+                    fd.append('infp_cartal', cartal);
+                    fd.append('infp_cartap', cartap);
+                    fd.append('infp_retencion', retencion);
+                    fd.append('infp_strabajo', strabajo);
+                    fd.append('infp_imss', imss);
+                    fd.append('infp_nomina', nomina);
+
+
+                    /*Ajax*/
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax/crearexpediente.php",
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            
+                        }
+                    });
 					return false;
                 }
             });
