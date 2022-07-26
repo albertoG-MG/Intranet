@@ -291,6 +291,7 @@
                     var fechanac = $("#fechanac").val();
                     var fechacon = $("#fechacon").val();
                     var fechaalta = $("#fechaalta").val();
+                    var observaciones = $("#observaciones").val();
                     var curp = $("#curp").val();
                     var nss = $("#nss").val();
                     var rfc = $("#rfc").val();
@@ -363,6 +364,7 @@
                     fd.append('fechanac', fechanac);
                     fd.append('fechacon', fechacon);
                     fd.append('fechaalta', fechaalta);
+                    fd.append('observaciones', observaciones);
                     fd.append('curp', curp);
                     fd.append('nss', nss);
                     fd.append('rfc', rfc);
