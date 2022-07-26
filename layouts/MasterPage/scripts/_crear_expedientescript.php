@@ -218,6 +218,30 @@
             }
 	    });
 
+        if(($('input[type=radio][name=empresa]:checked').val() === "si")){
+            document.getElementById("famnom").classList.remove('hidden');
+            document.getElementById("nomfam").classList.add('required');
+            document.getElementById("nomfam").setAttribute("data-msg-required", "Este campo es requerido");
+
+        }else if($('input[type=radio][name=empresa]:checked').val() === "no"){
+            document.getElementById("famnom").classList.add('hidden');
+            document.getElementById("nomfam").classList.remove('required');
+            document.getElementById("nomfam").removeAttribute("data-msg-required");
+        }
+
+        $('input[type=radio][name=empresa]').on('change', function () {
+            if(($('input[type=radio][name=empresa]:checked').val() === "si")){
+                document.getElementById("famnom").classList.remove('hidden');
+                document.getElementById("nomfam").classList.add('required');
+                document.getElementById("nomfam").setAttribute("data-msg-required", "Este campo es requerido");
+
+            }else if($('input[type=radio][name=empresa]:checked').val() === "no"){
+                document.getElementById("famnom").classList.add('hidden');
+                document.getElementById("nomfam").classList.remove('required');
+                document.getElementById("nomfam").removeAttribute("data-msg-required");
+            }
+        });
+
         $('#prueba').select2({
             theme: ["tailwind"],
             placeholder: '-- Seleccione --'

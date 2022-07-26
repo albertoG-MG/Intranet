@@ -388,7 +388,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                <div class="grid grid-cols-1 mt-5 mx-7" id="famnom">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo del familiar</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account text-gray-400 text-lg"></i></div>
