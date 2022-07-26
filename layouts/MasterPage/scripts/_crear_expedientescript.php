@@ -128,68 +128,94 @@
         });
 
         $("#infp_curriculum").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text').text(file);
+            if($("#infp_curriculum").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text').text(file);
+            }
 	    });
 
         $("#infp_evaluacion").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text2').text(file);
+            if($("#infp_evaluacion").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text2').text(file);
+            }
 	    });
 
         $("#infp_nacimiento").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text3').text(file);
+            if($("#infp_nacimiento").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text3').text(file);
+            }
 	    });
 
         $("#infp_curp").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text4').text(file);
+            if($("#infp_curp").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text4').text(file);
+            }
 	    });
 
         $("#infp_identificacion").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text5').text(file);
+            if($("#infp_identificacion").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text5').text(file);
+            }
 	    });
 
         $("#infp_comprobante").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text6').text(file);
+            if($("#infp_comprobante").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text6').text(file);
+            }
 	    });
 
         $("#infp_rfc").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text7').text(file);
+            if($("#infp_rfc").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text7').text(file);
+            }
 	    });
 
         $("#infp_cartal").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text8').text(file);
+            if($("#infp_cartal").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text8').text(file);
+            }
 	    });
 
         $("#infp_cartap").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text9').text(file);
+            if($("#infp_cartap").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text9').text(file);
+            }
 	    });
 
         $("#infp_retencion").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text10').text(file);
+            if($("#infp_retencion").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text10').text(file);
+            }
 	    });
 
         $("#infp_strabajo").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text11').text(file);
+            if($("#infp_strabajo").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text11').text(file);
+            }
 	    });
 
         $("#infp_imss").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text12').text(file);
+            if($("#infp_imss").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text12').text(file);
+            }
 	    });
 
         $("#infp_nomina").on('change', function (e) {
-            var file = e.target.files[0].name;
-            $('#file-text13').text(file);
+            if($("#infp_nomina").val() != ''){
+                var file = e.target.files[0].name;
+                $('#file-text13').text(file);
+            }
 	    });
 
         $('#prueba').select2({
@@ -264,7 +290,11 @@
             $('#Guardar').validate({
                 ignore: [],
                     errorPlacement: function(error, element) {
-                        error.insertAfter(element.parent('.group.flex'));
+                        if($(element).attr("type") === "file"){
+                            error.insertAfter($(element));
+                        }else{
+                            error.insertAfter(element.parent('.group.flex'));
+                        }
                     },
                 rules:{
                     prueba: {
@@ -314,7 +344,7 @@
                         extension: "pdf",
                         filesize: 10
                     },
-                    infp_imms: {
+                    infp_imss: {
                         extension: "pdf",
                         filesize: 10
                     },
@@ -371,7 +401,7 @@
                         extension: 'Solo se permiten pdf',
                         filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
                     },
-                    infp_imms: {
+                    infp_imss: {
                         extension: 'Solo se permiten pdf',
                         filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
                     },
