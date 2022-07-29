@@ -3,6 +3,7 @@ include_once __DIR__ . "/../classes/user.php";
 include_once __DIR__ . "/../classes/permissions.php";
 include_once __DIR__ . "/../classes/roles.php";
 include_once __DIR__ . "/../classes/departamentos.php";
+include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
@@ -147,5 +148,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "expediente"){
+	if(isset($_POST["select2"]) && isset($_POST["fechaalta"]) && isset($_POST["method"])){
+		switch($_POST["method"]){
+            case "store":
+                var_dump($_POST);
+            break;
+            case "edit":
+            break;
+        }
+	}
 }
 ?>
