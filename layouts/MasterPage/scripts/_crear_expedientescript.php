@@ -477,6 +477,8 @@
                     var vacante = $("#vacante").val();
                     var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
                     var nomfam = $("#nomfam").val();
+                    var method = "store";
+                    var app = "expediente";
 
                     /*Referencias laborales*/
                     var nreflab =  $("input[name=infa_ref]").val();
@@ -551,6 +553,8 @@
                     fd.append('vacante', vacante);
                     fd.append('radio2', radio2);
                     fd.append('nomfam', nomfam);
+                    fd.append('method', method);
+                    fd.append('app', app);
                     
 
                     /*Referencias*/
@@ -576,7 +580,7 @@
                     /*Ajax*/
                     $.ajax({
                         type: "POST",
-                        url: "../ajax/crearexpediente.php",
+                        url: "../ajax/class_search.php",
                         data: fd,
                         processData: false,
                         contentType: false,
