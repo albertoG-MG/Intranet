@@ -152,102 +152,172 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	if(isset($_POST["select2"]) && isset($_POST["fechaalta"]) && isset($_POST["method"])){
         if(!(empty($_POST["numempleado"]))){
             $numempleado = $_POST["numempleado"];
+        }else{
+            $numempleado = null;
         }
         if(!(empty($_POST["puesto"]))){
             $puesto = $_POST["puesto"];
+        }else{
+            $puesto = null;
         }
         if(!(empty($_POST["estudios"]))){
             $estudios = $_POST["estudios"];
+        }else{
+            $estudios = null;
         }
         if(!(empty($_POST["calle"]))){
             $calle = $_POST["calle"];
+        }else{
+            $calle = null;
         }
         if(!(empty($_POST["ninterior"]))){
             $ninterior = $_POST["ninterior"];
+        }else{
+            $ninterior = null;
         }
         if(!(empty($_POST["nexterior"]))){
             $nexterior = $_POST["nexterior"];
+        }else{
+            $nexterior = null;
         }
         if(!(empty($_POST["colonia"]))){
             $colonia = $_POST["colonia"];
+        }else{
+            $colonia = null;
         }
         if(!(empty($_POST["estado"]))){
             $estado = $_POST["estado"];
+        }else{
+            $estado = null;
         }
         if(!(empty($_POST["municipio"]))){
             $municipio = $_POST["municipio"];
+        }else{
+            $municipio = null;
         }
         if(!(empty($_POST["codigo"]))){
             $codigo = $_POST["codigo"];
+        }else{
+            $codigo = null;
         }
         if(!(empty($_POST["teldom"]))){
             $teldom = $_POST["teldom"];
+        }else{
+            $teldom = null;
         }
         if(!(empty($_POST["telmov"]))){
             $telmov = $_POST["telmov"];
+        }else{
+            $telmov = null;
         }
         if(!(empty($_POST["radio"]))){
             $radio = $_POST["radio"];
+        }else{
+            $radio = null;
         }
         if(!(empty($_POST["fechanac"]))){
             $fechanac = $_POST["fechanac"];
+        }else{
+            $fechanac = null;
         }
         if(!(empty($_POST["fechacon"]))){
             $fechacon = $_POST["fechacon"];
+        }else{
+            $fechacon = null;
         }
         $fechaalta = $_POST["fechaalta"];
         if(!(empty($_POST["observaciones"]))){
             $observaciones = $_POST["observaciones"];
+        }else{
+            $observaciones = null;
         }
         if(!(empty($_POST["curp"]))){
             $curp = $_POST["curp"];
+        }else{
+            $curp = null;
         }
         if(!(empty($_POST["nss"]))){
             $nss = $_POST["nss"];
+        }else{
+            $nss = null;
         }
         if(!(empty($_POST["rfc"]))){
             $rfc = $_POST["rfc"];
+        }else{
+            $rfc = null;
         }
         if(!(empty($_POST["identificacion"]))){
             $identificacion = $_POST["identificacion"];
+        }else{
+            $identificacion = null;
         }
         if(!(empty($_POST["numeroidentificacion"]))){
             $numeroidentificacion = $_POST["numeroidentificacion"];
+        }else{
+            $numeroidentificacion = null;
+        }
+        if(!(empty($_POST["referencias"]))){
+            $referencias = $_POST["referencias"];
         }
         if(!(empty($_POST["capacitacion"]))){
             $capacitacion = $_POST["capacitacion"];
+        }else{
+            $capacitacion = null;
         }
         if(!(empty($_POST["fechauniforme"]))){
             $fechauniforme = $_POST["fechauniforme"];
+        }else{
+            $fechauniforme = null;
         }
         if(!(empty($_POST["cantidadpolo"]))){
             $cantidadpolo = $_POST["cantidadpolo"];
+        }else{
+            $cantidadpolo = null;
         }
         if(!(empty($_POST["tallapolo"]))){
             $tallapolo = $_POST["tallapolo"];
+        }else{
+            $tallapolo = null;
         }
         if(!(empty($_POST["emergencianom"]))){
             $emergencianom = $_POST["emergencianom"];
+        }else{
+            $emergencianom = null;
         }
         if(!(empty($_POST["emergenciatel"]))){
             $emergenciatel = $_POST["emergenciatel"];
+        }else{
+            $emergenciatel = null;
         }
         if(!(empty($_POST["antidoping"]))){
             $antidoping = $_POST["antidoping"];
+        }else{
+            $antidoping = null;
         }
         if(!(empty($_POST["vacante"]))){
             $vacante = $_POST["vacante"];
+        }else{
+            $vacante = null;
         }
         if(!(empty($_POST["radio2"]))){
             $radio2 = $_POST["radio2"];
+        }else{
+            $radio2 = null;
         }
         if(!(empty($_POST["nomfam"]))){
             $nomfam = $_POST["nomfam"];
+        }else{
+            $nomfam = null;
+        }
+        if(!(empty($_POST["refbanc"]))){
+            $refbanc = $_POST["refbanc"];
         }
 		switch($_POST["method"]){
             case "store":
                 $iduser = $_POST["select2"];
-                /*La clase va aqui*/
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $telmov, $radio, $fechanac, $fechacon, $fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $refbanc);
+                $expediente ->Crear_expediente($iduser);
+                exit("success");
             break;
             case "edit":
             break;
