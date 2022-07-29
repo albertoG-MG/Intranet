@@ -439,6 +439,7 @@
 
                     /*Inputs*/
                     var select2 = $("#prueba").val();
+                    var numempleado = $("#numempleado").val();
                     var puesto = $("#puesto").val();
                     var estudios = $("#estudios").val();
                     var calle = $("#calle").val();
@@ -512,6 +513,7 @@
 
                     /*Inputs*/
                     fd.append('select2', select2);
+                    fd.append('numempleado', numempleado);
                     fd.append('puesto', puesto);
                     fd.append('estudios', estudios);
                     fd.append('calle', calle);

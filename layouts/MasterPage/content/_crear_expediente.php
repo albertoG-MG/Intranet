@@ -83,6 +83,13 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de empleado</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="numempleado" name="numempleado" placeholder="Input 1">
+                                    </div>
+                                </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Departamento</label>
