@@ -324,6 +324,9 @@
                     prueba: {
                         required:true
                     },
+                    fechaalta: {
+	                    required:true
+                    },
                     infp_curriculum: {
                         extension: "pdf",
                         filesize: 10
@@ -380,6 +383,9 @@
                 messages:{
                     prueba:{
                         required: 'Este campo es requerido'
+                    },
+                    fechaalta: {
+	                    required: 'Este campo es requerido'
                     },
                     infp_curriculum: {
                         extension: 'Solo se permiten pdf',
