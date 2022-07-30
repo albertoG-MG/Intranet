@@ -481,7 +481,7 @@
                     var app = "expediente";
 
                     /*Referencias laborales*/
-                    var nreflab =  $("input[name=infa_ref]").val();
+                    var nreflab =  $("input[name=reflab]").val();
                     var reflab = [];
                     for(var i=0; i <nreflab; i++){
                         var rnombre = $("input[name=infa_rnombre" +i+ "]").val();

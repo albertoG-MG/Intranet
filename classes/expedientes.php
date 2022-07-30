@@ -76,6 +76,7 @@ class expedientes {
 
     public function Crear_expediente($id){
         $crud = new crud();
+        $object = new connection_database();
         $crud->store('expedientes', ['users_id' => $id, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto,
 		'estudios' => $this->estudios, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia,
 		'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'tel_mov' => $this->tel_mov, 'casa_propia' => $this->casa_propia,
@@ -84,6 +85,28 @@ class expedientes {
         'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo,
         'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_telefono' => $this->emergencia_telefono, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 
         'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre]);
+        $exp_id = $object -> _db -> lastInsertId();
+	    $jsonData = stripslashes(html_entity_decode($this->referencias));
+	    $ref = json_decode($jsonData);
+        if(!(empty($ref))){
+            expedientes::Crear_referenciaslab($exp_id, $ref);
+        }
+    }
+
+    public static function Crear_referenciaslab($exp_id, $ref){
+        $refcrud = new crud();
+        $numero  = count($ref);
+        try{
+            for($i=0; $i<$numero; $i++){
+                $refnombre= $ref[$i]->nombre;
+                $refparentesco = $ref[$i]->parentesco;
+                $reftelefono = $ref[$i]->telefono;
+                $refcrud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco, 'expediente_id' => $exp_id]);
+            }
+        } catch (Exception $e) {
+                $refcrud -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
+                exit('Ocurrio un error al momento de grabar las referencias laborales');   
+        }
     }
 }
 ?>
