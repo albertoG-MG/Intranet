@@ -91,6 +91,11 @@ class expedientes {
         if(!(empty($ref))){
             expedientes::Crear_referenciaslab($exp_id, $ref);
         }
+        $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+        $ref_banc = json_decode($jsonData2);
+        if(!(empty($ref_banc))){
+            expedientes::Crear_referenciasbanc($exp_id, $ref_banc);
+        }
     }
 
     public static function Crear_referenciaslab($exp_id, $ref){
@@ -105,6 +110,25 @@ class expedientes {
             }
         } catch (Exception $e) {
                 $refcrud -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
+                exit('Ocurrio un error al momento de grabar las referencias laborales');   
+        }
+    }
+
+    public static function Crear_referenciasbanc($exp_id, $ref_banc){
+        $refcrud_banc = new crud();
+        $numerocont  = count($ref_banc);
+        try{
+            for($a=0; $a<$numerocont; $a++){
+                $brefnombre= $ref_banc[$a]->nombre;
+                $brefparentesco = $ref_banc[$a]->parentesco;
+                $brefrfc = $ref_banc[$a]->rfc;
+                $brefcurp = $ref_banc[$a]->curp;
+                $brefporcentaje = $ref_banc[$a]->porcentaje;
+
+                $refcrud_banc->store('ref_bancarias', ['expediente_id' => $exp_id, 'nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
+            }
+        } catch (Exception $e) {
+                $refcrud_banc -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
                 exit('Ocurrio un error al momento de grabar las referencias laborales');   
         }
     }

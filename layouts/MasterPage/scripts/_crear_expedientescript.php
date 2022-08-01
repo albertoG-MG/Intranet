@@ -491,7 +491,7 @@
                     }
 
                     /*Referencias bancarias*/
-                    var nrefbanc =  $("input[name=infb_ref]").val();
+                    var nrefbanc =  $("input[name=refban]").val();
                     var refbanc = [];
                     for(var i=0; i <nrefbanc; i++){
                         var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
