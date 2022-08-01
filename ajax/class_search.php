@@ -317,10 +317,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }else{
             $curriculum = null;
         }
+        if(!(empty($_FILES['infp_evaluacion']['name']))){
+            $evaluacion = $_FILES["infp_evaluacion"];
+        }else{
+            $evaluacion = null;
+        }
 		switch($_POST["method"]){
             case "store":
                 $iduser = $_POST["select2"];
-                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $telmov, $radio, $fechanac, $fechacon, $fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $refbanc, $curriculum);
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $telmov, $radio, $fechanac, $fechacon, $fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $refbanc, $curriculum, $evaluacion);
                 $expediente ->Crear_expediente($iduser);
                 exit("success");
             break;
