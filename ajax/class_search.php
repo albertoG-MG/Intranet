@@ -313,19 +313,74 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             $refbanc = $_POST["refbanc"];
         }
         if(!(empty($_FILES['infp_curriculum']['name']))){
-            $curriculum = $_FILES["infp_curriculum"];
+            $p_curriculum = $_FILES["infp_curriculum"];
         }else{
-            $curriculum = null;
+            $p_curriculum = null;
         }
         if(!(empty($_FILES['infp_evaluacion']['name']))){
-            $evaluacion = $_FILES["infp_evaluacion"];
+            $p_evaluacion = $_FILES["infp_evaluacion"];
         }else{
-            $evaluacion = null;
+            $p_evaluacion = null;
+        }
+        if(!(empty($_FILES['infp_nacimiento']['name']))){
+            $p_nacimiento = $_FILES["infp_nacimiento"];
+        }else{
+            $p_nacimiento = null;
+        }
+        if(!(empty($_FILES['infp_curp']['name']))){
+            $p_curp = $_FILES["infp_curp"];
+        }else{
+            $p_curp = null;
+        }
+        if(!(empty($_FILES['infp_identificacion']['name']))){
+            $p_identificacion = $_FILES["infp_identificacion"];
+        }else{
+            $p_identificacion = null;
+        }
+        if(!(empty($_FILES['infp_comprobante']['name']))){
+            $p_comprobante = $_FILES["infp_comprobante"];
+        }else{
+            $p_comprobante = null;
+        }
+        if(!(empty($_FILES['infp_rfc']['name']))){
+            $p_rfc = $_FILES["infp_rfc"];
+        }else{
+            $p_rfc = null;
+        }
+        if(!(empty($_FILES['infp_cartal']['name']))){
+            $p_cartal = $_FILES["infp_cartal"];
+        }else{
+            $p_cartal = null;
+        }
+        if(!(empty($_FILES['infp_cartap']['name']))){
+            $p_cartap = $_FILES["infp_cartap"];
+        }else{
+            $p_cartap = null;
+        }
+        if(!(empty($_FILES['infp_retencion']['name']))){
+            $p_retencion = $_FILES["infp_retencion"];
+        }else{
+            $p_retencion = null;
+        }
+        if(!(empty($_FILES['infp_strabajo']['name']))){
+            $p_strabajo = $_FILES["infp_strabajo"];
+        }else{
+            $p_strabajo = null;
+        }
+        if(!(empty($_FILES['infp_imss']['name']))){
+            $p_imss = $_FILES["infp_imss"];
+        }else{
+            $p_imss = null;
+        }
+        if(!(empty($_FILES['infp_nomina']['name']))){
+            $p_nomina = $_FILES["infp_nomina"];
+        }else{
+            $p_nomina = null;
         }
 		switch($_POST["method"]){
             case "store":
                 $iduser = $_POST["select2"];
-                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $telmov, $radio, $fechanac, $fechacon, $fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $refbanc, $curriculum, $evaluacion);
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $telmov, $radio, $fechanac, $fechacon, $fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $refbanc, $p_curriculum, $p_evaluacion, $p_nacimiento, $p_curp, $p_identificacion, $p_comprobante, $p_rfc, $p_cartal, $p_cartap, $p_retencion, $p_strabajo, $p_imss, $p_nomina);
                 $expediente ->Crear_expediente($iduser);
                 exit("success");
             break;
