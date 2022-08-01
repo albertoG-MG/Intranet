@@ -36,8 +36,9 @@ class expedientes {
     private $fam_dentro_empresa; 
     private $fam_nombre;
     private $ref_banc;
+    private $curriculum;
 
-    public function __construct($number_e, $job, $studies, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $phone_mobile, $own_house, $birth_date, $contract_date, $discharge_date, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_phone, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $referencies_banc){
+    public function __construct($number_e, $job, $studies, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $phone_mobile, $own_house, $birth_date, $contract_date, $discharge_date, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_phone, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $referencies_banc, $curr){
         $this->num_empleado= $number_e;
         $this->puesto= $job;
         $this->estudios= $studies;
@@ -72,6 +73,7 @@ class expedientes {
         $this->fam_dentro_empresa= $family_inside_bussiness; 
         $this->fam_nombre= $family_fib;
         $this->ref_banc= $referencies_banc;
+        $this->curriculum = $curr;
     }
 
     public function Crear_expediente($id){
@@ -95,6 +97,9 @@ class expedientes {
         $ref_banc = json_decode($jsonData2);
         if(!(empty($ref_banc))){
             expedientes::Crear_referenciasbanc($exp_id, $ref_banc);
+        }
+        if(!(empty($this->curriculum))){
+            expedientes::Curriculum($exp_id, $this->curriculum);
         }
     }
 
@@ -130,6 +135,26 @@ class expedientes {
         } catch (Exception $e) {
                 $refcrud_banc -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
                 exit('Ocurrio un error al momento de grabar las referencias laborales');   
+        }
+    }
+
+    public static function Curriculum($exp_id, $p_curriculum){
+        $crudcurriculum = new crud();
+        $papeleria = 1;
+        $filename = $p_curriculum["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_curriculum['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $crudcurriculum -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
         }
     }
 }
