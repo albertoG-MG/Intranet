@@ -314,6 +314,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
         if(!(empty($_FILES['infp_curriculum']['name']))){
             $curriculum = $_FILES["infp_curriculum"];
+        }else{
+            $curriculum = null;
         }
 		switch($_POST["method"]){
             case "store":
