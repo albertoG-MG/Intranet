@@ -36,10 +36,21 @@ class expedientes {
     private $fam_dentro_empresa; 
     private $fam_nombre;
     private $ref_banc;
-    private $curriculum;
-    private $evaluacion;
+    private $p_curriculum;
+    private $p_evaluacion;
+    private $p_nacimiento;
+    private $p_curp;
+    private $p_identificacion;
+    private $p_comprobante;
+    private $p_rfc;
+    private $p_cartal;
+    private $p_cartap;
+    private $p_retencion;
+    private $p_strabajo;
+    private $p_imss;
+    private $p_nomina;
 
-    public function __construct($number_e, $job, $studies, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $phone_mobile, $own_house, $birth_date, $contract_date, $discharge_date, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_phone, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $referencies_banc, $curr, $eval){
+    public function __construct($number_e, $job, $studies, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $phone_mobile, $own_house, $birth_date, $contract_date, $discharge_date, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_phone, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $referencies_banc, $curr, $eval, $nac, $cup, $identi, $comp, $rc, $cal, $cap, $reten, $strab, $iss, $nomin){
         $this->num_empleado= $number_e;
         $this->puesto= $job;
         $this->estudios= $studies;
@@ -74,8 +85,19 @@ class expedientes {
         $this->fam_dentro_empresa= $family_inside_bussiness; 
         $this->fam_nombre= $family_fib;
         $this->ref_banc= $referencies_banc;
-        $this->curriculum = $curr;
-        $this->evaluacion = $eval;
+        $this->p_curriculum = $curr;
+        $this->p_evaluacion = $eval;
+        $this->p_nacimiento = $nac;
+        $this->p_curp = $cup;
+        $this->p_identificacion = $identi;
+        $this->p_comprobante = $comp;
+        $this->p_rfc = $rc;
+        $this->p_cartal = $cal;
+        $this->p_cartap = $cap;
+        $this->p_retencion = $reten;
+        $this->p_strabajo = $strab;
+        $this->p_imss = $iss;
+        $this->p_nomina = $nomin;
     }
 
     public function Crear_expediente($id){
