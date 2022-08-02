@@ -585,7 +585,16 @@
                         processData: false,
                         contentType: false,
                         success: function (response) {
-                            
+                            response = response.replace(/[\r\n]/gm, '');
+                            if(response == "success"){
+                                Swal.fire({
+                                    title: "Expediente Creado",
+                                    text: "Se ha creado un expediente exitosamente!",
+                                    icon: "success"
+                                }).then(function() {
+                                    window.location.href = "expedientes.php";	
+                                });
+                            }
                         }
                     });
 					return false;
