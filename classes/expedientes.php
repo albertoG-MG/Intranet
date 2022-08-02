@@ -242,43 +242,43 @@ class expedientes {
 
     }
 
-    public static function Curp($exp_id, $p_nacimiento){
+    public static function Curp($exp_id, $p_curp){
         
     }
 
-    public static function Identificacion($exp_id, $p_nacimiento){
+    public static function Identificacion($exp_id, $p_identificacion){
         
     }
 
-    public static function Comprobante($exp_id, $p_nacimiento){
+    public static function Comprobante($exp_id, $p_comprobante){
         
     }
 
-    public static function Rfc($exp_id, $p_nacimiento){
+    public static function Rfc($exp_id, $p_rfc){
         
     }
 
-    public static function Cartal($exp_id, $p_nacimiento){
+    public static function Cartal($exp_id, $p_cartal){
         
     }
 
-    public static function Cartap($exp_id, $p_nacimiento){
+    public static function Cartap($exp_id, $p_cartap){
         
     }
 
-    public static function Retencion($exp_id, $p_nacimiento){
+    public static function Retencion($exp_id, $p_retencion){
         
     }
 
-    public static function Strabajo($exp_id, $p_nacimiento){
+    public static function Strabajo($exp_id, $p_strabajo){
         
     }
 
-    public static function Imss($exp_id, $p_nacimiento){
+    public static function Imss($exp_id, $p_imss){
         
     }
 
-    public static function Nomina($exp_id, $p_nacimiento){
+    public static function Nomina($exp_id, $p_nomina){
         
     }
 }
