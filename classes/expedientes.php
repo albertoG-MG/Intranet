@@ -122,11 +122,44 @@ class expedientes {
         if(!(empty($ref_banc))){
             expedientes::Crear_referenciasbanc($exp_id, $ref_banc);
         }
-        if(!(empty($this->curriculum))){
-            expedientes::Curriculum($exp_id, $this->curriculum);
+        if(!(empty($this->p_curriculum))){
+            expedientes::Curriculum($exp_id, $this->p_curriculum);
         }
-        if(!(empty($this->evaluacion))){
-            expedientes::Evaluacion($exp_id, $this->evaluacion);
+        if(!(empty($this->p_evaluacion))){
+            expedientes::Evaluacion($exp_id, $this->p_evaluacion);
+        }
+        if(!(empty($this->p_nacimiento))){
+            expedientes::Nacimiento($exp_id, $this->p_nacimiento);
+        }
+        if(!(empty($this->p_curp))){
+            expedientes::Curp($exp_id, $this->p_curp);
+        }
+        if(!(empty($this->p_identificacion))){
+            expedientes::Identificacion($exp_id, $this->p_identificacion);
+        }
+        if(!(empty($this->p_comprobante))){
+            expedientes::Comprobante($exp_id, $this->p_comprobante);
+        }
+        if(!(empty($this->p_rfc))){
+            expedientes::Rfc($exp_id, $this->p_rfc);
+        }
+        if(!(empty($this->p_cartal))){
+            expedientes::Cartal($exp_id, $this->p_cartal);
+        }
+        if(!(empty($this->p_cartap))){
+            expedientes::Cartap($exp_id, $this->p_cartap);
+        }
+        if(!(empty($this->p_retencion))){
+            expedientes::Retencion($exp_id, $this->p_retencion);
+        }
+        if(!(empty($this->p_strabajo))){
+            expedientes::Strabajo($exp_id, $this->p_strabajo);
+        }
+        if(!(empty($this->p_imss))){
+            expedientes::Imss($exp_id, $this->p_imss);
+        }
+        if(!(empty($this->p_nomina))){
+            expedientes::Nomina($exp_id, $this->p_nomina);
         }
     }
 
@@ -203,6 +236,50 @@ class expedientes {
                 }
             }
         }
+    }
+
+    public static function Nacimiento($exp_id, $p_nacimiento){
+
+    }
+
+    public static function Curp($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Identificacion($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Comprobante($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Rfc($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Cartal($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Cartap($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Retencion($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Strabajo($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Imss($exp_id, $p_nacimiento){
+        
+    }
+
+    public static function Nomina($exp_id, $p_nacimiento){
+        
     }
 }
 ?>
