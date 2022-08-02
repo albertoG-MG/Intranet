@@ -2497,6 +2497,133 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `expedientes`
+--
+
+CREATE TABLE `expedientes` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `num_empleado` bigint(100) DEFAULT NULL,
+  `estudios` varchar(100) DEFAULT NULL,
+  `puesto` varchar(100) DEFAULT NULL,
+  `calle` varchar(100) DEFAULT NULL,
+  `num_interior` varchar(100) DEFAULT NULL,
+  `num_exterior` varchar(100) DEFAULT NULL,
+  `colonia` varchar(100) DEFAULT NULL,
+  `estado_id` int DEFAULT NULL,
+  `municipio_id` int DEFAULT NULL,
+  `codigo` varchar(100) DEFAULT NULL,
+  `tel_dom` varchar(100) DEFAULT NULL,
+  `tel_mov` varchar(100) DEFAULT NULL,
+  `casa_propia` varchar(100) DEFAULT NULL, 
+  `fecha_nacimiento` date DEFAULT NULL,
+  `fecha_inicioc` date DEFAULT NULL,
+  `fecha_alta` date NOT NULL,
+  `observaciones` text DEFAULT NULL,
+  `curp` varchar(100) DEFAULT NULL,
+  `nss` varchar(100) DEFAULT NULL,
+  `rfc` varchar(100) DEFAULT NULL,
+  `tipo_identificacion` varchar(100) DEFAULT NULL,
+  `num_identificacion` varchar(100) DEFAULT NULL,
+  `capacitacion` varchar(100) DEFAULT NULL,
+  `fecha_enuniforme` date DEFAULT NULL,
+  `cantidad_polo` varchar(100) DEFAULT NULL,
+  `talla_polo` varchar(100) DEFAULT NULL,
+  `emergencia_nombre` varchar(100) DEFAULT NULL,
+  `emergencia_telefono` varchar(100) DEFAULT NULL,
+  `resultado_antidoping` varchar(100) DEFAULT NULL,
+  `vacante` varchar(100) DEFAULT NULL,
+  `fam_dentro_empresa` varchar(100) DEFAULT NULL,
+  `fam_nombre` varchar(100) DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (estado_id) REFERENCES estados(id),
+   FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ref_laborales`
+--
+
+CREATE TABLE `ref_laborales` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(100) DEFAULT NULL,
+  `telefono` varchar(100) DEFAULT NULL,
+  `parentesco` varchar(100) DEFAULT NULL,
+  `expediente_id` int NOT NULL,
+   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ref_bancarias`
+--
+
+CREATE TABLE `ref_bancarias` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `parentesco` varchar(100) DEFAULT NULL,
+  `rfc` varchar(100) DEFAULT NULL,
+  `curp` varchar(100) DEFAULT NULL,
+  `prcnt_derecho` varchar(100) DEFAULT NULL,
+   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tipo_papeleria`
+--
+
+CREATE TABLE `tipo_papeleria` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(254) COLLATE latin1_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `tipo_papeleria`
+--
+
+INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
+(1, 'CURRICULUM Y/O SOLICITUD'),
+(2, 'EVALUACION PSICOMETRICA'),
+(3, 'COPIA ACTA DE NACIMIENTO'),
+(4, 'CURP'),
+(5, 'IDENTIFICACION OFICIAL'),
+(6, 'COMPROBANTE DE DOMICILIO'),
+(7, 'RFC'),
+(8, 'CARTA DE RECOMENDACION LABORAL'),
+(9, 'CARTA DE RECOMENDACION PERSONAL'),
+(10, 'AVISO DE RETENCION CREDITO INFONAVIT'),
+(11, 'CARTA DE SEGUNDO TRABAJO'),
+(12, 'ALTA DE IMSS'),
+(13, 'CONTRATO NOMINA BANCARIA');
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `papeleria_empleado`
+--
+
+CREATE TABLE `papeleria_empleado` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `tipo_archivo` int NOT NULL,
+  `nombre_archivo` varchar(100) DEFAULT NULL,
+  `archivo` longtext DEFAULT NULL,
+  `fecha_subida` datetime DEFAULT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
+  FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+
+-- --------------------------------------------------------								
+
+--
 -- Structure for view `serverside_user`
 --
 DROP TABLE IF EXISTS `serverside_user`;
