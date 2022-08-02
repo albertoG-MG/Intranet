@@ -279,7 +279,23 @@ class expedientes {
     }
 
     public static function Identificacion($exp_id, $p_identificacion){
-        
+        $crudidentificacion = new crud();
+        $papeleria = 5;
+        $filename = $p_identificacion["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_identificacion['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $crudidentificacion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
     }
 
     public static function Comprobante($exp_id, $p_comprobante){
