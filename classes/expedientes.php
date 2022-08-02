@@ -399,15 +399,63 @@ class expedientes {
     }
 
     public static function Strabajo($exp_id, $p_strabajo){
-        
+        $crudstrabajo = new crud();
+        $papeleria = 11;
+        $filename = $p_strabajo["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_strabajo['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $crudstrabajo -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
     }
 
     public static function Imss($exp_id, $p_imss){
-        
+        $crudimss = new crud();
+        $papeleria = 12;
+        $filename = $p_imss["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_imss['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $crudimss -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
     }
 
     public static function Nomina($exp_id, $p_nomina){
-        
+        $crudnomina = new crud();
+        $papeleria = 13;
+        $filename = $p_nomina["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_nomina['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $crudnomina -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
     }
 }
 ?>
