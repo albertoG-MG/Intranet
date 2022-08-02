@@ -441,6 +441,7 @@
                     }
                 },
                 submitHandler: function(form) {
+                    $("#finish").attr("disabled", true);
 					var fd = new FormData();
 
                     /*Inputs*/
