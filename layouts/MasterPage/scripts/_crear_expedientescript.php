@@ -244,7 +244,12 @@
 
         $('#prueba').select2({
             theme: ["tailwind"],
-            placeholder: '-- Seleccione --'
+            placeholder: '-- Seleccione --',
+            "language": {
+                "noResults": function(){
+                    return "Todos los usuarios ya tienen vinculado un expediente! No podrá guardar cambios.";
+                }
+            }
         });
 
         $('#prueba').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent')
