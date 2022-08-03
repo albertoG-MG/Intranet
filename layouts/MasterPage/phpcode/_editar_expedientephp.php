@@ -12,10 +12,10 @@
     }
 	
 	/*Si el id no existe, regresa*/
-	if($_GET['idUser'] == null){
+	if($_GET['idExpediente'] == null){
 		header('Location: expedientes.php');
 	}else{
-		$Editarid = $_GET['idUser'];
+		$Editarid = $_GET['idExpediente'];
 	}
 
     $estado = $object->_db->prepare("select * from estados");
