@@ -33,10 +33,9 @@
                             <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left all">Id</th>
-                                        <th class="py-3 text-left desktop">Asignado a</th>
-                                        <th class="py-3 text-left desktop">Fecha_Alta</th>
-                                        <th class="py-3 text-center desktop">Status</th>
+                                        <th class="py-3 text-left all">Expediente_id</th>
+                                        <th class="py-3 text-left all">Asignado a</th>
+                                        <th class="py-3 text-left desktop">Fecha_alta</th>
                                         <th class="py-3 text-center min-tablet"></th>
                                     </tr>
                                 </thead>
