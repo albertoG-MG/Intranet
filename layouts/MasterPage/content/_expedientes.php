@@ -33,7 +33,7 @@
                             <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left all">Expediente_id</th>
+                                        <th class="py-3 text-left min-tablet">Expediente_id</th>
                                         <th class="py-3 text-left all">Asignado a</th>
                                         <th class="py-3 text-left desktop">Fecha_alta</th>
                                         <th class="py-3 text-center min-tablet"></th>
