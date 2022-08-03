@@ -457,5 +457,10 @@ class expedientes {
             }
         }
     }
+
+    public static function EliminarExpediente($id){
+        $crud = new crud();
+        $crud -> delete ('expedientes', 'id=:id', ['id' => $id]);
+    }
 }
 ?>
