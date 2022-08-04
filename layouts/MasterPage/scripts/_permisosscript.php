@@ -147,8 +147,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#datatable').on( 'click', 'tr .Edit', function () {
         var table = $('#datatable').DataTable();
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
+        var rowSelector;
+        var li = $(this).closest('li');
+        if ( li.length ) {
+            rowSelector = table.cell( li ).index().row;
+        }
+        else {
+            rowSelector =  $(this).closest('tr');
+        }
+        var row = table.row(rowSelector);
         var data = row.data();
         $('.modal-wrapper-flex').html(
             "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
@@ -258,8 +265,15 @@ $(document).ready(function() {
 
 $('#datatable').on( 'click', 'tr .Eliminar', function () {
     var table = $('#datatable').DataTable();
-    var tr = $(this).closest('tr');
-    var row = table.row(tr);
+    var rowSelector;
+    var li = $(this).closest('li');
+    if ( li.length ) {
+        rowSelector = table.cell( li ).index().row;
+    }
+    else {
+        rowSelector =  $(this).closest('tr');
+    }
+    var row = table.row(rowSelector);
     var data = row.data();
     Swal.fire({
     title: '¿Estas seguro?',
