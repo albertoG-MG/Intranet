@@ -1,7 +1,7 @@
 <div class="container mx-auto px-6 py-8">
     <div class="flex items-center justify-center">
         <div class="grid w-11/12 md:w-9/12">
-            <h3 class="text-gray-700 text-3xl font-medium">Crear expedientes</h3>
+            <h3 class="text-gray-700 text-3xl font-medium">Editar Expedientes</h3>
         </div>
     </div>
     <div class="mt-4">
@@ -36,12 +36,12 @@
                                 </svg>
                             </span>
 
-                            <a href="crear_expediente.php" class="flex items-center text-blue-600 -px-2 hover:underline">
+                            <a href="editar_expediente.php?idExpediente=<?php echo $Editarid ?>" class="flex items-center text-blue-600 -px-2 hover:underline">
                                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                     <path fill="currentColor" d="M22,4H14V7H10V4H2A2,2 0 0,0 0,6V20A2,2 0 0,0 2,22H22A2,2 0 0,0 24,20V6A2,2 0 0,0 22,4M8,9A2,2 0 0,1 10,11A2,2 0 0,1 8,13A2,2 0 0,1 6,11A2,2 0 0,1 8,9M12,17H4V16C4,14.67 6.67,14 8,14C9.33,14 12,14.67 12,16V17M20,18H14V16H20V18M20,14H14V12H20V14M20,10H14V8H20V10M13,6H11V2H13V6Z" />
                                 </svg>
 
-                                <span class="mx-2">Crear Expedientes</span>
+                                <span class="mx-2">Editar Expedientes</span>
                             </a>
                         </div>
                     </div>
