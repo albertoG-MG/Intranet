@@ -465,9 +465,9 @@ class expedientes {
 
     public static function Checkusuarioxexpediente($id){
         $object = new connection_database();
-	    $sql = "SELECT * FROM expedientes INNER JOIN usuarios ON expedientes.users_id = usuarios.id WHERE usuarios.id=:userid";
+	    $sql = "SELECT * FROM expedientes INNER JOIN usuarios ON expedientes.users_id = usuarios.id WHERE expedientes.id=:expedienteid";
         $fetchusex = $object->_db->prepare($sql);
-	    $fetchusex -> bindParam('userid', $id, PDO::PARAM_INT);
+	    $fetchusex -> bindParam('expedienteid', $id, PDO::PARAM_INT);
         $fetchusex->execute();
         $usuarioexp_count = $fetchusex->rowCount();
 	    return $usuarioexp_count;

@@ -100,8 +100,15 @@
 
     $('#datatable').on('click', 'tr .Editar', function () {
         var table = $('#datatable').DataTable();
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
+        var rowSelector;
+        var li = $(this).closest('li');
+        if ( li.length ) {
+            rowSelector = table.cell( li ).index().row;
+        }
+        else {
+            rowSelector =  $(this).closest('tr');
+        }
+        var row = table.row(rowSelector);
         var data = row.data();
         window.location.href = "editar_expediente.php?idExpediente="+data[0]+""; 
     });
@@ -109,8 +116,15 @@
 
     $('#datatable').on('click', 'tr .Eliminar', function() {
         var table = $('#datatable').DataTable();
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
+        var rowSelector;
+        var li = $(this).closest('li');
+        if ( li.length ) {
+            rowSelector = table.cell( li ).index().row;
+        }
+        else {
+            rowSelector =  $(this).closest('tr');
+        }
+        var row = table.row(rowSelector);
         var data = row.data();
         Swal.fire({
             title: '¿Estas seguro?',
