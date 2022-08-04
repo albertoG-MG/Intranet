@@ -471,6 +471,15 @@ class expedientes {
         $fetchusex->execute();
         $usuarioexp_count = $fetchusex->rowCount();
 	    return $usuarioexp_count;
-    } 
+    }
+    
+    public static function Fetcheditexpediente($id){
+        $object = new connection_database();
+        $row = $object->_db->prepare("SELECT expedientes.id as expid, expedientes.users_id as userid, expedientes.num_empleado as enum_empleado, expedientes.estudios as eestudios, expedientes.puesto as epuesto, expedientes.calle as ecalle, expedientes.num_interior as enum_interior, expedientes.num_exterior as enum_exterior, expedientes.colonia as ecolonia, expedientes.estado_id as eestado, expedientes.municipio_id as emunicipio, expedientes.codigo as ecodigo, expedientes.tel_dom as etel_dom, expedientes.tel_mov as etel_mov, expedientes.casa_propia as ecasa_propia, expedientes.fecha_nacimiento as efecha_nacimiento, expedientes.fecha_inicioc as efecha_inicioc, expedientes.fecha_alta as efecha_alta, expedientes.observaciones as eobservaciones, expedientes.curp as ecurp, expedientes.nss as enss, expedientes.rfc as erfc, expedientes.tipo_identificacion as etipo_identificacion, expedientes.num_identificacion as enum_identificacion, expedientes.capacitacion as ecapacitacion, expedientes.fecha_enuniforme as efecha_enuniforme, expedientes.cantidad_polo as ecantidad_polo, expedientes.talla_polo as etalla_polo, expedientes.emergencia_nombre as eemergencia_nombre, expedientes.emergencia_telefono as eemergencia_telefono, expedientes.resultado_antidoping as eresultado_antidoping, expedientes.vacante as evacante, expedientes.fam_dentro_empresa as efam_dentro_empresa, expedientes.fam_nombre as efam_nombre from expedientes where expedientes.id=:expedienteid");
+        $row->bindParam("expedienteid", $id, PDO::PARAM_INT);
+        $row->execute();
+        $editar = $row->fetch(PDO::FETCH_OBJ);
+        return $editar;
+    }
 }
 ?>

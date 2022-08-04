@@ -24,6 +24,8 @@
         }
 	}
 
+    $edit=Expedientes::Fetcheditexpediente($Editarid);
+
     $estado = $object->_db->prepare("select * from estados");
     $estado->execute();
     $contestado=0;

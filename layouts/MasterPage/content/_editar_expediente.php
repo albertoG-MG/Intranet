@@ -74,7 +74,8 @@
                                             <option></option>
                                             <?php
                                             $arr = array();
-                                            $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id"); 
+                                            $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id WHERE expedientes.id!=:expedienteid"); 
+                                            $checkexpuser -> bindParam('expedienteid', $Editarid, PDO::PARAM_INT); 
                                             $checkexpuser -> execute();
                                             while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
                                                 $arr[] = $fetchuserexp->id;
@@ -83,7 +84,9 @@
                                             foreach ($usuarios as $row) {
                                                 if(!in_array($row->id, $arr))
                                                 {
-                                                    echo "<option value='" . $row->id . "'>";
+                                                    echo "<option value='" . $row->id . "'";
+                                                    if($row->id == $edit->userid){ echo 'selected';}
+                                                    echo ">";
                                                     echo "$row->nombre $row->apellido_pat $row->apellido_mat";
                                                     echo "</option>";
                                                 }
