@@ -242,48 +242,48 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de nacimiento</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechanac" name="fechanac">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechanac" name="fechanac" value="<?php echo "{$edit->efecha_nacimiento}"; ?>">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de inicio de contrato</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechacon" name="fechacon">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechacon" name="fechacon" value="<?php echo "{$edit->efecha_inicioc}"; ?>">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de alta</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechaalta" name="fechaalta">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechaalta" name="fechaalta" value="<?php echo "{$edit->efecha_alta}"; ?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Observaciones</label>
-                                    <textarea class="w-full rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="observaciones" name="observaciones" placeholder="Input 11"></textarea>
+                                    <textarea class="w-full rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="observaciones" name="observaciones" placeholder="Input 11"><?php echo "{$edit->eobservaciones}"; ?></textarea>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Curp</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-format-list-numbered text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="curp" name="curp" placeholder="Input 12">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="curp" name="curp" value="<?php echo "{$edit->ecurp}"; ?>" placeholder="Input 12">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de seguro social</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nss" name="nss" placeholder="Input 13">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nss" name="nss" value="<?php echo "{$edit->enss}"; ?>" placeholder="Input 13">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">RFC</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-file-document-edit-outline text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="rfc" name="rfc" placeholder="Input 14">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="rfc" name="rfc" value="<?php echo "{$edit->erfc}"; ?>" placeholder="Input 14">
                                         </div>
                                     </div>
                                 </div>
@@ -293,9 +293,9 @@
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-card-account-details-outline text-gray-400 text-lg"></i></div>
                                         <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="identificacion" name="identificacion">
                                             <option value="">--Selecciona--</option>
-                                            <option value="INE">INE</option>
-                                            <option value="PASAPORTE">PASAPORTE</option>
-                                            <option value="CEDULA">CEDULA</option>
+                                            <option value="INE" <?php if ($edit->etipo_identificacion == 'INE') echo 'selected="selected"'; ?>>INE</option>
+                                            <option value="PASAPORTE" <?php if ($edit->etipo_identificacion == 'PASAPORTE') echo 'selected="selected"'; ?>>PASAPORTE</option>
+                                            <option value="CEDULA" <?php if ($edit->etipo_identificacion == 'CEDULA') echo 'selected="selected"'; ?>>CEDULA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -303,7 +303,7 @@
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de identificación</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Input 15">
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="numeroidentificacion" name="numeroidentificacion" value="<?php echo "{$edit->enum_identificacion}"; ?>" placeholder="Input 15">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
