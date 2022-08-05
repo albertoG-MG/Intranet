@@ -99,7 +99,7 @@
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de empleado</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="numempleado" name="numempleado" placeholder="Input 1">
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="numempleado" name="numempleado" value="<?php echo "{$edit->enum_empleado}"; ?>" placeholder="Input 1">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -114,7 +114,7 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Puesto</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-hard-hat text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="puesto" name="puesto" placeholder="Input 3">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="puesto" name="puesto" value="<?php echo "{$edit->epuesto}"; ?>" placeholder="Input 3">
                                         </div>
                                     </div>
                                 </div>
@@ -124,14 +124,14 @@
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-school text-gray-400 text-lg"></i></div>
                                         <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="estudios" name="estudios">
                                             <option value="">--Selecciona--</option>
-                                            <option value="PRIMARIA">Primaria</option>
-                                            <option value="SECUNDARIA">Secundaria</option>
-                                            <option value="BACHILLERATO">Bachillerato</option>
-                                            <option value="CARRERA TECNICA">Carrera técnica</option>
-                                            <option value="LICENCIATURA">Licenciatura</option>
-                                            <option value="ESPECIALIDAD">Especialidad</option>
-                                            <option value="MAESTRIA">Maestría</option>
-                                            <option value="DOCTORADO">Doctorado</option>
+                                            <option value="PRIMARIA" <?php if ($edit->eestudios == "PRIMARIA") echo 'selected="selected"'; ?>>Primaria</option>
+                                            <option value="SECUNDARIA" <?php if ($edit->eestudios == "SECUNDARIA") echo 'selected="selected"'; ?>>Secundaria</option>
+                                            <option value="BACHILLERATO" <?php if ($edit->eestudios == "BACHILLERATO") echo 'selected="selected"'; ?>>Bachillerato</option>
+                                            <option value="CARRERA TECNICA" <?php if ($edit->eestudios == "CARRERA TECNICA") echo 'selected="selected"'; ?>>Carrera técnica</option>
+                                            <option value="LICENCIATURA" <?php if ($edit->eestudios == "LICENCIATURA") echo 'selected="selected"'; ?>>Licenciatura</option>
+                                            <option value="ESPECIALIDAD" <?php if ($edit->eestudios == "ESPECIALIDAD") echo 'selected="selected"'; ?>>Especialidad</option>
+                                            <option value="MAESTRIA" <?php if ($edit->eestudios == "MAESTRIA") echo 'selected="selected"'; ?>>Maestría</option>
+                                            <option value="DOCTORADO" <?php if ($edit->eestudios == "DOCTORADO") echo 'selected="selected"'; ?>>Doctorado</option>
                                         </select>
                                     </div>
                                 </div>
@@ -144,21 +144,21 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Calle</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-map-marker text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="calle" name="calle" placeholder="Input 4">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="calle" name="calle" value="<?php echo "{$edit->ecalle}"; ?>" placeholder="Input 4">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número interior</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="ninterior" name="ninterior" placeholder="Input 5">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="ninterior" name="ninterior" value="<?php echo "{$edit->enum_interior}"; ?>" placeholder="Input 5">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número exterior</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nexterior" name="nexterior" placeholder="Input 6">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nexterior" name="nexterior" value="<?php echo "{$edit->enum_exterior}"; ?>" placeholder="Input 6">
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Colonia</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-map-marker text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="colonia" name="colonia" placeholder="Input 7">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="colonia" name="colonia" value="<?php echo "{$edit->ecolonia}"; ?>" placeholder="Input 7">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
