@@ -320,7 +320,7 @@
                                         <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" value="<?php echo "{$cont_referencias}"; ?>" placeholder="Input 16">
                                     </div>
                                 </div>
-                                <div id="referencias" class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                <div id="referencias">
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Capacitación</label>
