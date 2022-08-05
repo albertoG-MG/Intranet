@@ -242,6 +242,28 @@
             }
         });
 
+        if($('#estado').val() != ""){
+            var state = $('#estado').val();
+        
+            var data = {
+                id:state,
+                idExpediente: <?php echo ($Editarid); ?>
+            };
+        
+            $.ajax({
+            url: '../ajax/expedientes/municipios.php',
+            type:'POST',
+            data: data,
+            dataType: 'html',
+            success: function(data){
+                $('#imunicipio').html(data);
+            },
+            error: function (data) {
+            $("#ajax-error").text('Fail to send request');
+            }
+            });
+        }
+
         $('#prueba').select2({
             theme: ["tailwind"],
             placeholder: '-- Seleccione --',

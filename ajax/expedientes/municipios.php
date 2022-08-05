@@ -7,9 +7,9 @@ if(!empty($estado)){
 $municipios = $object -> _db->prepare("select  municipios.Id, municipios.nombre from municipios inner join estados on estados.id = municipios.estado where municipios.estado= :estado");
 $municipios->bindParam("estado", $estado,PDO::PARAM_STR);
 $municipios->execute();
-if(isset($_POST['idUser'])){
-$check = $object -> _db->prepare("select municipio_id from expedientes where users_id =:usuarioid");
-$check->bindParam("usuarioid", $_POST['idUser'],PDO::PARAM_INT);
+if(isset($_POST['idExpediente'])){
+$check = $object -> _db->prepare("select municipio_id from expedientes where id =:expedienteid");
+$check->bindParam("expedienteid", $_POST['idExpediente'],PDO::PARAM_INT);
 $check->execute();
 $count=$check->rowCount();
 $row=$check->fetch(PDO::FETCH_OBJ);
