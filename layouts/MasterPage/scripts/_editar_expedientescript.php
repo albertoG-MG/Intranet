@@ -242,6 +242,23 @@
             }
         });
 
+        if($('#prueba').val() != ""){ 
+            var fd =new FormData();
+            var x = $('#prueba').val();
+            fd.append('id', x);
+            $.ajax({
+                type: 'post',
+                url: '../ajax/expedientes/checkuserdepartamento.php',
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    data = JSON.parse(data);
+                    $("#departamento").val(data);
+                }
+            });
+        }
+
         if($('#estado').val() != ""){
             var state = $('#estado').val();
         
