@@ -180,7 +180,7 @@
                                                 while ($r = $estado->fetch(PDO::FETCH_OBJ)) {
                                                     $contestado++;
                                                 ?>
-                                                    <option value="<?php echo $contestado; ?>"><?php echo $r->nombre; ?></option>
+                                                    <option value="<?php echo $contestado; ?>" <?php if ($contestado == $edit->eestado) echo 'selected="selected"'; ?>><?php echo $r->nombre; ?></option>
                                                 <?php
                                                 }
                                                 ?>
