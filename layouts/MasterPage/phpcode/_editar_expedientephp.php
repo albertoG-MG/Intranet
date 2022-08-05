@@ -30,4 +30,22 @@
     $estado->execute();
     $contestado=0;
 
+
+    /*REFERENCIAS LABORALES*/
+    $array = [];
+    $contador_array = 0;
+    $referencias_laborales = $object->_db->prepare("select * from ref_laborales where expediente_id =:expedienteid");
+    $referencias_laborales->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+    $referencias_laborales->execute();
+    $cont_referencias = $referencias_laborales->rowCount();
+    while ($row_ref = $referencias_laborales->fetch(PDO::FETCH_OBJ)) {
+        $array[$contador_array] = ($row_ref->nombre);
+        $contador_array++;
+        $array[$contador_array] = ($row_ref->parentesco);
+        $contador_array++;
+        $array[$contador_array] = ($row_ref->telefono);
+        $contador_array++;
+    }
+    $json = json_encode($array, JSON_UNESCAPED_UNICODE);
+
 ?>

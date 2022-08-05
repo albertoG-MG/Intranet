@@ -281,6 +281,82 @@
             });
         }
 
+        if ($('#reflab').val() != "") {
+            var number = document.getElementById("reflab").value;
+            var container = document.getElementById("referencias");
+            var json = '<?php echo $json; ?>';
+            const myArr = JSON.parse(json);
+            var j = 0;
+            for (i = 0; i < number; i++) {
+            var div = document.createElement("div");
+            div.classList.add('grid', 'grid-cols-1');
+            container.appendChild(div);
+            var div2 = document.createElement("div");
+            div2.classList.add('grid', 'grid-cols-1');
+            container.appendChild(div2);
+            var div3 = document.createElement("div");
+            div3.classList.add('grid', 'grid-cols-1');
+            container.appendChild(div3);
+            div.appendChild(document.createTextNode("Nombre completo" + (i + 1) + " *"));
+            var grupo = document.createElement("div");
+            grupo.classList.add('group', 'flex');
+            div.appendChild(grupo);
+            var div4 = document.createElement("div");
+            div4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            var icon = document.createElement("i");
+            icon.classList.add('mdi', 'mdi-account', 'text-gray-400', 'text-lg');
+            div4.appendChild(icon);
+            grupo.appendChild(div4);
+            var input = document.createElement("input");
+            input.type = "text";
+            input.value = myArr[j];
+            j++;
+            input.name = "infa_rnombre" + i;
+            input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+            input.setAttribute("data-msg", "Este campo es requerido");
+            input.setAttribute("placeholder", "Nombre " +(i+1)); 
+            grupo.appendChild(input);
+            div2.appendChild(document.createTextNode("Parentesco " + (i + 1) + " *"));
+            var grupo2 = document.createElement("div");
+            grupo2.classList.add('group', 'flex');
+            div2.appendChild(grupo2);
+            var div5 = document.createElement("div");
+            div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            var icon2 = document.createElement("i");
+            icon2.classList.add('mdi', 'mdi-account-group', 'text-gray-400', 'text-lg');
+            div5.appendChild(icon2);
+            grupo2.appendChild(div5);
+            var input2 = document.createElement("input");
+            input2.type = "text";
+            input2.value = myArr[j];
+            j++;
+            input2.name = "infa_rparentesco" + i;
+            input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+            input2.setAttribute("data-msg", "Este campo es requerido");
+            input2.setAttribute("placeholder", "Parentesco " +(i+1));
+            grupo2.appendChild(input2);
+            div3.appendChild(document.createTextNode("Teléfono " + (i + 1) + " *"));
+            var grupo3 = document.createElement("div");
+            grupo3.classList.add('group', 'flex');
+            div3.appendChild(grupo3);
+            var div6 = document.createElement("div");
+            div6.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            var icon3 = document.createElement("i");
+            icon3.classList.add('mdi', 'mdi-cellphone', 'text-gray-400', 'text-lg');
+            div6.appendChild(icon3);
+            grupo3.appendChild(div6);
+            var input3 = document.createElement("input");
+            input3.type = "text";
+            input3.value = myArr[j];
+	        j++;
+            input3.name = "infa_rtelefono" + i;
+            input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'px-3', 'rounded-lg', 'border', 'border-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-black', 'focus:border-transparent', 'required');
+            input3.setAttribute("data-msg", "Este campo es requerido");
+            input3.setAttribute("placeholder", "Teléfono " +(i+1));
+            grupo3.appendChild(input3);
+            }
+        }
+
         $('#prueba').select2({
             theme: ["tailwind"],
             placeholder: '-- Seleccione --',
