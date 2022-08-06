@@ -686,6 +686,9 @@ select {
 .z-30 {
   z-index: 30 !important;
 }
+.col-span-2 {
+  grid-column: span 2 / span 2 !important;
+}
 .-mx-3 {
   margin-left: -0.75rem !important;
   margin-right: -0.75rem !important;
