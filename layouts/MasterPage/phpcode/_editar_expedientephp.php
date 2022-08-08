@@ -48,4 +48,25 @@
     }
     $json = json_encode($array, JSON_UNESCAPED_UNICODE);
 
+    /*REFERENCIAS BANCARIAS*/
+    $array2 = [];
+    $contador_array2 = 0;
+    $datos_bancarios = $object->_db->prepare("select * from ref_bancarias where expediente_id =:expedienteid");
+    $datos_bancarios->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+    $datos_bancarios->execute();
+    $cont_datos = $datos_bancarios->rowCount();
+    while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
+        $array2[$contador_array2] = ($row_datos->nombre);
+        $contador_array2++;
+        $array2[$contador_array2] = ($row_datos->parentesco);
+        $contador_array2++;
+        $array2[$contador_array2] = ($row_datos->rfc);
+        $contador_array2++;
+        $array2[$contador_array2] = ($row_datos->curp);
+        $contador_array2++;
+        $array2[$contador_array2] = ($row_datos->prcnt_derecho);
+        $contador_array2++;
+    }
+    $json2 = json_encode($array2, JSON_UNESCAPED_UNICODE);
+
 ?>
