@@ -69,4 +69,14 @@
     }
     $json2 = json_encode($array2, JSON_UNESCAPED_UNICODE);
 
+    /*PAPELERIAS*/
+    $array3 = [];
+    $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.archivo as archivo, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid");
+    $papeleria->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+    $papeleria->execute();
+
+    while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
+        $array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'archivo'=>$papel->archivo, 'fecha_subida'=>$papel->fecha_subida);
+    }
+
 ?>

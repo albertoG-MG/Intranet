@@ -449,6 +449,9 @@
                                             </tr>
                                         </thead>
                                         <tbody class="block md:table-row-group">
+                                            <?php for ($contador_array3 = 0; $contador_array3 < count($array3); $contador_array3++) { 
+												if($array3[$contador_array3]["nombre"] == "CURRICULUM Y/O SOLICITUD"){
+											?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>1</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curriculum y/o solicitud</p></td>
@@ -457,10 +460,15 @@
                                                     <label for="infp_curriculum" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_curriculum" id="infp_curriculum" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "EVALUACION PSICOMETRICA"){
+                                            ?>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>2</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Evaluación psicométrica</p></td>
@@ -469,10 +477,15 @@
                                                     <label for="infp_evaluacion" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 cursor-pointer font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text2">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text2"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_evaluacion" id="infp_evaluacion" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "COPIA ACTA DE NACIMIENTO"){
+                                            ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>3</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Copia acta de nacimiento</p></td>
@@ -481,10 +494,15 @@
                                                     <label for="infp_nacimiento" class="inline-block px-6 py-2 border-2 border-green-500 text-green-500 cursor-pointer font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text3">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text3"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_nacimiento" id="infp_nacimiento" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "CURP"){
+                                            ?>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>4</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curp</p></td>
@@ -493,10 +511,15 @@
                                                     <label for="infp_curp" class="inline-block px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text4">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text4"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_curp" id="infp_curp" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "IDENTIFICACION OFICIAL"){
+                                            ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>5</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Identificación oficial</p></td>
@@ -505,10 +528,15 @@
                                                     <label for="infp_identificacion" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text5">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text5"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_identificacion" id="infp_identificacion" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "COMPROBANTE DE DOMICILIO"){
+                                            ?>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>6</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Comprobante de domicilio</p></td>
@@ -517,10 +545,15 @@
                                                     <label for="infp_comprobante" class="inline-block px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text6">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text6"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_comprobante" id="infp_comprobante" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "RFC"){
+                                            ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>7</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>RFC</p></td>
@@ -529,10 +562,15 @@
                                                     <label for="infp_rfc" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text7">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text7"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_rfc" id="infp_rfc" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "CARTA DE RECOMENDACION LABORAL"){
+                                            ?>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>8</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación laboral</p></td>
@@ -541,10 +579,15 @@
                                                     <label for="infp_cartal" class="inline-block px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text8">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text8"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_cartal" id="infp_cartal" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "CARTA DE RECOMENDACION PERSONAL"){
+                                            ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>9</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación personal</p></td>
@@ -553,10 +596,15 @@
                                                     <label for="infp_cartap" class="inline-block px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text9">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text9"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_cartap" id="infp_cartap" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "AVISO DE RETENCION CREDITO INFONAVIT"){
+                                            ?>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>10</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Aviso de retención crédito infonavit</p></td>
@@ -565,10 +613,15 @@
                                                     <label for="infp_retencion" class="inline-block px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text10">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text10"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_retencion" id="infp_retencion" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "CARTA DE SEGUNDO TRABAJO"){
+                                            ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>11</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de segundo trabajo</p></td>
@@ -577,10 +630,15 @@
                                                     <label for="infp_strabajo" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text11">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text11"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_strabajo" id="infp_strabajo" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "ALTA DE IMSS"){
+                                            ?>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>12</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Alta del IMSS</p></td>
@@ -589,10 +647,15 @@
                                                     <label for="infp_imss" class="inline-block px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text12">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text12"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_imss" id="infp_imss" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            } 
+                                                if($array3[$contador_array3]["nombre"] == "CONTRATO NOMINA BANCARIA"){
+                                            ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>13</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Contrato nomina bancaria</p></td>
@@ -601,10 +664,15 @@
                                                     <label for="infp_nomina" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text13">No hay ningún archivo seleccionado</p>
+                                                    <p id="file-text13"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
                                                     <input class="hidden" name="infp_nomina" id="infp_nomina" type="file" />
                                                 </td>
                                             </tr>
+                                            <?php
+                                            continue; 
+                                            }
+                                            } 
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
