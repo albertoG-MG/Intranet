@@ -514,6 +514,28 @@ class expedientes {
                 expedientes::Crear_referenciaslab($id_expediente, $ref);
             }
         }
+
+        $array2 = [];
+        $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+        $ref_banc = json_decode($jsonData2);
+        $checkrefbanc = $object -> _db ->prepare("SELECT * FROM ref_bancarias WHERE expediente_id=:expedienteid");
+        $checkrefbanc -> bindParam('expedienteid', $id_expediente, PDO::PARAM_INT);
+        $checkrefbanc -> execute();
+        $countrefbanc = $checkrefbanc -> rowCount();
+        while ($row_banc = $checkrefbanc->fetch(PDO::FETCH_OBJ)) { 
+            $array2[]=array('id'=>$row_banc->id);
+        }
+        if($countrefbanc > 0){
+            if(empty($ref_banc)){
+                $crud -> delete('ref_bancarias', 'expediente_id=:idexpediente', ['idexpediente' => $id_expediente]);
+            }else{
+                expedientes::Editar_referenciasbanc($id_expediente, $countrefbanc, $array2, $ref_banc);
+            }
+        }else{
+            if(!(empty($ref))){
+                expedientes::Crear_referenciasbanc($id_expediente, $ref_banc);
+            }
+        }
     }
 
     public static function Editar_referenciaslab($id_expediente, $countreflab, $array, $ref){
@@ -559,6 +581,59 @@ class expedientes {
                 }
             } catch (Exception $e) {
                     exit('Ocurrio un error al momento de grabar las referencias laborales');   
+            }
+        }
+    }
+
+    public static function Editar_referenciasbanc($id_expediente, $countrefbanc, $array2, $ref_banc){
+        $crud = new crud();
+        $numero  = count($ref_banc);
+        if($numero > $countrefbanc){
+            try{
+                for($i=0; $i<$numero; $i++){
+                    $brefnombre= $ref_banc[$i]->nombre;
+                    $brefparentesco = $ref_banc[$i]->parentesco;
+                    $brefrfc = $ref_banc[$i]->rfc;
+                    $brefcurp = $ref_banc[$i]->curp;
+                    $brefporcentaje = $ref_banc[$i]->porcentaje;
+                    if($i < $countrefbanc){
+                        $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
+                    }else{
+                        $crud->store('ref_bancarias', ['expediente_id' => $id_expediente, 'nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
+                    }
+                }
+            } catch (Exception $e) {
+                    exit('Ocurrio un error al momento de grabar las referencias bancarias');   
+            }
+        }else if($numero < $countrefbanc){
+            try{
+                for($i=0; $i<$countrefbanc; $i++){
+                    if($i < $numero){
+                        $brefnombre= $ref_banc[$i]->nombre;
+                        $brefparentesco = $ref_banc[$i]->parentesco;
+                        $brefrfc = $ref_banc[$i]->rfc;
+                        $brefcurp = $ref_banc[$i]->curp;
+                        $brefporcentaje = $ref_banc[$i]->porcentaje;
+                        $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
+                    }else{
+                        $crud->delete('ref_bancarias', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);	
+                    }
+                }
+            } catch (Exception $e) {
+                    exit('Ocurrio un error al momento de grabar las referencias bancarias');   
+            }
+        }else if($numero == $countrefbanc){
+            try{
+                for($i=0; $i<$numero; $i++){
+                    $brefnombre= $ref_banc[$i]->nombre;
+                    $brefparentesco = $ref_banc[$i]->parentesco;
+                    $brefrfc = $ref_banc[$i]->rfc;
+                    $brefcurp = $ref_banc[$i]->curp;
+                    $brefporcentaje = $ref_banc[$i]->porcentaje;
+                    $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
+                }
+            } catch (Exception $e) {
+                    exit('Ocurrio un error al momento de grabar las referencias bancarias');   
             }
         }
     }
