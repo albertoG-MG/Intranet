@@ -691,7 +691,7 @@
 					var fd = new FormData();
 
                     /*Inputs*/
-                    var iduser = <?php echo $Editarid; ?>;
+                    var id_expediente = <?php echo $Editarid; ?>;
                     var select2 = $("#prueba").val();
                     var numempleado = $("#numempleado").val();
                     var puesto = $("#puesto").val();
@@ -768,7 +768,7 @@
                     /*FD appends*/
 
                     /*Inputs*/
-                    fd.append('iduser', iduser);
+                    fd.append('id_expediente', id_expediente);
                     fd.append('select2', select2);
                     fd.append('numempleado', numempleado);
                     fd.append('puesto', puesto);
