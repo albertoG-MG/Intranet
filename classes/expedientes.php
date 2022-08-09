@@ -483,7 +483,15 @@ class expedientes {
     }
 
     public function Editar_expediente($id_user, $id_expediente){
-        print_r($this->num_empleado);
+        $crud = new crud();
+        $crud->update('expedientes', ['users_id' => $id_user, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto,
+        'estudios' => $this->estudios, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia,
+        'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'tel_mov' => $this->tel_mov, 
+        'casa_propia' => $this->casa_propia, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 
+        'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 
+        'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 
+        'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_telefono' => $this->emergencia_telefono, 
+        'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre], "id=:idexpediente", ['idexpediente' => $id_expediente]);
     }
 }
 ?>
