@@ -505,7 +505,7 @@ class expedientes {
         }
         if($countreflab > 0){
             if(empty($ref)){
-                $crud -> delete('ref_laborales', 'id=:idexpediente', ['idexpediente' => $id_expediente]);
+                $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $id_expediente]);
             }else{
                 expedientes::Editar_referenciaslab($id_expediente, $countreflab, $array, $ref);
             }
