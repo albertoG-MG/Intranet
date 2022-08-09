@@ -691,6 +691,7 @@
 					var fd = new FormData();
 
                     /*Inputs*/
+                    var iduser = <?php echo $Editarid; ?>;
                     var select2 = $("#prueba").val();
                     var numempleado = $("#numempleado").val();
                     var puesto = $("#puesto").val();
@@ -724,7 +725,7 @@
                     var vacante = $("#vacante").val();
                     var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
                     var nomfam = $("#nomfam").val();
-                    var method = "store";
+                    var method = "edit";
                     var app = "expediente";
 
                     /*Referencias laborales*/
@@ -767,6 +768,7 @@
                     /*FD appends*/
 
                     /*Inputs*/
+                    fd.append('iduser', iduser);
                     fd.append('select2', select2);
                     fd.append('numempleado', numempleado);
                     fd.append('puesto', puesto);
