@@ -385,7 +385,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 exit("success");
             break;
             case "edit":
-                var_dump($_POST);
+                $iduser = $_POST["select2"];
+                $id_expediente = $_POST["id_expediente"];
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $telmov, $radio, $fechanac, $fechacon, $fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $refbanc, $p_curriculum, $p_evaluacion, $p_nacimiento, $p_curp, $p_identificacion, $p_comprobante, $p_rfc, $p_cartal, $p_cartap, $p_retencion, $p_strabajo, $p_imss, $p_nomina);
+                $expediente ->Editar_expediente($iduser, $id_expediente);
+                exit("success");
             break;
         }
 	}

@@ -481,5 +481,9 @@ class expedientes {
         $editar = $row->fetch(PDO::FETCH_OBJ);
         return $editar;
     }
+
+    public function Editar_expediente($id_user, $id_expediente){
+        print_r($this->num_empleado);
+    }
 }
 ?>
