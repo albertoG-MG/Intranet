@@ -483,6 +483,7 @@ class expedientes {
     }
 
     public function Editar_expediente($id_user, $id_expediente){
+        $object = new connection_database();
         $crud = new crud();
         $crud->update('expedientes', ['users_id' => $id_user, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto,
         'estudios' => $this->estudios, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia,
@@ -492,6 +493,74 @@ class expedientes {
         'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 
         'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_telefono' => $this->emergencia_telefono, 
         'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre], "id=:idexpediente", ['idexpediente' => $id_expediente]);
+        $array = [];
+        $jsonData = stripslashes(html_entity_decode($this->referencias));
+        $ref = json_decode($jsonData);
+        $checkreflab = $object -> _db ->prepare("SELECT * FROM ref_laborales WHERE expediente_id=:expedienteid");
+        $checkreflab -> bindParam('expedienteid', $id_expediente, PDO::PARAM_INT);
+        $checkreflab -> execute();
+        $countreflab = $checkreflab -> rowCount();
+        while ($row = $checkreflab->fetch(PDO::FETCH_OBJ)) { 
+            $array[]=array('id'=>$row->id);
+        }
+        if($countreflab > 0){
+            if(empty($ref)){
+                $crud -> delete('ref_laborales', 'id=:idexpediente', ['idexpediente' => $id_expediente]);
+            }else{
+                expedientes::Editar_referenciaslab($id_expediente, $countreflab, $array, $ref);
+            }
+        }else{
+            if(!(empty($ref))){
+                expedientes::Crear_referenciaslab($id_expediente, $ref);
+            }
+        }
+    }
+
+    public static function Editar_referenciaslab($id_expediente, $countreflab, $array, $ref){
+        $crud = new crud();
+        $numero  = count($ref);
+        if($numero > $countreflab){
+            try{
+                for($i=0; $i<$numero; $i++){
+                    $refnombre= $ref[$i]->nombre;
+                    $refparentesco = $ref[$i]->parentesco;
+                    $reftelefono = $ref[$i]->telefono;
+                    if($i < $countreflab){
+                        $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+                    }else{
+                        $crud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco, 'expediente_id' => $id_expediente]);
+                    }
+                }
+            } catch (Exception $e) {
+                    exit('Ocurrio un error al momento de grabar las referencias laborales');   
+            }
+        }else if($numero < $countreflab){
+            try{
+                for($i=0; $i<$countreflab; $i++){
+                    if($i < $numero){
+                        $refnombre= $ref[$i]->nombre;
+                        $refparentesco = $ref[$i]->parentesco;
+                        $reftelefono = $ref[$i]->telefono;
+                        $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+                    }else{
+                        $crud->delete('ref_laborales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);	
+                    }
+                }
+            } catch (Exception $e) {
+                    exit('Ocurrio un error al momento de grabar las referencias laborales');   
+            }
+        }else if($numero == $countreflab){
+            try{
+                for($i=0; $i<$numero; $i++){
+                    $refnombre= $ref[$i]->nombre;
+                    $refparentesco = $ref[$i]->parentesco;
+                    $reftelefono = $ref[$i]->telefono;
+                    $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+                }
+            } catch (Exception $e) {
+                    exit('Ocurrio un error al momento de grabar las referencias laborales');   
+            }
+        }
     }
 }
 ?>
