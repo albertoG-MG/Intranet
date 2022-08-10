@@ -2631,3 +2631,12 @@ DROP TABLE IF EXISTS `serverside_user`;
 CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`usuarios`.`roles_id` = `roles`.`id`))) left join `departamentos` on((`usuarios`.`departamento_id` = `departamentos`.`id`)));
 
 -- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_expuser`
+--
+DROP TABLE IF EXISTS `serverside_expuser`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT `expedientes`.`id` AS `exp_id`, `usuarios`.`nombre` AS `usernom`, `usuarios`.`apellido_pat` AS `userpat`, `usuarios`.`apellido_mat` AS `usermat`, `expedientes`.`fecha_alta` AS `fechaalta` FROM (`expedientes` join `usuarios` on((`expedientes`.`users_id` = `usuarios`.`id`)))  ;
+
+-- --------------------------------------------------------
