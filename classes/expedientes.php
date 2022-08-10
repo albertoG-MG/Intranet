@@ -536,6 +536,46 @@ class expedientes {
                 expedientes::Crear_referenciasbanc($id_expediente, $ref_banc);
             }
         }
+
+        if(!(empty($this->p_curriculum))){
+            expedientes::Editar_curriculum($id_expediente, $this->p_curriculum);
+        }
+		if(!(empty($this->p_evaluacion))){
+            expedientes::Editar_evaluacion($id_expediente, $this->p_evaluacion);
+        }
+		if(!(empty($this->p_nacimiento))){
+            expedientes::Editar_nacimiento($id_expediente, $this->p_nacimiento);
+        }
+		if(!(empty($this->p_curp))){
+            expedientes::Editar_curp($id_expediente, $this->p_curp);
+        }
+		if(!(empty($this->p_identificacion))){
+            expedientes::Editar_identificacion($id_expediente, $this->p_identificacion);
+        }
+		if(!(empty($this->p_comprobante))){
+            expedientes::Editar_comprobante($id_expediente, $this->p_comprobante);
+        }
+		if(!(empty($this->p_rfc))){
+            expedientes::Editar_rfc($id_expediente, $this->p_rfc);
+        }
+		if(!(empty($this->p_cartal))){
+            expedientes::Editar_cartal($id_expediente, $this->p_cartal);
+        }
+		if(!(empty($this->p_cartap))){
+            expedientes::Editar_cartap($id_expediente, $this->p_cartap);
+        }
+		if(!(empty($this->p_retencion))){
+            expedientes::Editar_retencion($id_expediente, $this->p_retencion);
+        }
+		if(!(empty($this->p_strabajo))){
+            expedientes::Editar_strabajo($id_expediente, $this->p_strabajo);
+        }
+        if(!(empty($this->p_imss))){
+            expedientes::Editar_imss($id_expediente, $this->p_imss);
+        }
+		if(!(empty($this->p_nomina))){
+            expedientes::Editar_nomina($id_expediente, $this->p_nomina);
+        }
     }
 
     public static function Editar_referenciaslab($id_expediente, $countreflab, $array, $ref){
@@ -634,6 +674,403 @@ class expedientes {
                 }
             } catch (Exception $e) {
                     exit('Ocurrio un error al momento de grabar las referencias bancarias');   
+            }
+        }
+    }
+
+    public static function Editar_curriculum($id_expediente, $p_curriculum){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 1;
+        $filename = $p_curriculum["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_curriculum['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    
+    public static function Editar_evaluacion($id_expediente, $p_evaluacion){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 2;
+        $filename = $p_evaluacion["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_evaluacion['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+
+
+    public static function Editar_nacimiento($id_expediente, $p_nacimiento){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 3;
+        $filename = $p_nacimiento["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_nacimiento['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+
+
+    public static function Editar_curp($id_expediente, $p_curp){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 4;
+        $filename = $p_curp["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_curp['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    public static function Editar_identificacion($id_expediente, $p_identificacion){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 5;
+        $filename = $p_identificacion["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_identificacion['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    
+    
+    public static function Editar_comprobante($id_expediente, $p_comprobante){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 6;
+        $filename = $p_comprobante["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_comprobante['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    
+    public static function Editar_rfc($id_expediente, $p_rfc){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 7;
+        $filename = $p_rfc["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_rfc['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+
+    public static function Editar_cartal($id_expediente, $p_cartal){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 8;
+        $filename = $p_cartal["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_cartal['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    public static function Editar_cartap($id_expediente, $p_cartap){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 9;
+        $filename = $p_cartap["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_cartap['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+
+    public static function Editar_retencion($id_expediente, $p_retencion){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 10;
+        $filename = $p_retencion["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_retencion['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    
+    public static function Editar_strabajo($id_expediente, $p_strabajo){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 11;
+        $filename = $p_strabajo["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_strabajo['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+    
+    public static function Editar_imss($id_expediente, $p_imss){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 12;
+        $filename = $p_imss["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_imss['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
+            }
+        }
+    }
+
+    public static function Editar_nomina($id_expediente, $p_nomina){
+        $object = new connection_database();
+        $crud = new crud();
+        $papeleria = 13;
+        $filename = $p_nomina["name"];
+        $location = "../src/pdfs_uploaded/".$filename;
+        if(move_uploaded_file($p_nomina['tmp_name'],$location)){
+            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
+            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+            date_default_timezone_set("America/Monterrey");
+            $fecha_subida = date('y-m-d h:i:s');
+            $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+            $checkpapeleria -> bindParam("expedienteid", $id_expediente, PDO::PARAM_INT);
+            $checkpapeleria -> bindParam("tipo", $papeleria, PDO::PARAM_INT);
+            $checkpapeleria -> execute();
+            $countpapeleria = $checkpapeleria -> rowCount();
+            if($countpapeleria > 0){
+                $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+            }else{
+                $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
+            }
+            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file)) {
+                    unlink($file); // delete file
+                }
             }
         }
     }
