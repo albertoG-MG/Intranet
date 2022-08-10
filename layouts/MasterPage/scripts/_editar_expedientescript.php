@@ -860,6 +860,9 @@
         var result = 0;
         if (number == 0) {
             childrenCount = 0;
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
         } else {
             if (number < childrenCount) {
                 result = childrenCount - number;
@@ -947,6 +950,9 @@
         var result = 0;
         if (number == 0) {
             childrenCount = 0;
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
         } else {
             if (number < childrenCount) {
                 result = childrenCount - number;
