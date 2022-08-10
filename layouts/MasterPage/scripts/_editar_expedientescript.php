@@ -546,7 +546,7 @@
 
         
         <?php
-        if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
+        if(basename($_SERVER['PHP_SELF']) == 'editar_expediente.php'){?>
             var dropdown = document.getElementById('catalogos');
             dropdown.classList.remove("hidden");
         <?php } ?>
