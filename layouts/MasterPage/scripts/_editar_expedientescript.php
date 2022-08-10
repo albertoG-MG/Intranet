@@ -837,8 +837,8 @@
                             response = response.replace(/[\r\n]/gm, '');
                             if(response == "success"){
                                 Swal.fire({
-                                    title: "Expediente Creado",
-                                    text: "Se ha creado un expediente exitosamente!",
+                                    title: "Expediente Editado",
+                                    text: "Se ha editado un expediente exitosamente!",
                                     icon: "success"
                                 }).then(function() {
                                     window.location.href = "expedientes.php";	
