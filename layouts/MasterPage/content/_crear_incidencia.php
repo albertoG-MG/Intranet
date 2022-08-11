@@ -65,7 +65,68 @@
           </div>
 
           <form id="Guardar" method="post">
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Título de la incidencia</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-beaker text-gray-400 text-lg"></i></div>
+                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="titulo" name="titulo" placeholder="Input 1">
+              </div>
+            </div>
             
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+              <div class="grid grid-cols-1">
+                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha inicio</label>
+                <div class="group flex">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechainicio" name="fechainicio">
+                </div>
+              </div>
+              <div class="grid grid-cols-1">
+                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha fin</label>
+                <div class="group flex">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechafin" name="fechafin">
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tipo de incidencia</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-pencil-box-multiple-outline text-gray-400 text-lg"></i></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="tipo" name="tipo">
+                  <option value="">--Selecciona--</option>
+                  <option value="ACTA ADMINISTRATIVA">Acta admnistrativa</option>
+                  <option value="INCAPACIDAD">Incapacidad</option>
+                  <option value="PERMISO">Permiso</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Descripción</label>
+              <textarea class="w-full rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="descripcion" name="descripcion" placeholder="Input 2"></textarea>
+            </div>
+
+            
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Subir comprobante</label>
+              <div class='flex items-center justify-center w-full'>
+              <label class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-black group'>
+                <div class='flex flex-col items-center justify-center pt-7'>
+                <div id="svg">
+                  <svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <img id="preview" class="hidden" />
+                <p id="archivo" class='lowercase text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider'>Selecciona una imagen</p>
+                </div>
+                <input type='file' id="foto" name="foto" class="hidden" />
+              </label>
+              </div>
+              <div id="error"></div>
+            </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
               <button class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Cancelar</button>
