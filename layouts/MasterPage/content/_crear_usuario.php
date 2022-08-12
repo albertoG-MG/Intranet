@@ -183,7 +183,7 @@
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Subir foto</label>
               <div class='flex items-center justify-center w-full'>
-                <label class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-black group'>
+                <label class='flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group'>
                   <div class='flex flex-col items-center justify-center pt-7'>
                     <div id="svg">
                       <svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
