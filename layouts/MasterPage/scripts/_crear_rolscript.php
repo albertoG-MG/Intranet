@@ -28,6 +28,7 @@ $("#Guardar").validate({
             }
         },
         submitHandler: function(form) {
+            $("#grabar").attr("disabled", true);
             var fd = new FormData();
             var roles = $("input[name=rol]").val();
             var permisos = JSON.stringify(array);
