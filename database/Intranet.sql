@@ -2624,6 +2624,27 @@ CREATE TABLE `papeleria_empleado` (
 -- --------------------------------------------------------								
 
 --
+-- Structure for view `incidencias`
+--
+
+CREATE TABLE `incidencias` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `titulo` varchar(500) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `tipo_incidencia` varchar(500) NOT NULL,
+  `descripcion` varchar(500) NOT NULL,
+  `estatus_incidencia` varchar(500) NOT NULL,
+  `filename` varchar(500) NOT NULL,
+  `foto` longtext NOT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------								
+
+--
 -- Structure for view `serverside_user`
 --
 DROP TABLE IF EXISTS `serverside_user`;
