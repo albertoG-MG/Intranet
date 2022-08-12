@@ -121,7 +121,7 @@
                   </svg>
                 </div>
                 <img id="preview" class="hidden" />
-                <p id="archivo" class='lowercase text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider'>Selecciona una imagen</p>
+                <p id="archivo" class='lowercase text-sm text-center text-gray-400 group-hover:text-black pt-1 tracking-wider'>Selecciona una imagen</p>
                 </div>
                 <input type='file' id="foto" name="foto" class="hidden" />
               </label>
