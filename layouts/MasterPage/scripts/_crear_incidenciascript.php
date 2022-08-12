@@ -104,6 +104,23 @@
 					return false;
 				}
 			});
-		}	
+		}
+		
+		$('input[name="foto"]').change(function(e) {
+			var file = e.target.files[0].name;
+			const archivo = this.files[0];
+			$('#preview').removeClass('hidden');
+			$('#preview').addClass('w-10 h-10');
+			$('#svg').addClass('hidden');
+			$('#archivo').text(file);
+			if (archivo){
+				let reader = new FileReader();
+				reader.onload = function(event){
+					console.log(event.target.result);
+					$('#preview').attr('src', event.target.result);
+				}
+				reader.readAsDataURL(archivo);
+			}
+		});
 	});
 </script>
