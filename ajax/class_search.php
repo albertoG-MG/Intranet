@@ -4,6 +4,7 @@ include_once __DIR__ . "/../classes/permissions.php";
 include_once __DIR__ . "/../classes/roles.php";
 include_once __DIR__ . "/../classes/departamentos.php";
 include_once __DIR__ . "/../classes/expedientes.php";
+include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
@@ -392,6 +393,43 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 exit("success");
             break;
         }
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "incidencias"){
+	if(isset($_POST["titulo"]) && isset($_POST["fechainicio"]) && isset($_POST["fechafin"]) && isset($_POST["tipo"]) && isset($_POST["descripcion"]) && isset($_POST["method"])){
+		$titulo = $_POST["titulo"];
+		$fechainicio = $_POST["fechainicio"];
+		$fechafin = $_POST["fechafin"];
+		$tipo = $_POST["tipo"];
+		$descripcion = $_POST["descripcion"];
+		$filename=null;
+		$foto=null;
+		
+		if(isset($_FILES['foto']['name'])){
+            $filename = $_FILES['foto']['name'];
+            $location = "../src/img/tmp/".$filename;
+            $target_file = $location . basename($_FILES['foto']['name']);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+            if(move_uploaded_file($_FILES['foto']['tmp_name'],$location)){
+                $image_base64 = base64_encode(file_get_contents('../src/img/tmp/'.$filename));
+                $foto = 'data:image/'.$imageFileType.';base64,'.$image_base64;
+                $files = glob('../src/img/tmp/*.{png,jpg,jpeg}', GLOB_BRACE); // get all file names
+                foreach($files as $file){ // iterate files
+                    if(is_file($file)) {
+                        unlink($file); // delete file
+                    }
+                }
+            }
+        }
+		switch($_POST["method"]){
+			case "store":
+				$incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
+                $incidencia->CrearIncidencias();
+                exit("success");
+			break;
+			case "edit":
+			break;
+		}
 	}
 }
 ?>
