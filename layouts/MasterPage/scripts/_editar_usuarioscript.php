@@ -1,5 +1,10 @@
 <script>
         $(document).ready(function() {
+
+            $.validator.addMethod('filesize', function(value, element, param) {
+            return this.optional(element) || (element.files[0].size <= param * 1000000)
+            }, 'File size must be less than {0} MB');
+
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
                     ignore: [],
@@ -45,7 +50,8 @@
                             }
                         },
                         foto: {
-                            extension: "jpg|jpeg|png"
+                            extension: "jpg|jpeg|png",
+                            filesize: 10
                         }
                     },
                     messages: {
@@ -75,10 +81,12 @@
                             remote: 'Ese correo ya existe, por favor, escriba otro'
                         },
                         foto: {
-                            extension: 'Solo se permite jpg, jpeg y pngs'
+                            extension: 'Solo se permite jpg, jpeg y pngs',
+                            filesize: 'Solo se permiten imágenes de un máximo de 10 megabytes'
                         }
                     },
                     submitHandler: function(form) {
+                        $("#grabar").attr("disabled", true);
                         var fd = new FormData();
                         var usuario = $("input[name=usuario]").val();
                         var password = $("input[name=password]").val();
