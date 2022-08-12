@@ -634,14 +634,15 @@
                                                 if($array3[$contador_array3]["nombre"] == "CARTA DE SEGUNDO TRABAJO"){
                                             ?>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
-                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>11</p></td>
-                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de segundo trabajo</p></td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-full md:hidden font-bold">id</span>11</td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-full md:hidden font-bold">Nombre</span>Carta de segundo trabajo</td>
+                                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-full md:hidden font-bold">Descarga</span><?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-blue-600 hover:border-b-2 hover:border-blue-600' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo $array3[$contador_array3]['nombre_archivo']; ?></a><?php }else{ echo "No se encontró el archivo en la base de datos";  }?> </td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <label for="infp_strabajo" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                     <p>Subir archivo</p>
                                                     </label>
-                                                    <p id="file-text11"><?php if($array3[$contador_array3]["nombre_archivo"] != null){ echo $array3[$contador_array3]["nombre_archivo"]; }else { echo "No hay ningún archivo seleccionado";} ?></p>
+                                                    <p id="file-text11">No hay ningún archivo seleccionado</p>
                                                     <input class="hidden" name="infp_strabajo" id="infp_strabajo" type="file" />
                                                 </td>
                                             </tr>
