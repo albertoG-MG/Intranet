@@ -71,6 +71,7 @@
 					var foto = $('#foto')[0].files[0];
 					var method = "store";
                     var app = "incidencias";
+					var userid = <?php echo $_SESSION["id"]; ?>;
 					fd.append('titulo', titulo);
 					fd.append('fechainicio', fechainicio);
 					fd.append('fechafin', fechafin);
@@ -78,7 +79,8 @@
 					fd.append('descripcion', descripcion);
 					fd.append('foto', foto);
 					fd.append('method', method);
-					fd.append('app', app)
+					fd.append('app', app);
+					fd.append('userid', userid);
 					$.ajax({
 							url: '../ajax/class_search.php',
                             type: 'POST',

@@ -423,8 +423,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
 		switch($_POST["method"]){
 			case "store":
+                $userid = $_POST["userid"];
 				$incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
-                $incidencia->CrearIncidencias();
+                $incidencia->CrearIncidencias($userid);
                 exit("success");
 			break;
 			case "edit":
