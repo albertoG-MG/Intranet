@@ -34,7 +34,9 @@
                             <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left all">Título</th>
+                                        <th class="py-3 text-left desktop">Id</th>
+                                        <th class="py-3 text-left all">Nombre</th>
+                                        <th class="py-3 text-left desktop">Título</th>
                                         <th class="py-3 text-left desktop">Tipo</th>
                                         <th class="py-3 text-left desktop">Fecha inicio</th>
                                         <th class="py-3 text-left desktop">Fecha fin</th>
