@@ -69,7 +69,7 @@
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Título de la incidencia</label>
               <div class="group flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-beaker text-gray-400 text-lg"></i></div>
-                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="titulo" name="titulo" placeholder="Input 1">
+                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="titulo" name="titulo" value="<?php echo "{$edit->titulo}"; ?>"  placeholder="Input 1">
               </div>
             </div>
             
@@ -78,14 +78,14 @@
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha inicio</label>
                 <div class="group flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechainicio" name="fechainicio">
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechainicio" name="fechainicio" value="<?php echo "{$edit->fecha_inicio}"; ?>" >
                 </div>
               </div>
               <div class="grid grid-cols-1">
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha fin</label>
                 <div class="group flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechafin" name="fechafin">
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fechafin" name="fechafin" value="<?php echo "{$edit->fecha_fin}"; ?>" >
                 </div>
               </div>
             </div>
@@ -96,16 +96,16 @@
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-pencil-box-multiple-outline text-gray-400 text-lg"></i></div>
                 <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="tipo" name="tipo">
                   <option value="">--Selecciona--</option>
-                  <option value="ACTA ADMINISTRATIVA">Acta admnistrativa</option>
-                  <option value="INCAPACIDAD">Incapacidad</option>
-                  <option value="PERMISO">Permiso</option>
+                  <option value="ACTA ADMINISTRATIVA"  <?php if ($edit->tipo_incidencia == "ACTA ADMNISTRATIVA") echo 'selected="selected"'; ?>>Acta admnistrativa</option>
+                  <option value="INCAPACIDAD" <?php if ($edit->tipo_incidencia == "INCAPACIDAD") echo 'selected="selected"'; ?>>Incapacidad</option>
+                  <option value="PERMISO" <?php if ($edit->tipo_incidencia == "PERMISO") echo 'selected="selected"'; ?>>Permiso</option>
                 </select>
               </div>
             </div>
             
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Descripción</label>
-              <textarea class="w-full rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="descripcion" name="descripcion" placeholder="Input 2"></textarea>
+              <textarea class="w-full rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="descripcion" name="descripcion" placeholder="Input 2"><?php echo "{$edit->descripcion}"; ?></textarea>
               <div id="error2"></div>
             </div>
 
