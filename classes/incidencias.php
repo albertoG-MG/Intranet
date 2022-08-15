@@ -31,5 +31,24 @@ class incidencias {
 		$crud = new crud();
 		$crud->delete('incidencias', 'id=:idincidencia', ['idincidencia' => $id]);
 	}
+
+	public static function Checkincidencia($id){
+        $object = new connection_database();
+	    $editar = $object -> _db->prepare("SELECT * FROM incidencias WHERE id=:incidenciaid");
+		$editar->bindParam("incidenciaid", $id ,PDO::PARAM_INT);
+		$editar->execute();
+        $check_incidencia=$editar->rowCount();
+	    return $check_incidencia;
+    }
+
+	
+   public static function Fetcheditincidencia($id){
+        $object = new connection_database();
+        $row = $object->_db->prepare("SELECT * from incidencias where id=:incidenciaid");
+        $row->bindParam("incidenciaid", $id, PDO::PARAM_INT);
+        $row->execute();
+        $editar = $row->fetch(PDO::FETCH_OBJ);
+        return $editar;
+    }
 }
 ?>
