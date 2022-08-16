@@ -33,7 +33,6 @@
 						required:true
 					},
 					foto:{
-						required:true,
 						extension:"jpg|jpeg|png",
 						filesize: 10
 					}
@@ -55,7 +54,6 @@
 						required: 'Este campo es requerido'
 					},
 					foto:{
-						required: 'Este campo es requerido',
 						extension: 'Solo se permiten jpgs, pngs y jpeg',
 						filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
 					}
