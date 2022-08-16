@@ -107,6 +107,30 @@
 				}
 			});
 		}
+
+		$('input[name="foto"]').change(function(e) {
+			if($("#foto").val() != ''){
+				var file = e.target.files[0].name;
+				var lastDot = file.lastIndexOf('.');
+				var extension = file.substring(lastDot + 1);
+				const archivo = this.files[0];
+				if(extension == "jpeg" || extension == "jpg" || extension == "png") {
+					$('#preview').removeClass('hidden');
+					$('#preview').addClass('w-10 h-10');
+					$('#svg').addClass('hidden');
+					$('#archivo').text(file);
+					let reader = new FileReader();
+					reader.onload = function(event){
+						$('#preview').attr('src', event.target.result);
+					}
+					reader.readAsDataURL(archivo);
+				}else{
+					$('#preview').addClass('hidden');
+					$('#svg').removeClass('hidden');
+					$('#archivo').text("El archivo " +file+ " no es una imagen");
+				}
+			}
+		});
 	});
     
 	function rdfechafin() {
