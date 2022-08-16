@@ -51,5 +51,10 @@ class incidencias {
         $editar = $row->fetch(PDO::FETCH_OBJ);
         return $editar;
     }
+
+	public function EditarIncidencias($incidenciaid){
+		$crud=new crud();
+		$crud -> update ('incidencias', ['titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto], 'id=:idincidencia', ['idincidencia' => $incidenciaid]);
+	}
 }
 ?>

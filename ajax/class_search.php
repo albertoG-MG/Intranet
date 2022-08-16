@@ -429,6 +429,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 exit("success");
 			break;
 			case "edit":
+                $incidenciaid = $_POST["editarid"];
+                $incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
+                $incidencia->EditarIncidencias($incidenciaid);
+                exit("success");
 			break;
 		}
 	}
