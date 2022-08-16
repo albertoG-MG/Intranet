@@ -2638,6 +2638,7 @@ CREATE TABLE `incidencias` (
   `estatus_incidencia` varchar(500) NOT NULL,
   `filename` varchar(500) NOT NULL,
   `foto` longtext NOT NULL,
+  `incidencia_creada` date NOT NULL,
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 

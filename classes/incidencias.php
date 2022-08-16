@@ -24,7 +24,8 @@ class incidencias {
 	public function CrearIncidencias($userid){
 		$crud = new crud();
 		$estatus = "pendiente";
-        $crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'estatus_incidencia' => $estatus, 'filename' => $this->filename, 'foto' => $this->foto]);
+		$todaydate = date("Y-m-d");
+        $crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'estatus_incidencia' => $estatus, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate]);
 	}
 
 	public static function EliminarIncidencias($id){
