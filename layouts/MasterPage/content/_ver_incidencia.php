@@ -64,51 +64,49 @@
             </div>
           </div>
 
-          <form id="Guardar" method="post">
-            <div class="grid grid-cols-1 mt-5 mx-7">
+          <div class="grid grid-cols-1">
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 b-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Título de la incidencia</label>
-              <span><?php echo "{$ver->titulo}"; ?></span>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->titulo}"; ?></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha inicio</label>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->fecha_inicio}"; ?></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha fin</label>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->fecha_fin}"; ?></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tipo de incidencia</label>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->tipo_incidencia}"; ?></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Estatus</label>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->estatus_incidencia}"; ?></span>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha inicio</label>
-                <span><?php echo "{$ver->fecha_inicio}"; ?></span>
-              </div>
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha fin</label>
-                <span><?php echo "{$ver->fecha_fin}"; ?></span>
-              </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tipo de incidencia</label>
-                <span><?php echo "{$ver->tipo_incidencia}"; ?></span>
-              </div>
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Estatus</label>
-                <span><?php echo "{$ver->estatus_incidencia}"; ?></span>
-              </div>
-            </div>
-            
-            <div class="grid grid-cols-1 mt-5 mx-7">
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Descripción</label>
-              <span><?php echo "{$ver->descripcion}"; ?></span>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->descripcion}"; ?></span>
             </div>
 
             
             <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Subir comprobante</label>
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Comprobante</label>
               <img id="preview" <?php if($ver->foto != null && $ver->filename != null){ echo "class='w-full' src='".$ver->foto."'"; }else { echo "class='hidden'"; } ?> />
-              <p id="archivo" class='lowercase text-sm text-center text-gray-400 group-hover:text-black pt-1 tracking-wider'><?php if ($ver->foto == null) { echo "No se encontró el comprobante en la base de datos"; } else { echo $ver->filename; } ?></p>         
+              <a href="<?php echo "{$ver->foto}"; ?>" download="<?php echo "{$ver->filename}"; ?>" id="archivo" class='lowercase text-sm text-center pt-1 tracking-wider'><span class="text-blue-600 hover:border-b-2 hover:border-blue-600"><?php if ($ver->foto == null) { echo "No se encontró el comprobante en la base de datos"; } else { echo $ver->filename; } ?></span></a>         
             </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
               <a href="incidencias.php" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2' id='regresar' name='regresar'>Regresar</a>
               <a href="editar_incidencia.php?idIncidencia=<?php echo $verid ?>" class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='editar' name='editar'>Editar</a>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
