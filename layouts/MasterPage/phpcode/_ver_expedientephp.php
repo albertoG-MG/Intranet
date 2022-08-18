@@ -26,9 +26,20 @@
 
     $ver=Expedientes::Fetcheditexpediente($Verid);
 
-    $estado = $object->_db->prepare("select * from estados");
+    $bringuser = $object -> _db -> prepare("SELECT usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, departamentos.departamento as departamento FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id LEFT JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE expedientes.id=:expedienteid"); 
+    $bringuser -> bindParam('expedienteid', $Verid, PDO::PARAM_INT); 
+    $bringuser -> execute();
+    $selected = $bringuser->fetch(PDO::FETCH_OBJ);
+
+    $estado = $object->_db->prepare("select nombre from estados where id=:estadoid");
+    $estado -> bindParam('estadoid', $ver->eestado, PDO::PARAM_INT);
     $estado->execute();
-    $contestado=0;
+    $verestado = $estado->fetch(PDO::FETCH_OBJ);
+
+    $municipio = $object->_db->prepare("select nombre from municipios where Id=:municipioid");
+    $municipio -> bindParam('municipioid', $ver->emunicipio, PDO::PARAM_INT);
+    $municipio->execute();
+    $vermunicipio = $municipio->fetch(PDO::FETCH_OBJ);
 
 
     /*REFERENCIAS LABORALES*/
