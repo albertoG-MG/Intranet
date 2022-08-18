@@ -99,7 +99,7 @@
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Comprobante</label>
               <img id="preview" <?php if($ver->foto != null && $ver->filename != null){ echo "class='w-full' src='".$ver->foto."'"; }else { echo "class='hidden'"; } ?> />
-              <a href="<?php echo "{$ver->foto}"; ?>" download="<?php echo "{$ver->filename}"; ?>" id="archivo" class='lowercase text-sm text-center pt-1 tracking-wider'><span class="text-blue-600 hover:border-b-2 hover:border-blue-600"><?php if ($ver->foto == null) { echo "No se encontró el comprobante en la base de datos"; } else { echo $ver->filename; } ?></span></a>         
+              <?php if($ver->foto != null && $ver->filename != null){ echo "<a href='{$ver->foto}' download='{$ver->filename}' id='archivo' class='text-sm text-center pt-1 tracking-wider'><span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>{$ver->filename}</span></a>";}else{ echo "<span class='text-center text-sm'>No se encontró el comprobante en la base de datos</span>"; }?>         
             </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
