@@ -98,6 +98,21 @@
     $('.dataTables_filter input[type="search"]').
     attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
 
+    $('#datatable').on('click', 'tr .Ver', function () {
+        var table = $('#datatable').DataTable();
+        var rowSelector;
+        var li = $(this).closest('li');
+        if ( li.length ) {
+            rowSelector = table.cell( li ).index().row;
+        }
+        else {
+            rowSelector =  $(this).closest('tr');
+        }
+        var row = table.row(rowSelector);
+        var data = row.data();
+        window.location.href = "ver_expediente.php?idExpediente="+data[0]+""; 
+    });
+
     $('#datatable').on('click', 'tr .Editar', function () {
         var table = $('#datatable').DataTable();
         var rowSelector;
