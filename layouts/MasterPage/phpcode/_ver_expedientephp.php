@@ -16,15 +16,15 @@
 	if($_GET['idExpediente'] == null){
 		header('Location: expedientes.php');
 	}else{
-		$Editarid = $_GET['idExpediente'];
+		$Verid = $_GET['idExpediente'];
         /*Checa si el expediente esta vinculado*/
-        $checkexp=Expedientes::Checkusuarioxexpediente($Editarid);
+        $checkexp=Expedientes::Checkusuarioxexpediente($Verid);
         if($checkexp == 0){
             header('Location: expedientes.php');
         }
 	}
 
-    $edit=Expedientes::Fetcheditexpediente($Editarid);
+    $ver=Expedientes::Fetcheditexpediente($Verid);
 
     $estado = $object->_db->prepare("select * from estados");
     $estado->execute();
@@ -35,7 +35,7 @@
     $array = [];
     $contador_array = 0;
     $referencias_laborales = $object->_db->prepare("select * from ref_laborales where expediente_id =:expedienteid");
-    $referencias_laborales->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+    $referencias_laborales->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
     $referencias_laborales->execute();
     $cont_referencias = $referencias_laborales->rowCount();
     while ($row_ref = $referencias_laborales->fetch(PDO::FETCH_OBJ)) {
@@ -52,7 +52,7 @@
     $array2 = [];
     $contador_array2 = 0;
     $datos_bancarios = $object->_db->prepare("select * from ref_bancarias where expediente_id =:expedienteid");
-    $datos_bancarios->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+    $datos_bancarios->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
     $datos_bancarios->execute();
     $cont_datos = $datos_bancarios->rowCount();
     while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
@@ -72,7 +72,7 @@
     /*PAPELERIAS*/
     $array3 = [];
     $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.archivo as archivo, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid");
-    $papeleria->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+    $papeleria->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
     $papeleria->execute();
 
     while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
