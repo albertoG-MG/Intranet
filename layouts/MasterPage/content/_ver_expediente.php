@@ -106,11 +106,11 @@
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Estado</label>
-                                <span class="md:flex md:justify-end"><?php if($verestado->nombre == null){echo "No hay datos";}else{ $state=ucfirst(strtolower($verestado->nombre)); echo "{$state}";} ?></span>
+                                <span class="md:flex md:justify-end"><?php if($countestado == 0){echo "No hay datos";}else{ $state=ucfirst(strtolower($verestado->nombre)); echo "{$state}";} ?></span>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Municipio</label>
-                                <span class="md:flex md:justify-end"><?php if($vermunicipio->nombre == null){echo "No hay datos";}else{ $city=ucfirst(strtolower($vermunicipio->nombre)); echo "{$city}";} ?></span>
+                                <span class="md:flex md:justify-end"><?php if($countmunicipio == 0){echo "No hay datos";}else{ $city=ucfirst(strtolower($vermunicipio->nombre)); echo "{$city}";} ?></span>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Código postal</label>

@@ -31,15 +31,21 @@
     $bringuser -> execute();
     $selected = $bringuser->fetch(PDO::FETCH_OBJ);
 
-    $estado = $object->_db->prepare("select nombre from estados where id=:estadoid");
-    $estado -> bindParam('estadoid', $ver->eestado, PDO::PARAM_INT);
+    $estado = $object->_db->prepare("select nombre from estados inner join expedientes on estados.id=expedientes.estado_id where expedientes.id=:expedienteid");
+    $estado -> bindParam('expedienteid', $Verid, PDO::PARAM_INT);
     $estado->execute();
+    $countestado = $estado ->rowCount();
+    if($countestado > 0){
     $verestado = $estado->fetch(PDO::FETCH_OBJ);
+    }
 
-    $municipio = $object->_db->prepare("select nombre from municipios where Id=:municipioid");
-    $municipio -> bindParam('municipioid', $ver->emunicipio, PDO::PARAM_INT);
+    $municipio = $object->_db->prepare("select nombre from municipios inner join expedientes on municipios.Id=expedientes.municipio_id where expedientes.id=:expedienteid");
+    $municipio -> bindParam('expedienteid', $Verid, PDO::PARAM_INT);
     $municipio->execute();
+    $countmunicipio = $municipio ->rowCount();
+    if($countmunicipio > 0){
     $vermunicipio = $municipio->fetch(PDO::FETCH_OBJ);
+    }
 
 
     /*REFERENCIAS LABORALES*/
