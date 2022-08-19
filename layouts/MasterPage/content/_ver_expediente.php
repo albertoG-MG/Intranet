@@ -175,7 +175,64 @@
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Referencias laborales</label>
                             </div>    
                             <div id="referencias">
-                            </div>		   
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Capacitación</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->ecapacitacion == null){ echo "No hay datos"; }else{echo "{$ver->ecapacitacion}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Uniformes</label>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de entrega de uniforme</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->efecha_enuniforme == null){ echo "No hay datos"; }else{echo "{$ver->efecha_enuniforme}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cantidad (camisa)</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->ecantidad_polo == null){ echo "No hay datos"; }else{echo "{$ver->ecantidad_polo}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Talla (camisa)</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->etalla_polo == null){ echo "No hay datos"; }else{echo "{$ver->etalla_polo}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contacto de emergencia</label>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->eemergencia_nombre == null){ echo "No hay datos"; }else{echo "{$ver->eemergencia_nombre}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->eemergencia_telefono == null){ echo "No hay datos"; }else{echo "{$ver->eemergencia_telefono}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Otros datos</label>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Resultado antidoping</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->eresultado_antidoping == null){ echo "No hay datos"; }else{echo "{$ver->eresultado_antidoping}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cómo se entero de la vacante?</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->evacante == null){ echo "No hay datos"; }else{echo "{$ver->evacante}";} ?></span>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tiene familiares dentro de la empresa?</label>
+                                <span class="md:flex md:justify-end"><?php if($ver->efam_dentro_empresa == null){ echo "No hay datos"; }else{echo "{$ver->efam_dentro_empresa}";} ?></span>
+                            </div>
+							<?php if($ver->efam_nombre != null){ ?>
+								<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+									<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo del familiar</label>
+									<span class="md:flex md:justify-end"><?php if($ver->efam_nombre == null){ echo "No hay datos"; }else{echo "{$ver->efam_nombre}";} ?></span>
+								</div>
+							<?php } ?>
+							<div class="grid grid-cols-1 mt-5 mx-7">
+								<div class="flex justify-center sm:justify-end gap-3">
+									<button type="button" id="anterior" name="anterior" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Anterior</button>
+									<button type="button" id="siguiente2" name="siguiente2" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Siguiente</button>
+								</div>
+							</div>		   
 						</div>
 						<div id='third' class='hidden p-4'>
 							
