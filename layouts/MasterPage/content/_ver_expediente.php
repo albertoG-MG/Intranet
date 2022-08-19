@@ -171,7 +171,11 @@
                             </div>	
 						</div>
 						<div id='second' class='hidden p-4'>
-									   
+                            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Referencias laborales</label>
+                            </div>    
+                            <div id="referencias">
+                            </div>		   
 						</div>
 						<div id='third' class='hidden p-4'>
 							
