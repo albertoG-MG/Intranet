@@ -978,7 +978,7 @@
                     div7.classList.add('grid', 'grid-cols-1');
                     divcontainer.appendChild(div7);
                     var div9 = document.createElement("div");
-                    div9.classList.add('grid', 'grid-cols-1', 'col-span-2');
+                    div9.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
                     divcontainer.appendChild(div9);
                     div.appendChild(document.createTextNode("Nombre completo" + (count) + " *"));
                     var grupo = document.createElement("div");
