@@ -1911,6 +1911,10 @@ select {
     padding-right: 2.5rem !important;
   }
 
+  .md\:text-right {
+    text-align: right !important;
+  }
+
   .md\:text-2xl {
     font-size: 1.5rem !important;
     line-height: 2rem !important;

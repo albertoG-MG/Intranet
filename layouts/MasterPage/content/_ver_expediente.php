@@ -248,7 +248,126 @@
 							</div>
 						</div>
 						<div id='fourth' class='hidden p-4'>
-						
+                        <?php for ($contador_array3 = 0; $contador_array3 < count($array3); $contador_array3++) { 
+								if($array3[$contador_array3]["nombre"] == "CURRICULUM Y/O SOLICITUD"){
+							?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Curriculum y/o solicitud</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue; 
+								} 
+								if($array3[$contador_array3]["nombre"] == "EVALUACION PSICOMETRICA"){
+									?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Evaluación psicométrica</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue; 
+								} 
+                                if($array3[$contador_array3]["nombre"] == "COPIA ACTA DE NACIMIENTO"){
+									?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Copia acta de nacimiento</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "CURP"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CURP</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "IDENTIFICACION OFICIAL"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">identificación oficial</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "COMPROBANTE DE DOMICILIO"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Comprobante de domicilio</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "RFC"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">RFC</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "CARTA DE RECOMENDACION LABORAL"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Carta de recomendación laboral</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "CARTA DE RECOMENDACION PERSONAL"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Carta de recomendación personal</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "AVISO DE RETENCION CREDITO INFONAVIT"){
+									?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Aviso de retención crédito infonavit </label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "CARTA DE SEGUNDO TRABAJO"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Carta de segundo trabajo</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "ALTA DE IMSS"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Alta de IMMS</label>
+										<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+								if($array3[$contador_array3]["nombre"] == "CONTRATO NOMINA BANCARIA"){
+                                    ?>
+									<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+										<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contrato nómina bancaria</label>
+									<?php if($array3[$contador_array3]['nombre_archivo'] != null){ ?><a class='text-left md:text-right' download='pdfTitle' href='<?php if($array3[$contador_array3]['nombre_archivo'] != null){ echo $array3[$contador_array3]['archivo']; }else { echo '#';} ?>' title='Download pdf document'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$contador_array3]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+									</div>
+									<?php
+									continue;
+								}
+							}
+							?>
 						</div>
 					</div>
                 </div>
