@@ -383,7 +383,7 @@
                divr1.classList.add('grid', 'grid-cols-1');
                div4.appendChild(divr1);  
                var divr2 = document.createElement("div");
-               divr2.classList.add('grid', 'grid-cols-1', 'col-span-2');
+               divr2.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
                div4.appendChild(divr2);
                div.appendChild(document.createTextNode("Nombre completo" + (i + 1) + " *"));
 			   var grupo = document.createElement("div");
