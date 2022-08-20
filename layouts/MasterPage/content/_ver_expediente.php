@@ -57,6 +57,11 @@
                             <h1 class="text-gray-600 font-bold md:text-2xl text-xl">Expediente</h1>
                         </div>
                     </div>
+                    <div class="flex justify-center mt-4">
+                        <div class="flex">
+                            <button type="button" onclick="location.href = 'editar_expediente.php?idExpediente=<?php echo $Verid; ?>';" id="editar" name="editar" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Editar expediente</button>
+                        </div>
+                    </div>
                     <ul id='tabs' class='flex flex-col items-center sm:flex-row w-full px-11 pt-2 '>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 border-blue-400 rounded-t opacity-50'><a id='default-tab' class='active' href='#first'>Datos generales</a></li>
                         <li class='px-4 py-2 font-semibold text-gray-800 border-b-4 rounded-t opacity-50'><a href='#second'>Datos adicionales</a></li>
