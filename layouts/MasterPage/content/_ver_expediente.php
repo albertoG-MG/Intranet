@@ -72,102 +72,102 @@
 						<div id='first' class='p-4'>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 b-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Expediente asignado a:</label>
-                                <span class="md:flex md:justify-end"><?php echo "$selected->nombre $selected->apellido_pat $selected->apellido_mat"; ?></span>
+                                <div class="text-left md:text-right"><span><?php echo "$selected->nombre $selected->apellido_pat $selected->apellido_mat"; ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de empleado</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->enum_empleado == null){ echo "No hay datos"; }else{echo "{$ver->enum_empleado}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->enum_empleado == null){ echo "No hay datos"; }else{echo "{$ver->enum_empleado}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Departamento</label>
-                                <span class="md:flex md:justify-end"><?php if($selected->departamento == null){echo "Sin departamento";}else{ echo "{$selected->departamento}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($selected->departamento == null){echo "Sin departamento";}else{ echo "{$selected->departamento}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Puesto</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->epuesto == null){ echo "No hay datos"; }else{echo "{$ver->epuesto}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->epuesto == null){ echo "No hay datos"; }else{echo "{$ver->epuesto}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nivel de estudios</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->eestudios == null){ echo "No hay datos"; }else{echo "{$ver->eestudios}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->eestudios == null){ echo "No hay datos"; }else{echo "{$ver->eestudios}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Datos de ubicación</label>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Calle</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecalle == null){ echo "No hay datos"; }else{echo "{$ver->ecalle}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecalle == null){ echo "No hay datos"; }else{echo "{$ver->ecalle}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número interior</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->enum_interior == null){ echo "No hay datos"; }else{echo "{$ver->enum_interior}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->enum_interior == null){ echo "No hay datos"; }else{echo "{$ver->enum_interior}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número exterior</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->enum_exterior == null){ echo "No hay datos"; }else{echo "{$ver->enum_exterior}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->enum_exterior == null){ echo "No hay datos"; }else{echo "{$ver->enum_exterior}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Colonia</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecolonia == null){ echo "No hay datos"; }else{echo "{$ver->ecolonia}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecolonia == null){ echo "No hay datos"; }else{echo "{$ver->ecolonia}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Estado</label>
-                                <span class="md:flex md:justify-end"><?php if($countestado == 0){echo "No hay datos";}else{ $state=ucfirst(strtolower($verestado->nombre)); echo "{$state}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($countestado == 0){echo "No hay datos";}else{ $state=ucfirst(strtolower($verestado->nombre)); echo "{$state}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Municipio</label>
-                                <span class="md:flex md:justify-end"><?php if($countmunicipio == 0){echo "No hay datos";}else{ $city=ucfirst(strtolower($vermunicipio->nombre)); echo "{$city}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($countmunicipio == 0){echo "No hay datos";}else{ $city=ucfirst(strtolower($vermunicipio->nombre)); echo "{$city}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Código postal</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecodigo == null){ echo "No hay datos"; }else{echo "{$ver->ecodigo}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecodigo == null){ echo "No hay datos"; }else{echo "{$ver->ecodigo}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono de domicilio</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->etel_dom == null){ echo "No hay datos"; }else{echo "{$ver->etel_dom}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->etel_dom == null){ echo "No hay datos"; }else{echo "{$ver->etel_dom}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono móvil</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->etel_mov == null){ echo "No hay datos"; }else{echo "{$ver->etel_mov}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->etel_mov == null){ echo "No hay datos"; }else{echo "{$ver->etel_mov}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Casa propia</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecasa_propia == null){ echo "No hay datos"; }else{echo "{$ver->ecasa_propia}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecasa_propia == null){ echo "No hay datos"; }else{echo "{$ver->ecasa_propia}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de nacimiento</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->efecha_nacimiento == null){ echo "No hay datos"; }else{echo "{$ver->efecha_nacimiento}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->efecha_nacimiento == null){ echo "No hay datos"; }else{echo "{$ver->efecha_nacimiento}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha inicio de contrato</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->efecha_inicioc == null){ echo "No hay datos"; }else{echo "{$ver->efecha_inicioc}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->efecha_inicioc == null){ echo "No hay datos"; }else{echo "{$ver->efecha_inicioc}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de alta</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->efecha_alta == null){ echo "No hay datos"; }else{echo "{$ver->efecha_alta}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->efecha_alta == null){ echo "No hay datos"; }else{echo "{$ver->efecha_alta}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Observaciones</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->eobservaciones == null){ echo "No hay datos"; }else{echo "{$ver->eobservaciones}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->eobservaciones == null){ echo "No hay datos"; }else{echo "{$ver->eobservaciones}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Curp</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecurp == null){ echo "No hay datos"; }else{echo "{$ver->ecurp}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecurp == null){ echo "No hay datos"; }else{echo "{$ver->ecurp}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de seguro social</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->enss == null){ echo "No hay datos"; }else{echo "{$ver->enss}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->enss == null){ echo "No hay datos"; }else{echo "{$ver->enss}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">RFC</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->erfc == null){ echo "No hay datos"; }else{echo "{$ver->erfc}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->erfc == null){ echo "No hay datos"; }else{echo "{$ver->erfc}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tipo de identificación</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->etipo_identificacion == null){echo "No hay datos";}else{ $tidentificacion=ucfirst(strtolower($ver->etipo_identificacion)); echo "{$tidentificacion}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->etipo_identificacion == null){echo "No hay datos";}else{ $tidentificacion=ucfirst(strtolower($ver->etipo_identificacion)); echo "{$tidentificacion}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de identificación</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->enum_identificacion == null){ echo "No hay datos"; }else{echo "{$ver->enum_identificacion}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->enum_identificacion == null){ echo "No hay datos"; }else{echo "{$ver->enum_identificacion}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <div class="flex justify-center sm:justify-end">
@@ -183,53 +183,53 @@
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Capacitación</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecapacitacion == null){ echo "No hay datos"; }else{echo "{$ver->ecapacitacion}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecapacitacion == null){ echo "No hay datos"; }else{echo "{$ver->ecapacitacion}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Uniformes</label>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de entrega de uniforme</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->efecha_enuniforme == null){ echo "No hay datos"; }else{echo "{$ver->efecha_enuniforme}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->efecha_enuniforme == null){ echo "No hay datos"; }else{echo "{$ver->efecha_enuniforme}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cantidad (camisa)</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->ecantidad_polo == null){ echo "No hay datos"; }else{echo "{$ver->ecantidad_polo}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->ecantidad_polo == null){ echo "No hay datos"; }else{echo "{$ver->ecantidad_polo}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Talla (camisa)</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->etalla_polo == null){ echo "No hay datos"; }else{echo "{$ver->etalla_polo}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->etalla_polo == null){ echo "No hay datos"; }else{echo "{$ver->etalla_polo}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contacto de emergencia</label>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->eemergencia_nombre == null){ echo "No hay datos"; }else{echo "{$ver->eemergencia_nombre}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->eemergencia_nombre == null){ echo "No hay datos"; }else{echo "{$ver->eemergencia_nombre}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->eemergencia_telefono == null){ echo "No hay datos"; }else{echo "{$ver->eemergencia_telefono}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->eemergencia_telefono == null){ echo "No hay datos"; }else{echo "{$ver->eemergencia_telefono}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Otros datos</label>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Resultado antidoping</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->eresultado_antidoping == null){ echo "No hay datos"; }else{echo "{$ver->eresultado_antidoping}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->eresultado_antidoping == null){ echo "No hay datos"; }else{echo "{$ver->eresultado_antidoping}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cómo se entero de la vacante?</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->evacante == null){ echo "No hay datos"; }else{echo "{$ver->evacante}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->evacante == null){ echo "No hay datos"; }else{echo "{$ver->evacante}";} ?></span></div>
                             </div>
 							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tiene familiares dentro de la empresa?</label>
-                                <span class="md:flex md:justify-end"><?php if($ver->efam_dentro_empresa == null){ echo "No hay datos"; }else{echo "{$ver->efam_dentro_empresa}";} ?></span>
+                                <div class="text-left md:text-right"><span><?php if($ver->efam_dentro_empresa == null){ echo "No hay datos"; }else{echo "{$ver->efam_dentro_empresa}";} ?></span></div>
                             </div>
 							<?php if($ver->efam_nombre != null){ ?>
 								<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
 									<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo del familiar</label>
-									<span class="md:flex md:justify-end"><?php if($ver->efam_nombre == null){ echo "No hay datos"; }else{echo "{$ver->efam_nombre}";} ?></span>
+									<div class="text-left md:text-right"><span><?php if($ver->efam_nombre == null){ echo "No hay datos"; }else{echo "{$ver->efam_nombre}";} ?></span></div>
 								</div>
 							<?php } ?>
 							<div class="grid grid-cols-1 mt-5 mx-7">
