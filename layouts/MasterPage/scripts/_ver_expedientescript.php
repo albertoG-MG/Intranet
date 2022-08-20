@@ -110,6 +110,22 @@ $(document).ready(function () {
             currentTab.parentElement.nextElementSibling.classList.add("border-blue-400", "opacity-100");
         });
 
+        $("#anterior3").on("click", function () {
+            let tabContents = document.querySelector("#tab-contents");
+            let currentTab = document.querySelector(".active");
+            let tabName = currentTab.parentElement.parentElement.children[2].firstChild.getAttribute("href");
+            for (let i = 0; i < tabContents.children.length; i++) {
+                    tabTogglers[i].parentElement.classList.remove("border-blue-400", "opacity-100");  tabContents.children[i].classList.remove("hidden");
+                    tabTogglers[i].classList.remove('active');
+                    if ("#" + tabContents.children[i].id === tabName) {
+                    tabTogglers[i].className="active";
+                    continue;
+                    }
+                    tabContents.children[i].classList.add("hidden");
+            }
+            currentTab.parentElement.parentElement.children[2].classList.add("border-blue-400", "opacity-100");
+        });
+
     <?php if($cont_referencias > 0){ ?>
             var number = <?php echo $cont_referencias; ?>;
             var container = document.getElementById("referencias");

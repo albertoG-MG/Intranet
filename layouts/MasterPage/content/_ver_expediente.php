@@ -368,6 +368,11 @@
 								}
 							}
 							?>
+                            <div class="grid grid-cols-1 mt-5 mx-7">
+								<div class="flex justify-center sm:justify-end gap-3">
+									<button type="button" id="anterior3" name="anterior3" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Anterior</button>
+								</div>
+							</div>
 						</div>
 					</div>
                 </div>
