@@ -16,7 +16,15 @@ CREATE TABLE `roles` (
 -- Insert into para la tabla `roles`
 
 INSERT INTO `roles` (`id`, `nombre`) VALUES
-(1, 'Superadministrador');
+(1, 'Superadministrador'),
+(2, 'Administrador'),
+(3, 'Director general'),
+(4, 'Director'),
+(5, 'Gerente'),
+(6, 'Empleado'),
+(7, 'Supervisor'),
+(8, 'Tecnico'),
+(9, 'Usuario externo');
 
 -- --------------------------------------------------------
 
@@ -53,6 +61,21 @@ CREATE TABLE `departamentos` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departamento` varchar(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Insert into para la tabla departamentos
+--
+
+INSERT INTO `departamentos` (`id`, `departamento`) VALUES
+(1, 'Soporte tecnico'),
+(2, 'Recursos humanos'),
+(3, 'Finanzas'),
+(4, 'Call center'),
+(5, 'Laboratorio'),
+(6, 'Almacen'),
+(7, 'Operaciones');
 
 -- --------------------------------------------------------
 
