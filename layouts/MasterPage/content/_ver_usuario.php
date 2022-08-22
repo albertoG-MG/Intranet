@@ -113,7 +113,7 @@
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
               <a href="users.php" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2' id='regresar' name='regresar'>Regresar</a>
-              <a href="ver_usuario.php?idUser=<?php echo $verid; ?>" class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='editar' name='editar'>Editar</a>
+              <a href="editar_usuario.php?idUser=<?php echo $verid; ?>" class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='editar' name='editar'>Editar</a>
             </div>
           </div>
         </div>
