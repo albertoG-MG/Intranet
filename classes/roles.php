@@ -4,10 +4,12 @@ include_once __DIR__ . "/crud.php";
 class roles {
 	
     public $roles;
+    public $jerarquia;
     public $rolpermissions;
 	
-	public function __construct($rolnom, $rpermissions){
+	public function __construct($rolnom, $hierarchy, $rpermissions){
         $this->roles = $rolnom;
+        $this->jerarquia = $hierarchy;
         $this->rolpermissions = $rpermissions;
 	}
 	
@@ -16,10 +18,22 @@ class roles {
 		$crud = new crud();
         $crud -> store('roles', ["nombre" => $this->roles]);
         $rol_id = $object -> _db->lastInsertId();
+        if($this->jerarquia != null){
+            roles::Asignarjerarquia($rol_id, $this->jerarquia);         
+        }
         if($this->rolpermissions != null){
         roles::Asignarpermisos($rol_id, $this->rolpermissions);
         }
 	}
+
+    public static function Asignarjerarquia($rol_id, $jerarquia){
+        $crud=new crud();
+        if($jerarquia == "SIN JEFE"){
+            $crud->store('jerarquia', ['rol_id' => $rol_id]);
+        }else{
+            $crud->store('jerarquia', ['rol_id' => $rol_id, 'jerarquia_id' => $jerarquia]);
+        }
+    }
 
     protected static function Asignarpermisos($rol_id, $permissions){
         $crud = new crud();
