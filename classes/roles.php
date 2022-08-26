@@ -44,12 +44,9 @@ class roles {
 
     public static function FetchJerarquia(){
         $object = new connection_database();
-        $superadministrador = 'Superadministrador';
-        $administrador= 'administrador';
-        $usuario_externo = 'Usuario externo';
-		$sql = "select id, nombre from roles where nombre!=:superadministrador and nombre!=:administrador and nombre !=:usuario_externo";
+		$sql = "select roles.id, roles.nombre from jerarquia inner join roles on jerarquia.rol_id=roles.id";
         $fetchjerarquia = $object->_db->prepare($sql);
-        $fetchjerarquia->execute(array('superadministrador' => $superadministrador, 'administrador' => $administrador, 'usuario_externo' => $usuario_externo));
+        $fetchjerarquia->execute();
         $jerarquia = $fetchjerarquia->fetchAll(PDO::FETCH_OBJ);
 		return $jerarquia;
     }
