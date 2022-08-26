@@ -63,6 +63,11 @@
             return false;
             }
         });
+
+        if(document.getElementById('permissionarray').textContent.trim() === ''){
+            $('#permissionarray').html( "<div class='bg-gray-100 flex flex-1 justify-center items-center rounded-lg h-12 font-semibold'>No hay permisos dados de alta en el sistema</div>");
+        }
+
         <?php
         if(basename($_SERVER['PHP_SELF']) == 'editar_rol.php'){?>
             var dropdown = document.getElementById('catalogos');
