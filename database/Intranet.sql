@@ -29,6 +29,20 @@ INSERT INTO `roles` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `jerarquia`
+--
+
+CREATE TABLE `jerarquia`(
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `rol_id` int NOT NULL,
+  `jerarquia_id` int DEFAULT NULL,
+   FOREIGN KEY (rol_id) REFERENCES roles(id) ON DELETE CASCADE,
+   FOREIGN KEY (jerarquia_id) REFERENCES jerarquia(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `permisos`
 --
 
