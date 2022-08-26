@@ -28,6 +28,18 @@ class roles {
         }
     }
 
+    public static function FetchJerarquia(){
+        $object = new connection_database();
+        $superadministrador = 'Superadministrador';
+        $administrador= 'administrador';
+        $usuario_externo = 'Usuario externo';
+		$sql = "select id, nombre from roles where nombre!=:superadministrador and nombre!=:administrador and nombre !=:usuario_externo";
+        $fetchjerarquia = $object->_db->prepare($sql);
+        $fetchjerarquia->execute(array('superadministrador' => $superadministrador, 'administrador' => $administrador, 'usuario_externo' => $usuario_externo));
+        $jerarquia = $fetchjerarquia->fetchAll(PDO::FETCH_OBJ);
+		return $jerarquia;
+    }
+
     public static function FetchRol(){
         $object = new connection_database();
 		$sql = "SELECT * FROM roles";

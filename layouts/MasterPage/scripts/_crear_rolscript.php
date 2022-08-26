@@ -31,10 +31,12 @@ $("#Guardar").validate({
             $("#grabar").attr("disabled", true);
             var fd = new FormData();
             var roles = $("input[name=rol]").val();
+            var jerarquia = $("#jerarquia").val();
             var permisos = JSON.stringify(array);
             var method="store";
             var app="roles";
             fd.append("roles", roles);
+            fd.append('jerarquia', jerarquia);
             fd.append("permisos", permisos);
             fd.append("method", method);
             fd.append("app", app);
