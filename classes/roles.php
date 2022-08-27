@@ -51,6 +51,15 @@ class roles {
 		return $jerarquia;
     }
 
+    public static function FetchEditJerarquia($id){
+        $object = new connection_database();
+        $sql = "select roles.id, roles.nombre, jerarquia.id as jerarquiaid from jerarquia inner join roles on jerarquia.rol_id=roles.id where roles.id!=:rolid";
+        $fetchjerarquia = $object->_db->prepare($sql);
+        $fetchjerarquia->execute(array(':rolid' => $id));
+        $jerarquia = $fetchjerarquia->fetchAll(PDO::FETCH_OBJ);
+        return $jerarquia;
+    }
+
     public static function FetchRol(){
         $object = new connection_database();
 		$sql = "SELECT * FROM roles";

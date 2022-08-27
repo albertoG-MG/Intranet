@@ -79,7 +79,7 @@
                     <option value="" <?php if($row->jera_rol == null && $row->jera_id ==null){ echo "selected"; } ?>>Sin jerarquía</option>
                     <option value="SIN JEFE" <?php if($row->jera_rol !=null && $row->jera_id == null){ echo "selected"; } ?>>Sin jefe</option>
                       <?php 
-                      $jerarquia = roles::FetchJerarquia();
+                      $jerarquia = roles::FetchEditJerarquia($editarid);
 					            $jefe_check = $object -> _db->prepare("SELECT t2.id as jefe_id FROM jerarquia t1 INNER JOIN roles a ON t1.rol_id=a.id INNER JOIN jerarquia t2 ON t1.jerarquia_id = t2.id INNER JOIN roles b ON t2.rol_id=b.id where a.id=:editarid");
                       $jefe_check -> execute(array(':editarid' => $editarid));
                       $jefe_count = $jefe_check ->rowCount();
