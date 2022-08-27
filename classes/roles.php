@@ -65,6 +65,11 @@ class roles {
 		$object = new connection_database();
         $crud = new crud();
         $crud -> update('roles', ['nombre' => $this->roles], 'id=:id', ['id' => $id]);
+        if($this->jerarquia != null){
+            roles::Editarjerarquia($id, $this->jerarquia);         
+        }else{
+            $crud -> delete('jerarquia', 'rol_id=:rolid', ['rolid' => $id]);
+        }
         $checkrolesxpermisos = $object -> _db -> prepare("SELECT permisos_id FROM rolesxpermisos WHERE roles_id=:idrol");
         $checkrolesxpermisos -> execute(array(":idrol" => $id));
         $fetchroles = $checkrolesxpermisos -> fetchAll(PDO::FETCH_COLUMN);
@@ -110,6 +115,22 @@ class roles {
             
         }
 	}
+
+    public static function Editarjerarquia($rol_id, $jerarquia){
+        $object = new connection_database();
+        $crud=new crud();
+        if($jerarquia == "SIN JEFE"){
+            $jerarquia = null;
+        }
+        $sql = $object -> _db ->prepare("SELECT * from jerarquia where rol_id=:rolid");
+        $sql -> execute(array(':rolid' => $rol_id));
+        $check_jerarquia = $sql -> rowCount();
+        if($check_jerarquia > 0 ){
+            $crud->update('jerarquia', ['jerarquia_id' => $jerarquia], 'rol_id=:rolid', ['rolid' => $rol_id]);
+        }else{
+            $crud->store('jerarquia', ['rol_id' => $rol_id, 'jerarquia_id' => $jerarquia]);
+        }
+    }
 
     public static function EliminarRol($id){
 		$crud = new crud();

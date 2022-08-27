@@ -82,9 +82,10 @@
                       $jerarquia = roles::FetchJerarquia();
 					            $jefe_check = $object -> _db->prepare("SELECT t2.id as jefe_id FROM jerarquia t1 INNER JOIN roles a ON t1.rol_id=a.id INNER JOIN jerarquia t2 ON t1.jerarquia_id = t2.id INNER JOIN roles b ON t2.rol_id=b.id where a.id=:editarid");
                       $jefe_check -> execute(array(':editarid' => $editarid));
+                      $jefe_count = $jefe_check ->rowCount();
                       $jefe_row = $jefe_check -> fetch(PDO::FETCH_OBJ);
                       foreach ($jerarquia as $row) {
-                        echo "<option value='" . $row->id . "'"; if($row->jerarquiaid == $jefe_row->jefe_id){ echo "selected"; } echo ">";
+                        echo "<option value='" . $row->id . "'"; if($jefe_count > 0){ if($row->jerarquiaid == $jefe_row->jefe_id){ echo "selected"; }} echo ">";
                         echo "$row->nombre";
                         echo "</option>";
                       }
