@@ -72,6 +72,28 @@
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Jerarquía</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-school text-gray-400 text-lg"></i></div>
+                  <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="jerarquia" name="jerarquia">
+                    <option value="" <?php if($row->jera_rol == null && $row->jera_id ==null){ echo "selected"; } ?>>Sin jerarquía</option>
+                    <option value="SIN JEFE" <?php if($row->jera_rol !=null && $row->jera_id == null){ echo "selected"; } ?>>Sin jefe</option>
+                      <?php 
+                      $jerarquia = roles::FetchJerarquia();
+					            $jefe_check = $object -> _db->prepare("SELECT t2.id as jefe_id FROM jerarquia t1 INNER JOIN roles a ON t1.rol_id=a.id INNER JOIN jerarquia t2 ON t1.jerarquia_id = t2.id INNER JOIN roles b ON t2.rol_id=b.id where a.id=:editarid");
+                      $jefe_check -> execute(array(':editarid' => $editarid));
+                      $jefe_row = $jefe_check -> fetch(PDO::FETCH_OBJ);
+                      foreach ($jerarquia as $row) {
+                        echo "<option value='" . $row->id . "'"; if($row->jerarquiaid == $jefe_row->jefe_id){ echo "selected"; } echo ">";
+                        echo "$row->nombre";
+                        echo "</option>";
+                      }
+                      ?>
+                  </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Permisos</label>
               <div id="permissionarray" class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
                 <?php

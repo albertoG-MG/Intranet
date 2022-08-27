@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . "/../../../config/conexion.php";
+include_once __DIR__ . "/../../../classes/roles.php";
 include_once __DIR__ . "/../../../classes/permissions.php";
 $object = new connection_database();
 
@@ -25,7 +26,7 @@ if($editarid == null){
 }
 //Fin de la validacion
 
-$editar = $object -> _db->prepare("SELECT * FROM roles WHERE id=:editarid");
+$editar = $object -> _db->prepare("SELECT roles.id as rolid, roles.nombre as nombre, jerarquia.id as jerarquiaid, jerarquia.rol_id as jera_rol, jerarquia.jerarquia_id as jera_id FROM roles left join jerarquia on roles.id=jerarquia.rol_id WHERE roles.id=:editarid");
 $editar->bindParam("editarid", $editarid,PDO::PARAM_INT);
 $editar->execute();
 

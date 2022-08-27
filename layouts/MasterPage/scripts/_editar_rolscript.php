@@ -32,11 +32,13 @@
                 $("#grabar").attr("disabled", true);
                 var fd = new FormData();
                 var roles = $("input[name=rol]").val();
+                var jerarquia = $("#jerarquia").val();
                 var permisos = JSON.stringify(array);
                 var editar = <?php echo $editarid; ?>;
                 var method="edit";
                 var app="roles";
                 fd.append("roles", roles);
+                fd.append('jerarquia', jerarquia);
                 fd.append("permisos", permisos);
                 fd.append("editarid", editar);
                 fd.append("method", method);

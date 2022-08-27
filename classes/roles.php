@@ -44,7 +44,7 @@ class roles {
 
     public static function FetchJerarquia(){
         $object = new connection_database();
-		$sql = "select roles.id, roles.nombre from jerarquia inner join roles on jerarquia.rol_id=roles.id";
+		$sql = "select roles.id, roles.nombre, jerarquia.id as jerarquiaid from jerarquia inner join roles on jerarquia.rol_id=roles.id";
         $fetchjerarquia = $object->_db->prepare($sql);
         $fetchjerarquia->execute();
         $jerarquia = $fetchjerarquia->fetchAll(PDO::FETCH_OBJ);
