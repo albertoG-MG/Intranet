@@ -2699,3 +2699,12 @@ DROP TABLE IF EXISTS `serverside_expuser`;
 CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT `expedientes`.`id` AS `exp_id`, `usuarios`.`nombre` AS `usernom`, `usuarios`.`apellido_pat` AS `userpat`, `usuarios`.`apellido_mat` AS `usermat`, `expedientes`.`fecha_alta` AS `fechaalta` FROM (`expedientes` join `usuarios` on((`expedientes`.`users_id` = `usuarios`.`id`)))  ;
 
 -- --------------------------------------------------------
+
+--
+-- Estructura para la vista `serverside_rol`
+--
+DROP TABLE IF EXISTS `serverside_rol`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_rol`  AS SELECT `a`.`id` AS `rol_id`, `a`.`nombre` AS `rol`, `t1`.`id` AS `jerarquia_id`, `b`.`nombre` AS `jefe` FROM (((`roles` `a` left join `jerarquia` `t1` on((`t1`.`rol_id` = `a`.`id`))) left join `jerarquia` `t2` on((`t1`.`jerarquia_id` = `t2`.`id`))) left join `roles` `b` on((`t2`.`rol_id` = `b`.`id`)))  ;
+
+-- --------------------------------------------------------
