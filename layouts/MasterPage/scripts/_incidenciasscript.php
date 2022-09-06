@@ -45,11 +45,10 @@
                 { data: null, render: function ( data, type, row ) {
                     return (data.nombre+ ' ' +data.apellido_pat+ ' ' +data.apellido_mat); 
                 }},
-                {"data": "titulo"},
                 {"data": "tipo_incidencia"},
                 {"data": "fecha_inicio"},
                 {"data": "fecha_fin"},
-                {"data": "estatus_incidencia"},
+                {"data": "estatus_nombre"},
                 { data: null, render: function ( data, type, row ) {
                     return (
                             "<div class='py-3 text-left'>" +
