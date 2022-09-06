@@ -42,6 +42,18 @@ CREATE TABLE `jerarquia`(
 
 -- --------------------------------------------------------
 
+-- Insert into para la tabla `jerarquia`
+
+INSERT INTO `jerarquia` (`id`, `rol_id`, `jerarquia_id`) VALUES
+(1, 3, NULL),
+(2, 4, 1),
+(3, 5, 2),
+(4, 6, 3),
+(5, 7, 3),
+(6, 8 ,3);
+
+-- --------------------------------------------------------
+
 --
 -- Estructura de tabla para la tabla `permisos`
 --
@@ -2679,7 +2691,9 @@ INSERT INTO `tipo_estatus_incidencia` (`id`, `descripcion_estado`) VALUES
    (1, 'Aprobada'),
    (2, 'Cancelada'),
    (3, 'Rechazada'),
-   (4, 'Pendiente');
+   (4, 'Pendiente'),
+   (5, 'Sin jefe'),
+   (6, 'Sin jerarquía');
 
 -- --------------------------------------------------------
 
@@ -2702,7 +2716,9 @@ INSERT INTO `estatus_incidencia` (`id`, `tipo_estatus_id`, `nombre`) VALUES
    (1, 1, "Su superior ha aprobado la petición"),
    (2, 2, "Su superior ha cancelado la petición"),
    (3, 3, "Su superior ha rechazado la petición"),
-   (4, 4, "Su petición se ha enviado a su superior");
+   (4, 4, "Su petición se ha enviado a su superior"),
+   (5, 5, "Ústed no tiene un superior"),
+   (6, 6, "Ústed no tiene jerarquía");
 
 -- --------------------------------------------------------								
 
