@@ -2658,6 +2658,52 @@ CREATE TABLE `papeleria_empleado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_estatus_incidencia`
+--
+
+
+CREATE TABLE `tipo_estatus_incidencia`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_estado` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `tipo_estatus_incidencia`
+
+
+INSERT INTO `tipo_estatus_incidencia` (`id`, `descripcion_estado`) VALUES
+   (1, 'Aprobada'),
+   (2, 'Cancelada'),
+   (3, 'Rechazada'),
+   (4, 'Pendiente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estatus_incidencia`
+--
+	
+CREATE TABLE `estatus_incidencia`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `tipo_estatus_id` int NOT NULL,
+   `nombre` varchar(200) NOT NULL,
+	FOREIGN KEY (tipo_estatus_id) REFERENCES tipo_estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `estatus_incidencia`
+
+
+INSERT INTO `estatus_incidencia` (`id`, `tipo_estatus_id`, `nombre`) VALUES
+   (1, 1, "Su superior ha aprobado la petición"),
+   (2, 2, "Su superior ha cancelado la petición"),
+   (3, 3, "Su superior ha rechazado la petición"),
+   (4, 4, "Su petición se ha enviado a su superior");
+
 -- --------------------------------------------------------								
 
 --
@@ -2672,13 +2718,122 @@ CREATE TABLE `incidencias` (
   `fecha_fin` date NOT NULL,
   `tipo_incidencia` varchar(500) NOT NULL,
   `descripcion` varchar(500) NOT NULL,
-  `estatus_incidencia` varchar(500) NOT NULL,
   `filename` longtext DEFAULT NULL,
   `foto` longtext DEFAULT NULL,
   `incidencia_creada` date NOT NULL,
-   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE
+  `estatus_id` int DEFAULT '4',
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus_id) REFERENCES tipo_estatus_incidencia(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transicion_estatus_incidencia`
+--
+
+
+CREATE TABLE `transicion_estatus_incidencia`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `incidencias_id` bigint(20) NOT NULL,
+   `estatus_actual` int NOT NULL,
+   `estatus_siguiente` int NOT NULL,
+   FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus_actual) REFERENCES estatus_incidencia(id),
+   FOREIGN KEY (estatus_siguiente) REFERENCES estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_accion_incidencias`
+--
+
+CREATE TABLE `tipo_accion_incidencias`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_accion` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `tipo_accion_incidencias`
+
+
+INSERT INTO `tipo_accion_incidencias` (`id`, `descripcion_accion`) VALUES
+   (1, 'Aprobar'),
+   (2, 'Rechazar'),
+   (3, 'Cancelar');
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accion_incidencias`
+--
+
+CREATE TABLE `accion_incidencias`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`incidencias_id` bigint(20) NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`aprobado_por` varchar(200) NOT NULL,
+	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transición_acción_incidencias`
+--
+
+CREATE TABLE `transicion_accion_incidencias`(
+   id_transicion int NOT NULL,
+   id_accion int NOT NULL,
+   FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_incidencia(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_accion) REFERENCES accion_incidencias(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla Transicion_estatus_incidencia
+--
+
+
+DELIMITER $$
+
+CREATE TRIGGER insertar_transicion_estatus_incidencia
+AFTER INSERT ON accion_incidencias FOR EACH ROW
+BEGIN
+	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, incidencias.estatus_id, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla transicion_accion_incidencia
+--
+
+DELIMITER $$
+
+CREATE TRIGGER link_transcicion_accion
+AFTER INSERT ON transicion_estatus_incidencia FOR EACH ROW
+BEGIN
+	 DECLARE AccionId INTEGER(4);
+
+	 SELECT id INTO AccionId from accion_incidencias where incidencias_id=NEW.incidencias_id;
+
+	 INSERT INTO transicion_accion_incidencias(id_transicion, id_accion) VALUES (NEW.id, AccionId);
+END;
+$$
+
+
+DELIMITER ;
 
 -- --------------------------------------------------------								
 
