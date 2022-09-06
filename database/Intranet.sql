@@ -2739,7 +2739,7 @@ CREATE TABLE `incidencias` (
   `incidencia_creada` date NOT NULL,
   `estatus_id` int DEFAULT '4',
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-   FOREIGN KEY (estatus_id) REFERENCES tipo_estatus_incidencia(id)
+   FOREIGN KEY (estatus_id) REFERENCES estatus_incidencia(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
