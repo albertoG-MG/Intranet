@@ -24,7 +24,7 @@
                                 'id': 'Incidencia',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white <?php if($count_block > 0){ echo "disabled"; } ?>',
                             action: function(e, dt, node, config) {
                                 window.location.href = "crear_incidencia.php";
                             }
