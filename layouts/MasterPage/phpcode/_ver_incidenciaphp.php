@@ -27,7 +27,7 @@
 		}
 	}
 
-    $ver=Incidencias::Fetcheditincidencia($verid);
+    $ver=Incidencias::Fetchverincidencia($verid);
 
 	
 ?>

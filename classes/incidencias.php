@@ -129,5 +129,14 @@ class incidencias {
 		$crud=new crud();
 		$crud -> update ('incidencias', ['titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto], 'id=:idincidencia', ['idincidencia' => $incidenciaid]);
 	}
+
+	public static function Fetchverincidencia($id){
+        $object = new connection_database();
+        $row = $object->_db->prepare("SELECT i.id as incidenciaid, u.nombre, u.apellido_pat, u.apellido_mat, i.titulo, i.fecha_inicio, i.fecha_fin, i.tipo_incidencia, ei.nombre as estatus_incidencia, i.descripcion, i.filename, i.foto, i.incidencia_creada FROM incidencias i INNER JOIN usuarios u ON i.users_id=u.id INNER JOIN estatus_incidencia ei ON i.estatus_id=ei.id WHERE i.id=:incidenciaid");
+        $row->bindParam("incidenciaid", $id, PDO::PARAM_INT);
+        $row->execute();
+        $ver_incidencia = $row->fetch(PDO::FETCH_OBJ);
+        return $ver_incidencia;
+    }
 }
 ?>

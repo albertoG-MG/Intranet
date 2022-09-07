@@ -65,7 +65,17 @@
           </div>
 
           <div class="grid grid-cols-1">
-            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 b-5 mx-7">
+	          <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 b-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Incidencia ID</label>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->incidenciaid}"; ?></span>
+            </div>
+			
+			      <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo</label>
+              <span class="md:flex md:justify-end"><?php echo "{$ver->nombre} {$ver->apellido_pat} {$ver->apellido_mat}"; ?></span>
+            </div>
+			
+			      <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Título de la incidencia</label>
               <span class="md:flex md:justify-end"><?php echo "{$ver->titulo}"; ?></span>
             </div>
