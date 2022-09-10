@@ -1,5 +1,6 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+        var buttonlist = 0;
         $("#datatable").DataTable({
             responsive:true,
             "lengthChange": false,
@@ -11,12 +12,34 @@
             dom: '<"top"fB>rt<"bottom"ip><"clear">',
             buttons: [
                         {
-                            text: "<i class='mdi mdi-bus text-white font-semibold text-lg'></i> Solicitar vacaciones",
+                            text: "<i class='mdi mdi-newspaper-variant text-white font-semibold text-lg'></i> Mis incidencias",
                             attr: {
-                                'id': 'Vacaciones',
+                                'id': 'mis_incidencias',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/ajax_incidencias.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 buttonlist = 0; 
+										 table.column().cells().invalidate().render();
+									
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
                         },
 						{
                             text: "<i class='mdi mdi-beaker-plus text-white font-semibold text-lg'></i> Crear Incidencia",
@@ -50,9 +73,10 @@
                 {"data": "fecha_fin"},
                 {"data": "estatus_nombre"},
                 { data: null, render: function ( data, type, row ) {
-                    return (
+                    if(buttonlist == 0){
+                        return     (
                             "<div class='py-3 text-left'>" +
-                            "<div class='flex item-center justify-center'>" +
+                            "<div class='flex item-center justify-center data'>" +
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
                             "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
@@ -70,7 +94,9 @@
                             "</svg>" +
                             "</div>" +
                             "</div>" +
-                            "</div>");
+                            "</div>"
+                        );	
+					}
                 }}
             ],
             "initComplete": () => {
