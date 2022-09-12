@@ -4,7 +4,7 @@ $object = new connection_database();
 
 /*$idrol = $_POST["rol"];*/
 $id = $_POST["sessionid"];
-$pendiente = 4;
+$pendiente = 1;
 
 /*$rolnombre = $object -> _db -> prepare("SELECT roles.nombre FROM usuarios INNER JOIN roles ON usuarios.roles_id=roles.id WHERE roles_id= :rolid");
 $rolnombre -> execute(array(":rolid" => $idrol));
