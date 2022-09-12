@@ -161,6 +161,36 @@
 								})
 							}
                         },
+                        {
+                            text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
+                            attr: {
+                                'id': 'incidencias_desplieguetodo',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/incidencias/incidencia_desplieguetodo.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 buttonlist = 0; 
+										 table.column().cells().invalidate().render();
+									
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
+                        },
 						{
                             text: "<i class='mdi mdi-beaker-plus text-white font-semibold text-lg'></i> Crear Incidencia",
                             attr: {
