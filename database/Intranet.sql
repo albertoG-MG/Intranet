@@ -2778,8 +2778,8 @@ CREATE TABLE `tipo_accion_incidencias`(
 
 INSERT INTO `tipo_accion_incidencias` (`id`, `descripcion_accion`) VALUES
    (1, 'Aprobar'),
-   (2, 'Rechazar'),
-   (3, 'Cancelar');
+   (2, 'Cancelar'),
+   (3, 'Rechazar');
 
 
 -- --------------------------------------------------------
@@ -2792,6 +2792,7 @@ CREATE TABLE `accion_incidencias`(
 	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`incidencias_id` bigint(20) NOT NULL,
 	`tipo_de_accion` int NOT NULL,
+   `goce_de_sueldo` bit(1) NOT NULL,
 	`aprobado_por` varchar(200) NOT NULL,
 	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
 	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
