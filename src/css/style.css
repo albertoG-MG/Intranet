@@ -675,9 +675,6 @@ select {
 .z-30 {
   z-index: 30 !important;
 }
-.col-span-2 {
-  grid-column: span 2 / span 2 !important;
-}
 .col-span-1 {
   grid-column: span 1 / span 1 !important;
 }
@@ -1240,6 +1237,18 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(67 56 202 / var(--tw-bg-opacity)) !important;
 }
+.bg-green-700 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity)) !important;
+}
+.bg-red-700 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity)) !important;
+}
+.bg-gray-800 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)) !important;
+}
 .bg-purple-200 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(233 213 255 / var(--tw-bg-opacity)) !important;
@@ -1606,6 +1615,18 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
 }
+.hover\:bg-green-800:hover {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(22 101 52 / var(--tw-bg-opacity)) !important;
+}
+.hover\:bg-red-800:hover {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(153 27 27 / var(--tw-bg-opacity)) !important;
+}
+.hover\:bg-gray-900:hover {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity)) !important;
+}
 .hover\:bg-opacity-25:hover {
   --tw-bg-opacity: 0.25 !important;
 }
@@ -1688,6 +1709,18 @@ select {
 .focus\:ring-blue-200:focus {
   --tw-ring-opacity: 1 !important;
   --tw-ring-color: rgb(191 219 254 / var(--tw-ring-opacity)) !important;
+}
+.focus\:ring-green-300:focus {
+  --tw-ring-opacity: 1 !important;
+  --tw-ring-color: rgb(134 239 172 / var(--tw-ring-opacity)) !important;
+}
+.focus\:ring-red-300:focus {
+  --tw-ring-opacity: 1 !important;
+  --tw-ring-color: rgb(252 165 165 / var(--tw-ring-opacity)) !important;
+}
+.focus\:ring-gray-300:focus {
+  --tw-ring-opacity: 1 !important;
+  --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity)) !important;
 }
 .focus\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px !important;
@@ -1891,6 +1924,10 @@ select {
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .md\:flex-row {
+    flex-direction: row !important;
   }
 
   .md\:justify-end {

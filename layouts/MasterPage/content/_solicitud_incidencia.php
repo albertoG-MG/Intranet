@@ -46,12 +46,12 @@
                             <table class="w-full" id="datatable" style="display:none;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left desktop">Id</th>
-                                        <th class="py-3 text-left all">Nombre</th>
+                                        <th class="py-3 text-left all">Id</th>
+                                        <th class="py-3 text-left min-tablet">Nombre</th>
                                         <th class="py-3 text-left desktop">Tipo</th>
                                         <th class="py-3 text-left desktop">Fecha inicio</th>
                                         <th class="py-3 text-left desktop">Fecha fin</th>
-                                        <th class="py-3 text-left desktop">Estado</th>
+                                        <th class="py-3 text-center desktop">Goce de sueldo?</th>
 										<th class="py-3 text-center desktop"></th>
                                         <th class="py-3 text-center min-tablet"></th>
                                     </tr>
