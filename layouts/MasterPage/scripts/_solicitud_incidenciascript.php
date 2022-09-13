@@ -31,7 +31,7 @@
 	                return "<div class='text-center'><input type='checkbox' id='"+data['incidenciaid']+"' value='Check'></div>";
                 }},
                 { data: null, render: function ( data, type, row ) {
-	                return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" class="text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';                
+	                return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" id="Aprobar" name="Aprobar" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" id="Rechazar" name="Rechazar" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" id="Cancelar" name="Cancelar" class="text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';                
                 }},
                 { data: null, render: function ( data, type, row ) {
                     return (
@@ -65,6 +65,30 @@
 	$(document).ready(function() {
 		$('.dataTables_filter input[type="search"]').
 		attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+
+        $('#datatable').on('click', 'tr #Aprobar', function () {
+            alert("Aprobar");
+        });
+
+        $('#datatable').on('click', 'tr #Cancelar', function () {
+            alert("Cancelar");
+        });
+
+        $('#datatable').on('click', 'tr #Rechazar', function () {
+            alert("Rechazar");
+        });
+
+        $('#datatable').on('click', 'tr .Ver', function () {
+            alert("Ver");
+        });
+
+        $('#datatable').on('click', 'tr .Editar', function () {
+            alert("Editar");
+        });
+
+        $('#datatable').on('click', 'tr .Eliminar', function () {
+            alert("Eliminar");
+        });
 	});
 
 </script>
