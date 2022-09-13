@@ -191,6 +191,17 @@
 								})
 							}
                         },
+                        {
+                            text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver Solicitudes",
+                            attr: {
+                                'id': 'incidencias_solpendientes',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								window.location.href = "solicitud_incidencia.php";
+							}
+                        },
 						{
                             text: "<i class='mdi mdi-beaker-plus text-white font-semibold text-lg'></i> Crear Incidencia",
                             attr: {
