@@ -143,7 +143,7 @@ class incidencias {
 		$object = new connection_database();
 		$crud = new crud();
 		$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
-		$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'aprobado_por' => $nombre_completo]);
+		$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'evaluado_por' => $nombre_completo]);
 		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id SET i.estatus_id = temp.estatus_siguiente");
 		$update_state -> execute(array(':incidenciaid' => $incidenciaid));
 	}
