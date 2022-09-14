@@ -67,15 +67,147 @@
 		attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
 
         $('#datatable').on('click', 'tr #Aprobar', function () {
-            alert("Aprobar");
+            var estatus=1;
+            var sueldo=0;
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+
+            if ($('#' + data['incidenciaid']).is(":checked") == true){
+                sueldo=1;
+            }
+
+            var fd = new FormData();
+            var incidenciaid = data["incidenciaid"];
+            var method = "store";
+            var app = "solicitud_incidencia";
+            var sessionid = <?php echo $_SESSION["id"]; ?>;
+            fd.append('iduser', sessionid);
+            fd.append('incidenciaid', incidenciaid);
+            fd.append('estatus', estatus);
+            fd.append('sueldo', sueldo);
+            fd.append('method', method);
+            fd.append('app', app);
+
+            $.ajax({
+                type: "POST",
+                url: "../ajax/class_search.php",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $("#Aprobar").attr("disabled", true);
+                    $("#Rechazar").attr("disabled", true);
+                    $("#Cancelar").attr("disabled", true);
+
+                }, error: function(response) {
+                    console.log(response);
+                }	
+            });
         });
 
         $('#datatable').on('click', 'tr #Cancelar', function () {
-            alert("Cancelar");
+            var estatus=2;
+            var sueldo=0;
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+
+            if ($('#' + data['incidenciaid']).is(":checked") == true){
+                sueldo=1;
+            }
+
+            var fd = new FormData();
+            var incidenciaid = data["incidenciaid"];
+            var method = "store";
+            var app = "solicitud_incidencia";
+            var sessionid = <?php echo $_SESSION["id"]; ?>;
+            fd.append('iduser', sessionid);
+            fd.append('incidenciaid', incidenciaid);
+            fd.append('estatus', estatus);
+            fd.append('sueldo', sueldo);
+            fd.append('method', method);
+            fd.append('app', app);
+
+            $.ajax({
+                type: "POST",
+                url: "../ajax/class_search.php",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $("#Aprobar").attr("disabled", true);
+                    $("#Rechazar").attr("disabled", true);
+                    $("#Cancelar").attr("disabled", true);
+
+                }, error: function(response) {
+                    console.log(response);
+                }	
+            });
         });
 
         $('#datatable').on('click', 'tr #Rechazar', function () {
-            alert("Rechazar");
+            var estatus=3;
+            var sueldo=0;
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+
+            if ($('#' + data['incidenciaid']).is(":checked") == true){
+                sueldo=1;
+            }
+
+            var fd = new FormData();
+            var incidenciaid = data["incidenciaid"];
+            var method = "store";
+            var app = "solicitud_incidencia";
+            var sessionid = <?php echo $_SESSION["id"]; ?>;
+            fd.append('iduser', sessionid);
+            fd.append('incidenciaid', incidenciaid);
+            fd.append('estatus', estatus);
+            fd.append('sueldo', sueldo);
+            fd.append('method', method);
+            fd.append('app', app);
+
+            $.ajax({
+                type: "POST",
+                url: "../ajax/class_search.php",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $("#Aprobar").attr("disabled", true);
+                    $("#Rechazar").attr("disabled", true);
+                    $("#Cancelar").attr("disabled", true);
+
+                }, error: function(response) {
+                    console.log(response);
+                }	
+            });
         });
 
         $('#datatable').on('click', 'tr .Ver', function () {

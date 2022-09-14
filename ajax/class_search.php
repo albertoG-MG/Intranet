@@ -448,5 +448,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			break;
 		}
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
+    if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
+		$incidenciaid= $_POST["incidenciaid"];
+        $estatus= $_POST["estatus"];
+		$sueldo= $_POST["sueldo"];
+		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
+		$select_user -> execute(array(':iduser' => $_POST["iduser"]));
+        $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
+        switch($_POST["method"]){
+            case "store":
+                Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $fetch_user -> nombre, $fetch_user -> apellido_pat, $fetch_user -> apellido_mat);
+                exit("success");
+            break;
+        }
+    }
 }
 ?>
