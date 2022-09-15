@@ -305,7 +305,13 @@
                     $("#Aprobar").attr("disabled", true);
                     $("#Rechazar").attr("disabled", true);
                     $("#Cancelar").attr("disabled", true);
-
+                    Swal.fire({
+				        title: "Incidencia Aprobada",
+				        text: "Se ha aprobado una incidencia!",
+				        icon: "success"
+			        }).then(function() {
+				        table.ajax.reload(null, false);
+			        });
                 }, error: function(response) {
                     console.log(response);
                 }	
@@ -353,7 +359,13 @@
                     $("#Aprobar").attr("disabled", true);
                     $("#Rechazar").attr("disabled", true);
                     $("#Cancelar").attr("disabled", true);
-
+                    Swal.fire({
+				        title: "Incidencia Cancelada",
+				        text: "Se ha cancelado una incidencia!",
+				        icon: "success"
+			        }).then(function() {
+				        table.ajax.reload(null, false);
+			        });
                 }, error: function(response) {
                     console.log(response);
                 }	
@@ -401,7 +413,13 @@
                     $("#Aprobar").attr("disabled", true);
                     $("#Rechazar").attr("disabled", true);
                     $("#Cancelar").attr("disabled", true);
-
+                    Swal.fire({
+				        title: "Incidencia Rechazada",
+				        text: "Se ha rechazado una incidencia!",
+				        icon: "success"
+			        }).then(function() {
+				        table.ajax.reload(null, false);
+			        });
                 }, error: function(response) {
                     console.log(response);
                 }	
