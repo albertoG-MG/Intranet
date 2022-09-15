@@ -154,6 +154,42 @@
 									}
 								})
 							}
+                        },
+
+                        {
+                            text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver todo",
+                            attr: {
+                                'id': 'ver_todo',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/solicitud_incidencia/ver_todo.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 evaluation_buttons=1;
+										 goce_sueldo=1;
+                                         var status = table.column(5);
+                                         status.visible(true);
+                                         var evaluation = table.column(7);
+                                         evaluation.visible(false);
+										 table.column().cells().invalidate().render();
+									
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
                         }
 					],
             "ajax":{
