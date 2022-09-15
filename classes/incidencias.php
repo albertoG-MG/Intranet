@@ -59,7 +59,7 @@ class incidencias {
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		$path = dirname($path);
-		$links = $path. "/layouts/aprobacion_incidencia.php?idIncidencia=" .$incidencia_id;
+		$links = $path. "/layouts/solicitud_incidencia.php";
 		$mail=new PHPMailer\PHPMailer\PHPMailer();
 		$mail->IsSMTP();  // telling the class to use SMTP
 		$mail->SMTPDebug = 0;
@@ -90,7 +90,7 @@ class incidencias {
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
 		$mail->Subject  = "Solicitud de aprobación de incidencias";
-		$mail->Body     = "Buen día ".$correos.": <br> Toca aquí para aprobar la incidencia <br> $links";
+		$mail->Body     = "Buen día ".$correos.": <br> Toca aquí para evaluar la incidencia <br> $links";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {
