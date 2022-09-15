@@ -267,6 +267,7 @@
         $('#datatable').on('click', 'tr #Aprobar', function () {
             var estatus=1;
             var sueldo=0;
+            var message="sin goce de sueldo?";
             var table = $('#datatable').DataTable();
             var rowSelector;
             var li = $(this).closest('li');
@@ -281,46 +282,60 @@
 
             if ($('#' + data['incidenciaid']).is(":checked") == true){
                 sueldo=1;
+                message = "con goce de sueldo?"
             }
 
-            var fd = new FormData();
-            var incidenciaid = data["incidenciaid"];
-            var method = "store";
-            var app = "solicitud_incidencia";
-            var sessionid = <?php echo $_SESSION["id"]; ?>;
-            fd.append('iduser', sessionid);
-            fd.append('incidenciaid', incidenciaid);
-            fd.append('estatus', estatus);
-            fd.append('sueldo', sueldo);
-            fd.append('method', method);
-            fd.append('app', app);
-
-            $.ajax({
-                type: "POST",
-                url: "../ajax/class_search.php",
-                data: fd,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    $("#Aprobar").attr("disabled", true);
-                    $("#Rechazar").attr("disabled", true);
-                    $("#Cancelar").attr("disabled", true);
+            Swal.fire({
+                title: 'Aprobar Incidencia',
+                text: "¿Está seguro que desea aprobar esta incidencia " +message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
                     Swal.fire({
-				        title: "Incidencia Aprobada",
-				        text: "Se ha aprobado una incidencia!",
-				        icon: "success"
-			        }).then(function() {
-				        table.ajax.reload(null, false);
-			        });
-                }, error: function(response) {
-                    console.log(response);
-                }	
-            });
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'Se ha aprobado la incidencia!'
+                    }).then(function() {
+                        var fd = new FormData();
+                        var incidenciaid = data["incidenciaid"];
+                        var method = "store";
+                        var app = "solicitud_incidencia";
+                        var sessionid = <?php echo $_SESSION["id"]; ?>;
+                        fd.append('iduser', sessionid);
+                        fd.append('incidenciaid', incidenciaid);
+                        fd.append('estatus', estatus);
+                        fd.append('sueldo', sueldo);
+                        fd.append('method', method);
+                        fd.append('app', app);				
+                        $.ajax({
+                            type: "POST",
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                table.ajax.reload(null, false);
+                            }, error: function(response) {
+                                console.log(response);
+                            }	
+                        });		
+                    });
+                }else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                    'Cancelado',
+                    'Se ha cancelado la operación',
+                    'error'
+                    )
+                }
+            })
         });
 
         $('#datatable').on('click', 'tr #Cancelar', function () {
             var estatus=2;
-            var sueldo=0;
             var table = $('#datatable').DataTable();
             var rowSelector;
             var li = $(this).closest('li');
@@ -333,48 +348,56 @@
             var row = table.row(rowSelector);
             var data = row.data();
 
-            if ($('#' + data['incidenciaid']).is(":checked") == true){
-                sueldo=1;
-            }
-
-            var fd = new FormData();
-            var incidenciaid = data["incidenciaid"];
-            var method = "store";
-            var app = "solicitud_incidencia";
-            var sessionid = <?php echo $_SESSION["id"]; ?>;
-            fd.append('iduser', sessionid);
-            fd.append('incidenciaid', incidenciaid);
-            fd.append('estatus', estatus);
-            fd.append('sueldo', sueldo);
-            fd.append('method', method);
-            fd.append('app', app);
-
-            $.ajax({
-                type: "POST",
-                url: "../ajax/class_search.php",
-                data: fd,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    $("#Aprobar").attr("disabled", true);
-                    $("#Rechazar").attr("disabled", true);
-                    $("#Cancelar").attr("disabled", true);
+            Swal.fire({
+                title: 'Cancelar Incidencia',
+                text: "¿Está seguro que desea cancelar esta incidencia?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
                     Swal.fire({
-				        title: "Incidencia Cancelada",
-				        text: "Se ha cancelado una incidencia!",
-				        icon: "success"
-			        }).then(function() {
-				        table.ajax.reload(null, false);
-			        });
-                }, error: function(response) {
-                    console.log(response);
-                }	
-            });
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'Se ha cancelado la incidencia!'
+                    }).then(function() {
+                        var fd = new FormData();
+                        var incidenciaid = data["incidenciaid"];
+                        var method = "store";
+                        var app = "solicitud_incidencia";
+                        var sessionid = <?php echo $_SESSION["id"]; ?>;
+                        fd.append('iduser', sessionid);
+                        fd.append('incidenciaid', incidenciaid);
+                        fd.append('estatus', estatus);
+                        fd.append('method', method);
+                        fd.append('app', app);				
+                        $.ajax({
+                            type: "POST",
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                table.ajax.reload(null, false);
+                            }, error: function(response) {
+                                console.log(response);
+                            }	
+                        });		
+                    });
+                }else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                    'Cancelado',
+                    'Se ha cancelado la operación',
+                    'error'
+                    )
+                }
+            })
         });
 
         $('#datatable').on('click', 'tr #Rechazar', function () {
             var estatus=3;
-            var sueldo=0;
             var table = $('#datatable').DataTable();
             var rowSelector;
             var li = $(this).closest('li');
@@ -387,43 +410,52 @@
             var row = table.row(rowSelector);
             var data = row.data();
 
-            if ($('#' + data['incidenciaid']).is(":checked") == true){
-                sueldo=1;
-            }
-
-            var fd = new FormData();
-            var incidenciaid = data["incidenciaid"];
-            var method = "store";
-            var app = "solicitud_incidencia";
-            var sessionid = <?php echo $_SESSION["id"]; ?>;
-            fd.append('iduser', sessionid);
-            fd.append('incidenciaid', incidenciaid);
-            fd.append('estatus', estatus);
-            fd.append('sueldo', sueldo);
-            fd.append('method', method);
-            fd.append('app', app);
-
-            $.ajax({
-                type: "POST",
-                url: "../ajax/class_search.php",
-                data: fd,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    $("#Aprobar").attr("disabled", true);
-                    $("#Rechazar").attr("disabled", true);
-                    $("#Cancelar").attr("disabled", true);
+            Swal.fire({
+                title: 'Rechazar Incidencia',
+                text: "¿Está seguro que desea rechazar esta incidencia?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
                     Swal.fire({
-				        title: "Incidencia Rechazada",
-				        text: "Se ha rechazado una incidencia!",
-				        icon: "success"
-			        }).then(function() {
-				        table.ajax.reload(null, false);
-			        });
-                }, error: function(response) {
-                    console.log(response);
-                }	
-            });
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'Se ha rechazado la incidencia!'
+                    }).then(function() {
+                        var fd = new FormData();
+                        var incidenciaid = data["incidenciaid"];
+                        var method = "store";
+                        var app = "solicitud_incidencia";
+                        var sessionid = <?php echo $_SESSION["id"]; ?>;
+                        fd.append('iduser', sessionid);
+                        fd.append('incidenciaid', incidenciaid);
+                        fd.append('estatus', estatus);
+                        fd.append('method', method);
+                        fd.append('app', app);				
+                        $.ajax({
+                            type: "POST",
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                table.ajax.reload(null, false);
+                            }, error: function(response) {
+                                console.log(response);
+                            }	
+                        });		
+                    });
+                }else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                    'Cancelado',
+                    'Se ha cancelado la operación',
+                    'error'
+                    )
+                }
+            })
         });
 
         $('#datatable').on('click', 'tr .Ver', function () {

@@ -452,7 +452,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
 		$incidenciaid= $_POST["incidenciaid"];
         $estatus= $_POST["estatus"];
-		$sueldo= $_POST["sueldo"];
+        $sueldo=null;
+        if(isset($_POST["sueldo"])){
+		    $sueldo= $_POST["sueldo"];
+        }
 		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
 		$select_user -> execute(array(':iduser' => $_POST["iduser"]));
         $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
