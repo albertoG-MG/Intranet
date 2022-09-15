@@ -51,8 +51,9 @@
                                         <th class="py-3 text-left desktop">Tipo</th>
                                         <th class="py-3 text-left desktop">Fecha inicio</th>
                                         <th class="py-3 text-left desktop">Fecha fin</th>
+                                        <th class="py-3 text-left estatus desktop">Estatus</th>
                                         <th class="py-3 text-center desktop">Goce de sueldo?</th>
-										<th class="py-3 text-center desktop"></th>
+										<th class="py-3 text-center evaluacion desktop"></th>
                                         <th class="py-3 text-center min-tablet"></th>
                                     </tr>
                                 </thead>

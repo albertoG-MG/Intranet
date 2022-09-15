@@ -1,5 +1,7 @@
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
+        var evaluation_buttons=0;
+        var goce_sueldo=0;
         $("#datatable").DataTable({
             responsive:true,
             "lengthChange": false,
@@ -9,6 +11,79 @@
                         search: ""
             },
             dom: '<"top"fB>rt<"bottom"ip><"clear">',
+            buttons: [
+						{
+                            text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Solicitudes pendientes",
+                            attr: {
+                                'id': 'sol_pendientes',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/ajax_solicitud_incidencia.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 evaluation_buttons=0;
+										 goce_sueldo=0;
+                                         var status = table.column(5);
+                                         status.visible(false);
+                                         var evaluation = table.column(7);
+                                         evaluation.visible(true);
+										 table.column().cells().invalidate().render();
+									
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
+                        },
+						
+						{
+                            text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Solicitudes Aprobadas",
+                            attr: {
+                                'id': 'sol_aprobadas',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/solicitud_incidencia/solicitud_aprobada.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 evaluation_buttons=1;
+										 goce_sueldo=1;
+                                         var status = table.column(5);
+                                         status.visible(true);
+                                         var evaluation = table.column(7);
+                                         evaluation.visible(false);
+										 table.column().cells().invalidate().render();
+									
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
+                        },
+					],
             "ajax":{
                 "url": "../config/ajax_solicitud_incidencia.php",
                 "type": "POST",
@@ -27,11 +102,26 @@
                 {"data": "tipo_incidencia"},
                 {"data": "fecha_inicio"},
                 {"data": "fecha_fin"},
-                { data: null, render: function ( data, type, row ) {
-	                return "<div class='text-center'><input type='checkbox' id='"+data['incidenciaid']+"' value='Check'></div>";
+                {"data": "estatus_nombre", "visible": false},
+				{"data": null, render: function ( data, type, row ) {
+                    if(goce_sueldo == 0){
+							return "<div class='text-center'><input type='checkbox' id='"+data['incidenciaid']+"' value='Check'></div>";
+                    }else if(goce_sueldo == 1){
+                        if(row["sueldo"] == 0){
+                            return "<div class='w-full text-center'><span>No</span></div>";
+                        }else if(row["sueldo"] == 1){
+                            return "<div class='w-full text-center'><span>Sí</span></div>";
+                        }else{
+                            return "<div class='w-full text-center'><span>Sin datos</span></div>";
+                        } 
+                    }
                 }},
-                { data: null, render: function ( data, type, row ) {
-	                return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" id="Aprobar" name="Aprobar" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" id="Rechazar" name="Rechazar" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" id="Cancelar" name="Cancelar" class="text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';                
+				{ data: null, render: function ( data, type, row ) {
+                    if(evaluation_buttons == 0){
+							return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" id="Aprobar" name="Aprobar" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" id="Rechazar" name="Rechazar" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" id="Cancelar" name="Cancelar" class="text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';
+                    }else{
+                        return null;
+                    }
                 }},
                 { data: null, render: function ( data, type, row ) {
                     return (
