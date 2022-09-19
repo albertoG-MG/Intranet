@@ -91,7 +91,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         <h1 class="font-bold text-3xl text-gray-900">INTRANET</h1>
                         <p>Ingresa tus credenciales</p>
                     </div>
-                    <form id="Acceder" action="Login.php" method="post">
+                    <form id="Acceder" action="login.php" method="post">
                         <div>
                             <div class="flex -mx-3">
                                 <div class="w-full px-3 mb-5">
@@ -154,7 +154,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         fd.append('password', password);
 
                         $.ajax({
-                            url: 'Login.php',
+                            url: 'login.php',
                             type: 'POST',
                             data: fd,
                             processData: false,
