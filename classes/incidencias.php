@@ -47,6 +47,7 @@ class incidencias {
 
 	public static function sendEmail($incidencia_id){
 		$object = new connection_database();
+		$crud = new crud();
 		$sql = $object->_db->prepare('SELECT incidencias.id AS id, incidencias.users_id AS userid, incidencias.titulo AS titulo, incidencias.fecha_inicio AS fecha_inicio, incidencias.fecha_fin AS fecha_fin, incidencias.tipo_incidencia AS tipo_incidencia, incidencias.estatus_id AS estatus_id, incidencias.filename AS filename, incidencias.foto AS foto, incidencias.incidencia_creada AS incidencia_creada, departamentos.departamento AS depanom, roles.nombre AS rolnom from incidencias INNER JOIN usuarios ON incidencias.users_id = usuarios.id LEFT JOIN departamentos ON usuarios.departamento_id = departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id WHERE incidencias.id=:incidenciaid');
 		$sql -> execute(array(':incidenciaid' => $incidencia_id));
 		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
@@ -56,6 +57,10 @@ class incidencias {
 		while($row_jefe = $select -> fetch(PDO::FETCH_OBJ)){
 			$array[]=$row_jefe->correo;
 		}
+		$notificado_a = $object -> _db ->prepare("select roles.id from usuarios inner join roles on roles.id=usuarios.roles_id where usuarios.correo=:correo");
+		$notificado_a -> execute(array(":correo" => $array[0]));
+		$fetch_notificacion = $notificado_a -> fetch(PDO::FETCH_OBJ);
+		$crud -> update('incidencias', ['notificado_a' => $fetch_notificacion->id], 'id=:incidenciaid', ['incidenciaid' => $incidencia_id]);
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		$path = dirname($path);
