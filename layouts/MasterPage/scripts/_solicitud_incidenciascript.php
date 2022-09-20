@@ -10,7 +10,7 @@
             language: {
                         search: ""
             },
-            dom: '<"top"fB>rt<"bottom"ip><"clear">',
+            dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
 						{
                             text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Solicitudes pendientes",
@@ -18,7 +18,7 @@
                                 'id': 'sol_pendientes',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/ajax_solicitud_incidencia.php",
@@ -54,7 +54,7 @@
                                 'id': 'sol_aprobadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/solicitud_aprobada.php",
@@ -90,7 +90,7 @@
                                 'id': 'sol_rechazadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/solicitud_rechazada.php",
@@ -126,7 +126,7 @@
                                 'id': 'sol_canceladas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/solicitud_cancelada.php",
@@ -162,7 +162,7 @@
                                 'id': 'ver_todo',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/ver_todo.php",
@@ -256,7 +256,25 @@
                     );	
                 }}
             ],
-            "initComplete": () => {$("#datatable").show();}
+            "initComplete": () => {
+                var table = $('#datatable').DataTable();
+                $('.dt-buttons').attr('id', "botones");
+                var boton = document.getElementById('botones');
+                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
+                var children = boton.childElementCount;
+                let array = [];
+                for(let i=0; i<children; i++){
+                    array[i]=boton.children[i];
+                }
+                for(let j=0; j<children; j++){
+                    var container = document.createElement("div");
+                    container.classList.add('flex-[1_0_18%]', 'm-[5px]');
+                    boton.append(container);
+                    container.append(array[j]);
+                }
+                $('#DT-div').show();
+                table.columns.adjust().responsive.recalc();
+            }
         });
     });
 	

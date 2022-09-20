@@ -43,21 +43,23 @@
                             </div>
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
-                            <table class="w-full" id="datatable" style="display:none;">
-                                <thead>
-                                    <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left all">Id</th>
-                                        <th class="py-3 text-left min-tablet">Nombre</th>
-                                        <th class="py-3 text-left desktop">Tipo</th>
-                                        <th class="py-3 text-left desktop">Fecha inicio</th>
-                                        <th class="py-3 text-left desktop">Fecha fin</th>
-                                        <th class="py-3 text-left estatus desktop">Estatus</th>
-                                        <th class="py-3 text-center desktop">Goce de sueldo?</th>
-										<th class="py-3 text-center evaluacion desktop"></th>
-                                        <th class="py-3 text-center min-tablet"></th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div id="DT-div" style="display:none;">
+                                <table class="w-full" id="datatable">
+                                    <thead>
+                                        <tr class="bg-black text-white uppercase text-sm leading-normal">
+                                            <th class="py-3 text-left all">Id</th>
+                                            <th class="py-3 text-left min-tablet">Nombre</th>
+                                            <th class="py-3 text-left desktop">Tipo</th>
+                                            <th class="py-3 text-left desktop">Fecha inicio</th>
+                                            <th class="py-3 text-left desktop">Fecha fin</th>
+                                            <th class="py-3 text-left estatus desktop">Estatus</th>
+                                            <th class="py-3 text-center desktop">Goce de sueldo?</th>
+                                            <th class="py-3 text-center evaluacion desktop"></th>
+                                            <th class="py-3 text-center min-tablet"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
