@@ -1,6 +1,5 @@
 <?php
     include_once __DIR__ . "/../../../config/conexion.php";
-    include_once __DIR__ . "/../../../classes/roles.php";
     include_once __DIR__ . "/../../../classes/departamentos.php";
     $object = new connection_database();
     
