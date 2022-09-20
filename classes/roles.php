@@ -144,6 +144,14 @@ class roles {
     public static function EliminarRol($id){
 		$crud = new crud();
 		$crud->delete('roles', 'id=:idrol', ['idrol' => $id]);
-	} 
+	}
+    
+    public static function FetchSessionRol($id){
+		$object = new connection_database();
+		$check_rol = $object->_db->prepare("select nombre from roles where id=:sessionrol");
+		$check_rol ->execute(array(':sessionrol' => $id));
+		$fetch_rol = $check_rol -> fetch(PDO::FETCH_OBJ);
+		return $fetch_rol->nombre;
+    }
 }
 ?>
