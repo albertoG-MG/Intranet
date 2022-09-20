@@ -635,6 +635,9 @@ select {
 .pointer-events-none {
   pointer-events: none !important;
 }
+.visible {
+  visibility: visible !important;
+}
 .fixed {
   position: fixed !important;
 }
@@ -677,6 +680,9 @@ select {
 }
 .col-span-1 {
   grid-column: span 1 / span 1 !important;
+}
+.m-\[5px\] {
+  margin: 5px !important;
 }
 .-mx-3 {
   margin-left: -0.75rem !important;
@@ -883,6 +889,9 @@ select {
 }
 .flex-1 {
   flex: 1 1 0% !important;
+}
+.flex-\[1_0_21\%\] {
+  flex: 1 0 21% !important;
 }
 .flex-shrink-0 {
   flex-shrink: 0 !important;
@@ -1928,6 +1937,10 @@ select {
 
   .md\:flex-row {
     flex-direction: row !important;
+  }
+
+  .md\:flex-wrap {
+    flex-wrap: wrap !important;
   }
 
   .md\:justify-end {
