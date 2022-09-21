@@ -10,6 +10,7 @@
 		},
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
 				{
 					text: "<i class='mdi mdi-account-box-multiple text-white font-semibold text-lg'></i> Crear Departamento",
 					attr: {
@@ -18,6 +19,7 @@
 					},
 					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
 				}
+            <?php } ?>
 				],
         "processing": true,
         "serverSide": true,
@@ -42,22 +44,27 @@
                     return  (
                    "<div class='py-3 text-left'>"+
                         "<div class='flex item-center justify-end'>"+
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Edit'>"+
                                 "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>"+
                                 "</svg>"+
                             "</div>"+
+                        <?php } ?>
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>"+
                                 "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>"+
                                 "</svg>"+
                             "</div>"+
+                        <?php } ?>    
                         "</div>"+
                    "</div>");
                 }
             },
         ]
         });
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
         const modalContainer = document.querySelector(
         "#modal-component-container"
         );
@@ -73,169 +80,201 @@
         $.validator.unobtrusive.parse(formId);
         }
 
-        $('.dt-buttons').on('click', '.dt-button', function(){
-            $('.modal-wrapper-flex').html(
-            "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
-            "<h3 class='text-lg font-medium text-gray-900'>Crear departamento</h3>"+
-            "</div>"+
-            "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
-                "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
-                    "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del departamento</label>"+
-                    "<div class='group flex'>"+
-                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='creardepartamento' name='creardepartamento' placeholder='Input 1'>"+
-                    "</div>"+
-                "</div>"+
-            "</div>");
-            $('.modal-actions').html(
-                "<button id='crear-departamento' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
-                "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
-            );
-            openModal();
-            resetFormValidator("#Guardar");
-            $('#Guardar').unbind('submit');
-            $('#Guardar').validate({
-                ignore: [],
-                errorPlacement: function(error, element) {
-                    error.insertAfter(element.parent('.group.flex'));
-                },
-                rules: {
-                    creardepartamento: {
-                        required: true,
-                        remote: "../ajax/validacion/departamentos/checkdepartamento.php"
-                    }
-                },
-                messages: {
-                    creardepartamento: {
-                        required: 'Por favor, ingresa un departamento',
-                        remote: 'Ese departamento ya existe, por favor, ingrese otro'
-                    }
-                },
-                submitHandler: function(form) {
-                    var fd = new FormData();
-                    var departamentos = $("input[name=creardepartamento]").val();
-                    var app = "departamentos";
-                    var method = "store";
-                    fd.append('departamentos', departamentos);
-                    fd.append('app', app);
-                    fd.append('method', method);
-                    var table = $('#datatable').DataTable();
-                    $.ajax({
-                        type: "post",
-                        url: "../ajax/class_search.php",
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        success: function (response) {
-                            response = response.replace(/[\r\n]/gm, '');
-                            if(response == "success"){
-                                Swal.fire({
-                                    title: "Departamento Creado",
-                                    text: "Se ha creado un departamento exitosamente!",
-                                    icon: "success"
-                                }).then(function() {
-                                    table.ajax.reload(null, false);
-                                    });
-                            }
-                        }
-                    });
-                    return false;
-                }
-            });
-        });
-
-        $('#datatable').on( 'click', 'tr .Edit', function () {
-            var table = $('#datatable').DataTable();
-            var rowSelector;
-            var li = $(this).closest('li');
-            if ( li.length ) {
-                rowSelector = table.cell( li ).index().row;
-            }
-            else {
-                rowSelector =  $(this).closest('tr');
-            }
-            var row = table.row(rowSelector);
-            var data = row.data();
-            $('.modal-wrapper-flex').html(
+        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            $('.dt-buttons').on('click', '.dt-button', function(){
+                $('.modal-wrapper-flex').html(
                 "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
                 "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
-                "<h3 class='text-lg font-medium text-gray-900'>Editar departamento</h3>"+
+                "<h3 class='text-lg font-medium text-gray-900'>Crear departamento</h3>"+
                 "</div>"+
                 "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
                     "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
-                        "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el departamento</label>"+
+                        "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del departamento</label>"+
                         "<div class='group flex'>"+
                             "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
-                            "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editdepartamento' name='editdepartamento' value='"+data[1]+"'>"+
+                            "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='creardepartamento' name='creardepartamento' placeholder='Input 1'>"+
                         "</div>"+
                     "</div>"+
                 "</div>");
-            $('.modal-actions').html(
-                "<button id='editar-departamento' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
-                "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
-            );
-            openModal();
-            resetFormValidator("#Guardar");
-            $('#Guardar').unbind('submit'); 		
-            $('#Guardar').validate({
-                ignore: [],
-                errorPlacement: function(error, element) {
-                    error.insertAfter(element.parent('.group.flex'));
-                },
-                rules: {
-                    editdepartamento: {
-                        required: true,
-                        remote: {
-                            url: "../ajax/validacion/departamentos/checkeditdepartamento.php",
+                $('.modal-actions').html(
+                    "<button id='crear-departamento' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
+                    "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
+                );
+                openModal();
+                resetFormValidator("#Guardar");
+                $('#Guardar').unbind('submit');
+                $('#Guardar').validate({
+                    ignore: [],
+                    errorPlacement: function(error, element) {
+                        error.insertAfter(element.parent('.group.flex'));
+                    },
+                    rules: {
+                        creardepartamento: {
+                            required: true,
+                            remote: "../ajax/validacion/departamentos/checkdepartamento.php"
+                        }
+                    },
+                    messages: {
+                        creardepartamento: {
+                            required: 'Por favor, ingresa un departamento',
+                            remote: 'Ese departamento ya existe, por favor, ingrese otro'
+                        }
+                    },
+                    submitHandler: function(form) {
+                        var fd = new FormData();
+                        var departamentos = $("input[name=creardepartamento]").val();
+                        var app = "departamentos";
+                        var method = "store";
+                        fd.append('departamentos', departamentos);
+                        fd.append('app', app);
+                        fd.append('method', method);
+                        var table = $('#datatable').DataTable();
+                        $.ajax({
                             type: "post",
-                            data: {
-                                "editarid": data[0]
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                response = response.replace(/[\r\n]/gm, '');
+                                if(response == "success"){
+                                    Swal.fire({
+                                        title: "Departamento Creado",
+                                        text: "Se ha creado un departamento exitosamente!",
+                                        icon: "success"
+                                    }).then(function() {
+                                        table.ajax.reload(null, false);
+                                        });
+                                }
                             }
-                        }
+                        });
+                        return false;
                     }
-                },
-                messages: {
-                    editdepartamento: {
-                        required: 'Por favor, ingresa un departamento',
-                        remote: 'Ese departamento ya existe, por favor, ingrese otro'
-                    }
-                },
-                submitHandler: function(form) {
-                    var fd = new FormData();
-                    var departamentos = $("input[name=editdepartamento]").val();
-                    var app = "departamentos";
-                    var method = "edit";
-                    var id = data[0];
-                    fd.append('departamentos', departamentos);
-                    fd.append('app', app);
-                    fd.append('method', method);
-                    fd.append('editarid', id);
-                    var table = $('#datatable').DataTable();
-                    $.ajax({
-                        type: "post",
-                        url: "../ajax/class_search.php",
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        success: function (response) {
-                            response = response.replace(/[\r\n]/gm, '');
-                            if(response == "success"){
-                                Swal.fire({
-                                    title: "Departamento Editado",
-                                    text: "Se ha editado un departamento exitosamente!",
-                                    icon: "success"
-                                }).then(function() {
-                                    table.ajax.reload(null, false);
-                                    });
-                            }
-                        }
-                    });
-                    return false;
-                }
+                });
             });
-        });
+        <?php } ?>
 
+        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            $('#datatable').on( 'click', 'tr .Edit', function () {
+                var table = $('#datatable').DataTable();
+                var rowSelector;
+                var li = $(this).closest('li');
+                if ( li.length ) {
+                    rowSelector = table.cell( li ).index().row;
+                }
+                else {
+                    rowSelector =  $(this).closest('tr');
+                }
+                var row = table.row(rowSelector);
+                var data = row.data();
+                $('.modal-wrapper-flex').html(
+                    "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
+                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
+                    "<h3 class='text-lg font-medium text-gray-900'>Editar departamento</h3>"+
+                    "</div>"+
+                    "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
+                        "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
+                            "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el departamento</label>"+
+                            "<div class='group flex'>"+
+                                "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
+                                "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editdepartamento' name='editdepartamento' value='"+data[1]+"'>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>");
+                $('.modal-actions').html(
+                    "<button id='editar-departamento' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
+                    "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
+                );
+                openModal();
+                resetFormValidator("#Guardar");
+                $('#Guardar').unbind('submit'); 		
+                $('#Guardar').validate({
+                    ignore: [],
+                    errorPlacement: function(error, element) {
+                        error.insertAfter(element.parent('.group.flex'));
+                    },
+                    rules: {
+                        editdepartamento: {
+                            required: true,
+                            remote: {
+                                url: "../ajax/validacion/departamentos/checkeditdepartamento.php",
+                                type: "post",
+                                data: {
+                                    "editarid": data[0]
+                                }
+                            }
+                        }
+                    },
+                    messages: {
+                        editdepartamento: {
+                            required: 'Por favor, ingresa un departamento',
+                            remote: 'Ese departamento ya existe, por favor, ingrese otro'
+                        }
+                    },
+                    submitHandler: function(form) {
+                        var fd = new FormData();
+                        var departamentos = $("input[name=editdepartamento]").val();
+                        var app = "departamentos";
+                        var method = "edit";
+                        var id = data[0];
+                        fd.append('departamentos', departamentos);
+                        fd.append('app', app);
+                        fd.append('method', method);
+                        fd.append('editarid', id);
+                        var table = $('#datatable').DataTable();
+                        $.ajax({
+                            type: "post",
+                            url: "../ajax/class_search.php",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                response = response.replace(/[\r\n]/gm, '');
+                                if(response == "success"){
+                                    Swal.fire({
+                                        title: "Departamento Editado",
+                                        text: "Se ha editado un departamento exitosamente!",
+                                        icon: "success"
+                                    }).then(function() {
+                                        table.ajax.reload(null, false);
+                                        });
+                                }
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        <?php } ?>
+
+        function openModal(){
+            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+        }
+
+        function closeModal(){
+            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+        }
+
+        function showAndHide(element, classesToAdd, classessToRemove){
+            element.classList.remove( ...classessToRemove);
+            element.classList.add( ...classesToAdd);
+        }
+    <?php } ?>
+    });
+    $(document).ready(function() {
+        $('.dataTables_filter input[type="search"]').
+        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'departamentos.php'){?>
+            var dropdown = document.getElementById('catalogos');
+            dropdown.classList.remove("hidden");
+        <?php } ?>
+    });
+
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
         $('#datatable').on( 'click', 'tr .Eliminar', function () {
             var table = $('#datatable').DataTable();
             var rowSelector;
@@ -284,31 +323,6 @@
                 }
             })
         });
-
-        function openModal(){
-            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
-            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
-        }
-
-        function closeModal(){
-            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
-            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
-            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
-        }
-
-        function showAndHide(element, classesToAdd, classessToRemove){
-            element.classList.remove( ...classessToRemove);
-            element.classList.add( ...classesToAdd);
-        }
-    });
-    $(document).ready(function() {
-    $('.dataTables_filter input[type="search"]').
-    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
-    });
-    <?php
-    if(basename($_SERVER['PHP_SELF']) == 'departamentos.php'){?>
-        var dropdown = document.getElementById('catalogos');
-        dropdown.classList.remove("hidden");
     <?php } ?>
 </script>
 <style>
