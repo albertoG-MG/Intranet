@@ -12,6 +12,12 @@ if ($_SESSION['loggedin'] != true) {
     die();
 }
 
+if (Permissions::CheckPermissions($_SESSION["id"], "Editar roles") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador") {
+    header("HTTP/1.0 403 Forbidden");
+    echo '<h1>Prohibido</h1><br> No tiene permiso para acceder a / esta parte del servidor.';
+    exit();
+}
+
 //Fin de la validacion
 
 $editarid = $_GET['idRol'];
