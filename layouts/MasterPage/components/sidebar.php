@@ -42,6 +42,7 @@
             <?php } ?>
                 <p class="ml-4">Usuarios</p>
             </a>
+            
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                 <?php if(basename($_SERVER['PHP_SELF']) == 'roles.php' || basename($_SERVER['PHP_SELF']) == 'permisos.php' || basename($_SERVER['PHP_SELF']) == 'crear_rol.php' || basename($_SERVER['PHP_SELF']) == 'editar_rol.php'){?>
                     <a href="roles.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
@@ -51,13 +52,17 @@
                     <p class="ml-4">Roles</p>
                 </a>
             <?php } ?>
-            <?php if(basename($_SERVER['PHP_SELF']) == 'departamentos.php'){?>
-                <a href="departamentos.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
-            <?php }else{ ?>
-                <a href="departamentos.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <?php } ?>
-                <p class="ml-4">Departamentos</p>
-            </a>
+
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                <?php if(basename($_SERVER['PHP_SELF']) == 'departamentos.php'){?>
+                    <a href="departamentos.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+                <?php }else{ ?>
+                    <a href="departamentos.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <?php } ?>
+                    <p class="ml-4">Departamentos</p>
+                </a>
+            <?php } ?>    
+
             <?php if(basename($_SERVER['PHP_SELF']) == 'expedientes.php' || basename($_SERVER['PHP_SELF']) == 'crear_expediente.php' || basename($_SERVER['PHP_SELF']) == 'editar_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente.php'){?>
                 <a href="expedientes.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
             <?php }else{ ?>
