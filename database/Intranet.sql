@@ -2810,7 +2810,7 @@ CREATE TABLE `transicion_accion_incidencias`(
    id_transicion int NOT NULL,
    id_accion int NOT NULL,
    FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_incidencia(id) ON DELETE CASCADE,
-   FOREIGN KEY (id_accion) REFERENCES accion_incidencias(id)
+   FOREIGN KEY (id_accion) REFERENCES accion_incidencias(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
