@@ -58,6 +58,7 @@
         </div>
     </div>
 </div>
+<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Editar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
 <div id="modal-component-container" class="modal-component-container hidden fixed inset-0">
     <div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="modal-bg-container fixed inset-0 bg-gray-700 bg-opacity-75"></div>
@@ -89,3 +90,4 @@
         </div>
     </div>
 </div>
+<?php } ?>
