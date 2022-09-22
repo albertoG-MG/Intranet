@@ -206,6 +206,18 @@
 							}
                         },*/
                         {
+                            text: "<i class='mdi mdi-bus text-white font-semibold text-lg'></i> Solicitar vacaciones",
+                            attr: {
+                                'id': 'vacaciones',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            action: function ( e, dt, node, config ) {
+                                
+                            }
+                        },
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud incidencias") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                        {
                             text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver Solicitudes",
                             attr: {
                                 'id': 'incidencias_solpendientes',
@@ -216,6 +228,8 @@
 								window.location.href = "solicitud_incidencia.php";
 							}
                         },
+                        <?php } ?>
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
 						{
                             text: "<i class='mdi mdi-beaker-plus text-white font-semibold text-lg'></i> Crear Incidencia",
                             attr: {
@@ -227,6 +241,7 @@
                                 window.location.href = "crear_incidencia.php";
                             }
                         }
+                        <?php } ?>
                     ],
             "ajax":{
                 "url": "../config/incidencias/incidencia_pendiente.php",
@@ -261,22 +276,28 @@
                         return     (
                             "<div class='py-3 text-left'>" +
                             "<div class='flex item-center justify-center data'>" +
+                            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
                             "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
                             "</svg>"+
                             "</div>" +
+                            <?php } ?>
+                            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Editar'>" +
                             "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>" +
                             "</svg>" +
                             "</div>" +
+                            <?php } ?>
+                            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>" +
                             "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>" +
                             "</svg>" +
                             "</div>" +
+                            <?php } ?>
                             "</div>" +
                             "</div>"
                         );	
@@ -284,12 +305,14 @@
 						return     (
                             "<div class='py-3 text-left'>" +
                             "<div class='flex item-center justify-center data'>" +
+                            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
                             "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
                             "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
                             "</svg>"+
                             "</div>" +
+                            <?php } ?>
                             "</div>" +
                             "</div>"
                         );	
@@ -324,6 +347,7 @@
 		$('.dataTables_filter input[type="search"]').
 		attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
 
+        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
         $('#datatable').on('click', 'tr .Ver', function () {
             var table = $('#datatable').DataTable();
             var rowSelector;
@@ -338,7 +362,9 @@
             var data = row.data();
             window.location.href = "ver_incidencia.php?idIncidencia="+data['incidenciaid']+""; 
         });
+        <?php } ?>
 
+        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
         $('#datatable').on('click', 'tr .Editar', function () {
             var table = $('#datatable').DataTable();
             var rowSelector;
@@ -353,7 +379,9 @@
             var data = row.data();
             window.location.href = "editar_incidencia.php?idIncidencia="+data['incidenciaid']+""; 
         });
+        <?php } ?>
 
+        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
         $('#datatable').on('click', 'tr .Eliminar', function() {
             var table = $('#datatable').DataTable();
             var rowSelector;
@@ -399,6 +427,7 @@
                 }
             })
         });
+        <?php } ?>
 	});
 </script>
 
