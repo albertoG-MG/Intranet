@@ -229,7 +229,11 @@
 							}
                         },
                         <?php } ?>
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                        <?php 
+                        if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+                            if($count_jerarquia > 0){
+                                if($fetch_jerarquia != null){
+                        ?>
 						{
                             text: "<i class='mdi mdi-beaker-plus text-white font-semibold text-lg'></i> Crear Incidencia",
                             attr: {
@@ -241,7 +245,11 @@
                                 window.location.href = "crear_incidencia.php";
                             }
                         }
-                        <?php } ?>
+                        <?php 
+                                }
+                            }
+                        } 
+                        ?>
                     ],
             "ajax":{
                 "url": "../config/incidencias/incidencia_pendiente.php",
