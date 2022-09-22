@@ -41,6 +41,7 @@
                                             <th class="py-3 text-left desktop">Fecha inicio</th>
                                             <th class="py-3 text-left desktop">Fecha fin</th>
                                             <th class="py-3 text-left desktop">Estado</th>
+                                            <th class="py-3 text-center min-tablet">Goce de sueldo?</th>
                                             <th class="py-3 text-center min-tablet"></th>
                                         </tr>
                                     </thead>

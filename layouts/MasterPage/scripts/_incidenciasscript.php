@@ -12,36 +12,6 @@
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
                         {
-                            text: "<i class='mdi mdi-newspaper-variant text-white font-semibold text-lg'></i> Mis incidencias",
-                            attr: {
-                                'id': 'mis_incidencias',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                            },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-							action: function ( e, dt, node, config ) {
-								$.ajax({
-									url: "../config/ajax_incidencias.php",
-									method: 'POST',
-									data:{
-										"rol": <?php echo $_SESSION["rol"]; ?>,
-										"sessionid": <?php echo $_SESSION["id"]; ?>
-
-									},
-									success: function(response) {
-										 var table = $('#datatable').DataTable();
-										 table.clear().draw();
-										 const obj = JSON.parse(response);
-										 table.rows.add(obj).draw();
-										 buttonlist = 0; 
-										 table.column().cells().invalidate().render();
-									
-									}, error: function(response) {
-										console.log(response);
-									}
-								})
-							}
-                        },
-                        {
                             text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Pendientes",
                             attr: {
                                 'id': 'incidencias_pendientes',
@@ -62,8 +32,11 @@
 										 table.clear().draw();
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
-										 buttonlist = 0; 
+										 buttonlist = 0;
+                                         var sueldo = table.column(6);
+                                         sueldo.visible(false);  
 										 table.column().cells().invalidate().render();
+                                         table.columns.adjust().responsive.recalc();
 									
 									}, error: function(response) {
 										console.log(response);
@@ -92,8 +65,11 @@
 										 table.clear().draw();
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
-										 buttonlist = 1; 
+										 buttonlist = 1;
+                                         var sueldo = table.column(6);
+                                         sueldo.visible(true); 
 										 table.column().cells().invalidate().render();
+                                         table.columns.adjust().responsive.recalc();
 									
 									}, error: function(response) {
 										console.log(response);
@@ -122,8 +98,11 @@
 										 table.clear().draw();
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
-										 buttonlist = 1; 
+										 buttonlist = 1;
+                                         var sueldo = table.column(6);
+                                         sueldo.visible(true); 
 										 table.column().cells().invalidate().render();
+                                         table.columns.adjust().responsive.recalc();
 									
 									}, error: function(response) {
 										console.log(response);
@@ -152,8 +131,11 @@
 										 table.clear().draw();
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
-										 buttonlist = 1; 
+										 buttonlist = 1;
+                                         var sueldo = table.column(6);
+                                         sueldo.visible(true); 
 										 table.column().cells().invalidate().render();
+                                         table.columns.adjust().responsive.recalc();
 									
 									}, error: function(response) {
 										console.log(response);
@@ -162,6 +144,38 @@
 							}
                         },
                         {
+                            text: "<i class='mdi mdi-newspaper-variant text-white font-semibold text-lg'></i> Mis incidencias evaluadas",
+                            attr: {
+                                'id': 'mis_incidencias',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/ajax_incidencias.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 buttonlist = 1;
+                                         var sueldo = table.column(6);
+                                         sueldo.visible(true); 
+										 table.column().cells().invalidate().render();
+										 table.columns.adjust().responsive.recalc();				
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
+                        },
+                        /*{
                             text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
                             attr: {
                                 'id': 'incidencias_desplieguetodo',
@@ -190,7 +204,7 @@
 									}
 								})
 							}
-                        },
+                        },*/
                         {
                             text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver Solicitudes",
                             attr: {
@@ -215,7 +229,7 @@
                         }
                     ],
             "ajax":{
-                "url": "../config/ajax_incidencias.php",
+                "url": "../config/incidencias/incidencia_pendiente.php",
                 "type": "POST",
                 "dataSrc": "",
                 "data":{
@@ -233,6 +247,15 @@
                 {"data": "fecha_inicio"},
                 {"data": "fecha_fin"},
                 {"data": "estatus_nombre"},
+                { data: null, visible:false, render: function ( data, type, row ) {
+                    if(row["sueldo"] == 0){
+                        return "<div class='w-full text-center'><span>No</span></div>";
+                    }else if(row["sueldo"] == 1){
+                        return "<div class='w-full text-center'><span>Sí</span></div>";
+                    }else{
+                        return "<div class='w-full text-center'><span>Sin datos</span></div>";
+                    }
+	            }},
                 { data: null, render: function ( data, type, row ) {
                     if(buttonlist == 0){
                         return     (
