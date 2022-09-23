@@ -86,42 +86,48 @@ class roles {
         $countselected = count($this->rolpermissions);
 
         if($countdatabase > $countselected){
-            for($i=0; $i<$countdatabase; $i++){
-                for($j=0; $j<$countselected; $j++){
-                    if($fetchroles[$i] == $this->rolpermissions[$j]){
-                        unset($fetchroles[$i]);
-                        break;
-                    }
-                }
-            }
-            $params = ["rolid" => $id];
-            $in = "";
-            $i = 0;
-            foreach ($fetchroles as $item)
-            {
-                $key = ":id".$i++;
-                $in .= ($in ? "," : "") . $key; // :id0,:id1,:id2
-                $in_params[$key] = $item; // collecting values into a key-value array
+            $agregar_permisos = array_values(array_diff($this->rolpermissions, $fetchroles));
+            $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));  
+            
+            for($i=0; $i<count($eliminar_permisos); $i++){
+                $crud->delete('rolesxpermisos', 'permisos_id=:permisos', [":permisos" => $eliminar_permisos[$i]]);
             }
 
-        $crud->delete('rolesxpermisos', 'roles_id=:rolid AND permisos_id IN('.$in.')', array_merge($params,$in_params));
-        }else if($countdatabase < $countselected){
-            for($i=0; $i<$countselected; $i++){
-                for($j=0; $j<$countdatabase; $j++){
-                    if($fetchroles[$j] == $this->rolpermissions[$i]){
-                        unset($this->rolpermissions[$i]);
-                        break;
-                    }
+            if(count($agregar_permisos) > 0){
+                for($j=0; $j<count($agregar_permisos); $j++){
+                    $crud->store('rolesxpermisos', ['roles_id' => $id, 'permisos_id' => $agregar_permisos[$j]]);
                 }
             }
-            $params = ["roles_id" => $id];
-            foreach ($this->rolpermissions as $item)
-            {
-                $key = "permisos_id";
-                $in_params[$key] = $item; // collecting values into a key-value array
-                $crud -> store('rolesxpermisos', array_merge($params, $in_params));
+            
+
+        }else if($countdatabase < $countselected){
+            $agregar_permisos = array_values(array_diff($this->rolpermissions, $fetchroles));
+            $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));
+            
+            for($i=0; $i<count($agregar_permisos); $i++){
+                $crud->store('rolesxpermisos', ['roles_id' => $id, 'permisos_id' => $agregar_permisos[$i]]);
+            }
+
+            if(count($eliminar_permisos) > 0){
+                for($j=0; $j<count($eliminar_permisos); $j++){
+                    $crud->delete('rolesxpermisos', 'permisos_id=:permisos', [":permisos" => $eliminar_permisos[$j]]);
+                }
             }
             
+            
+        }else if($countdatabase == $countselected){
+            $agregar_permisos = array_values(array_diff($this->rolpermissions, $fetchroles));
+            $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));           
+            if(count($eliminar_permisos) > 0){
+                for($i=0; $i<count($eliminar_permisos); $i++){
+                    $crud->delete('rolesxpermisos', "permisos_id=:permisos", [':permisos' => $eliminar_permisos[$i]]);
+                }
+            }
+            if(count($agregar_permisos) >0){
+                for($j=0; $j<count($agregar_permisos); $j++){
+                    $crud->store('rolesxpermisos', ['roles_id' => $id, 'permisos_id' => $agregar_permisos[$j]]);
+                }
+            }
         }
 	}
 
