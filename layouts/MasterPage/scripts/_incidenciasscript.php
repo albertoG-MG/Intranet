@@ -162,7 +162,49 @@
 								})
 							}
                         },
-                        <?php } ?>
+                        <?php 
+                        }  
+                        if($count_jerarquia > 0){
+                            if($fetch_jerarquia != null){
+                        ?>
+                        {
+                            text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i>Mis Rechazadas",
+                            attr: {
+                                'id': 'mis_incidencias_rechazadas',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							action: function ( e, dt, node, config ) {
+								$.ajax({
+									url: "../config/incidencias/mi_incidencia_rechazada.php",
+									method: 'POST',
+									data:{
+										"rol": <?php echo $_SESSION["rol"]; ?>,
+										"sessionid": <?php echo $_SESSION["id"]; ?>
+
+									},
+									success: function(response) {
+										 var table = $('#datatable').DataTable();
+										 table.clear().draw();
+										 const obj = JSON.parse(response);
+										 table.rows.add(obj).draw();
+										 buttonlist = 1;
+                                         var sueldo = table.column(6);
+                                         sueldo.visible(true); 
+										 table.column().cells().invalidate().render();
+                                         table.columns.adjust().responsive.recalc();
+									
+									}, error: function(response) {
+										console.log(response);
+									}
+								})
+							}
+                        },
+                        <?php 
+							}
+						}
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+						?>
                         {
                             text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i> Rechazadas",
                             attr: {
@@ -196,6 +238,7 @@
 								})
 							}
                         },
+                        <?php } ?>
                         {
                             text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i> Canceladas",
                             attr: {
