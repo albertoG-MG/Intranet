@@ -314,7 +314,11 @@
 								})
 							}
                         },
-                        <?php } ?>
+                        <?php 
+                        }  
+                        if($count_jerarquia > 0){
+                            if($fetch_jerarquia != null){
+                        ?>
                         {
                             text: "<i class='mdi mdi-newspaper-variant text-white font-semibold text-lg'></i> Mis incidencias evaluadas",
                             attr: {
@@ -347,7 +351,12 @@
 								})
 							}
                         },
-                        /*{
+                        <?php 
+							}
+						}
+						if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+						?>
+                        {
                             text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
                             attr: {
                                 'id': 'incidencias_desplieguetodo',
@@ -376,7 +385,8 @@
 									}
 								})
 							}
-                        },*/
+                        },
+                        <?php } ?>
                         {
                             text: "<i class='mdi mdi-bus text-white font-semibold text-lg'></i> Solicitar vacaciones",
                             attr: {
