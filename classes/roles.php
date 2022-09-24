@@ -90,7 +90,7 @@ class roles {
             $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));  
             
             for($i=0; $i<count($eliminar_permisos); $i++){
-                $crud->delete('rolesxpermisos', 'permisos_id=:permisos', [":permisos" => $eliminar_permisos[$i]]);
+                $crud->delete('rolesxpermisos', 'roles_id=:roles AND permisos_id=:permisos', [':roles' => $id, ":permisos" => $eliminar_permisos[$i]]);
             }
 
             if(count($agregar_permisos) > 0){
@@ -110,7 +110,7 @@ class roles {
 
             if(count($eliminar_permisos) > 0){
                 for($j=0; $j<count($eliminar_permisos); $j++){
-                    $crud->delete('rolesxpermisos', 'permisos_id=:permisos', [":permisos" => $eliminar_permisos[$j]]);
+                    $crud->delete('rolesxpermisos', 'roles_id=:roles AND permisos_id=:permisos', [':roles' => $id, ":permisos" => $eliminar_permisos[$j]]);
                 }
             }
             
@@ -120,7 +120,7 @@ class roles {
             $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));           
             if(count($eliminar_permisos) > 0){
                 for($i=0; $i<count($eliminar_permisos); $i++){
-                    $crud->delete('rolesxpermisos', "permisos_id=:permisos", [':permisos' => $eliminar_permisos[$i]]);
+                    $crud->delete('rolesxpermisos', "roles_id=:roles AND permisos_id=:permisos", [':roles' => $id, ':permisos' => $eliminar_permisos[$i]]);
                 }
             }
             if(count($agregar_permisos) >0){
