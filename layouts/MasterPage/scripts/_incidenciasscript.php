@@ -11,6 +11,48 @@
             },
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
+                        <?php 
+                        if($count_jerarquia > 0){
+                            if($fetch_jerarquia != null){
+                        ?>
+                        {
+                            text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i>Mis Pendientes",
+                            attr: {
+                                'id': 'mis_incidencias_pendientes',
+                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                            },
+                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            action: function ( e, dt, node, config ) {
+                                $.ajax({
+                                    url: "../config/incidencias/mi_incidencia_pendiente.php",
+                                    method: 'POST',
+                                    data:{
+                                        "rol": <?php echo $_SESSION["rol"]; ?>,
+                                        "sessionid": <?php echo $_SESSION["id"]; ?>
+
+                                    },
+                                    success: function(response) {
+                                        var table = $('#datatable').DataTable();
+                                        table.clear().draw();
+                                        const obj = JSON.parse(response);
+                                        table.rows.add(obj).draw();
+                                        buttonlist = 0;
+                                        var sueldo = table.column(6);
+                                        sueldo.visible(false);  
+                                        table.column().cells().invalidate().render();
+                                        table.columns.adjust().responsive.recalc();
+                                    
+                                    }, error: function(response) {
+                                        console.log(response);
+                                    }
+                                })
+                            }
+                        },
+                        <?php 
+                            }
+                        }
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        ?>	
                         {
                             text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Pendientes",
                             attr: {
@@ -44,6 +86,7 @@
 								})
 							}
                         },
+                        <?php } ?>
                         {
                             text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Aprobados",
                             attr: {
@@ -252,7 +295,11 @@
                         ?>
                     ],
             "ajax":{
+                <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){ ?>
                 "url": "../config/incidencias/incidencia_pendiente.php",
+                <?php }else{ ?>
+                "url": "../config/incidencias/mi_incidencia_pendiente.php",
+                <?php } ?>
                 "type": "POST",
                 "dataSrc": "",
                 "data":{
