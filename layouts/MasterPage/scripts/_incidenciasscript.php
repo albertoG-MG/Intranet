@@ -50,43 +50,6 @@
                         },
                         <?php 
                             }
-                        }
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
-                        ?>	
-                        {
-                            text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Pendientes",
-                            attr: {
-                                'id': 'incidencias_pendientes',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                            },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-							action: function ( e, dt, node, config ) {
-								$.ajax({
-									url: "../config/incidencias/incidencia_pendiente.php",
-									method: 'POST',
-									data:{
-										"rol": <?php echo $_SESSION["rol"]; ?>,
-										"sessionid": <?php echo $_SESSION["id"]; ?>
-
-									},
-									success: function(response) {
-										 var table = $('#datatable').DataTable();
-										 table.clear().draw();
-										 const obj = JSON.parse(response);
-										 table.rows.add(obj).draw();
-										 buttonlist = 0;
-                                         var sueldo = table.column(6);
-                                         sueldo.visible(false);  
-										 table.column().cells().invalidate().render();
-                                         table.columns.adjust().responsive.recalc();
-									
-									}, error: function(response) {
-										console.log(response);
-									}
-								})
-							}
-                        },
-                        <?php 
                         }  
                         if($count_jerarquia > 0){
                             if($fetch_jerarquia != null){
@@ -126,44 +89,7 @@
 						},
                         <?php 
 							}
-						}
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
-						?>
-                        {
-                            text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Aprobadas",
-                            attr: {
-                                'id': 'incidencias_aprobadas',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                            },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-							action: function ( e, dt, node, config ) {
-								$.ajax({
-									url: "../config/incidencias/incidencia_aprobada.php",
-									method: 'POST',
-									data:{
-										"rol": <?php echo $_SESSION["rol"]; ?>,
-										"sessionid": <?php echo $_SESSION["id"]; ?>
-
-									},
-									success: function(response) {
-										 var table = $('#datatable').DataTable();
-										 table.clear().draw();
-										 const obj = JSON.parse(response);
-										 table.rows.add(obj).draw();
-										 buttonlist = 1;
-                                         var sueldo = table.column(6);
-                                         sueldo.visible(true); 
-										 table.column().cells().invalidate().render();
-                                         table.columns.adjust().responsive.recalc();
-									
-									}, error: function(response) {
-										console.log(response);
-									}
-								})
-							}
-                        },
-                        <?php 
-                        }  
+						} 
                         if($count_jerarquia > 0){
                             if($fetch_jerarquia != null){
                         ?>
@@ -202,44 +128,7 @@
                         },
                         <?php 
 							}
-						}
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
-						?>
-                        {
-                            text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i> Rechazadas",
-                            attr: {
-                                'id': 'incidencias_rechazadas',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                            },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-							action: function ( e, dt, node, config ) {
-								$.ajax({
-									url: "../config/incidencias/incidencia_rechazada.php",
-									method: 'POST',
-									data:{
-										"rol": <?php echo $_SESSION["rol"]; ?>,
-										"sessionid": <?php echo $_SESSION["id"]; ?>
-
-									},
-									success: function(response) {
-										 var table = $('#datatable').DataTable();
-										 table.clear().draw();
-										 const obj = JSON.parse(response);
-										 table.rows.add(obj).draw();
-										 buttonlist = 1;
-                                         var sueldo = table.column(6);
-                                         sueldo.visible(true); 
-										 table.column().cells().invalidate().render();
-                                         table.columns.adjust().responsive.recalc();
-									
-									}, error: function(response) {
-										console.log(response);
-									}
-								})
-							}
-                        },
-                        <?php 
-                        }  
+						} 
                         if($count_jerarquia > 0){
                             if($fetch_jerarquia != null){
                         ?>
@@ -278,44 +167,7 @@
                         },
                         <?php 
 							}
-						}
-						if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
-						?>
-                        {
-                            text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i> Canceladas",
-                            attr: {
-                                'id': 'incidencias_canceladas',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                            },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-							action: function ( e, dt, node, config ) {
-								$.ajax({
-									url: "../config/incidencias/incidencia_cancelada.php",
-									method: 'POST',
-									data:{
-										"rol": <?php echo $_SESSION["rol"]; ?>,
-										"sessionid": <?php echo $_SESSION["id"]; ?>
-
-									},
-									success: function(response) {
-										 var table = $('#datatable').DataTable();
-										 table.clear().draw();
-										 const obj = JSON.parse(response);
-										 table.rows.add(obj).draw();
-										 buttonlist = 1;
-                                         var sueldo = table.column(6);
-                                         sueldo.visible(true); 
-										 table.column().cells().invalidate().render();
-                                         table.columns.adjust().responsive.recalc();
-									
-									}, error: function(response) {
-										console.log(response);
-									}
-								})
-							}
-                        },
-                        <?php 
-                        }  
+						} 
                         if($count_jerarquia > 0){
                             if($fetch_jerarquia != null){
                         ?>
@@ -353,40 +205,190 @@
                         },
                         <?php 
 							}
-						}
-						if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
-						?>
-                        {
-                            text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
-                            attr: {
-                                'id': 'incidencias_desplieguetodo',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+						} 
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        ?>	
+                            {
+                                text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Pendientes",
+                                attr: {
+                                    'id': 'incidencias_pendientes',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/incidencias/incidencia_pendiente.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+    
+                                        },
+                                        success: function(response) {
+                                             var table = $('#datatable').DataTable();
+                                             table.clear().draw();
+                                             const obj = JSON.parse(response);
+                                             table.rows.add(obj).draw();
+                                             buttonlist = 0;
+                                             var sueldo = table.column(6);
+                                             sueldo.visible(false);  
+                                             table.column().cells().invalidate().render();
+                                             table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
-							action: function ( e, dt, node, config ) {
-								$.ajax({
-									url: "../config/incidencias/incidencia_desplieguetodo.php",
-									method: 'POST',
-									data:{
-										"rol": <?php echo $_SESSION["rol"]; ?>,
-										"sessionid": <?php echo $_SESSION["id"]; ?>
-
-									},
-									success: function(response) {
-										 var table = $('#datatable').DataTable();
-										 table.clear().draw();
-										 const obj = JSON.parse(response);
-										 table.rows.add(obj).draw();
-										 buttonlist = 0; 
-										 table.column().cells().invalidate().render();
-									
-									}, error: function(response) {
-										console.log(response);
-									}
-								})
-							}
-                        },
-                        <?php } ?>
+                        <?php 
+                        }
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        ?>
+                            {
+                                text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Aprobadas",
+                                attr: {
+                                    'id': 'incidencias_aprobadas',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/incidencias/incidencia_aprobada.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+    
+                                        },
+                                        success: function(response) {
+                                             var table = $('#datatable').DataTable();
+                                             table.clear().draw();
+                                             const obj = JSON.parse(response);
+                                             table.rows.add(obj).draw();
+                                             buttonlist = 1;
+                                             var sueldo = table.column(6);
+                                             sueldo.visible(true); 
+                                             table.column().cells().invalidate().render();
+                                             table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php 
+                        }
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        ?>
+                            {
+                                text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i> Rechazadas",
+                                attr: {
+                                    'id': 'incidencias_rechazadas',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/incidencias/incidencia_rechazada.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+    
+                                        },
+                                        success: function(response) {
+                                             var table = $('#datatable').DataTable();
+                                             table.clear().draw();
+                                             const obj = JSON.parse(response);
+                                             table.rows.add(obj).draw();
+                                             buttonlist = 1;
+                                             var sueldo = table.column(6);
+                                             sueldo.visible(true); 
+                                             table.column().cells().invalidate().render();
+                                             table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php 
+                        }
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        ?>
+                            {
+                                text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i> Canceladas",
+                                attr: {
+                                    'id': 'incidencias_canceladas',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/incidencias/incidencia_cancelada.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+    
+                                        },
+                                        success: function(response) {
+                                             var table = $('#datatable').DataTable();
+                                             table.clear().draw();
+                                             const obj = JSON.parse(response);
+                                             table.rows.add(obj).draw();
+                                             buttonlist = 1;
+                                             var sueldo = table.column(6);
+                                             sueldo.visible(true); 
+                                             table.column().cells().invalidate().render();
+                                             table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php 
+                        }
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        ?>
+                            {
+                                text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
+                                attr: {
+                                    'id': 'incidencias_desplieguetodo',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/incidencias/incidencia_desplieguetodo.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+    
+                                        },
+                                        success: function(response) {
+                                             var table = $('#datatable').DataTable();
+                                             table.clear().draw();
+                                             const obj = JSON.parse(response);
+                                             table.rows.add(obj).draw();
+                                             buttonlist = 0; 
+                                             table.column().cells().invalidate().render();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php 
+                        }
+                        ?>   
                         {
                             text: "<i class='mdi mdi-bus text-white font-semibold text-lg'></i> Solicitar vacaciones",
                             attr: {
