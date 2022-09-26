@@ -23,6 +23,9 @@
             "processing": true,
             "serverSide": true,
             "sAjaxSource": '../config/serverside_user.php',
+            "fnServerParams": function ( aoData ) {
+	            aoData.push( { "name": "rol", "value": "<?php echo $_SESSION["rol"]; ?>" }, {"name": "sessionid", "value": "<?php echo $_SESSION["id"]; ?>"} );
+            },
             "initComplete": () => {
                 $("#datatable").show();
             },

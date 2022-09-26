@@ -35,13 +35,15 @@
 
     <ul id="catalogos" class="hidden py-2 space-y-2">
         <li>
-            <?php if(basename($_SERVER['PHP_SELF']) == 'users.php' || basename($_SERVER['PHP_SELF']) == 'crear_usuario.php' || basename($_SERVER['PHP_SELF']) == 'editar_usuario.php' || basename($_SERVER['PHP_SELF']) == 'ver_usuario.php'){?>
-                <a href="users.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
-            <?php }else{ ?>
-            <a href="users.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                <?php if(basename($_SERVER['PHP_SELF']) == 'users.php' || basename($_SERVER['PHP_SELF']) == 'crear_usuario.php' || basename($_SERVER['PHP_SELF']) == 'editar_usuario.php' || basename($_SERVER['PHP_SELF']) == 'ver_usuario.php'){?>
+                    <a href="users.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+                <?php }else{ ?>
+                <a href="users.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <?php } ?>
+                    <p class="ml-4">Usuarios</p>
+                </a>
             <?php } ?>
-                <p class="ml-4">Usuarios</p>
-            </a>
             
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                 <?php if(basename($_SERVER['PHP_SELF']) == 'roles.php' || basename($_SERVER['PHP_SELF']) == 'permisos.php' || basename($_SERVER['PHP_SELF']) == 'crear_rol.php' || basename($_SERVER['PHP_SELF']) == 'editar_rol.php'){?>
