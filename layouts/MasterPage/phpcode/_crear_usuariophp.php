@@ -9,4 +9,10 @@
         header('Location: login.php');
         die();
     }
+
+    if (Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+		header("HTTP/1.0 403 Forbidden");
+		echo '<h1>Prohibido</h1><br> No tiene permiso para acceder a / esta parte del servidor.';
+		exit();
+    }
 ?>
