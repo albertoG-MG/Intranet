@@ -527,7 +527,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_21%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_18%]', 'm-[5px]');
                     boton.append(container);
                     container.append(array[j]);
                 }

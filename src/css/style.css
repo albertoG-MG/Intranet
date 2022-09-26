@@ -890,9 +890,6 @@ select {
 .flex-1 {
   flex: 1 1 0% !important;
 }
-.flex-\[1_0_21\%\] {
-  flex: 1 0 21% !important;
-}
 .flex-\[1_0_18\%\] {
   flex: 1 0 18% !important;
 }
