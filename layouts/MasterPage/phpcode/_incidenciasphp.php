@@ -10,6 +10,12 @@
         die();
     }
 
+    if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+		header("HTTP/1.0 403 Forbidden");
+		echo '<h1>Prohibido</h1><br> No tiene permiso para acceder a / esta parte del servidor.';
+		exit();
+    }
+
     $check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid");
 	$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
 	$count_jerarquia = $check_jerarquia -> rowCount();
