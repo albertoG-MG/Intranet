@@ -8,7 +8,7 @@
 	$select_rol_dep -> execute(array(":userid" => $id));
 	$fetch_rol_dep = $select_rol_dep -> fetch(PDO::FETCH_OBJ);
 
-	if($fetch_rol_dep -> rolnom == "Superadministrador" || $fetch_rol_dep -> rolnom == "Administrador" || $fetch_rol_dep -> rolnom != "Director general"){
+	if($fetch_rol_dep -> rolnom == "Superadministrador" || $fetch_rol_dep -> rolnom == "Administrador" || $fetch_rol_dep -> rolnom != "Director general" || $fetch_rol_dep -> rolnom == "Gerente" && $fetch_rol_dep -> depanom == "Recursos humanos" || $fetch_rol_dep -> rolnom == "Gerente" && $fetch_rol_dep -> depanom == "Finanzas"){
 		$consulta = "SELECT incidencias.id as incidenciaid, usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, incidencias.tipo_incidencia as tipo_incidencia, incidencias.fecha_inicio as fecha_inicio, incidencias.fecha_fin as fecha_fin, estatus_incidencia.nombre as estatus_nombre, accion_incidencias.goce_de_sueldo as sueldo FROM incidencias INNER JOIN usuarios ON incidencias.users_id = usuarios.id INNER JOIN estatus_incidencia ON incidencias.estatus_id=estatus_incidencia.id LEFT JOIN accion_incidencias ON accion_incidencias.incidencias_id = incidencias.id WHERE incidencias.estatus_id !='4' AND incidencias.estatus_id !='5' AND incidencias.estatus_id !='6';";
 		$resultado = $object->_db->prepare($consulta);
 		$resultado->execute();
