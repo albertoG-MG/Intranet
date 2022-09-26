@@ -206,7 +206,7 @@
                         <?php 
 							}
 						} 
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>	
                             {
                                 text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Pendientes",
@@ -243,7 +243,7 @@
                             },
                         <?php 
                         }
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
                                 text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Aprobadas",
@@ -280,7 +280,7 @@
                             },
                         <?php 
                         }
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
                                 text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i> Rechazadas",
@@ -317,7 +317,7 @@
                             },
                         <?php 
                         }
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
                                 text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i> Canceladas",
@@ -354,7 +354,7 @@
                             },
                         <?php 
                         }
-                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
                                 text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
