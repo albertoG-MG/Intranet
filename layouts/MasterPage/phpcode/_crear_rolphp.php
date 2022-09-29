@@ -9,7 +9,7 @@ if ($_SESSION['loggedin'] != true) {
     die();
 }
 
-if (Permissions::CheckPermissions($_SESSION["id"], "Crear roles") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+if (Permissions::CheckPermissions($_SESSION["id"], "Crear roles") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador") {
     header("HTTP/1.0 403 Forbidden");
     echo '<div class="error" style="width:100%; display:flex; flex-direction:column;">';
         echo '<h1>Prohibido</h1>';
