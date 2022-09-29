@@ -2870,7 +2870,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_admin`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_admin`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) WHERE (`roles`.`nombre` <> 'Superadministrador')  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_admin`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) WHERE ((`roles`.`nombre` <> 'Superadministrador') OR isnull(`roles`.`nombre`))  ;
 
 -- --------------------------------------------------------
 
@@ -2879,7 +2879,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_vistausuarios`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) WHERE ((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador'))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador')) OR isnull(`roles`.`nombre`))  ;
 
 -- --------------------------------------------------------
 
@@ -2888,7 +2888,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_vistatecnicos`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) WHERE (`roles`.`nombre` = 'Tecnico')  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) WHERE ((`roles`.`nombre` = 'Tecnico') OR isnull(`roles`.`nombre`))  ;
 
 -- --------------------------------------------------------
 
