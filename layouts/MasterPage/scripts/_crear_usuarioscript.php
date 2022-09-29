@@ -79,51 +79,65 @@
                     },
                     submitHandler: function(form) {
                         $("#grabar").attr("disabled", true);
-                        var fd = new FormData();
-                        var usuario = $("input[name=usuario]").val();
-                        var password = $("input[name=password]").val();
-                        var nombre = $("input[name=nombre]").val();
-                        var apellido_pat = $("input[name=apellido_pat]").val();
-                        var apellido_mat = $("input[name=apellido_mat]").val();
-                        var correo = $("input[name=correo]").val();
-                        var departamento = $("#departamento").val();
-                        var rol = $("#rol").val();
-                        var foto = $('#foto')[0].files[0];
-                        var method = "store";
-                        var app = "usuario";
-                        fd.append('usuario', usuario);
-                        fd.append('password', password);
-                        fd.append('nombre', nombre);
-                        fd.append('apellido_pat', apellido_pat);
-                        fd.append('apellido_mat', apellido_mat);
-                        fd.append('correo', correo);
-                        fd.append('departamento', departamento);
-                        fd.append('roles_id', rol);
-                        fd.append('foto', foto);
-                        fd.append('method', method);
-                        fd.append('app', app);
-                        $.ajax({
-                            url: '../ajax/class_search.php',
-                            type: 'POST',
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(data) {
-                                data = data.replace(/[\r\n]/gm, '');
-                                if(data == "success"){
-                                    Swal.fire({
-                                        title: "Usuario Creado",
-                                        text: "Se ha creado un usuario exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        window.location.href = "users.php";	
-                                        });
-                                }
-                            },
-                            error: function(data) {
-                                $("#ajax-error").text('Fail to send request');
+                        check_user_logged().then((response) => {
+		                    if(response == "true"){
+                                var fd = new FormData();
+                                var usuario = $("input[name=usuario]").val();
+                                var password = $("input[name=password]").val();
+                                var nombre = $("input[name=nombre]").val();
+                                var apellido_pat = $("input[name=apellido_pat]").val();
+                                var apellido_mat = $("input[name=apellido_mat]").val();
+                                var correo = $("input[name=correo]").val();
+                                var departamento = $("#departamento").val();
+                                var rol = $("#rol").val();
+                                var foto = $('#foto')[0].files[0];
+                                var method = "store";
+                                var app = "usuario";
+                                fd.append('usuario', usuario);
+                                fd.append('password', password);
+                                fd.append('nombre', nombre);
+                                fd.append('apellido_pat', apellido_pat);
+                                fd.append('apellido_mat', apellido_mat);
+                                fd.append('correo', correo);
+                                fd.append('departamento', departamento);
+                                fd.append('roles_id', rol);
+                                fd.append('foto', foto);
+                                fd.append('method', method);
+                                fd.append('app', app);
+                                $.ajax({
+                                    url: '../ajax/class_search.php',
+                                    type: 'POST',
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data) {
+                                        data = data.replace(/[\r\n]/gm, '');
+                                        if(data == "success"){
+                                            Swal.fire({
+                                                title: "Usuario Creado",
+                                                text: "Se ha creado un usuario exitosamente!",
+                                                icon: "success"
+                                            }).then(function() {
+                                                window.location.href = "users.php";	
+                                                });
+                                        }
+                                    },
+                                    error: function(data) {
+                                        $("#ajax-error").text('Fail to send request');
+                                    }
+                                });
+                            }else{
+                                Swal.fire({
+                                    title: "Ocurrió un error",
+                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                    icon: "error"
+                                }).then(function() {
+                                    window.location.href = "login.php";
+                                });
                             }
-                        });
+                        }).catch((error) => {
+		                    console.log(error)
+	                    })
                         return false;
                     }
                 });
@@ -134,6 +148,24 @@
                 var dropdown = document.getElementById('catalogos');
                 dropdown.classList.remove("hidden");
             <?php } ?>
+
+            function check_user_logged(){
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax/check_user_logged.php",
+                        data:{
+                            pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                        },
+                        success: function (response) {
+                            resolve(response)
+                        },
+                        error: function (error) {
+                            reject(error)
+                        }
+                    });
+                })
+            }
 
             $('input[name="foto"]').change(function(e) {
                 if($("#foto").val() != ''){

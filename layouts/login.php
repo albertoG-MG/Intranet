@@ -28,10 +28,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $_SESSION['apellidomat'] = $row->apellido_mat;
             $_SESSION['correo'] = $row->correo;
             $_SESSION['rol'] = $row->roles_id;
-
-            exit("success");
+            if(isset($_SESSION['redirectURL'])){
+                $link = $_SESSION['redirectURL'];
+                unset($_SESSION['redirectURL']);
+                exit(json_encode(array("success", "{$link}")));
+            }else{
+                exit(json_encode(array("success", "dashboard.php")));
+            }
         } else {
-            exit('failed');
+            exit(json_encode(array("failed")));
         }
     }
 }
@@ -160,20 +165,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                             processData: false,
                             contentType: false,
                             success: function(data) {
-                                if (data == "success") {
+                                var array = $.parseJSON(data);
+                                if (array[0] == "success") {
                                     Swal.fire({
                                         title: "Autentificación exitosa",
                                         text: "Bienvenido!",
                                         icon: "success"
                                     }).then(function() {
-                                        <?php if (isset($_SESSION['redirectURL'])) {
-                                            $link = $_SESSION['redirectURL'];
-                                            unset($_SESSION['redirectURL']);
-                                            echo "window.location.href='" . $link . "';";
-                                        ?>
-                                        <?php } else { ?>
-                                            window.location.href = "dashboard.php";
-                                        <?php } ?>
+                                        window.location.href = array[1]; 
                                     });
                                 } else {
                                     Swal.fire({
