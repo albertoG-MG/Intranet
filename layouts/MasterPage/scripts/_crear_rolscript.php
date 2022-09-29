@@ -29,36 +29,50 @@ $("#Guardar").validate({
         },
         submitHandler: function(form) {
             $("#grabar").attr("disabled", true);
-            var fd = new FormData();
-            var roles = $("input[name=rol]").val();
-            var jerarquia = $("#jerarquia").val();
-            var permisos = JSON.stringify(array);
-            var method="store";
-            var app="roles";
-            fd.append("roles", roles);
-            fd.append('jerarquia', jerarquia);
-            fd.append("permisos", permisos);
-            fd.append("method", method);
-            fd.append("app", app);
-            $.ajax({
-                type: "POST",
-                url: "../ajax/class_search.php",
-                data: fd,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    response = response.replace(/[\r\n]/gm, '');
-                    if(response == "success"){
-                            Swal.fire({
-                            title: "Rol Creado",
-                            text: "Se ha creado un rol exitosamente!",
-                            icon: "success"
+            check_user_logged().then((response) => {
+		        if(response == "true"){
+                    var fd = new FormData();
+                    var roles = $("input[name=rol]").val();
+                    var jerarquia = $("#jerarquia").val();
+                    var permisos = JSON.stringify(array);
+                    var method="store";
+                    var app="roles";
+                    fd.append("roles", roles);
+                    fd.append('jerarquia', jerarquia);
+                    fd.append("permisos", permisos);
+                    fd.append("method", method);
+                    fd.append("app", app);
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax/class_search.php",
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            response = response.replace(/[\r\n]/gm, '');
+                            if(response == "success"){
+                                    Swal.fire({
+                                    title: "Rol Creado",
+                                    text: "Se ha creado un rol exitosamente!",
+                                    icon: "success"
+                            }).then(function() {
+                                    window.location.href = "roles.php";	
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        title: "Ocurrió un error",
+                        text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                        icon: "error"
                     }).then(function() {
-                            window.location.href = "roles.php";	
-                        });
-                    }
+                        window.location.href = "login.php";
+                    });
                 }
-            });
+            }).catch((error) => {
+		        console.log(error)
+	        })
         return false;
         }
     });
@@ -70,5 +84,24 @@ $("#Guardar").validate({
         var dropdown = document.getElementById('catalogos');
         dropdown.classList.remove("hidden");
     <?php } ?>
+
+    function check_user_logged(){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "POST",
+                url: "../ajax/check_user_logged.php",
+                data:{
+                    pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                },
+                success: function (response) {
+                    resolve(response)
+                },
+                error: function (error) {
+                    reject(error)
+                }
+            });
+        })
+    }
+
 });
 </script>
