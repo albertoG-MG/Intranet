@@ -60,50 +60,82 @@
 				},
 				submitHandler: function(form) {
 					$("#grabar").attr("disabled", true);
-					var fd = new FormData();
-					var titulo = $("#titulo").val();
-					var fechainicio = $("#fechainicio").val();
-					var fechafin = $("#fechafin").val();
-					var tipo = $("#tipo").val();
-					var descripcion = $("#descripcion").val();
-					var foto = $('#foto')[0].files[0];
-					var method = "store";
-                    var app = "incidencias";
-					var userid = <?php echo $_SESSION["id"]; ?>;
-					fd.append('titulo', titulo);
-					fd.append('fechainicio', fechainicio);
-					fd.append('fechafin', fechafin);
-					fd.append('tipo', tipo);
-					fd.append('descripcion', descripcion);
-					fd.append('foto', foto);
-					fd.append('method', method);
-					fd.append('app', app);
-					fd.append('userid', userid);
-					$.ajax({
-							url: '../ajax/class_search.php',
-                            type: 'POST',
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(data) {
-                                data = data.replace(/[\r\n]/gm, '');
-                                if(data == "success"){
-                                    Swal.fire({
-                                        title: "Incidencia creada",
-                                        text: "Se ha creado una incidencia exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        window.location.href = "incidencias.php";	
-                                        });
-                                }
-                            },
-                            error: function(data) {
-                                $("#ajax-error").text('Fail to send request');
-                            }		
-					});
+					check_user_logged().then((response) => {
+						if(response == "true"){
+							var fd = new FormData();
+							var titulo = $("#titulo").val();
+							var fechainicio = $("#fechainicio").val();
+							var fechafin = $("#fechafin").val();
+							var tipo = $("#tipo").val();
+							var descripcion = $("#descripcion").val();
+							var foto = $('#foto')[0].files[0];
+							var method = "store";
+							var app = "incidencias";
+							var userid = <?php echo $_SESSION["id"]; ?>;
+							fd.append('titulo', titulo);
+							fd.append('fechainicio', fechainicio);
+							fd.append('fechafin', fechafin);
+							fd.append('tipo', tipo);
+							fd.append('descripcion', descripcion);
+							fd.append('foto', foto);
+							fd.append('method', method);
+							fd.append('app', app);
+							fd.append('userid', userid);
+							$.ajax({
+									url: '../ajax/class_search.php',
+									type: 'POST',
+									data: fd,
+									processData: false,
+									contentType: false,
+									success: function(data) {
+										data = data.replace(/[\r\n]/gm, '');
+										if(data == "success"){
+											Swal.fire({
+												title: "Incidencia creada",
+												text: "Se ha creado una incidencia exitosamente!",
+												icon: "success"
+											}).then(function() {
+												window.location.href = "incidencias.php";	
+												});
+										}
+									},
+									error: function(data) {
+										$("#ajax-error").text('Fail to send request');
+									}		
+							});
+						}else{
+							Swal.fire({
+								title: "Ocurrió un error",
+								text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+								icon: "error"
+							}).then(function() {
+								window.location.href = "login.php";
+							});
+						}
+					}).catch((error) => {
+						console.log(error);
+					})
 					return false;
 				}
 			});
+		}
+
+		function check_user_logged(){
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: "POST",
+					url: "../ajax/check_user_logged.php",
+					data:{
+						pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+					},
+					success: function (response) {
+						resolve(response)
+					},
+					error: function (error) {
+						reject(error)
+					}
+				});
+			})
 		}
 		
 		$('input[name="foto"]').change(function(e) {
