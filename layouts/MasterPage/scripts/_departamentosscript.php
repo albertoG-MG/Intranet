@@ -121,33 +121,47 @@
                         }
                     },
                     submitHandler: function(form) {
-                        var fd = new FormData();
-                        var departamentos = $("input[name=creardepartamento]").val();
-                        var app = "departamentos";
-                        var method = "store";
-                        fd.append('departamentos', departamentos);
-                        fd.append('app', app);
-                        fd.append('method', method);
-                        var table = $('#datatable').DataTable();
-                        $.ajax({
-                            type: "post",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                response = response.replace(/[\r\n]/gm, '');
-                                if(response == "success"){
-                                    Swal.fire({
-                                        title: "Departamento Creado",
-                                        text: "Se ha creado un departamento exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        table.ajax.reload(null, false);
-                                        });
-                                }
+                        check_user_logged().then((response) => {
+		                    if(response == "true"){
+                                var fd = new FormData();
+                                var departamentos = $("input[name=creardepartamento]").val();
+                                var app = "departamentos";
+                                var method = "store";
+                                fd.append('departamentos', departamentos);
+                                fd.append('app', app);
+                                fd.append('method', method);
+                                var table = $('#datatable').DataTable();
+                                $.ajax({
+                                    type: "post",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (response) {
+                                        response = response.replace(/[\r\n]/gm, '');
+                                        if(response == "success"){
+                                            Swal.fire({
+                                                title: "Departamento Creado",
+                                                text: "Se ha creado un departamento exitosamente!",
+                                                icon: "success"
+                                            }).then(function() {
+                                                table.ajax.reload(null, false);
+                                                });
+                                        }
+                                    }
+                                });
+                            }else{
+                                Swal.fire({
+                                    title: "Ocurrió un error",
+                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                    icon: "error"
+                                }).then(function() {
+                                    window.location.href = "login.php";
+                                });
                             }
-                        });
+                        }).catch((error) => {
+		                    console.log(error);
+	                    })
                         return false;
                     }
                 });
@@ -212,35 +226,49 @@
                         }
                     },
                     submitHandler: function(form) {
-                        var fd = new FormData();
-                        var departamentos = $("input[name=editdepartamento]").val();
-                        var app = "departamentos";
-                        var method = "edit";
-                        var id = data[0];
-                        fd.append('departamentos', departamentos);
-                        fd.append('app', app);
-                        fd.append('method', method);
-                        fd.append('editarid', id);
-                        var table = $('#datatable').DataTable();
-                        $.ajax({
-                            type: "post",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                response = response.replace(/[\r\n]/gm, '');
-                                if(response == "success"){
-                                    Swal.fire({
-                                        title: "Departamento Editado",
-                                        text: "Se ha editado un departamento exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        table.ajax.reload(null, false);
-                                        });
-                                }
+                        check_user_logged().then((response) => {
+		                    if(response == "true"){
+                                var fd = new FormData();
+                                var departamentos = $("input[name=editdepartamento]").val();
+                                var app = "departamentos";
+                                var method = "edit";
+                                var id = data[0];
+                                fd.append('departamentos', departamentos);
+                                fd.append('app', app);
+                                fd.append('method', method);
+                                fd.append('editarid', id);
+                                var table = $('#datatable').DataTable();
+                                $.ajax({
+                                    type: "post",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (response) {
+                                        response = response.replace(/[\r\n]/gm, '');
+                                        if(response == "success"){
+                                            Swal.fire({
+                                                title: "Departamento Editado",
+                                                text: "Se ha editado un departamento exitosamente!",
+                                                icon: "success"
+                                            }).then(function() {
+                                                table.ajax.reload(null, false);
+                                                });
+                                        }
+                                    }
+                                });
+                            }else{
+                                Swal.fire({
+                                    title: "Ocurrió un error",
+                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                    icon: "error"
+                                }).then(function() {
+                                    window.location.href = "login.php";
+                                });
                             }
-                        });
+                        }).catch((error) => {
+                            console.log(error);
+                        })
                         return false;
                     }
                 });
@@ -297,33 +325,66 @@
             confirmButtonText: 'Sí!',
             cancelButtonText: 'cancelar'
             }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'éxito',
-                        text: 'La fila ha sido eliminada!'
-                    }).then(function() {
-                        var eliminarid = data[0];
-                        var fd = new FormData();
-                        fd.append('id', eliminarid);
-                        $.ajax({
-                            url: "../ajax/eliminar/tabla_departamentos/eliminardepartamento.php",
-                            type: "post",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(result) {
-                                    table
-                                    .row($(this).parents('tr'))
-                                    .remove()
-                                    .draw();
-                            }
+                check_user_logged().then((response) => {
+		            if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'éxito',
+                                text: 'La fila ha sido eliminada!'
+                            }).then(function() {
+                                var eliminarid = data[0];
+                                var fd = new FormData();
+                                fd.append('id', eliminarid);
+                                $.ajax({
+                                    url: "../ajax/eliminar/tabla_departamentos/eliminardepartamento.php",
+                                    type: "post",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result) {
+                                            table
+                                            .row($(this).parents('tr'))
+                                            .remove()
+                                            .draw();
+                                    }
+                                });
+                            });
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
                         });
-                    });
-                }
+                    }
+                }).catch((error) => {
+		            console.log(error);
+	            })
             })
         });
     <?php } ?>
+
+    function check_user_logged(){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "POST",
+                url: "../ajax/check_user_logged.php",
+                data:{
+                    pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                },
+                success: function (response) {
+                    resolve(response)
+                },
+                error: function (error) {
+                    reject(error)
+                }
+            });
+        })
+    }
+
 </script>
 <style>
     .dataTables_wrapper .dataTables_filter{
