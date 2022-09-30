@@ -151,32 +151,64 @@
             confirmButtonText: 'Sí!',
             cancelButtonText: 'cancelar'
         }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'éxito',
-                    text: 'La fila ha sido eliminada!'
-                }).then(function() {
-                    var eliminarid = data[0];
-                    var fd = new FormData();
-                    fd.append('id', eliminarid);
-                    $.ajax({
-                        url: "../ajax/eliminar/tabla_expedientes/eliminarexpediente.php",
-                        type: "post",
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        success: function(result) {
-                            table
-                                .row($(this).parents('tr'))
-                                .remove()
-                                .draw();
-                        }
+            check_user_logged().then((response) => {
+		        if(response == "true"){
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'éxito',
+                            text: 'La fila ha sido eliminada!'
+                        }).then(function() {
+                            var eliminarid = data[0];
+                            var fd = new FormData();
+                            fd.append('id', eliminarid);
+                            $.ajax({
+                                url: "../ajax/eliminar/tabla_expedientes/eliminarexpediente.php",
+                                type: "post",
+                                data: fd,
+                                processData: false,
+                                contentType: false,
+                                success: function(result) {
+                                    table
+                                        .row($(this).parents('tr'))
+                                        .remove()
+                                        .draw();
+                                }
+                            });
+                        });
+                    }
+                }else{
+                    Swal.fire({
+                        title: "Ocurrió un error",
+                        text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                        icon: "error"
+                    }).then(function() {
+                        window.location.href = "login.php";
                     });
-                });
-            }
+                }
+            }).catch((error) => {
+		        console.log(error);
+	        })
         })
     });
+
+    function check_user_logged(){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "POST",
+                url: "../ajax/check_user_logged.php",
+                data:{
+                    pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                },
+                success: function (response) {
+                    resolve(response)
+                },
+                error: function (error) {
+                    reject(error)
+                }
+            });
+        })
+    }
 
     <?php
     if(basename($_SERVER['PHP_SELF']) == 'expedientes.php'){?>
