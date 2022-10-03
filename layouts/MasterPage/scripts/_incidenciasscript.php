@@ -13,7 +13,7 @@
             buttons: [
                         <?php 
                         if($count_jerarquia > 0){
-                            if($fetch_jerarquia != null){
+                            if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
                             text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i>Mis Pendientes",
@@ -52,7 +52,7 @@
                             }
                         }  
                         if($count_jerarquia > 0){
-                            if($fetch_jerarquia != null){
+                            if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
 							text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i>Mis Aprobadas",
@@ -91,7 +91,7 @@
 							}
 						} 
                         if($count_jerarquia > 0){
-                            if($fetch_jerarquia != null){
+                            if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
                             text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i>Mis Rechazadas",
@@ -130,7 +130,7 @@
 							}
 						} 
                         if($count_jerarquia > 0){
-                            if($fetch_jerarquia != null){
+                            if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
                             text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i>Mis Canceladas",
@@ -169,7 +169,7 @@
 							}
 						} 
                         if($count_jerarquia > 0){
-                            if($fetch_jerarquia != null){
+                            if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
                             text: "<i class='mdi mdi-newspaper-variant text-white font-semibold text-lg'></i> Mis incidencias evaluadas",
@@ -357,7 +357,7 @@
                         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
-                                text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Desplegar todo",
+                                text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver incidencias evaluadas",
                                 attr: {
                                     'id': 'incidencias_desplieguetodo',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'

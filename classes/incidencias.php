@@ -152,5 +152,26 @@ class incidencias {
 		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id SET i.estatus_id = temp.estatus_siguiente");
 		$update_state -> execute(array(':incidenciaid' => $incidenciaid));
 	}
+
+	public static function CheckSameDepartment($userid, $incidenciaid){
+		$object = new connection_database();
+		$check_same_departament = $object -> _db ->prepare("SELECT CASE WHEN departamento1 = departamento2 THEN 'true' ELSE 'false' END AS resultado FROM (SELECT (SELECT departamentos.departamento FROM usuarios INNER JOIN incidencias ON incidencias.users_id=usuarios.id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias.id=:incidenciaid) AS departamento1, (SELECT  departamentos.departamento FROM usuarios INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE usuarios.id=:sessionid) AS departamento2) AS departamentos");
+		$check_same_departament -> execute(array(':incidenciaid' => $incidenciaid, ':sessionid' => $userid));
+		$fetch_resultado = $check_same_departament -> fetch(PDO::FETCH_OBJ);
+		return $fetch_resultado -> resultado;
+	}
+
+	public static function CheckIFIncidentOwnership($incidenciaid, $userid){
+		$object = new connection_database();
+		$check_if_roles_owns_incident = $object -> _db ->prepare("SELECT * FROM usuarios INNER JOIN incidencias ON incidencias.users_id = usuarios.id WHERE usuarios.id=:userid AND incidencias.id=:incidenciaid");
+		$check_if_roles_owns_incident -> execute(array(':userid' => $userid, ':incidenciaid' => $incidenciaid));
+		$count_result = $check_if_roles_owns_incident -> rowCount();
+		if($count_result > 0){
+		 $resultado="true";
+		}else{
+		 $resultado="false";
+		}
+		return $resultado;
+	}
 }
 ?>

@@ -35,5 +35,34 @@
 
     $edit=Incidencias::Fetcheditincidencia($editarid);
 
-	
+	if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Director general"){
+		/*No le pertenece sigue; el siguiente query saca la informacion del usuario que esta tratando de ingresar y su departamento.*/
+		$check_rol_departament = $object -> _db ->prepare("SELECT roles.nombre, departamentos.departamento FROM usuarios left join departamentos ON departamentos.id=usuarios.departamento_id INNER JOIN roles ON roles.id=usuarios.roles_id WHERE usuarios.id=:userid");
+		$check_rol_departament -> execute(array(':userid' => $_SESSION["id"]));
+		$fetch_rol_departament = $check_rol_departament -> fetch(PDO::FETCH_OBJ);
+        /*Este metodo checa si la incidencia le pertenece al usuario*/
+        if(Incidencias::CheckIFIncidentOwnership($editarid, $_SESSION["id"]) == "false"){
+            /*Si los usuarios resultan ser empleados, supervisores o tecnicos, regresa*/
+            if($fetch_rol_departament -> nombre == "Empleado" || $fetch_rol_departament -> nombre == "Supervisor" || $fetch_rol_departament -> nombre == "Tecnico"){
+                if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true"){
+                    header('Location: incidencias.php');
+                    die();
+                }else{
+                    header('Location: dashboard.php');
+                    die();
+                }
+            /*Si resulta ser un gerente que no sea del departamento de rh o resulta ser un director, asegurarse que solo puedan a sus empleados o departamentos*/
+            }else if($fetch_rol_departament -> nombre == "Gerente" && $fetch_rol_departament -> departamento != "Recursos humanos" && $fetch_rol_departament -> departamento != "Finanzas" || $fetch_rol_departament -> nombre == "Director"){
+                if($edit -> notificado_a != $_SESSION["rol"] || Incidencias::CheckSameDepartment($_SESSION["id"], $editarid) == "false"){
+                    if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true"){
+                        header('Location: incidencias.php');
+                        die();
+                    }else{
+                        header('Location: dashboard.php');
+                        die();
+                    }
+                }
+            }
+        }
+    }
 ?>
