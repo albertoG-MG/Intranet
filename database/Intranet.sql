@@ -2552,7 +2552,7 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 CREATE TABLE `expedientes` (
   `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
-  `num_empleado` bigint(100) DEFAULT NULL,
+  `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
   `estudios` varchar(100) DEFAULT NULL,
   `puesto` varchar(100) DEFAULT NULL,
   `calle` varchar(100) DEFAULT NULL,
