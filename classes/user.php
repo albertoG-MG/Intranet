@@ -40,7 +40,7 @@ class user {
 
     public static function FetchUsuarios(){
         $object = new connection_database();
-		$sql = "SELECT * FROM usuarios";
+		$sql = "SELECT usuarios.id as id, usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, roles.nombre as rolnom  FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id";
         $fetchusuarios = $object->_db->prepare($sql);
         $fetchusuarios->execute();
 

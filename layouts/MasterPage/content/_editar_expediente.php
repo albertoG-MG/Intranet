@@ -82,13 +82,16 @@
                                             }
                                             $usuarios = user::FetchUsuarios();
                                             foreach ($usuarios as $row) {
-                                                if(!in_array($row->id, $arr))
+                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador")
                                                 {
-                                                    echo "<option value='" . $row->id . "'";
-                                                    if($row->id == $edit->userid){ echo 'selected';}
-                                                    echo ">";
-                                                    echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                    echo "</option>";
+                                                    if(!in_array($row->id, $arr))
+                                                    {
+                                                        echo "<option value='" . $row->id . "'";
+                                                        if($row->id == $edit->userid){ echo 'selected';}
+                                                        echo ">";
+                                                        echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                        echo "</option>";
+                                                    }
                                                 }
                                             }
                                             ?>

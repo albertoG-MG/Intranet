@@ -488,7 +488,7 @@
             placeholder: '-- Seleccione --',
             "language": {
                 "noResults": function(){
-                    return "Todos los usuarios ya tienen vinculado un expediente! No podrá guardar cambios.";
+                    return "No hay resultados";
                 }
             }
         });
