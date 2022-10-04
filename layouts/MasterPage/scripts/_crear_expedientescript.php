@@ -329,6 +329,9 @@
                     prueba: {
                         required:true
                     },
+                    numempleado: {
+	                    remote: "../ajax/expedientes/check_num_empleado.php"
+                    },
                     fechaalta: {
 	                    required:true
                     },
@@ -388,6 +391,9 @@
                 messages:{
                     prueba:{
                         required: 'Este campo es requerido'
+                    },
+                    numempleado: {
+	                    remote: "Este número de empleado ya existe, por favor, eliga otro"
                     },
                     fechaalta: {
 	                    required: 'Este campo es requerido'
