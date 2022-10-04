@@ -570,6 +570,15 @@
                     prueba: {
                         required:true
                     },
+                    numempleado: {
+                        remote: {
+                            url: "../ajax/expedientes/checkedit_num_empleado.php",
+                            type: "post",
+                            data: {
+                                "editarid": <?php echo $Editarid; ?>
+                            }
+                        }
+                    },
                     fechaalta: {
 	                    required:true
                     },
@@ -629,6 +638,9 @@
                 messages:{
                     prueba:{
                         required: 'Este campo es requerido'
+                    },
+                    numempleado: {
+                        remote: "Este número de empleado ya existe, por favor, eliga otro"
                     },
                     fechaalta: {
 	                    required: 'Este campo es requerido'
