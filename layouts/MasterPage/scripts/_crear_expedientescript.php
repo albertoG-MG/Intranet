@@ -218,6 +218,30 @@
             }
 	    });
 
+        if(($('input[type=radio][name=tel_movil]:checked').val() === "si")){
+            document.getElementById("div_movil").classList.remove('hidden');
+            document.getElementById("telmov").classList.add('required');
+            document.getElementById("telmov").setAttribute("data-msg-required", "Este campo es requerido");
+
+        }else if($('input[type=radio][name=tel_movil]:checked').val() === "no"){
+            document.getElementById("div_movil").classList.add('hidden');
+            document.getElementById("telmov").classList.remove('required');
+            document.getElementById("telmov").removeAttribute("data-msg-required");
+        }
+
+        $('input[type=radio][name=tel_movil]').on('change', function () {
+            if(($('input[type=radio][name=tel_movil]:checked').val() === "si")){
+                document.getElementById("div_movil").classList.remove('hidden');
+                document.getElementById("telmov").classList.add('required');
+                document.getElementById("telmov").setAttribute("data-msg-required", "Este campo es requerido");
+
+            }else if($('input[type=radio][name=tel_movil]:checked').val() === "no"){
+                document.getElementById("div_movil").classList.add('hidden');
+                document.getElementById("telmov").classList.remove('required');
+                document.getElementById("telmov").removeAttribute("data-msg-required");
+            }
+        });
+
         if(($('input[type=radio][name=empresa]:checked').val() === "si")){
             document.getElementById("famnom").classList.remove('hidden');
             document.getElementById("nomfam").classList.add('required');
