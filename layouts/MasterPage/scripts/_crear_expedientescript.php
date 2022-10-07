@@ -242,6 +242,46 @@
             }
         });
 
+        if(($('input[type=radio][name=tel_movil_empresa]:checked').val() === "si")){
+            document.getElementById("div_movil_empresa").classList.remove('hidden');
+            document.getElementById("marcacion").classList.add('required');
+            document.getElementById("marcacion").setAttribute("data-msg-required", "Este campo es requerido");
+			document.getElementById("serie").classList.add('required');
+            document.getElementById("serie").setAttribute("data-msg-required", "Este campo es requerido");
+			document.getElementById("sim").classList.add('required');
+            document.getElementById("sim").setAttribute("data-msg-required", "Este campo es requerido");
+
+        }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
+            document.getElementById("div_movil_empresa").classList.add('hidden');
+            document.getElementById("marcacion").classList.remove('required');
+            document.getElementById("marcacion").removeAttribute("data-msg-required");
+			document.getElementById("serie").classList.remove('required');
+            document.getElementById("serie").removeAttribute("data-msg-required");
+			document.getElementById("sim").classList.remove('required');
+            document.getElementById("sim").removeAttribute("data-msg-required");
+        }
+
+        $('input[type=radio][name=tel_movil_empresa]').on('change', function () {
+            if(($('input[type=radio][name=tel_movil_empresa]:checked').val() === "si")){
+                document.getElementById("div_movil_empresa").classList.remove('hidden');
+                document.getElementById("marcacion").classList.add('required');
+                document.getElementById("marcacion").setAttribute("data-msg-required", "Este campo es requerido");
+				document.getElementById("serie").classList.add('required');
+				document.getElementById("serie").setAttribute("data-msg-required", "Este campo es requerido");
+				document.getElementById("sim").classList.add('required');
+				document.getElementById("sim").setAttribute("data-msg-required", "Este campo es requerido");
+
+            }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
+                document.getElementById("div_movil_empresa").classList.add('hidden');
+                document.getElementById("marcacion").classList.remove('required');
+                document.getElementById("marcacion").removeAttribute("data-msg-required");
+                document.getElementById("serie").classList.remove('required');
+                document.getElementById("serie").removeAttribute("data-msg-required");
+                document.getElementById("sim").classList.remove('required');
+                document.getElementById("sim").removeAttribute("data-msg-required");
+            }
+        });
+
         if(($('input[type=radio][name=empresa]:checked').val() === "si")){
             document.getElementById("famnom").classList.remove('hidden');
             document.getElementById("nomfam").classList.add('required');
