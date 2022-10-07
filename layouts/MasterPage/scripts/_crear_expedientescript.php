@@ -282,6 +282,30 @@
             }
         });
 
+        if(($('input[type=radio][name=retencion]:checked').val() === "si")){
+        document.getElementById("div_retencion").classList.remove('hidden');
+        document.getElementById("monto_mensual").classList.add('required');
+        document.getElementById("monto_mensual").setAttribute("data-msg-required", "Este campo es requerido");
+
+    }else if($('input[type=radio][name=retencion]:checked').val() === "no"){
+        document.getElementById("div_retencion").classList.add('hidden');
+        document.getElementById("monto_mensual").classList.remove('required');
+        document.getElementById("monto_mensual").removeAttribute("data-msg-required");
+    }
+
+    $('input[type=radio][name=retencion]').on('change', function () {
+        if(($('input[type=radio][name=retencion]:checked').val() === "si")){
+        document.getElementById("div_retencion").classList.remove('hidden');
+        document.getElementById("monto_mensual").classList.add('required');
+        document.getElementById("monto_mensual").setAttribute("data-msg-required", "Este campo es requerido");
+
+        }else if($('input[type=radio][name=retencion]:checked').val() === "no"){
+        document.getElementById("div_retencion").classList.add('hidden');
+        document.getElementById("monto_mensual").classList.remove('required');
+        document.getElementById("monto_mensual").removeAttribute("data-msg-required");
+        }
+    });
+
         if(($('input[type=radio][name=empresa]:checked').val() === "si")){
             document.getElementById("famnom").classList.remove('hidden');
             document.getElementById("nomfam").classList.add('required');
