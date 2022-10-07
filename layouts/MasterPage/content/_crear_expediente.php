@@ -533,13 +533,74 @@
                             </div>
                             <div id='third' class='hidden p-4'>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de referencias bancarias</label>
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de beneficiarios bancarios</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
                                         <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" value="" placeholder="Input 26">
                                     </div>
                                 </div>
                                 <div id="ref">
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CUENTA BANCARIA PERSONAL</label>
+                                    <hr>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Banco</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-bank text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="banco_personal" name="banco_personal" placeholder="Input">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cuenta</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cuenta_personal" name="cuenta_personal" placeholder="Input">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Clabe</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="clabe_personal" name="clabe_personal" placeholder="Input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">CUENTA BANCARIA NOMINA</label>
+                                    <hr>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Banco</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-bank text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="banco_nomina" name="banco_nomina" placeholder="Input">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cuenta</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cuenta_nomina" name="cuenta_nomina" placeholder="Input">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Clabe</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="clabe_nomina" name="clabe_nomina" placeholder="Input">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 lg:col-span-3">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Plástico asignado</label>
+                                        <div class="group flex">
+                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-piggy-bank-outline text-gray-400 text-lg"></i></div>
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="plastico" name="plastico" placeholder="Input">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <div class="flex justify-center sm:justify-end gap-3">

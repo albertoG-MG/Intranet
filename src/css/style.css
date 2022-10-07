@@ -1995,6 +1995,10 @@ select {
     left: 0px !important;
   }
 
+  .lg\:col-span-3 {
+    grid-column: span 3 / span 3 !important;
+  }
+
   .lg\:hidden {
     display: none !important;
   }
