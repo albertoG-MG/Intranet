@@ -636,7 +636,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="block md:table-row-group">
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>1</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curriculum y/o solicitud</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -680,7 +680,7 @@
                                                     <div id="content-container2"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>3</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Copia acta de nacimiento</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -724,7 +724,7 @@
                                                     <div id="content-container4"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>5</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Identificación oficial</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -768,7 +768,7 @@
                                                     <div id="content-container6"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>7</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>RFC</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -812,7 +812,7 @@
                                                     <div id="content-container8"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>9</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación personal</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -856,7 +856,7 @@
                                                     <div id="content-container10"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>11</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de segundo trabajo</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -900,13 +900,13 @@
                                                     <div id="content-container12"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>13</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Contrato nomina bancaria</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button13" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-ou">
+                                                        <div id="upload-button13" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -922,7 +922,7 @@
                                                     <div id="content-container13"></div>
                                                 </td>
                                             </tr>
-                                            <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                                            <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>14</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Contrato de prueba</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -966,7 +966,7 @@
                                                     <div id="content-container15"></div>
                                                 </td>
                                             </tr>
-											<tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+											<tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>16</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Contrato Interno</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -1010,7 +1010,7 @@
                                                     <div id="content-container17"></div>
                                                 </td>
                                             </tr>
-											<tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+											<tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>18</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Comprobante de domicilio</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -1054,7 +1054,7 @@
                                                     <div id="content-container19"></div>
                                                 </td>
                                             </tr>
-											<tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+											<tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>20</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta responsiva de equipos asignados</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -1098,7 +1098,7 @@
                                                     <div id="content-container21"></div>
                                                 </td>
                                             </tr>
-											<tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+											<tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>22</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Modificacion salarial</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
@@ -1142,7 +1142,7 @@
                                                     <div id="content-container23"></div>
                                                 </td>
                                             </tr>
-											<tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+											<tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">id</span><p>24</p></td>
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Caratula de datos bancarios</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
