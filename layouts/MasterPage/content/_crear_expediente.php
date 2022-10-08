@@ -928,7 +928,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button14" class="inline-flex self-start items-center px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button14" class="inline-flex self-start items-center px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -950,7 +950,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button15" class="inline-flex self-start items-center px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button15" class="inline-flex self-start items-center px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -972,7 +972,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button16" class="inline-flex self-start items-center px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button16" class="inline-flex self-start items-center px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -994,7 +994,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button17" class="inline-flex self-start items-center px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button17" class="inline-flex self-start items-center px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1016,7 +1016,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button18" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button18" class="inline-flex self-start items-center px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1038,7 +1038,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button19" class="inline-flex self-start items-center px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button19" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1060,7 +1060,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button20" class="inline-flex self-start items-center px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button20" class="inline-flex self-start items-center px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1082,7 +1082,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button21" class="inline-flex self-start items-center px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button21" class="inline-flex self-start items-center px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1104,7 +1104,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button22" class="inline-flex self-start items-center px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button22" class="inline-flex self-start items-center px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1126,7 +1126,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button23" class="inline-flex self-start items-center px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button23" class="inline-flex self-start items-center px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1148,7 +1148,7 @@
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
                                                     <div class="flex flex-col w-full justify-center">
-                                                        <div id="upload-button24" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                        <div id="upload-button24" class="inline-flex self-start items-center px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
                                                         <div class="flex-1 md:flex items-center justify-between">
