@@ -728,6 +728,10 @@ select {
   margin-left: 1.5rem !important;
   margin-right: 1.5rem !important;
 }
+.my-auto {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
 .mb-10 {
   margin-bottom: 2.5rem !important;
 }
@@ -833,6 +837,9 @@ select {
 .h-4 {
   height: 1rem !important;
 }
+.h-3 {
+  height: 0.75rem !important;
+}
 .h-10 {
   height: 2.5rem !important;
 }
@@ -877,6 +884,9 @@ select {
 }
 .w-1\/3 {
   width: 33.333333% !important;
+}
+.w-3 {
+  width: 0.75rem !important;
 }
 .w-auto {
   width: auto !important;
@@ -1064,6 +1074,9 @@ select {
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse))) !important;
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse)) !important;
 }
+.self-start {
+  align-self: flex-start !important;
+}
 .overflow-hidden {
   overflow: hidden !important;
 }
@@ -1078,6 +1091,9 @@ select {
 }
 .whitespace-nowrap {
   white-space: nowrap !important;
+}
+.break-all {
+  word-break: break-all !important;
 }
 .rounded-3xl {
   border-radius: 1.5rem !important;
@@ -1097,6 +1113,10 @@ select {
 .rounded-t {
   border-top-left-radius: 0.25rem !important;
   border-top-right-radius: 0.25rem !important;
+}
+.rounded-r-md {
+  border-top-right-radius: 0.375rem !important;
+  border-bottom-right-radius: 0.375rem !important;
 }
 .rounded-t-lg {
   border-top-left-radius: 0.5rem !important;
@@ -1267,6 +1287,9 @@ select {
 }
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75 !important;
+}
+.fill-current {
+  fill: currentColor !important;
 }
 .object-cover {
   -o-object-fit: cover !important;
@@ -1491,6 +1514,10 @@ select {
 .text-purple-600 {
   --tw-text-opacity: 1 !important;
   color: rgb(147 51 234 / var(--tw-text-opacity)) !important;
+}
+.text-red-700 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
 }
 .text-red-600 {
   --tw-text-opacity: 1 !important;
@@ -1951,6 +1978,11 @@ select {
     gap: 2rem !important;
   }
 
+  .md\:break-normal {
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
   .md\:border {
     border-width: 1px !important;
   }
@@ -1961,6 +1993,10 @@ select {
 
   .md\:p-4 {
     padding: 1rem !important;
+  }
+
+  .md\:p-2 {
+    padding: 0.5rem !important;
   }
 
   .md\:px-10 {

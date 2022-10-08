@@ -641,11 +641,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curriculum y/o solicitud</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_curriculum" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_curriculum" id="infp_curriculum" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 border border-gray-300 rounded-r-md md:flex items-center justify-between">
+                                                            <span id="upload-text">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_curriculum" id="infp_curriculum" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
