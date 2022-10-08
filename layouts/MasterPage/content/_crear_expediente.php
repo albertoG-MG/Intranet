@@ -685,11 +685,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Copia acta de nacimiento</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_nacimiento" class="inline-block px-6 py-2 border-2 border-green-500 text-green-500 cursor-pointer font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text3">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_nacimiento" id="infp_nacimiento" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button3" class="inline-flex self-start items-center px-6 py-2 border-2 border-green-500 text-green-500 cursor-pointer font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text3">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete3" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_nacimiento" id="infp_nacimiento" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container3"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
@@ -697,11 +707,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Curp</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_curp" class="inline-block px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text4">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_curp" id="infp_curp" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button4" class="inline-flex self-start items-center px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text4">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete4" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_curp" id="infp_curp" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container4"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
@@ -709,11 +729,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Identificación oficial</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_identificacion" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text5">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_identificacion" id="infp_identificacion" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button5" class="inline-flex self-start items-center px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text5">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete5" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_identificacion" id="infp_identificacion" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container5"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
@@ -721,11 +751,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Comprobante de domicilio</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_comprobante" class="inline-block px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text6">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_comprobante" id="infp_comprobante" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button6" class="inline-flex self-start items-center px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text6">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete6" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_comprobante" id="infp_comprobante" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container6"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
@@ -733,11 +773,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>RFC</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_rfc" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text7">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_rfc" id="infp_rfc" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button7" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text7">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete7" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_rfc" id="infp_rfc" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container7"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
@@ -745,11 +795,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación laboral</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_cartal" class="inline-block px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text8">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_cartal" id="infp_cartal" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button8" class="inline-flex self-start items-center px-6 py-2 border-2 border-red-600 cursor-pointer text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text8">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete8" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_cartal" id="infp_cartal" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container8"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
@@ -757,11 +817,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de recomendación personal</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_cartap" class="inline-block px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text9">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_cartap" id="infp_cartap" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button9" class="inline-flex self-start items-center px-6 py-2 border-2 border-green-500 cursor-pointer text-green-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text9">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete9" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_cartap" id="infp_cartap" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container9"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
@@ -769,11 +839,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Aviso de retención crédito infonavit</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_retencion" class="inline-block px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text10">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_retencion" id="infp_retencion" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button10" class="inline-flex self-start items-center px-6 py-2 border-2 border-yellow-500 cursor-pointer text-yellow-500 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text10">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete10" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_retencion" id="infp_retencion" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container10"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
@@ -781,11 +861,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Carta de segundo trabajo</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_strabajo" class="inline-block px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text11">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_strabajo" id="infp_strabajo" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button11" class="inline-flex self-start items-center px-6 py-2 border-2 border-blue-600 cursor-pointer text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text11">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete11" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_strabajo" id="infp_strabajo" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container11"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
@@ -793,11 +883,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Alta del IMSS</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_imss" class="inline-block px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text12">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_imss" id="infp_imss" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button12" class="inline-flex self-start items-center px-6 py-2 border-2 border-gray-800 cursor-pointer text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text12">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete12" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_imss" id="infp_imss" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container12"></div>
                                                 </td>
                                             </tr>
                                             <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
@@ -805,11 +905,21 @@
                                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Nombre</span><p>Contrato nomina bancaria</p></td>
                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                     <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
-                                                    <label for="infp_nomina" class="inline-block px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                                                    <p>Subir archivo</p>
-                                                    </label>
-                                                    <p id="file-text13">No hay ningún archivo seleccionado</p>
-                                                    <input class="hidden" name="infp_nomina" id="infp_nomina" type="file" />
+                                                    <div class="flex flex-col w-full justify-center">
+                                                        <div id="upload-button13" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-ou">
+                                                            Subir archivo
+                                                        </div>
+                                                        <div class="flex-1 md:flex items-center justify-between">
+                                                            <span id="upload-text13">No hay ningún archivo seleccionado</span>
+                                                            <button type="button" id="upload-delete13" class="hidden">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
+                                                                    d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file" name="infp_nomina" id="infp_nomina" accept=".jpg,.pdf" class="hidden" />
+                                                    <div id="content-container13"></div>
                                                 </td>
                                             </tr>
                                         </tbody>
