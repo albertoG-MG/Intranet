@@ -645,7 +645,7 @@
                                                         <div id="upload-button" class="inline-flex self-start items-center px-6 py-2 border-2 border-purple-600 cursor-pointer text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                                                             Subir archivo
                                                         </div>
-                                                        <div class="flex-1 border border-gray-300 rounded-r-md md:flex items-center justify-between">
+                                                        <div class="flex-1 md:flex items-center justify-between">
                                                             <span id="upload-text">No hay ningún archivo seleccionado</span>
                                                             <button type="button" id="upload-delete" class="hidden">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512"><path
