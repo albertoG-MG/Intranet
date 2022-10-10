@@ -65,7 +65,7 @@
                     </ul>
                     <form id="Guardar" method="post">
                         <div id='tab-contents'>
-                            <div id='first' class='p-4'>
+                            <div id='first' class='p-4 tab-pane'>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Vincular usuario al expediente</label>
                                     <div class="group flex" id="selectprueba" style="display:none !important;">
@@ -408,7 +408,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id='second' class='hidden p-4'>
+                            <div id='second' class='hidden p-4 tab-pane'>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de referencias laborales</label>
                                     <div class="group flex">
@@ -547,7 +547,7 @@
                                     </div>
                                 </div>           
                             </div>
-                            <div id='third' class='hidden p-4'>
+                            <div id='third' class='hidden p-4 tab-pane'>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de beneficiarios bancarios</label>
                                     <div class="group flex">
@@ -625,7 +625,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id='fourth' class='hidden p-4'>
+                            <div id='fourth' class='hidden p-4 tab-pane'>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <table class="min-w-full border-collapse block md:table">
                                         <thead class="block md:table-header-group">
