@@ -654,7 +654,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_curriculum" id="infp_curriculum" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_curriculum" id="infp_curriculum"  class="hidden" />
                                                     <div id="content-container"></div>
                                                 </td>
                                             </tr>
@@ -676,7 +676,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_evaluacion" id="infp_evaluacion" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_evaluacion" id="infp_evaluacion"  class="hidden" />
                                                     <div id="content-container2"></div>
                                                 </td>
                                             </tr>
@@ -698,7 +698,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_nacimiento" id="infp_nacimiento" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_nacimiento" id="infp_nacimiento"  class="hidden" />
                                                     <div id="content-container3"></div>
                                                 </td>
                                             </tr>
@@ -720,7 +720,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_curp" id="infp_curp" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_curp" id="infp_curp"  class="hidden" />
                                                     <div id="content-container4"></div>
                                                 </td>
                                             </tr>
@@ -742,7 +742,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_identificacion" id="infp_identificacion" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_identificacion" id="infp_identificacion"  class="hidden" />
                                                     <div id="content-container5"></div>
                                                 </td>
                                             </tr>
@@ -764,7 +764,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_comprobante" id="infp_comprobante" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_comprobante" id="infp_comprobante"  class="hidden" />
                                                     <div id="content-container6"></div>
                                                 </td>
                                             </tr>
@@ -786,7 +786,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_rfc" id="infp_rfc" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_rfc" id="infp_rfc"  class="hidden" />
                                                     <div id="content-container7"></div>
                                                 </td>
                                             </tr>
@@ -808,7 +808,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_cartal" id="infp_cartal" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_cartal" id="infp_cartal"  class="hidden" />
                                                     <div id="content-container8"></div>
                                                 </td>
                                             </tr>
@@ -830,7 +830,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_cartap" id="infp_cartap" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_cartap" id="infp_cartap"  class="hidden" />
                                                     <div id="content-container9"></div>
                                                 </td>
                                             </tr>
@@ -852,7 +852,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_retencion" id="infp_retencion" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_retencion" id="infp_retencion"  class="hidden" />
                                                     <div id="content-container10"></div>
                                                 </td>
                                             </tr>
@@ -874,7 +874,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_strabajo" id="infp_strabajo" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_strabajo" id="infp_strabajo"  class="hidden" />
                                                     <div id="content-container11"></div>
                                                 </td>
                                             </tr>
@@ -896,7 +896,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_imss" id="infp_imss" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_imss" id="infp_imss"  class="hidden" />
                                                     <div id="content-container12"></div>
                                                 </td>
                                             </tr>
@@ -918,7 +918,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_nomina" id="infp_nomina" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_nomina" id="infp_nomina"  class="hidden" />
                                                     <div id="content-container13"></div>
                                                 </td>
                                             </tr>
@@ -940,7 +940,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_contratop" id="infp_contratop" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_contratop" id="infp_contratop"  class="hidden" />
                                                     <div id="content-container14"></div>
                                                 </td>
                                             </tr>
@@ -962,7 +962,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_contratod" id="infp_contratod" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_contratod" id="infp_contratod"  class="hidden" />
                                                     <div id="content-container15"></div>
                                                 </td>
                                             </tr>
@@ -984,7 +984,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_contratoi" id="infp_contratoi" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_contratoi" id="infp_contratoi"  class="hidden" />
                                                     <div id="content-container16"></div>
                                                 </td>
                                             </tr>
@@ -1006,7 +1006,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_contratos" id="infp_contratos" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_contratos" id="infp_contratos"  class="hidden" />
                                                     <div id="content-container17"></div>
                                                 </td>
                                             </tr>
@@ -1028,7 +1028,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_comprobanted" id="infp_comprobanted" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_comprobanted" id="infp_comprobanted"  class="hidden" />
                                                     <div id="content-container18"></div>
                                                 </td>
                                             </tr>
@@ -1050,7 +1050,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_situacionf" id="infp_situacionf" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_situacionf" id="infp_situacionf"  class="hidden" />
                                                     <div id="content-container19"></div>
                                                 </td>
                                             </tr>
@@ -1072,7 +1072,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_cartare" id="infp_cartare" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_cartare" id="infp_cartare"  class="hidden" />
                                                     <div id="content-container20"></div>
                                                 </td>
                                             </tr>
@@ -1094,7 +1094,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_bajaimss" id="infp_bajaimss" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_bajaimss" id="infp_bajaimss"  class="hidden" />
                                                     <div id="content-container21"></div>
                                                 </td>
                                             </tr>
@@ -1116,7 +1116,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_modificacions" id="infp_modificacions" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_modificacions" id="infp_modificacions"  class="hidden" />
                                                     <div id="content-container22"></div>
                                                 </td>
                                             </tr>
@@ -1138,7 +1138,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_comprobantees" id="infp_comprobantees" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_comprobantees" id="infp_comprobantees"  class="hidden" />
                                                     <div id="content-container23"></div>
                                                 </td>
                                             </tr>
@@ -1160,7 +1160,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="file" name="infp_cdatosb" id="infp_cdatosb" accept=".jpg,.pdf" class="hidden" />
+                                                    <input type="file" name="infp_cdatosb" id="infp_cdatosb"  class="hidden" />
                                                     <div id="content-container24"></div>
                                                 </td>
                                             </tr>
