@@ -1197,6 +1197,10 @@ select {
   --tw-border-opacity: 1 !important;
   border-color: rgb(127 29 29 / var(--tw-border-opacity)) !important;
 }
+.border-rose-500 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(244 63 94 / var(--tw-border-opacity)) !important;
+}
 .bg-gray-900 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity)) !important;
@@ -1767,6 +1771,10 @@ select {
 .focus\:ring-blue-200:focus {
   --tw-ring-opacity: 1 !important;
   --tw-ring-color: rgb(191 219 254 / var(--tw-ring-opacity)) !important;
+}
+.focus\:ring-rose-600:focus {
+  --tw-ring-opacity: 1 !important;
+  --tw-ring-color: rgb(225 29 72 / var(--tw-ring-opacity)) !important;
 }
 .focus\:ring-green-300:focus {
   --tw-ring-opacity: 1 !important;
