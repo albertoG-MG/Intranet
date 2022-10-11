@@ -1722,7 +1722,11 @@
                             var cantidadpolo = $("#cantidadpolo").val();
                             var tallapolo = $("#tallapolo").val();
                             var emergencianom = $("#emergencianom").val();
+                            var emergenciaparentesco = $("#emergenciaparentesco").val();
                             var emergenciatel = $("#emergenciatel").val();
+                            var emergencianom2 = $("#emergencianom2").val();
+                            var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
+                            var emergenciatel2 = $("#emergenciatel2").val();
                             var antidoping = $("#antidoping").val();
                             var vacante = $("#vacante").val();
                             var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
@@ -1826,7 +1830,11 @@
                             fd.append('cantidadpolo', cantidadpolo);
                             fd.append('tallapolo', tallapolo);
                             fd.append('emergencianom', emergencianom);
+                            fd.append('emergenciaparentesco', emergenciaparentesco);
                             fd.append('emergenciatel', emergenciatel);
+                            fd.append('emergencianom2', emergencianom2);
+                            fd.append('emergenciaparentesco2', emergenciaparentesco2);
+                            fd.append('emergenciatel2', emergenciatel2);
                             fd.append('antidoping', antidoping);
                             fd.append('vacante', vacante);
                             fd.append('radio2', radio2);
