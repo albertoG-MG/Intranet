@@ -1474,55 +1474,99 @@
 	                    required:true
                     },
                     infp_curriculum: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_evaluacion: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_nacimiento: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_curp: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_identificacion: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_comprobante: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_rfc: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_cartal: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_cartap: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_retencion: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_strabajo: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_imss: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     },
                     infp_nomina: {
-                        extension: "pdf",
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_contratop: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_contratod: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_contratoi: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_contratos: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_comprobanted: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_situacionf: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_cartare: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_bajaimss: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_modificacions: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_comprobantees: {
+                        extension: "pdf|jpg|jpeg",
+                        filesize: 10
+                    },
+                    infp_cdatosb: {
+                        extension: "pdf|jpg|jpeg",
                         filesize: 10
                     }
                 },
@@ -1537,56 +1581,100 @@
 	                    required: 'Este campo es requerido'
                     },
                     infp_curriculum: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_evaluacion: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_nacimiento: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_curp: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_identificacion: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_comprobante: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_rfc: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_cartal: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_cartap: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_retencion: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_strabajo: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_imss: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     },
                     infp_nomina: {
-                        extension: 'Solo se permiten pdf',
-                        filesize: 'Solo se permiten pdfs de un máximo de 10 megabytes'
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_contratop: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_contratod: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_contratoi: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_contratos: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_comprobanted: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_situacionf: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_cartare: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_bajaimss: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_modificacions: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_comprobantees: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
+                    },
+                    infp_cdatosb: {
+                        extension: 'Solo se permiten pdf, jpgs y jpegs',
+                        filesize: 'Solo se permiten tamaños de un máximo de 10 megabytes'
                     }
                 },
                 submitHandler: function(form) {
@@ -1608,11 +1696,21 @@
                             var municipio = $("#municipio").val();
                             var codigo = $("#codigo").val();
                             var teldom = $("#teldom").val();
+                            var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
                             var telmov = $("#telmov").val();
+                            var posee_telempresa = $("input[name=tel_movil_empresa]:checked", "#Guardar").val();
+                            var marcacion = $("#marcacion").val();
+		                    var serie = $("#serie").val();
+		                    var sim = $("#sim").val();
                             var radio = $("input[name=casa]:checked", "#Guardar").val();
+                            var ecivil = $("#ecivil").val();
+                            var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+                            var monto_mensual = $("#monto_mensual").val();
                             var fechanac = $("#fechanac").val();
                             var fechacon = $("#fechacon").val();
                             var fechaalta = $("#fechaalta").val();
+                            var salario_contrato = $("#salario_contrato").val();
+		                    var salario_fechaalta = $("#salario_fechaalta").val();
                             var observaciones = $("#observaciones").val();
                             var curp = $("#curp").val();
                             var nss = $("#nss").val();
@@ -1629,6 +1727,13 @@
                             var vacante = $("#vacante").val();
                             var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
                             var nomfam = $("#nomfam").val();
+                            var banco_personal = $("#banco_personal").val();
+		                    var cuenta_personal = $("#cuenta_personal").val();
+		                    var clabe_personal = $("#clabe_personal").val();
+                            var banco_nomina = $("#banco_nomina").val();
+		                    var cuenta_nomina = $("#cuenta_nomina").val();
+		                    var clabe_nomina = $("#clabe_nomina").val();
+		                    var plastico = $("#plastico").val();
                             var method = "store";
                             var app = "expediente";
 
@@ -1668,6 +1773,18 @@
                             var strabajo = $('#infp_strabajo')[0].files[0];
                             var imss = $('#infp_imss')[0].files[0];
                             var nomina = $('#infp_nomina')[0].files[0];
+                            var contrato_prueba = $('#infp_contratop')[0].files[0];
+                            var contrato_definitivo = $('#infp_contratod')[0].files[0];
+                            var contrato_interno = $('#infp_contratoi')[0].files[0];
+                            var contrato_supervivencia = $('#infp_contratos')[0].files[0];
+                            var comprobante_domicilio = $('#infp_comprobanted')[0].files[0];
+                            var contrato_prueba = $('#infp_contratop')[0].files[0];
+                            var situacion_fiscal = $('#infp_situacionf')[0].files[0];
+                            var carta_responsiva_equipos_asignados = $('#infp_cartare')[0].files[0];
+                            var baja_ante_imss = $('#infp_bajaimss')[0].files[0];
+                            var modificacion_salarial = $('#infp_modificacions')[0].files[0];
+                            var comprobante_estudios = $('#infp_comprobantees')[0].files[0];
+                            var caratula_datos_bancarios = $('#infp_cdatosb')[0].files[0];
 
                             /*FD appends*/
 
@@ -1684,11 +1801,21 @@
                             fd.append('municipio', municipio);
                             fd.append('codigo', codigo);
                             fd.append('teldom', teldom);
+                            fd.append('posee_telmov', posee_telmov);
                             fd.append('telmov', telmov);
+                            fd.append('posee_telempresa', posee_telempresa);
+                            fd.append('marcacion', marcacion);
+		                    fd.append('serie', serie);
+		                    fd.append('sim', sim);
                             fd.append('radio', radio);
+                            fd.append('ecivil', ecivil);
+                            fd.append('posee_retencion', posee_retencion);
+                            fd.append('monto_mensual', monto_mensual);
                             fd.append('fechanac', fechanac);
                             fd.append('fechacon', fechacon);
                             fd.append('fechaalta', fechaalta);
+                            fd.append('salario_contrato', salario_contrato);
+		                    fd.append('salario_fechaalta', salario_fechaalta);
                             fd.append('observaciones', observaciones);
                             fd.append('curp', curp);
                             fd.append('nss', nss);
@@ -1705,6 +1832,13 @@
                             fd.append('vacante', vacante);
                             fd.append('radio2', radio2);
                             fd.append('nomfam', nomfam);
+                            fd.append('banco_personal', banco_personal);
+		                    fd.append('cuenta_personal', cuenta_personal);
+		                    fd.append('clabe_personal', clabe_personal);
+                            fd.append('banco_nomina', banco_nomina);
+		                    fd.append('cuenta_nomina', cuenta_nomina);
+		                    fd.append('clabe_nomina', clabe_nomina);
+		                    fd.append('plastico', plastico);
                             fd.append('method', method);
                             fd.append('app', app);
                             
@@ -1727,6 +1861,18 @@
                             fd.append('infp_strabajo', strabajo);
                             fd.append('infp_imss', imss);
                             fd.append('infp_nomina', nomina);
+                            fd.append('infp_contratop', contrato_prueba);
+		                    fd.append('infp_contratod', contrato_definitivo);
+		                    fd.append('infp_contratoi', contrato_interno);
+		                    fd.append('infp_contratos', contrato_supervivencia);
+                            fd.append('infp_comprobanted', comprobante_domicilio);
+                            fd.append('infp_contratop', contrato_prueba);
+                            fd.append('infp_situacionf', situacion_fiscal);
+                            fd.append('infp_cartare', carta_responsiva_equipos_asignados);
+                            fd.append('infp_bajaimss', baja_ante_imss);
+                            fd.append('infp_modificacions', modificacion_salarial);
+                            fd.append('infp_comprobantees', comprobante_estudios);
+                            fd.append('infp_cdatosb', caratula_datos_bancarios);
 
 
                             /*Ajax*/
