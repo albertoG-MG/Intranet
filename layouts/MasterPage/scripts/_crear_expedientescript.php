@@ -1778,7 +1778,6 @@
                             var contrato_interno = $('#infp_contratoi')[0].files[0];
                             var contrato_supervivencia = $('#infp_contratos')[0].files[0];
                             var comprobante_domicilio = $('#infp_comprobanted')[0].files[0];
-                            var contrato_prueba = $('#infp_contratop')[0].files[0];
                             var situacion_fiscal = $('#infp_situacionf')[0].files[0];
                             var carta_responsiva_equipos_asignados = $('#infp_cartare')[0].files[0];
                             var baja_ante_imss = $('#infp_bajaimss')[0].files[0];
@@ -1866,7 +1865,6 @@
 		                    fd.append('infp_contratoi', contrato_interno);
 		                    fd.append('infp_contratos', contrato_supervivencia);
                             fd.append('infp_comprobanted', comprobante_domicilio);
-                            fd.append('infp_contratop', contrato_prueba);
                             fd.append('infp_situacionf', situacion_fiscal);
                             fd.append('infp_cartare', carta_responsiva_equipos_asignados);
                             fd.append('infp_bajaimss', baja_ante_imss);
