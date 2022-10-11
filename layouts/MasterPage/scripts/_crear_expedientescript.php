@@ -1445,6 +1445,24 @@
                             }
                         }
                     },
+                    highlight: function(element) {
+                        var elem = $(element);
+                        if (elem.hasClass("select2-hidden-accessible")) {
+                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border-2 border-rose-500 border-2"); 
+                        }else{
+                            $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                            $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                        }
+                    },
+                    unhighlight: function(element) {
+                        var elem = $(element);
+                        if (elem.hasClass("select2-hidden-accessible")) {
+                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border-2 border-rose-500 border-2");
+                        }else{
+                            $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                            $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                        }
+                    },
                 rules:{
                     prueba: {
                         required:true
@@ -1749,6 +1767,10 @@
         }
     });
 
+    $('#prueba').select2({}).on("change", function (e) {
+        $(this).valid()
+    });
+
     function check_user_logged(){
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -1989,6 +2011,11 @@
 
 </script>
 <style>
+
+    .error{
+        color: rgb(244 63 94);
+    }
+    
     .select2-results__option--selectable:hover{
         background: #5897fb;
         color:white;
