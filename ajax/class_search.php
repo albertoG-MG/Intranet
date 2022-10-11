@@ -347,10 +347,30 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }else{
             $emergencianom = null;
         }
+        if(!(empty($_POST["emergenciaparentesco"]))){
+            $emergenciaparentesco = $_POST["emergenciaparentesco"];
+        }else{
+            $emergenciaparentesco = null;
+        }
         if(!(empty($_POST["emergenciatel"]))){
             $emergenciatel = $_POST["emergenciatel"];
         }else{
             $emergenciatel = null;
+        }
+        if(!(empty($_POST["emergencianom2"]))){
+            $emergencianom2 = $_POST["emergencianom2"];
+        }else{
+            $emergencianom2 = null;
+        }
+		if(!(empty($_POST["emergenciaparentesco2"]))){
+            $emergenciaparentesco2 = $_POST["emergenciaparentesco2"];
+        }else{
+            $emergenciaparentesco2 = null;
+        }
+		if(!(empty($_POST["emergenciatel2"]))){
+            $emergenciatel2 = $_POST["emergenciatel2"];
+        }else{
+            $emergenciatel2 = null;
         }
         if(!(empty($_POST["antidoping"]))){
             $antidoping = $_POST["antidoping"];
@@ -543,7 +563,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		switch($_POST["method"]){
             case "store":
                 $iduser = $_POST["select2"];
-                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciatel, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $p_curriculum, $p_evaluacion, $p_nacimiento, $p_curp, $p_identificacion, $p_comprobante, $p_rfc, $p_cartal, $p_cartap, $p_retencion, $p_strabajo, $p_imss, $p_nomina, $p_contratop, $p_contratod, $p_contratoi, $p_contratos, $p_comprobanted, $p_situacionf, $p_cartare, $p_bajaimss, $p_modificacions, $p_comprobantees, $p_cdatosb);
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $p_curriculum, $p_evaluacion, $p_nacimiento, $p_curp, $p_identificacion, $p_comprobante, $p_rfc, $p_cartal, $p_cartap, $p_retencion, $p_strabajo, $p_imss, $p_nomina, $p_contratop, $p_contratod, $p_contratoi, $p_contratos, $p_comprobanted, $p_situacionf, $p_cartare, $p_bajaimss, $p_modificacions, $p_comprobantees, $p_cdatosb);
                 $expediente ->Crear_expediente($iduser);
                 exit("success");
             break;
