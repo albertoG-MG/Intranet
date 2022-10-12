@@ -798,11 +798,17 @@ select {
 .mb-4 {
   margin-bottom: 1rem !important;
 }
+.mr-3 {
+  margin-right: 0.75rem !important;
+}
 .block {
   display: block !important;
 }
 .inline-block {
   display: inline-block !important;
+}
+.inline {
+  display: inline !important;
 }
 .flex {
   display: flex !important;
@@ -936,6 +942,22 @@ select {
 }
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
+}
+@-webkit-keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  -webkit-animation: spin 1s linear infinite !important;
+          animation: spin 1s linear infinite !important;
 }
 @-webkit-keyframes fadeIn {
 
@@ -1775,6 +1797,10 @@ select {
 .focus\:ring-rose-600:focus {
   --tw-ring-opacity: 1 !important;
   --tw-ring-color: rgb(225 29 72 / var(--tw-ring-opacity)) !important;
+}
+.focus\:ring-indigo-300:focus {
+  --tw-ring-opacity: 1 !important;
+  --tw-ring-color: rgb(165 180 252 / var(--tw-ring-opacity)) !important;
 }
 .focus\:ring-green-300:focus {
   --tw-ring-opacity: 1 !important;
