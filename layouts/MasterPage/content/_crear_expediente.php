@@ -214,12 +214,12 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-1" type="radio" name="tel_movil" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
-                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        <input id="option-telmov-1" type="radio" name="tel_movil" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-2" type="radio" name="tel_movil" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
-                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        <input id="option-telmov-2" type="radio" name="tel_movil" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
                                     </div>
@@ -236,12 +236,12 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-1" type="radio" name="tel_movil_empresa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
-                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-2" type="radio" name="tel_movil_empresa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
-                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
                                     </div>
@@ -274,12 +274,12 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Casa propia?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
-                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
-                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-casa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
                                     </div>
@@ -298,12 +298,12 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Posee retención?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-1" type="radio" name="retencion" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
-                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        <input id="option-retencion-1" type="radio" name="retencion" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-2" type="radio" name="retencion" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
-                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        <input id="option-retencion-2" type="radio" name="retencion" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
                                     </div>
@@ -523,12 +523,12 @@
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Tiene familiares dentro de la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-1" type="radio" name="empresa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
-                                        <label for="option-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        <input id="option-empresa-1" type="radio" name="empresa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-2" type="radio" name="empresa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
-                                        <label for="option-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        <input id="option-empresa-2" type="radio" name="empresa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
                                     </div>
