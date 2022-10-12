@@ -1373,6 +1373,12 @@
                     fechaalta: {
 	                    required:true
                     },
+                    salario_contrato: {
+	                    number:true
+                    },
+                    salario_fechaalta: {
+	                    number:true
+                    },
                     emergenciatel: {
 	                    digits:true
                     },
@@ -1509,6 +1515,12 @@
                     },
                     fechaalta: {
 	                    required: 'Este campo es requerido'
+                    },
+                    salario_contrato: {
+	                    number: "Por favor, ingrese solamente numeros ó decimales"
+                    },
+                    salario_fechaalta: {
+	                    number: "Por favor, ingrese solamente numeros ó decimales"
                     },
                     emergenciatel: {
 	                    digits: 'Por favor, ingrese solamente números'
