@@ -2695,8 +2695,8 @@ CREATE TABLE `papeleria_empleado` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
   `tipo_archivo` int NOT NULL,
-  `nombre_archivo` varchar(100) DEFAULT NULL,
-  `archivo` longtext DEFAULT NULL,
+  `nombre_archivo` longtext DEFAULT NULL,
+  `identificador` longtext DEFAULT NULL,
   `fecha_subida` datetime DEFAULT NULL,
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id)
