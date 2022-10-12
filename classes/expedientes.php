@@ -288,283 +288,210 @@ class expedientes {
         }
     }
 
+    public static function tempnam_sfx($path, $suffix){
+        do {
+            $file = $path."/".mt_rand().".".$suffix;
+            $fp = @fopen($file, 'x');
+        }
+        while(!$fp);
+    
+        fclose($fp);
+        return $file;
+    }
+
     public static function Curriculum($exp_id, $p_curriculum){
         $crudcurriculum = new crud();
         $papeleria = 1;
         $filename = $p_curriculum["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_curriculum['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_curriculum['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcurriculum -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcurriculum -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Evaluacion($exp_id, $p_evaluacion){
+	
+	public static function Evaluacion($exp_id, $p_evaluacion){
         $crudevaluacion = new crud();
         $papeleria = 2;
         $filename = $p_evaluacion["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_evaluacion['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_evaluacion['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudevaluacion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudevaluacion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Nacimiento($exp_id, $p_nacimiento){
+	
+	public static function Nacimiento($exp_id, $p_nacimiento){
         $crudnacimiento = new crud();
         $papeleria = 3;
         $filename = $p_nacimiento["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_nacimiento['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_nacimiento['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudnacimiento -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudnacimiento -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Curp($exp_id, $p_curp){
+	
+	public static function Curp($exp_id, $p_curp){
         $crudcurp = new crud();
         $papeleria = 4;
         $filename = $p_curp["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_curp['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_curp['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcurp -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcurp -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Identificacion($exp_id, $p_identificacion){
+	
+	public static function Identificacion($exp_id, $p_identificacion){
         $crudidentificacion = new crud();
         $papeleria = 5;
         $filename = $p_identificacion["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_identificacion['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_identificacion['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudidentificacion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudidentificacion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Comprobante($exp_id, $p_comprobante){
+	
+	public static function Comprobante($exp_id, $p_comprobante){
         $crudcomprobante = new crud();
         $papeleria = 6;
         $filename = $p_comprobante["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_comprobante['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_comprobante['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcomprobante -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcomprobante -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Rfc($exp_id, $p_rfc){
+	
+	public static function Rfc($exp_id, $p_rfc){
         $crudrfc = new crud();
         $papeleria = 7;
         $filename = $p_rfc["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_rfc['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_rfc['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudrfc -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudrfc -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Cartal($exp_id, $p_cartal){
+	
+	public static function Cartal($exp_id, $p_cartal){
         $crudcartal = new crud();
         $papeleria = 8;
         $filename = $p_cartal["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_cartal['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_cartal['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcartal -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcartal -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Cartap($exp_id, $p_cartap){
+	
+	public static function Cartap($exp_id, $p_cartap){
         $crudcartap = new crud();
         $papeleria = 9;
         $filename = $p_cartap["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_cartap['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_cartap['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcartap -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcartap -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Retencion($exp_id, $p_retencion){
+	
+	public static function Retencion($exp_id, $p_retencion){
         $crudretencion = new crud();
         $papeleria = 10;
         $filename = $p_retencion["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_retencion['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_retencion['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudretencion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudretencion -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Strabajo($exp_id, $p_strabajo){
+	
+	public static function Strabajo($exp_id, $p_strabajo){
         $crudstrabajo = new crud();
         $papeleria = 11;
         $filename = $p_strabajo["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_strabajo['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_strabajo['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudstrabajo -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudstrabajo -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Imss($exp_id, $p_imss){
+	
+	public static function Imss($exp_id, $p_imss){
         $crudimss = new crud();
         $papeleria = 12;
         $filename = $p_imss["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_imss['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_imss['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudimss -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudimss -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Nomina($exp_id, $p_nomina){
+	
+	public static function Nomina($exp_id, $p_nomina){
         $crudnomina = new crud();
         $papeleria = 13;
         $filename = $p_nomina["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_nomina['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_nomina['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudnomina -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudnomina -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
-
-    public static function Contrato_Prueba($exp_id, $p_contratop){
+	
+	public static function Contrato_Prueba($exp_id, $p_contratop){
         $crudcontrato_prueba = new crud();
         $papeleria = 14;
         $filename = $p_contratop["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_contratop['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_contratop['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcontrato_prueba -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcontrato_prueba -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -572,19 +499,13 @@ class expedientes {
         $crudcontrato_definitivo = new crud();
         $papeleria = 15;
         $filename = $p_contratod["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_contratod['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_contratod['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcontrato_definitivo -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcontrato_definitivo -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -592,19 +513,13 @@ class expedientes {
         $crudcontrato_interno = new crud();
         $papeleria = 16;
         $filename = $p_contratoi["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_contratoi['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_contratoi['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcontrato_interno -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcontrato_interno -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -612,19 +527,13 @@ class expedientes {
         $crudcontrato_supervivencia = new crud();
         $papeleria = 17;
         $filename = $p_contratos["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_contratos['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_contratos['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcontrato_supervivencia -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcontrato_supervivencia -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -632,19 +541,13 @@ class expedientes {
         $crudcomprobanted = new crud();
         $papeleria = 18;
         $filename = $p_comprobanted["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_comprobanted['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_comprobanted['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcomprobanted -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcomprobanted -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -652,19 +555,13 @@ class expedientes {
         $crudsituacionf = new crud();
         $papeleria = 19;
         $filename = $p_situacionf["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_situacionf['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_situacionf['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudsituacionf -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudsituacionf -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -672,19 +569,13 @@ class expedientes {
         $crudcartarea = new crud();
         $papeleria = 20;
         $filename = $p_cartarea["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_cartarea['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_cartarea['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcartarea -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcartarea -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -692,19 +583,13 @@ class expedientes {
         $crudbaja_imss = new crud();
         $papeleria = 21;
         $filename = $p_bajaimms["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_bajaimms['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_bajaimms['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudbaja_imss -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudbaja_imss -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -712,19 +597,13 @@ class expedientes {
         $crudmodificacions = new crud();
         $papeleria = 22;
         $filename = $p_modificacions["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_modificacions['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_modificacions['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudmodificacions -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudmodificacions -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -732,19 +611,13 @@ class expedientes {
         $crudcomprobantee = new crud();
         $papeleria = 23;
         $filename = $p_comprobantee["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_comprobantee['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_comprobantee['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcomprobantee -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcomprobantee -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 	
@@ -752,24 +625,24 @@ class expedientes {
         $crudcaratulad = new crud();
         $papeleria = 24;
         $filename = $p_caratulad["name"];
-        $location = "../src/pdfs_uploaded/".$filename;
-        if(move_uploaded_file($p_caratulad['tmp_name'],$location)){
-            $pdf_base64 = base64_encode(file_get_contents('../src/pdfs_uploaded/'.$filename));
-            $pdf = 'data:application/pdf;base64,'.$pdf_base64;
+        $location = "../src/pdfs_uploaded/";
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+        if(move_uploaded_file($p_caratulad['tmp_name'],$uploadfile)){
             date_default_timezone_set("America/Monterrey");
             $fecha_subida = date('y-m-d h:i:s');
-            $crudcaratulad -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'archivo' => $pdf, 'fecha_subida' => $fecha_subida]);
-            $files = glob('../src/pdfs_uploaded/*.pdf'); // get all file names
-            foreach($files as $file){ // iterate files
-                if(is_file($file)) {
-                    unlink($file); // delete file
-                }
-            }
+            $crudcaratulad -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
         }
     }
 
     public static function EliminarExpediente($id){
+        $object = new connection_database();
         $crud = new crud();
+        $selectarchivos = $object -> _db ->prepare("SELECT identificador from papeleria_empleado WHERE expediente_id=:expedienteid");
+        $selectarchivos -> execute(array(":expedienteid" => $id));
+        while($fetcharchivos = $selectarchivos -> fetch(PDO::FETCH_OBJ)){
+            unlink(__DIR__ . "/../src/pdfs_uploaded/" .$fetcharchivos->identificador);
+        }
         $crud -> delete ('expedientes', 'id=:id', ['id' => $id]);
     }
 
