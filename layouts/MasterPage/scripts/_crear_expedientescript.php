@@ -1358,8 +1358,38 @@
                     numempleado: {
 	                    remote: "../ajax/expedientes/check_num_empleado.php"
                     },
+                    ninterior: {
+	                    digits:true
+                    },
+                    nexterior: {
+	                    digits:true
+                    },
+                    codigo: {
+	                    digits:true
+                    },
+                    teldom: {
+	                    digits:true
+                    },
                     fechaalta: {
 	                    required:true
+                    },
+                    emergenciatel: {
+	                    digits:true
+                    },
+                    emergenciatel2: {
+	                    digits:true
+                    },
+                    cuenta_personal: {
+	                    digits:true
+                    },
+                    clabe_personal: {
+	                    digits:true
+                    },
+                    cuenta_nomina: {
+	                    digits:true
+                    },
+                    clabe_nomina: {
+	                    digits:true
                     },
                     infp_curriculum: {
                         extension: "pdf|jpg|jpeg",
@@ -1465,8 +1495,38 @@
                     numempleado: {
 	                    remote: "Este número de empleado ya existe, por favor, eliga otro"
                     },
+                    ninterior: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    nexterior: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    codigo: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    teldom: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
                     fechaalta: {
 	                    required: 'Este campo es requerido'
+                    },
+                    emergenciatel: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    emergenciatel2: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    cuenta_personal: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    clabe_personal: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    cuenta_nomina: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    clabe_nomina: {
+	                    digits: 'Por favor, ingrese solamente números'
                     },
                     infp_curriculum: {
                         extension: 'Solo se permiten pdf, jpgs y jpegs',
