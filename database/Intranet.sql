@@ -2605,6 +2605,7 @@ CREATE TABLE `expedientes` (
   `cuenta_nomina` int(100) DEFAULT NULL,
   `clabe_nomina` int(100) DEFAULT NULL,
   `plastico` varchar(100) DEFAULT NULL,
+  `estatus_empleado` int DEFAULT '1',
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
    FOREIGN KEY (estado_id) REFERENCES estados(id),
    FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
