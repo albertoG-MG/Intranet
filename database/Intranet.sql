@@ -2556,19 +2556,19 @@ CREATE TABLE `expedientes` (
   `estudios` varchar(100) DEFAULT NULL,
   `puesto` varchar(100) DEFAULT NULL,
   `calle` varchar(100) DEFAULT NULL,
-  `num_interior` int(100) DEFAULT NULL,
-  `num_exterior` int(100) DEFAULT NULL,
+  `num_interior` varchar(100) DEFAULT NULL,
+  `num_exterior` varchar(100) DEFAULT NULL,
   `colonia` varchar(100) DEFAULT NULL,
   `estado_id` int DEFAULT NULL,
   `municipio_id` int DEFAULT NULL,
-  `codigo` int(100) DEFAULT NULL,
-  `tel_dom` int(100) DEFAULT NULL,
+  `codigo` varchar(100) DEFAULT NULL,
+  `tel_dom` varchar(100) DEFAULT NULL,
   `posee_telmov` varchar(100) DEFAULT NULL,
-  `tel_mov` int(100) DEFAULT NULL,
+  `tel_mov` varchar(100) DEFAULT NULL,
   `posee_telempresa` varchar(100) DEFAULT NULL,
-  `marcacion` int(100) DEFAULT NULL,
+  `marcacion` varchar(100) DEFAULT NULL,
   `serie` varchar(100) DEFAULT NULL,
-  `sim` int(100) DEFAULT NULL,
+  `sim` varchar(100) DEFAULT NULL,
   `casa_propia` varchar(100) DEFAULT NULL,
   `ecivil` varchar(100) DEFAULT NULL,
   `posee_retencion` varchar(100) DEFAULT NULL,
@@ -2590,20 +2590,20 @@ CREATE TABLE `expedientes` (
   `talla_polo` varchar(100) DEFAULT NULL,
   `emergencia_nombre` varchar(100) DEFAULT NULL,
   `emergencia_parentesco` varchar(100) DEFAULT NULL,
-  `emergencia_telefono` int(100) DEFAULT NULL,
+  `emergencia_telefono` varchar(100) DEFAULT NULL,
   `emergencia_nombre2` varchar(100) DEFAULT NULL,
   `emergencia_parentesco2` varchar(100) DEFAULT NULL,
-  `emergencia_telefono2` int(100) DEFAULT NULL,
+  `emergencia_telefono2` varchar(100) DEFAULT NULL,
   `resultado_antidoping` varchar(100) DEFAULT NULL,
   `vacante` varchar(100) DEFAULT NULL,
   `fam_dentro_empresa` varchar(100) DEFAULT NULL,
   `fam_nombre` varchar(100) DEFAULT NULL,
   `banco_personal` varchar(100) DEFAULT NULL,
-  `cuenta_personal` int(100) DEFAULT NULL,
-  `clabe_personal` int(100) DEFAULT NULL,
+  `cuenta_personal` varchar(100) DEFAULT NULL,
+  `clabe_personal` varchar(100) DEFAULT NULL,
   `banco_nomina` varchar(100) DEFAULT NULL,
-  `cuenta_nomina` int(100) DEFAULT NULL,
-  `clabe_nomina` int(100) DEFAULT NULL,
+  `cuenta_nomina` varchar(100) DEFAULT NULL,
+  `clabe_nomina` varchar(100) DEFAULT NULL,
   `plastico` varchar(100) DEFAULT NULL,
   `estatus_empleado` int DEFAULT '1',
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
@@ -2701,6 +2701,20 @@ CREATE TABLE `papeleria_empleado` (
   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historial_papeleria_empleado`
+--
+
+CREATE TABLE `historial_papeleria_empleado` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `papeleria_empleado_id` bigint  NOT NULL,
+  `viejo_nombre_archivo` longtext NOT NULL,
+  `viejo_identificador` longtext NOT NULL,
+  `vieja_fecha_subida` date NOT NULL,
+   FOREIGN KEY (papeleria_empleado_id) REFERENCES papeleria_empleado(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
