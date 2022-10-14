@@ -430,140 +430,21 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         if(!(empty($_POST["refbanc"]))){
             $refbanc = $_POST["refbanc"];
         }
-        if(!(empty($_FILES['infp_curriculum']['name']))){
-            $p_curriculum = $_FILES["infp_curriculum"];
-        }else{
-            $p_curriculum = null;
-        }
-        if(!(empty($_FILES['infp_evaluacion']['name']))){
-            $p_evaluacion = $_FILES["infp_evaluacion"];
-        }else{
-            $p_evaluacion = null;
-        }
-        if(!(empty($_FILES['infp_nacimiento']['name']))){
-            $p_nacimiento = $_FILES["infp_nacimiento"];
-        }else{
-            $p_nacimiento = null;
-        }
-        if(!(empty($_FILES['infp_curp']['name']))){
-            $p_curp = $_FILES["infp_curp"];
-        }else{
-            $p_curp = null;
-        }
-        if(!(empty($_FILES['infp_identificacion']['name']))){
-            $p_identificacion = $_FILES["infp_identificacion"];
-        }else{
-            $p_identificacion = null;
-        }
-        if(!(empty($_FILES['infp_comprobante']['name']))){
-            $p_comprobante = $_FILES["infp_comprobante"];
-        }else{
-            $p_comprobante = null;
-        }
-        if(!(empty($_FILES['infp_rfc']['name']))){
-            $p_rfc = $_FILES["infp_rfc"];
-        }else{
-            $p_rfc = null;
-        }
-        if(!(empty($_FILES['infp_cartal']['name']))){
-            $p_cartal = $_FILES["infp_cartal"];
-        }else{
-            $p_cartal = null;
-        }
-        if(!(empty($_FILES['infp_cartap']['name']))){
-            $p_cartap = $_FILES["infp_cartap"];
-        }else{
-            $p_cartap = null;
-        }
-        if(!(empty($_FILES['infp_retencion']['name']))){
-            $p_retencion = $_FILES["infp_retencion"];
-        }else{
-            $p_retencion = null;
-        }
-        if(!(empty($_FILES['infp_strabajo']['name']))){
-            $p_strabajo = $_FILES["infp_strabajo"];
-        }else{
-            $p_strabajo = null;
-        }
-        if(!(empty($_FILES['infp_imss']['name']))){
-            $p_imss = $_FILES["infp_imss"];
-        }else{
-            $p_imss = null;
-        }
-        if(!(empty($_FILES['infp_nomina']['name']))){
-            $p_nomina = $_FILES["infp_nomina"];
-        }else{
-            $p_nomina = null;
-        }
-        if(!(empty($_FILES['infp_contratop']['name']))){
-            $p_contratop = $_FILES["infp_contratop"];
-        }else{
-            $p_contratop = null;
-        }
-
-		if(!(empty($_FILES['infp_contratod']['name']))){
-            $p_contratod = $_FILES["infp_contratod"];
-        }else{
-            $p_contratod = null;
-        }
-
-		if(!(empty($_FILES['infp_contratoi']['name']))){
-            $p_contratoi = $_FILES["infp_contratoi"];
-        }else{
-            $p_contratoi = null;
-        }
-
-		if(!(empty($_FILES['infp_contratos']['name']))){
-            $p_contratos = $_FILES["infp_contratos"];
-        }else{
-            $p_contratos = null;
-        }
-
-		if(!(empty($_FILES['infp_comprobanted']['name']))){
-            $p_comprobanted = $_FILES["infp_comprobanted"];
-        }else{
-            $p_comprobanted = null;
-        }
-
-		if(!(empty($_FILES['infp_situacionf']['name']))){
-            $p_situacionf = $_FILES["infp_situacionf"];
-        }else{
-            $p_situacionf = null;
-        }
-
-		if(!(empty($_FILES['infp_cartare']['name']))){
-            $p_cartare = $_FILES["infp_cartare"];
-        }else{
-            $p_cartare = null;
-        }
-
-		if(!(empty($_FILES['infp_bajaimss']['name']))){
-            $p_bajaimss = $_FILES["infp_bajaimss"];
-        }else{
-            $p_bajaimss = null;
-        }
-
-		if(!(empty($_FILES['infp_modificacions']['name']))){
-            $p_modificacions = $_FILES["infp_modificacions"];
-        }else{
-            $p_modificacions = null;
-        }
-
-		if(!(empty($_FILES['infp_comprobantees']['name']))){
-            $p_comprobantees = $_FILES["infp_comprobantees"];
-        }else{
-            $p_comprobantees = null;
-        }
-
-		if(!(empty($_FILES['infp_cdatosb']['name']))){
-            $p_cdatosb = $_FILES["infp_cdatosb"];
-        }else{
-            $p_cdatosb = null;
+        $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
+        $checktipospapeleria -> execute();
+        $counttipospapeleria = $checktipospapeleria -> rowCount();
+        $arraypapeleria = [];
+        for($i = 1; $i <= $counttipospapeleria; $i++){
+            if(!(empty($_FILES['papeleria'.$i.'']['name']))){
+                $arraypapeleria[$i] = $_FILES['papeleria'.$i.''];
+            }else{
+                $arraypapeleria[$i] = null;
+            }
         }
 		switch($_POST["method"]){
             case "store":
                 $iduser = $_POST["select2"];
-                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $p_curriculum, $p_evaluacion, $p_nacimiento, $p_curp, $p_identificacion, $p_comprobante, $p_rfc, $p_cartal, $p_cartap, $p_retencion, $p_strabajo, $p_imss, $p_nomina, $p_contratop, $p_contratod, $p_contratoi, $p_contratos, $p_comprobanted, $p_situacionf, $p_cartare, $p_bajaimss, $p_modificacions, $p_comprobantees, $p_cdatosb);
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Crear_expediente($iduser);
                 exit("success");
             break;
