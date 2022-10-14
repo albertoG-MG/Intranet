@@ -115,12 +115,44 @@
 
     /*PAPELERIAS*/
     $array3 = [];
-    $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.archivo as archivo, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid");
-    $papeleria->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
-    $papeleria->execute();
+    $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
+    $papeleria->execute(array(':expedienteid' => $Editarid));
 
     while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
-        $array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'archivo'=>$papel->archivo, 'fecha_subida'=>$papel->fecha_subida);
+        $array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'identificador'=>$papel->identificador, 'fecha_subida'=>$papel->fecha_subida);
     }
+
+    $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
+    $checktipospapeleria -> execute();
+    $counttipospapeleria = $checktipospapeleria -> rowCount();
+
+
+    $colorscont = 0;
+    $arrayColors = array(
+        0 => array(
+            'border' => 'border-purple-600',
+            'text' => 'text-purple-600'
+        ),
+        1 => array(
+            'border' => 'border-red-600',
+            'text' => 'text-red-600'
+        ),
+        2 => array(
+            'border' => 'border-green-500',
+            'text' => 'text-green-500'
+        ),
+        3 => array(
+            'border' => 'border-yellow-500',
+            'text' => 'text-yellow-500'
+        ),
+        4 => array(
+            'border' => 'border-blue-600 ',
+            'text' => 'text-blue-600'
+        ),
+        5 => array(
+            'border' => 'border-gray-800',
+            'text' => 'text-gray-800'
+        ),
+    );
 
 ?>
