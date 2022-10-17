@@ -236,24 +236,24 @@
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Código postal</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="codigo" name="codigo" placeholder="Input 8">
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="codigo" name="codigo" value="<?php echo "{$edit -> eecodigo}"; ?>" placeholder="Input 8">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono de domicilio</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-phone text-gray-400 text-lg"></i></div>
-                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="teldom" name="teldom" placeholder="Input 9">
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="teldom" name="teldom" value="<?php echo "{$edit -> etel_dom}"; ?>" placeholder="Input 9">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-telmov-1" type="radio" name="tel_movil" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <input id="option-telmov-1" type="radio" name="tel_movil" value="si" <?= ($edit->eposee_telmov == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                         <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-telmov-2" type="radio" name="tel_movil" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <input id="option-telmov-2" type="radio" name="tel_movil" value="no" <?= ($edit->eposee_telmov == 'no') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
                                         <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
@@ -264,18 +264,18 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono móvil propio</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-cellphone text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="telmov" name="telmov" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="telmov" name="telmov" value="<?php echo "{$edit -> etel_mov}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" <?= ($edit->eposee_telempresa == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                         <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" <?= ($edit->eposee_telempresa == 'no') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
                                         <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
@@ -287,21 +287,21 @@
                                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Marcación corta</label>
                                             <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="marcacion" name="marcacion" placeholder="Input">
+                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="marcacion" name="marcacion" value="<?php echo "{$edit -> emarcacion}"; ?>" placeholder="Input">
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1">
                                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de serie</label>
                                             <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-phone text-gray-400 text-lg"></i></div>
-                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="serie" name="serie" placeholder="Input">
+                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="serie" name="serie" value="<?php echo "{$edit -> eserie}"; ?>" placeholder="Input">
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1">
                                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">SIM</label>
                                             <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-cellphone text-gray-400 text-lg"></i></div>
-                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="sim" name="sim" placeholder="Input">
+                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="sim" name="sim" value="<?php echo "{$edit -> esim}"; ?>" placeholder="Input">
                                             </div>
                                         </div>
                                     </div>
@@ -327,17 +327,17 @@
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Estado civil</label>
                                     <div class="group flex">
                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-ring text-gray-400 text-lg"></i></div>
-                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="ecivil" name="ecivil" placeholder="Input">
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="ecivil" name="ecivil" value="<?php echo "{$edit -> eecivil}"; ?>" placeholder="Input">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Posee retención?</label>
                                     <div class="group flex mt-3 items-center">
-                                        <input id="option-retencion-1" type="radio" name="retencion" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                        <input id="option-retencion-1" type="radio" name="retencion" value="si" <?= ($edit->eposee_retencion == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                         <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                         Sí
                                         </label>
-                                        <input id="option-retencion-2" type="radio" name="retencion" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
+                                        <input id="option-retencion-2" type="radio" name="retencion" value="no" <?= ($edit->eposee_retencion == 'no') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-2" aria-describedby="option-2">
                                         <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                         No
                                         </label>
@@ -348,7 +348,7 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Monto mensual</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-currency-usd text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="monto_mensual" name="monto_mensual" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="monto_mensual" name="monto_mensual" value="<?php echo "{$edit -> emonto_mensual}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                 </div>
@@ -380,14 +380,14 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Salario - Inicio de contrato</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-currency-usd text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="salario_contrato" name="salario_contrato" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="salario_contrato" name="salario_contrato" value="<?php echo "{$edit -> esalario_contrato}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Salario - Fecha de alta</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-currency-usd text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="salario_fechaalta" name="salario_fechaalta" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="salario_fechaalta" name="salario_fechaalta" value="<?php echo "{$edit -> esalario_fechaalta}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                 </div>
@@ -496,21 +496,21 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo1</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergencianom" name="emergencianom" placeholder="Input 21">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergencianom" name="emergencianom" value="<?php echo "{$edit -> eemergencia_nombre}"; ?>" placeholder="Input 21">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Parentesco1</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-group text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciaparentesco" name="emergenciaparentesco" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciaparentesco" name="emergenciaparentesco" value="<?php echo "{$edit -> eemergencia_parentesco}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono1</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-cellphone text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciatel" name="emergenciatel" placeholder="Input 22">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciatel" name="emergenciatel" value="<?php echo "{$edit -> eemergencia_telefono}"; ?>" placeholder="Input 22">
                                         </div>
                                     </div>
                                 </div>
@@ -519,21 +519,21 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre completo2</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergencianom2" name="emergencianom2" placeholder="Input 21">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergencianom2" name="emergencianom2" value="<?php echo "{$edit -> eemergencia_nombre2}"; ?>" placeholder="Input 21">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Parentesco2</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-group text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciaparentesco2" name="emergenciaparentesco2" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciaparentesco2" name="emergenciaparentesco2" value="<?php echo "{$edit -> eemergencia_parentesco2}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Teléfono2</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-cellphone text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciatel2" name="emergenciatel2" placeholder="Input 22">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="emergenciatel2" name="emergenciatel2" value="<?php echo "{$edit -> eemergencia_telefono2}"; ?>" placeholder="Input 22">
                                         </div>
                                     </div>
                                 </div>    
@@ -601,21 +601,21 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Banco</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-bank text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="banco_personal" name="banco_personal" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="banco_personal" name="banco_personal" value="<?php echo "{$edit -> ebanco_personal}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cuenta</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cuenta_personal" name="cuenta_personal" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cuenta_personal" name="cuenta_personal" value="<?php echo "{$edit -> ecuenta_personal}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Clabe</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="clabe_personal" name="clabe_personal" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="clabe_personal" name="clabe_personal" value="<?php echo "{$edit -> eclabe_personal}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                 </div>					
@@ -628,28 +628,28 @@
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Banco</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-bank text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="banco_nomina" name="banco_nomina" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="banco_nomina" name="banco_nomina" value="<?php echo "{$edit -> ebanco_nomina}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Cuenta</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cuenta_nomina" name="cuenta_nomina" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="cuenta_nomina" name="cuenta_nomina" value="<?php echo "{$edit -> ecuenta_nomina}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Clabe</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="clabe_nomina" name="clabe_nomina" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="clabe_nomina" name="clabe_nomina" value="<?php echo "{$edit -> eclabe_nomina}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1 lg:col-span-3">
                                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Plástico asignado</label>
                                         <div class="group flex">
                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-piggy-bank-outline text-gray-400 text-lg"></i></div>
-                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="plastico" name="plastico" placeholder="Input">
+                                            <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="plastico" name="plastico" value="<?php echo "{$edit -> eplastico}"; ?>" placeholder="Input">
                                         </div>
                                     </div>
 								</div>
