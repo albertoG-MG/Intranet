@@ -2646,6 +2646,38 @@ CREATE TABLE `ref_bancarias` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `estatus_empleado`
+--
+
+CREATE TABLE `estatus_empleado` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expedientes_id` int  NOT NULL,
+  `situacion_del_empleado` varchar(100) NOT NULL,
+  `estatus_del_empleado` varchar(100) NOT NULL,
+  `motivo` varchar(100) DEFAULT NULL,
+  `fecha` date NOT NULL,
+   FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `historial_estatus_empleado`
+--
+
+CREATE TABLE `historial_estatus_empleado` (
+  `id` bigint  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `estatus_empleado_id` int  NOT NULL,
+  `vieja_situacion_del_empleado` varchar(100) NOT NULL,
+  `viejo_estatus_del_empleado` varchar(100) NOT NULL,
+  `viejo_motivo` varchar(100) DEFAULT NULL,
+  `vieja_fecha` date NOT NULL,
+   FOREIGN KEY (estatus_empleado_id) REFERENCES estatus_empleado(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tipo_papeleria`
 --
 

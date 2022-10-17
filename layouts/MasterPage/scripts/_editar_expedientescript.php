@@ -141,7 +141,8 @@
 		if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
 			$('#div_estatus_motivo').removeClass("hidden");
 		}else{
-			$('#div_estatus_motivo').addClass("hidden")
+			$('#div_estatus_motivo').addClass("hidden");
+            $("#estatus_motivo").val('');
 		}
 
         $('#situacion').on('change', function(event) {
@@ -150,12 +151,14 @@
                     "<option value=\"NUEVO INGRESO\">Nuevo ingreso</option>"+
                     "<option value=\"REINGRESO\">Reingreso</option>");
 					$('#div_estatus_motivo').addClass("hidden");
+                    $("#estatus_motivo").val('');
             }else if ($('#situacion').val() == "INACTIVO"){
                 $('#estatus_empleado').html(
 					"<option value=\"FALLECIMIENTO\">Fallecimiento</option>"+
                     "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
                     "<option value=\"LIQUIDACION\">Liquidación</option>");
 					$('#div_estatus_motivo').addClass("hidden");
+                    $("#estatus_motivo").val('');
             }
         });
 		
@@ -165,6 +168,7 @@
 				$('#div_estatus_motivo').removeClass("hidden");
 			}else{
 				$('#div_estatus_motivo').addClass("hidden");
+                $("#estatus_motivo").val('');
 			}
 		});
 
