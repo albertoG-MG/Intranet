@@ -127,6 +127,47 @@
             currentTab.parentElement.parentElement.children[2].classList.add("border-blue-400", "opacity-100");
         });
 
+        if ($('#situacion').val() == "ACTIVO") {
+            $('#estatus_empleado').html(
+                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected";} ?>>Nuevo ingreso</option>"+
+                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected";} ?>>Reingreso</option>");
+        }else if ($('#situacion').val() == "INACTIVO"){
+            $('#estatus_empleado').html(
+				"<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected";} ?>>Fallecimiento</option>"+
+                "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected";} ?>>Renuncia voluntaria</option>"+
+                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected";} ?>>Liquidación</option>");
+        }
+		
+		if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
+			$('#div_estatus_motivo').removeClass("hidden");
+		}else{
+			$('#div_estatus_motivo').addClass("hidden")
+		}
+
+        $('#situacion').on('change', function(event) {
+            if ($('#situacion').val() == "ACTIVO") {
+                $('#estatus_empleado').html(
+                    "<option value=\"NUEVO INGRESO\">Nuevo ingreso</option>"+
+                    "<option value=\"REINGRESO\">Reingreso</option>");
+					$('#div_estatus_motivo').addClass("hidden");
+            }else if ($('#situacion').val() == "INACTIVO"){
+                $('#estatus_empleado').html(
+					"<option value=\"FALLECIMIENTO\">Fallecimiento</option>"+
+                    "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
+                    "<option value=\"LIQUIDACION\">Liquidación</option>");
+					$('#div_estatus_motivo').addClass("hidden");
+            }
+        });
+		
+		
+		$('#estatus_empleado').on('change', function(event) {
+			if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
+				$('#div_estatus_motivo').removeClass("hidden");
+			}else{
+				$('#div_estatus_motivo').addClass("hidden");
+			}
+		});
+
         <?php for($i = 1; $i <= $counttipospapeleria; $i++){
             echo (   "$('#upload-button{$i}').on('click', function () {
                     $('#infp_papeleria{$i}').click();
@@ -556,7 +597,10 @@
                     },
                     fechaalta: {
 	                    required:true
-                    }
+                    },
+                    fecha_estatus: {
+		                required:true
+	                }
                 },
                 messages:{
                     prueba:{
@@ -567,7 +611,10 @@
                     },
                     fechaalta: {
 	                    required: 'Este campo es requerido'
-                    }
+                    },
+                    fecha_estatus: {
+		                required: 'Es necesaria una fecha de estatus, por favor, inserte una'
+	                }
                 },
                 submitHandler: function(form) {
                     $("#finish").attr("disabled", true);
@@ -581,6 +628,10 @@
                             var numempleado = $("#numempleado").val();
                             var puesto = $("#puesto").val();
                             var estudios = $("#estudios").val();
+                            var situacion = $('#situacion').val();
+	                        var estatus_empleado = $('#estatus_empleado').val();
+	                        var estatus_fecha = $('#fecha_estatus').val();
+	                        var motivo_estatus = $('#estatus_motivo').val();
                             var calle = $("#calle").val();
                             var ninterior = $("#ninterior").val();
                             var nexterior = $("#nexterior").val();
@@ -652,6 +703,10 @@
                             fd.append('numempleado', numempleado);
                             fd.append('puesto', puesto);
                             fd.append('estudios', estudios);
+                            fd.append('situacion', situacion);
+	                        fd.append('estatus_empleado', estatus_empleado);
+	                        fd.append('estatus_fecha', estatus_fecha);
+	                        fd.append('motivo_estatus', motivo_estatus);
                             fd.append('calle', calle);
                             fd.append('ninterior', ninterior);
                             fd.append('nexterior', nexterior);

@@ -139,6 +139,38 @@
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Situación del empleado</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-clock text-gray-400 text-lg"></i></div>
+                                        <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="situacion" name="situacion">
+                                            <option value="ACTIVO" <?php if($edit -> esituacion_del_empleado == "ACTIVO"){ echo "selected"; }?>>Activo</option>
+                                            <option value="INACTIVO" <?php if($edit -> esituacion_del_empleado == "INACTIVO"){ echo "selected"; }?>>Inactivo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Estatus del empleado</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-search text-gray-400 text-lg"></i></div>
+                                        <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="estatus_empleado" name="estatus_empleado">
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Fecha de estatus</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-calendar-range text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="date" id="fecha_estatus" name="fecha_estatus" value="<?php echo "{$edit->eestatus_fecha}"; ?>">
+                                    </div>
+                                </div>
+                                <div id="div_estatus_motivo" class="hidden">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Motivo del estatus</label>
+                                        <textarea class="w-full rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="estatus_motivo" name="estatus_motivo" placeholder="Ingrese el motivo"><?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }?></textarea>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Datos de ubicación</label>
                                     <hr>
                                 </div>
