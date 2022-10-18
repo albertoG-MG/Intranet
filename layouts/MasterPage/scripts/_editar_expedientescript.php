@@ -576,7 +576,7 @@
       }, 'File size must be less than {0} MB');
 
 
-        if($('#Guardar').length > 0 ){
+      if($('#Guardar').length > 0 ){
             $('#Guardar').validate({
                 ignore: [],
                     errorPlacement: function(error, element) {
@@ -584,6 +584,43 @@
                             error.insertAfter($(element));
                         }else{
                             error.insertAfter(element.parent('.group.flex'));
+                        }
+                    },
+                    invalidHandler: function(e, validator){
+                        if(!($('#error-container').length)){
+                            this.$div = $('<div id="error-container" class="grid grid-cols-1 mt-5 mx-7"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex items-center"><div class="p-2"><div class="flex items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-lg">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#tabs");
+                        }
+                        $("#arrayerrors").html(""); 
+                        $.each(validator.errorMap, function( index, value ) { 
+                            this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
+                            $("#arrayerrors").append(this.$arrayerror);
+                        });
+                        if(validator.errorList.length){
+                            var taberror = jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id');
+                            if(taberror != "fourth"){
+                                $('#tabs a[href="#' + jQuery(validator.errorList[0].element).closest(".tab-pane").removeClass("hidden") + '"]');
+                                $('#tabs > li > a[href="#'+taberror+'"]').addClass("active").parent().addClass("border-blue-400 opacity-100");
+                                $('#tabs > li > a:last').removeClass("active").parent().removeClass("border-blue-400 opacity-100");
+                                $("#tab-contents > div:last").addClass("hidden");
+                            }
+                        }
+                    },
+                    highlight: function(element) {
+                        var elem = $(element);
+                        if (elem.hasClass("select2-hidden-accessible")) {
+                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border-2 border-rose-500 border-2"); 
+                        }else{
+                            $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                            $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                        }
+                    },
+                    unhighlight: function(element) {
+                        var elem = $(element);
+                        if (elem.hasClass("select2-hidden-accessible")) {
+                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border-2 border-rose-500 border-2");
+                        }else{
+                            $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                            $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
                         }
                     },
                 rules:{
@@ -599,26 +636,98 @@
                             }
                         }
                     },
+                    ninterior: {
+	                    digits:true
+                    },
+                    nexterior: {
+	                    digits:true
+                    },
+                    codigo: {
+	                    digits:true
+                    },
+                    teldom: {
+	                    digits:true
+                    },
                     fechaalta: {
 	                    required:true
                     },
-                    fecha_estatus: {
+					fecha_estatus: {
 		                required:true
-	                }
+	                },
+                    salario_contrato: {
+	                    number:true
+                    },
+                    salario_fechaalta: {
+	                    number:true
+                    },
+                    emergenciatel: {
+	                    digits:true
+                    },
+                    emergenciatel2: {
+	                    digits:true
+                    },
+                    cuenta_personal: {
+	                    digits:true
+                    },
+                    clabe_personal: {
+	                    digits:true
+                    },
+                    cuenta_nomina: {
+	                    digits:true
+                    },
+                    clabe_nomina: {
+	                    digits:true
+                    }
                 },
                 messages:{
                     prueba:{
                         required: 'Este campo es requerido'
                     },
                     numempleado: {
-                        remote: "Este número de empleado ya existe, por favor, eliga otro"
+	                    remote: "Este número de empleado ya existe, por favor, eliga otro"
+                    },
+                    ninterior: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    nexterior: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    codigo: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    teldom: {
+	                    digits: 'Por favor, ingrese solamente números'
                     },
                     fechaalta: {
 	                    required: 'Este campo es requerido'
                     },
-                    fecha_estatus: {
+					fecha_estatus: {
 		                required: 'Es necesaria una fecha de estatus, por favor, inserte una'
-	                }
+	                },
+                    salario_contrato: {
+	                    number: "Por favor, ingrese solamente numeros ó decimales"
+                    },
+                    salario_fechaalta: {
+	                    number: "Por favor, ingrese solamente numeros ó decimales"
+                    },
+                    emergenciatel: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    emergenciatel2: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    cuenta_personal: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    clabe_personal: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    cuenta_nomina: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    },
+                    clabe_nomina: {
+	                    digits: 'Por favor, ingrese solamente números'
+                    }
                 },
                 submitHandler: function(form) {
                     $("#finish").attr("disabled", true);
@@ -794,6 +903,216 @@
                 }
             });
         }
+        if (!($("#numempleado").val().length == 0)){
+		$("#numempleado").valid();
+	}
+	
+        if(($('input[type=radio][name=tel_movil]:checked').val() === "si")){
+            document.getElementById("div_movil").classList.remove('hidden');
+	        $("#telmov").rules("add", {
+		        required: true,
+		        digits:true,
+		        messages: {
+			        required: "Por favor, ingrese el télefono",
+			        digits: "Por favor, ingrese solamente números"
+		        }
+	        });
+        }else if($('input[type=radio][name=tel_movil]:checked').val() === "no"){
+            document.getElementById("div_movil").classList.add('hidden');
+            $("#telmov").val('');
+            $("#telmov").rules("remove");
+            $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#telmov").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#telmov-error").css("display", "none");
+        }
+
+        $('input[type=radio][name=tel_movil]').on('change', function () {
+	        if(($('input[type=radio][name=tel_movil]:checked').val() === "si")){
+		        document.getElementById("div_movil").classList.remove('hidden');
+		        $("#telmov").rules("add", {
+			        required: true,
+			        digits:true,
+			        messages: {
+				        required: "Por favor, ingrese el télefono",
+				        digits: "Por favor, ingrese solamente números"
+			        }
+		        });
+            }else if($('input[type=radio][name=tel_movil]:checked').val() === "no"){
+                document.getElementById("div_movil").classList.add('hidden');
+                $("#telmov").val('');
+                $("#telmov").rules("remove");
+                $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#telmov").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#telmov-error").css("display", "none");
+            }
+        });
+		if(($('input[type=radio][name=tel_movil_empresa]:checked').val() === "si")){
+            document.getElementById("div_movil_empresa").classList.remove('hidden');
+			$("#marcacion").rules("add", {
+				required: true,
+				digits:true,
+				messages: {
+					required: "Por favor, ingrese la marcación",
+					digits: "Por favor, ingrese solamente números"
+				}
+			});
+			$("#serie").rules("add", {
+				required: true,
+				messages: {
+					required: "Por favor, ingrese la serie"
+				}
+			});
+			$("#sim").rules("add", {
+				required: true,
+				digits: true,
+				messages: {
+					required: "Por favor, ingrese un número SIM",
+					digits: "Por favor, ingrese solamente numeros"
+				}
+			});
+        }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
+            document.getElementById("div_movil_empresa").classList.add('hidden');
+			$("#marcacion").val('');
+			$("#marcacion").rules("remove");
+			$("#marcacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#marcacion").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#marcacion-error").css("display", "none");
+			$("#serie").val('');
+			$("#serie").rules("remove");
+			$("#serie").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#serie").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#serie-error").css("display", "none");
+			$("#sim").val('');
+			$("#sim").rules("remove");
+			$("#sim").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#sim").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#sim-error").css("display", "none");	
+            
+        }
+
+        $('input[type=radio][name=tel_movil_empresa]').on('change', function () {
+            if(($('input[type=radio][name=tel_movil_empresa]:checked').val() === "si")){
+                document.getElementById("div_movil_empresa").classList.remove('hidden');
+				$("#marcacion").rules("add", {
+					required: true,
+					digits:true,
+					messages: {
+						required: "Por favor, ingrese la marcación",
+						digits: "Por favor, ingrese solamente números"
+					}
+				});
+				$("#serie").rules("add", {
+					required: true,
+					messages: {
+						required: "Por favor, ingrese la serie"
+					}
+				});
+				$("#sim").rules("add", {
+					required: true,
+					digits: true,
+					messages: {
+						required: "Por favor, ingrese un número SIM",
+						digits: "Por favor, ingrese solamente numeros"
+					}
+				});	
+            }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
+                document.getElementById("div_movil_empresa").classList.add('hidden');
+				$("#marcacion").val('');
+				$("#marcacion").rules("remove");
+				$("#marcacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#marcacion").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#marcacion-error").css("display", "none");
+				$("#serie").val('');
+				$("#serie").rules("remove");
+				$("#serie").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#serie").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#serie-error").css("display", "none");
+				$("#sim").val('');
+				$("#sim").rules("remove");
+				$("#sim").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#sim").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#sim-error").css("display", "none");				
+            }
+        });
+		if(($('input[type=radio][name=retencion]:checked').val() === "si")){
+			document.getElementById("div_retencion").classList.remove('hidden');
+			$("#monto_mensual").rules("add", {
+				required: true,
+				number: true,
+				messages: {
+					required: "Por favor, ingrese el monto mensual",
+					number: "Por favor, ingrese solamente numeros ó decimales"
+				}
+			});
+
+		}else if($('input[type=radio][name=retencion]:checked').val() === "no"){
+			document.getElementById("div_retencion").classList.add('hidden');
+			$("#monto_mensual").val('');
+			$("#monto_mensual").rules("remove");
+			$("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#monto_mensual").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#monto_mensual-error").css("display", "none");
+		}
+
+		$('input[type=radio][name=retencion]').on('change', function () {
+			if(($('input[type=radio][name=retencion]:checked').val() === "si")){
+				document.getElementById("div_retencion").classList.remove('hidden');
+				$("#monto_mensual").rules("add", {
+					required: true,
+					number: true,
+					messages: {
+						required: "Por favor, ingrese el monto mensual",
+						number: "Por favor, ingrese solamente numeros ó decimales"
+					}
+				});
+			}else if($('input[type=radio][name=retencion]:checked').val() === "no"){
+				document.getElementById("div_retencion").classList.add('hidden');
+				$("#monto_mensual").val('');
+				$("#monto_mensual").rules("remove");
+				$("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+				$("#monto_mensual").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#monto_mensual-error").css("display", "none");
+			}
+		});
+		if(($('input[type=radio][name=empresa]:checked').val() === "si")){
+            document.getElementById("famnom").classList.remove('hidden');
+            $("#nomfam").rules("add", {
+				required: true,
+				messages: {
+					required: "Por favor, ingrese el nombre completo del familiar"
+				}
+			});
+        }else if($('input[type=radio][name=empresa]:checked').val() === "no"){
+            document.getElementById("famnom").classList.add('hidden');
+            $("#nomfam").val('');
+			$("#nomfam").rules("remove");
+			$("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#nomfam").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#nomfam-error").css("display", "none");
+        }
+
+        $('input[type=radio][name=empresa]').on('change', function () {
+            if(($('input[type=radio][name=empresa]:checked').val() === "si")){
+                document.getElementById("famnom").classList.remove('hidden');
+				$("#nomfam").rules("add", {
+					required: true,
+					messages: {
+						required: "Por favor, ingrese el nombre completo del familiar"
+					}
+				});
+            }else if($('input[type=radio][name=empresa]:checked').val() === "no"){
+                document.getElementById("famnom").classList.add('hidden');
+                $("#nomfam").val('');
+				$("#nomfam").rules("remove");
+				$("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+				$("#nomfam").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#nomfam-error").css("display", "none");
+            }
+        });
+    });
+
+    $('#prueba').select2({}).on("change", function (e) {
+        $(this).valid();
     });
 
     function check_user_logged(){
@@ -1036,6 +1355,9 @@
 
 </script>
 <style>
+    .error{
+        color: rgb(244 63 94);
+    }
     .select2-results__option--selectable:hover{
         background: #5897fb;
         color:white;
