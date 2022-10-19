@@ -167,9 +167,9 @@ $(document).ready(function () {
         <?php }else{ ?>
             var container = document.getElementById("referencias");
             var div = document.createElement("div");
-            div.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'border-b-2', 'border-gray-200', 'mt-5', 'b-5', 'mx-7');
+            div.classList.add('grid', 'grid-cols-1', 'text-center', 'border-b-2', 'border-gray-200', 'mt-5', 'b-5', 'mx-7');
             container.appendChild(div);
-            div.appendChild(document.createTextNode("No hay datos registrados"));
+            div.appendChild(document.createTextNode("No hay referencias laborales registradas"));
         <?php } ?>
 
         <?php if($cont_datos > 0){ ?>
@@ -229,9 +229,9 @@ $(document).ready(function () {
          <?php }else{ ?>
 			var container = document.getElementById("ref");
             var div = document.createElement("div");
-            div.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'border-b-2', 'border-gray-200', 'mt-5', 'b-5', 'mx-7');
+            div.classList.add('grid', 'grid-cols-1', 'text-center', 'border-b-2', 'border-gray-200', 'mt-5', 'b-5', 'mx-7');
             container.appendChild(div);
-            div.appendChild(document.createTextNode("No hay datos registrados"));
+            div.appendChild(document.createTextNode("No hay beneficiarios bancarios registrados"));
 		 <?php } ?>
 
     <?php
