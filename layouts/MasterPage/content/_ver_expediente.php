@@ -362,10 +362,43 @@
 							</div>
 						</div>
 						<div id='fourth' class='hidden p-4'>
-                        <?php for ($i = 0; $i < count($array3); $i++) { ?>
+                        <?php for ($i = 0; $i < count($array3); $i++) { 
+                                $historial_expedientes = $object -> _db -> prepare("SELECT nombre, nombre_archivo, identificador, fecha_subida FROM (SELECT tipo_papeleria.nombre, papeleria_empleado.nombre_archivo, papeleria_empleado.identificador, papeleria_empleado.fecha_subida FROM papeleria_empleado inner join tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo WHERE expediente_id=:expedienteid1 AND tipo_papeleria.id=:tipo1 UNION ALL SELECT tipo_papeleria.nombre, historial_papeleria_empleado.viejo_nombre_archivo, historial_papeleria_empleado.viejo_identificador, historial_papeleria_empleado.vieja_fecha_subida FROM historial_papeleria_empleado inner join papeleria_empleado ON papeleria_empleado.id = historial_papeleria_empleado.papeleria_empleado_id inner join tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo  WHERE expediente_id=:expedienteid2 AND tipo_papeleria.id=:tipo2) t ORDER BY t.fecha_subida DESC");
+                                $historial_expedientes -> execute(array(':expedienteid1' => $Verid, ':tipo1' => $array3[$i]["id"], ':expedienteid2' => $Verid, ':tipo2' => $array3[$i]["id"]));
+                                $count_historial = $historial_expedientes -> rowCount();    
+                        ?>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold"><?php print ($array3[$i]['nombre']); ?></label>
-                                <?php $filepath = "../src/pdfs_uploaded/"; if(is_file($filepath.$array3[$i]["identificador"])){ ?><a class='text-left md:text-right' onclick='javascript:window.open("<?php print ($filepath.$array3[$i]["identificador"]); ?>", "_blank")'><?php echo "<span class='text-blue-600 hover:border-b-2 hover:border-blue-600'>".$array3[$i]['nombre_archivo']. "</span>"; ?></a><?php }else{ echo "<span class='text-left md:text-right'>No se encontró el archivo en la base de datos</span>";  }?>
+                                <?php 
+                                    $filepath = "../src/pdfs_uploaded/"; 
+                                    if(is_file($filepath.$array3[$i]["identificador"])){ 
+                                ?>
+                                <div class = 'text-left md:text-right'>
+                                    <a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' onclick='javascript:window.open("<?php print ($filepath.$array3[$i]["identificador"]); ?>", "_blank")'>
+                                        <?php print ($array3[$i]['nombre_archivo']); ?>
+                                    </a>
+                                </div>
+                                <?php 
+                                    }else{ 
+                                ?> 
+                                        <div class='text-left md:text-right'>
+                                            <span>
+                                                No se encontró el archivo en la base de datos
+                                            </span>
+                                        </div>  
+                                    <?php 
+                                    } 
+                                    if($count_historial > 1){
+                                    ?>
+                                        <br>
+                                        <div class="text-left md:text-right">
+                                            <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?tipo_papeleria=<?php print ($array3[$i]['id']); ?>">
+                                                Ver historial...
+                                            </a>
+                                        </div>							
+                                    <?php 
+                                    }
+                                    ?>
                             </div>
                         <?php } ?>
                             <div class="grid grid-cols-1 mt-5 mx-7">
