@@ -223,6 +223,15 @@ class expedientes {
         $usuarioexp_count = $fetchusex->rowCount();
 	    return $usuarioexp_count;
     }
+
+    public static function Checkpapeleria($id){
+        $object = new connection_database();
+	    $sql = "SELECT * FROM tipo_papeleria WHERE id=:papeleriaid";
+        $checkthis = $object->_db->prepare($sql);
+        $checkthis->execute(array(':papeleriaid' => $id));
+        $papeleriacount = $checkthis->rowCount();
+	    return $papeleriacount;
+    }
     
     public static function Fetcheditexpediente($id){
         $object = new connection_database();
