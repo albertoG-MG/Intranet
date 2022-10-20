@@ -13,6 +13,7 @@
  /*Si el id no existe, regresa*/
 if($_GET['idExpediente'] == null || $_GET['tipo_papeleria'] == null){
 	header('Location: expedientes.php');
+	die();
 }else{
 	$expedienteid = $_GET['idExpediente'];
 	$tipo_papeleria_id = $_GET['tipo_papeleria'];
@@ -20,11 +21,13 @@ if($_GET['idExpediente'] == null || $_GET['tipo_papeleria'] == null){
 	$checkexp=Expedientes::Checkusuarioxexpediente($expedienteid);
 	if($checkexp == 0){
 		header('Location: expedientes.php');
+		die();
 	}
 	/*Checa si ese tipo de papeleria existe*/
 	$checkpapeleria=Expedientes::Checkpapeleria($tipo_papeleria_id);
 	if($checkpapeleria == 0){
 		header('Location: expedientes.php');
+		die();
 	}
 }
 ?>
