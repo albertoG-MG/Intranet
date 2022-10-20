@@ -29,5 +29,11 @@ if($_GET['idExpediente'] == null || $_GET['tipo_papeleria'] == null){
 		header('Location: expedientes.php');
 		die();
 	}
+	/*Checa si hay records en la base de datos*/
+	$check_records = Expedientes::Check_records_papeleria($expedienteid, $tipo_papeleria_id);
+	if($check_records == 0){
+		header('Location: expedientes.php');
+		die();
+	}
 }
 ?>

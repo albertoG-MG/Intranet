@@ -232,6 +232,15 @@ class expedientes {
         $papeleriacount = $checkthis->rowCount();
 	    return $papeleriacount;
     }
+
+    public static function Check_records_papeleria($expedienteid, $tipo_papeleria_id){
+		$object = new connection_database();
+	    $sql = "SELECT * FROM historial_papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo";
+        $check_records = $object->_db->prepare($sql);
+        $check_records->execute(array(':expedienteid' => $expedienteid, ':tipo' => $tipo_papeleria_id));
+        $recordscount = $check_records->rowCount();
+	    return $recordscount;
+	}
     
     public static function Fetcheditexpediente($id){
         $object = new connection_database();
