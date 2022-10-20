@@ -392,7 +392,7 @@
                                     ?>
                                         <br>
                                         <div class="text-left md:text-right">
-                                            <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?tipo_papeleria=<?php print ($array3[$i]['id']); ?>">
+                                            <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?idExpediente=<?php echo $Verid; ?>&tipo_papeleria=<?php print ($array3[$i]['id']); ?>">
                                                 Ver historial...
                                             </a>
                                         </div>							
