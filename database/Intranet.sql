@@ -2726,11 +2726,11 @@ CREATE TABLE `papeleria_empleado` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
   `tipo_archivo` int NOT NULL,
-  `nombre_archivo` longtext DEFAULT NULL,
-  `identificador` longtext DEFAULT NULL,
-  `fecha_subida` datetime DEFAULT NULL,
+  `nombre_archivo` longtext NOT NULL,
+  `identificador` longtext NOT NULL,
+  `fecha_subida` datetime NOT NULL,
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
-  FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id)
+  FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -2740,12 +2740,14 @@ CREATE TABLE `papeleria_empleado` (
 --
 
 CREATE TABLE `historial_papeleria_empleado` (
-  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `papeleria_empleado_id` bigint  NOT NULL,
+  `id` bigint  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `tipo_archivo` int  NOT NULL,
   `viejo_nombre_archivo` longtext NOT NULL,
   `viejo_identificador` longtext NOT NULL,
-  `vieja_fecha_subida` date NOT NULL,
-   FOREIGN KEY (papeleria_empleado_id) REFERENCES papeleria_empleado(id) ON DELETE CASCADE
+  `vieja_fecha_subida` datetime NOT NULL,
+   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
+   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------

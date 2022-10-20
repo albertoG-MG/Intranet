@@ -363,8 +363,8 @@
 						</div>
 						<div id='fourth' class='hidden p-4'>
                         <?php for ($i = 0; $i < count($array3); $i++) { 
-                                $historial_expedientes = $object -> _db -> prepare("SELECT nombre, nombre_archivo, identificador, fecha_subida FROM (SELECT tipo_papeleria.nombre, papeleria_empleado.nombre_archivo, papeleria_empleado.identificador, papeleria_empleado.fecha_subida FROM papeleria_empleado inner join tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo WHERE expediente_id=:expedienteid1 AND tipo_papeleria.id=:tipo1 UNION ALL SELECT tipo_papeleria.nombre, historial_papeleria_empleado.viejo_nombre_archivo, historial_papeleria_empleado.viejo_identificador, historial_papeleria_empleado.vieja_fecha_subida FROM historial_papeleria_empleado inner join papeleria_empleado ON papeleria_empleado.id = historial_papeleria_empleado.papeleria_empleado_id inner join tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo  WHERE expediente_id=:expedienteid2 AND tipo_papeleria.id=:tipo2) t ORDER BY t.fecha_subida DESC");
-                                $historial_expedientes -> execute(array(':expedienteid1' => $Verid, ':tipo1' => $array3[$i]["id"], ':expedienteid2' => $Verid, ':tipo2' => $array3[$i]["id"]));
+                                $historial_expedientes = $object -> _db -> prepare("SELECT * FROM historial_papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+                                $historial_expedientes -> execute(array(':expedienteid' => $Verid, ':tipo' => $array3[$i]["id"]));
                                 $count_historial = $historial_expedientes -> rowCount();    
                         ?>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
@@ -388,7 +388,7 @@
                                         </div>  
                                     <?php 
                                     } 
-                                    if($count_historial > 1){
+                                    if($count_historial > 0){
                                     ?>
                                         <br>
                                         <div class="text-left md:text-right">

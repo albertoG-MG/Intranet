@@ -307,7 +307,7 @@ class expedientes {
                     $checkpapeleria -> execute(array(':expedienteid' => $id_expediente, ':tipo' => $papeleria));
                     $countpapeleria = $checkpapeleria -> rowCount();
                     if($countpapeleria > 0){
-                        $oldrecord = $object -> _db -> prepare("INSERT INTO historial_papeleria_empleado(papeleria_empleado_id, viejo_nombre_archivo, viejo_identificador, vieja_fecha_subida) SELECT id, nombre_archivo, identificador, fecha_subida  FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
+                        $oldrecord = $object -> _db -> prepare("INSERT INTO historial_papeleria_empleado(expediente_id, tipo_archivo, viejo_nombre_archivo, viejo_identificador, vieja_fecha_subida) SELECT expediente_id, tipo_archivo, nombre_archivo, identificador, fecha_subida  FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
                         $oldrecord -> execute(array(':expedienteid' => $id_expediente, ':tipo' => $papeleria));
                         $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
                     }else{
