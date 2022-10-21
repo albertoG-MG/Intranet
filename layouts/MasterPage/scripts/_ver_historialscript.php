@@ -10,6 +10,39 @@
                         search: ""
             },
             dom: '<"top"f>rt<"bottom"ip><"clear">',
+            "ajax":{
+				"url": "../config/ajax_historial_papeleria.php",
+				"type": "POST",
+				"dataSrc": "",
+				"data":{
+					"expedienteid": <?php echo $expedienteid; ?>,
+					"tipoarchivo": <?php echo $tipo_papeleria_id; ?>
+				}
+			},
+            "columns":[
+                { data: null, render: function ( data, type, row ) {
+                    if(data.viejo_nombre_archivo != "No se encontró el archivo"){
+                        return "<a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/pdfs_uploaded/"+data.viejo_identificador+"'>"+data.viejo_nombre_archivo+"</a>";
+                    }else{
+                        return data.viejo_nombre_archivo;
+                    }
+                }},
+                {"data": "vieja_fecha_subida"},
+                { data: null, render: function ( data, type, row ) {
+                    return (
+                        "<div class='py-3 text-left'>" +
+                        "<div class='flex item-center justify-center data'>" +
+                        "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>" +
+                        "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
+                        "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>" +
+                        "</svg>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>"
+                    );	
+                }}
+
+            ],
             "initComplete": () => {
                 $("#datatable").show();
             }
