@@ -36,4 +36,8 @@ if($_GET['idExpediente'] == null || $_GET['tipo_papeleria'] == null){
 		die();
 	}
 }
+
+$checkpapelera = $object -> _db -> prepare("SELECT * FROM tipo_papeleria WHERE id=:tipo");
+$checkpapelera -> execute(array(':tipo' => $tipo_papeleria_id));
+$fetchpapelera = $checkpapelera -> fetch(PDO::FETCH_OBJ);
 ?>
