@@ -248,7 +248,7 @@ class expedientes {
 		$check_if_doc_exist = $object -> _db -> prepare("SELECT * FROM historial_papeleria_empleado WHERE id=:idhistorial");
 		$check_if_doc_exist -> execute(array(':idhistorial' => $id));
 		$fetch_doc = $check_if_doc_exist -> fetch(PDO::FETCH_OBJ);
-		$filepath = "../src/pdfs_uploaded/"; 
+		$filepath = __DIR__ . "/../src/pdfs_uploaded/"; 
         if(is_file($filepath.$fetch_doc -> viejo_identificador)){ 
 			unlink($filepath.$fetch_doc -> viejo_identificador);
 		}

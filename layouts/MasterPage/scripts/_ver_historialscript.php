@@ -90,7 +90,7 @@
                             title: 'éxito',
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
-                            var eliminarid = data[0];
+                            var eliminarid = data["id"];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
                             $.ajax({
@@ -100,10 +100,7 @@
                                 processData: false,
                                 contentType: false,
                                 success: function(result) {
-                                    table
-                                        .row($(this).parents('tr'))
-                                        .remove()
-                                        .draw();
+                                    table.ajax.reload();
                                 }
                             });
                         });
