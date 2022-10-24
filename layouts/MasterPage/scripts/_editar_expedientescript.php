@@ -127,51 +127,6 @@
             currentTab.parentElement.parentElement.children[2].classList.add("border-blue-400", "opacity-100");
         });
 
-        if ($('#situacion').val() == "ACTIVO") {
-            $('#estatus_empleado').html(
-                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected";} ?>>Nuevo ingreso</option>"+
-                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected";} ?>>Reingreso</option>");
-        }else if ($('#situacion').val() == "INACTIVO"){
-            $('#estatus_empleado').html(
-				"<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected";} ?>>Fallecimiento</option>"+
-                "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected";} ?>>Renuncia voluntaria</option>"+
-                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected";} ?>>Liquidación</option>");
-        }
-		
-		if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
-			$('#div_estatus_motivo').removeClass("hidden");
-		}else{
-			$('#div_estatus_motivo').addClass("hidden");
-            $("#estatus_motivo").val('');
-		}
-
-        $('#situacion').on('change', function(event) {
-            if ($('#situacion').val() == "ACTIVO") {
-                $('#estatus_empleado').html(
-                    "<option value=\"NUEVO INGRESO\">Nuevo ingreso</option>"+
-                    "<option value=\"REINGRESO\">Reingreso</option>");
-					$('#div_estatus_motivo').addClass("hidden");
-                    $("#estatus_motivo").val('');
-            }else if ($('#situacion').val() == "INACTIVO"){
-                $('#estatus_empleado').html(
-					"<option value=\"FALLECIMIENTO\">Fallecimiento</option>"+
-                    "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
-                    "<option value=\"LIQUIDACION\">Liquidación</option>");
-					$('#div_estatus_motivo').addClass("hidden");
-                    $("#estatus_motivo").val('');
-            }
-        });
-		
-		
-		$('#estatus_empleado').on('change', function(event) {
-			if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
-				$('#div_estatus_motivo').removeClass("hidden");
-			}else{
-				$('#div_estatus_motivo').addClass("hidden");
-                $("#estatus_motivo").val('');
-			}
-		});
-
         <?php for($i = 1; $i <= $counttipospapeleria; $i++){
             echo (   "$('#upload-button{$i}').on('click', function () {
                     $('#infp_papeleria{$i}').click();
@@ -955,8 +910,108 @@
             });
         }
         if (!($("#numempleado").val().length == 0)){
-		$("#numempleado").valid();
-	}
+		    $("#numempleado").valid();
+	    }
+
+        if ($('#situacion').val() == "ACTIVO") {
+            $('#estatus_empleado').html(
+                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected";} ?>>Nuevo ingreso</option>"+
+                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected";} ?>>Reingreso</option>");
+        }else if ($('#situacion').val() == "INACTIVO"){
+            $('#estatus_empleado').html(
+				"<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected";} ?>>Fallecimiento</option>"+
+                "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected";} ?>>Renuncia voluntaria</option>"+
+                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected";} ?>>Liquidación</option>");
+        }
+		
+		if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
+			$('#div_estatus_motivo').removeClass("hidden");
+		}else if ($('#estatus_empleado').val() == "NUEVO INGRESO"){
+            $('#div_fecha_estatus').addClass("hidden");
+            $("#fecha_estatus").val('');
+            $("#fecha_estatus").rules("remove");
+            $("#fecha_estatus").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#fecha_estatus").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#fecha_estatus-error").css("display", "none");
+			$('#div_estatus_motivo').addClass("hidden");
+            $("#estatus_motivo").val('');
+		}else{
+            $('#div_estatus_motivo').addClass("hidden");
+            $("#estatus_motivo").val('');
+        }
+
+        $('#situacion').on('change', function(event) {
+            if ($('#situacion').val() == "ACTIVO") {
+                $('#estatus_empleado').html(
+                    "<option value=\"NUEVO INGRESO\">Nuevo ingreso</option>"+
+                    "<option value=\"REINGRESO\">Reingreso</option>");
+                if($('#estatus_empleado').val() == "NUEVO INGRESO"){
+                    $('#div_fecha_estatus').addClass("hidden");
+                    $("#fecha_estatus").val('');
+                    $("#fecha_estatus").rules("remove");
+                    $("#fecha_estatus").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                    $("#fecha_estatus").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                    $("#fecha_estatus-error").css("display", "none");
+                }else{
+                    $('#div_fecha_estatus').removeClass("hidden");
+                    $("#fecha_estatus").rules("add", {
+                        required: true,
+                        messages: {
+                            required: "Es necesaria una fecha de estatus, por favor, inserte una"
+                        }
+                    });
+                } 
+                $('#div_estatus_motivo').addClass("hidden");
+                $("#estatus_motivo").val('');
+            }else if ($('#situacion').val() == "INACTIVO"){
+                $('#estatus_empleado').html(
+					"<option value=\"FALLECIMIENTO\">Fallecimiento</option>"+
+                    "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
+                    "<option value=\"LIQUIDACION\">Liquidación</option>");
+                    $('#div_fecha_estatus').removeClass("hidden");
+                    $("#fecha_estatus").rules("add", {
+                        required: true,
+                        messages: {
+                            required: "Es necesaria una fecha de estatus, por favor, inserte una"
+                        }
+                    });
+					$('#div_estatus_motivo').addClass("hidden");
+                    $("#estatus_motivo").val('');
+            }
+        });
+		
+		
+		$('#estatus_empleado').on('change', function(event) {
+			if ($('#estatus_empleado').val() == "LIQUIDACION" || $('#estatus_empleado').val() == "RENUNCIA VOLUNTARIA") {
+                $('#div_fecha_estatus').removeClass("hidden");
+                $("#fecha_estatus").rules("add", {
+                    required: true,
+                    messages: {
+                        required: "Es necesaria una fecha de estatus, por favor, inserte una"
+                    }
+                });
+				$('#div_estatus_motivo').removeClass("hidden");
+			}else if($('#estatus_empleado').val() == "NUEVO INGRESO"){
+                $('#div_fecha_estatus').addClass("hidden");
+                $("#fecha_estatus").val('');
+                $("#fecha_estatus").rules("remove");
+                $("#fecha_estatus").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#fecha_estatus").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#fecha_estatus-error").css("display", "none");
+				$('#div_estatus_motivo').addClass("hidden");
+                $("#estatus_motivo").val('');
+			}else{
+                $('#div_fecha_estatus').removeClass("hidden");
+                $("#fecha_estatus").rules("add", {
+                    required: true,
+                    messages: {
+                        required: "Es necesaria una fecha de estatus, por favor, inserte una"
+                    }
+                });
+                $('#div_estatus_motivo').addClass("hidden");
+                $("#estatus_motivo").val('');
+            }
+		});
 	
         if(($('input[type=radio][name=tel_movil]:checked').val() === "si")){
             document.getElementById("div_movil").classList.remove('hidden');

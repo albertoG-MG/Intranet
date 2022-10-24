@@ -152,9 +152,7 @@ class expedientes {
                 }
             }
         }
-        date_default_timezone_set("America/Monterrey");
-        $fecha = date('y-m-d');
-        $crud -> store('estatus_empleado', ['expedientes_id' => $exp_id, 'situacion_del_empleado' => "ACTIVO", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha]);
+        $crud -> store('estatus_empleado', ['expedientes_id' => $exp_id, 'situacion_del_empleado' => "ACTIVO", 'estatus_del_empleado' => "NUEVO INGRESO"]);
     }
 
     public static function Crear_referenciaslab($exp_id, $ref){
