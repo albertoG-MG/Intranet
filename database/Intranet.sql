@@ -2655,7 +2655,7 @@ CREATE TABLE `estatus_empleado` (
   `situacion_del_empleado` varchar(100) NOT NULL,
   `estatus_del_empleado` varchar(100) NOT NULL,
   `motivo` varchar(100) DEFAULT NULL,
-  `fecha` date NOT NULL,
+  `fecha` date DEFAULT NULL,
    FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -2671,7 +2671,7 @@ CREATE TABLE `historial_estatus_empleado` (
   `vieja_situacion_del_empleado` varchar(100) NOT NULL,
   `viejo_estatus_del_empleado` varchar(100) NOT NULL,
   `viejo_motivo` varchar(100) DEFAULT NULL,
-  `vieja_fecha` date NOT NULL,
+  `vieja_fecha` date DEFAULT NULL,
    FOREIGN KEY (estatus_empleado_id) REFERENCES estatus_empleado(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
