@@ -5,6 +5,7 @@ include_once __DIR__ . "/../classes/roles.php";
 include_once __DIR__ . "/../classes/departamentos.php";
 include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../classes/incidencias.php";
+include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
@@ -526,6 +527,25 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "store":
                 Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $fetch_user -> nombre, $fetch_user -> apellido_pat, $fetch_user -> apellido_mat);
                 exit("success");
+            break;
+        }
+    }
+}else if(isset($_POST["app"]) && $_POST["app"] == "categorias"){
+    if(isset($_POST["categorias"]) && isset($_POST["method"])){
+        $categorias = $_POST["categorias"];
+        switch($_POST["method"]){
+            case "store":
+                $categoria = new Categorias($categorias);
+                $categoria ->CrearCategorias();
+                exit("success");
+            break;
+            case "edit":
+                if(isset($_POST["editarid"])){
+                    $id = $_POST["editarid"];
+                    $categoria = new Categorias($categorias);
+                    $categoria ->EditarCategorias($id);
+                    exit("success");
+                }
             break;
         }
     }
