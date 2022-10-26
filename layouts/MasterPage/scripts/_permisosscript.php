@@ -106,6 +106,23 @@ document.addEventListener("DOMContentLoaded", function() {
                         "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='crearpermiso' name='crearpermiso' placeholder='Input 1'>"+
                     "</div>"+
                 "</div>"+
+                "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
+                    "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Seleccionar categoría</label>"+
+                    "<div class='group flex'>"+
+                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
+                        "<select class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent' id='category' name='category'>"+
+							"<option value=''>---Seleccione---</option>"+
+							"<?php
+							  $categorias = categorias::FetchCategorias();
+							  foreach ($categorias as $row) {
+								echo "<option value='" . $row->id . "'>";
+								echo "" . $row->nombre . "";
+								echo "</option>";
+							  }
+							?>"+
+						"</select>"+
+                    "</div>"+
+                "</div>"+ 
             "</div>");
         $('.modal-actions').html(
             "<button id='crear-permiso' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
@@ -123,22 +140,30 @@ document.addEventListener("DOMContentLoaded", function() {
                         crearpermiso: {
                             required: true,
                             remote: "../ajax/validacion/permisos/checkpermiso.php"
-                        }
+                        },
+                        category: {
+					        required: true
+				        }
                     },
                     messages: {
                         crearpermiso: {
                             required: 'Por favor, ingresa un permiso',
                             remote: 'Ese permiso ya existe, por favor escriba otro'
-                        }
+                        },
+                        category: {
+					        required: 'Por favor, selecciona una categoria, en caso de que no exista, crear una'
+				        }
                     },
                     submitHandler: function(form) {
                         check_user_logged().then((response) => {
 		                    if(response == "true"){
                                 var fd = new FormData();
                                 var permisos = $("input[name=crearpermiso]").val();
+                                var categorias = $("#category").val();
                                 var app = "permisos";
                                 var method = "store";
                                 fd.append('permisos', permisos);
+                                fd.append('categorias', categorias);
                                 fd.append('app', app);
                                 fd.append('method', method);
                                 var table = $('#datatable').DataTable();
@@ -205,11 +230,30 @@ document.addEventListener("DOMContentLoaded", function() {
                         "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editpermiso' name='editpermiso' value='"+data[1]+"'>"+
                     "</div>"+
                 "</div>"+
+                "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
+                    "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Seleccionar categoría</label>"+
+                    "<div class='group flex'>"+
+                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
+                        "<select class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent' id='editarcategory' name='editarcategory'>"+
+							"<option value=''>---Seleccione---</option>"+
+							"<?php
+							  $categorias = categorias::FetchCategorias();
+							  foreach ($categorias as $row) {
+								echo "<option value='" . $row->id . "'>";
+								echo "" . $row->nombre . "";
+								echo "</option>";
+							  }
+							?>"+
+						"</select>"+
+                    "</div>"+
+                "</div>"+
             "</div>");
         $('.modal-actions').html(
             "<button id='editar-permiso' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
             "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
         );
+        let element = document.getElementById('editarcategory');
+		element.value = data[3];
         openModal();
         resetFormValidator("#Guardar");
         $('#Guardar').unbind('submit'); 		
@@ -228,23 +272,31 @@ document.addEventListener("DOMContentLoaded", function() {
                                     "editarid": data[0]
                                 }
                             }
-                        }
+                        },
+                        editarcategory: {
+					        required: true
+				        }
                     },
                     messages: {
                         editpermiso: {
                             required: 'Por favor, ingresa un permiso',
                             remote: 'Ese permiso ya existe, por favor, escriba otro'
-                        }
+                        },
+                        editarcategory: {
+					        required: 'Por favor, selecciona una categoria'
+				        }
                     },
                     submitHandler: function(form) {
                         check_user_logged().then((response) => {
 		                    if(response == "true"){
                                 var fd = new FormData();
                                 var permisos = $("input[name=editpermiso]").val();
+                                var categorias = $("#editarcategory").val();
                                 var app = "permisos";
                                 var method = "edit";
                                 var id = data[0];
                                 fd.append('permisos', permisos);
+                                fd.append('categorias', categorias);
                                 fd.append('app', app);
                                 fd.append('method', method);
                                 fd.append('editarid', id);

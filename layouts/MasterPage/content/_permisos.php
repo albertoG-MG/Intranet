@@ -79,6 +79,23 @@
                                     <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent" type="text" id="crearpermiso" name="crearpermiso" placeholder="Input 1">
                                 </div>
                             </div>
+                            <div class="grid grid-cols-1 mt-5 mx-6 px-3">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Seleccionar categoría</label>
+                                <div class="group flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock text-gray-400 text-lg"></i></div>
+                                    <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="category" name="category">
+                                        <option value="">---Seleccione---</option>
+                                        <?php
+                                        $categorias = categorias::FetchCategorias();
+                                        foreach ($categorias as $row) {
+                                            echo "<option value='" . $row->id . "'>";
+                                            echo "" . $row->nombre . "";
+                                            echo "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
