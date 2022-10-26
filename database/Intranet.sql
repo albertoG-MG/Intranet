@@ -55,10 +55,10 @@ INSERT INTO `jerarquia` (`id`, `rol_id`, `jerarquia_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos`
+-- Table structure for table `categorias`
 --
 
-CREATE TABLE `permisos` (
+CREATE TABLE `categorias` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
@@ -66,12 +66,14 @@ CREATE TABLE `permisos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorias`
+-- Estructura de tabla para la tabla `permisos`
 --
 
-CREATE TABLE `categorias` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL UNIQUE
+CREATE TABLE `permisos` (
+`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`nombre` varchar(100) NOT NULL UNIQUE,
+`categoria_id` int DEFAULT NULL,
+FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -2998,5 +3000,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 DROP TABLE IF EXISTS `serverside_rol`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_rol`  AS SELECT `a`.`id` AS `rol_id`, `a`.`nombre` AS `rol`, `t1`.`id` AS `jerarquia_id`, `b`.`nombre` AS `jefe` FROM (((`roles` `a` left join `jerarquia` `t1` on((`t1`.`rol_id` = `a`.`id`))) left join `jerarquia` `t2` on((`t1`.`jerarquia_id` = `t2`.`id`))) left join `roles` `b` on((`t2`.`rol_id` = `b`.`id`)))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `serverside_permisos`
+--
+DROP TABLE IF EXISTS `serverside_permisos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_permisos`  AS SELECT `permisos`.`id` AS `permisoid`, `permisos`.`nombre` AS `pernom`, `categorias`.`nombre` AS `catnom`, `categorias`.`id` AS `catid` FROM (`permisos` join `categorias` on((`categorias`.`id` = `permisos`.`categoria_id`)))  ;
 
 -- --------------------------------------------------------
