@@ -4,19 +4,21 @@ include_once __DIR__ . "/crud.php";
 class permissions {
 	
     public $permisos;
+	public $categorias;
 	
-	public function __construct($nompermisos){
+	public function __construct($nompermisos, $nomcategorias){
         $this->permisos = $nompermisos;
+		$this->categorias = $nomcategorias;
 	}
 	
 	public function CrearPermisos(){
 		$crud = new crud();
-		$crud->store('permisos', ['nombre' => $this->permisos]);
+		$crud->store('permisos', ['nombre' => $this->permisos, 'categoria_id' => $this->categorias]);
 	}
     
     public function EditarPermisos($id){
 		$crud = new crud();
-		$crud -> update('permisos', ['nombre' => $this->permisos], "id=:idpermiso", ['idpermiso' => $id]);
+		$crud -> update('permisos', ['nombre' => $this->permisos, 'categoria_id' => $this->categorias], "id=:idpermiso", ['idpermiso' => $id]);
 	}
     
     public static function FetchPermisos(){

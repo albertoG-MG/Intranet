@@ -90,18 +90,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
     }
 }else if(isset($_POST["app"]) && $_POST["app"] == "permisos"){
-    if(isset($_POST["permisos"]) && isset($_POST["method"])){
+    if(isset($_POST["permisos"]) && isset($_POST["categorias"]) && isset($_POST["method"])){
         $permisos = $_POST["permisos"];
+        $categorias = $_POST["categorias"];
         switch($_POST["method"]){
             case "store":
-                $permiso = new Permissions($permisos);
+                $permiso = new Permissions($permisos, $categorias);
                 $permiso ->CrearPermisos();
                 exit("success");
             break;
             case "edit":
                 if(isset($_POST["editarid"])){
                     $id = $_POST["editarid"];
-                    $permiso = new Permissions($permisos);
+                    $permiso = new Permissions($permisos, $categorias);
                     $permiso ->EditarPermisos($id);
                     exit("success");
                 }
