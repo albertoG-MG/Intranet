@@ -47,6 +47,7 @@
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Permiso</th>
+                                        <th class="py-3 text-left min-tablet">Categoria</th>
                                         <th class="py-3 text-left min-tablet"></th>
                                     </tr>
                                 </thead>
