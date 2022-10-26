@@ -10,11 +10,22 @@ document.addEventListener("DOMContentLoaded", function() {
 		},
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
+            {
+                text: "<i class='mdi mdi-account-box-multiple text-white font-semibold text-lg'></i>Administrar categorías",
+                attr: {
+                    'id': 'categorias',
+                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                },
+                className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                action: function(e, dt, node, config) {
+                    window.location.href = "permisocategoria.php";
+                }
+            },
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
 				{
 					text: "<i class='mdi mdi-account-lock text-white font-semibold text-lg'></i> Crear Permiso",
 					attr: {
-						'id': 'open-modal',
+						'id': 'permiso',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
 					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
@@ -81,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
-    $('.dt-buttons').on('click', '.dt-button', function(){
+    $('.dt-buttons').on('click', '#permiso', function(){
         $('.modal-wrapper-flex').html(
             "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
             "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-lock text-black font-semibold text-lg'></i></div>"+
