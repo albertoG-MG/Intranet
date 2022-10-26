@@ -66,6 +66,17 @@ CREATE TABLE `permisos` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rolesxpermisos`
 --
 
