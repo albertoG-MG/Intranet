@@ -100,6 +100,14 @@ document.addEventListener("DOMContentLoaded", function() {
             errorPlacement: function(error, element) {
                 error.insertAfter(element.parent('.group.flex'));
             },
+            highlight: function(element) {
+                $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+            },
+            unhighlight: function(element) {
+                $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            },
                     rules: {
                         crearcategoria: {
                             required: true,
@@ -181,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar la categoria</label>"+
                     "<div class='group flex'>"+
                         "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-animation text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editcategoria' name='editcategoria' value='"+data[1]+"'>"+
+                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editcategoria' name='editcategoria' placeholder='Input 1' value='"+data[1]+"'>"+
                     "</div>"+
                 "</div>"+
             "</div>");
@@ -196,6 +204,14 @@ document.addEventListener("DOMContentLoaded", function() {
             ignore: [],
             errorPlacement: function(error, element) {
                 error.insertAfter(element.parent('.group.flex'));
+            },
+            highlight: function(element) {
+                $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+            },
+            unhighlight: function(element) {
+                $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
             },
 			rules: {
 				editcategoria: {
@@ -373,6 +389,11 @@ function check_user_logged(){
 
 </script>
 <style>
+
+    .error{
+        color: rgb(244 63 94);
+    }
+
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
