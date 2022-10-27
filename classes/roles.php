@@ -5,12 +5,12 @@ class roles {
 	
     public $roles;
     public $jerarquia;
-    public $rolpermissions;
+    public $rolcategorias;
 	
-	public function __construct($rolnom, $hierarchy, $rpermissions){
+	public function __construct($rolnom, $hierarchy, $rcategorias){
         $this->roles = $rolnom;
         $this->jerarquia = $hierarchy;
-        $this->rolpermissions = $rpermissions;
+        $this->rolcategorias = $rcategorias;
 	}
 	
 	public function CrearRol(){
@@ -21,8 +21,8 @@ class roles {
         if($this->jerarquia != null){
             roles::Asignarjerarquia($rol_id, $this->jerarquia);         
         }
-        if($this->rolpermissions != null){
-        roles::Asignarpermisos($rol_id, $this->rolpermissions);
+		if($this->rolcategorias != null){
+            roles::Asignarcategorias($rol_id, $this->rolcategorias);
         }
 	}
 
@@ -35,10 +35,10 @@ class roles {
         }
     }
 
-    protected static function Asignarpermisos($rol_id, $permissions){
+    protected static function Asignarcategorias($rol_id, $categorias){
         $crud = new crud();
-        for($i = 0; $i < count($permissions); $i++){
-            $crud -> store('rolesxpermisos', ["roles_id" => $rol_id, "permisos_id" => $permissions[$i]]);
+        for($i = 0; $i < count($categorias); $i++){
+            $crud -> store('rolesxcategorias', ["roles_id" => $rol_id, "categorias_id" => $categorias[$i]]);
         }
     }
 

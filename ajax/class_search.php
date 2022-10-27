@@ -113,7 +113,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     if(isset($_POST["roles"]) && isset($_POST["method"])){
         $roles = $_POST["roles"];
         $jerarquia = null;
-        $permissions = null;
+        $categorias = null;
         if(isset($_POST["jerarquia"]) && is_numeric($_POST["jerarquia"])){
             $checkjerarquia = $object->_db->prepare("select id from jerarquia where rol_id=:rolesid");
             $checkjerarquia -> execute(array('rolesid' => $_POST["jerarquia"])); 
@@ -125,19 +125,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }else if($_POST["jerarquia"] == "SIN JEFE"){
             $jerarquia=$_POST["jerarquia"];
         }
-        if(isset($_POST["permisos"])){
-        $permissions = json_decode($_POST["permisos"]);
+		if(isset($_POST["categorias"])){
+            $categorias = json_decode($_POST["categorias"]);
         }
         switch($_POST["method"]){
             case "store":
-                $rol = new Roles($roles, $jerarquia, $permissions);
+                $rol = new Roles($roles, $jerarquia, $categorias);
                 $rol->CrearRol();
                 exit("success");
                 break;
             case "edit":
                 if(isset($_POST["editarid"])){
                     $id = $_POST["editarid"];
-                    $rol = new Roles($roles, $jerarquia, $permissions);
+                    $rol = new Roles($roles, $jerarquia, $categorias);
                     $rol ->EditarRol($id);
                     exit("success");
                 }

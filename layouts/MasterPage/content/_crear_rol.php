@@ -91,17 +91,17 @@
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Permisos</label>
-              <div id="permissionarray" class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
-                <?php
-                $permisos = permissions::FetchPermisos();
-                foreach ($permisos as $row) {
-                  echo "<div class='flex gap-3 items-center' style='flex: 1 0 21%'>";
-                  echo "<input type='checkbox' value='" . $row->id . "'>" . $row->nombre . "</>";
-                  echo "</div>";
-                }
-                ?>
-              </div>
+                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Categorías de permisos a desplegar</label>
+                <div id="categoriasarray" class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-8">
+                  <?php
+                  $categorias = Categorias::FetchCategorias();
+                  foreach ($categorias as $row) {
+                    echo "<div class='flex gap-3 items-center'>";
+                    echo "<input type='checkbox' value='" . $row->id . "'>" . $row->nombre . "</>";
+                    echo "</div>";
+                  }
+                  ?>
+                </div>
             </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
