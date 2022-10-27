@@ -6,6 +6,7 @@ include_once __DIR__ . "/../classes/departamentos.php";
 include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../classes/categorias.php";
+include_once __DIR__ . "/../classes/subroles.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
@@ -547,6 +548,26 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                     $categoria ->EditarCategorias($id);
                     exit("success");
                 }
+            break;
+        }
+    }
+}else if(isset($_POST["app"]) && $_POST["app"] == "subroles"){
+    if(isset($_POST["roles"]) && isset($_POST["subroles"]) && isset($_POST["method"])){
+        $roles = $_POST["roles"];
+		$subroles = $_POST["subroles"];
+		$permissions = null;
+		if(isset($_POST["permisos"])){
+        $permissions = json_decode($_POST["permisos"]);
+        }
+        switch($_POST["method"]){
+            case "store":
+                $subrol = new Subroles($roles, $subroles, $permissions);
+                $subrol->CrearSubrol();
+                exit("success");
+                break;
+            break;
+            case "edit":
+            
             break;
         }
     }
