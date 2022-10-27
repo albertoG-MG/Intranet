@@ -79,6 +79,20 @@ FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rolesxcategorias`
+--
+
+CREATE TABLE `rolesxcategorias` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `roles_id` int NOT NULL,
+  `categorias_id` int NOT NULL,
+  FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE,
+  FOREIGN KEY (categorias_id) REFERENCES categorias(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rolesxpermisos`
 --
 
