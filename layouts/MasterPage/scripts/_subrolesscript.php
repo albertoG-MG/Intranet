@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
             {
-                text: "<i class='mdi account-supervisor-circle text-white font-semibold text-lg'></i>Crear subrol",
+                text: "<i class='mdi mdi-account-supervisor-circle text-white font-semibold text-lg'></i> Crear subrol",
                 attr: {
                     'id': 'subroles',
                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
