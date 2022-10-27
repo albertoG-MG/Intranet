@@ -23,6 +23,17 @@ document.addEventListener("DOMContentLoaded", function() {
 					}
 				},
             <?php } ?>
+                {
+                    text: "<i class='mdi mdi-account-supervisor-circle text-white font-semibold text-lg'></i>Administrar subroles",
+                    attr: {
+                        'id': 'Subroles',
+                        'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                    },
+                    className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                    action: function(e, dt, node, config) {
+                        window.location.href = "subroles.php";
+                    }
+                },
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a permisos") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                 {
                     text: "<i class='mdi mdi-account-lock text-white font-semibold text-lg'></i> Ver Permisos",
