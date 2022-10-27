@@ -106,6 +106,20 @@ CREATE TABLE `rolesxcategorias` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subrolesxpermisos`
+--
+
+CREATE TABLE `subrolesxpermisos` (
+`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`subroles_id` int NOT NULL,
+`permisos_id` int NOT NULL,
+ FOREIGN KEY (subroles_id) REFERENCES subroles(id) ON DELETE CASCADE,
+ FOREIGN KEY (permisos_id) REFERENCES permisos(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rolesxpermisos`
 --
 
