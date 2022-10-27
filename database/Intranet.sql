@@ -55,6 +55,19 @@ INSERT INTO `jerarquia` (`id`, `rol_id`, `jerarquia_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura para la vista `subroles`
+--
+
+CREATE TABLE `subroles` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `roles_id` int NOT NULL,
+  `subrol_nombre` varchar(100) NOT NULL,
+  FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categorias`
 --
 
@@ -3025,3 +3038,11 @@ DROP TABLE IF EXISTS `serverside_permisos`;
 CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_permisos`  AS SELECT `permisos`.`id` AS `permisoid`, `permisos`.`nombre` AS `pernom`, `categorias`.`nombre` AS `catnom`, `categorias`.`id` AS `catid` FROM (`permisos` join `categorias` on((`categorias`.`id` = `permisos`.`categoria_id`)))  ;
 
 -- --------------------------------------------------------
+
+--
+-- Estructura para la vista `serverside_subrol`
+--
+
+DROP TABLE IF EXISTS `serverside_subrol`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_subrol`  AS SELECT `subroles`.`id` AS `sbid`, `subroles`.`subrol_nombre` AS `sbnombre`, `roles`.`nombre` AS `rolnom` FROM (`subroles` join `roles` on((`roles`.`id` = `subroles`.`roles_id`)))  ;
