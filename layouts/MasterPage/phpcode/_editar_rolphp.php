@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . "/../../../classes/categorias.php";
 include_once __DIR__ . "/../../../config/conexion.php";
 $object = new connection_database();
 
@@ -91,5 +92,9 @@ $editar->execute();
 
  $row=$editar->fetch(PDO::FETCH_OBJ);
 
+ $editarcategoria = $object -> _db->prepare("SELECT categorias_id FROM rolesxcategorias WHERE roles_id=:editarid");
+ $editarcategoria->bindParam("editarid", $editarid,PDO::PARAM_INT);
+ $editarcategoria->execute();
+ $checkcategoria=$editarcategoria->fetchAll(PDO::FETCH_COLUMN);
 
 ?>

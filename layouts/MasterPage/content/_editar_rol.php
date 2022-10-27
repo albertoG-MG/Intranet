@@ -95,19 +95,19 @@
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Permisos</label>
-              <div id="permissionarray" class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Categorías de permisos a desplegar</label>
+              <div id="categoriasarray" class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-8">
                 <?php
-                $permisos = permissions::FetchPermisos();
-                for ($i = 0; $i < count($permisos); $i++) {
-                  echo "<div class='flex gap-3 items-center' style='flex: 1 0 21%'>";
+                $categorias = Categorias::FetchCategorias();
+                for ($i = 0; $i < count($categorias); $i++) {
+                  echo "<div class='flex gap-3 items-center'>";
                   echo "<input type='checkbox'";
-                  for ($j = 0; $j < count($checkpermiso); $j++) {
-                    if ($permisos[$i]->id == $checkpermiso[$j]) {
+                  for ($j = 0; $j < count($checkcategoria); $j++) {
+                    if ($categorias[$i]->id == $checkcategoria[$j]) {
                       echo "checked";
                     }
                   }
-                  echo " value='" . $permisos[$i]->id . "'>" . $permisos[$i]->nombre . "</>";
+                  echo " value='" . $categorias[$i]->id . "'>" . $categorias[$i]->nombre . "</>";
                   echo "</div>";
                 }
                 ?>

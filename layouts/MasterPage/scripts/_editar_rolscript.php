@@ -35,13 +35,13 @@
                         var fd = new FormData();
                         var roles = $("input[name=rol]").val();
                         var jerarquia = $("#jerarquia").val();
-                        var permisos = JSON.stringify(array);
+                        var categorias = JSON.stringify(array);
                         var editar = <?php echo $editarid; ?>;
                         var method="edit";
                         var app="roles";
                         fd.append("roles", roles);
                         fd.append('jerarquia', jerarquia);
-                        fd.append("permisos", permisos);
+                        fd.append("categorias", categorias);
                         fd.append("editarid", editar);
                         fd.append("method", method);
                         fd.append("app", app);
@@ -80,9 +80,9 @@
             }
         });
 
-        if(document.getElementById('permissionarray').textContent.trim() === ''){
-            $('#permissionarray').html( "<div class='bg-gray-100 flex flex-1 justify-center items-center rounded-lg h-12 font-semibold'>No hay permisos dados de alta en el sistema</div>");
-        }
+        if(document.getElementById('categoriasarray').textContent.trim() === ''){
+			$('#categoriasarray').html( "<div class='bg-gray-100 flex flex-1 justify-center items-center rounded-lg h-12 font-semibold'>No hay categorías dadas de alta en el sistema</div>");
+		}
 
         function check_user_logged(){
             return new Promise((resolve, reject) => {

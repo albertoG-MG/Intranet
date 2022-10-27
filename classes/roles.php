@@ -79,53 +79,53 @@ class roles {
         }else{
             $crud -> delete('jerarquia', 'rol_id=:rolid', ['rolid' => $id]);
         }
-        $checkrolesxpermisos = $object -> _db -> prepare("SELECT permisos_id FROM rolesxpermisos WHERE roles_id=:idrol");
-        $checkrolesxpermisos -> execute(array(":idrol" => $id));
-        $fetchroles = $checkrolesxpermisos -> fetchAll(PDO::FETCH_COLUMN);
+        $checkrolesxcategorias = $object -> _db -> prepare("SELECT categorias_id FROM rolesxcategorias WHERE roles_id=:idrol");
+        $checkrolesxcategorias -> execute(array(":idrol" => $id));
+        $fetchroles = $checkrolesxcategorias -> fetchAll(PDO::FETCH_COLUMN);
         $countdatabase = count($fetchroles);
-        $countselected = count($this->rolpermissions);
+        $countselected = count($this->rolcategorias);
 
         if($countdatabase > $countselected){
-            $agregar_permisos = array_values(array_diff($this->rolpermissions, $fetchroles));
-            $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));  
+            $agregar_categorias = array_values(array_diff($this->rolcategorias, $fetchroles));
+            $eliminar_categorias = array_values(array_diff($fetchroles, $this->rolcategorias));  
             
-            for($i=0; $i<count($eliminar_permisos); $i++){
-                $crud->delete('rolesxpermisos', 'roles_id=:roles AND permisos_id=:permisos', [':roles' => $id, ":permisos" => $eliminar_permisos[$i]]);
+            for($i=0; $i<count($eliminar_categorias); $i++){
+                $crud->delete('rolesxcategorias', 'roles_id=:roles AND categorias_id=:categorias', [':roles' => $id, ":categorias" => $eliminar_categorias[$i]]);
             }
 
-            if(count($agregar_permisos) > 0){
-                for($j=0; $j<count($agregar_permisos); $j++){
-                    $crud->store('rolesxpermisos', ['roles_id' => $id, 'permisos_id' => $agregar_permisos[$j]]);
+            if(count($agregar_categorias) > 0){
+                for($j=0; $j<count($agregar_categorias); $j++){
+                    $crud->store('rolesxcategorias', ['roles_id' => $id, 'categorias_id' => $agregar_categorias[$j]]);
                 }
             }
             
 
         }else if($countdatabase < $countselected){
-            $agregar_permisos = array_values(array_diff($this->rolpermissions, $fetchroles));
-            $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));
+            $agregar_categorias = array_values(array_diff($this->rolcategorias, $fetchroles));
+            $eliminar_categorias = array_values(array_diff($fetchroles, $this->rolcategorias)); 
             
-            for($i=0; $i<count($agregar_permisos); $i++){
-                $crud->store('rolesxpermisos', ['roles_id' => $id, 'permisos_id' => $agregar_permisos[$i]]);
+            for($i=0; $i<count($agregar_categorias); $i++){
+                $crud->store('rolesxcategorias', ['roles_id' => $id, 'categorias_id' => $agregar_categorias[$i]]);
             }
 
-            if(count($eliminar_permisos) > 0){
-                for($j=0; $j<count($eliminar_permisos); $j++){
-                    $crud->delete('rolesxpermisos', 'roles_id=:roles AND permisos_id=:permisos', [':roles' => $id, ":permisos" => $eliminar_permisos[$j]]);
+            if(count($eliminar_categorias) > 0){
+                for($j=0; $j<count($eliminar_categorias); $j++){
+                    $crud->delete('rolesxcategorias', 'roles_id=:roles AND categorias_id=:categorias', [':roles' => $id, ":categorias" => $eliminar_categorias[$j]]);
                 }
             }
             
             
         }else if($countdatabase == $countselected){
-            $agregar_permisos = array_values(array_diff($this->rolpermissions, $fetchroles));
-            $eliminar_permisos = array_values(array_diff($fetchroles, $this->rolpermissions));           
-            if(count($eliminar_permisos) > 0){
-                for($i=0; $i<count($eliminar_permisos); $i++){
-                    $crud->delete('rolesxpermisos', "roles_id=:roles AND permisos_id=:permisos", [':roles' => $id, ':permisos' => $eliminar_permisos[$i]]);
+            $agregar_categorias = array_values(array_diff($this->rolcategorias, $fetchroles));
+            $eliminar_categorias = array_values(array_diff($fetchroles, $this->rolcategorias));            
+            if(count($eliminar_categorias) > 0){
+                for($i=0; $i<count($eliminar_categorias); $i++){
+                    $crud->delete('rolesxcategorias', "roles_id=:roles AND categorias_id=:categorias", [':roles' => $id, ':categorias' => $eliminar_categorias[$i]]);
                 }
             }
-            if(count($agregar_permisos) >0){
-                for($j=0; $j<count($agregar_permisos); $j++){
-                    $crud->store('rolesxpermisos', ['roles_id' => $id, 'permisos_id' => $agregar_permisos[$j]]);
+            if(count($agregar_categorias) >0){
+                for($j=0; $j<count($agregar_categorias); $j++){
+                    $crud->store('rolesxcategorias', ['roles_id' => $id, 'categorias_id' => $agregar_categorias[$j]]);
                 }
             }
         }
