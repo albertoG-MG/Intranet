@@ -567,7 +567,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 break;
             break;
             case "edit":
-            
+                if(isset($_POST["subrol_id"])){
+                    $subrol_id = $_POST["subrol_id"];
+                    $subrol = new Subroles($roles, $subroles, $permissions);
+                    $subrol->EditarSubrol($subrol_id);
+                    exit("success");
+                }
             break;
         }
     }

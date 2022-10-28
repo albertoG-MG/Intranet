@@ -47,5 +47,61 @@ class subroles {
         $fetch_rol_subrol = $query_rol_subrol -> fetchAll(PDO::FETCH_OBJ);
 		return $fetch_rol_subrol;
     }
+
+    public function EditarSubrol($id){
+		$object = new connection_database();
+        $crud = new crud();
+        $crud -> update('subroles', ['roles_id' => $this->roles, "subrol_nombre" => $this->subroles], 'id=:id', ['id' => $id]);
+        $checksubrolesxpermisos = $object -> _db -> prepare("SELECT permisos_id FROM subrolesxpermisos WHERE subroles_id=:idsubrol");
+        $checksubrolesxpermisos -> execute(array(":idsubrol" => $id));
+        $fetchsubroles = $checksubrolesxpermisos -> fetchAll(PDO::FETCH_COLUMN);
+        $countdatabase = count($fetchsubroles);
+        $countselected = count($this->subrolpermissions);
+
+        if($countdatabase > $countselected){
+            $agregar_permisos = array_values(array_diff($this->subrolpermissions, $fetchsubroles));
+            $eliminar_permisos = array_values(array_diff($fetchsubroles, $this->subrolpermissions));  
+            
+            for($i=0; $i<count($eliminar_permisos); $i++){
+                $crud->delete('subrolesxpermisos', 'subroles_id=:subroles AND permisos_id=:permisos', [':subroles' => $id, ":permisos" => $eliminar_permisos[$i]]);
+            }
+
+            if(count($agregar_permisos) > 0){
+                for($j=0; $j<count($agregar_permisos); $j++){
+                    $crud->store('subrolesxpermisos', ['subroles_id' => $id, 'permisos_id' => $agregar_permisos[$j]]);
+                }
+            }
+            
+
+        }else if($countdatabase < $countselected){
+            $agregar_permisos = array_values(array_diff($this->subrolpermissions, $fetchsubroles));
+            $eliminar_permisos = array_values(array_diff($fetchsubroles, $this->subrolpermissions));
+            
+            for($i=0; $i<count($agregar_permisos); $i++){
+                $crud->store('subrolesxpermisos', ['subroles_id' => $id, 'permisos_id' => $agregar_permisos[$i]]);
+            }
+
+            if(count($eliminar_permisos) > 0){
+                for($j=0; $j<count($eliminar_permisos); $j++){
+                    $crud->delete('subrolesxpermisos', 'subroles_id=:subroles AND permisos_id=:permisos', [':subroles' => $id, ":permisos" => $eliminar_permisos[$j]]);
+                }
+            }
+            
+            
+        }else if($countdatabase == $countselected){
+            $agregar_permisos = array_values(array_diff($this->subrolpermissions, $fetchsubroles));
+            $eliminar_permisos = array_values(array_diff($fetchsubroles, $this->subrolpermissions));           
+            if(count($eliminar_permisos) > 0){
+                for($i=0; $i<count($eliminar_permisos); $i++){
+                    $crud->delete('subrolesxpermisos', "subroles_id=:subroles AND permisos_id=:permisos", [':subroles' => $id, ':permisos' => $eliminar_permisos[$i]]);
+                }
+            }
+            if(count($agregar_permisos) >0){
+                for($j=0; $j<count($agregar_permisos); $j++){
+                    $crud->store('subrolesxpermisos', ['subroles_id' => $id, 'permisos_id' => $agregar_permisos[$j]]);
+                }
+            }
+        }
+	}
 }
 ?>
