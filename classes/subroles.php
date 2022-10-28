@@ -103,5 +103,10 @@ class subroles {
             }
         }
 	}
+
+    public static function Eliminarsubrol($id){
+		$crud = new crud();
+		$crud->delete('subroles', 'id=:idsubrol', ['idsubrol' => $id]);
+	}
 }
 ?>
