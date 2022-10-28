@@ -11,14 +11,14 @@ $object = new connection_database();
             while ($index < $countcategorias) {
                 $fetchcategorias = $checkcategorias -> fetch(PDO::FETCH_ASSOC);
                  echo "<li style='flex: 1 0 21%'>". $fetchcategorias["catnom"];
-                    getpermiso($fetchcategorias["catid"], $object); 
+                    getpermiso($fetchcategorias["catid"], $object, $rolid); 
                 $index++;
             }
         echo "</ul>";
     }
-    function getpermiso($categoriaid, $object){
-        $checkpermissions = $object -> _db -> prepare("SELECT permisos.id as perid, permisos.nombre as pernom FROM rolesxcategorias INNER JOIN categorias ON categorias.id=rolesxcategorias.categorias_id INNER JOIN permisos ON permisos.categoria_id=categorias.id INNER JOIN roles ON roles.id=rolesxcategorias.roles_id WHERE categorias.id=:categoriaid");
-        $checkpermissions -> execute(array(':categoriaid' => $categoriaid));
+    function getpermiso($categoriaid, $object, $rolid){
+        $checkpermissions = $object -> _db -> prepare("SELECT permisos.id as perid, permisos.nombre as pernom FROM rolesxcategorias INNER JOIN categorias ON categorias.id=rolesxcategorias.categorias_id INNER JOIN permisos ON permisos.categoria_id=categorias.id INNER JOIN roles ON roles.id=rolesxcategorias.roles_id WHERE categorias.id=:categoriaid AND roles_id=:rolid");
+        $checkpermissions -> execute(array(':categoriaid' => $categoriaid, ':rolid' => $rolid));
         $countpermissions = $checkpermissions -> rowCount();
         $index2=0;
         echo "<ul style='list-style: none;'>";
