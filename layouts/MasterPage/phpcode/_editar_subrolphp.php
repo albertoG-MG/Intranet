@@ -1,5 +1,6 @@
 <?php
     include_once __DIR__ . "/../../../config/conexion.php";
+	include_once __DIR__ . "/../../../classes/subroles.php";
     $object = new connection_database();
     
     session_start();
@@ -54,6 +55,22 @@
 		</style>';
 		exit();
 	}
+
+	/*Si el id no existe, regresa*/
+	if($_GET['subrol'] == null){
+		header('Location: subroles.php');
+		die();
+	}else{
+		$Editarid = $_GET['subrol'];
+		/*Checa si el subrol esta vinculado a un rol*/
+		$check_subrol=Subroles::Check_rol_subrol($Editarid);
+		if($check_subrol == 0){
+			header('Location: subroles.php');
+			die();
+		}
+	}
+	
+	$edit=Subroles::fetch_rol_subrol($Editarid);
 
 
 ?>
