@@ -41,7 +41,7 @@ class permissions {
 		
 		try
 		{
-			$select_permissions = $object -> _db -> prepare("SELECT count(*) AS total_permissions FROM rolesxpermisos rp LEFT JOIN usuarios u ON rp.roles_id=u.roles_id LEFT JOIN permisos p ON p.id=rp.permisos_id WHERE u.id=:userid AND p.nombre=:permisosname");
+			$select_permissions = $object -> _db -> prepare("SELECT count(*) AS total_permissions FROM subrolesxpermisos rp LEFT JOIN usuarios u ON rp.subroles_id=u.subrol_id LEFT JOIN permisos p ON p.id=rp.permisos_id WHERE u.id=:userid AND p.nombre=:permisosname");
 			$select_permissions -> execute(array(':userid' => $user_id, ':permisosname' => $permission_name));
 			$fetch_permissions = $select_permissions -> fetch(PDO::FETCH_OBJ);
 			
