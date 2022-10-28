@@ -12,12 +12,13 @@ class user {
     public $password;
     private $departamento;
     private $roles_id;
+    private $subrol_id;
     private $filename;
     private $foto;
 
 
 	
-	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $department, $rolesid, $filenom, $photo){
+	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $department, $rolesid, $subid, $filenom, $photo){
 		$this->conn = new connection_database();
         $this->username = $user;
         $this->nombre = $nom;
@@ -27,6 +28,7 @@ class user {
         $this->password = $contraseña;
         $this->departamento = $department;
         $this->roles_id = $rolesid;
+        $this->subrol_id = $subid;
         $this->filename = $filenom;
         $this->foto = $photo;
 	}
@@ -35,7 +37,7 @@ class user {
 		$crud = new crud();
 		$crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
 		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
-		'nombre_foto' => $this->filename, 'foto' => $this->foto]);
+        'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto' => $this->foto]);
 	}
 
     public static function FetchUsuarios(){

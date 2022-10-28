@@ -90,6 +90,7 @@
                                 var correo = $("input[name=correo]").val();
                                 var departamento = $("#departamento").val();
                                 var rol = $("#rol").val();
+                                var subrol = $("#subrol").val();
                                 var foto = $('#foto')[0].files[0];
                                 var method = "store";
                                 var app = "usuario";
@@ -101,6 +102,7 @@
                                 fd.append('correo', correo);
                                 fd.append('departamento', departamento);
                                 fd.append('roles_id', rol);
+                                fd.append('subrol_id', subrol);
                                 fd.append('foto', foto);
                                 fd.append('method', method);
                                 fd.append('app', app);
@@ -190,5 +192,19 @@
                     }
                 }
 		    });
+
+            $("#rol").on("change", function () {
+                var x = $("#rol option:selected").val();
+                $.ajax({
+                    type: "POST",
+                    url: "../ajax/usuarios/getsubrol.php",
+                    data: {
+                        "subrol_id": x
+                    },
+                    success: function (response) {
+                        $("#subrol").html(response);
+                    }
+                });
+            });
         });
     </script>

@@ -181,6 +181,16 @@
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Subrol</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="subrol" name="subrol">
+                  <option value="">Sin subrol</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Subir foto</label>
               <div class='flex items-center justify-center w-full'>
                 <label class='flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group'>

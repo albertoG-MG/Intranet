@@ -35,6 +35,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         $correo = $_POST["correo"];
         $departamento = null;
         $roles=null;
+        $subroles = null;
         $filename=null;
         $foto=null;
 
@@ -44,6 +45,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
         if(!(empty($_POST["roles_id"]))){
             $roles = $_POST["roles_id"];
+        }
+
+        if(!(empty($_POST["subrol_id"]))){
+            $subroles = $_POST["subrol_id"];
         }
 
         if(isset($_FILES['foto']['name'])){
@@ -66,7 +71,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         switch($_POST["method"]){
 
             case "store":
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $filename, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $subroles, $filename, $foto);
                     $user->CrearUsuarios();
                     exit("success");
                 break;
