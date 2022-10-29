@@ -98,6 +98,7 @@
                                 var correo = $("input[name=correo]").val();
                                 var departamento = $('#departamento').val();
                                 var rol = $("#rol").val();
+                                var subrol = $("#subrol").val();
                                 var foto = $('#foto')[0].files[0];
                                 var editarid = <?php echo $editarid; ?>;
                                 var method = "edit";
@@ -110,6 +111,7 @@
                                 fd.append('correo', correo);
                                 fd.append('departamento', departamento);
                                 fd.append('roles_id', rol);
+                                fd.append('subrol_id', subrol);
                                 fd.append('foto', foto);
                                 fd.append('editarid', editarid);
                                 fd.append('method', method);
@@ -199,6 +201,35 @@
                         $('#archivo').text("El archivo " +file+ " no es una imagen");
                     }
                 }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "../ajax/usuarios/geteditsubrol.php",
+                data: {
+                    "roles_id": <?php echo $fetch_subrol -> roles_id; ?>
+                    <?php if(isset($fetch_subrol -> subrol_id)){ ?>
+                    ,
+                    "subrol_id": <?php echo $fetch_subrol -> subrol_id ?>
+                    <?php } ?>
+                },
+                success: function (response) {
+                    $("#subrol").html(response);
+                }
+            });
+
+            $("#rol").on("change", function () {
+                var x = $("#rol option:selected").val();
+                $.ajax({
+                    type: "POST",
+                    url: "../ajax/usuarios/getsubrol.php",
+                    data: {
+                        "roles_id": x
+                    },
+                    success: function (response) {
+                        $("#subrol").html(response);
+                    }
+                });
             });
         });
     </script>
