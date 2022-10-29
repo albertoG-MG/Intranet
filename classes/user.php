@@ -54,7 +54,7 @@ class user {
 		$crud = new crud();
 		$crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
 		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
-		'nombre_foto' => $this->filename, 'foto' => $this->foto], "id=:iduser", ['iduser' => $id]);
+		'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto' => $this->foto], "id=:iduser", ['iduser' => $id]);
 	} 
 
     public static function EliminarUsuarios($id){

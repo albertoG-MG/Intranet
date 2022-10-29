@@ -87,7 +87,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                         $foto = $row->foto;
                         $filename = $row->nombre_foto;
                     }
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $filename, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $subroles, $filename, $foto);
                     $user->EditarUsuarios($ideditar);
                     exit("success");
                 }
