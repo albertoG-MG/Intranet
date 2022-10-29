@@ -199,7 +199,7 @@
                     type: "POST",
                     url: "../ajax/usuarios/getsubrol.php",
                     data: {
-                        "subrol_id": x
+                        "roles_id": x
                     },
                     success: function (response) {
                         $("#subrol").html(response);

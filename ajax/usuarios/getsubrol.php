@@ -3,7 +3,7 @@ include_once __DIR__ . "/../../config/conexion.php";
 $object = new connection_database();
 
 $get_subrol = $object -> _db -> prepare("select * from subroles where roles_id=:rolid");
-$get_subrol -> execute(array(':rolid' => $_POST["subrol_id"]));
+$get_subrol -> execute(array(':rolid' => $_POST["roles_id"]));
 $count_subrol = $get_subrol -> rowCount();
 if($count_subrol > 0){
     echo "<option value=''>Sin subrol</option>";
