@@ -178,7 +178,7 @@ CREATE TABLE `usuarios` (
   `foto` longtext DEFAULT NULL,
    FOREIGN KEY (departamento_id) REFERENCES departamentos(id) ON DELETE SET NULL,
    FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL,
-   FOREIGN KEY (subrol_id) REFERENCES subroles(id) ON DELETE SET NULL,
+   FOREIGN KEY (subrol_id) REFERENCES subroles(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
