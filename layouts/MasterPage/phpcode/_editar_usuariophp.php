@@ -88,7 +88,7 @@
 
     $row=$editar->fetch(PDO::FETCH_OBJ);
 
-    $check_subrol = $object -> _db -> prepare("SELECT subroles.id, subroles.roles_id, subroles.subrol_nombre FROM subroles INNER JOIN roles ON roles.id=subroles.roles_id INNER JOIN usuarios ON usuarios.roles_id=roles.id WHERE usuarios.id=:userid");
+    $check_subrol = $object -> _db -> prepare("SELECT subroles.id, subroles.roles_id, subroles.subrol_nombre, usuarios.subrol_id FROM subroles INNER JOIN roles ON roles.id=subroles.roles_id INNER JOIN usuarios ON usuarios.roles_id=roles.id WHERE usuarios.id=:userid");
 	$check_subrol -> execute(array(':userid' => $editarid));
 	$fetch_subrol = $check_subrol -> fetch(PDO::FETCH_OBJ);
  
