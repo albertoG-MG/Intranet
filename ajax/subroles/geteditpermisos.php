@@ -2,6 +2,7 @@
 include_once __DIR__ . "/../../config/conexion.php";
 $object = new connection_database();
     if(isset($_POST["rol_id"])){
+        $array = [];
         $rolid= $_POST["rol_id"];
         $check_permisos = $object -> _db -> prepare("SELECT permisos_id FROM subrolesxpermisos WHERE subroles_id=:subrol");
         $check_permisos -> execute(array(':subrol' => $_POST["subrol_id"]));
@@ -29,7 +30,7 @@ $object = new connection_database();
         echo "<ul style='list-style: none;'>";
             while ($index2 < $countpermissions) {
                 $fetchpermissions = $checkpermissions -> fetch(PDO::FETCH_ASSOC);
-                 echo "<li><input type='checkbox' value='" . $fetchpermissions['perid'] . "'"; if(count($array) != 0){ foreach($array as $key => $value){ if ($value['id'] == $fetchpermissions['perid']) {  echo "checked"; }}} echo ">". $fetchpermissions["pernom"] . "</>"; 
+                 echo "<li><input type='checkbox' value='" . $fetchpermissions['perid'] . "'"; if(is_countable($array) && count($array) > 0){ foreach($array as $key => $value){ if ($value['id'] == $fetchpermissions['perid']) {  echo "checked"; }}} echo ">". $fetchpermissions["pernom"] . "</>"; 
                 $index2++;
             }
         echo "</ul>";
