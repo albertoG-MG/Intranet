@@ -104,6 +104,11 @@
               <span class="md:flex md:justify-end"><?php if($row->rolnom == null){ echo "Sin rol"; }else{ echo $row->rolnom; } ?></span>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Subrol</label>
+              <span class="md:flex md:justify-end"><?php if($row->subnom == null){ echo "Sin subrol"; }else{ echo $row->subnom; } ?></span>
+            </div>
+
             
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Foto</label>
