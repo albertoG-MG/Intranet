@@ -27,32 +27,40 @@ class incidencias {
 	public function CrearIncidencias($userid){
 		$object = new connection_database();
 		$crud = new crud();
-		$sql = $object -> _db -> prepare("SELECT t1.id AS jerarquiaid, b.nombre as jefe FROM jerarquia t1 RIGHT JOIN roles a ON t1.rol_id=a.id LEFT JOIN usuarios u ON u.roles_id=a.id LEFT JOIN jerarquia t2 ON t1.jerarquia_id = t2.id LEFT JOIN roles b ON t2.rol_id=b.id WHERE u.id=:userid");
-		$sql -> execute(array(':userid' => $userid));
-		$row_jefe = $sql->fetch(PDO::FETCH_OBJ);
-		$todaydate = date("Y-m-d");
-		$numero=0;
-		if(!(is_null($row_jefe -> jerarquiaid)) && !(is_null($row_jefe->jefe))){
-			$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate]);
-			$incidencia_id = $object -> _db -> lastInsertId();
-			Incidencias::sendEmail($incidencia_id);
-		}else if(!(is_null($row_jefe -> jerarquiaid)) && is_null($row_jefe->jefe)){
-			$numero = 5;
-			$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate, 'estatus_id' => $numero]);
-		}else if(is_null($row_jefe -> jerarquiaid) && is_null($row_jefe->jefe)){
-			$numero = 6;
-			$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate, 'estatus_id' => $numero]);
+		$user_datos = $object->_db->prepare('SELECT departamentos.departamento as depanom, roles.nombre as rolnom FROM usuarios inner join roles ON roles.id=usuarios.roles_id left join departamentos ON departamentos.id=usuarios.departamento_id WHERE usuarios.id=:userid');
+		$user_datos -> execute(array(':userid' => $userid));
+		$row_user_datos = $user_datos ->fetch(PDO::FETCH_OBJ);
+		$select = $object -> _db ->prepare("SELECT u1.correo FROM jerarquia j1 INNER JOIN roles r1 ON r1.id = j1.rol_id INNER JOIN usuarios u1 ON u1.roles_id = r1.id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id WHERE IF(d1.departamento IS NULL, d1.departamento IS NULL, d1.departamento = :departamento1) AND r1.nombre =(SELECT CASE WHEN r6.nombre = 'Director' THEN (SELECT r2.nombre FROM jerarquia j2 INNER JOIN roles r2 ON j2.rol_id = r2.id INNER JOIN usuarios u2 ON u2.roles_id = r2.id LEFT JOIN departamentos d2 ON d2.id = u2.departamento_id WHERE r2.nombre =(SELECT r4.nombre FROM jerarquia j3 INNER JOIN roles r3 ON r3.id=j3.rol_id INNER JOIN jerarquia j4 ON j4.id = j3.jerarquia_id INNER JOIN roles r4 ON r4.id = j4.rol_id WHERE r4.nombre = 'Director') AND d2.departamento = :departamento2 UNION SELECT 'Director general' LIMIT 1) ELSE r6.nombre END FROM jerarquia j5 INNER JOIN roles r5 ON r5.id = j5.rol_id INNER JOIN jerarquia j6 ON j6.id = j5.jerarquia_id INNER JOIN roles r6 ON r6.id = j6.rol_id WHERE r5.nombre = :rolnom)");
+		$select -> execute(array(':departamento1' => $row_user_datos->depanom, ':departamento2' => $row_user_datos->depanom, ':rolnom' => $row_user_datos->rolnom));
+		$select_count = $select -> rowCount();
+		if($select_count > 0 || $row_user_datos == "Superadministrador" || $row_user_datos == "Administrador" || $row_user_datos == "Director general"){
+			$sql = $object -> _db -> prepare("SELECT t1.id AS jerarquiaid, b.nombre as jefe FROM jerarquia t1 RIGHT JOIN roles a ON t1.rol_id=a.id LEFT JOIN usuarios u ON u.roles_id=a.id LEFT JOIN jerarquia t2 ON t1.jerarquia_id = t2.id LEFT JOIN roles b ON t2.rol_id=b.id WHERE u.id=:userid");
+			$sql -> execute(array(':userid' => $userid));
+			$row_jefe = $sql->fetch(PDO::FETCH_OBJ);
+			$todaydate = date("Y-m-d");
+			$numero=0;
+			if(!(is_null($row_jefe -> jerarquiaid)) && !(is_null($row_jefe->jefe))){
+				$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate]);
+				$incidencia_id = $object -> _db -> lastInsertId();
+				Incidencias::sendEmail($incidencia_id, $select);
+			}else if(!(is_null($row_jefe -> jerarquiaid)) && is_null($row_jefe->jefe)){
+				$numero = 5;
+				$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate, 'estatus_id' => $numero]);
+			}else if(is_null($row_jefe -> jerarquiaid) && is_null($row_jefe->jefe)){
+				$numero = 6;
+				$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate, 'estatus_id' => $numero]);
+			}
+		}else{
+			die(json_encode(array("failed", "No se encontró su superior, por favor, contacte a un administrador")));
 		}
 	}
 
-	public static function sendEmail($incidencia_id){
+	public static function sendEmail($incidencia_id, $select){
 		$object = new connection_database();
 		$crud = new crud();
 		$sql = $object->_db->prepare('SELECT incidencias.id AS id, incidencias.users_id AS userid, incidencias.titulo AS titulo, incidencias.fecha_inicio AS fecha_inicio, incidencias.fecha_fin AS fecha_fin, incidencias.tipo_incidencia AS tipo_incidencia, incidencias.estatus_id AS estatus_id, incidencias.filename AS filename, incidencias.foto AS foto, incidencias.incidencia_creada AS incidencia_creada, departamentos.departamento AS depanom, roles.nombre AS rolnom from incidencias INNER JOIN usuarios ON incidencias.users_id = usuarios.id LEFT JOIN departamentos ON usuarios.departamento_id = departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id WHERE incidencias.id=:incidenciaid');
 		$sql -> execute(array(':incidenciaid' => $incidencia_id));
 		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
-		$select = $object -> _db ->prepare("SELECT u1.correo FROM jerarquia j1 INNER JOIN roles r1 ON r1.id = j1.rol_id INNER JOIN usuarios u1 ON u1.roles_id = r1.id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id WHERE IF(d1.departamento IS NULL, d1.departamento IS NULL, d1.departamento = :departamento1) AND r1.nombre =(SELECT CASE WHEN r6.nombre = 'Director' THEN (SELECT r2.nombre FROM jerarquia j2 INNER JOIN roles r2 ON j2.rol_id = r2.id INNER JOIN usuarios u2 ON u2.roles_id = r2.id LEFT JOIN departamentos d2 ON d2.id = u2.departamento_id WHERE r2.nombre =(SELECT r4.nombre FROM jerarquia j3 INNER JOIN roles r3 ON r3.id=j3.rol_id INNER JOIN jerarquia j4 ON j4.id = j3.jerarquia_id INNER JOIN roles r4 ON r4.id = j4.rol_id WHERE r4.nombre = 'Director') AND d2.departamento = :departamento2 UNION SELECT 'Director general' LIMIT 1) ELSE r6.nombre END FROM jerarquia j5 INNER JOIN roles r5 ON r5.id = j5.rol_id INNER JOIN jerarquia j6 ON j6.id = j5.jerarquia_id INNER JOIN roles r6 ON r6.id = j6.rol_id WHERE r5.nombre = :rolnom)");
-		$select -> execute(array(':departamento1' => $row_user_incidencia->depanom, ':departamento2' => $row_user_incidencia->depanom, ':rolnom' => $row_user_incidencia->rolnom));
 		$array = array();
 		while($row_jefe = $select -> fetch(PDO::FETCH_OBJ)){
 			$array[]=$row_jefe->correo;
@@ -101,8 +109,6 @@ class incidencias {
 		if(!$mail->Send()) {
 			echo 'Message was not sent.' .$correo;
 			echo 'Mailer error: ' . $mail->ErrorInfo;
-		} else {
-			exit("success");
 		}
 	}
 

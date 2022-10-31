@@ -88,8 +88,8 @@
 									processData: false,
 									contentType: false,
 									success: function(data) {
-										data = data.replace(/[\r\n]/gm, '');
-										if(data == "success"){
+										var array = $.parseJSON(data);
+										if(array[0] == "success"){
 											Swal.fire({
 												title: "Incidencia creada",
 												text: "Se ha creado una incidencia exitosamente!",
@@ -97,6 +97,8 @@
 											}).then(function() {
 												window.location.href = "incidencias.php";	
 												});
+										}else if (array[0] == "failed"){
+											$('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
 										}
 									},
 									error: function(data) {
