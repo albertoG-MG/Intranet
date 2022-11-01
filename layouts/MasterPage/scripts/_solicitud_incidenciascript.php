@@ -312,43 +312,57 @@
                 cancelButtonText: 'Cancelar',
                 reverseButtons: true
             }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: 'Se ha aprobado la incidencia!'
-                    }).then(function() {
-                        var fd = new FormData();
-                        var incidenciaid = data["incidenciaid"];
-                        var method = "store";
-                        var app = "solicitud_incidencia";
-                        var sessionid = <?php echo $_SESSION["id"]; ?>;
-                        fd.append('iduser', sessionid);
-                        fd.append('incidenciaid', incidenciaid);
-                        fd.append('estatus', estatus);
-                        fd.append('sueldo', sueldo);
-                        fd.append('method', method);
-                        fd.append('app', app);				
-                        $.ajax({
-                            type: "POST",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                table.ajax.reload(null, false);
-                            }, error: function(response) {
-                                console.log(response);
-                            }	
-                        });		
-                    });
-                }else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire(
-                    'Cancelado',
-                    'Se ha cancelado la operación',
-                    'error'
-                    )
-                }
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Éxito',
+                                text: 'Se ha aprobado la incidencia!'
+                            }).then(function() {
+                                var fd = new FormData();
+                                var incidenciaid = data["incidenciaid"];
+                                var method = "store";
+                                var app = "solicitud_incidencia";
+                                var sessionid = <?php echo $_SESSION["id"]; ?>;
+                                fd.append('iduser', sessionid);
+                                fd.append('incidenciaid', incidenciaid);
+                                fd.append('estatus', estatus);
+                                fd.append('sueldo', sueldo);
+                                fd.append('method', method);
+                                fd.append('app', app);				
+                                $.ajax({
+                                    type: "POST",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        table.ajax.reload(null, false);
+                                    }, error: function(response) {
+                                        console.log(response);
+                                    }	
+                                });		
+                            });
+                        }else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire(
+                            'Cancelado',
+                            'Se ha cancelado la operación',
+                            'error'
+                            )
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+		            console.log(error);
+	            })       
             })
         });
 
@@ -375,42 +389,56 @@
                 cancelButtonText: 'Cancelar',
                 reverseButtons: true
             }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: 'Se ha cancelado la incidencia!'
-                    }).then(function() {
-                        var fd = new FormData();
-                        var incidenciaid = data["incidenciaid"];
-                        var method = "store";
-                        var app = "solicitud_incidencia";
-                        var sessionid = <?php echo $_SESSION["id"]; ?>;
-                        fd.append('iduser', sessionid);
-                        fd.append('incidenciaid', incidenciaid);
-                        fd.append('estatus', estatus);
-                        fd.append('method', method);
-                        fd.append('app', app);				
-                        $.ajax({
-                            type: "POST",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                table.ajax.reload(null, false);
-                            }, error: function(response) {
-                                console.log(response);
-                            }	
-                        });		
-                    });
-                }else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire(
-                    'Cancelado',
-                    'Se ha cancelado la operación',
-                    'error'
-                    )
-                }
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Éxito',
+                                text: 'Se ha cancelado la incidencia!'
+                            }).then(function() {
+                                var fd = new FormData();
+                                var incidenciaid = data["incidenciaid"];
+                                var method = "store";
+                                var app = "solicitud_incidencia";
+                                var sessionid = <?php echo $_SESSION["id"]; ?>;
+                                fd.append('iduser', sessionid);
+                                fd.append('incidenciaid', incidenciaid);
+                                fd.append('estatus', estatus);
+                                fd.append('method', method);
+                                fd.append('app', app);				
+                                $.ajax({
+                                    type: "POST",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        table.ajax.reload(null, false);
+                                    }, error: function(response) {
+                                        console.log(response);
+                                    }	
+                                });		
+                            });
+                        }else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire(
+                            'Cancelado',
+                            'Se ha cancelado la operación',
+                            'error'
+                            )
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+		            console.log(error);
+	            })
             })
         });
 
@@ -437,42 +465,56 @@
                 cancelButtonText: 'Cancelar',
                 reverseButtons: true
             }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: 'Se ha rechazado la incidencia!'
-                    }).then(function() {
-                        var fd = new FormData();
-                        var incidenciaid = data["incidenciaid"];
-                        var method = "store";
-                        var app = "solicitud_incidencia";
-                        var sessionid = <?php echo $_SESSION["id"]; ?>;
-                        fd.append('iduser', sessionid);
-                        fd.append('incidenciaid', incidenciaid);
-                        fd.append('estatus', estatus);
-                        fd.append('method', method);
-                        fd.append('app', app);				
-                        $.ajax({
-                            type: "POST",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                table.ajax.reload(null, false);
-                            }, error: function(response) {
-                                console.log(response);
-                            }	
-                        });		
-                    });
-                }else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire(
-                    'Cancelado',
-                    'Se ha cancelado la operación',
-                    'error'
-                    )
-                }
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Éxito',
+                                text: 'Se ha rechazado la incidencia!'
+                            }).then(function() {
+                                var fd = new FormData();
+                                var incidenciaid = data["incidenciaid"];
+                                var method = "store";
+                                var app = "solicitud_incidencia";
+                                var sessionid = <?php echo $_SESSION["id"]; ?>;
+                                fd.append('iduser', sessionid);
+                                fd.append('incidenciaid', incidenciaid);
+                                fd.append('estatus', estatus);
+                                fd.append('method', method);
+                                fd.append('app', app);				
+                                $.ajax({
+                                    type: "POST",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        table.ajax.reload(null, false);
+                                    }, error: function(response) {
+                                        console.log(response);
+                                    }	
+                                });		
+                            });
+                        }else if (result.dismiss === Swal.DismissReason.cancel) {
+                            Swal.fire(
+                            'Cancelado',
+                            'Se ha cancelado la operación',
+                            'error'
+                            )
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+		            console.log(error);
+	            })
             })
         });
 
@@ -487,6 +529,24 @@
         $('#datatable').on('click', 'tr .Eliminar', function () {
             alert("Eliminar");
         });
+
+        function check_user_logged(){
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "POST",
+                    url: "../ajax/check_user_logged.php",
+                    data:{
+                        pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                    },
+                    success: function (response) {
+                        resolve(response)
+                    },
+                    error: function (error) {
+                        reject(error)
+                    }
+                });
+            })
+        }
 	});
 
 </script>
