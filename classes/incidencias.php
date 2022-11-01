@@ -209,8 +209,6 @@ class incidencias {
 		{
 			$mail->AddAddress($correo);
 		}
-		$correos= implode(', ', $array);
-		$correos = trim($correos, ',');
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
 		$mail->Subject  = "La incidencia ha sido evaluada";
