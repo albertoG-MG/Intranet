@@ -151,12 +151,76 @@ class incidencias {
     }
 
 	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat){
+		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
+		if($check_incidencia > 0 ){
+			$object = new connection_database();
+			$crud = new crud();
+			$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
+			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'evaluado_por' => $nombre_completo]);
+			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id SET i.estatus_id = temp.estatus_siguiente");
+			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
+			Incidencias::getResponse($incidenciaid, $estatus);
+		}else{
+			die(json_encode(array("failed", "La incidencia ya no existe!")));
+		}
+	}
+
+	public static function getResponse($incidencia_id, $estatus){
 		$object = new connection_database();
 		$crud = new crud();
-		$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
-		$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'evaluado_por' => $nombre_completo]);
-		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id SET i.estatus_id = temp.estatus_siguiente");
-		$update_state -> execute(array(':incidenciaid' => $incidenciaid));
+		$array = [];
+		$sql = $object->_db->prepare('SELECT incidencias.id AS id, incidencias.users_id AS userid, incidencias.titulo AS titulo, incidencias.fecha_inicio AS fecha_inicio, incidencias.fecha_fin AS fecha_fin, incidencias.tipo_incidencia AS tipo_incidencia, incidencias.estatus_id AS estatus_id, incidencias.filename AS filename, incidencias.foto AS foto, incidencias.incidencia_creada AS incidencia_creada, departamentos.departamento AS depanom, roles.nombre AS rolnom, usuarios.correo as correo from incidencias INNER JOIN usuarios ON incidencias.users_id = usuarios.id LEFT JOIN departamentos ON usuarios.departamento_id = departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id WHERE incidencias.id=:incidenciaid');
+		$sql -> execute(array(':incidenciaid' => $incidencia_id));
+		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
+		array_push($array, $row_user_incidencia -> correo);
+		$check_if_sup_exist = $object -> _db ->prepare("select usuarios.correo as supcor from usuarios inner join roles on roles.id=usuarios.roles_id inner join departamentos on departamentos.id=usuarios.departamento_id where roles.nombre='Gerente' && departamentos.departamento='Recursos humanos' || departamentos.departamento='Finanzas'");
+		$check_if_sup_exist -> execute();
+		$count_sup = $check_if_sup_exist -> rowCount(); 
+		if($count_sup > 0){
+			while($fetch_sup = $check_if_sup_exist -> fetch(PDO::FETCH_OBJ)){
+				array_push($array, $fetch_sup -> supcor);
+			}
+		}
+		$check_estatus = $object->_db->prepare("select nombre from estatus_incidencia where tipo_estatus_id=:estatus");
+		$check_estatus -> execute(array(':estatus' => $estatus));
+		$fetch_estatus = $check_estatus -> fetch(PDO::FETCH_OBJ);
+		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+		$path = dirname($path);
+		$links = $path. "/layouts/incidencias.php";		
+		$mail=new PHPMailer\PHPMailer\PHPMailer();
+		$mail->IsSMTP();  // telling the class to use SMTP
+		$mail->SMTPDebug = 0;
+		$mail->SMTPSecure = 'tls'; 
+		$mail->Host = 'mail.sinttecom.com'; 
+		$mail->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true
+			)
+		);
+		$mail->Port = 587;
+		$mail->SMTPAuth = true; // turn on SMTP authentication
+		$mail->Username = "botsinttecom@sinttecom.com"; // SMTP username
+		$mail->Password = "sinttecom1994"; // SMTP password
+		$mail->IsHTML(true);
+		foreach($array as $correo)
+		{
+			$mail->AddAddress($correo);
+		}
+		$correos= implode(', ', $array);
+		$correos = trim($correos, ',');
+		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
+		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
+		$mail->Subject  = "La incidencia ha sido evaluada";
+		$mail->Body     = "Buen día: <br> La incidencia evaluada tiene el siguiente estatus: ".$fetch_estatus->nombre.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a>";
+		$mail->WordWrap = 50;
+		$mail->CharSet = "UTF-8";
+		if(!$mail->Send()) {
+			echo 'Message was not sent.';
+			echo 'Mailer error: ' . $mail->ErrorInfo;
+		}
 	}
 
 	public static function CheckSameDepartment($userid, $incidenciaid){

@@ -533,7 +533,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         switch($_POST["method"]){
             case "store":
                 Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $fetch_user -> nombre, $fetch_user -> apellido_pat, $fetch_user -> apellido_mat);
-                exit("success");
+                die(json_encode(array("success")));
             break;
         }
     }

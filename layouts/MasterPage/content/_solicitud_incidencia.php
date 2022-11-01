@@ -43,6 +43,8 @@
                             </div>
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
+                        <div id="message-error" class="text-center">
+	                    </div>
                             <div id="DT-div" style="display:none;">
                                 <table class="w-full" id="datatable">
                                     <thead>

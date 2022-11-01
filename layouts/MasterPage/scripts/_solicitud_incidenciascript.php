@@ -338,7 +338,13 @@
                                     processData: false,
                                     contentType: false,
                                     success: function(response) {
-                                        table.ajax.reload(null, false);
+                                        var array = $.parseJSON(response);
+                                        if(array[0] == "success"){
+                                            table.ajax.reload(null, false);
+                                        }else if(array[0] == "failed"){
+                                            $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                            table.ajax.reload(null, false);
+                                        }
                                     }, error: function(response) {
                                         console.log(response);
                                     }	
@@ -414,7 +420,13 @@
                                     processData: false,
                                     contentType: false,
                                     success: function(response) {
-                                        table.ajax.reload(null, false);
+                                        var array = $.parseJSON(response);
+                                        if(array[0] == "success"){
+                                            table.ajax.reload(null, false);
+                                        }else if(array[0] == "failed"){
+                                            $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                            table.ajax.reload(null, false);
+                                        }
                                     }, error: function(response) {
                                         console.log(response);
                                     }	
@@ -490,7 +502,13 @@
                                     processData: false,
                                     contentType: false,
                                     success: function(response) {
-                                        table.ajax.reload(null, false);
+                                        var array = $.parseJSON(response);
+                                        if(array[0] == "success"){
+                                            table.ajax.reload(null, false);
+                                        }else if(array[0] == "failed"){
+                                            $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                            table.ajax.reload(null, false);
+                                        }
                                     }, error: function(response) {
                                         console.log(response);
                                     }	
