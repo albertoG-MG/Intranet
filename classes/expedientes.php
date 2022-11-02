@@ -18,7 +18,10 @@ class expedientes {
     private $posee_telempresa;
     private $marcacion;
     private $serie; 
-    private $sim; 
+    private $sim;
+    private $numred;
+	private $modelotel;
+	private $marcatel; 
     private $casa_propia;
     private $ecivil; 
     private $posee_retencion; 
@@ -59,7 +62,7 @@ class expedientes {
     private $ref_banc;
     private $arraypapeleria;
 
-    public function __construct($number_e, $job, $studies, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $have_own_phone, $phone_mobile, $have_business_phone, $marcation, $serial, $simi, $own_house, $civil_status, $have_retention, $money_retention, $birth_date, $contract_date, $discharge_date, $contract_money, $date_money, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_parent, $emergency_phone, $emergency_name2, $emergency_parent2, $emergency_phone2, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $personal_bank, $personal_account, $personal_clabe, $payroll_bank, $payroll_account, $payroll_clabe, $plastic, $referencies_banc, $documentsarray){
+    public function __construct($number_e, $job, $studies, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $have_own_phone, $phone_mobile, $have_business_phone, $marcation, $serial, $simi, $rednum, $telmodel, $telbrand, $own_house, $civil_status, $have_retention, $money_retention, $birth_date, $contract_date, $discharge_date, $contract_money, $date_money, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_parent, $emergency_phone, $emergency_name2, $emergency_parent2, $emergency_phone2, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $personal_bank, $personal_account, $personal_clabe, $payroll_bank, $payroll_account, $payroll_clabe, $plastic, $referencies_banc, $documentsarray){
         $this->num_empleado= $number_e;
         $this->puesto= $job;
         $this->estudios= $studies;
@@ -76,7 +79,10 @@ class expedientes {
         $this->posee_telempresa= $have_business_phone; 
 	    $this->marcacion= $marcation; 
 	    $this->serie= $serial; 
-	    $this->sim= $simi; 
+	    $this->sim= $simi;
+        $this->numred = $rednum;
+		$this->telmodel = $telmodel;
+		$this->telbrand = $telbrand; 
         $this->casa_propia= $own_house;
         $this->ecivil= $civil_status; 
 	    $this->posee_retencion= $have_retention; 
@@ -121,7 +127,7 @@ class expedientes {
     public function Crear_expediente($id){
         $crud = new crud();
         $object = new connection_database();
-        $crud->store('expedientes', ['users_id' => $id, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]); 
+        $crud->store('expedientes', ['users_id' => $id, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->telmodel, 'marcatel_empresa' => $this->telbrand, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]); 
         $exp_id = $object -> _db -> lastInsertId();
 	    $jsonData = stripslashes(html_entity_decode($this->referencias));
 	    $ref = json_decode($jsonData);
