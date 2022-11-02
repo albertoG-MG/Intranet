@@ -721,6 +721,9 @@
                             var marcacion = $("#marcacion").val();
                             var serie = $("#serie").val();
                             var sim = $("#sim").val();
+                            var numred = $("#numred").val();
+		                    var modelotel = $("#modelotel").val();
+		                    var marcatel = $("#marcatel").val();
                             var radio = $("input[name=casa]:checked", "#Guardar").val();
                             var ecivil = $("#ecivil").val();
                             var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
@@ -817,6 +820,9 @@
                             fd.append('marcacion', marcacion);
                             fd.append('serie', serie);
                             fd.append('sim', sim);
+                            fd.append('numred', numred);
+		                    fd.append('modelotel', modelotel);
+		                    fd.append('marcatel', marcatel);
                             fd.append('radio', radio);
                             fd.append('ecivil', ecivil);
                             fd.append('posee_retencion', posee_retencion);
@@ -1076,6 +1082,26 @@
 					digits: "Por favor, ingrese solamente numeros"
 				}
 			});
+            $("#numred").rules("add", {
+                required: true,
+                digits:true,
+                messages: {
+                    required: "Por favor, ingrese el número de red",
+                    digits: "Por favor, ingrese solamente números"
+                }
+            });
+            $("#modelotel").rules("add", {
+                required: true,
+                messages: {
+                    required: "Por favor, ingrese el modelo"
+                }
+            });
+            $("#marcatel").rules("add", {
+                required: true,
+                messages: {
+                    required: "Por favor, ingrese la marca"
+                }
+            });
         }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
             document.getElementById("div_movil_empresa").classList.add('hidden');
 			$("#marcacion").val('');
@@ -1092,7 +1118,22 @@
 			$("#sim").rules("remove");
 			$("#sim").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
 			$("#sim").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
-			$("#sim-error").css("display", "none");	
+			$("#sim-error").css("display", "none");
+            $("#numred").val('');
+            $("#numred").rules("remove");
+            $("#numred").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#numred").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#numred-error").css("display", "none");
+            $("#modelotel").val('');
+            $("#modelotel").rules("remove");
+            $("#modelotel").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#modelotel").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#modelotel-error").css("display", "none");
+            $("#marcatel").val('');
+            $("#marcatel").rules("remove");
+            $("#marcatel").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#marcatel").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#marcatel-error").css("display", "none");	
             
         }
 
@@ -1120,7 +1161,27 @@
 						required: "Por favor, ingrese un número SIM",
 						digits: "Por favor, ingrese solamente numeros"
 					}
-				});	
+				});
+                $("#numred").rules("add", {
+                    required: true,
+                    digits:true,
+                    messages: {
+                        required: "Por favor, ingrese el número de red",
+                        digits: "Por favor, ingrese solamente números"
+                    }
+                });
+                $("#modelotel").rules("add", {
+                    required: true,
+                    messages: {
+                        required: "Por favor, ingrese el modelo"
+                    }
+                });
+                $("#marcatel").rules("add", {
+                    required: true,
+                    messages: {
+                        required: "Por favor, ingrese la marca"
+                    }
+                });	
             }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
                 document.getElementById("div_movil_empresa").classList.add('hidden');
 				$("#marcacion").val('');
@@ -1137,7 +1198,22 @@
 				$("#sim").rules("remove");
 				$("#sim").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
                 $("#sim").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
-				$("#sim-error").css("display", "none");				
+				$("#sim-error").css("display", "none");
+                $("#numred").val('');
+                $("#numred").rules("remove");
+                $("#numred").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#numred").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#numred-error").css("display", "none");
+                $("#modelotel").val('');
+                $("#modelotel").rules("remove");
+                $("#modelotel").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#modelotel").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#modelotel-error").css("display", "none");
+                $("#marcatel").val('');
+                $("#marcatel").rules("remove");
+                $("#marcatel").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#marcatel").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#marcatel-error").css("display", "none");				
             }
         });
 		if(($('input[type=radio][name=retencion]:checked').val() === "si")){
