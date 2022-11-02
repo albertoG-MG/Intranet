@@ -695,217 +695,14 @@
                                 '</button>');
                     check_user_logged().then((response) => {
 		                if(response == "true"){
-                            var fd = new FormData();
-
-                            /*Inputs*/
-                            var id_expediente = <?php echo $Editarid; ?>;
-                            var select2 = $("#prueba").val();
-                            var numempleado = $("#numempleado").val();
-                            var puesto = $("#puesto").val();
-                            var estudios = $("#estudios").val();
-                            var situacion = $('#situacion').val();
-	                        var estatus_empleado = $('#estatus_empleado').val();
-	                        var estatus_fecha = $('#fecha_estatus').val();
-	                        var motivo_estatus = $('#estatus_motivo').val();
-                            var calle = $("#calle").val();
-                            var ninterior = $("#ninterior").val();
-                            var nexterior = $("#nexterior").val();
-                            var colonia = $("#colonia").val();
-                            var estado = $("#estado").val();
-                            var municipio = $("#municipio").val();
-                            var codigo = $("#codigo").val();
-                            var teldom = $("#teldom").val();
-                            var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
-                            var telmov = $("#telmov").val();
-                            var posee_telempresa = $("input[name=tel_movil_empresa]:checked", "#Guardar").val();
-                            var marcacion = $("#marcacion").val();
-                            var serie = $("#serie").val();
-                            var sim = $("#sim").val();
-                            var numred = $("#numred").val();
-		                    var modelotel = $("#modelotel").val();
-		                    var marcatel = $("#marcatel").val();
-                            var radio = $("input[name=casa]:checked", "#Guardar").val();
-                            var ecivil = $("#ecivil").val();
-                            var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
-                            var monto_mensual = $("#monto_mensual").val();
-                            var fechanac = $("#fechanac").val();
-                            var fechacon = $("#fechacon").val();
-                            var fechaalta = $("#fechaalta").val();
-                            var salario_contrato = $("#salario_contrato").val();
-                            var salario_fechaalta = $("#salario_fechaalta").val();
-                            var observaciones = $("#observaciones").val();
-                            var curp = $("#curp").val();
-                            var nss = $("#nss").val();
-                            var rfc = $("#rfc").val();
-                            var tipoidentificacion = $("#identificacion").val();
-                            var numeroidentificacion = $("#numeroidentificacion").val();
-                            var capacitacion = $("#capacitacion").val();
-                            var fechauniforme = $("#fechauniforme").val();
-                            var cantidadpolo = $("#cantidadpolo").val();
-                            var tallapolo = $("#tallapolo").val();
-                            var emergencianom = $("#emergencianom").val();
-                            var emergenciaparentesco = $("#emergenciaparentesco").val();
-                            var emergenciatel = $("#emergenciatel").val();
-                            var emergencianom2 = $("#emergencianom2").val();
-                            var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
-                            var emergenciatel2 = $("#emergenciatel2").val();
-                            var antidoping = $("#antidoping").val();
-                            var vacante = $("#vacante").val();
-                            var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
-                            var nomfam = $("#nomfam").val();
-                            var banco_personal = $("#banco_personal").val();
-                            var cuenta_personal = $("#cuenta_personal").val();
-                            var clabe_personal = $("#clabe_personal").val();
-                            var banco_nomina = $("#banco_nomina").val();
-                            var cuenta_nomina = $("#cuenta_nomina").val();
-                            var clabe_nomina = $("#clabe_nomina").val();
-                            var plastico = $("#plastico").val();
-                            var method = "edit";
-                            var app = "expediente";
-
-                            /*Referencias laborales*/
-                            var nreflab =  $("input[name=reflab]").val();
-                            var reflab = [];
-                            for(var i=0; i <nreflab; i++){
-                                var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
-                                var rparentesco = $("input[name=infa_rparentesco" +i+ "]").val();
-                                var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
-                                reflab[i] = {nombre: rnombre, parentesco: rparentesco, telefono: rtelefono};
-                            }
-
-                            /*Referencias bancarias*/
-                            var nrefbanc =  $("input[name=refban]").val();
-                            var refbanc = [];
-                            for(var i=0; i <nrefbanc; i++){
-                                var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
-                                var brparentesco = $("input[name=infb_rparentesco" +i+ "]").val();
-                                var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
-                                var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
-                                var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
-                                refbanc[i] = {nombre: brnombre, parentesco: brparentesco, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
-                            }
-
-                            /*File uploads*/
-                            <?php 
-                            for($i = 1; $i <= $counttipospapeleria; $i++){
-                                echo ("
-                                    var papeleria{$i} = $('#infp_papeleria{$i}')[0].files[0];
-                                ");
-                            } 
-                            ?>
-
-                            /*FD appends*/
-
-                            /*Inputs*/
-                            fd.append('id_expediente', id_expediente);
-                            fd.append('select2', select2);
-                            fd.append('numempleado', numempleado);
-                            fd.append('puesto', puesto);
-                            fd.append('estudios', estudios);
-                            fd.append('situacion', situacion);
-	                        fd.append('estatus_empleado', estatus_empleado);
-	                        fd.append('estatus_fecha', estatus_fecha);
-	                        fd.append('motivo_estatus', motivo_estatus);
-                            fd.append('calle', calle);
-                            fd.append('ninterior', ninterior);
-                            fd.append('nexterior', nexterior);
-                            fd.append('colonia', colonia);
-                            fd.append('estado', estado);
-                            fd.append('municipio', municipio);
-                            fd.append('codigo', codigo);
-                            fd.append('teldom', teldom);
-                            fd.append('posee_telmov', posee_telmov);
-                            fd.append('telmov', telmov);
-                            fd.append('posee_telempresa', posee_telempresa);
-                            fd.append('marcacion', marcacion);
-                            fd.append('serie', serie);
-                            fd.append('sim', sim);
-                            fd.append('numred', numred);
-		                    fd.append('modelotel', modelotel);
-		                    fd.append('marcatel', marcatel);
-                            fd.append('radio', radio);
-                            fd.append('ecivil', ecivil);
-                            fd.append('posee_retencion', posee_retencion);
-                            fd.append('monto_mensual', monto_mensual);
-                            fd.append('fechanac', fechanac);
-                            fd.append('fechacon', fechacon);
-                            fd.append('fechaalta', fechaalta);
-                            fd.append('salario_contrato', salario_contrato);
-                            fd.append('salario_fechaalta', salario_fechaalta);
-                            fd.append('observaciones', observaciones);
-                            fd.append('curp', curp);
-                            fd.append('nss', nss);
-                            fd.append('rfc', rfc);
-                            fd.append('identificacion', tipoidentificacion);
-                            fd.append('numeroidentificacion', numeroidentificacion);
-                            fd.append('capacitacion', capacitacion);
-                            fd.append('fechauniforme', fechauniforme);
-                            fd.append('cantidadpolo', cantidadpolo);
-                            fd.append('tallapolo', tallapolo);
-                            fd.append('emergencianom', emergencianom);
-                            fd.append('emergenciaparentesco', emergenciaparentesco);
-                            fd.append('emergenciatel', emergenciatel);
-                            fd.append('emergencianom2', emergencianom2);
-                            fd.append('emergenciaparentesco2', emergenciaparentesco2);
-                            fd.append('emergenciatel2', emergenciatel2);
-                            fd.append('antidoping', antidoping);
-                            fd.append('vacante', vacante);
-                            fd.append('radio2', radio2);
-                            fd.append('nomfam', nomfam);
-                            fd.append('banco_personal', banco_personal);
-                            fd.append('cuenta_personal', cuenta_personal);
-                            fd.append('clabe_personal', clabe_personal);
-                            fd.append('banco_nomina', banco_nomina);
-                            fd.append('cuenta_nomina', cuenta_nomina);
-                            fd.append('clabe_nomina', clabe_nomina);
-                            fd.append('plastico', plastico);
-                            fd.append('method', method);
-                            fd.append('app', app);
-                            
-
-                            /*Referencias*/
-                            fd.append('referencias', JSON.stringify(reflab));
-                            fd.append('refbanc', JSON.stringify(refbanc));
-
-                            /*File uploads*/
-                            <?php 
-                            for($i = 1; $i <= $counttipospapeleria; $i++){
-                                echo ("
-                                    fd.append('papeleria{$i}', papeleria{$i});
-                                ");
-                            } 
-                            ?>
-
-
-                            /*Ajax*/
-                            $.ajax({
-                                type: "POST",
-                                url: "../ajax/class_search.php",
-                                data: fd,
-                                processData: false,
-                                contentType: false,
-                                success: function (response) {
-                                    response = response.replace(/[\r\n]/gm, '');
-                                    if(response == "success"){
-                                        Swal.fire({
-                                            title: "Expediente Editado",
-                                            text: "Se ha editado un expediente exitosamente!",
-                                            icon: "success"
-                                        }).then(function() {
-                                            $('#submit-button').html("<button disabled class='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2' type='submit' id='finish' name='finish'>Guardar</button>");
-                                            window.location.href = "expedientes.php";	
-                                        });
-                                    }
-                                }
-                            });
+                            SubmitChanges();
                         }else{
                             Swal.fire({
                                 title: "Ocurrió un error",
-                                text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                text: "Su sesión expiró, se guardaran los datos, no cierre el navegador o la página!",
                                 icon: "error"
                             }).then(function() {
-                                $('#submit-button').html("<button disabled class='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2' type='submit' id='finish' name='finish'>Guardar</button>");
-                                window.location.href = "login.php";
+                                SubmitChanges();
                             });
                         }
                     }).catch((error) => {
@@ -1533,6 +1330,212 @@
                 }
             }
         }
+    }
+
+    function SubmitChanges(){
+        var fd = new FormData();
+
+        /*Inputs*/
+        var id_expediente = <?php echo $Editarid; ?>;
+        var select2 = $("#prueba").val();
+        var numempleado = $("#numempleado").val();
+        var puesto = $("#puesto").val();
+        var estudios = $("#estudios").val();
+        var situacion = $('#situacion').val();
+        var estatus_empleado = $('#estatus_empleado').val();
+        var estatus_fecha = $('#fecha_estatus').val();
+        var motivo_estatus = $('#estatus_motivo').val();
+        var calle = $("#calle").val();
+        var ninterior = $("#ninterior").val();
+        var nexterior = $("#nexterior").val();
+        var colonia = $("#colonia").val();
+        var estado = $("#estado").val();
+        var municipio = $("#municipio").val();
+        var codigo = $("#codigo").val();
+        var teldom = $("#teldom").val();
+        var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
+        var telmov = $("#telmov").val();
+        var posee_telempresa = $("input[name=tel_movil_empresa]:checked", "#Guardar").val();
+        var marcacion = $("#marcacion").val();
+        var serie = $("#serie").val();
+        var sim = $("#sim").val();
+        var numred = $("#numred").val();
+        var modelotel = $("#modelotel").val();
+        var marcatel = $("#marcatel").val();
+        var radio = $("input[name=casa]:checked", "#Guardar").val();
+        var ecivil = $("#ecivil").val();
+        var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+        var monto_mensual = $("#monto_mensual").val();
+        var fechanac = $("#fechanac").val();
+        var fechacon = $("#fechacon").val();
+        var fechaalta = $("#fechaalta").val();
+        var salario_contrato = $("#salario_contrato").val();
+        var salario_fechaalta = $("#salario_fechaalta").val();
+        var observaciones = $("#observaciones").val();
+        var curp = $("#curp").val();
+        var nss = $("#nss").val();
+        var rfc = $("#rfc").val();
+        var tipoidentificacion = $("#identificacion").val();
+        var numeroidentificacion = $("#numeroidentificacion").val();
+        var capacitacion = $("#capacitacion").val();
+        var fechauniforme = $("#fechauniforme").val();
+        var cantidadpolo = $("#cantidadpolo").val();
+        var tallapolo = $("#tallapolo").val();
+        var emergencianom = $("#emergencianom").val();
+        var emergenciaparentesco = $("#emergenciaparentesco").val();
+        var emergenciatel = $("#emergenciatel").val();
+        var emergencianom2 = $("#emergencianom2").val();
+        var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
+        var emergenciatel2 = $("#emergenciatel2").val();
+        var antidoping = $("#antidoping").val();
+        var vacante = $("#vacante").val();
+        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+        var nomfam = $("#nomfam").val();
+        var banco_personal = $("#banco_personal").val();
+        var cuenta_personal = $("#cuenta_personal").val();
+        var clabe_personal = $("#clabe_personal").val();
+        var banco_nomina = $("#banco_nomina").val();
+        var cuenta_nomina = $("#cuenta_nomina").val();
+        var clabe_nomina = $("#clabe_nomina").val();
+        var plastico = $("#plastico").val();
+        var method = "edit";
+        var app = "expediente";
+
+        /*Referencias laborales*/
+        var nreflab =  $("input[name=reflab]").val();
+        var reflab = [];
+        for(var i=0; i <nreflab; i++){
+            var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
+            var rparentesco = $("input[name=infa_rparentesco" +i+ "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
+            reflab[i] = {nombre: rnombre, parentesco: rparentesco, telefono: rtelefono};
+        }
+
+        /*Referencias bancarias*/
+        var nrefbanc =  $("input[name=refban]").val();
+        var refbanc = [];
+        for(var i=0; i <nrefbanc; i++){
+            var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
+            var brparentesco = $("input[name=infb_rparentesco" +i+ "]").val();
+            var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
+            var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
+            refbanc[i] = {nombre: brnombre, parentesco: brparentesco, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+        }
+
+        /*File uploads*/
+        <?php 
+        for($i = 1; $i <= $counttipospapeleria; $i++){
+            echo ("
+                var papeleria{$i} = $('#infp_papeleria{$i}')[0].files[0];
+            ");
+        } 
+        ?>
+
+        /*FD appends*/
+
+        /*Inputs*/
+        fd.append('id_expediente', id_expediente);
+        fd.append('select2', select2);
+        fd.append('numempleado', numempleado);
+        fd.append('puesto', puesto);
+        fd.append('estudios', estudios);
+        fd.append('situacion', situacion);
+        fd.append('estatus_empleado', estatus_empleado);
+        fd.append('estatus_fecha', estatus_fecha);
+        fd.append('motivo_estatus', motivo_estatus);
+        fd.append('calle', calle);
+        fd.append('ninterior', ninterior);
+        fd.append('nexterior', nexterior);
+        fd.append('colonia', colonia);
+        fd.append('estado', estado);
+        fd.append('municipio', municipio);
+        fd.append('codigo', codigo);
+        fd.append('teldom', teldom);
+        fd.append('posee_telmov', posee_telmov);
+        fd.append('telmov', telmov);
+        fd.append('posee_telempresa', posee_telempresa);
+        fd.append('marcacion', marcacion);
+        fd.append('serie', serie);
+        fd.append('sim', sim);
+        fd.append('numred', numred);
+        fd.append('modelotel', modelotel);
+        fd.append('marcatel', marcatel);
+        fd.append('radio', radio);
+        fd.append('ecivil', ecivil);
+        fd.append('posee_retencion', posee_retencion);
+        fd.append('monto_mensual', monto_mensual);
+        fd.append('fechanac', fechanac);
+        fd.append('fechacon', fechacon);
+        fd.append('fechaalta', fechaalta);
+        fd.append('salario_contrato', salario_contrato);
+        fd.append('salario_fechaalta', salario_fechaalta);
+        fd.append('observaciones', observaciones);
+        fd.append('curp', curp);
+        fd.append('nss', nss);
+        fd.append('rfc', rfc);
+        fd.append('identificacion', tipoidentificacion);
+        fd.append('numeroidentificacion', numeroidentificacion);
+        fd.append('capacitacion', capacitacion);
+        fd.append('fechauniforme', fechauniforme);
+        fd.append('cantidadpolo', cantidadpolo);
+        fd.append('tallapolo', tallapolo);
+        fd.append('emergencianom', emergencianom);
+        fd.append('emergenciaparentesco', emergenciaparentesco);
+        fd.append('emergenciatel', emergenciatel);
+        fd.append('emergencianom2', emergencianom2);
+        fd.append('emergenciaparentesco2', emergenciaparentesco2);
+        fd.append('emergenciatel2', emergenciatel2);
+        fd.append('antidoping', antidoping);
+        fd.append('vacante', vacante);
+        fd.append('radio2', radio2);
+        fd.append('nomfam', nomfam);
+        fd.append('banco_personal', banco_personal);
+        fd.append('cuenta_personal', cuenta_personal);
+        fd.append('clabe_personal', clabe_personal);
+        fd.append('banco_nomina', banco_nomina);
+        fd.append('cuenta_nomina', cuenta_nomina);
+        fd.append('clabe_nomina', clabe_nomina);
+        fd.append('plastico', plastico);
+        fd.append('method', method);
+        fd.append('app', app);
+        
+
+        /*Referencias*/
+        fd.append('referencias', JSON.stringify(reflab));
+        fd.append('refbanc', JSON.stringify(refbanc));
+
+        /*File uploads*/
+        <?php 
+        for($i = 1; $i <= $counttipospapeleria; $i++){
+            echo ("
+                fd.append('papeleria{$i}', papeleria{$i});
+            ");
+        } 
+        ?>
+
+
+        /*Ajax*/
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                response = response.replace(/[\r\n]/gm, '');
+                if(response == "success"){
+                    Swal.fire({
+                        title: "Expediente Editado",
+                        text: "Se ha editado un expediente exitosamente!",
+                        icon: "success"
+                    }).then(function() {
+                        $('#submit-button').html("<button disabled class='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2' type='submit' id='finish' name='finish'>Guardar</button>");
+                        window.location.href = "expedientes.php";	
+                    });
+                }
+            }
+        });
     }
 
 </script>
