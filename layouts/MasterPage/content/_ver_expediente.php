@@ -166,6 +166,18 @@
                                 <div class="text-left md:text-right"><span><?php if($ver -> esim == null){ echo "No hay datos"; }else{echo "{$ver -> esim}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Número de red</label>
+                                <div class="text-left md:text-right"><span><?php if($ver -> enumred == null){ echo "No hay datos"; }else{echo "{$ver -> enumred}";} ?></span></div>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Modelo</label>
+                                <div class="text-left md:text-right"><span><?php if($ver -> modeltel == null){ echo "No hay datos"; }else{echo "{$ver -> modeltel}";} ?></span></div>
+                            </div>
+							<div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Marca</label>
+                                <div class="text-left md:text-right"><span><?php if($ver -> marcatel == null){ echo "No hay datos"; }else{echo "{$ver -> marcatel}";} ?></span></div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Casa propia</label>
                                 <div class="text-left md:text-right"><span><?php if($ver->ecasa_propia == null){ echo "No hay datos"; }else{echo "{$ver->ecasa_propia}";} ?></span></div>
                             </div>
