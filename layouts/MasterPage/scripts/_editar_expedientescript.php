@@ -1543,6 +1543,12 @@
     .error{
         color: rgb(244 63 94);
     }
+
+    .select2-results{
+        overflow-y: scroll;
+        max-height: 110px;
+    }
+
     .select2-results__option--selectable:hover{
         background: #5897fb;
         color:white;
