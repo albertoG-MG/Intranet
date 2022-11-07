@@ -226,7 +226,7 @@
                 }},
 				{ data: null, render: function ( data, type, row ) {
                     if(evaluation_buttons == 0){
-							return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" id="Aprobar" name="Aprobar" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" id="Rechazar" name="Rechazar" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" id="Cancelar" name="Cancelar" class="text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';
+							return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="Aprobar focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" class="Rechazar focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" class="Cancelar text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';
                     }else{
                         return null;
                     }
@@ -315,7 +315,7 @@
 		$('.dataTables_filter input[type="search"]').
 		attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
 
-        $('#datatable').on('click', 'tr #Aprobar', function () {
+        $('#datatable').on('click', 'tr .Aprobar', function () {
             var estatus=1;
             var sueldo=0;
             var message="sin goce de sueldo?";
@@ -542,7 +542,7 @@
             })
         });
 
-        $('#datatable').on('click', 'tr #Cancelar', function () {
+        $('#datatable').on('click', 'tr .Cancelar', function () {
             var estatus=2;
             var table = $('#datatable').DataTable();
             var rowSelector;
@@ -760,7 +760,7 @@
             })
         });
 
-        $('#datatable').on('click', 'tr #Rechazar', function () {
+        $('#datatable').on('click', 'tr .Rechazar', function () {
             var estatus=3;
             var table = $('#datatable').DataTable();
             var rowSelector;
