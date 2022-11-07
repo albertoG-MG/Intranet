@@ -545,9 +545,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
 		$select_user -> execute(array(':iduser' => $_POST["iduser"]));
         $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
+        if(!(empty($_POST["comentario"]))){
+            $comentario = $_POST["comentario"];
+        }else{
+            $comentario = null;
+        }
         switch($_POST["method"]){
             case "store":
-                Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $fetch_user -> nombre, $fetch_user -> apellido_pat, $fetch_user -> apellido_mat);
+                Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $fetch_user -> nombre, $fetch_user -> apellido_pat, $fetch_user -> apellido_mat, $comentario);
                 die(json_encode(array("success")));
             break;
         }
