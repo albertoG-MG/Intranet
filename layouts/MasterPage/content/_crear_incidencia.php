@@ -22,7 +22,7 @@
                 </svg>
               </span>
 
-			  <a href="incidencias.php" class="flex items-center text-blue-600 -px-2 hover:underline">
+			  <a href="incidencias.php" class="flex items-center text-gray-600 -px-2 hover:underline">
 					<svg  style="width:24px;height:24px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
 						</path>
@@ -135,7 +135,9 @@
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
               <a href="incidencias.php" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2' id='regresar' name='regresar'>Regresar</a>
-              <button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>
+              <div id="submit-button">
+                <button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>
+              </div>
             </div>
           </form>
         </div>
