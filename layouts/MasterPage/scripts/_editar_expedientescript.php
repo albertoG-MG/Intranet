@@ -1333,6 +1333,7 @@
     }
 
     function SubmitChanges(){
+        window.addEventListener('beforeunload', unloadHandler);
         var fd = new FormData();
 
         /*Inputs*/
@@ -1530,12 +1531,20 @@
                         text: "Se ha editado un expediente exitosamente!",
                         icon: "success"
                     }).then(function() {
+                        window.removeEventListener('beforeunload', unloadHandler);
                         $('#submit-button').html("<button disabled class='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2' type='submit' id='finish' name='finish'>Guardar</button>");
                         window.location.href = "expedientes.php";	
                     });
                 }
             }
         });
+    }
+
+    function unloadHandler(e) {
+        // Cancel the event
+        e.preventDefault();
+        // Chrome requires returnValue to be set
+        e.returnValue = '';
     }
 
 </script>
