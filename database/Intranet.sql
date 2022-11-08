@@ -2933,7 +2933,8 @@ CREATE TABLE `accion_incidencias`(
 	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`incidencias_id` bigint(20) NOT NULL,
 	`tipo_de_accion` int NOT NULL,
-   `goce_de_sueldo` tinyint(1) DEFAULT NULL,
+  `goce_de_sueldo` tinyint(1) DEFAULT NULL,
+  `comentario` varchar(200) DEFAULT NULL,
 	`evaluado_por` varchar(200) NOT NULL,
 	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
 	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
