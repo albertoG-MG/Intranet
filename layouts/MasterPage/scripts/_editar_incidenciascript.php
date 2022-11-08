@@ -90,15 +90,18 @@
 								processData: false,
 								contentType: false,
 								success: function(data) {
-									data = data.replace(/[\r\n]/gm, '');
-									if(data == "success"){
+									var array = $.parseJSON(data);
+									if(array[0] == "success"){
 										Swal.fire({
 											title: "Incidencia editada",
 											text: "Se ha editado una incidencia exitosamente!",
 											icon: "success"
 										}).then(function() {
+											$('#message-error').html("");
 											window.location.href = "incidencias.php";	
-											});
+										});
+									}else if (array[0] == "failed"){
+										$('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
 									}
 								},
 								error: function(data) {

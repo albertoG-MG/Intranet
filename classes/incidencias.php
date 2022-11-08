@@ -137,8 +137,13 @@ class incidencias {
     }
 
 	public function EditarIncidencias($incidenciaid){
-		$crud=new crud();
-		$crud -> update ('incidencias', ['titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto], 'id=:idincidencia', ['idincidencia' => $incidenciaid]);
+		$check = Incidencias::Checkincidencia($incidenciaid);
+		if($check > 0){
+			$crud=new crud();
+			$crud -> update ('incidencias', ['titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto], 'id=:idincidencia', ['idincidencia' => $incidenciaid]);
+		}else{
+			die(json_encode(array("failed", "La incidencia ya no existe!")));
+		}
 	}
 
 	public static function Fetchverincidencia($id){
