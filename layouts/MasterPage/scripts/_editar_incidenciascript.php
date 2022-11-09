@@ -71,6 +71,7 @@
 					'</button>');
 					check_user_logged().then((response) => {
 						if(response == "true"){
+							window.addEventListener('beforeunload', unloadHandler);
 							var fd = new FormData();
 							var titulo = $("#titulo").val();
 							var fechainicio = $("#fechainicio").val();
@@ -104,11 +105,13 @@
 											text: "Se ha editado una incidencia exitosamente!",
 											icon: "success"
 										}).then(function() {
+											window.removeEventListener('beforeunload', unloadHandler);
 											$('#message-error').html("");
 											$('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
 											window.location.href = "incidencias.php";	
 										});
 									}else if (array[0] == "failed"){
+										window.removeEventListener('beforeunload', unloadHandler);
 										$('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
 										$('#submit-button').html("<button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
 									}
@@ -181,6 +184,13 @@
 				}
 			});
 		})
+	}
+
+	function unloadHandler(e) {
+  		// Cancel the event
+  		e.preventDefault();
+  		// Chrome requires returnValue to be set
+  		e.returnValue = '';
 	}
 
 </script>
