@@ -494,6 +494,7 @@
                                                 text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
                                                 icon: "error"
                                             }).then(function() {
+                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
                                                 window.location.href = "login.php";
                                             });	
                                         }
@@ -712,6 +713,7 @@
                                                 text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
                                                 icon: "error"
                                             }).then(function() {
+                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
                                                 window.location.href = "login.php";
                                             });	
                                         }
@@ -930,6 +932,7 @@
                                                 text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
                                                 icon: "error"
                                             }).then(function() {
+                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
                                                 window.location.href = "login.php";
                                             });	
                                         }
