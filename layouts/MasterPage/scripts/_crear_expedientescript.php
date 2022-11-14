@@ -196,6 +196,7 @@
         $('#prueba').select2({
             theme: ["tailwind"],
             placeholder: '-- Seleccione --',
+            dropdownParent: $('#selectprueba'),
             "language": {
                 "noResults": function(){
                     return "No hay resultados";
@@ -214,6 +215,12 @@
         $('.select2-selection__arrow').addClass('rotate-180 mb-1');
 
         $("#selectprueba").show();
+
+        $('#prueba').on('select2:open', function (e) {
+            const evt = "scroll.select2";
+            $(e.target).parents().off(evt);
+            $(window).off(evt);
+        });
 
         $('#prueba').on('change', function () {
             var fd =new FormData();
