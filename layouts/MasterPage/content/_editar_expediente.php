@@ -332,6 +332,44 @@
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Laptop asignado por la empresa?</label>
+                                    <div class="group flex mt-3 items-center">
+                                        <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" <?= ($edit->eposee_laptop == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" checked="">
+                                        <label for="option-laptop-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        Sí
+                                        </label>
+                                        <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" <?= ($edit->eposee_laptop == 'no') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2">
+                                        <label for="option-laptop-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div id="div_laptop_empresa">
+                                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                        <div class="grid grid-cols-1">
+                                            <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Marca de la laptop</label>
+                                            <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-laptop text-gray-400 text-lg"></i></div>
+                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="marca_laptop" name="marca_laptop" value="<?php echo "{$edit->emarca_laptop}"; ?>" placeholder="Input">
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-1">
+                                            <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Modelo de la laptop</label>
+                                            <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-magnify text-gray-400 text-lg"></i></div>
+                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="modelo_laptop" name="modelo_laptop" value="<?php echo "{$edit->emodelo_laptop}"; ?>" placeholder="Input">
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-1">
+                                            <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Serie de la laptop</label>
+                                            <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-numeric text-gray-400 text-lg"></i></div>
+                                                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="serie_laptop" name="serie_laptop" value="<?php echo "{$edit->eserie_laptop}"; ?>" placeholder="Input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Casa propia?</label>
                                     <div class="group flex mt-3 items-center">
                                         <input id="option-1" type="radio" name="casa" value="si" <?= ($edit->ecasa_propia == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-1" aria-describedby="option-1">

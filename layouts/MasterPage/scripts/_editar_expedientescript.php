@@ -1020,6 +1020,87 @@
                 $("#marcatel-error").css("display", "none");				
             }
         });
+
+        if(($('input[type=radio][name=laptop_empresa]:checked').val() === "si")){
+            document.getElementById("div_laptop_empresa").classList.remove('hidden');
+			$("#marca_laptop").rules("add", {
+				required: true,
+				messages: {
+					required: "Por favor, ingrese la marca de la laptop"
+				}
+			});
+			$("#modelo_laptop").rules("add", {
+				required: true,
+				messages: {
+					required: "Por favor, ingrese el modelo de la laptop"
+				}
+			});
+			$("#serie_laptop").rules("add", {
+				required: true,
+				messages: {
+					required: "Por favor, ingrese la serie de la laptop"
+				}
+			});
+        }else if($('input[type=radio][name=laptop_empresa]:checked').val() === "no"){
+            document.getElementById("div_laptop_empresa").classList.add('hidden');
+			$("#marca_laptop").val('');
+			$("#marca_laptop").rules("remove");
+			$("#marca_laptop").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#marca_laptop").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#marca_laptop-error").css("display", "none");
+			$("#modelo_laptop").val('');
+			$("#modelo_laptop").rules("remove");
+			$("#modelo_laptop").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#modelo_laptop").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#modelo_laptop-error").css("display", "none");
+			$("#serie_laptop").val('');
+			$("#serie_laptop").rules("remove");
+			$("#serie_laptop").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			$("#serie_laptop").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			$("#serie_laptop-error").css("display", "none");
+        }
+
+        $('input[type=radio][name=laptop_empresa]').on('change', function () {
+            if(($('input[type=radio][name=laptop_empresa]:checked').val() === "si")){
+                document.getElementById("div_laptop_empresa").classList.remove('hidden');
+				$("#marca_laptop").rules("add", {
+					required: true,
+					messages: {
+						required: "Por favor, ingrese la marca de la laptop"
+					}
+				});
+				$("#modelo_laptop").rules("add", {
+					required: true,
+					messages: {
+						required: "Por favor, ingrese el modelo de la laptop"
+					}
+				});
+				$("#serie_laptop").rules("add", {
+					required: true,
+					messages: {
+						required: "Por favor, ingrese la serie de la laptop"
+					}
+				});
+            }else if($('input[type=radio][name=laptop_empresa]:checked').val() === "no"){
+                document.getElementById("div_laptop_empresa").classList.add('hidden');
+				$("#marca_laptop").val('');
+				$("#marca_laptop").rules("remove");
+				$("#marca_laptop").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#marca_laptop").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#marca_laptop-error").css("display", "none");
+				$("#modelo_laptop").val('');
+				$("#modelo_laptop").rules("remove");
+				$("#modelo_laptop").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#modelo_laptop").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#modelo_laptop-error").css("display", "none");
+				$("#serie_laptop").val('');
+				$("#serie_laptop").rules("remove");
+				$("#serie_laptop").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#serie_laptop").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#serie_laptop-error").css("display", "none");				
+            }
+        });
+
 		if(($('input[type=radio][name=retencion]:checked').val() === "si")){
 			document.getElementById("div_retencion").classList.remove('hidden');
 			$("#monto_mensual").rules("add", {
@@ -1370,6 +1451,10 @@
         var numred = $("#numred").val();
         var modelotel = $("#modelotel").val();
         var marcatel = $("#marcatel").val();
+        var posee_laptop = $("input[name=laptop_empresa]:checked", "#Guardar").val();
+	    var marca_laptop = $("#marca_laptop").val();
+        var modelo_laptop = $("#modelo_laptop").val();
+        var serie_laptop = $("#serie_laptop").val();
         var radio = $("input[name=casa]:checked", "#Guardar").val();
         var ecivil = $("#ecivil").val();
         var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
@@ -1469,6 +1554,10 @@
         fd.append('numred', numred);
         fd.append('modelotel', modelotel);
         fd.append('marcatel', marcatel);
+        fd.append('posee_laptop', posee_laptop);
+	    fd.append('marca_laptop', marca_laptop);
+        fd.append('modelo_laptop', modelo_laptop);
+        fd.append('serie_laptop', serie_laptop);
         fd.append('radio', radio);
         fd.append('ecivil', ecivil);
         fd.append('posee_retencion', posee_retencion);
