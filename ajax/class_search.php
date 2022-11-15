@@ -271,6 +271,26 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }else{
             $marcatel = null;
         }
+        if(!(empty($_POST["posee_laptop"]))){
+            $posee_laptop = $_POST["posee_laptop"];
+        }else{
+            $posee_laptop = null;
+        }
+        if(!(empty($_POST["marca_laptop"]))){
+            $marca_laptop = $_POST["marca_laptop"];
+        }else{
+            $marca_laptop = null;
+        }
+        if(!(empty($_POST["modelo_laptop"]))){
+            $modelo_laptop = $_POST["modelo_laptop"];
+        }else{
+            $modelo_laptop = null;
+        }	
+        if(!(empty($_POST["serie_laptop"]))){
+            $serie_laptop = $_POST["serie_laptop"];
+        }else{
+            $serie_laptop = null;
+        }
         if(!(empty($_POST["radio"]))){
             $radio = $_POST["radio"];
         }else{
@@ -467,7 +487,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		switch($_POST["method"]){
             case "store":
                 $iduser = $_POST["select2"];
-                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Crear_expediente($iduser);
                 exit("success");
             break;
@@ -486,7 +506,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 }else {
                     $fecha_estatus = null;
                 }
-                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
+                $expediente = new Expedientes($numempleado, $puesto, $estudios, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $radio, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $radio2, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Editar_expediente($iduser, $id_expediente, $situacion, $estatus_empleado, $motivo_estatus, $fecha_estatus);
                 exit("success");
             break;
