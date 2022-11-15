@@ -906,6 +906,14 @@
                     required: "Por favor, ingrese la marca"
                 }
             });
+            $("#imei").rules("add", {
+                required: true,
+                digits: true,
+                messages: {
+                    required: "Por favor, ingrese el imei",
+                    digits: "Por favor, ingrese puros números"
+                }
+            });
         }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
             document.getElementById("div_movil_empresa").classList.add('hidden');
 			$("#marcacion").val('');
@@ -938,7 +946,11 @@
             $("#marcatel").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
             $("#marcatel").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
             $("#marcatel-error").css("display", "none");	
-            
+            $("#imei").val('');
+            $("#imei").rules("remove");
+            $("#imei").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#imei").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#imei-error").css("display", "none");
         }
 
         $('input[type=radio][name=tel_movil_empresa]').on('change', function () {
@@ -985,6 +997,14 @@
                     messages: {
                         required: "Por favor, ingrese la marca"
                     }
+                });
+                $("#imei").rules("add", {
+                    required: true,
+                    digits: true,
+                    messages: {
+                        required: "Por favor, ingrese el imei",
+                        digits: "Por favor, ingrese puros números"
+                    }
                 });	
             }else if($('input[type=radio][name=tel_movil_empresa]:checked').val() === "no"){
                 document.getElementById("div_movil_empresa").classList.add('hidden');
@@ -1017,7 +1037,12 @@
                 $("#marcatel").rules("remove");
                 $("#marcatel").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
                 $("#marcatel").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
-                $("#marcatel-error").css("display", "none");				
+                $("#marcatel-error").css("display", "none");
+                $("#imei").val('');
+                $("#imei").rules("remove");
+                $("#imei").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#imei").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#imei-error").css("display", "none");				
             }
         });
 
@@ -1451,6 +1476,7 @@
         var numred = $("#numred").val();
         var modelotel = $("#modelotel").val();
         var marcatel = $("#marcatel").val();
+        var imei = $("#imei").val();
         var posee_laptop = $("input[name=laptop_empresa]:checked", "#Guardar").val();
 	    var marca_laptop = $("#marca_laptop").val();
         var modelo_laptop = $("#modelo_laptop").val();
@@ -1554,6 +1580,7 @@
         fd.append('numred', numred);
         fd.append('modelotel', modelotel);
         fd.append('marcatel', marcatel);
+        fd.append('imei', imei);
         fd.append('posee_laptop', posee_laptop);
 	    fd.append('marca_laptop', marca_laptop);
         fd.append('modelo_laptop', modelo_laptop);
