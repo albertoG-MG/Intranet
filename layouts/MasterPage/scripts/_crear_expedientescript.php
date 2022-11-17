@@ -269,8 +269,12 @@
         <?php } ?>
 
         $.validator.addMethod('filesize', function(value, element, param) {
-         return this.optional(element) || (element.files[0].size <= param * 1000000)
-      }, 'File size must be less than {0} MB');
+            return this.optional(element) || (element.files[0].size <= param * 1000000)
+        }, 'File size must be less than {0} MB');
+
+        $.validator.addMethod('nosinttecom', function (value) {
+		    return /^[\w.-]+@(?!sinttecom)[a-zA-z]+[\.]+[\w.-]+$/.test(value);
+		}, 'please, insert a different email other than Sinttecom.');
 
 
         if($('#Guardar').length > 0 ){
@@ -442,6 +446,54 @@
                 }
             });
         }
+
+        if(($('input[type=radio][name=posee_correo]:checked').val() === "si")){
+            document.getElementById("div_correo_electrónico").classList.remove('hidden');
+			$("#correo_personal").rules("add", {
+				required: true,
+				email: true,
+                remote: "../ajax/validacion/expedientes/checkemail.php",
+				nosinttecom: true,
+				messages: {
+					required: "Por favor, ingrese el correo electrónico",
+					email: "Asegúrese que el texto ingresado este en formato de email",
+					remote: "Ese correo ya existe, por favor escriba otro",
+					nosinttecom: "Por favor, ingrese bien el email y sin el dominio sinttecom"
+				}
+			});		
+        }else if($('input[type=radio][name=posee_correo]:checked').val() === "no"){
+            document.getElementById("div_correo_electrónico").classList.add('hidden');
+			$("#correo_personal").val('');
+            $("#correo_personal").rules("remove");
+            $("#correo_personal").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+            $("#correo_personal").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            $("#correo_personal-error").css("display", "none");			
+        }
+		$('input[type=radio][name=posee_correo]').on('change', function () {
+            if(($('input[type=radio][name=posee_correo]:checked').val() === "si")){
+                document.getElementById("div_correo_electrónico").classList.remove('hidden');
+				$("#correo_personal").rules("add", {
+					required: true,
+					email: true,
+					remote: "../ajax/validacion/expedientes/checkemail.php",
+					nosinttecom: true,
+					messages: {
+						required: "Por favor, ingrese el correo electrónico",
+						email: "Asegúrese que el texto ingresado este en formato de email",
+						remote: "Ese correo ya existe, por favor escriba otro",
+						nosinttecom: "Por favor, ingrese bien el email y sin el dominio sinttecom"
+					}
+				});	
+            }else if($('input[type=radio][name=posee_correo]:checked').val() === "no"){
+                document.getElementById("div_correo_electrónico").classList.add('hidden');
+				$("#correo_personal").val('');
+				$("#correo_personal").rules("remove");
+				$("#correo_personal").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+				$("#correo_personal").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+				$("#correo_personal-error").css("display", "none");	
+            }
+        });
+
         if(($('input[type=radio][name=tel_movil]:checked').val() === "si")){
             document.getElementById("div_movil").classList.remove('hidden');
 	        $("#telmov").rules("add", {
@@ -1074,6 +1126,8 @@
         var numempleado = $("#numempleado").val();
         var puesto = $("#puesto").val();
         var estudios = $("#estudios").val();
+        var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
+        var correo_personal = $("#correo_personal").val();
         var calle = $("#calle").val();
         var ninterior = $("#ninterior").val();
         var nexterior = $("#nexterior").val();
@@ -1173,6 +1227,8 @@
         fd.append('numempleado', numempleado);
         fd.append('puesto', puesto);
         fd.append('estudios', estudios);
+        fd.append('posee_correo', posee_correo);
+        fd.append('correo_personal', correo_personal);
         fd.append('calle', calle);
         fd.append('ninterior', ninterior);
         fd.append('nexterior', nexterior);

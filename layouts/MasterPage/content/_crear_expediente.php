@@ -136,6 +136,28 @@
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Posee correo electrónico personal?</label>
+                                    <div class="group flex mt-3 items-center">
+                                        <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" checked="">
+                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                        Sí
+                                        </label>
+                                        <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2">
+                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                        No
+                                        </label>
+                                    </div>
+                                </div>     
+                                <div id="div_correo_electrónico">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Correo</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email text-gray-400 text-lg"></i></div>
+                                        <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="correo_personal" name="correo_personal" placeholder="Input">
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Datos de ubicación</label>
                                     <hr>
                                 </div>
