@@ -767,7 +767,7 @@
 						data: {
 							"editarid": "<?php echo $Editarid; ?>"
 						}
-					}
+					},
 					nosinttecom: true,
 					messages: {
 						required: "Por favor, ingrese el correo electrónico",
