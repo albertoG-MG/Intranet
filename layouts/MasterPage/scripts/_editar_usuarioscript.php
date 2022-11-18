@@ -2,8 +2,12 @@
         $(document).ready(function() {
 
             $.validator.addMethod('filesize', function(value, element, param) {
-            return this.optional(element) || (element.files[0].size <= param * 1000000)
+                return this.optional(element) || (element.files[0].size <= param * 1000000)
             }, 'File size must be less than {0} MB');
+
+            $.validator.addMethod('sinttecom', function (value) {
+	            return /^[\w.-]+@sinttecom+[\.]+com$/.test(value);
+            }, 'not a valid Sinttecom email.');
 
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
@@ -47,7 +51,8 @@
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"
                                 }
-                            }
+                            },
+                            sinttecom: true
                         },
                         foto: {
                             extension: "jpg|jpeg|png",
@@ -78,7 +83,8 @@
                         correo: {
                             required: 'Por favor, ingrese un correo electrónico',
                             email: 'Asegúrese que el texto ingresado este en formato de email',
-                            remote: 'Ese correo ya existe, por favor, escriba otro'
+                            remote: 'Ese correo ya existe, por favor, escriba otro',
+                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
@@ -203,6 +209,7 @@
                 }
             });
 
+        <?php if(isset($fetch_subrol -> roles_id)){ ?>
             $.ajax({
                 type: "POST",
                 url: "../ajax/usuarios/geteditsubrol.php",
@@ -217,6 +224,7 @@
                     $("#subrol").html(response);
                 }
             });
+        <?php } ?>
 
             $("#rol").on("change", function () {
                 var x = $("#rol option:selected").val();
