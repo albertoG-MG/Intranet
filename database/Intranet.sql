@@ -2610,6 +2610,8 @@ CREATE TABLE `expedientes` (
   `users_id` int NOT NULL,
   `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
   `estudios` varchar(100) DEFAULT NULL,
+  `posee_correo` varchar(100) DEFAULT NULL,
+	`correo_personal` varchar(100) DEFAULT NULL UNIQUE,
   `puesto` varchar(100) DEFAULT NULL,
   `calle` varchar(100) DEFAULT NULL,
   `num_interior` varchar(100) DEFAULT NULL,

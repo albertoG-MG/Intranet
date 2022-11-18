@@ -91,6 +91,14 @@
                                 <div class="text-left md:text-right"><span><?php if($ver->eestudios == null){ echo "No hay datos"; }else{echo "{$ver->eestudios}";} ?></span></div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+						        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Posee correo personal?</label>
+						        <div class="text-left md:text-right"><span><?php if($ver -> eposee_correo == null){ echo "No hay datos"; }else{echo "{$ver -> eposee_correo}";} ?></span></div>
+					        </div>				
+                            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Correo personal</label>
+                                <div class="text-left md:text-right"><span><?php if($ver -> ecorreo_personal == null){ echo "No hay datos"; }else{echo "{$ver -> ecorreo_personal}";} ?></span></div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 border-b-2 border-gray-200 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Situación</label>
                                 <div class="text-left md:text-right"><span><?php if($ver -> esituacion_del_empleado == null){ echo "No hay datos"; }else{echo "{$ver -> esituacion_del_empleado}";} ?></span></div>
                             </div>
