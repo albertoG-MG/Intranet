@@ -19,6 +19,26 @@
                             error.insertAfter(element.parent('.group.flex'));
                         }
                     },
+                    invalidHandler: function(e, validator){
+                        if(!($('#error-container').length)){
+                            this.$div = $('<div id="error-container" class="grid grid-cols-1 mt-5 mx-7"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex items-center"><div class="p-2"><div class="flex items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-lg">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#Guardar");
+                        }
+                        $("#arrayerrors").html(""); 
+                        $.each(validator.errorMap, function( index, value ) { 
+                            this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
+                            $("#arrayerrors").append(this.$arrayerror);
+                        });
+                    },
+                    highlight: function(element) {
+                        var elem = $(element);
+                        $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                        $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                    },
+                    unhighlight: function(element) {
+                        var elem = $(element);	
+                        $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                        $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                    },
                     rules: {
                         usuario: {
                             required: true,
@@ -241,3 +261,8 @@
             });
         });
     </script>
+    <style>
+        .error{
+            color: rgb(244 63 94);
+        }
+    </style>
