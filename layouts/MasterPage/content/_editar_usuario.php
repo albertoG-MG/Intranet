@@ -145,6 +145,38 @@
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Rol</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="rol" name="rol">
+                  <option value="">Sin rol</option>
+                  <?php
+                  $roles = roles::FetchRol();
+                  foreach ($roles as $rq) {
+                    if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" && $rq->nombre != "Superadministrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false" && $rq->nombre != "Superadministrador" && $rq->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "true" && $rq->nombre=="Tecnico"){
+                      echo "<option value='" . $rq->id . "'";
+                      if ($row->roles_id == $rq->id) echo 'selected="selected"';
+                      echo ">";
+                      echo "" . $rq->nombre . "";
+                      echo "</option>";
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Subrol</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="subrol" name="subrol">
+                  <option value="">Sin subrol</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Departamento</label>
               <div class="group flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
@@ -160,36 +192,6 @@
                     echo "</option>";
                   }
                   ?>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Rol</label>
-              <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
-                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="rol" name="rol">
-                  <option value="">Sin rol</option>
-                  <?php
-                  $roles = roles::FetchRol();
-                  foreach ($roles as $rq) {
-                    echo "<option value='" . $rq->id . "'";
-                    if ($row->roles_id == $rq->id) echo 'selected="selected"';
-                    echo ">";
-                    echo "" . $rq->nombre . "";
-                    echo "</option>";
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Subrol</label>
-              <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
-                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="subrol" name="subrol">
-                  <option value="">Sin subrol</option>
                 </select>
               </div>
             </div>
