@@ -219,9 +219,22 @@
                 }
 		    });
 
+            var role_selected = $('#rol').find('option:selected').text();
+            if (role_selected == "Sin rol"){
+                $('#correo').attr('disabled', "true").addClass("bg-gray-200");
+                $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
+                $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                $("#correo").val('');
+                $("#correo").rules("remove");
+                $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                $("#correo").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#correo-error").css("display", "none");
+            
+            }
+
             $("#rol").on("change", function () {
                 var role_selected = $('#rol').find('option:selected').text();
-                if (role_selected == "Superadministrador" || role_selected == "Administrador"){
+                if (role_selected == "Superadministrador" || role_selected == "Administrador" || role_selected == "Sin rol"){
                     $('#correo').attr('disabled', "true").addClass("bg-gray-200");
                     $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
                     $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
