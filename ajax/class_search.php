@@ -32,12 +32,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         $nombre = $_POST["nombre"];
         $apellido_pat = $_POST["apellido_pat"];
         $apellido_mat = $_POST["apellido_mat"];
-        $correo = $_POST["correo"];
+        $correo = null;
         $departamento = null;
         $roles=null;
         $subroles = null;
         $filename=null;
         $foto=null;
+
+        if(!(empty($_POST["correo"]))){
+            $correo = $_POST["correo"];
+        }
 
         if(!(empty($_POST["departamento"]))){
             $departamento = $_POST["departamento"];

@@ -50,16 +50,28 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        var email = row[5].split("@");
-                        return (
-                            "<div class='py-3 text-left'>" +
-                            "<div class='flex items-center'>" +
-                            "<div class='mr-2'>" +
-                            "<i class='w-6 h-6 mdi mdi-email text-gray-400 text-lg'></i>" +
-                            "</div>" +
-                            "<span class='font-medium'>" + email[0] + ' @ ' + email[1] + "</span>" +
-                            "</div>" +
-                            "</div>");
+                        if(row[5] != null){
+                            var email = row[5].split("@");
+                            return (
+                                "<div class='py-3 text-left'>" +
+                                "<div class='flex items-center'>" +
+                                "<div class='mr-2'>" +
+                                "<i class='w-6 h-6 mdi mdi-email text-gray-400 text-lg'></i>" +
+                                "</div>" +
+                                "<span class='font-medium'>" + email[0] + ' @ ' + email[1] + "</span>" +
+                                "</div>" +
+                                "</div>");
+                        }else{
+                            return (
+                                "<div class='py-3 text-left'>" +
+                                "<div class='flex items-center'>" +
+                                "<div class='mr-2'>" +
+                                "<i class='w-6 h-6 mdi mdi-email text-gray-400 text-lg'></i>" +
+                                "</div>" +
+                                "<span class='font-medium'>Sin correo eletrónico</span>"+
+                                "</div>" +
+                                "</div>");
+                        }
                     }
                 },
                 {

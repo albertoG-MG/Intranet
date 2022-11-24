@@ -220,17 +220,91 @@
 		    });
 
             $("#rol").on("change", function () {
-                var x = $("#rol option:selected").val();
-                $.ajax({
-                    type: "POST",
-                    url: "../ajax/usuarios/getsubrol.php",
-                    data: {
-                        "roles_id": x
-                    },
-                    success: function (response) {
-                        $("#subrol").html(response);
-                    }
-                });
+                var role_selected = $('#rol').find('option:selected').text();
+                if (role_selected == "Superadministrador" || role_selected == "Administrador"){
+                    $('#correo').attr('disabled', "true").addClass("bg-gray-200");
+                    $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
+                    $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                    $("#correo").val('');
+			        $("#correo").rules("remove");
+			        $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			        $("#correo").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			        $("#correo-error").css("display", "none");
+                }else if(role_selected == "Usuario externo"){
+                    $('#correo').attr('disabled', "true").addClass("bg-gray-200");
+                    $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
+                    $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                    $("#correo").val('');
+			        $("#correo").rules("remove");
+			        $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+			        $("#correo").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			        $("#correo-error").css("display", "none");
+                    var x = $("#rol option:selected").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax/usuarios/getsubrol.php",
+                        data: {
+                            "roles_id": x
+                        },
+                        success: function (response) {
+                            $("#subrol").html(response);
+                        }
+                    });
+                }else if(role_selected == "Director general"){
+                    $('#correo').removeAttr('disabled').removeClass("bg-gray-200");
+                    $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
+                    $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                    $("#correo").rules("add", {
+                        required: true,
+                        email: true,
+                        remote: '../ajax/validacion/crear_usuarios/checkemail.php',
+                        sinttecom: true,
+                        messages: {
+                            required: 'Por favor, ingrese un correo electrónico',
+                            email: 'Asegúrese que el texto ingresado este en formato de email',
+                            remote: 'Ese correo ya existe, por favor escriba otro',
+                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
+                        }
+                    });
+                    var x = $("#rol option:selected").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax/usuarios/getsubrol.php",
+                        data: {
+                            "roles_id": x
+                        },
+                        success: function (response) {
+                            $("#subrol").html(response);
+                        }
+                    });
+                }else{
+                    $('#correo').removeAttr('disabled').removeClass("bg-gray-200");
+                    $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
+                    $('#departamento').removeAttr('disabled').removeClass("bg-gray-200");
+                    $("#correo").rules("add", {
+                        required: true,
+                        email: true,
+                        remote: '../ajax/validacion/crear_usuarios/checkemail.php',
+                        sinttecom: true,
+                        messages: {
+                            required: 'Por favor, ingrese un correo electrónico',
+                            email: 'Asegúrese que el texto ingresado este en formato de email',
+                            remote: 'Ese correo ya existe, por favor escriba otro',
+                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
+                        }
+                    });
+                    var x = $("#rol option:selected").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "../ajax/usuarios/getsubrol.php",
+                        data: {
+                            "roles_id": x
+                        },
+                        success: function (response) {
+                            $("#subrol").html(response);
+                        }
+                    });
+                }
             });
         });
     </script>
