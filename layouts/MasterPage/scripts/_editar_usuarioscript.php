@@ -122,6 +122,7 @@
                         '</button>');
                         check_user_logged().then((response) => {
 		                    if(response == "true"){
+                                window.addEventListener('beforeunload', unloadHandler);
                                 var fd = new FormData();
                                 var usuario = $("input[name=usuario]").val();
                                 var password = $("input[name=password]").val();
@@ -163,6 +164,7 @@
                                                 text: "Se ha editado un usuario exitosamente!",
                                                 icon: "success"
                                             }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
                                                 $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' type='submit' id='grabar' name='grabar'>Guardar</button>");
                                                 window.location.href = "users.php";	
                                                 });
@@ -212,6 +214,13 @@
                         }
                     });
                 })
+            }
+
+            function unloadHandler(e) {
+                // Cancel the event
+                e.preventDefault();
+                // Chrome requires returnValue to be set
+                e.returnValue = '';
             }
 
             $('input[name="foto"]').change(function(e) {
