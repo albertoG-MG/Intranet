@@ -169,7 +169,7 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(100) NOT NULL,
   `apellido_pat` varchar(100) NOT NULL,
   `apellido_mat` varchar(100) NOT NULL,
-  `correo` varchar(100) NOT NULL UNIQUE,
+  `correo` varchar(100) DEFAULT NULL UNIQUE,
   `password` varchar(100) NOT NULL,
   `departamento_id` int DEFAULT NULL,
   `roles_id` int DEFAULT NULL,
