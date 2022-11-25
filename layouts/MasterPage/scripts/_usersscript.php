@@ -36,15 +36,27 @@
             "columns": [{
                     data: null,
                     render: function(data, type, row) {
-                        return (
+                        if(row[7] === null){
+                            return (
                             "<div class='py-3 text-left'>" +
                             "<div class='flex items-center'>" +
                             "<div class='mr-2 shrink-0'>" +
-                            "<img class='w-6 h-6 rounded-full' src='https://randomuser.me/api/portraits/men/1.jpg'>" +
+                            "<img class='w-6 h-6 rounded-full' src='../src/img/default-user.png'>"+
                             "</div>" +
                             "<span>" + row[2] + ' ' + row[3] + ' ' + row[4] + "</span>" +
                             "</div>" +
                             "</div>");
+                        }else{
+                            return (
+                            "<div class='py-3 text-left'>" +
+                            "<div class='flex items-center'>" +
+                            "<div class='mr-2 shrink-0'>" +
+                            "<img class='w-6 h-6 rounded-full' src='"+row[7]+"'>"+
+                            "</div>" +
+                            "<span>" + row[2] + ' ' + row[3] + ' ' + row[4] + "</span>" +
+                            "</div>" +
+                            "</div>");
+                        }
                     }
                 },
                 {
