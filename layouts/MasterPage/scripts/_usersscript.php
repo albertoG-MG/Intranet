@@ -77,10 +77,27 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        return (
+                        if(row[11] == "ACTIVO"){
+                            return (
                             "<div class='py-3 text-left'>" +
                             "<span class='bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs'>Active</span>" +
                             "</div>");
+                        }else if(row[11] == "INACTIVO"){
+                            return (
+                            "<div class='py-3 text-left'>" +
+                            "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>Inactive</span>" +
+                            "</div>");
+                        }else if(row[11] === null && row[8] != "Superadministrador" && row[8] != "Administrador" && row[8] != "Usuario externo"){
+                            return (
+                            "<div class='py-3 text-left'>" +
+                            "<span class='bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs'>Pending</span>" +
+                            "</div>");
+                        }else{
+                            return (
+                            "<div class='py-3 text-left'>" +
+                            "<span class='bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs'>No status</span>" +
+                            "</div>");
+                        }
                     }
                 },
                 {

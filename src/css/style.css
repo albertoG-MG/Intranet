@@ -1314,6 +1314,14 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(233 213 255 / var(--tw-bg-opacity)) !important;
 }
+.bg-yellow-200 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity)) !important;
+}
+.bg-red-200 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity)) !important;
+}
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25 !important;
 }
@@ -1582,6 +1590,10 @@ select {
 .text-rose-500 {
   --tw-text-opacity: 1 !important;
   color: rgb(244 63 94 / var(--tw-text-opacity)) !important;
+}
+.text-yellow-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(202 138 4 / var(--tw-text-opacity)) !important;
 }
 .opacity-50 {
   opacity: 0.5 !important;
