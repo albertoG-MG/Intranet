@@ -63,9 +63,9 @@ class permissions {
 	public static function Check_if_user_has_permission($user_logged_id, $user_logged_rol, $user_information_rol){
 		if($user_logged_rol == "Administrador" && $user_information_rol != "Superadministrador"){
 			return "true";
-		}else if(Permissions::CheckPermissions($user_logged_id, "Crear usuario") == "true" && Permissions::CheckPermissions($user_logged_id, "Vista tecnico") == "false" && $user_information_rol != "Superadministrador" && $user_information_rol != "Administrador"){
+		}else if(Permissions::CheckPermissions($user_logged_id, "Acceso a usuarios") == "true" && Permissions::CheckPermissions($user_logged_id, "Vista tecnico") == "false" && $user_information_rol != "Superadministrador" && $user_information_rol != "Administrador"){
 			return "true";
-		}else if (Permissions::CheckPermissions($user_logged_id, "Crear usuario") == "true" && Permissions::CheckPermissions($user_logged_id, "Vista tecnico") == "true" && $user_information_rol == "Tecnico"){
+		}else if (Permissions::CheckPermissions($user_logged_id, "Acceso a usuarios") == "true" && Permissions::CheckPermissions($user_logged_id, "Vista tecnico") == "true" && $user_information_rol == "Tecnico"){
 			return "true";
 		}else{
 			return "false";
