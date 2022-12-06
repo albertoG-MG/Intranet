@@ -1,42 +1,66 @@
 <?php
 include_once __DIR__ . "/../config/conexion.php";
+require_once('environment.php');
 $object = new connection_database();
 session_start();
+
+$site_key = $_ENV['SITE_KEY'];
+$secret_key = $_ENV['SECRET_KEY'];
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     header('Location: dashboard.php');
     die();
 } else {
 
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $user = $_POST['username'];
-        $password = $_POST['password'];
-        $password = sha1($password);
+    if(isset($_POST["token"])){
+        $data = array(
+            'secret' => "$secret_key",
+            'response' => $_POST['token']
+        );
+        
+        $verify = curl_init();
+        curl_setopt($verify, CURLOPT_URL,   "https://hcaptcha.com/siteverify");
+        curl_setopt($verify, CURLOPT_POST, true);
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        $verifyResponse = curl_exec($verify);
+        $responseData = json_decode($verifyResponse);
 
-        $data = $object->_db->prepare("SELECT * FROM usuarios WHERE username= :user AND password= :password");
-        $data->bindParam("user", $user, PDO::PARAM_STR);
-        $data->bindParam("password", $password, PDO::PARAM_STR);
-        $data->execute();
-        $count = $data->rowCount();
-        $row = $data->fetch(PDO::FETCH_OBJ);
-        if ($count > 0) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['id'] = $row->id;
-            $_SESSION['nombre'] = $row->nombre;
-            $_SESSION['usuario'] = $row->username;
-            $_SESSION['apellidopat'] = $row->apellido_pat;
-            $_SESSION['apellidomat'] = $row->apellido_mat;
-            $_SESSION['correo'] = $row->correo;
-            $_SESSION['rol'] = $row->roles_id;
-            if(isset($_SESSION['redirectURL'])){
-                $link = $_SESSION['redirectURL'];
-                unset($_SESSION['redirectURL']);
-                exit(json_encode(array("success", "{$link}")));
-            }else{
-                exit(json_encode(array("success", "dashboard.php")));
+        if($responseData->success){
+
+            if (isset($_POST['username']) && isset($_POST['password'])) {
+                $user = $_POST['username'];
+                $password = $_POST['password'];
+                $password = sha1($password);
+
+                $data = $object->_db->prepare("SELECT * FROM usuarios WHERE username= :user AND password= :password");
+                $data->bindParam("user", $user, PDO::PARAM_STR);
+                $data->bindParam("password", $password, PDO::PARAM_STR);
+                $data->execute();
+                $count = $data->rowCount();
+                $row = $data->fetch(PDO::FETCH_OBJ);
+                if ($count > 0) {
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['id'] = $row->id;
+                    $_SESSION['nombre'] = $row->nombre;
+                    $_SESSION['usuario'] = $row->username;
+                    $_SESSION['apellidopat'] = $row->apellido_pat;
+                    $_SESSION['apellidomat'] = $row->apellido_mat;
+                    $_SESSION['correo'] = $row->correo;
+                    $_SESSION['rol'] = $row->roles_id;
+                    if(isset($_SESSION['redirectURL'])){
+                        $link = $_SESSION['redirectURL'];
+                        unset($_SESSION['redirectURL']);
+                        exit(json_encode(array("success", "{$link}")));
+                    }else{
+                        exit(json_encode(array("success", "dashboard.php")));
+                    }
+                } else {
+                    exit(json_encode(array("failed")));
+                }
             }
-        } else {
-            exit(json_encode(array("failed")));
+        }else {
+            exit(json_encode(array("captcha-error")));
         }
     }
 }
@@ -116,7 +140,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex -mx-3">
+                            <div class="flex flex-col items-center">
+                                <div class="h-captcha" data-sitekey="<?php echo $site_key;  ?>" data-callback="verifyCaptcha"></div>
+                                <div id="h-captcha-error"></div>
+                            </div>
+                            <div class="flex -mx-3 mt-5">
                                 <div class="w-full px-3 mb-5">
                                     <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Ingresar</button>
                                 </div>
@@ -128,8 +156,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
         </div>
     </div>
     <script src="../src/js/bundle.js"></script>
+    <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
     <script>
         $(document).ready(function() {
+
+            var hcaptcha_response = '';
+
             if ($('#Acceder').length > 0) {
                 $('#Acceder').validate({
                     errorPlacement: function(error, element) {
@@ -152,46 +184,70 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         }
                     },
                     submitHandler: function(form) {
-                        var fd = new FormData();
-                        var user = $("input[name=user]").val();
-                        var password = $("input[name=passwordLogin]").val();
-                        fd.append('username', user);
-                        fd.append('password', password);
+                        var hcaptcha_response = hcaptcha.getResponse();
+                        if(hcaptcha_response.length == 0) {
+                            document.getElementById('h-captcha-error').innerHTML = '<span style="color:red;">El captcha es requerido.</span>';
+                            return false;
+                        }else{
+                            var fd = new FormData();
+                            var user = $("input[name=user]").val();
+                            var password = $("input[name=passwordLogin]").val();
+                            var token = $('[name=h-captcha-response]').val();
+                            fd.append('username', user);
+                            fd.append('password', password);
+                            fd.append('token', token);
 
-                        $.ajax({
-                            url: 'login.php',
-                            type: 'POST',
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function(data) {
-                                var array = $.parseJSON(data);
-                                if (array[0] == "success") {
-                                    Swal.fire({
-                                        title: "Autentificación exitosa",
-                                        text: "Bienvenido!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        window.location.href = array[1]; 
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        title: "Error",
-                                        text: "El username ó la contraseña son incorrectos",
-                                        icon: "error"
-                                    });
+                            $.ajax({
+                                url: 'login.php',
+                                type: 'POST',
+                                data: fd,
+                                processData: false,
+                                contentType: false,
+                                success: function(data) {
+                                    var array = $.parseJSON(data);
+                                    if (array[0] == "success") {
+                                        Swal.fire({
+                                            title: "Autentificación exitosa",
+                                            text: "Bienvenido!",
+                                            icon: "success"
+                                        }).then(function() {
+                                            window.location.href = array[1]; 
+                                        });
+                                    } else if(array[0] == "failed") {
+                                        Swal.fire({
+                                            title: "Error",
+                                            text: "El username ó la contraseña son incorrectos",
+                                            icon: "error"
+                                        });
+                                    } else if(array[0] == "captcha-error"){
+                                        Swal.fire({
+                                            title: "Error",
+                                            text: "El token del captcha no existe",
+                                            icon: "error"
+                                        });
+                                    }
+                                },
+                                error: function(data) {
+                                    $("#ajax-error").text('Fail to send request');
                                 }
-                            },
-                            error: function(data) {
-                                $("#ajax-error").text('Fail to send request');
-                            }
-                        });
+                            });
+                        }
                         return false;
                     }
                 });
             }
         });
+
+        function verifyCaptcha(token) {
+            hcaptcha_response = token;
+            document.getElementById('h-captcha-error').innerHTML = '';
+        }
+
     </script>
 </body>
-
+<style>
+    div{
+        border:0;
+    }
+</style>
 </html>
