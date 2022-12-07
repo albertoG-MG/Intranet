@@ -149,6 +149,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                     <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Ingresar</button>
                                 </div>
                             </div>
+                            <div class="text-center">
+	                            <a href="forgotpassword.php" class="text-blue-600 hover:underline cursor-pointer">¿Olvidaste tu contraseña?</a>
+                            </div>
                         </div>
                     </form>
                 </div>
