@@ -18,7 +18,7 @@ if(isset($_POST["password"], $_POST["token"], $_POST["password_confirm"])){
 			if(strlen($password) < 8 ){
 				die(json_encode(array("error", "La contraseña debe ser 8 dígitos ó más")));
 			}else if(!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+$/", $password)){
-			    die(json_encode(array("error", "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*)")));
+			    die(json_encode(array("error", "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) y no se permiten espacios")));
 			}else if(empty($password)){
 			    die(json_encode(array("error", "La contraseña no puede estar vacía")));
 			}else if(empty($password_confirm)){
@@ -212,7 +212,7 @@ if($_GET['token'] == null){
                                     password: {
                                         required: 'Por favor, ingrese una contraseña',
                                         minlength: "La contraseña debe de contener 8 caracteres como mínimo",
-                                        password_validation: "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*)"
+                                        password_validation: "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) y no se permiten espacios"
                                     },
                                     password_confirm:{
                                         required: "La confirmación de la contraseña no puede estar vacía",
