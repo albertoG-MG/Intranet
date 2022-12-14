@@ -139,6 +139,7 @@ if(isset($_POST["email"])){
 							'</svg>'+
 							'Cargando...'+
 						'</button>');
+						window.addEventListener('beforeunload', unloadHandler);
                         var fd = new FormData();
                         var email = $("input[name=email]").val();
                         fd.append('email', email);
@@ -157,6 +158,7 @@ if(isset($_POST["email"])){
                                         text: "Se ha enviado un correo electrónico con instrucciones para cambiar la contraseña",
                                         icon: "success"
                                     }).then(function() {
+										window.removeEventListener('beforeunload', unloadHandler);
 										$('#submit-button').html(
 											"<button disabled class='w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center mt-5'>"+
 												"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>"+
@@ -172,6 +174,7 @@ if(isset($_POST["email"])){
 										text: "Ya se generó un token para este correo",
 										icon: "error"
 									}).then(function() {
+										window.removeEventListener('beforeunload', unloadHandler);
 										$('#submit-button').html(
 											"<button class='w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center mt-5'>"+
 												"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>"+
@@ -191,6 +194,14 @@ if(isset($_POST["email"])){
                 });
             }
         });
+
+		function unloadHandler(e) {
+			// Cancel the event
+			e.preventDefault();
+			// Chrome requires returnValue to be set
+			e.returnValue = '';
+		}
+
     </script>
 	<style>
 		.error{
