@@ -9,6 +9,18 @@ $crud = new crud();
 
 if(isset($_POST["email"])){
 	$email = $_POST["email"];
+	if(empty($email)){
+		die(json_encode(array("error", "Por favor, ingresa un correo electrónico")));
+	}else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)){
+		die(json_encode(array("error", "Asegúrese que el texto ingresado este en formato de email")));
+	}else{
+		$email_exists = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo");
+		$email_exists -> execute(array(":correo" => $email));
+		$countemail = $email_exists->rowCount();
+		if($countemail == 0){
+			die(json_encode(array("error", "El correo no existe")));
+		}
+	}
 	$check_email_password = $object -> _db -> prepare("SELECT * FROM usuarios INNER JOIN reset_password ON reset_password.user_id=usuarios.id WHERE usuarios.correo=:usercorreo");
 	$check_email_password -> execute(array(':usercorreo' => $email));
 	$count_email = $check_email_password -> rowCount();
@@ -53,9 +65,9 @@ if(isset($_POST["email"])){
 			echo 'Message was not sent.' .$correo;
 			echo 'Mailer error: ' . $mail->ErrorInfo;
 		}
-		exit(json_encode(array("success", "login.php")));
+		die(json_encode(array("success", "Se ha enviado un correo electrónico con instrucciones para cambiar la contraseña")));
 	}else{
-		exit(json_encode(array("failed")));
+		die(json_encode(array("error", "Ya se generó un token para este correo, espere a su eliminación")));
 	}
 }
 ?>
@@ -101,6 +113,11 @@ if(isset($_POST["email"])){
 	<script src="../src/js/bundle.js"></script>
     <script>
         $(document).ready(function() {
+
+			$.validator.addMethod('email_verification', function (value) {
+	            return /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
+            }, 'not a valid email.');
+
             if ($('#Enviar').length > 0) {
                 $('#Enviar').validate({
                     errorPlacement: function(error, element) {
@@ -119,14 +136,14 @@ if(isset($_POST["email"])){
                     rules: {
                         email: {
                             required: true,
-							email: true,
+							email_verification: true,
 							remote: '../ajax/validacion/forgotpassword/checkemail.php'
                         }
                     },
                     messages: {
                         email: {
                             required: 'Por favor, ingresa un correo electrónico',
-							email: 'Asegúrese que el texto ingresado este en formato de email',
+							email_verification: 'Asegúrese que el texto ingresado este en formato de email',
 							remote: 'Ese correo no existe'
                         }
                     },
@@ -155,7 +172,7 @@ if(isset($_POST["email"])){
                                 if (array[0] == "success") {
                                     Swal.fire({
                                         title: "Éxito!",
-                                        text: "Se ha enviado un correo electrónico con instrucciones para cambiar la contraseña",
+                                        text: array[1],
                                         icon: "success"
                                     }).then(function() {
 										window.removeEventListener('beforeunload', unloadHandler);
@@ -166,12 +183,12 @@ if(isset($_POST["email"])){
 												"</svg>"+		
 												"<span>Cambiar contraseña</span>"+
 											"</button>");
-                                        window.location.href = array[1]; 
+                                        window.location.href = 'login.php'; 
                                     });
-                                }else if(array[0] == "failed"){
+                                }else if(array[0] == "error"){
 									Swal.fire({
 										title: "Error!",
-										text: "Ya se generó un token para este correo",
+										text: array[1],
 										icon: "error"
 									}).then(function() {
 										window.removeEventListener('beforeunload', unloadHandler);
