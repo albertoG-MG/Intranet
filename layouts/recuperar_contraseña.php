@@ -2,6 +2,81 @@
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
+if(isset($_POST["password"], $_POST["token"], $_POST["password_confirm"])){
+	//Serverside validation
+	$token = $_POST["token"];
+	$select_user_information = $object -> _db -> prepare("SELECT * FROM reset_password WHERE reset_link_token=:token");
+    $select_user_information -> execute(array(':token' => $token));
+	$count_token_information = $select_user_information -> rowCount();
+	if($count_token_information > 0){
+		date_default_timezone_set("America/Monterrey");
+		$today_date = date("Y-m-d H:i:s");
+		$fetch_token_information = $select_user_information -> fetch(PDO::FETCH_OBJ);
+		if($fetch_token_information -> exp_date >= $today_date){
+			$password = $_POST["password"];
+			$password_confirm = $_POST["password_confirm"];
+			if(strlen($password) < 8 ){
+				die(json_encode(array("error", "La contraseña debe ser 8 dígitos ó más")));
+			}else if(!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+$/", $password)){
+			    die(json_encode(array("error", "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*)")));
+			}else if(empty($password)){
+			    die(json_encode(array("error", "La contraseña no puede estar vacía")));
+			}else if(empty($password_confirm)){
+				die(json_encode(array("error", "La confirmación de la contraseña no puede estar vacía")));
+			}else if(strlen($password_confirm) < 8 ){
+				die(json_encode(array("error", "La confirmación de la contraseña debe de tener como mínimo 8 caracteres")));
+			}else if($password_confirm!=$password){
+				die(json_encode(array("error", "Las contraseñas no coinciden")));
+			}else{
+				$blacklist_query = $object ->_db->prepare("SELECT password from blacklist_password");
+				$blacklist_query -> execute();
+				$fetch_blacklist = $blacklist_query -> fetchAll(PDO::FETCH_ASSOC);
+				foreach($fetch_blacklist as $badword_blacklist){
+					if(strpos($password, $badword_blacklist["password"]) !== false)
+					{
+						die(json_encode(array("error", "La contraseña no puede contener: " .$badword_blacklist["password"]. ", Por favor, modifique la contraseña")));
+					}
+				}
+				$password_repeat = $object ->_db->prepare("SELECT historial_password.password, historial_password.today_date FROM usuarios INNER JOIN reset_password ON reset_password.user_id=usuarios.id INNER JOIN historial_password ON historial_password.user_id=usuarios.id WHERE reset_password.reset_link_token=:token");
+				$password_repeat -> execute(array(':token' => $token));
+				$check_password_repeat = $password_repeat -> rowCount();
+				$password_sha1 = sha1($password); 
+				if($check_password_repeat > 0){
+					date_default_timezone_set("America/Monterrey");
+					$date_database = date('y-m-d');
+					$database_date = date_create($date_database);
+					date_format($database_date,"y-m-d");
+					$fetch_password_repeat = $password_repeat -> fetchAll(PDO::FETCH_ASSOC);
+					foreach($fetch_password_repeat as $repeated_password){
+						if(!preg_match("/^[0-9a-f]{40}$/i", $repeated_password["password"])){
+							$hashing = sha1($repeated_password["password"]);
+						}else{
+							$hashing = $repeated_password["password"];
+						}
+						if($hashing == $password_sha1){
+							$used_date = date_create($repeated_password["today_date"]);
+							date_format($used_date,"y-m-d");
+							$difference=date_diff($used_date, $database_date);
+							if($difference -> days < 366){
+								die(json_encode(array("error", "Deben pasar más de 365 días para que esta contraseña vuelva a ser usable")));
+							}
+						}
+					}	
+				}
+				$insert_password = $object -> _db -> prepare("UPDATE usuarios INNER JOIN reset_password ON reset_password.user_id = usuarios.id SET password = :password WHERE reset_password.reset_link_token=:token");
+				$insert_password -> execute(array(':password' => $password_sha1, ':token' => $token));
+				$delete_token = $object -> _db -> prepare("DELETE FROM reset_password WHERE reset_link_token=:tokens");
+				$delete_token -> execute(array(':tokens' => $token));
+				die(json_encode(array("success", "La contraseña ha sido cambiada")));
+			}
+		}else{
+			die(json_encode(array("error", "El token ha expirado")));
+		}
+	}else{
+		die(json_encode(array("error", "La petición ha sido eliminada ó no existe")));
+	}
+}
+
 /*Si el token en la pagina no existe*/
 if($_GET['token'] == null){
     header('Location: login.php');
@@ -128,6 +203,8 @@ if($_GET['token'] == null){
                                         }
                                     },
                                     password_confirm: {
+                                        required: true,
+                                        minlength: 8,
                                         equalTo: "input[name=\"password\"]"
                                     }
                                 },
@@ -138,12 +215,14 @@ if($_GET['token'] == null){
                                         password_validation: "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*)"
                                     },
                                     password_confirm:{
+                                        required: "La confirmación de la contraseña no puede estar vacía",
+                                        minlength: "La confirmación de la contraseña debe de tener como mínimo 8 caracteres",
                                         equalTo: "Las contraseñas deben coincidir"
                                     }
                                 },
                                 submitHandler: function(form) {
                                     $('#submit-button').html(
-                                    '<button disabled type="button" class="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center mt-5">'+
+                                    '<button disabled type="button" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5">'+
                                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                         '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                         '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -151,8 +230,12 @@ if($_GET['token'] == null){
                                         'Cargando...'+
                                     '</button>');
                                     var fd = new FormData();
-                                    var email = $("input[name=email]").val();
-                                    fd.append('email', email);
+                                    var password = $("input[name=password]").val();
+                                    var password_confirm = $("input[name=password_confirm]").val();
+                                    var token = "<?php echo $_GET['token']; ?>";
+                                    fd.append('password', password);
+                                    fd.append('password_confirm', password_confirm);
+                                    fd.append('token', token);
 
                                     $.ajax({
                                         url: 'recuperar_contraseña.php',
@@ -161,7 +244,25 @@ if($_GET['token'] == null){
                                         processData: false,
                                         contentType: false,
                                         success: function(data) {
-                                            
+                                            var array = $.parseJSON(data);
+                                            if (array[0] == "success") {
+                                                Swal.fire({
+                                                title: "Éxito",
+                                                text: array[1],
+                                                icon: "success"
+                                                }).then(function() {
+                                                    $('#submit-button').html("<button disabled class='block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5'>Guardar</button>");
+                                                    window.location.href = 'login.php'; 
+                                                });
+                                            }else if(array[0] == "error") {
+                                                Swal.fire({
+                                                title: "Error",
+                                                text: array[1],
+                                                icon: "error"
+                                                }).then(function() {
+                                                    $('#submit-button').html("<button class='block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5'>Guardar</button>");
+                                                });
+                                            } 
                                         },
                                         error: function(data) {
                                             $("#ajax-error").text('Fail to send request');
