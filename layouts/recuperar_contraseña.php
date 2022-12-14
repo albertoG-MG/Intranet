@@ -229,6 +229,7 @@ if($_GET['token'] == null){
                                         '</svg>'+
                                         'Cargando...'+
                                     '</button>');
+                                    window.addEventListener('beforeunload', unloadHandler);
                                     var fd = new FormData();
                                     var password = $("input[name=password]").val();
                                     var password_confirm = $("input[name=password_confirm]").val();
@@ -251,6 +252,7 @@ if($_GET['token'] == null){
                                                 text: array[1],
                                                 icon: "success"
                                                 }).then(function() {
+                                                    window.removeEventListener('beforeunload', unloadHandler);
                                                     $('#submit-button').html("<button disabled class='block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5'>Guardar</button>");
                                                     window.location.href = 'login.php'; 
                                                 });
@@ -260,6 +262,7 @@ if($_GET['token'] == null){
                                                 text: array[1],
                                                 icon: "error"
                                                 }).then(function() {
+                                                    window.removeEventListener('beforeunload', unloadHandler);
                                                     $('#submit-button').html("<button class='block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5'>Guardar</button>");
                                                 });
                                             } 
@@ -273,6 +276,14 @@ if($_GET['token'] == null){
                             });
                         }
                     });
+
+                    function unloadHandler(e) {
+                        // Cancel the event
+                        e.preventDefault();
+                        // Chrome requires returnValue to be set
+                        e.returnValue = '';
+                    }
+
                 </script>
                 <style>
                     .error{
