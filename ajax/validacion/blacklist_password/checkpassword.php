@@ -14,7 +14,7 @@ $fetch_badword = $query -> fetchAll(PDO::FETCH_ASSOC);
 foreach($fetch_badword as $badword){
     if(strpos($password, $badword["password"]) !== false)
     {
-        $output = "La contranseña no puede contener: " .$badword['password']. ", Por favor, modifique la contraseña";
+        $output = "La contraseña no puede contener: " .$badword['password']. ", Por favor, modifique la contraseña";
         break;
     }else{
         $output = true;
