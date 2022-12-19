@@ -9,6 +9,10 @@
 				return /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+$/.test(value);
 			}, 'at least one uppercase, one lowercase, one number and one symbol.');
 
+            $.validator.addMethod('names_validation', function (value) {
+				return /^(?=.{1,40}$)[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+			}, 'not a valid name.');
+
             $.validator.addMethod('filesize', function(value, element, param) {
                 return this.optional(element) || (element.files[0].size <= param * 1000000)
             }, 'File size must be less than {0} MB');
@@ -66,13 +70,16 @@
                             equalTo: "input[name=\"password\"]"
                         },
                         nombre: {
-                            required: true
+                            required: true,
+                            names_validation: true
                         },
                         apellido_pat: {
-                            required: true
+                            required: true,
+                            names_validation: true
                         },
                         apellido_mat: {
-                            required: true
+                            required: true,
+                            names_validation: true
                         },
                         correo: {
                             required: true,
@@ -103,13 +110,16 @@
                             equalTo: 'Las contraseñas no coinciden'
                         },
                         nombre: {
-                            required: 'Por favor, ingrese un nombre'
+                            required: 'Por favor, ingrese un nombre',
+                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         apellido_pat: {
-                            required: 'Por favor, ingrese un apellido paterno'
+                            required: 'Por favor, ingrese un apellido paterno',
+                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         apellido_mat: {
-                            required: 'Por favor, ingrese un apellido materno'
+                            required: 'Por favor, ingrese un apellido materno',
+                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         correo: {
                             required: 'Por favor, ingrese un correo electrónico',

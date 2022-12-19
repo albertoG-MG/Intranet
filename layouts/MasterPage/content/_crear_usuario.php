@@ -153,7 +153,7 @@
 
             <div class="grid grid-cols-1 mx-7">
               <ul id="nameHelpBlock" class="text-light text-sm text-gray-500">
-                <li>Se permiten acentos y ñ en el nombre, apellido paterno y materno.</li>
+                <li>Se permiten acentos, guiones(-) y ñ en el nombre, apellido paterno y materno.</li>
                 <li>Solo se permiten espacios para separar nombres (e.g Juan Peña / María del Socorro).</li> 
               </ul>
             </div>
