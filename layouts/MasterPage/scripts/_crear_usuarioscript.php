@@ -1,6 +1,10 @@
 <script>
         $(document).ready(function() {
 
+            $.validator.addMethod('user_validation', function (value) {
+				return /^(?=[a-zA-Z0-9._]{4,30}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(value);
+			}, 'not a valid user.');
+
             $.validator.addMethod('filesize', function(value, element, param) {
                 return this.optional(element) || (element.files[0].size <= param * 1000000)
             }, 'File size must be less than {0} MB');
@@ -31,17 +35,19 @@
                     },
                     highlight: function(element) {
                         var elem = $(element);
-                        $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                        $(element).removeClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
                         var elem = $(element);	
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                        $(element).addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
                     },
                     rules: {
                         usuario: {
                             required: true,
+                            minlength: 5,
+                            user_validation: true,
                             remote: '../ajax/validacion/crear_usuarios/checkusername.php'
                         },
                         password:{
@@ -74,6 +80,8 @@
                     messages: {
                         usuario: {
                             required: 'Por favor, ingresa un usuario',
+                            minlength: 'El usuario debe de contener 8 caracteres como mínimo',
+                            user_validation: 'Usuario no válido',
                             remote: 'Ese usuario ya existe, por favor escriba otro'
                         },
                         password:{
