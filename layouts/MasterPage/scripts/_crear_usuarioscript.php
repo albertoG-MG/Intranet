@@ -5,6 +5,10 @@
 				return /^(?=[a-zA-Z0-9._]{4,30}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(value);
 			}, 'not a valid user.');
 
+            $.validator.addMethod('password_validation', function (value) {
+				return /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+$/.test(value);
+			}, 'at least one uppercase, one lowercase, one number and one symbol.');
+
             $.validator.addMethod('filesize', function(value, element, param) {
                 return this.optional(element) || (element.files[0].size <= param * 1000000)
             }, 'File size must be less than {0} MB');
@@ -51,10 +55,14 @@
                             remote: '../ajax/validacion/crear_usuarios/checkusername.php'
                         },
                         password:{
-                            required: true
+                            required: true,
+                            minlength: 8,
+                            password_validation: true,
+			                remote: "../ajax/validacion/crear_usuarios/checkpassword.php"
                         },
                         cpassword:{
                             required: true,
+                            minlength: 8,
                             equalTo: "input[name=\"password\"]"
                         },
                         nombre: {
@@ -85,10 +93,13 @@
                             remote: 'Ese usuario ya existe, por favor escriba otro'
                         },
                         password:{
-                            required: 'Por favor, ingresa una contraseña'
+                            required: 'Por favor, ingresa una contraseña',
+                            minlength: "La contraseña debe de contener 8 caracteres como mínimo",
+                            password_validation: "Contraseña no válida"
                         },
                         cpassword:{
                             required: 'Por favor, confirme su contraseña',
+                            minlength: "La confirmación de la contraseña debe de tener como mínimo 8 caracteres",
                             equalTo: 'Las contraseñas no coinciden'
                         },
                         nombre: {
@@ -126,6 +137,7 @@
                                 var fd = new FormData();
                                 var usuario = $("input[name=usuario]").val();
                                 var password = $("input[name=password]").val();
+                                var confirmar_password = $("input[name=cpassword]").val();
                                 var nombre = $("input[name=nombre]").val();
                                 var apellido_pat = $("input[name=apellido_pat]").val();
                                 var apellido_mat = $("input[name=apellido_mat]").val();
@@ -138,6 +150,7 @@
                                 var app = "usuario";
                                 fd.append('usuario', usuario);
                                 fd.append('password', password);
+                                fd.append('confirmar_password', confirmar_password);
                                 fd.append('nombre', nombre);
                                 fd.append('apellido_pat', apellido_pat);
                                 fd.append('apellido_mat', apellido_mat);
