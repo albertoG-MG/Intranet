@@ -17,9 +17,9 @@
                 return this.optional(element) || (element.files[0].size <= param * 1000000)
             }, 'File size must be less than {0} MB');
 
-            $.validator.addMethod('sinttecom', function (value) {
-	            return /^[\w.-]+@sinttecom+[\.]+com$/.test(value);
-            }, 'not a valid Sinttecom email.');
+            $.validator.addMethod('email_verification', function (value) {
+	            return /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
+            }, 'not a valid email.');
 
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
@@ -83,9 +83,8 @@
                         },
                         correo: {
                             required: true,
-                            email: true,
-                            remote: '../ajax/validacion/crear_usuarios/checkemail.php',
-                            sinttecom: true
+                            email_verification: true,
+                            remote: '../ajax/validacion/crear_usuarios/checkemail.php'
                         },
                         foto: {
                             extension: "jpg|jpeg|png",
@@ -123,9 +122,7 @@
                         },
                         correo: {
                             required: 'Por favor, ingrese un correo electrónico',
-                            email: 'Asegúrese que el texto ingresado este en formato de email',
-                            remote: 'Ese correo ya existe, por favor escriba otro',
-                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
+                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
@@ -276,7 +273,7 @@
                 $("#correo").val('');
                 $("#correo").rules("remove");
                 $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                $("#correo").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $("#correo").addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
                 $("#correo-error").css("display", "none");
             
             }
@@ -290,7 +287,7 @@
                     $("#correo").val('');
 			        $("#correo").rules("remove");
 			        $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-			        $("#correo").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			        $("#correo").addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
 			        $("#correo-error").css("display", "none");
                 }else if(role_selected == "Usuario externo"){
                     $('#correo').attr('disabled', "true").addClass("bg-gray-200");
@@ -299,7 +296,7 @@
                     $("#correo").val('');
 			        $("#correo").rules("remove");
 			        $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-			        $("#correo").addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+			        $("#correo").addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
 			        $("#correo-error").css("display", "none");
                     var x = $("#rol option:selected").val();
                     $.ajax({
@@ -318,14 +315,11 @@
                     $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
                     $("#correo").rules("add", {
                         required: true,
-                        email: true,
+                        email_verification: true,
                         remote: '../ajax/validacion/crear_usuarios/checkemail.php',
-                        sinttecom: true,
                         messages: {
                             required: 'Por favor, ingrese un correo electrónico',
-                            email: 'Asegúrese que el texto ingresado este en formato de email',
-                            remote: 'Ese correo ya existe, por favor escriba otro',
-                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
+                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
                         }
                     });
                     var x = $("#rol option:selected").val();
@@ -345,14 +339,11 @@
                     $('#departamento').removeAttr('disabled').removeClass("bg-gray-200");
                     $("#correo").rules("add", {
                         required: true,
-                        email: true,
+                        email_verification: true,
                         remote: '../ajax/validacion/crear_usuarios/checkemail.php',
-                        sinttecom: true,
                         messages: {
                             required: 'Por favor, ingrese un correo electrónico',
-                            email: 'Asegúrese que el texto ingresado este en formato de email',
-                            remote: 'Ese correo ya existe, por favor escriba otro',
-                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
+                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
                         }
                     });
                     var x = $("#rol option:selected").val();
