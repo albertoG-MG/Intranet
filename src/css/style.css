@@ -1068,6 +1068,9 @@ select {
 .flex-col {
   flex-direction: column !important;
 }
+.flex-col-reverse {
+  flex-direction: column-reverse !important;
+}
 .flex-wrap {
   flex-wrap: wrap !important;
 }
