@@ -2126,6 +2126,11 @@ select {
     font-size: 1.5rem !important;
     line-height: 2rem !important;
   }
+
+  .md\:text-lg {
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
+  }
 }
 @media (min-width: 1024px) {
 
