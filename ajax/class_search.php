@@ -195,6 +195,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                         foreach($fetch_this_jerarquia as $rol_departamento){
                             if($rol_departamento["nombre"] == $_POST["rolnom"]){
                                 $departamento = $_POST["departamento"];
+                                break;
                             }else{
                                 $departamento = null;
                             }
