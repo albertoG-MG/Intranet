@@ -94,7 +94,7 @@
                     messages: {
                         usuario: {
                             required: 'Por favor, ingresa un usuario',
-                            minlength: 'El usuario debe de contener 8 caracteres como mínimo',
+                            minlength: 'El usuario debe de contener 5 caracteres como mínimo',
                             user_validation: 'Usuario no válido',
                             remote: 'Ese usuario ya existe, por favor escriba otro'
                         },
@@ -151,6 +151,7 @@
                                 var correo = $("input[name=correo]").val();
                                 var departamento = $("#departamento").val();
                                 var rol = $("#rol").val();
+                                var rolnom = $("#rol option:selected").text();
                                 var subrol = $("#subrol").val();
                                 var foto = $('#foto')[0].files[0];
                                 var method = "store";
@@ -164,6 +165,7 @@
                                 fd.append('correo', correo);
                                 fd.append('departamento', departamento);
                                 fd.append('roles_id', rol);
+                                fd.append('rolnom', rolnom);
                                 fd.append('subrol_id', subrol);
                                 fd.append('foto', foto);
                                 fd.append('method', method);
@@ -175,17 +177,26 @@
                                     processData: false,
                                     contentType: false,
                                     success: function(data) {
-                                        data = data.replace(/[\r\n]/gm, '');
-                                        if(data == "success"){
+                                        var array = $.parseJSON(data);
+                                        if (array[0] == "success") {
                                             Swal.fire({
                                                 title: "Usuario Creado",
-                                                text: "Se ha creado un usuario exitosamente!",
+                                                text: array[1],
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' type='submit' id='grabar' name='grabar'>Guardar</button>");
-                                                window.location.href = "users.php";	
-                                                });
+                                                $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
+                                                window.location.href = 'users.php'; 
+                                            });
+                                        } else if(array[0] == "error") {
+                                            Swal.fire({
+                                                title: "Error",
+                                                text: array[1],
+                                                icon: "error"
+                                            }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#submit-button').html("<button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
+                                            });
                                         }
                                     },
                                     error: function(data) {

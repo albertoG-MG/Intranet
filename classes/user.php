@@ -34,11 +34,22 @@ class user {
 	}
 	
 	public function CrearUsuarios(){
-		$crud = new crud();
-		$crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
-		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
-        'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto' => $this->foto]);
-	}
+        $crud = new crud();
+        if($this->filename != null && $this->foto !=null){
+            $location = "../src/img/imgs_uploaded/";
+            $ext = pathinfo($this->filename, PATHINFO_EXTENSION);
+            $uploadfile = User::tempnam_sfx($location, $ext);
+            if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                $crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)]);
+            }
+        }else{
+            $crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+            'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+            'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => $this->foto]);
+        }
+    }
 
     public static function FetchUsuarios(){
         $object = new connection_database();
@@ -60,6 +71,17 @@ class user {
     public static function EliminarUsuarios($id){
 		$crud = new crud();
 		$crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
-	} 
+	}
+    
+    public static function tempnam_sfx($path, $suffix){
+        do {
+            $file = $path."/".mt_rand().".".$suffix;
+            $fp = @fopen($file, 'x');
+        }
+        while(!$fp);
+    
+        fclose($fp);
+        return $file;
+    }
 }
 ?>

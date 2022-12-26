@@ -7,77 +7,239 @@ include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
+include_once __DIR__ . "/../config/email_verification/class.verifyEmail.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 
+set_time_limit(0);
+
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
-    if(isset($_POST["usuario"]) && isset($_POST["password"]) && isset($_POST["nombre"]) && isset($_POST["apellido_pat"]) && isset($_POST["apellido_mat"]) && isset($_POST["correo"]) && isset($_POST["method"])){
-        $username = $_POST["usuario"];
+    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["method"])){
         
-        if($_POST["method"] == "store"){
-            $password = sha1($_POST["password"]);
-        }else if ($_POST["method"] == "edit"){
-            if(!(empty($_POST["password"]))){
-                $password = sha1($_POST["password"]); 
-            }else{
+        if(empty($_POST["usuario"])){
+            die(json_encode(array("error", "Por favor, ingresa un usuario")));
+        }else if(strlen($_POST["usuario"]) < 5){
+            die(json_encode(array("error", "El usuario debe de contener 5 caracteres como mínimo")));
+        }else if(!preg_match("/^(?=[a-zA-Z0-9._]{4,30}$)(?!.*[_.]{2})[^_.].*[^_.]$/", $_POST["usuario"])){
+            die(json_encode(array("error", "Usuario no válido")));
+        }else{
+            if($_POST["method"] == "store"){
+                $username = $_POST["usuario"];
+                $check_username = $object ->_db->prepare("SELECT username from usuarios where username=:username");
+                $check_username -> execute(array(":username" => $username));
+                $count_username = $check_username -> rowCount();
+                if($count_username > 0){
+                    die(json_encode(array("error", "Usuario repetido")));
+                }
+            }else if($_POST["method"] == "edit"){
+                $username = $_POST["usuario"];
+                $check_edit_username = $object ->_db->prepare("SELECT username from usuarios where username=:username and id!=:iduser");
+                $check_edit_username -> execute(array(":username" => $username, ":iduser" => $_POST["editarid"]));
+                $count_edit_username = $check_edit_username -> rowCount();
+                if($count_edit_username > 0){
+                    die(json_encode(array("error", "Usuario repetido")));
+                }
+            }		
+        }
+        
+        if(empty($_POST["password"]) && empty($_POST["confirmar_password"])){
+            if($_POST["method"] == "store"){
+                die(json_encode(array("error", "Por favor, llene los campos de contraseña y confirmar contraseña")));
+            }else if($_POST["method"] == "edit"){
                 $retrieve_password = $object -> _db -> prepare("SELECT * FROM usuarios where id=:editarid");
                 $retrieve_password -> bindParam('editarid', $_POST["editarid"], PDO::PARAM_INT);
                 $retrieve_password -> execute();
                 $retrieved = $retrieve_password -> fetch(PDO::FETCH_OBJ);
                 $password = $retrieved -> password;
             }
+        }else if(empty($_POST["password"]) && !(empty($_POST["confirmar_password"]))){
+            die(json_encode(array("error", "Por favor, ingrese la contraseña")));
+        }else if(!(empty($_POST["password"])) && empty($_POST["confirmar_password"])){
+            die(json_encode(array("error", "Por favor, ingrese la confirmación de la contraseña")));
+        }else if(!(empty($_POST["password"])) && !(empty($_POST["confirmar_password"]))){
+            if(strlen($_POST["password"]) < 8){
+                die(json_encode(array("error", "La contraseña debe de contener 8 caracteres como mínimo")));
+            }else if(strlen($_POST["confirmar_password"]) < 8){
+                die(json_encode(array("error", "La confirmación de la contraseña debe de tener como mínimo 8 caracteres")));
+            }else if(!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+$/", $_POST["password"])){
+                die(json_encode(array("error", "Contraseña no válida")));
+            }else if($_POST["confirmar_password"] != $_POST["password"]){
+                die(json_encode(array("error", "Las contraseñas no coinciden")));
+            }else{
+                $password = $_POST["password"];
+                $blacklist_serverside = $object ->_db->prepare("SELECT password from blacklist_password");
+                $blacklist_serverside -> execute();
+                $fetch_serverside_badword = $blacklist_serverside -> fetchAll(PDO::FETCH_ASSOC);
+                foreach($fetch_serverside_badword as $serverside_badword){
+                    if(strpos($password, $serverside_badword["password"]) !== false)
+                    {
+                        die(json_encode(array("error", "La contraseña no puede contener: " .$serverside_badword['password']. ", Por favor, modifique la contraseña")));
+                    }
+                }
+                $password = sha1($password);
+            }
         }
 
-        $nombre = $_POST["nombre"];
-        $apellido_pat = $_POST["apellido_pat"];
-        $apellido_mat = $_POST["apellido_mat"];
-        $correo = null;
-        $departamento = null;
-        $roles=null;
-        $subroles = null;
-        $filename=null;
-        $foto=null;
-
-        if(!(empty($_POST["correo"]))){
-            $correo = $_POST["correo"];
+        if(empty($_POST["nombre"])){
+            die(json_encode(array("error", "Por favor, ingrese un nombre")));
+        }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["nombre"])){
+            die(json_encode(array("error", "Nombre inválido")));
+        }else{
+            $nombre = $_POST["nombre"];
         }
 
-        if(!(empty($_POST["departamento"]))){
-            $departamento = $_POST["departamento"];
+        if(empty($_POST["apellido_pat"])){
+            die(json_encode(array("error", "Por favor, ingrese un apellido paterno")));
+        }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["apellido_pat"])){
+            die(json_encode(array("error", "Apellido paterno inválido")));
+        }else{
+            $apellido_pat = $_POST["apellido_pat"];
+        }
+
+        if(empty($_POST["apellido_mat"])){
+            die(json_encode(array("error", "Por favor, ingrese un apellido materno")));
+        }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["apellido_mat"])){
+            die(json_encode(array("error", "Apellido materno inválido")));
+        }else{
+            $apellido_mat = $_POST["apellido_mat"];
         }
 
         if(!(empty($_POST["roles_id"]))){
-            $roles = $_POST["roles_id"];
-        }
-
-        if(!(empty($_POST["subrol_id"]))){
-            $subroles = $_POST["subrol_id"];
+            $check_rol = $object -> _db -> prepare("SELECT * FROM roles WHERE id=:rolid");
+            $check_rol -> execute(array(':rolid' => $_POST["roles_id"]));
+            $count_rol = $check_rol -> rowCount();
+            if($count_rol > 0){
+                $roles = $_POST["roles_id"];
+            
+                //Correo	
+                $select_jerarquia = $object -> _db -> prepare("SELECT roles.nombre FROM jerarquia inner join roles ON roles.id=jerarquia.rol_id");
+                $select_jerarquia -> execute();
+                $fetch_jerarquia = $select_jerarquia -> fetchAll(PDO::FETCH_ASSOC);
+                
+                foreach($fetch_jerarquia as $rol_email){
+                    if($rol_email["nombre"] == $_POST["rolnom"]){
+                        if(empty($_POST["correo"])){
+                            die(json_encode(array("error", "Por favor, ingrese un correo electrónico")));
+                        }else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $_POST["correo"])){
+                            die(json_encode(array("error", "Asegúrese que el texto ingresado este en formato de email")));
+                        }else{
+                            if($_POST["method"] == "store"){
+                                
+                                $check_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo");
+                                $check_correo -> execute(array(":correo" => $_POST["correo"]));
+                                $count_email = $check_correo->rowCount();
+                                
+                                if($count_email > 0){
+                                    die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
+                                }	
+                            }else if($_POST["method"] == "edit"){
+                                $check_edit_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo and id!=:iduser");
+                                $check_edit_correo -> execute(array(":correo" => $_POST["correo"], ":iduser" => $_POST["editarid"]));
+                                $count_edit_correo = $check_edit_correo -> rowCount();
+                                
+                                if($count_edit_correo > 0){
+                                    die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
+                                }
+                            }
+                            $vmail = new verifyEmail();
+                            $vmail->setStreamTimeoutWait(20);
+                            $vmail->Debug= false;
+                            $vmail->Debugoutput= 'html';
+                            $vmail->setEmailFrom('viska@viska.is');
+                            if ($vmail->check($_POST["correo"])) {
+                                $correo = $_POST["correo"];
+                            } else if(verifyEmail::validate($_POST["correo"])) {
+                                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> válido, pero el nombre del servidor ó el dominio erróneos!')));
+                            } else {
+                                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> no válido!')));
+                            }
+                            $correo = $_POST["correo"];
+                        }
+                        break;		
+                    }else{
+                        $correo=null;
+                    }
+                }
+                
+                //SUBROLES
+                if($_POST["rolnom"] != "Superadministrador" && $_POST["rolnom"] != "Administrador" && $_POST["rolnom"] != "Sin rol"){
+                    if(!(empty($_POST["subrol_id"]))){	
+                        $check_subrol = $object -> _db -> prepare("SELECT * FROM subroles WHERE roles_id=:rolid && id=:subrolid");
+                        $check_subrol -> execute(array(':rolid' => $_POST["roles_id"], ':subrolid' => $_POST["subrol_id"]));
+                        $count_subrol = $check_subrol -> rowCount();						
+                        if($count_subrol == 0 )
+                        {
+                            die(json_encode(array("error", "No se encontró el subrol")));
+                        }else{
+                            $subroles = $_POST["subrol_id"];
+                        }
+                    }else{
+                        $subroles=null;
+                    }
+                }else{
+                    $subroles=null;
+                }	
+                
+                //DEPARTAMENTOS
+                if(!(empty($_POST["departamento"]))){
+                    $select_departamentos = $object -> _db -> prepare("SELECT * FROM departamentos WHERE id=:depaid");
+                    $select_departamentos -> execute(array(':depaid' => $_POST["departamento"]));
+                    $count_departamentos = $select_departamentos -> rowCount();
+                    if($count_departamentos == 0){
+                        die(json_encode(array("error", "No se encontró el departamento")));
+                    }else{
+                        $check_jerarquia = $object -> _db -> prepare("SELECT roles.nombre FROM jerarquia inner join roles ON roles.id=jerarquia.rol_id");
+                        $check_jerarquia -> execute();
+                        $fetch_this_jerarquia = $check_jerarquia -> fetchAll(PDO::FETCH_ASSOC);
+                        foreach($fetch_this_jerarquia as $rol_departamento){
+                            if($rol_departamento["nombre"] == $_POST["rolnom"]){
+                                $departamento = $_POST["departamento"];
+                            }else{
+                                $departamento = null;
+                            }
+                        }
+                    }
+                }else{
+                    $departamento = null;
+                }			
+            }else{
+                die(json_encode(array("error", "Ese rol no existe")));
+            }
+        }else{
+            $roles = null;
+            $correo = null;
+            $subroles = null;
+            $departamento = null;
         }
 
         if(isset($_FILES['foto']['name'])){
+            $allowed = array('jpeg', 'png', 'jpg');
             $filename = $_FILES['foto']['name'];
-            $location = "../src/img/tmp/".$filename;
-            $target_file = $location . basename($_FILES['foto']['name']);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            if(move_uploaded_file($_FILES['foto']['tmp_name'],$location)){
-                $image_base64 = base64_encode(file_get_contents('../src/img/tmp/'.$filename));
-                $foto = 'data:image/'.$imageFileType.';base64,'.$image_base64;
-                $files = glob('../src/img/tmp/*.{png,jpg,jpeg}', GLOB_BRACE); // get all file names
-                foreach($files as $file){ // iterate files
-                    if(is_file($file)) {
-                        unlink($file); // delete file
-                    }
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array($ext, $allowed)) {
+                die(json_encode(array("error", "Solo se permite jpg, jpeg y pngs")));
+            }else if($_FILES['foto']['size'] > 10485760){
+                die(json_encode(array("error", "Solo se permiten imágenes de un máximo de 10 megabytes")));
+            }else{
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimetype = finfo_file($finfo, $_FILES["foto"]["tmp_name"]);
+                finfo_close($finfo);
+                if($mimetype != "image/jpeg" && $mimetype != "image/png"){
+                    die(json_encode(array("error", "Por favor, asegurese que la imagen sea originalmente un archivo png, jpg y jpeg")));
                 }
             }
+            $foto=$_FILES['foto'];
+        }else{
+            $filename=null;
+            $foto=null;
         }
         switch($_POST["method"]){
 
             case "store":
                     $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $subroles, $filename, $foto);
                     $user->CrearUsuarios();
-                    exit("success");
+                    die(json_encode(array("success", "Se ha creado un usuario exitosamente!")));
                 break;
             
             case "edit":
