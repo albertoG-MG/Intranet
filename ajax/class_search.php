@@ -15,7 +15,7 @@ set_time_limit(0);
 
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
-    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["method"])){
+    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
         
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
@@ -192,112 +192,58 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
 
         if(!(empty($_POST["roles_id"]))){
-            $check_rol = $object -> _db -> prepare("SELECT * FROM roles WHERE id=:rolid");
-            $check_rol -> execute(array(':rolid' => $_POST["roles_id"]));
-            $count_rol = $check_rol -> rowCount();
-            if($count_rol > 0){
-                $roles = $_POST["roles_id"];
-            
-                //Correo	
-                $select_jerarquia = $object -> _db -> prepare("SELECT roles.nombre FROM jerarquia inner join roles ON roles.id=jerarquia.rol_id");
-                $select_jerarquia -> execute();
-                $fetch_jerarquia = $select_jerarquia -> fetchAll(PDO::FETCH_ASSOC);
-                
-                foreach($fetch_jerarquia as $rol_email){
-                    if($rol_email["nombre"] == $_POST["rolnom"]){
-                        if(empty($_POST["correo"])){
-                            die(json_encode(array("error", "Por favor, ingrese un correo electrónico")));
-                        }else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $_POST["correo"])){
-                            die(json_encode(array("error", "Asegúrese que el texto ingresado este en formato de email")));
-                        }else{
-                            if($_POST["method"] == "store"){
-                                
-                                $check_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo");
-                                $check_correo -> execute(array(":correo" => $_POST["correo"]));
-                                $count_email = $check_correo->rowCount();
-                                
-                                if($count_email > 0){
-                                    die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
-                                }	
-                            }else if($_POST["method"] == "edit"){
-                                $check_edit_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo and id!=:iduser");
-                                $check_edit_correo -> execute(array(":correo" => $_POST["correo"], ":iduser" => $_POST["editarid"]));
-                                $count_edit_correo = $check_edit_correo -> rowCount();
-                                
-                                if($count_edit_correo > 0){
-                                    die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
-                                }
-                            }
-                            $vmail = new verifyEmail();
-                            $vmail->setStreamTimeoutWait(20);
-                            $vmail->Debug= false;
-                            $vmail->Debugoutput= 'html';
-                            $vmail->setEmailFrom('viska@viska.is');
-                            if ($vmail->check($_POST["correo"])) {
-                                $correo = $_POST["correo"];
-                            } else if(verifyEmail::validate($_POST["correo"])) {
-                                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> válido, pero el nombre del servidor ó el dominio erróneos!')));
-                            } else {
-                                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> no válido!')));
-                            }
-                            $correo = $_POST["correo"];
-                        }
-                        break;		
-                    }else{
-                        $correo=null;
-                    }
-                }
-                
-                //SUBROLES
-                if($_POST["rolnom"] != "Superadministrador" && $_POST["rolnom"] != "Administrador" && $_POST["rolnom"] != "Sin rol"){
-                    if(!(empty($_POST["subrol_id"]))){	
-                        $check_subrol = $object -> _db -> prepare("SELECT * FROM subroles WHERE roles_id=:rolid && id=:subrolid");
-                        $check_subrol -> execute(array(':rolid' => $_POST["roles_id"], ':subrolid' => $_POST["subrol_id"]));
-                        $count_subrol = $check_subrol -> rowCount();						
-                        if($count_subrol == 0 )
-                        {
-                            die(json_encode(array("error", "No se encontró el subrol")));
-                        }else{
-                            $subroles = $_POST["subrol_id"];
-                        }
-                    }else{
-                        $subroles=null;
-                    }
-                }else{
-                    $subroles=null;
-                }	
-                
-                //DEPARTAMENTOS
-                if(!(empty($_POST["departamento"]))){
-                    $select_departamentos = $object -> _db -> prepare("SELECT * FROM departamentos WHERE id=:depaid");
-                    $select_departamentos -> execute(array(':depaid' => $_POST["departamento"]));
-                    $count_departamentos = $select_departamentos -> rowCount();
-                    if($count_departamentos == 0){
-                        die(json_encode(array("error", "No se encontró el departamento")));
-                    }else{
-                        $check_jerarquia = $object -> _db -> prepare("SELECT roles.nombre FROM jerarquia inner join roles ON roles.id=jerarquia.rol_id");
-                        $check_jerarquia -> execute();
-                        $fetch_this_jerarquia = $check_jerarquia -> fetchAll(PDO::FETCH_ASSOC);
-                        foreach($fetch_this_jerarquia as $rol_departamento){
-                            if($rol_departamento["nombre"] == $_POST["rolnom"]){
-                                $departamento = $_POST["departamento"];
-                                break;
-                            }else{
-                                $departamento = null;
-                            }
-                        }
-                    }
-                }else{
-                    $departamento = null;
-                }			
-            }else{
-                die(json_encode(array("error", "Ese rol no existe")));
-            }
-        }else{
-            $roles = null;
-            $correo = null;
-            $subroles = null;
-            $departamento = null;
+			$roles = $_POST["roles_id"];
+			
+			//SUBROLES	
+			$check_subrol = $object -> _db -> prepare("SELECT id, subrol_nombre FROM subroles WHERE roles_id=:rolid");
+			$check_subrol -> execute(array(':rolid' => $roles));
+			$fetch_subrol = $check_subrol -> fetchAll(PDO::FETCH_KEY_PAIR);
+			
+			$key_subrol = array_search($_POST['subrol_nom'], $fetch_subrol);
+			
+			if ($key_subrol !== false || $_POST['subrol_nom'] == "Sin subrol") {
+				if($key_subrol != $_POST["subrol_id"] && !(empty($_POST["subrol_id"]))){
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los subroles registrados")));
+				}else{
+					if(empty($_POST["subrol_id"])){
+						$subroles = null;
+					}else{
+						$subroles = $_POST["subrol_id"];
+					}
+				}
+			}else{
+				die(json_encode(array("error", "Por favor, asegurese que el subrol escogido se encuentre en el dropdown")));
+			}
+			
+			//DEPARTAMENTOS
+			
+			if($_POST['rolnom'] != "Superadministrador" && $_POST['rolnom'] != "Administrador" && $_POST['rolnom'] != "Usuario externo"){
+				$check_departamento = $object -> _db -> prepare("SELECT id, departamento FROM departamentos");
+				$check_departamento -> execute();
+				$fetch_departamento = $check_departamento -> fetchAll(PDO::FETCH_KEY_PAIR);
+				
+				$key_departamento = array_search($_POST['departamentonom'], $fetch_departamento);
+				
+				if ($key_departamento !== false || $_POST['departamentonom'] == "Sin departamento") {
+					if($key_departamento != $_POST["departamento"] && !(empty($_POST["departamento"]))){
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los departamentos registrados")));
+					}else{
+						if(empty($_POST["departamento"])){
+							$departamento = null;
+						}else{
+							$departamento = $_POST["departamento"];
+						}
+					}
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el departamento escogido se encuentre en el dropdown")));
+				}
+			}else{
+				$departamento = null;
+			}
+		}else{
+			$roles = null;
+			$subroles = null;
+			$departamento = null;
         }
 
         if(isset($_FILES['foto']['name'])){
