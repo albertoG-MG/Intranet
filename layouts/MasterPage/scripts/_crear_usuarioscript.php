@@ -324,37 +324,18 @@
 
             var role_selected = $('#rol').find('option:selected').text();
             if (role_selected == "Sin rol"){
-                $('#correo').attr('disabled', "true").addClass("bg-gray-200");
                 $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
-                $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                $("#correo").val('');
-                $("#correo").rules("remove");
-                $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                $("#correo").addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
-                $("#correo-error").css("display", "none");
-            
+                $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");       
             }
-
-            $("#rol").on("change", function () {
+			
+			$("#rol").on("change", function () {
                 var role_selected = $('#rol').find('option:selected').text();
                 if (role_selected == "Superadministrador" || role_selected == "Administrador" || role_selected == "Sin rol"){
-                    $('#correo').attr('disabled', "true").addClass("bg-gray-200");
                     $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
                     $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                    $("#correo").val('');
-			        $("#correo").rules("remove");
-			        $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-			        $("#correo").addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
-			        $("#correo-error").css("display", "none");
                 }else if(role_selected == "Usuario externo"){
-                    $('#correo').attr('disabled', "true").addClass("bg-gray-200");
                     $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
                     $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                    $("#correo").val('');
-			        $("#correo").rules("remove");
-			        $("#correo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-			        $("#correo").addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
-			        $("#correo-error").css("display", "none");
                     var x = $("#rol option:selected").val();
                     $.ajax({
                         type: "POST",
@@ -367,18 +348,8 @@
                         }
                     });
                 }else if(role_selected == "Director general"){
-                    $('#correo').removeAttr('disabled').removeClass("bg-gray-200");
                     $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
                     $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                    $("#correo").rules("add", {
-                        required: true,
-                        email_verification: true,
-                        remote: '../ajax/validacion/crear_usuarios/checkemail.php',
-                        messages: {
-                            required: 'Por favor, ingrese un correo electrónico',
-                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
-                        }
-                    });
                     var x = $("#rol option:selected").val();
                     $.ajax({
                         type: "POST",
@@ -391,18 +362,8 @@
                         }
                     });
                 }else{
-                    $('#correo').removeAttr('disabled').removeClass("bg-gray-200");
                     $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
                     $('#departamento').removeAttr('disabled').removeClass("bg-gray-200");
-                    $("#correo").rules("add", {
-                        required: true,
-                        email_verification: true,
-                        remote: '../ajax/validacion/crear_usuarios/checkemail.php',
-                        messages: {
-                            required: 'Por favor, ingrese un correo electrónico',
-                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
-                        }
-                    });
                     var x = $("#rol option:selected").val();
                     $.ajax({
                         type: "POST",

@@ -105,6 +105,44 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             $apellido_mat = $_POST["apellido_mat"];
         }
 
+        if(empty($_POST["correo"])){
+            die(json_encode(array("error", "Por favor, ingrese un correo electrónico")));
+        }else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $_POST["correo"])){
+            die(json_encode(array("error", "Asegúrese que el texto ingresado este en formato de email")));
+        }else{
+            if($_POST["method"] == "store"){
+                
+                $check_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo");
+                $check_correo -> execute(array(":correo" => $_POST["correo"]));
+                $count_email = $check_correo->rowCount();
+                
+                if($count_email > 0){
+                    die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
+                }	
+            }else if($_POST["method"] == "edit"){
+                $check_edit_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo and id!=:iduser");
+                $check_edit_correo -> execute(array(":correo" => $_POST["correo"], ":iduser" => $_POST["editarid"]));
+                $count_edit_correo = $check_edit_correo -> rowCount();
+                
+                if($count_edit_correo > 0){
+                    die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
+                }
+            }
+            $vmail = new verifyEmail();
+            $vmail->setStreamTimeoutWait(20);
+            $vmail->Debug= false;
+            $vmail->Debugoutput= 'html';
+            $vmail->setEmailFrom('viska@viska.is');
+            if ($vmail->check($_POST["correo"])) {
+                $correo = $_POST["correo"];
+            } else if(verifyEmail::validate($_POST["correo"])) {
+                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> válido, pero el nombre del servidor ó el dominio erróneos!')));
+            } else {
+                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> no válido!')));
+            }
+            $correo = $_POST["correo"];
+        }
+
         $check_session = $object -> _db -> prepare("SELECT nombre FROM roles WHERE id=:rolid");
         $check_session -> execute(array(':rolid' => $_POST["rolsession"]));
         $fetch_session = $check_session -> fetch(PDO::FETCH_OBJ);
