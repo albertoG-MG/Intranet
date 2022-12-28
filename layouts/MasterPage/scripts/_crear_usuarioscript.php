@@ -152,6 +152,7 @@
                                 var departamento = $("#departamento").val();
                                 var rol = $("#rol").val();
                                 var rolnom = $("#rol option:selected").text();
+                                var rolsession = <?php echo $_SESSION["rol"]; ?>;
                                 var subrol = $("#subrol").val();
                                 var foto = $('#foto')[0].files[0];
                                 var method = "store";
@@ -166,6 +167,7 @@
                                 fd.append('departamento', departamento);
                                 fd.append('roles_id', rol);
                                 fd.append('rolnom', rolnom);
+                                fd.append('rolsession', rolsession);
                                 fd.append('subrol_id', subrol);
                                 fd.append('foto', foto);
                                 fd.append('method', method);
@@ -195,6 +197,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#error-container').html("");
                                                 $('#submit-button').html("<button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
                                             });
                                         }

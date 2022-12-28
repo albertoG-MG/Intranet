@@ -15,7 +15,7 @@ set_time_limit(0);
 
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
-    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["method"])){
+    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["method"])){
         
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
@@ -103,6 +103,54 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             die(json_encode(array("error", "Apellido materno inválido")));
         }else{
             $apellido_mat = $_POST["apellido_mat"];
+        }
+
+        $check_session = $object -> _db -> prepare("SELECT nombre FROM roles WHERE id=:rolid");
+        $check_session -> execute(array(':rolid' => $_POST["rolsession"]));
+        $fetch_session = $check_session -> fetch(PDO::FETCH_OBJ);
+        
+        if($fetch_session -> nombre == "Superadministrador"){
+            $admin_privileges = $object -> _db -> prepare("SELECT id, nombre FROM roles");
+            $admin_privileges -> execute();
+            $fetch_admin_privileges = $admin_privileges -> fetchAll(PDO::FETCH_KEY_PAIR);
+            
+            $key_admin = array_search($_POST['rolnom'], $fetch_admin_privileges);
+            
+            if ($key_admin !== false || $_POST['rolnom'] == "Sin rol") {
+                if($key_admin != $_POST["roles_id"] && !(empty($_POST["roles_id"]))){
+                    die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los roles registrados")));
+                }
+            }else{
+                die(json_encode(array("error", "Por favor, asegurese que el rol escogido se encuentre en el dropdown")));
+            }		
+        }else if($fetch_session -> nombre == "Administrador" || Permissions::CheckPermissions($_POST["rolsession"], "Crear usuario") == "true" && Permissions::CheckPermissions($_POST["rolsession"], "Vista tecnico") == "false"){
+            $user_privileges = $object -> _db -> prepare("SELECT id, nombre FROM roles WHERE nombre NOT IN('Superadministrador', 'Administrador')");
+            $user_privileges -> execute();
+            $fetch_user_privileges = $user_privileges -> fetchAll(PDO::FETCH_KEY_PAIR);
+
+            $key_user = array_search($_POST['rolnom'], $fetch_user_privileges);
+
+            if ($key_user !== false || $_POST['rolnom'] == "Sin rol") {
+                if($key_user != $_POST["roles_id"] && !(empty($_POST["roles_id"]))){
+                    die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los roles registrados")));
+                }
+            }else{
+                die(json_encode(array("error", "Por favor, asegurese que el rol escogido se encuentre en el dropdown")));
+            }
+        }else if(Permissions::CheckPermissions($_POST["rolsession"], "Crear usuario") == "true" && Permissions::CheckPermissions($_POST["rolsession"], "Vista tecnico") == "true"){
+            $supervisor_privileges = $object -> _db -> prepare("SELECT id, nombre FROM roles WHERE nombre IN('Tecnico')");
+            $supervisor_privileges -> execute();
+            $fetch_supervisor_privileges = $supervisor_privileges -> fetchAll(PDO::FETCH_KEY_PAIR);
+            
+            $key_supervisor = array_search($_POST['rolnom'], $fetch_supervisor_privileges);
+            
+            if ($key_supervisor !== false || $_POST['rolnom'] == "Sin rol") {
+                if($key_supervisor != $_POST["roles_id"] && !(empty($_POST["roles_id"]))){
+                    die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los roles registrados")));
+                }
+            }else{
+                die(json_encode(array("error", "Por favor, asegurese que el rol escogido se encuentre en el dropdown")));
+            }
         }
 
         if(!(empty($_POST["roles_id"]))){

@@ -175,7 +175,7 @@
                   <?php
                   $roles = roles::FetchRol();
                   foreach ($roles as $row) {
-                    if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" && $row->nombre != "Superadministrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false" && $row->nombre != "Superadministrador" && $row->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "true" && $row->nombre=="Tecnico"){
+                    if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" && $row->nombre != "Superadministrador" && $row->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false" && $row->nombre != "Superadministrador" && $row->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "true" && $row->nombre=="Tecnico"){
                       echo "<option value='" . $row->id . "'>";
                       echo "" . $row->nombre . "";
                       echo "</option>";
