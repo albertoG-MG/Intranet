@@ -8,9 +8,9 @@ $object = new connection_database();
 	$fetch_rol_dep = $select_rol_dep -> fetch(PDO::FETCH_OBJ);
 	if($fetch_rol_dep -> rolnom == "Superadministrador"){
 		$table_data->get('serverside_user','id',array('id', 'username','usnom','apellido_pat','apellido_mat', 'correo', 'roles_id', 'foto_identificador', 'rolnom', 'depa_id', 'depanom', 'estatus'));
-	}else if ($fetch_rol_dep -> rolnom == "Admnistrador" || Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "false" && $fetch_rol_dep -> rolnom != "Superadministrador"){ 
+	}else if ($fetch_rol_dep -> rolnom == "Administrador" || Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "false" && $fetch_rol_dep -> rolnom != "Superadministrador"){ 
 		$table_data->get('serverside_user_vistausuarios','id',array('id', 'username','usnom','apellido_pat','apellido_mat', 'correo', 'roles_id', 'foto_identificador', 'rolnom', 'depa_id', 'depanom', 'estatus'));
-	}else if (Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "true" && $fetch_rol_dep -> rolnom != "Superadministrador" && $fetch_rol_dep -> rolnom != "Admnistrador"){
+	}else if (Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "true" && $fetch_rol_dep -> rolnom != "Superadministrador" && $fetch_rol_dep -> rolnom != "Administrador"){
 		$table_data->get('serverside_user_vistatecnicos','id',array('id', 'username','usnom','apellido_pat','apellido_mat', 'correo', 'roles_id', 'foto_identificador', 'rolnom', 'depa_id', 'depanom', 'estatus'));
 	}
 ?>
