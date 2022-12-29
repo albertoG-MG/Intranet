@@ -51,7 +51,7 @@
                             "<div class='py-3 text-left'>" +
                             "<div class='flex items-center'>" +
                             "<div class='mr-2 shrink-0'>" +
-                            "<img class='w-6 h-6 rounded-full' src='"+row[7]+"'>"+
+                            "<img class='w-6 h-6 rounded-full' src='../src/img/imgs_uploaded/"+row[7]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
                             "</div>" +
                             "<span>" + row[2] + ' ' + row[3] + ' ' + row[4] + "</span>" +
                             "</div>" +
