@@ -217,28 +217,28 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			
 			//DEPARTAMENTOS
 			
-			if($_POST['rolnom'] != "Superadministrador" && $_POST['rolnom'] != "Administrador" && $_POST['rolnom'] != "Usuario externo"){
-				$check_departamento = $object -> _db -> prepare("SELECT id, departamento FROM departamentos");
-				$check_departamento -> execute();
-				$fetch_departamento = $check_departamento -> fetchAll(PDO::FETCH_KEY_PAIR);
-				
-				$key_departamento = array_search($_POST['departamentonom'], $fetch_departamento);
-				
-				if ($key_departamento !== false || $_POST['departamentonom'] == "Sin departamento") {
-					if($key_departamento != $_POST["departamento"] && !(empty($_POST["departamento"]))){
-						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los departamentos registrados")));
-					}else{
+			$check_departamento = $object -> _db -> prepare("SELECT id, departamento FROM departamentos");
+			$check_departamento -> execute();
+			$fetch_departamento = $check_departamento -> fetchAll(PDO::FETCH_KEY_PAIR);
+			
+			$key_departamento = array_search($_POST['departamentonom'], $fetch_departamento);
+			
+			if ($key_departamento !== false || $_POST['departamentonom'] == "Sin departamento") {
+				if($key_departamento != $_POST["departamento"] && !(empty($_POST["departamento"]))){
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los departamentos registrados")));
+				}else{
+					if($_POST['rolnom'] != "Superadministrador" && $_POST['rolnom'] != "Administrador" && $_POST['rolnom'] != "Usuario externo"){
 						if(empty($_POST["departamento"])){
 							$departamento = null;
 						}else{
 							$departamento = $_POST["departamento"];
 						}
+					}else{
+						$departamento = null;
 					}
-				}else{
-					die(json_encode(array("error", "Por favor, asegurese que el departamento escogido se encuentre en el dropdown")));
 				}
 			}else{
-				$departamento = null;
+				die(json_encode(array("error", "Por favor, asegurese que el departamento escogido se encuentre en el dropdown")));
 			}
 		}else{
 			$roles = null;
