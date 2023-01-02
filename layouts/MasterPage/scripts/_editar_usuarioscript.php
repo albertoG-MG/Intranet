@@ -158,26 +158,36 @@
                                 var fd = new FormData();
                                 var usuario = $("input[name=usuario]").val();
                                 var password = $("input[name=password]").val();
+                                var confirmar_password = $("input[name=cpassword]").val();
                                 var nombre = $("input[name=nombre]").val();
                                 var apellido_pat = $("input[name=apellido_pat]").val();
                                 var apellido_mat = $("input[name=apellido_mat]").val();
                                 var correo = $("input[name=correo]").val();
                                 var departamento = $('#departamento').val();
+                                var departamentonom = $("#departamento option:selected").text();
                                 var rol = $("#rol").val();
+                                var rolnom = $("#rol option:selected").text();
+                                var rolsession = <?php echo $_SESSION["rol"]; ?>;
                                 var subrol = $("#subrol").val();
+                                var subrolnom = $("#subrol option:selected").text();
                                 var foto = $('#foto')[0].files[0];
                                 var editarid = <?php echo $editarid; ?>;
                                 var method = "edit";
                                 var app = "usuario";
                                 fd.append('usuario', usuario);
                                 fd.append('password', password);
+                                fd.append('confirmar_password', confirmar_password);
                                 fd.append('nombre', nombre);
                                 fd.append('apellido_pat', apellido_pat);
                                 fd.append('apellido_mat', apellido_mat);
                                 fd.append('correo', correo);
                                 fd.append('departamento', departamento);
+                                fd.append('departamentonom', departamentonom);
                                 fd.append('roles_id', rol);
+                                fd.append('rolnom', rolnom);
+                                fd.append('rolsession', rolsession);
                                 fd.append('subrol_id', subrol);
+                                fd.append('subrol_nom', subrolnom);
                                 fd.append('foto', foto);
                                 fd.append('editarid', editarid);
                                 fd.append('method', method);
@@ -189,17 +199,27 @@
                                     processData: false,
                                     contentType: false,
                                     success: function(data) {
-                                        data = data.replace(/[\r\n]/gm, '');
-                                        if(data == "success"){
+                                        var array = $.parseJSON(data);
+                                        if (array[0] == "success") {
                                             Swal.fire({
                                                 title: "Usuario Editado",
-                                                text: "Se ha editado un usuario exitosamente!",
+                                                text: array[1],
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' type='submit' id='grabar' name='grabar'>Guardar</button>");
-                                                window.location.href = "users.php";	
-                                                });
+                                                $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
+                                                window.location.href = 'users.php'; 
+                                            });
+                                        } else if(array[0] == "error") {
+                                            Swal.fire({
+                                                title: "Error",
+                                                text: array[1],
+                                                icon: "error"
+                                            }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#error-container').html("");
+                                                $('#submit-button').html("<button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
+                                            });
                                         }
                                     },
                                     error: function(data) {
