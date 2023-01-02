@@ -224,6 +224,14 @@
                 });
             }
 
+            if (!($("#usuario").val().length == 0)){
+				$("#usuario").valid();
+			}
+
+            if (!($("#correo").val().length == 0)){
+				$("#correo").valid();
+			}
+
             <?php
             if(basename($_SERVER['PHP_SELF']) == 'editar_usuario.php'){?>
                 var dropdown = document.getElementById('catalogos');
