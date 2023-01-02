@@ -22,36 +22,43 @@ foreach($fetch_badword as $badword){
 }
 
 if($output === true){
-    $sha1_password = sha1($password); 
-    $repeated_password = $object ->_db->prepare("SELECT historial_password.password, historial_password.today_date FROM historial_password WHERE historial_password.user_id=:editarid");
-    $repeated_password -> execute(array(':editarid' => $editarid));
-    $check_repeated_password = $repeated_password -> rowCount();
-    date_default_timezone_set("America/Monterrey");
-    $upload_date = date('y-m-d');
-    $date_upload = date_create($upload_date);
-    date_format($date_upload,"y-m-d");
-    if($check_repeated_password > 0){
-        $fetch_repeated_password = $repeated_password -> fetchAll(PDO::FETCH_ASSOC);
-        foreach($fetch_repeated_password as $password_repeated){
-            if(!(is_sha1($password_repeated["password"]))){
-                $hash_password = sha1($password_repeated["password"]);
-            }else{
-                $hash_password = $password_repeated["password"];
-            }
-            if($hash_password == $sha1_password){
-                $date_used = date_create($password_repeated["today_date"]);
-                date_format($date_used,"y-m-d");
-                $diff=date_diff($date_used, $date_upload);
-                if($diff -> days < 366){
-                    $output = "Deben pasar más de 365 días para que esta contraseña vuelva a ser usable";
-                    break;
+    $sha1_password = sha1($password);
+    $check_password = $object ->_db->prepare("SELECT password from usuarios WHERE id=:ideditar");
+    $check_password->execute(array(':ideditar' => $editarid));
+    $fetch_password = $check_password -> fetch(PDO::FETCH_OBJ);
+    if($fetch_password -> password == $sha1_password){
+        $output = "La nueva contraseña no puede ser igual a la vieja contraseña, por favor, escriba otra contraseña";
+    }else{ 
+        $repeated_password = $object ->_db->prepare("SELECT historial_password.password, historial_password.today_date FROM historial_password WHERE historial_password.user_id=:editarid");
+        $repeated_password -> execute(array(':editarid' => $editarid));
+        $check_repeated_password = $repeated_password -> rowCount();
+        date_default_timezone_set("America/Monterrey");
+        $upload_date = date('y-m-d');
+        $date_upload = date_create($upload_date);
+        date_format($date_upload,"y-m-d");
+        if($check_repeated_password > 0){
+            $fetch_repeated_password = $repeated_password -> fetchAll(PDO::FETCH_ASSOC);
+            foreach($fetch_repeated_password as $password_repeated){
+                if(!(is_sha1($password_repeated["password"]))){
+                    $hash_password = sha1($password_repeated["password"]);
+                }else{
+                    $hash_password = $password_repeated["password"];
                 }
-            }else{
-                $output=true;
+                if($hash_password == $sha1_password){
+                    $date_used = date_create($password_repeated["today_date"]);
+                    date_format($date_used,"y-m-d");
+                    $diff=date_diff($date_used, $date_upload);
+                    if($diff -> days < 366){
+                        $output = "Deben pasar más de 365 días para que esta contraseña vuelva a ser usable";
+                        break;
+                    }
+                }else{
+                    $output=true;
+                }
             }
+        }else{
+            $output=true;
         }
-    }else{
-        $output=true;
     }
 }
 
