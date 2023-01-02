@@ -278,17 +278,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "edit":
                 if(isset($_POST["editarid"])){
                     $ideditar = $_POST["editarid"];
-                    if($foto == null && $filename == null){
-                        $selectphoto = $object -> _db -> prepare("select nombre_foto, foto from usuarios where id=:iduser");
-                        $selectphoto -> bindParam("iduser", $ideditar, PDO::PARAM_INT);
-                        $selectphoto -> execute();
-                        $row = $selectphoto ->fetch(PDO::FETCH_OBJ);
-                        $foto = $row->foto;
-                        $filename = $row->nombre_foto;
-                    }
                     $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $subroles, $filename, $foto);
                     $user->EditarUsuarios($ideditar);
-                    exit("success");
+                    die(json_encode(array("success", "Se ha editado un usuario exitosamente!")));
                 }
                 break;
             

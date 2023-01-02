@@ -62,11 +62,29 @@ class user {
     } 
     
     public function EditarUsuarios($id){
-		$crud = new crud();
-		$crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
-		'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
-		'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto' => $this->foto], "id=:iduser", ['iduser' => $id]);
-	} 
+        $crud = new crud();
+        $object = new connection_database();
+        if($this->foto == null && $this->filename == null){
+            $selectphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:iduser");
+            $selectphoto -> bindParam("iduser", $id, PDO::PARAM_INT);
+            $selectphoto -> execute();
+            $row = $selectphoto ->fetch(PDO::FETCH_OBJ);
+            $this->foto = $row->foto_identificador;
+            $this->filename = $row->nombre_foto;
+            $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+            'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+            'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => $this->foto], "id=:iduser", ['iduser' => $id]);
+        }else{
+            $location = "../src/img/imgs_uploaded/";
+            $ext = pathinfo($this->filename, PATHINFO_EXTENSION);
+            $uploadfile = User::tempnam_sfx($location, $ext);
+            if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)], "id=:iduser", ['iduser' => $id]);
+            }
+        }
+    } 
 
     public static function EliminarUsuarios($id){
 		$crud = new crud();
