@@ -252,6 +252,24 @@
 				$("#correo").valid();
 			}
 
+            <?php  if($row->foto_identificador != null && $row->nombre_foto != null){ ?>
+				if (window.FileReader && window.Blob) {
+					console.log('FileReader ó Blob es compatible con este navegador.');
+					$('#svg').addClass("hidden");
+                    checkImage("../src/img/imgs_uploaded/<?php echo $row->foto_identificador; ?>", function(){ $('#preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/imgs_uploaded/<?php echo $row->foto_identificador; ?>'); $('#archivo').text("<?php echo $row->nombre_foto; ?>"); }, function(){ $('#preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/not_found.jpg'); $('#archivo').text("No se encontró la imagen"); } );
+				}else{
+					console.error('FileReader ó Blob no es compatible con este navegador.');
+					checkImage("../src/img/imgs_uploaded/<?php echo $row->foto_identificador; ?>", function(){ $('#archivo').text("<?php echo $row->nombre_foto; ?>"); }, function(){ $('#archivo').text("No se encontró la imagen"); } );
+				}				
+			<?php } ?>
+
+            function checkImage(imageSrc, good, bad) {
+                var img = new Image();
+                img.onload = good; 
+                img.onerror = bad;
+                img.src = imageSrc;
+            }
+
             <?php
             if(basename($_SERVER['PHP_SELF']) == 'editar_usuario.php'){?>
                 var dropdown = document.getElementById('catalogos');
@@ -283,29 +301,72 @@
                 e.returnValue = '';
             }
 
-            $('input[name="foto"]').change(function(e) {
-                if($("#foto").val() != ''){
-                    var file = e.target.files[0].name;
-                    var lastDot = file.lastIndexOf('.');
-                    var extension = file.substring(lastDot + 1);
-                    const archivo = this.files[0];
-                    if(extension == "jpeg" || extension == "jpg" || extension == "png") {
-                        $('#preview').removeClass('hidden');
-                        $('#preview').addClass('w-10 h-10');
-                        $('#svg').addClass('hidden');
-                        $('#archivo').text(file);
-                        let reader = new FileReader();
-                        reader.onload = function(event){
-                            $('#preview').attr('src', event.target.result);
-                        }
-                        reader.readAsDataURL(archivo);
-                    }else{
-                        $('#preview').addClass('hidden');
-                        $('#svg').removeClass('hidden');
-                        $('#archivo').text("El archivo " +file+ " no es una imagen");
+            $('input[name="foto"]').change(function() {
+                if (window.FileReader && window.Blob) {
+                    var files = $('input#foto').get(0).files;
+                    if (files.length > 0) {
+                        var file = files[0];
+                        console.log('Archivo cargado: ' + file.name);
+                        console.log('Blob mime: ' + file.type);
+
+                        var fileReader = new FileReader();
+                        fileReader.onerror = function (e) {
+                            console.error('ERROR', e);
+                        };
+                        fileReader.onloadend = function (e) {
+                            var arr = new Uint8Array(e.target.result);
+                            var header = '';
+                            for (var i = 0; i < arr.length; i++) {
+                                header += arr[i].toString(16);
+                            }
+                            console.log('Encabezado: ' + header);
+
+                            // Check the file signature against known types
+                            var type = 'unknown';
+                            switch (header) {
+                                case '89504e47':
+                                    type = 'image/png';
+                                    break;
+                                case 'ffd8ffe0':
+                                case 'ffd8ffe1':
+                                case 'ffd8ffe2':
+                                    type = 'image/jpeg';
+                                    break;
+                            }
+                            if (file.type !== type) {
+                                console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                                $('#preview').addClass('hidden');
+                                $('#svg').removeClass('hidden');
+                                $('#archivo').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                            } else {
+                                console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                                $('#preview').removeClass('hidden');
+                                $('#preview').addClass('w-10 h-10');
+                                $('#svg').addClass('hidden');
+                                $('#archivo').text(file.name);
+                                let reader = new FileReader();
+                                reader.onload = function (event) {
+                                    $('#preview').attr('src', event.target.result);
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        };
+                        fileReader.readAsArrayBuffer(file.slice(0, 4));
                     }
+                } else {
+                    console.error('FileReader ó Blob no es compatible con este navegador.');
+					if($("#foto").val() != ''){
+						var file = e.target.files[0].name;
+						var lastDot = file.lastIndexOf('.');
+						var extension = file.substring(lastDot + 1);
+						if(extension == "jpeg" || extension == "jpg" || extension == "png") {
+							$('#archivo').text(file);
+						}else{
+							$('#archivo').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+						}
+					}
                 }
-            });
+		    });
 
             var role_selected = $('#rol').find('option:selected').text();
             if (role_selected == "Superadministrador" || role_selected == "Administrador" || role_selected == "Sin rol"){
