@@ -5,9 +5,21 @@
                 return this.optional(element) || (element.files[0].size <= param * 1000000)
             }, 'File size must be less than {0} MB');
 
-            $.validator.addMethod('sinttecom', function (value) {
-	            return /^[\w.-]+@sinttecom+[\.]+com$/.test(value);
-            }, 'not a valid Sinttecom email.');
+            $.validator.addMethod('user_validation', function (value) {
+				return /^(?=[a-zA-Z0-9._]{4,30}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(value);
+			}, 'not a valid user.');
+			
+			$.validator.addMethod('password_validation', function (value) {
+				return /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+)?$/.test(value);
+			}, 'at least one uppercase, one lowercase, one number and one symbol.');
+			
+			$.validator.addMethod('names_validation', function (value) {
+				return /^(?=.{1,40}$)[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+			}, 'not a valid name.');
+			
+			$.validator.addMethod('email_verification', function (value) {
+	            return /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
+            }, 'not a valid email.');
 
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
@@ -21,7 +33,7 @@
                     },
                     invalidHandler: function(e, validator){
                         if(!($('#error-container').length)){
-                            this.$div = $('<div id="error-container" class="grid grid-cols-1 mt-5 mx-7"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex items-center"><div class="p-2"><div class="flex items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-lg">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#Guardar");
+                            this.$div = $('<div id="error-container" class="grid grid-cols-1 mt-5 mx-7"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex flex-col md:flex-row items-center"><div class="p-2"><div class="flex flex-col md:flex-row items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-sm md:text-lg text-center">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#Guardar");
                         }
                         $("#arrayerrors").html(""); 
                         $.each(validator.errorMap, function( index, value ) { 
@@ -31,17 +43,19 @@
                     },
                     highlight: function(element) {
                         var elem = $(element);
-                        $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                        $(element).removeClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
                         var elem = $(element);	
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                        $(element).addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
                     },
                     rules: {
                         usuario: {
                             required: true,
+                            minlength: 5,
+                            user_validation: true,
                             remote: {
                                 url: "../ajax/validacion/editar_usuarios/checkeditusername.php",
                                 type: "post",
@@ -50,21 +64,36 @@
                                 }
                             }
                         },
+                        password:{
+                            minlength: 8,
+                            password_validation: true,
+                            remote: {
+                                url: "../ajax/validacion/editar_usuarios/checkeditpassword.php",
+                                type: "post",
+                                data: {
+                                    "editarid": "<?php echo $editarid; ?>"
+                                }
+                            }
+                        },
                         cpassword:{
+                            minlength: 8,
                             equalTo: "input[name=\"password\"]"
                         },
                         nombre: {
-                            required: true
+                            required: true,
+                            names_validation: true
                         },
                         apellido_pat: {
-                            required: true
+                            required: true,
+                            names_validation: true
                         },
                         apellido_mat: {
-                            required: true
+                            required: true,
+                            names_validation: true
                         },
                         correo: {
                             required: true,
-                            email: true,
+                            email_verification: true,
                             remote: {
                                 url: "../ajax/validacion/editar_usuarios/checkeditemail.php",
                                 type: "post",
@@ -72,7 +101,6 @@
                                     "editarid": "<?php echo $editarid; ?>"
                                 }
                             },
-                            sinttecom: true
                         },
                         foto: {
                             extension: "jpg|jpeg|png",
@@ -82,29 +110,33 @@
                     messages: {
                         usuario: {
                             required: 'Por favor, ingresa un usuario',
-                            remote: 'Ese usuario ya existe, por favor, escribe otro'
+                            minlength: 'El usuario debe de contener 5 caracteres como mínimo',
+                            user_validation: 'Usuario no válido',
+                            remote: 'Ese usuario ya existe, por favor escriba otro'
                         },
                         password:{
-                            required: 'Por favor, ingresa una contraseña'
+                            minlength: "La contraseña debe de contener 8 caracteres como mínimo",
+                            password_validation: "Contraseña no válida"
                         },
                         cpassword:{
-                            required: 'Por favor, confirme su contraseña',
+                            minlength: "La confirmación de la contraseña debe de tener como mínimo 8 caracteres",
                             equalTo: 'Las contraseñas no coinciden'
                         },
                         nombre: {
-                            required: 'Por favor, ingrese un nombre'
+                            required: 'Por favor, ingrese un nombre',
+                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         apellido_pat: {
-                            required: 'Por favor, ingrese un apellido paterno'
+                            required: 'Por favor, ingrese un apellido paterno',
+                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         apellido_mat: {
-                            required: 'Por favor, ingrese un apellido materno'
+                            required: 'Por favor, ingrese un apellido materno',
+                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         correo: {
                             required: 'Por favor, ingrese un correo electrónico',
-                            email: 'Asegúrese que el texto ingresado este en formato de email',
-                            remote: 'Ese correo ya existe, por favor, escriba otro',
-                            sinttecom: 'Ingrese el email correctamente y que tenga el dominio sinttecom'
+                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
