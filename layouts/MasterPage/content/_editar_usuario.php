@@ -66,20 +66,31 @@
           </div>
 
           <form id="Guardar" method="post">
+
+
             <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Usuario</label>
-              <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="usuario" name="usuario" value="<?php echo "{$row->username}"; ?>" placeholder="Input 1">
-              </div>
-            </div>
+				      <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Usuario</label>
+				      <div class="group flex">
+					      <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg></div>
+					      <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="usuario" name="usuario" value="<?php echo "{$row->username}"; ?>" placeholder="Usuario">
+				      </div>
+				    </div>
+
+            <div class="grid grid-cols-1 mx-7">
+				      <ul id="usuarioHelpBlock" class="text-light text-sm text-gray-500">
+					      <li>Solo caracteres alfanúmericos, guión y punto sin espacios, acentos ni ñ.</li>
+					      <li>El guión bajo y el punto no pueden estar al final o al principio del usuario (e.g _username / username_ / .username / username.).</li> 
+					      <li>El guión bajo y el punto no pueden estar uno al lado del otro (e.g user_.name).</li>
+					      <li>El guión bajo o el punto no se pueden usar varias veces seguidas (e.g user__name / user..name).</li>
+				      </ul>
+				    </div>
 
             <div x-data="{showen:true}" class='grid grid-cols-1 mt-5 mx-7'>
               <div x-show="showen">
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña (Opcional)</label>
                 <div class="group flex" x-data="{isshow:false}">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="************">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="Contraseña">
                   <button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
                     <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -97,8 +108,8 @@
               <div x-show="showen">
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Confirmar contraseña</label>
                 <div class="group flex" x-data="{isshow:false}">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" x-bind:type="isshow ? 'text' : 'password'" type="password" id="cpassword" name="cpassword" placeholder="************">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="cpassword" name="cpassword" placeholder="Contraseña">
                   <button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
                     <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -112,48 +123,61 @@
               </div>
             </div>
 
+            <div class="grid grid-cols-1 mx-7">
+              <ul id="passwordHelpBlock" class="text-light text-sm text-gray-500">
+                <li>La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) sin espacios, acentos ni ñ.</li>
+              </ul>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
               <div class="grid grid-cols-1">
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
                 <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-edit-outline text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="nombre" name="nombre" value="<?php echo "{$row->nombre}"; ?>" placeholder="Input 2">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="nombre" name="nombre" value="<?php echo "{$row->nombre}"; ?>" placeholder="Nombre">
                 </div>
               </div>
               <div class="grid grid-cols-1">
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Apellido paterno</label>
                 <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-edit-outline text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="apellido_pat" name="apellido_pat" value="<?php echo "{$row->apellido_pat}"; ?>" placeholder="Input 3">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="apellido_pat" name="apellido_pat" value="<?php echo "{$row->apellido_pat}"; ?>" placeholder="Apellido paterno">
                 </div>
               </div>
               <div class="grid grid-cols-1">
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Apellido materno</label>
                 <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-edit-outline text-gray-400 text-lg"></i></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="apellido_mat" name="apellido_mat" value="<?php echo "{$row->apellido_mat}"; ?>" placeholder="Input 4">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="apellido_mat" name="apellido_mat" value="<?php echo "{$row->apellido_mat}"; ?>" placeholder="Apellido materno">
                 </div>
               </div>
             </div>
 
+            <div class="grid grid-cols-1 mx-7">
+				      <ul id="nameHelpBlock" class="text-light text-sm text-gray-500">
+					      <li>Se permiten acentos, guiones(-) y ñ en el nombre, apellido paterno y materno.</li>
+					      <li>Solo se permiten espacios para separar nombres (e.g Juan Peña / María del Socorro).</li> 
+				      </ul>
+				    </div>
+
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Correo</label>
-              <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email text-gray-400 text-lg"></i></div>
-                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="correo" name="correo" value="<?php echo "{$row->correo}"; ?>" placeholder="Input 5">
+                <div class="group flex">
+                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg></div>
+                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="correo" name="correo" value="<?php echo "{$row->correo}"; ?>" placeholder="Correo">
               </div>
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Rol</label>
               <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
-                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="rol" name="rol">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8C6 5.79 7.79 4 10 4S14 5.79 14 8 12.21 12 10 12 6 10.21 6 8M12 18.2C12 17.24 12.5 16.34 13.2 15.74V15.5C13.2 15.11 13.27 14.74 13.38 14.38C12.35 14.14 11.21 14 10 14C5.58 14 2 15.79 2 18V20H12V18.2M22 18.3V21.8C22 22.4 21.4 23 20.7 23H15.2C14.6 23 14 22.4 14 21.7V18.2C14 17.6 14.6 17 15.2 17V15.5C15.2 14.1 16.6 13 18 13C19.4 13 20.8 14.1 20.8 15.5V17C21.4 17 22 17.6 22 18.3M19.5 15.5C19.5 14.7 18.8 14.2 18 14.2C17.2 14.2 16.5 14.7 16.5 15.5V17H19.5V15.5Z" /></svg></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" id="rol" name="rol">
                   <option value="">Sin rol</option>
                   <?php
                   $roles = roles::FetchRol();
                   foreach ($roles as $rq) {
-                    if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" && $rq->nombre != "Superadministrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false" && $rq->nombre != "Superadministrador" && $rq->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "true" && $rq->nombre=="Tecnico"){
+                    if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" && $rq->nombre != "Superadministrador" && $rq->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false" && $rq->nombre != "Superadministrador" && $rq->nombre != "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "true" && $rq->nombre=="Tecnico"){
                       echo "<option value='" . $rq->id . "'";
                       if ($row->roles_id == $rq->id) echo 'selected="selected"';
                       echo ">";
@@ -169,8 +193,8 @@
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Subrol</label>
               <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
-                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="subrol" name="subrol">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8C6 5.79 7.79 4 10 4S14 5.79 14 8 12.21 12 10 12 6 10.21 6 8M12 18.2C12 17.24 12.5 16.34 13.2 15.74V15.5C13.2 15.11 13.27 14.74 13.38 14.38C12.35 14.14 11.21 14 10 14C5.58 14 2 15.79 2 18V20H12V18.2M22 18.3V21.8C22 22.4 21.4 23 20.7 23H15.2C14.6 23 14 22.4 14 21.7V18.2C14 17.6 14.6 17 15.2 17V15.5C15.2 14.1 16.6 13 18 13C19.4 13 20.8 14.1 20.8 15.5V17C21.4 17 22 17.6 22 18.3M19.5 15.5C19.5 14.7 18.8 14.2 18 14.2C17.2 14.2 16.5 14.7 16.5 15.5V17H19.5V15.5Z" /></svg></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" id="subrol" name="subrol">
                   <option value="">Sin subrol</option>
                 </select>
               </div>
@@ -179,8 +203,8 @@
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Departamento</label>
               <div class="group flex">
-                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock-outline text-gray-400 text-lg"></i></div>
-                <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="departamento" name="departamento">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" /></svg></div>
+                <select class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" id="departamento" name="departamento">
                   <option value="">Sin departamento</option>
                   <?php
                   $departamentos = departamentos::FetchDepartamento();
@@ -201,17 +225,13 @@
               <div class='flex items-center justify-center w-full'>
                 <label class='flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group'>
                   <div class='flex flex-col items-center justify-center pt-7'>
-                    <div id="svg" <?php if($row->foto != null && $row->nombre_foto != null){ echo "class='hidden'";  } ?>>
-                    <svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
+                    <div id="svg">
+                      <svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
                     </div>
-                    <img id="preview" <?php if($row->foto != null && $row->nombre_foto != null){ echo "class='w-10 h-10' src='".$row->foto."'"; }else { echo "class='hidden'"; } ?>/>
-                    <p id="archivo" class='lowercase text-sm text-center text-gray-400 group-hover:text-black pt-1 tracking-wider'><?php if ($row->foto == null) {
-                                                                                                                          echo "Selecciona una fotografía";
-                                                                                                                        } else {
-                                                                                                                          echo $row->nombre_foto;
-                                                                                                                        } ?></p>
+                    <img id="preview" class="hidden" />
+                    <p id="archivo" style="word-break:break-word;" class='lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider'>Selecciona una fotografía</p>
                   </div>
                   <input type='file' id="foto" name="foto" class="hidden" />
                 </label>
@@ -219,11 +239,11 @@
               <div id="error"></div>
             </div>
 
-            <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
+            <div class='flex flex-col-reverse md:flex-row items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
               <a href="users.php" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2' id='regresar' name='regresar'>Regresar</a>
               <div id="submit-button">
                 <button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>
-              </div>                                                                                                          
+              </div>
             </div>
           </form>
         </div>
