@@ -221,13 +221,17 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                             title: "Error",
                                             text: "El username ó la contraseña son incorrectos",
                                             icon: "error"
-                                        });
+                                        }).then(function() {
+	                                        grecaptcha.reset();
+	                                    });
                                     } else if(array[0] == "captcha-error"){
                                         Swal.fire({
                                             title: "Error",
                                             text: "El token del captcha no existe",
                                             icon: "error"
-                                        });
+                                        }).then(function() {
+	                                        grecaptcha.reset();
+	                                    });
                                     }
                                 },
                                 error: function(data) {
@@ -249,6 +253,24 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     </script>
 </body>
 <style>
+
+    @media (max-width: 300px) {
+        .h-captcha {
+
+            -webkit-transform: scale(0.76) translateX(16%);
+            -moz-transform:    scale(0.76) translateX(16%);
+            -ms-transform:     scale(0.76) translateX(16%);
+            -o-transform:      scale(0.76) translateX(16%);
+            transform:         scale(0.76) translateX(16%);
+
+            -webkit-transform-origin: 0 0;
+            -moz-transform-origin: 0 0;
+            -ms-transform-origin: 0 0;
+            -o-transform-origin: 0 0;
+            transform-origin: 0 0;
+        }
+    }
+
     div{
         border:0;
     }
