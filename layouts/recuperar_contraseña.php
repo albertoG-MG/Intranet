@@ -37,37 +37,44 @@ if(isset($_POST["password"], $_POST["token"], $_POST["password_confirm"])){
 						die(json_encode(array("error", "La contraseña no puede contener: " .$badword_blacklist["password"]. ", Por favor, modifique la contraseña")));
 					}
 				}
-				$password_repeat = $object ->_db->prepare("SELECT historial_password.password, historial_password.today_date FROM usuarios INNER JOIN reset_password ON reset_password.user_id=usuarios.id INNER JOIN historial_password ON historial_password.user_id=usuarios.id WHERE reset_password.reset_link_token=:token");
-				$password_repeat -> execute(array(':token' => $token));
-				$check_password_repeat = $password_repeat -> rowCount();
-				$password_sha1 = sha1($password); 
-				if($check_password_repeat > 0){
-					date_default_timezone_set("America/Monterrey");
-					$date_database = date('y-m-d');
-					$database_date = date_create($date_database);
-					date_format($database_date,"y-m-d");
-					$fetch_password_repeat = $password_repeat -> fetchAll(PDO::FETCH_ASSOC);
-					foreach($fetch_password_repeat as $repeated_password){
-						if(!preg_match("/^[0-9a-f]{40}$/i", $repeated_password["password"])){
-							$hashing = sha1($repeated_password["password"]);
-						}else{
-							$hashing = $repeated_password["password"];
-						}
-						if($hashing == $password_sha1){
-							$used_date = date_create($repeated_password["today_date"]);
-							date_format($used_date,"y-m-d");
-							$difference=date_diff($used_date, $database_date);
-							if($difference -> days < 366){
-								die(json_encode(array("error", "Deben pasar más de 365 días para que esta contraseña vuelva a ser usable")));
-							}
-						}
-					}	
-				}
-				$insert_password = $object -> _db -> prepare("UPDATE usuarios INNER JOIN reset_password ON reset_password.user_id = usuarios.id SET password = :password WHERE reset_password.reset_link_token=:token");
-				$insert_password -> execute(array(':password' => $password_sha1, ':token' => $token));
-				$delete_token = $object -> _db -> prepare("DELETE FROM reset_password WHERE reset_link_token=:tokens");
-				$delete_token -> execute(array(':tokens' => $token));
-				die(json_encode(array("success", "La contraseña ha sido cambiada")));
+                $password_sha1 = sha1($password); 
+                $check_password = $object ->_db->prepare("SELECT usuarios.password FROM usuarios INNER JOIN reset_password ON reset_password.user_id=usuarios.id WHERE reset_password.reset_link_token=:rtoken");
+                $check_password->execute(array(':rtoken' => $token));
+                $fetch_password = $check_password -> fetch(PDO::FETCH_OBJ);
+                if($fetch_password -> password == $password_sha1){
+                    die(json_encode(array("error", "La nueva contraseña no puede ser igual a la vieja contraseña, por favor, escriba otra contraseña")));
+                }else{
+                    $password_repeat = $object ->_db->prepare("SELECT historial_password.password, historial_password.today_date FROM usuarios INNER JOIN reset_password ON reset_password.user_id=usuarios.id INNER JOIN historial_password ON historial_password.user_id=usuarios.id WHERE reset_password.reset_link_token=:token");
+                    $password_repeat -> execute(array(':token' => $token));
+                    $check_password_repeat = $password_repeat -> rowCount();
+                    if($check_password_repeat > 0){
+                        date_default_timezone_set("America/Monterrey");
+                        $date_database = date('y-m-d');
+                        $database_date = date_create($date_database);
+                        date_format($database_date,"y-m-d");
+                        $fetch_password_repeat = $password_repeat -> fetchAll(PDO::FETCH_ASSOC);
+                        foreach($fetch_password_repeat as $repeated_password){
+                            if(!preg_match("/^[0-9a-f]{40}$/i", $repeated_password["password"])){
+                                $hashing = sha1($repeated_password["password"]);
+                            }else{
+                                $hashing = $repeated_password["password"];
+                            }
+                            if($hashing == $password_sha1){
+                                $used_date = date_create($repeated_password["today_date"]);
+                                date_format($used_date,"y-m-d");
+                                $difference=date_diff($used_date, $database_date);
+                                if($difference -> days < 366){
+                                    die(json_encode(array("error", "Deben pasar más de 365 días para que esta contraseña vuelva a ser usable")));
+                                }
+                            }
+                        }	
+                    }
+                    $insert_password = $object -> _db -> prepare("UPDATE usuarios INNER JOIN reset_password ON reset_password.user_id = usuarios.id SET password = :password WHERE reset_password.reset_link_token=:token");
+                    $insert_password -> execute(array(':password' => $password_sha1, ':token' => $token));
+                    $delete_token = $object -> _db -> prepare("DELETE FROM reset_password WHERE reset_link_token=:tokens");
+                    $delete_token -> execute(array(':tokens' => $token));
+                    die(json_encode(array("success", "La contraseña ha sido cambiada")));
+                }
 			}
 		}else{
 			die(json_encode(array("error", "El token ha expirado")));
@@ -97,6 +104,7 @@ if($_GET['token'] == null){
             <body>
                 <h1>Error</h1>
                 <p>No se encontró el token ingresado ó el token ingresado es invalido.</p>
+                <a href='login.php'>Regresar al login</a>
             </body>
         </html>";
         die();
