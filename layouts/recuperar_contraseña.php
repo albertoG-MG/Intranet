@@ -170,8 +170,13 @@ if($_GET['token'] == null){
                             </div>
                         </div>
                     </div>
+                    <div class="grid grid-cols-1 mx-7">
+                        <ul id="passwordHelpBlock" class="text-light text-sm text-gray-500">
+                            <li>La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) sin espacios, acentos ni ñ.</li>
+                        </ul>
+                    </div>
                     <div id="submit-button">
-                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5">Guardar</button>
+                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5">Guardar</button>
                     </div>
 				</form>
                 <script src="../src/js/bundle.js"></script>
