@@ -24,6 +24,7 @@
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
                     ignore: [],
+                    onkeyup: false,
                     errorPlacement: function(error, element) {
                         if((element.attr('name') === 'foto')){
                             error.appendTo("div#error");  
