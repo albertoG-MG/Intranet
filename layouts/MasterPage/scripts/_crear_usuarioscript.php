@@ -57,13 +57,42 @@
                             required: true,
                             minlength: 5,
                             user_validation: true,
-                            remote: '../ajax/validacion/crear_usuarios/checkusername.php'
+                            remote: {
+                                url: "../ajax/validacion/crear_usuarios/checkusername.php",
+                                type: "GET",
+                                beforeSend: function () {
+                                    $('#loader-usuario').removeClass('hidden');
+                                    $('#correct-usuario').addClass('hidden');
+                                },
+                                complete: function(data){
+                                    if(data.responseText == "true") {
+                                        $('#loader-usuario').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-usuario').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    }
+                                }
+                            }
                         },
-                        password:{
+                        password: {
                             required: true,
                             minlength: 8,
                             password_validation: true,
-			                remote: "../ajax/validacion/crear_usuarios/checkpassword.php"
+                            remote: {
+                                url: "../ajax/validacion/crear_usuarios/checkpassword.php",
+                                type: "GET",
+                                beforeSend: function () {
+                                    $('#loader-password').removeClass('hidden');
+                                    $('#correct-password').addClass('hidden');
+                                },
+                                complete: function(data){
+                                    if(data.responseText == "true") {
+                                        $('#loader-password').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-password').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    }else{
+                                        $('#loader-password').addClass('hidden');
+                                        $('#correct-password').addClass('hidden');
+                                    }
+                                }
+                            }
                         },
                         cpassword:{
                             required: true,
@@ -110,15 +139,15 @@
                     },
                     messages: {
                         usuario: {
-                            required: 'Por favor, ingresa un usuario',
-                            minlength: 'El usuario debe de contener 5 caracteres como mínimo',
-                            user_validation: 'Usuario no válido',
-                            remote: 'Ese usuario ya existe, por favor escriba otro'
+                            required:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "Por favor, ingresa un usuario"; },
+                            minlength:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "El usuario debe de contener 5 caracteres como mínimo"; },
+                            user_validation:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "Usuario no válido"; },
+                            remote:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "Usuario repetido"; }
                         },
-                        password:{
-                            required: 'Por favor, ingresa una contraseña',
-                            minlength: "La contraseña debe de contener 8 caracteres como mínimo",
-                            password_validation: "Contraseña no válida"
+                        password: {
+                            required:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); return "Por favor, ingresa una contraseña"; },
+                            minlength:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); return "La contraseña debe de contener 8 caracteres como mínimo"; },
+                            password_validation:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); return "Contraseña no válida"; }
                         },
                         cpassword:{
                             required: 'Por favor, confirme su contraseña',
