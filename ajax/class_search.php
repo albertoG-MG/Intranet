@@ -136,7 +136,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             if ($vmail->check($_POST["correo"])) {
                 $correo = $_POST["correo"];
             } else if(verifyEmail::validate($_POST["correo"])) {
-                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> válido, pero el nombre del servidor ó el dominio erróneos!')));
+                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> válido, pero no se pudo conectar con el servidor ó el mailbox no existe!')));
             } else {
                 die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> no válido!')));
             }

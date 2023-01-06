@@ -84,7 +84,23 @@
                         correo: {
                             required: true,
                             email_verification: true,
-                            remote: '../ajax/validacion/crear_usuarios/checkemail.php'
+                            remote: {
+                                url: "../ajax/validacion/crear_usuarios/checkemail.php",
+                                type: "GET",
+                                beforeSend: function () {
+                                    $('#myloader').removeClass('hidden');
+                                    $('#correct-email').addClass('hidden');
+                                },
+                                complete: function(data){
+                                    if(data.responseText == "true") {
+                                        $('#myloader').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-email').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    }else{
+                                        $('#myloader').addClass('hidden');
+                                        $('#correct-email').addClass('hidden');
+                                    }
+                                }
+                            }
                         },
                         foto: {
                             extension: "jpg|jpeg|png",
@@ -121,8 +137,8 @@
                             names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         correo: {
-                            required: 'Por favor, ingrese un correo electrónico',
-                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
+                            required:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); return "Por favor, ingrese un correo electrónico"; },
+                            email_verification:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); return "Asegúrese que el texto ingresado este en formato de email"; }
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
