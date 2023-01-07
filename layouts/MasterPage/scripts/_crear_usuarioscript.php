@@ -139,15 +139,15 @@
                     },
                     messages: {
                         usuario: {
-                            required:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "Por favor, ingresa un usuario"; },
-                            minlength:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "El usuario debe de contener 5 caracteres como mínimo"; },
-                            user_validation:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "Usuario no válido"; },
-                            remote:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); return "Usuario repetido"; }
+                            required:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "Por favor, ingresa un usuario"; },
+                            minlength:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "El usuario debe de contener 5 caracteres como mínimo"; },
+                            user_validation:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "Usuario no válido"; },
+                            remote:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "Usuario repetido"; }
                         },
                         password: {
-                            required:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); return "Por favor, ingresa una contraseña"; },
-                            minlength:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); return "La contraseña debe de contener 8 caracteres como mínimo"; },
-                            password_validation:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); return "Contraseña no válida"; }
+                            required:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); $("#password").removeData("previousValue"); return "Por favor, ingresa una contraseña"; },
+                            minlength:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); $("#password").removeData("previousValue"); return "La contraseña debe de contener 8 caracteres como mínimo"; },
+                            password_validation:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); $("#password").removeData("previousValue"); return "Contraseña no válida"; }
                         },
                         cpassword:{
                             required: 'Por favor, confirme su contraseña',
@@ -167,8 +167,8 @@
                             names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         correo: {
-                            required:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); return "Por favor, ingrese un correo electrónico"; },
-                            email_verification:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); return "Asegúrese que el texto ingresado este en formato de email"; }
+                            required:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); $("#correo").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },
+                            email_verification:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); $("#correo").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
