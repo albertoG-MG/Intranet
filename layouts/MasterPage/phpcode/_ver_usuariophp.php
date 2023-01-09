@@ -69,7 +69,7 @@
     }
     //Fin de la validacion
 
-    $ver = $object -> _db->prepare("SELECT usuarios.username as username, usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, usuarios.correo, departamentos.departamento as depanom, roles.nombre as rolnom, subroles.subrol_nombre as subnom, usuarios.nombre_foto as filename, usuarios.foto as foto FROM usuarios LEFT JOIN departamentos ON usuarios.departamento_id=departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id LEFT JOIN subroles ON subroles.id=usuarios.subrol_id WHERE usuarios.id=:verid");
+    $ver = $object -> _db->prepare("SELECT usuarios.username as username, usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, usuarios.correo, departamentos.departamento as depanom, roles.nombre as rolnom, subroles.subrol_nombre as subnom, usuarios.nombre_foto as nombre_foto, usuarios.foto_identificador as foto_identificador FROM usuarios LEFT JOIN departamentos ON usuarios.departamento_id=departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id LEFT JOIN subroles ON subroles.id=usuarios.subrol_id WHERE usuarios.id=:verid");
     $ver->bindParam("verid", $verid, PDO::PARAM_INT);
     $ver->execute();
 
