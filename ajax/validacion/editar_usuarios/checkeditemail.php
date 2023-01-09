@@ -22,7 +22,7 @@
         if ($vmail->check($email)) {
             $output = true;
         } elseif (verifyEmail::validate($email)) {
-            $output = 'correo &lt;' . $email . '&gt; válido, pero el nombre del servidor ó el dominio erróneos!';
+            $output = 'correo &lt;' . $email . '&gt; válido, pero no se pudo conectar con el servidor ó el mailbox no existe!';
         } else {
             $output = 'correo &lt;' . $email . '&gt; no válido!';
         }

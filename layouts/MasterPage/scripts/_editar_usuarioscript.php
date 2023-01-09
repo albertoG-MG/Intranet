@@ -24,6 +24,7 @@
             if ($('#Guardar').length > 0) {
                 $('#Guardar').validate({
                     ignore: [],
+                    onkeyup: false,
                     errorPlacement: function(error, element) {
                         if((element.attr('name') === 'foto')){
                             error.appendTo("div#error");  
@@ -96,11 +97,24 @@
                             email_verification: true,
                             remote: {
                                 url: "../ajax/validacion/editar_usuarios/checkeditemail.php",
-                                type: "post",
+                                type: "POST",
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"
+                                },
+                                beforeSend: function () {
+                                    $('#myloader').removeClass('hidden');
+                                    $('#correct-email').addClass('hidden');
+                                },
+                                complete: function(data){
+                                    if(data.responseText == "true") {
+                                        $('#myloader').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-email').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    }else{
+                                        $('#myloader').addClass('hidden');
+                                        $('#correct-email').addClass('hidden');
+                                    }
                                 }
-                            },
+                            }
                         },
                         foto: {
                             extension: "jpg|jpeg|png",
@@ -135,8 +149,8 @@
                             names_validation: 'Nombre, apellido paterno ó materno no válidos'
                         },
                         correo: {
-                            required: 'Por favor, ingrese un correo electrónico',
-                            email_verification: 'Asegúrese que el texto ingresado este en formato de email'
+                            required:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); $("#correo").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },
+                            email_verification:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); $("#correo").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
