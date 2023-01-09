@@ -65,7 +65,7 @@
                                 }
                             }
                         },
-                        password:{
+                        password: {
                             minlength: 8,
                             password_validation: true,
                             remote: {
@@ -73,6 +73,19 @@
                                 type: "post",
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"
+                                },
+                                beforeSend: function () {
+                                    $('#loader-password').removeClass('hidden');
+                                    $('#correct-password').addClass('hidden');
+                                },
+                                complete: function(data){
+                                    if(data.responseText == "true") {
+                                        $('#loader-password').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-password').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    }else{
+                                        $('#loader-password').addClass('hidden');
+                                        $('#correct-password').addClass('hidden');
+                                    }
                                 }
                             }
                         },
@@ -128,9 +141,9 @@
                             user_validation: 'Usuario no válido',
                             remote: 'Ese usuario ya existe, por favor escriba otro'
                         },
-                        password:{
-                            minlength: "La contraseña debe de contener 8 caracteres como mínimo",
-                            password_validation: "Contraseña no válida"
+                        password: {
+                            minlength:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); $("#password").removeData("previousValue"); return "La contraseña debe de contener 8 caracteres como mínimo"; },
+                            password_validation:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); $("#password").removeData("previousValue"); return "Contraseña no válida"; }
                         },
                         cpassword:{
                             minlength: "La confirmación de la contraseña debe de tener como mínimo 8 caracteres",
