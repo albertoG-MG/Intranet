@@ -62,6 +62,16 @@
                                 type: "post",
                                 data: {
                                     "editarid": "<?php echo $editarid; ?>"
+                                },
+                                beforeSend: function () {
+                                    $('#loader-usuario').removeClass('hidden');
+                                    $('#correct-usuario').addClass('hidden');
+                                },
+                                complete: function(data){
+                                    if(data.responseText == "true") {
+                                        $('#loader-usuario').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-usuario').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    }
                                 }
                             }
                         },
@@ -136,10 +146,10 @@
                     },
                     messages: {
                         usuario: {
-                            required: 'Por favor, ingresa un usuario',
-                            minlength: 'El usuario debe de contener 5 caracteres como mínimo',
-                            user_validation: 'Usuario no válido',
-                            remote: 'Ese usuario ya existe, por favor escriba otro'
+                            required:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "Por favor, ingresa un usuario"; },
+                            minlength:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "El usuario debe de contener 5 caracteres como mínimo"; },
+                            user_validation:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "Usuario no válido"; },
+                            remote:function () {$('#loader-usuario').addClass('hidden'); $('#correct-usuario').addClass('hidden'); $("#usuario").removeData("previousValue"); return "Usuario repetido"; }
                         },
                         password: {
                             minlength:function () {$('#loader-password').addClass('hidden'); $('#correct-password').addClass('hidden'); $("#password").removeData("previousValue"); return "La contraseña debe de contener 8 caracteres como mínimo"; },
