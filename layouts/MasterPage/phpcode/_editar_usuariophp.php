@@ -111,5 +111,10 @@
     $check_subrol = $object -> _db -> prepare("SELECT subroles.id, subroles.roles_id, subroles.subrol_nombre, usuarios.subrol_id FROM subroles INNER JOIN roles ON roles.id=subroles.roles_id INNER JOIN usuarios ON usuarios.roles_id=roles.id WHERE usuarios.id=:userid");
 	$check_subrol -> execute(array(':userid' => $editarid));
 	$fetch_subrol = $check_subrol -> fetch(PDO::FETCH_OBJ);
+
+    /*Query que detecta si el usuario tiene el password temporal habilitado*/
+    $temporal_password = $object -> _db -> prepare("SELECT * FROM usuarios INNER JOIN temporal_password ON temporal_password.user_id=usuarios.id WHERE usuarios.id=:editar");
+	$temporal_password -> execute(array(':editar' => $editarid));
+	$fetch_temporal_password = $temporal_password -> rowCount();
  
 ?>

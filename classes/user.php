@@ -91,6 +91,18 @@ class user {
                 'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)], "id=:iduser", ['iduser' => $id]);
             }
         }
+        if($this->temppassword != null){	
+            $temporal_password = $object -> _db -> prepare("SELECT * FROM usuarios INNER JOIN temporal_password ON temporal_password.user_id=usuarios.id WHERE usuarios.id=:editar");
+            $temporal_password -> execute(array(':editar' => $id));
+            $fetch_temporal_password = $temporal_password -> rowCount();
+            
+            
+            if($fetch_temporal_password > 0 && $this->temppassword == 0){ 
+                $crud -> delete('temporal_password', "user_id=:iduser", ['iduser' => $id]);
+            }else if($fetch_temporal_password == 0 && $this->temppassword == 1){ 
+                $crud -> store('temporal_password', ['user_id' => $id]);
+            }
+        }
     } 
 
     public static function EliminarUsuarios($id){
