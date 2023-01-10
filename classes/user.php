@@ -10,6 +10,7 @@ class user {
     public $apellido_mat;
     public $correo;
     public $password;
+    private $temppassword;
     private $departamento;
     private $roles_id;
     private $subrol_id;
@@ -18,7 +19,7 @@ class user {
 
 
 	
-	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $department, $rolesid, $subid, $filenom, $photo){
+	public function __construct($user, $nom, $apellidopat, $apellidomat, $email, $contraseña, $temp, $department, $rolesid, $subid, $filenom, $photo){
 		$this->conn = new connection_database();
         $this->username = $user;
         $this->nombre = $nom;
@@ -26,6 +27,7 @@ class user {
         $this->apellido_mat = $apellidomat;
         $this->correo = $email;
         $this->password = $contraseña;
+        $this->temppassword = $temp;
         $this->departamento = $department;
         $this->roles_id = $rolesid;
         $this->subrol_id = $subid;
@@ -34,6 +36,7 @@ class user {
 	}
 	
 	public function CrearUsuarios(){
+        $object = new connection_database();
         $crud = new crud();
         if($this->filename != null && $this->foto !=null){
             $location = "../src/img/imgs_uploaded/";
@@ -48,6 +51,10 @@ class user {
             $crud->store('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
             'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
             'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => $this->foto]);
+        }
+        if($this->temppassword == 1){
+            $user_store_id = $object -> _db -> lastInsertId();
+            $crud -> store('temporal_password', ['user_id' => $user_store_id]);
         }
     }
 

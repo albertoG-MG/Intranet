@@ -15,7 +15,7 @@ set_time_limit(0);
 
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
-    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
+    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["password_temporal"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
         
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
@@ -78,6 +78,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                     }
                 }
                 $password = sha1($password);
+            }
+        }
+
+        if($_POST["method"] == "store"){
+            if(Roles::FetchSessionRol($_POST["rolsession"]) == "Superadministrador" || Roles::FetchSessionRol($_POST["rolsession"]) == "Administrador"){
+                $password_temporal = $_POST["password_temporal"];
+            }else{
+                $password_temporal = 1;
+            }
+        }else if($_POST["method"] == "edit"){
+            if(Roles::FetchSessionRol($_POST["rolsession"]) == "Superadministrador" || Roles::FetchSessionRol($_POST["rolsession"]) == "Administrador"){
+                $password_temporal = $_POST["password_temporal"];
+            }else{
+                $password_temporal = null;
             }
         }
 
@@ -270,7 +284,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         switch($_POST["method"]){
 
             case "store":
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $subroles, $filename, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $password_temporal, $departamento, $roles, $subroles, $filename, $foto);
                     $user->CrearUsuarios();
                     die(json_encode(array("success", "Se ha creado un usuario exitosamente!")));
                 break;
@@ -278,7 +292,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "edit":
                 if(isset($_POST["editarid"])){
                     $ideditar = $_POST["editarid"];
-                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $departamento, $roles, $subroles, $filename, $foto);
+                    $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $password_temporal, $departamento, $roles, $subroles, $filename, $foto);
                     $user->EditarUsuarios($ideditar);
                     die(json_encode(array("success", "Se ha editado un usuario exitosamente!")));
                 }

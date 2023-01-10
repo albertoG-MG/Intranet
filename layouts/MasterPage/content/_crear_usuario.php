@@ -155,6 +155,28 @@
               </ul>
             </div>
 
+            	<?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
+                    <div class="grid grid-cols-1 mx-7 mt-5" id="slider-container" x-data="{value: 'Off', offValue: 'Off', onValue:'On'}">
+                      <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña temporal</label>
+                      <div class="flex flex-col md:flex-row md:items-center cursor-pointer cm-toggle-wrapper" id="slider-event" x-on:click="value =  (value == onValue ? offValue : onValue);">
+                        <div class="rounded-full w-8 h-4 p-0.5 bg-red-500" :class="{'bg-red-500': value == offValue,'bg-green-500': value == onValue}">
+                          <div class="rounded-full w-3 h-3 bg-white transform mx-auto duration-300 ease-in-out -translate-x-2" :class="{'-translate-x-2': value == offValue,'translate-x-2': value == onValue}"></div>
+                        </div>
+                        <input type="checkbox" id="checkbox-slider" name="checkbox-slider" class="hidden" x-bind:checked="value == offValue ? false : true">
+                        <span class="text-light text-sm text-gray-500 md:ml-1" x-text="value == offValue ? 'Contraseña temporal deshabilitada': 'Contraseña temporal habilitada'">
+                          Contraseña temporal deshabilitada
+                        </span>
+                      </div>
+                    </div>
+                          
+                          
+                    <div class="grid grid-cols-1 mx-7">
+                      <ul id="temppasswordHelpBlock" class="text-light text-sm text-gray-500">
+                        <li>Si se habilita esta opción, el usuario tendrá que cambiar la contraseña la próxima vez que inicie sesión.</li>
+                      </ul>
+                    </div>
+              <?php } ?>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
               <div class="grid grid-cols-1">
 				        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
