@@ -90,11 +90,11 @@
 	
 	if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador"){
 		/*El siguiente query saca la informacion del usuario loggeado y su departamento.*/
-		$check_user_rol_departament = $object -> _db ->prepare("SELECT usuarios.id as userid, roles.nombre as rolnom, departamentos.departamento as depnom FROM usuarios left join departamentos ON departamentos.id=usuarios.departamento_id INNER JOIN roles ON roles.id=usuarios.roles_id WHERE usuarios.id=:userloggedid");
+		$check_user_rol_departament = $object -> _db ->prepare("SELECT usuarios.id as userid, roles.nombre as rolnom, departamentos.departamento as depnom FROM usuarios left join roles on roles.id=usuarios.roles_id left join departamentos on departamentos.id=usuarios.departamento_id where usuarios.id=:userloggedid");
 		$check_user_rol_departament -> execute(array(':userloggedid' => $_SESSION["id"]));
 		$fetch_user_rol_departament = $check_user_rol_departament -> fetch(PDO::FETCH_OBJ);
 		/*Query que saca la informacion del usuario que se ingreso*/
-		$check_user_information = $object -> _db -> prepare("SELECT usuarios.id as userid, roles.nombre as rolnom, departamentos.departamento as depnom FROM usuarios left join departamentos ON departamentos.id=usuarios.departamento_id INNER JOIN roles ON roles.id=usuarios.roles_id WHERE usuarios.id=:userid");
+		$check_user_information = $object -> _db -> prepare("SELECT usuarios.id as userid, roles.nombre as rolnom, departamentos.departamento as depnom FROM usuarios left join roles on roles.id=usuarios.roles_id left join departamentos on departamentos.id=usuarios.departamento_id where usuarios.id=:userid");
 		$check_user_information -> execute(array(':userid' => $editarid));
 		$fetch_user_information = $check_user_information -> fetch(PDO::FETCH_OBJ);
         /*Este metodo checa si usuario puede acceder a la parte de los usuarios*/
