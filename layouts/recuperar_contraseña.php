@@ -203,6 +203,7 @@ if($_GET['token'] == null){
 
                         if ($('#Guardar').length > 0) {
                             $('#Guardar').validate({
+                                onkeyup: false,
                                 errorPlacement: function(error, element) {
                                         error.insertAfter(element.parent('.group'));
                                 },
