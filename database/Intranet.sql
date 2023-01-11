@@ -3336,6 +3336,19 @@ INSERT INTO `blacklist_password` VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `temporal_password`
+--
+
+
+CREATE TABLE `temporal_password`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `user_id` int NOT NULL UNIQUE,
+   FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Trigger que inserta en la tabla Transicion_estatus_incidencia
 --
 
