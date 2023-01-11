@@ -40,20 +40,28 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 $count = $data->rowCount();
                 $row = $data->fetch(PDO::FETCH_OBJ);
                 if ($count > 0) {
-                    $_SESSION['loggedin'] = true;
-                    $_SESSION['id'] = $row->id;
-                    $_SESSION['nombre'] = $row->nombre;
-                    $_SESSION['usuario'] = $row->username;
-                    $_SESSION['apellidopat'] = $row->apellido_pat;
-                    $_SESSION['apellidomat'] = $row->apellido_mat;
-                    $_SESSION['correo'] = $row->correo;
-                    $_SESSION['rol'] = $row->roles_id;
-                    if(isset($_SESSION['redirectURL'])){
-                        $link = $_SESSION['redirectURL'];
-                        unset($_SESSION['redirectURL']);
-                        exit(json_encode(array("success", "{$link}")));
-                    }else{
-                        exit(json_encode(array("success", "dashboard.php")));
+                    $check_temp_pass = $object->_db->prepare("SELECT * FROM temporal_password WHERE user_id= :userid");
+                    $check_temp_pass->execute(array(':userid' => $row->id));
+	                $count_temp_pass = $check_temp_pass -> rowCount();
+	                if($count_temp_pass > 0){
+		                $_SESSION['changepass'] = true;
+		                exit(json_encode(array("temp-pass", "temppass.php?iduser=$row->id")));
+	                }else{
+                        $_SESSION['loggedin'] = true;
+                        $_SESSION['id'] = $row->id;
+                        $_SESSION['nombre'] = $row->nombre;
+                        $_SESSION['usuario'] = $row->username;
+                        $_SESSION['apellidopat'] = $row->apellido_pat;
+                        $_SESSION['apellidomat'] = $row->apellido_mat;
+                        $_SESSION['correo'] = $row->correo;
+                        $_SESSION['rol'] = $row->roles_id;
+                        if(isset($_SESSION['redirectURL'])){
+                            $link = $_SESSION['redirectURL'];
+                            unset($_SESSION['redirectURL']);
+                            exit(json_encode(array("success", "{$link}")));
+                        }else{
+                            exit(json_encode(array("success", "dashboard.php")));
+                        }
                     }
                 } else {
                     exit(json_encode(array("failed")));
