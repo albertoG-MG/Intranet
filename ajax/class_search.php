@@ -7,12 +7,8 @@ include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
-include_once __DIR__ . "/../config/email_verification/class.verifyEmail.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
-
-set_time_limit(0);
-
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["password_temporal"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
@@ -141,18 +137,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 if($count_edit_correo > 0){
                     die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
                 }
-            }
-            $vmail = new verifyEmail();
-            $vmail->setStreamTimeoutWait(20);
-            $vmail->Debug= false;
-            $vmail->Debugoutput= 'html';
-            $vmail->setEmailFrom('viska@viska.is');
-            if ($vmail->check($_POST["correo"])) {
-                $correo = $_POST["correo"];
-            } else if(verifyEmail::validate($_POST["correo"])) {
-                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> válido, pero no se pudo conectar con el servidor ó el mailbox no existe!')));
-            } else {
-                die(json_encode(array("error", 'correo <' . $_POST["correo"] . '> no válido!')));
             }
             $correo = $_POST["correo"];
         }
