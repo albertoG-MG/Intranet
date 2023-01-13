@@ -240,6 +240,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                         }).then(function() {
 	                                        grecaptcha.reset();
 	                                    });
+                                    } else if(array[0] == "temp-pass"){
+                                        Swal.fire({
+                                            title: "Advertencia",
+                                            text: "Necesitará cambiar la contraseña antes de continuar",
+                                            icon: "warning"
+                                        }).then(function() {
+                                            window.location.href = array[1]; 
+                                        });
                                     }
                                 },
                                 error: function(data) {
