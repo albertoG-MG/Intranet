@@ -93,7 +93,7 @@
                 <li>El guión bajo y el punto no pueden estar al final o al principio del usuario (e.g _username / username_ / .username / username.).</li> 
                 <li>El guión bajo y el punto no pueden estar uno al lado del otro (e.g user_.name).</li>
                 <li>El guión bajo o el punto no se pueden usar varias veces seguidas (e.g user__name / user..name).</li>
-                <li>Nota: Se hara una verificación al usuario para comprobar que no esté repetido.</li> 
+                <li>Nota: Se hará una verificación al usuario para comprobar que no esté repetido.</li> 
               </ul>
             </div>
 
@@ -151,7 +151,7 @@
             <div class="grid grid-cols-1 mx-7">
               <ul id="passwordHelpBlock" class="text-light text-sm text-gray-500">
                 <li>La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) sin espacios, acentos ni ñ.</li>
-                <li>Nota: Se hara una verificación a la contraseña para evitar el uso de palabras comunes.</li>
+                <li>Nota: Se hará una verificación a la contraseña para evitar el uso de palabras comunes.</li>
               </ul>
             </div>
 
@@ -231,7 +231,7 @@
 
             <div class="grid grid-cols-1 mx-7">
               <ul id="correoHelpBlock" class="text-light text-sm text-gray-500">
-                <li>Nota: Se hara una verificación al correo para comprobar que no esté repetido.</li>
+                <li>Nota: Se hará una verificación al correo para comprobar que no esté repetido.</li>
               </ul>
             </div>
 
