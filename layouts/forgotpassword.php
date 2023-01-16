@@ -62,8 +62,7 @@ if(isset($_POST["email"])){
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {
-			echo 'Message was not sent.' .$correo;
-			echo 'Mailer error: ' . $mail->ErrorInfo;
+			die(json_encode(array("error", "El mensaje no se envío, intentelo de nuevo más tarde")));
 		}
 		die(json_encode(array("success", "Se ha enviado un correo electrónico con instrucciones para cambiar la contraseña")));
 	}else{
@@ -93,8 +92,8 @@ if(isset($_POST["email"])){
 					<div class="flex flex-col mt-5">
 							<label for="email" class="text-xs font-semibold px-1">Correo electrónico</label>
 							<div class="group flex">
-								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email text-gray-400 text-lg"></i></div>
-								<input type="text" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" id="email" name="email" type="email" placeholder="Ingrese un correo electrónico">
+								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg></div>
+								<input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="email" name="email" placeholder="Correo">
 							</div>
 					    <div id="submit-button">
 							<button class="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center mt-5">
@@ -120,19 +119,20 @@ if(isset($_POST["email"])){
 
             if ($('#Enviar').length > 0) {
                 $('#Enviar').validate({
+					onkeyup: false,
                     errorPlacement: function(error, element) {
                             error.insertAfter(element.parent('.group'));
                     },
 					highlight: function(element) {
-                        var elem = $(element);
-                        $(element).removeClass("border-2 border-gray-200 outline-none focus:border-indigo-500");
-                        $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
-                    },
-                    unhighlight: function(element) {
-                        var elem = $(element);	
-                        $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border-2 border-gray-200 outline-none focus:border-indigo-500");
-                    },
+						var elem = $(element);
+						$(element).removeClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
+						$(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+					},
+					unhighlight: function(element) {
+						var elem = $(element);	
+						$(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+						$(element).addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
+					},
                     rules: {
                         email: {
                             required: true,
