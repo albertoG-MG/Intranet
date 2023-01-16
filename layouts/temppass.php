@@ -3,9 +3,10 @@
 	$object = new connection_database();
 	session_start();
 	
-	if(isset($_POST["password"], $_POST["id_user"], $_POST["password_confirm"])){
+	if(isset($_POST["password"], $_POST["id_user"], $_POST["password_confirm"], $_POST["current_password"])){
 		$password = $_POST["password"];
 		$password_confirm = $_POST["password_confirm"];
+		$current_password = $_POST["current_password"];
 		$userid = $_POST["id_user"];
 		if(empty($password)){
 			die(json_encode(array("error", "La contraseña no puede estar vacía")));
@@ -19,6 +20,8 @@
 			die(json_encode(array("error", "La confirmación de la contraseña debe de tener como mínimo 8 caracteres")));
 		}else if($password_confirm!=$password){
 			die(json_encode(array("error", "Las contraseñas no coinciden")));
+		}else if(empty($current_password)){
+			die(json_encode(array("error", "Por favor, ingrese la contraseña actual")));
 		}else{
 			$blacklist_query = $object ->_db->prepare("SELECT password from blacklist_password");
 			$blacklist_query -> execute();
@@ -60,6 +63,13 @@
 							}
 						}
 					}	
+				}
+				$check_pass = $object -> _db -> prepare("SELECT password from usuarios where id=:checkidpass");
+				$check_pass -> execute(array(":checkidpass" => $userid));
+				$fetch_pass = $check_pass -> fetch(PDO::FETCH_OBJ);		
+				$current_psha1 = sha1($current_password); 
+				if ($current_psha1 != $fetch_pass -> password) {
+					die(json_encode(array("error", "La contraseña actual no coincide con la contraseña registrada")));
 				}
 				$updating_password = $object -> _db -> prepare("UPDATE usuarios SET password = :password WHERE id=:useridchange");
                 $updating_password -> execute(array(':password' => $password_sha1, ':useridchange' => $userid));
@@ -112,8 +122,8 @@
                         <div x-show="showen">
                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña</label>
                             <div class="group flex" x-data="{isshow:false}">
-								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-								<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="************">
+								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+        						<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="Contraseña">
 								<button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
 									<svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -143,8 +153,8 @@
                         <div x-show="showen">
                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Confirmar contraseña</label>
                             <div class="group flex" x-data="{isshow:false}">
-								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-								<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password_confirm" name="password_confirm" placeholder="************">
+								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+        						<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password_confirm" name="password_confirm" placeholder="Contraseña">
 								<button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
 									<svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -163,6 +173,13 @@
 							<li>Nota: Se hara una verificación a la contraseña para evitar el uso de palabras comunes, contraseñas repetidas y evitar su uso por 365 días.</li>
                         </ul>
                     </div>
+					<div class='grid grid-cols-1 mt-5 mx-7'>
+						<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña actual</label>
+						<div class="group flex">
+							<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+							<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="password" id="current_password" name="current_password" placeholder="Contraseña">
+						</div>
+					</div>
                     <div id="submit-button">
                         <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5">Guardar</button>
                     </div>
@@ -186,13 +203,13 @@
 					},
 					highlight: function(element) {
 						var elem = $(element);
-						$(element).removeClass("border-2 border-gray-200 outline-none focus:border-indigo-500");
+						$(element).removeClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
 						$(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
 					},
 					unhighlight: function(element) {
 						var elem = $(element);	
 						$(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-						$(element).addClass("border-2 border-gray-200 outline-none focus:border-indigo-500");
+						$(element).addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
 					},
 					rules: {
 						password: {
@@ -224,6 +241,9 @@
 							required: true,
 							minlength: 8,
 							equalTo: "input[name=\"password\"]"
+						},
+						current_password: {
+							required: true
 						}
 					},
 					messages: {
@@ -236,6 +256,9 @@
 							required: 'Por favor, confirme su contraseña',
 							minlength: "La confirmación de la contraseña debe de tener como mínimo 8 caracteres",
 							equalTo: 'Las contraseñas no coinciden'
+						},
+						current_password: {
+							required: "Por favor, ingrese la contraseña actual"
 						}
 					},
 					submitHandler: function(form) {
@@ -251,9 +274,11 @@
 						var fd = new FormData();
 						var password = $("input[name=password]").val();
 						var password_confirm = $("input[name=password_confirm]").val();
+						var current_password = $("input[name=current_password]").val();
 						var id_user = <?php echo $id_user; ?>;
 						fd.append('password', password);
 						fd.append('password_confirm', password_confirm);
+						fd.append('current_password', current_password);
 						fd.append('id_user', id_user);
 						$.ajax({
 							url: 'temppass.php',
