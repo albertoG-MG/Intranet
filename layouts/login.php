@@ -134,8 +134,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 <div class="w-full px-3 mb-5">
                                     <label for="" class="text-xs font-semibold px-1">Usuario</label>
                                     <div class="group flex">
-                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                        <input type="text" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" name="user" id="user" placeholder="alberto.martinez">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg></div>
+                                        <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="user" name="user" placeholder="Usuario">
                                     </div>
                                 </div>
                             </div>
@@ -143,8 +143,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                 <div class="w-full px-3 mb-12">
                                     <label for="" class="text-xs font-semibold px-1">Contraseña</label>
                                     <div class="group flex">
-                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                        <input type="password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" name="passwordLogin" id="passwordLogin" placeholder="************">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+                                        <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="password" id="passwordLogin" name="passwordLogin" placeholder="Contraseña">
                                     </div>
                                 </div>
                             </div>
@@ -177,6 +177,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 $('#Acceder').validate({
                     errorPlacement: function(error, element) {
                             error.insertAfter(element.parent('.group'));
+                    },
+                    highlight: function(element) {
+                        var elem = $(element);
+                        $(element).removeClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
+                        $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                    },
+                    unhighlight: function(element) {
+                        var elem = $(element);	
+                        $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                        $(element).addClass("border border-gray-300 focus:ring-blue-500 focus:border-blue-500");
                     },
                     rules: {
                         user: {
@@ -269,6 +279,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     </script>
 </body>
 <style>
+
+    .error{
+        color: rgb(244 63 94);
+    }
 
     @media (max-width: 300px) {
         .h-captcha {
