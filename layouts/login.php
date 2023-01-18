@@ -33,44 +33,77 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                 $password = $_POST['password'];
                 $password = sha1($password);
 
-                $data = $object->_db->prepare("SELECT * FROM usuarios WHERE username= :user AND password= :password");
-                $data->bindParam("user", $user, PDO::PARAM_STR);
-                $data->bindParam("password", $password, PDO::PARAM_STR);
-                $data->execute();
-                $count = $data->rowCount();
-                $row = $data->fetch(PDO::FETCH_OBJ);
-                if ($count > 0) {
-                    $check_temp_pass = $object->_db->prepare("SELECT * FROM temporal_password WHERE user_id= :userid");
-                    $check_temp_pass->execute(array(':userid' => $row->id));
-	                $count_temp_pass = $check_temp_pass -> rowCount();
-	                if($count_temp_pass > 0){
-		                $_SESSION['changepass'] = true;
-		                exit(json_encode(array("temp-pass", "temppass.php?iduser=$row->id")));
-	                }else{
-                        $_SESSION['loggedin'] = true;
-                        $_SESSION['id'] = $row->id;
-                        $_SESSION['nombre'] = $row->nombre;
-                        $_SESSION['usuario'] = $row->username;
-                        $_SESSION['apellidopat'] = $row->apellido_pat;
-                        $_SESSION['apellidomat'] = $row->apellido_mat;
-                        $_SESSION['correo'] = $row->correo;
-                        $_SESSION['rol'] = $row->roles_id;
-                        if(isset($_SESSION['redirectURL'])){
-                            $link = $_SESSION['redirectURL'];
-                            unset($_SESSION['redirectURL']);
-                            exit(json_encode(array("success", "{$link}")));
+                $check_user_exist = $object -> _db -> prepare("SELECT IF(password = :password, 1, 0) as password, id, username, nombre, apellido_pat, apellido_mat, correo, roles_id FROM usuarios WHERE username=:username");
+                $check_user_exist -> execute(array(':password' => $password, ':username' => $user));
+                $row_user_count = $check_user_exist -> rowCount();
+                
+                if($row_user_count == 0){
+                    die(json_encode(array("failed", "Por favor, ingrese las credenciales correctas")));
+                }else{
+                    $fetch_user_check = $check_user_exist -> fetch(PDO::FETCH_OBJ);
+                    if($fetch_user_check -> password == 0){
+                    //Usuario correcto pero contraseña incorrecta
+                        $total_intentos = check_login_attempts($user, $object);
+                        if($total_intentos == 5){
+                            die(json_encode(array("blocked", "Has sobrepasado el límite de intentos para este usuario")));
                         }else{
-                            exit(json_encode(array("success", "dashboard.php")));
+                            $total_intentos++;
+                            $rem_attm=6-$total_intentos;
+                            if($rem_attm==0){
+                                die(json_encode(array("blocked", "Has sobrepasado el límite de intentos para este usuario")));
+                            }else{
+                                $insertar_intento = $object -> _db -> prepare("INSERT INTO loginlogs(user_id) SELECT id FROM usuarios where username=:userintentoid");
+                                $insertar_intento -> execute(array(':userintentoid' => $user));
+                                die(json_encode(array("failed", "Por favor, ingrese las credenciales correctas. Tiene $rem_attm intentos más para este usuario")));
+                            }
+                        }	
+                    }else if($fetch_user_check -> password == 1){
+                    //Contraseña y usuario correcto
+                        $total_intentos = check_login_attempts($user, $object);
+                        if($total_intentos == 5){
+                            die(json_encode(array("blocked", "Has sobrepasado el límite de intentos para este usuario")));
+                        }else{
+                            $delete_count_query = $object -> _db -> prepare("DELETE l FROM loginlogs l INNER JOIN usuarios u ON u.id = l.user_id WHERE u.username=:username");
+                            $delete_count_query -> execute(array(':username' => $user));
+                            $check_temp_pass = $object->_db->prepare("SELECT * FROM temporal_password WHERE user_id= :userid");
+                            $check_temp_pass->execute(array(':userid' => $fetch_user_check->id));
+                            $count_temp_pass = $check_temp_pass -> rowCount();
+                            if($count_temp_pass > 0){
+                                $_SESSION['changepass'] = true;
+                                exit(json_encode(array("temp-pass", "temppass.php?iduser=$fetch_user_check->id")));
+                            }else{
+                                $_SESSION['loggedin'] = true;
+                                $_SESSION['id'] = $fetch_user_check->id;
+                                $_SESSION['nombre'] = $fetch_user_check->nombre;
+                                $_SESSION['usuario'] = $fetch_user_check->username;
+                                $_SESSION['apellidopat'] = $fetch_user_check->apellido_pat;
+                                $_SESSION['apellidomat'] = $fetch_user_check->apellido_mat;
+                                $_SESSION['correo'] = $fetch_user_check->correo;
+                                $_SESSION['rol'] = $fetch_user_check->roles_id;
+                                if(isset($_SESSION['redirectURL'])){
+                                    $link = $_SESSION['redirectURL'];
+                                    unset($_SESSION['redirectURL']);
+                                    exit(json_encode(array("success", "{$link}")));
+                                }else{
+                                    exit(json_encode(array("success", "dashboard.php")));
+                                }
+                            }	
                         }
                     }
-                } else {
-                    exit(json_encode(array("failed")));
                 }
             }
         }else {
             exit(json_encode(array("captcha-error")));
         }
     }
+}
+
+function check_login_attempts($user, $object) {
+    $count_query = $object -> _db -> prepare("SELECT count(*) AS total_intentos FROM loginlogs inner join usuarios ON usuarios.id=loginlogs.user_id WHERE usuarios.username=:username");
+    $count_query -> execute(array(':username' => $user));
+    $fetch_count = $count_query -> fetch(PDO::FETCH_OBJ);
+    $total_intentos = $fetch_count -> total_intentos;
+    return $total_intentos;
 }
 ?>
 
@@ -234,14 +267,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                         }).then(function() {
                                             window.location.href = array[1]; 
                                         });
-                                    } else if(array[0] == "failed") {
+                                    } else if(array[0] == "failed"){
                                         Swal.fire({
                                             title: "Error",
-                                            text: "El username ó la contraseña son incorrectos",
+                                            text: array[1],
                                             icon: "error"
                                         }).then(function() {
-	                                        grecaptcha.reset();
-	                                    });
+                                            grecaptcha.reset();
+                                        });
                                     } else if(array[0] == "captcha-error"){
                                         Swal.fire({
                                             title: "Error",
@@ -257,6 +290,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                                             icon: "warning"
                                         }).then(function() {
                                             window.location.href = array[1]; 
+                                        });
+                                    } else if(array[0] == "blocked"){
+                                        Swal.fire({
+                                            title: "Error",
+                                            text: array[1],
+                                            icon: "error"
+                                        }).then(function() {
+                                            grecaptcha.reset();
                                         });
                                     }
                                 },
