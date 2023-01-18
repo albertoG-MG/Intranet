@@ -54,6 +54,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                             }else{
                                 $insertar_intento = $object -> _db -> prepare("INSERT INTO loginlogs(user_id) SELECT id FROM usuarios where username=:userintentoid");
                                 $insertar_intento -> execute(array(':userintentoid' => $user));
+                                $rem_attm--;
                                 die(json_encode(array("failed", "Por favor, ingrese las credenciales correctas. Tiene $rem_attm intentos más para este usuario")));
                             }
                         }	

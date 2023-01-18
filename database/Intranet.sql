@@ -3349,6 +3349,19 @@ CREATE TABLE `temporal_password`(
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `loginlogs`
+--
+
+CREATE TABLE `loginlogs`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `user_id` int NOT NULL,
+   `fecha_intento` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Trigger que inserta en la tabla Transicion_estatus_incidencia
 --
 
