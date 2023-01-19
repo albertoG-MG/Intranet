@@ -353,6 +353,8 @@
                         var file = files[0];
                         console.log('Archivo cargado: ' + file.name);
                         console.log('Blob mime: ' + file.type);
+                        console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+			            console.log('Tamaño en bytes: ' + file.size);
 
                         var fileReader = new FileReader();
                         fileReader.onerror = function (e) {
@@ -385,15 +387,21 @@
                                 $('#archivo').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
                             } else {
                                 console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
-                                $('#preview').removeClass('hidden');
-                                $('#preview').addClass('w-10 h-10');
-                                $('#svg').addClass('hidden');
-                                $('#archivo').text(file.name);
-                                let reader = new FileReader();
-                                reader.onload = function (event) {
-                                    $('#preview').attr('src', event.target.result);
+                                if((file.size / 1024 / 1024).toFixed(2) > 10){
+                                    $('#preview').addClass('hidden');
+				                    $('#svg').removeClass('hidden');
+				                    $('#archivo').text("El archivo " +file.name+ " supera el tamaño de carga máximo permitido de 10 MB.");
+                                }else{
+                                    $('#preview').removeClass('hidden');
+                                    $('#preview').addClass('w-10 h-10');
+                                    $('#svg').addClass('hidden');
+                                    $('#archivo').text(file.name);
+                                    let reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        $('#preview').attr('src', event.target.result);
+                                    }
+                                    reader.readAsDataURL(file);
                                 }
-                                reader.readAsDataURL(file);
                             }
                         };
                         fileReader.readAsArrayBuffer(file.slice(0, 4));
@@ -401,11 +409,15 @@
                 } else {
                     console.error('FileReader ó Blob no es compatible con este navegador.');
 					if($("#foto").val() != ''){
-						var file = e.target.files[0].name;
+						var file = this.files[0].name;
 						var lastDot = file.lastIndexOf('.');
 						var extension = file.substring(lastDot + 1);
 						if(extension == "jpeg" || extension == "jpg" || extension == "png") {
-							$('#archivo').text(file);
+                            if((this.files[0].size/ 1024 / 1024).toFixed(2) > 10){
+				                $('#archivo').text("El archivo " +file+ " supera el tamaño de carga máximo permitido de 10 MB.");
+			                }else{
+							    $('#archivo').text(file);
+                            }
 						}else{
 							$('#archivo').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
 						}
