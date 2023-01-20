@@ -14,7 +14,7 @@
 			}, 'not a valid name.');
 
             $.validator.addMethod('filesize', function(value, element, param) {
-                return this.optional(element) || (element.files[0].size <= param * 1000000)
+                return this.optional(element) || (element.files[0].size <= param * 1048576)
             }, 'File size must be less than {0} MB');
 
             $.validator.addMethod('email_verification', function (value) {
@@ -172,7 +172,7 @@
                         },
                         foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
-                            filesize: 'Solo se permiten imágenes de un máximo de 10 megabytes'
+                            filesize: 'Las imágenes deben pesar ser menos de 10 MB'
                         }
                     },
                     submitHandler: function(form) {
@@ -354,10 +354,10 @@
                                 $('#archivo').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
                             } else {
                                 console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
-                                if((file.size / 1024 / 1024).toFixed(2) > 10){
+                                if(file.size > 10485760){
                                     $('#preview').addClass('hidden');
 				                    $('#svg').removeClass('hidden');
-				                    $('#archivo').text("El archivo " +file.name+ " supera el tamaño de carga máximo permitido de 10 MB.");
+				                    $('#archivo').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
                                 }else{
                                     $('#preview').removeClass('hidden');
                                     $('#preview').addClass('w-10 h-10');
@@ -380,8 +380,8 @@
 						var lastDot = file.lastIndexOf('.');
 						var extension = file.substring(lastDot + 1);
 						if(extension == "jpeg" || extension == "jpg" || extension == "png") {
-                            if((this.files[0].size/ 1024 / 1024).toFixed(2) > 10){
-                                $('#archivo').text("El archivo " +file+ " supera el tamaño de carga máximo permitido de 10 MB.");
+                            if(this.files[0].size > 10485760){
+                                $('#archivo').text("El archivo " +file+ " debe pesar menos 10 MB.");
                             }else{
 							    $('#archivo').text(file);
                             }
