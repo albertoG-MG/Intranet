@@ -251,7 +251,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             if (!in_array($ext, $allowed)) {
                 die(json_encode(array("error", "Solo se permite jpg, jpeg y pngs")));
             }else if($_FILES['foto']['size'] > 10485760){
-                die(json_encode(array("error", "Solo se permiten imágenes de un máximo de 10 megabytes")));
+                die(json_encode(array("error", "Las imágenes deben pesar ser menos de 10 MB")));
             }else{
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
                 $mimetype = finfo_file($finfo, $_FILES["foto"]["tmp_name"]);
