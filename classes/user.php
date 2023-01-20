@@ -71,26 +71,53 @@ class user {
     public function EditarUsuarios($id){
         $crud = new crud();
         $object = new connection_database();
-        if($this->foto == null && $this->filename == null){
-            $selectphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:iduser");
-            $selectphoto -> bindParam("iduser", $id, PDO::PARAM_INT);
-            $selectphoto -> execute();
-            $row = $selectphoto ->fetch(PDO::FETCH_OBJ);
-            $this->foto = $row->foto_identificador;
-            $this->filename = $row->nombre_foto;
+        $selectphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:iduser");
+        $selectphoto -> execute(array(':iduser' => $id));
+        $fetch_row_photo = $selectphoto -> fetch(PDO::FETCH_OBJ);
+        //Cuando existe la foto y se sube algo
+        if($fetch_row_photo -> nombre_foto != null && $fetch_row_photo -> foto_identificador != null && $this->foto != null && $this->filename != null){
+            //Aquí se debe de eliminar la foto anterior
+            $path = "../src/img/imgs_uploaded/".$fetch_row_photo -> foto_identificador;
+            $directory = "../src/img/imgs_uploaded/";
+            $ext = pathinfo($this->filename, PATHINFO_EXTENSION);
+            $uploadfile = User::tempnam_sfx($directory, $ext);
+            if(!file_exists($path)){
+                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                    $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                    'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                    'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)], "id=:iduser", ['iduser' => $id]);
+                }
+            }else{
+                unlink($directory.$fetch_row_photo -> foto_identificador);
+                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                    $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                    'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                    'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)], "id=:iduser", ['iduser' => $id]);
+                }
+            }
+        //Cuando existe la foto y no se sube nada
+        }else if($fetch_row_photo -> nombre_foto != null && $fetch_row_photo -> foto_identificador != null && $this->foto == null && $this->filename == null){
+            $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+            'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+            'subrol_id' => $this->subrol_id, 'nombre_foto' => $fetch_row_photo -> nombre_foto, 'foto_identificador' => $fetch_row_photo -> foto_identificador], "id=:iduser", ['iduser' => $id]);
+            //Opcional - Boton eliminar
+        //Cuando no existe la foto y se sube algo
+        }else if($fetch_row_photo -> nombre_foto == null && $fetch_row_photo -> foto_identificador == null && $this->foto != null && $this->filename != null){
+            $directory = "../src/img/imgs_uploaded/";
+            $ext = pathinfo($this->filename, PATHINFO_EXTENSION);
+            $uploadfile = User::tempnam_sfx($directory, $ext);
+            if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+				'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+				'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)], "id=:iduser", ['iduser' => $id]);
+            }    
+        //Cuando no existe la foto y no se sube algo      
+        }else if($fetch_row_photo -> nombre_foto == null && $fetch_row_photo -> foto_identificador == null && $this->foto == null && $this->filename == null){
             $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
             'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
             'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => $this->foto], "id=:iduser", ['iduser' => $id]);
-        }else{
-            $location = "../src/img/imgs_uploaded/";
-            $ext = pathinfo($this->filename, PATHINFO_EXTENSION);
-            $uploadfile = User::tempnam_sfx($location, $ext);
-            if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
-                $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
-                'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
-                'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => basename($uploadfile)], "id=:iduser", ['iduser' => $id]);
-            }
         }
+
         if($this->temppassword != null){	
             $temporal_password = $object -> _db -> prepare("SELECT * FROM usuarios INNER JOIN temporal_password ON temporal_password.user_id=usuarios.id WHERE usuarios.id=:editar");
             $temporal_password -> execute(array(':editar' => $id));
