@@ -320,7 +320,7 @@
                 img.src = imageSrc;
             }
 
-            <?php if($row -> nombre_archivo != null && $row -> foto_identificador != null){ ?>
+            <?php if($row -> nombre_foto != null && $row -> foto_identificador != null){ ?>
 			    $("#div_actions_foto").removeClass("hidden");
 		    <?php } ?>
 
