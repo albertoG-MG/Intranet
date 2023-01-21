@@ -68,7 +68,7 @@ class user {
 		return $usuarios;
     } 
     
-    public function EditarUsuarios($id){
+    public function EditarUsuarios($id, $delete){
         $crud = new crud();
         $object = new connection_database();
         $selectphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:iduser");
@@ -97,10 +97,24 @@ class user {
             }
         //Cuando existe la foto y no se sube nada
         }else if($fetch_row_photo -> nombre_foto != null && $fetch_row_photo -> foto_identificador != null && $this->foto == null && $this->filename == null){
-            $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
-            'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
-            'subrol_id' => $this->subrol_id, 'nombre_foto' => $fetch_row_photo -> nombre_foto, 'foto_identificador' => $fetch_row_photo -> foto_identificador], "id=:iduser", ['iduser' => $id]);
-            //Opcional - Boton eliminar
+            if($delete == "false"){
+                $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                'subrol_id' => $this->subrol_id, 'nombre_foto' => $fetch_row_photo -> nombre_foto, 'foto_identificador' => $fetch_row_photo -> foto_identificador], "id=:iduser", ['iduser' => $id]);
+            }else{
+                $directory = "../src/img/imgs_uploaded/";
+                $path = "../src/img/imgs_uploaded/".$fetch_row_photo -> foto_identificador;
+                if(!file_exists($path)){
+                    $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                    'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                    'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => $this->foto], "id=:iduser", ['iduser' => $id]);
+                }else{
+                    unlink($directory.$fetch_row_photo -> foto_identificador);
+                    $crud->update('usuarios', ['username' => $this->username, 'nombre' => $this->nombre, 'apellido_pat' => $this->apellido_pat,
+                    'apellido_mat' => $this->apellido_mat, 'correo' => $this->correo, 'password' => $this->password, 'departamento_id' => $this->departamento, 'roles_id' => $this->roles_id,
+                    'subrol_id' => $this->subrol_id, 'nombre_foto' => $this->filename, 'foto_identificador' => $this->foto], "id=:iduser", ['iduser' => $id]);
+                }
+            }
         //Cuando no existe la foto y se sube algo
         }else if($fetch_row_photo -> nombre_foto == null && $fetch_row_photo -> foto_identificador == null && $this->foto != null && $this->filename != null){
             $directory = "../src/img/imgs_uploaded/";

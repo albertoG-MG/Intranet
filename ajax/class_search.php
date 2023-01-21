@@ -276,8 +276,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "edit":
                 if(isset($_POST["editarid"])){
                     $ideditar = $_POST["editarid"];
+                    $delete = $_POST["delete"];
                     $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $password_temporal, $departamento, $roles, $subroles, $filename, $foto);
-                    $user->EditarUsuarios($ideditar);
+                    $user->EditarUsuarios($ideditar, $delete);
                     die(json_encode(array("success", "Se ha editado un usuario exitosamente!")));
                 }
                 break;

@@ -1,6 +1,8 @@
 <script>
         $(document).ready(function() {
 
+            var delete_switch="false";
+
             $.validator.addMethod('filesize', function(value, element, param) {
                 return this.optional(element) || (element.files[0].size <= param * 1048576)
             }, 'File size must be less than {0} MB');
@@ -232,6 +234,7 @@
                                 fd.append('subrol_id', subrol);
                                 fd.append('subrol_nom', subrolnom);
                                 fd.append('foto', foto);
+                                fd.append('delete', delete_switch);
                                 fd.append('editarid', editarid);
                                 fd.append('method', method);
                                 fd.append('app', app);
@@ -289,6 +292,8 @@
                 });
             }
 
+            var originalState = $("#img_information").clone();
+
             if (!($("#usuario").val().length == 0)){
 				$("#usuario").valid();
 			}
@@ -314,6 +319,10 @@
                 img.onerror = bad;
                 img.src = imageSrc;
             }
+
+            <?php if($row -> nombre_archivo != null && $row -> foto_identificador != null){ ?>
+			    $("#div_actions_foto").removeClass("hidden");
+		    <?php } ?>
 
             <?php
             if(basename($_SERVER['PHP_SELF']) == 'editar_usuario.php'){?>
@@ -345,6 +354,13 @@
                 // Chrome requires returnValue to be set
                 e.returnValue = '';
             }
+
+            $('#delete_foto').on('click', function() {
+			    $("#img_information").replaceWith(originalState.clone());
+			    $("#foto").val("");
+			    $("#div_actions_foto").addClass("hidden");
+			    delete_switch = "true";
+		    });
 
             $('input[name="foto"]').change(function() {
                 if (window.FileReader && window.Blob) {
@@ -385,17 +401,21 @@
                                 $('#preview').addClass('hidden');
                                 $('#svg').removeClass('hidden');
                                 $('#archivo').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                                $("#div_actions_foto").removeClass("hidden");
                             } else {
                                 console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
                                 if(file.size > 10485760){
                                     $('#preview').addClass('hidden');
 				                    $('#svg').removeClass('hidden');
 				                    $('#archivo').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                    $("#div_actions_foto").removeClass("hidden");
                                 }else{
                                     $('#preview').removeClass('hidden');
                                     $('#preview').addClass('w-10 h-10');
                                     $('#svg').addClass('hidden');
                                     $('#archivo').text(file.name);
+                                    $("#div_actions_foto").removeClass("hidden");
+                                    delete_switch="false";
                                     let reader = new FileReader();
                                     reader.onload = function (event) {
                                         $('#preview').attr('src', event.target.result);
@@ -415,12 +435,16 @@
 						if(extension == "jpeg" || extension == "jpg" || extension == "png") {
                             if(this.files[0].size > 10485760){
 				                $('#archivo').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                                $("#div_actions_foto").removeClass("hidden");
 			                }else{
 							    $('#archivo').text(file);
+                                $("#div_actions_foto").removeClass("hidden");
+                                delete_switch="false";
                             }
 						}else{
 							$('#archivo').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
-						}
+                            $("#div_actions_foto").removeClass("hidden");
+                        }
 					}
                 }
 		    });
