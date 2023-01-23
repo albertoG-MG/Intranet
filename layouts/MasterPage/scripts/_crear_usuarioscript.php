@@ -315,6 +315,10 @@
                 e.returnValue = '';
             }
 
+            $('form#Guardar input[type="text"], input[type="password"]').on('keypress', function(e) {
+		        return e.which !== 13;
+	        });
+
             $('#delete_foto').on('click', function() {
                 $("#img_information").replaceWith(originalState.clone());
                 $("#foto").val("");

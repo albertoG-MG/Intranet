@@ -148,7 +148,18 @@ class user {
 
     public static function EliminarUsuarios($id){
 		$crud = new crud();
-		$crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
+        $object = new connection_database();
+        $select_photo = $object -> _db -> prepare("SELECT nombre_foto, foto_identificador FROM usuarios WHERE id=:iduser");
+        $select_photo -> execute(array(':iduser' => $id));
+        $fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
+        $directory = __DIR__ . "/../src/img/imgs_uploaded/";
+        $path = __DIR__ . "/../src/img/imgs_uploaded/".$fetch_select_photo -> foto_identificador;
+        if(!file_exists($path)){
+            $crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
+        }else{
+            unlink($directory.$fetch_select_photo -> foto_identificador);
+            $crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
+        }
 	}
     
     public static function tempnam_sfx($path, $suffix){
