@@ -48,13 +48,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                             die(json_encode(array("blocked", "Has sobrepasado el límite de intentos para este usuario")));
                         }else{
                             $total_intentos++;
-                            $rem_attm=6-$total_intentos;
+                            $rem_attm=5-$total_intentos;
+                            $insertar_intento = $object -> _db -> prepare("INSERT INTO loginlogs(user_id) SELECT id FROM usuarios where username=:userintentoid");
+                            $insertar_intento -> execute(array(':userintentoid' => $user));
                             if($rem_attm==0){
                                 die(json_encode(array("blocked", "Has sobrepasado el límite de intentos para este usuario")));
                             }else{
-                                $insertar_intento = $object -> _db -> prepare("INSERT INTO loginlogs(user_id) SELECT id FROM usuarios where username=:userintentoid");
-                                $insertar_intento -> execute(array(':userintentoid' => $user));
-                                $rem_attm--;
                                 die(json_encode(array("failed", "Por favor, ingrese las credenciales correctas. Tiene $rem_attm intentos más para este usuario")));
                             }
                         }	
