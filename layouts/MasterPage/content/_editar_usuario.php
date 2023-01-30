@@ -69,11 +69,11 @@
 
 
             <div class="grid grid-cols-1 mt-5 mx-7">
-				      <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Usuario</label>
-				      <div class="group flex">
-					      <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg></div>
-					      <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="usuario" name="usuario" value="<?php echo "{$row->username}"; ?>" placeholder="Usuario">
-				      </div>
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Usuario</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg></div>
+                <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" aria-describedby="usuarioHelpBlock" id="usuario" name="usuario" value="<?php echo "{$row->username}"; ?>" placeholder="Usuario">
+              </div>
               <div id="loader-usuario" class="hidden mt-5">
                 <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
@@ -87,24 +87,23 @@
                   <p class="text-green-600">Usuario válido y disponible</p>
                 </li>
               </div>
-				    </div>
-
-            <div class="grid grid-cols-1 mx-7">
-				      <ul id="usuarioHelpBlock" class="text-light text-sm text-gray-500">
-					      <li>Solo caracteres alfanúmericos, guión y punto sin espacios, acentos ni ñ.</li>
-					      <li>El guión bajo y el punto no pueden estar al final o al principio del usuario (e.g _username / username_ / .username / username.).</li> 
-					      <li>El guión bajo y el punto no pueden estar uno al lado del otro (e.g user_.name).</li>
-					      <li>El guión bajo o el punto no se pueden usar varias veces seguidas (e.g user__name / user..name).</li>
-                <li>Nota: Se hará una verificación al usuario para comprobar que no esté repetido.</li>
-				      </ul>
-				    </div>
+              <div id="usuarioHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+                  <li>Solo caracteres alfanúmericos, guión y punto sin espacios, acentos ni ñ.</li>
+                  <li>El guión bajo y el punto no pueden estar al final o al principio del usuario (e.g _username / username_ / .username / username.).</li> 
+                  <li>El guión bajo y el punto no pueden estar uno al lado del otro (e.g user_.name).</li>
+                  <li>El guión bajo o el punto no se pueden usar varias veces seguidas (e.g user__name / user..name).</li>
+                  <li>Nota: Se hará una verificación al usuario para comprobar que no esté repetido.</li> 
+                </ul>
+              </div>
+            </div>
 
             <div x-data="{showen:true}" class='grid grid-cols-1 mt-5 mx-7'>
               <div x-show="showen">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña (Opcional)</label>
+                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña</label>
                 <div class="group flex" x-data="{isshow:false}">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
-                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="Contraseña">
+                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" aria-describedby="passwordHelpBlock" id="password" name="password" placeholder="Contraseña">
                   <button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
                     <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -129,6 +128,13 @@
                   <p class="text-green-600">Contraseña válida</p>
                 </li>
               </div>
+              <div id="passwordHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+                  <li>El cambio de contraseña es opcional.</li>
+                  <li>La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) sin espacios, acentos ni ñ.</li>
+                  <li>Nota: Se hará una verificación a la contraseña para evitar el uso de palabras comunes.</li>
+                </ul>
+              </div>
             </div>
 
             <div x-data="{showen:true}" class='grid grid-cols-1 mt-5 mx-7'>
@@ -136,25 +142,24 @@
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Confirmar contraseña</label>
                 <div class="group flex" x-data="{isshow:false}">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
-                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="cpassword" name="cpassword" placeholder="Contraseña">
+                  <input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" aria-describedby="confirmacionpasswordHelpBlock" id="cpassword" name="cpassword" placeholder="Confirmar contraseña">
                   <button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
-                    <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                    </svg>
-                    <svg x-show="isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
-                    </svg>
+                  <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  <svg x-show="isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                  </svg>
                   </button>
                 </div>
               </div>
-            </div>
-
-            <div class="grid grid-cols-1 mx-7">
-              <ul id="passwordHelpBlock" class="text-light text-sm text-gray-500">
-                <li>La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) sin espacios, acentos ni ñ.</li>
-                <li>Nota: Se hará una verificación a la contraseña para evitar el uso de palabras comunes, contraseñas repetidas y evitar su uso por 365 días.</li> 
-              </ul>
+			        <div id="confirmacionpasswordHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+				          <li>Si no se ingreso nada en la contraseña, dejar vacío.</li>
+                  <li>La confirmación de la contraseña debe coincidir con la contraseña ingresada anteriormente.</li>
+                </ul>
+			        </div>
             </div>
 
             <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
@@ -162,59 +167,72 @@
                 <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña temporal</label>
                 <div class="flex flex-col md:flex-row md:items-center cursor-pointer cm-toggle-wrapper" id="slider-event" x-on:click="value =  (value == onValue ? offValue : onValue);">
                   <div class="rounded-full w-8 h-4 p-0.5 <?php if($fetch_temporal_password > 0){ ?> bg-green-500 <?php }else{ ?>  bg-red-500  <?php } ?>" :class="{'bg-red-500': value == offValue,'bg-green-500': value == onValue}">
-                    <div class="rounded-full w-3 h-3 bg-white transform mx-auto duration-300 ease-in-out <?php if($fetch_temporal_password > 0){ ?> translate-x-2 <?php }else{ ?> -translate-x-2 <?php } ?>" :class="{'-translate-x-2': value == offValue,'translate-x-2': value == onValue}"></div>
+                  <div class="rounded-full w-3 h-3 bg-white transform mx-auto duration-300 ease-in-out <?php if($fetch_temporal_password > 0){ ?> translate-x-2 <?php }else{ ?> -translate-x-2 <?php } ?>" :class="{'-translate-x-2': value == offValue,'translate-x-2': value == onValue}"></div>
                   </div>
-                  <input type="checkbox" id="checkbox-slider" name="checkbox-slider" class="hidden" x-bind:checked="value == offValue ? false : true" <?php if($fetch_temporal_password > 0){ ?> checked  <?php } ?> >
+                  <input type="checkbox" aria-describedby="temppasswordHelpBlock" id="checkbox-slider" name="checkbox-slider" class="hidden" x-bind:checked="value == offValue ? false : true" <?php if($fetch_temporal_password > 0){ ?> checked  <?php } ?> >
                   <span class="text-light text-sm text-gray-500 md:ml-1" x-text="value == offValue ? 'Contraseña temporal deshabilitada': 'Contraseña temporal habilitada'">
-                    <?php if($fetch_temporal_password > 0){ ?> Contraseña temporal habilitada <?php }else{ ?> Contraseña temporal deshabilitada  <?php } ?>
+                  <?php if($fetch_temporal_password > 0){ ?> Contraseña temporal habilitada <?php }else{ ?> Contraseña temporal deshabilitada  <?php } ?>
                   </span>
                 </div>
-              </div>
-              
-              <div class="grid grid-cols-1 mx-7">
-                <ul id="temppasswordHelpBlock" class="text-light text-sm text-gray-500">
-                  <li>Si se habilita esta opción, el usuario tendrá que cambiar la contraseña la próxima vez que inicie sesión.</li>
-                  <li>Nota: Si la contraseña temporal estaba originalmente habilitada, deshabilitarla eliminará la contraseña temporal y el usuario podrá acceder al sistema sin la necesidad de cambiar la contraseña.</li>
-                </ul>
+                <div id="temppasswordHelpBlock">
+                  <ul class="text-light text-sm text-gray-500">
+                    <li>Si se habilita esta opción, el usuario tendrá que cambiar la contraseña la próxima vez que inicie sesión.</li>
+                    <li>Nota: Si la contraseña temporal estaba originalmente habilitada, deshabilitarla eliminará la contraseña temporal y el usuario podrá acceder al sistema sin la necesidad de cambiar la contraseña.</li>
+                  </ul>
+                </div>
               </div>
             <?php } ?>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
-                <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="nombre" name="nombre" value="<?php echo "{$row->nombre}"; ?>" placeholder="Nombre">
-                </div>
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
+                <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" aria-describedby="nombreHelpBlock" id="nombre" name="nombre" value="<?php echo "{$row->nombre}"; ?>" placeholder="Nombre">
               </div>
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Apellido paterno</label>
-                <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="apellido_pat" name="apellido_pat" value="<?php echo "{$row->apellido_pat}"; ?>" placeholder="Apellido paterno">
-                </div>
+              <div id="nombreHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+                  <li>Se permiten acentos y ñ en el nombre.</li>
+                  <li>Se permiten los guiones para nombres compuestos (e.g  Antonia Caballero-Plasencia).</li>
+                  <li>Solo se permiten espacios para separar nombres (e.g Juan Peña / María del Socorro).</li> 
+                </ul>
               </div>
-              <div class="grid grid-cols-1">
-                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Apellido materno</label>
-                <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="apellido_mat" name="apellido_mat" value="<?php echo "{$row->apellido_mat}"; ?>" placeholder="Apellido materno">
-                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Apellido paterno</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
+                <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" aria-describedby="apellidopaternoHelpBlock" id="apellido_pat" name="apellido_pat" value="<?php echo "{$row->apellido_pat}"; ?>" placeholder="Apellido paterno">
+              </div>
+              <div id="apellidopaternoHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+                  <li>Se permiten acentos y ñ en el apellido paterno.</li>
+                  <li>Se permiten los guiones para apellidos compuestos (e.g Sánchez-Arjona).</li>
+                  <li>Solo se permiten espacios para separar apellidos compuestos (e.g De la rosa).</li> 
+                </ul>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 mt-5 mx-7">
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Apellido materno</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" /></svg></div>
+                <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" aria-describedby="apellidomaternoHelpBlock" id="apellido_mat" name="apellido_mat" value="<?php echo "{$row->apellido_mat}"; ?>" placeholder="Apellido materno">
+              </div>
+              <div id="apellidomaternoHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+                  <li>Se permiten acentos y ñ en el apellido materno.</li>
+                  <li>Se permiten los guiones para apellidos compuestos (e.g Sánchez-Arjona).</li>
+                  <li>Solo se permiten espacios para separar apellidos compuestos (e.g De la rosa).</li> 
+                </ul>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 mx-7">
-				      <ul id="nameHelpBlock" class="text-light text-sm text-gray-500">
-					      <li>Se permiten acentos, guiones(-) y ñ en el nombre, apellido paterno y materno.</li>
-					      <li>Solo se permiten espacios para separar nombres (e.g Juan Peña / María del Socorro).</li> 
-				      </ul>
-				    </div>
-
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Correo</label>
-                <div class="group flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg></div>
-                  <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="correo" name="correo" value="<?php echo "{$row->correo}"; ?>" placeholder="Correo">
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg></div>
+                <input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" aria-describedby="correoHelpBlock" id="correo" name="correo" value="<?php echo "{$row->correo}"; ?>" placeholder="Correo">
               </div>
               <div id="myloader" class="hidden mt-5">
                 <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -229,13 +247,12 @@
                   <p class="text-green-600">Correo electrónico válido y disponible</p>
                 </li>
               </div>
+              <div id="correoHelpBlock">
+                <ul class="text-light text-sm text-gray-500">
+                  <li>Nota: Se hará una verificación al correo para comprobar que no esté repetido.</li>
+                </ul>
+              </div>
             </div>
-
-            <div class="grid grid-cols-1 mx-7">
-	            <ul id="correoHelpBlock" class="text-light text-sm text-gray-500">
-		            <li>Nota: Se hará una verificación al correo para comprobar que no esté repetido.</li>
-	            </ul>
-	          </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Rol</label>
