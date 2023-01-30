@@ -156,15 +156,15 @@
                         },
                         nombre: {
                             required: 'Por favor, ingrese un nombre',
-                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
+                            names_validation: 'Nombre no válido'
                         },
                         apellido_pat: {
                             required: 'Por favor, ingrese un apellido paterno',
-                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
+                            names_validation: 'Apellido paterno no válido'
                         },
                         apellido_mat: {
                             required: 'Por favor, ingrese un apellido materno',
-                            names_validation: 'Nombre, apellido paterno ó materno no válidos'
+                            names_validation: 'Apellido materno no válido'
                         },
                         correo: {
                             required:function () {$('#myloader').addClass('hidden'); $('#correct-email').addClass('hidden'); $("#correo").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },

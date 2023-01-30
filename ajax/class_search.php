@@ -94,7 +94,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         if(empty($_POST["nombre"])){
             die(json_encode(array("error", "Por favor, ingrese un nombre")));
         }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["nombre"])){
-            die(json_encode(array("error", "Nombre inválido")));
+            die(json_encode(array("error", "Nombre no válido")));
         }else{
             $nombre = $_POST["nombre"];
         }
@@ -102,7 +102,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         if(empty($_POST["apellido_pat"])){
             die(json_encode(array("error", "Por favor, ingrese un apellido paterno")));
         }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["apellido_pat"])){
-            die(json_encode(array("error", "Apellido paterno inválido")));
+            die(json_encode(array("error", "Apellido paterno no válido")));
         }else{
             $apellido_pat = $_POST["apellido_pat"];
         }
@@ -110,7 +110,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         if(empty($_POST["apellido_mat"])){
             die(json_encode(array("error", "Por favor, ingrese un apellido materno")));
         }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["apellido_mat"])){
-            die(json_encode(array("error", "Apellido materno inválido")));
+            die(json_encode(array("error", "Apellido materno no válido")));
         }else{
             $apellido_mat = $_POST["apellido_mat"];
         }
