@@ -9,9 +9,10 @@ include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
+session_start();
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
-    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["password_temporal"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["rolsession"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
+    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["password_temporal"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
         
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
@@ -78,13 +79,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
 
         if($_POST["method"] == "store"){
-            if(Roles::FetchSessionRol($_POST["rolsession"]) == "Superadministrador" || Roles::FetchSessionRol($_POST["rolsession"]) == "Administrador"){
+            if(Roles::FetchSessionRol($_SESSION['rol']) == "Superadministrador" || Roles::FetchSessionRol($_SESSION['rol']) == "Administrador"){
                 $password_temporal = $_POST["password_temporal"];
             }else{
                 $password_temporal = 1;
             }
         }else if($_POST["method"] == "edit"){
-            if(Roles::FetchSessionRol($_POST["rolsession"]) == "Superadministrador" || Roles::FetchSessionRol($_POST["rolsession"]) == "Administrador"){
+            if(Roles::FetchSessionRol($_SESSION['rol']) == "Superadministrador" || Roles::FetchSessionRol($_SESSION['rol']) == "Administrador"){
                 $password_temporal = $_POST["password_temporal"];
             }else{
                 $password_temporal = null;
@@ -142,7 +143,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
 
         $check_session = $object -> _db -> prepare("SELECT nombre FROM roles WHERE id=:rolid");
-        $check_session -> execute(array(':rolid' => $_POST["rolsession"]));
+        $check_session -> execute(array(':rolid' => $_SESSION['rol']));
         $fetch_session = $check_session -> fetch(PDO::FETCH_OBJ);
         
         if($fetch_session -> nombre == "Superadministrador"){
@@ -159,7 +160,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             }else{
                 die(json_encode(array("error", "Por favor, asegurese que el rol escogido se encuentre en el dropdown")));
             }		
-        }else if($fetch_session -> nombre == "Administrador" || Permissions::CheckPermissions($_POST["rolsession"], "Crear usuario") == "true" && Permissions::CheckPermissions($_POST["rolsession"], "Vista tecnico") == "false"){
+        }else if($fetch_session -> nombre == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false"){
             $user_privileges = $object -> _db -> prepare("SELECT id, nombre FROM roles WHERE nombre NOT IN('Superadministrador', 'Administrador')");
             $user_privileges -> execute();
             $fetch_user_privileges = $user_privileges -> fetchAll(PDO::FETCH_KEY_PAIR);
@@ -173,7 +174,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             }else{
                 die(json_encode(array("error", "Por favor, asegurese que el rol escogido se encuentre en el dropdown")));
             }
-        }else if(Permissions::CheckPermissions($_POST["rolsession"], "Crear usuario") == "true" && Permissions::CheckPermissions($_POST["rolsession"], "Vista tecnico") == "true"){
+        }else if(Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "true"){
             $supervisor_privileges = $object -> _db -> prepare("SELECT id, nombre FROM roles WHERE nombre IN('Tecnico')");
             $supervisor_privileges -> execute();
             $fetch_supervisor_privileges = $supervisor_privileges -> fetchAll(PDO::FETCH_KEY_PAIR);

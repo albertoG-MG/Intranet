@@ -211,7 +211,6 @@
                                 var departamentonom = $("#departamento option:selected").text();
                                 var rol = $("#rol").val();
                                 var rolnom = $("#rol option:selected").text();
-                                var rolsession = <?php echo $_SESSION["rol"]; ?>;
                                 var subrol = $("#subrol").val();
                                 var subrolnom = $("#subrol option:selected").text();
                                 var foto = $('#foto')[0].files[0];
@@ -230,7 +229,6 @@
                                 fd.append('departamentonom', departamentonom);
                                 fd.append('roles_id', rol);
                                 fd.append('rolnom', rolnom);
-                                fd.append('rolsession', rolsession);
                                 fd.append('subrol_id', subrol);
                                 fd.append('subrol_nom', subrolnom);
                                 fd.append('foto', foto);
