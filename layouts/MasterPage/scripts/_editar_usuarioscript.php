@@ -200,9 +200,7 @@
                                 var confirmar_password = $("input[name=cpassword]").val();
                                 <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
                                     var password_temporal = $('#checkbox-slider').is(':checked') ? 1 : 0;
-                                <?php }else{ ?>
-                                    var password_temporal = "";
-                                <?php } ?>
+	                            <?php } ?>
                                 var nombre = $("input[name=nombre]").val();
                                 var apellido_pat = $("input[name=apellido_pat]").val();
                                 var apellido_mat = $("input[name=apellido_mat]").val();
@@ -220,7 +218,9 @@
                                 fd.append('usuario', usuario);
                                 fd.append('password', password);
                                 fd.append('confirmar_password', confirmar_password);
-                                fd.append('password_temporal', password_temporal);
+                                <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
+		                            fd.append('password_temporal', password_temporal);    
+	                            <?php } ?>
                                 fd.append('nombre', nombre);
                                 fd.append('apellido_pat', apellido_pat);
                                 fd.append('apellido_mat', apellido_mat);

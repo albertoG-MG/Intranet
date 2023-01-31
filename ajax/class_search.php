@@ -12,7 +12,7 @@ $object = new connection_database();
 session_start();
 
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
-    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["password_temporal"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
+    if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
         
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
