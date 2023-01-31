@@ -226,7 +226,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				if($key_departamento != $_POST["departamento"] && !(empty($_POST["departamento"]))){
 					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los departamentos registrados")));
 				}else{
-					if($_POST['rolnom'] != "Superadministrador" && $_POST['rolnom'] != "Administrador" && $_POST['rolnom'] != "Usuario externo"){
+					if($_POST['rolnom'] != "Superadministrador" && $_POST['rolnom'] != "Administrador" && $_POST['rolnom'] != "Director general" && $_POST['rolnom'] != "Usuario externo"){
 						if(empty($_POST["departamento"])){
 							$departamento = null;
 						}else{
