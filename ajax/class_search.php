@@ -14,6 +14,16 @@ session_start();
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
         
+        //Checa si el usuario existe
+        if($_POST["method"] == "edit"){
+            $user_check = $object -> _db -> prepare("SELECT * FROM usuarios where id=:checkuser");
+            $user_check -> execute(array(':checkuser' => $_POST["editarid"]));
+            $count_user_check = $user_check -> rowCount();
+            if($count_user_check == 0){
+                die(json_encode(array("user_deleted", "Este usuario ya no existe!")));
+            }
+        }
+
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
         }else if(strlen($_POST["usuario"]) < 5){
