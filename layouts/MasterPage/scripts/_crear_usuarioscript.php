@@ -416,51 +416,65 @@
 			
 			$("#rol").on("change", function () {
                 var role_selected = $('#rol').find('option:selected').text();
-                if (role_selected == "Superadministrador" || role_selected == "Administrador" || role_selected == "Sin rol"){
-                    $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
-                    $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                }else if(role_selected == "Usuario externo"){
-                    $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
-                    $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                    var x = $("#rol option:selected").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "../ajax/usuarios/getsubrol.php",
-                        data: {
-                            "roles_id": x
-                        },
-                        success: function (response) {
-                            $("#subrol").html(response);
-                        }
-                    });
-                }else if(role_selected == "Director general"){
-                    $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
-                    $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
-                    var x = $("#rol option:selected").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "../ajax/usuarios/getsubrol.php",
-                        data: {
-                            "roles_id": x
-                        },
-                        success: function (response) {
-                            $("#subrol").html(response);
-                        }
-                    });
-                }else{
-                    $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
-                    $('#departamento').removeAttr('disabled').removeClass("bg-gray-200");
-                    var x = $("#rol option:selected").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "../ajax/usuarios/getsubrol.php",
-                        data: {
-                            "roles_id": x
-                        },
-                        success: function (response) {
-                            $("#subrol").html(response);
-                        }
-                    });
+                switch(role_selected){
+                    <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador"){ ?>
+                        case "Superadministrador":
+                        case "Administrador":
+                            $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
+                            $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                        break;
+                    <?php } ?>
+                    <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Vista tecnico") == "false"){ ?>
+                        case "Usuario externo":
+                            $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
+                            $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                            var x = $("#rol option:selected").val();
+                            $.ajax({
+                                type: "POST",
+                                url: "../ajax/usuarios/getsubrol.php",
+                                data: {
+                                    "roles_id": x
+                                },
+                                success: function (response) {
+                                    $("#subrol").html(response);
+                                }
+                            });
+                        break;
+                        case "Director general":
+                            $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
+                            $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                            var x = $("#rol option:selected").val();
+                            $.ajax({
+                                type: "POST",
+                                url: "../ajax/usuarios/getsubrol.php",
+                                data: {
+                                    "roles_id": x
+                                },
+                                success: function (response) {
+                                    $("#subrol").html(response);
+                                }
+                            });
+                        break;
+                    <?php } ?>
+                    case "Sin rol":
+                        $('#subrol').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin subrol</option>");
+                        $('#departamento').attr('disabled', "true").addClass("bg-gray-200").empty().append("<option value=''>Sin departamento</option><?php $departamentos = departamentos::FetchDepartamento(); foreach ($departamentos as $row) { echo "<option value='" . $row->id . "'>"; echo "" . $row->departamento . ""; echo "</option>"; } ?>");
+                    break;
+                    default:
+                        $('#subrol').removeAttr('disabled').removeClass("bg-gray-200");
+                        $('#departamento').removeAttr('disabled').removeClass("bg-gray-200");
+                        var x = $("#rol option:selected").val();
+                        $.ajax({
+                            type: "POST",
+                            url: "../ajax/usuarios/getsubrol.php",
+                            data: {
+                                "roles_id": x
+                            },
+                            success: function (response) {
+                                $("#subrol").html(response);
+                            }
+                        });
+                    break;
                 }
             });
         });
