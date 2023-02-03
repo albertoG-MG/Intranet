@@ -69,6 +69,15 @@
     }
     //Fin de la validacion
 
+    //Validacion - Si el usuario loggeado quiere acceder a su información cambiando el número de id, regresa
+
+    if($editarid == $_SESSION['id']){
+        header('Location: users.php');
+        die();
+    }
+
+    //Fin de la validacion
+
     $editar = $object -> _db->prepare("SELECT * FROM usuarios WHERE id=:editarid");
     $editar->bindParam("editarid", $editarid,PDO::PARAM_INT);
     $editar->execute();
