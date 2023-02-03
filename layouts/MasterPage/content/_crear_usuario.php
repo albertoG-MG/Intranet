@@ -87,7 +87,8 @@
               </div>
               <div id="usuarioHelpBlock">
                 <ul class="text-light text-sm text-gray-500">
-                  <li>Solo caracteres alfanúmericos, guión y punto sin espacios, acentos ni ñ.</li>
+                  <li>Solo caracteres alfanúmericos (mayúsculas ó minúsculas) sin espacios, acentos ni ñ.</li>
+                  <li>Se permiten guiones bajos y puntos para separar cada string (e.g flavio.cordova, flavio_cordova).</li>
                   <li>El guión bajo y el punto no pueden estar al final o al principio del usuario (e.g _username / username_ / .username / username.).</li> 
                   <li>El guión bajo y el punto no pueden estar uno al lado del otro (e.g user_.name).</li>
                   <li>El guión bajo o el punto no se pueden usar varias veces seguidas (e.g user__name / user..name).</li>
@@ -186,8 +187,8 @@
               </div>
               <div id="nombreHelpBlock">
                 <ul class="text-light text-sm text-gray-500">
-                  <li>Se permiten acentos y ñ en el nombre.</li>
-                  <li>Se permiten los guiones para nombres compuestos (e.g  Antonia Caballero-Plasencia).</li>
+                  <li>Se permiten letras (mayúsculas ó minúsculas), acentos y ñ en el nombre.</li>
+                  <li>Se permiten los guiones y apóstrofes para nombres compuestos (e.g  Antonia Caballero-Plasencia, Ana'Karen).</li>
                   <li>Solo se permiten espacios para separar nombres (e.g Juan Peña / María del Socorro).</li> 
                 </ul>
               </div>
@@ -201,8 +202,8 @@
               </div>
               <div id="apellidopaternoHelpBlock">
                 <ul class="text-light text-sm text-gray-500">
-                  <li>Se permiten acentos y ñ en el apellido paterno.</li>
-                  <li>Se permiten los guiones para apellidos compuestos (e.g Sánchez-Arjona).</li>
+                  <li>Se permiten letras (mayúsculas ó minúsculas), acentos y ñ en el apellido paterno.</li>
+                  <li>Se permiten los guiones y apóstrofes para apellidos compuestos (e.g Sánchez-Arjona, Plasencia'Ramírez).</li>
                   <li>Solo se permiten espacios para separar apellidos compuestos (e.g De la rosa).</li> 
                 </ul>
               </div>
@@ -216,8 +217,8 @@
               </div>
               <div id="apellidomaternoHelpBlock">
                 <ul class="text-light text-sm text-gray-500">
-                  <li>Se permiten acentos y ñ en el apellido materno.</li>
-                  <li>Se permiten los guiones para apellidos compuestos (e.g Sánchez-Arjona).</li>
+                  <li>Se permiten letras (mayúsculas ó minúsculas), acentos y ñ en el apellido materno.</li>
+                  <li>Se permiten los guiones y apóstrofes para apellidos compuestos (e.g Sánchez-Arjona, Plasencia'Ramírez).</li>
                   <li>Solo se permiten espacios para separar apellidos compuestos (e.g De la rosa).</li> 
                 </ul>
               </div>
