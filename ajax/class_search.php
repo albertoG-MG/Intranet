@@ -24,6 +24,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             }
         }
 
+        $logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
+
         if(empty($_POST["usuario"])){
             die(json_encode(array("error", "Por favor, ingresa un usuario")));
         }else if(strlen($_POST["usuario"]) < 5){
@@ -280,7 +282,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
             case "store":
                     $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $password_temporal, $departamento, $roles, $subroles, $filename, $foto);
-                    $user->CrearUsuarios();
+                    $user->CrearUsuarios($logged_user);
                     die(json_encode(array("success", "Se ha creado un usuario exitosamente!")));
                 break;
             
@@ -289,7 +291,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                     $ideditar = $_POST["editarid"];
                     $delete = $_POST["delete"];
                     $user = new User($username, $nombre, $apellido_pat, $apellido_mat, $correo, $password, $password_temporal, $departamento, $roles, $subroles, $filename, $foto);
-                    $user->EditarUsuarios($ideditar, $delete);
+                    $user->EditarUsuarios($ideditar, $delete, $logged_user);
                     die(json_encode(array("success", "Se ha editado un usuario exitosamente!")));
                 }
                 break;

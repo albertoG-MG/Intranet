@@ -35,9 +35,11 @@ class user {
         $this->foto = $photo;
 	}
 	
-	public function CrearUsuarios(){
+	public function CrearUsuarios($sessionname){
         $object = new connection_database();
         $crud = new crud();
+        $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
+        $set_logged_user -> execute(array(':loggeduser' => $sessionname));
         if($this->filename != null && $this->foto !=null){
             $location = "../src/img/imgs_uploaded/";
             $ext = pathinfo($this->filename, PATHINFO_EXTENSION);
@@ -68,9 +70,11 @@ class user {
 		return $usuarios;
     } 
     
-    public function EditarUsuarios($id, $delete){
+    public function EditarUsuarios($id, $delete, $sessionname){
         $crud = new crud();
         $object = new connection_database();
+        $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
+        $set_logged_user -> execute(array(':loggeduser' => $sessionname));
         $selectphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:iduser");
         $selectphoto -> execute(array(':iduser' => $id));
         $fetch_row_photo = $selectphoto -> fetch(PDO::FETCH_OBJ);
@@ -146,9 +150,11 @@ class user {
         }
     } 
 
-    public static function EliminarUsuarios($id){
+    public static function EliminarUsuarios($id, $sessionname){
 		$crud = new crud();
         $object = new connection_database();
+        $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
+        $set_logged_user -> execute(array(':loggeduser' => $sessionname));
         $select_photo = $object -> _db -> prepare("SELECT nombre_foto, foto_identificador FROM usuarios WHERE id=:iduser");
         $select_photo -> execute(array(':iduser' => $id));
         $fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
