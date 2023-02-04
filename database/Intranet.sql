@@ -3372,6 +3372,20 @@ CREATE TABLE `loginlogs`(
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `tabla_usuarios_log`
+--
+
+CREATE TABLE `tabla_usuarios_log`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Trigger que inserta en la tabla Transicion_estatus_incidencia
 --
 
@@ -3429,6 +3443,51 @@ END$$
 DELIMITER ;
 
 -- --------------------------------------------------------								
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_insertar`
+--
+
+DELIMITER $$
+	CREATE TRIGGER log_usuarios_insertar AFTER INSERT ON usuarios
+	FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
+		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(NEW.nombre, ' ', NEW.apellido_pat, ' ', NEW.apellido_mat), 'Insertar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_actualizar`
+--
+
+DELIMITER $$
+	CREATE TRIGGER log_usuarios_actualizar AFTER UPDATE ON usuarios
+	FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
+		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(OLD.nombre, ' ', OLD.apellido_pat, ' ', OLD.apellido_mat), 'Actualizar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_eliminar`
+--
+
+DELIMITER $$
+	CREATE TRIGGER log_usuarios_eliminar AFTER DELETE ON usuarios
+	FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
+		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(OLD.nombre, ' ', OLD.apellido_pat, ' ', OLD.apellido_mat), 'Eliminar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
 
 --
 -- Structure for view `serverside_user_superadministrador`
