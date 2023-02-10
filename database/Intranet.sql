@@ -19,7 +19,7 @@ DELIMITER ;
 CREATE TABLE `roles` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE `jerarquia`(
   `jerarquia_id` int DEFAULT NULL,
    FOREIGN KEY (rol_id) REFERENCES roles(id) ON DELETE CASCADE,
    FOREIGN KEY (jerarquia_id) REFERENCES jerarquia(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE `subroles` (
   `roles_id` int NOT NULL,
   `subrol_nombre` varchar(100) NOT NULL,
   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -84,7 +84,7 @@ CREATE TABLE `subroles` (
 CREATE TABLE `categorias` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,7 @@ CREATE TABLE `permisos` (
 `nombre` varchar(100) NOT NULL UNIQUE,
 `categoria_id` int DEFAULT NULL,
 FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -111,7 +111,7 @@ CREATE TABLE `rolesxcategorias` (
   `categorias_id` int NOT NULL,
   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE,
   FOREIGN KEY (categorias_id) REFERENCES categorias(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE `subrolesxpermisos` (
 `permisos_id` int NOT NULL,
  FOREIGN KEY (subroles_id) REFERENCES subroles(id) ON DELETE CASCADE,
  FOREIGN KEY (permisos_id) REFERENCES permisos(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -139,7 +139,7 @@ CREATE TABLE `rolesxpermisos` (
   `permisos_id` int NOT NULL,
   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE,
   FOREIGN KEY (permisos_id) REFERENCES permisos(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -150,7 +150,7 @@ CREATE TABLE `rolesxpermisos` (
 CREATE TABLE `departamentos` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departamento` varchar(100) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -189,7 +189,7 @@ CREATE TABLE `usuarios` (
    FOREIGN KEY (departamento_id) REFERENCES departamentos(id) ON DELETE SET NULL,
    FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL,
    FOREIGN KEY (subrol_id) REFERENCES subroles(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -199,8 +199,8 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `estados` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` char(45) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -252,10 +252,10 @@ INSERT INTO `estados` (`id`, `nombre`) VALUES
 CREATE TABLE `municipios` (
   `Id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `estado` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `clave` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `clave` varchar(100) NOT NULL,
    FOREIGN KEY (estado) REFERENCES estados(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2684,7 +2684,7 @@ CREATE TABLE `expedientes` (
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
    FOREIGN KEY (estado_id) REFERENCES estados(id),
    FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2699,7 +2699,7 @@ CREATE TABLE `ref_laborales` (
   `parentesco` varchar(100) DEFAULT NULL,
   `expediente_id` int NOT NULL,
    FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2716,7 +2716,7 @@ CREATE TABLE `ref_bancarias` (
   `curp` varchar(100) DEFAULT NULL,
   `prcnt_derecho` varchar(100) DEFAULT NULL,
    FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2732,7 +2732,7 @@ CREATE TABLE `estatus_empleado` (
   `motivo` varchar(100) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
    FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2748,7 +2748,7 @@ CREATE TABLE `historial_estatus_empleado` (
   `viejo_motivo` varchar(100) DEFAULT NULL,
   `vieja_fecha` date DEFAULT NULL,
    FOREIGN KEY (estatus_empleado_id) REFERENCES estatus_empleado(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2758,8 +2758,8 @@ CREATE TABLE `historial_estatus_empleado` (
 
 CREATE TABLE `tipo_papeleria` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(254) COLLATE latin1_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `nombre` varchar(254) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tipo_papeleria`
@@ -2806,7 +2806,7 @@ CREATE TABLE `papeleria_empleado` (
   `fecha_subida` datetime NOT NULL,
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2823,7 +2823,7 @@ CREATE TABLE `historial_papeleria_empleado` (
   `vieja_fecha_subida` datetime NOT NULL,
    FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
    FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2835,7 +2835,7 @@ CREATE TABLE `historial_papeleria_empleado` (
 CREATE TABLE `tipo_estatus_incidencia`(
    `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
    `descripcion_estado` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2861,7 +2861,7 @@ CREATE TABLE `estatus_incidencia`(
    `tipo_estatus_id` int NOT NULL,
    `nombre` varchar(200) NOT NULL,
 	FOREIGN KEY (tipo_estatus_id) REFERENCES tipo_estatus_incidencia(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 -- Insert into para la tabla `estatus_incidencia`
@@ -2897,7 +2897,7 @@ CREATE TABLE `incidencias` (
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
    FOREIGN KEY (notificado_a) REFERENCES roles(id),
    FOREIGN KEY (estatus_id) REFERENCES estatus_incidencia(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2914,7 +2914,7 @@ CREATE TABLE `transicion_estatus_incidencia`(
    FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
    FOREIGN KEY (estatus_actual) REFERENCES estatus_incidencia(id),
    FOREIGN KEY (estatus_siguiente) REFERENCES estatus_incidencia(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 -- --------------------------------------------------------
@@ -2926,7 +2926,7 @@ CREATE TABLE `transicion_estatus_incidencia`(
 CREATE TABLE `tipo_accion_incidencias`(
    `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
    `descripcion_accion` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2954,7 +2954,7 @@ CREATE TABLE `accion_incidencias`(
 	`evaluado_por` varchar(200) NOT NULL,
 	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
 	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2967,7 +2967,7 @@ CREATE TABLE `transicion_accion_incidencias`(
    id_accion int NOT NULL,
    FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_incidencia(id) ON DELETE CASCADE,
    FOREIGN KEY (id_accion) REFERENCES accion_incidencias(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2981,7 +2981,7 @@ CREATE TABLE `reset_password`(
   `reset_link_token` varchar(255) NOT NULL,
   `exp_date` TIMESTAMP NULL,
    FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2995,7 +2995,7 @@ CREATE TABLE `historial_password`(
 	`password` varchar(255) NOT NULL,
 	`today_date` date NOT NULL,
     FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3006,7 +3006,7 @@ CREATE TABLE `historial_password`(
 CREATE TABLE `blacklist_password` (
     `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3354,7 +3354,7 @@ CREATE TABLE `temporal_password`(
    `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
    `user_id` int NOT NULL UNIQUE,
    FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3367,7 +3367,7 @@ CREATE TABLE `loginlogs`(
    `user_id` int NOT NULL,
    `fecha_intento` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3381,7 +3381,7 @@ CREATE TABLE `tabla_usuarios_log`(
 	`data_usuario` varchar(100) NOT NULL,
 	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`accion` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
