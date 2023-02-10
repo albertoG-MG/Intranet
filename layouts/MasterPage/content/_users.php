@@ -35,10 +35,11 @@
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Nombre</th>
                                         <th class="py-3 text-left desktop">Correo</th>
-                                        <th class="py-3 text-left desktop">Estatus</th>
+                                        <th>Foto_identificador</th>
+                                        <th class="py-3 text-center desktop">Estatus</th>
                                         <th class="py-3 text-center desktop">Departamento</th>
-                                        <th class="py-3 text-center desktop">Rol</th>
-                                        <th class="py-3 text-center min-tablet"></th>
+                                        <th>Rol</th>
+                                        <th class="py-3 text-center min-tablet">Acción</th>
                                     </tr>
                                 </thead>
                             </table>

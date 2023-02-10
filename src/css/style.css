@@ -1097,6 +1097,9 @@ select {
 .items-center {
   align-items: center !important;
 }
+.justify-start {
+  justify-content: flex-start !important;
+}
 .justify-end {
   justify-content: flex-end !important;
 }
@@ -2137,6 +2140,10 @@ select {
 
   .md\:justify-end {
     justify-content: flex-end !important;
+  }
+
+  .md\:justify-center {
+    justify-content: center !important;
   }
 
   .md\:gap-8 {
