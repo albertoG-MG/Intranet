@@ -12,12 +12,12 @@ session_start();
 		$set_session -> execute(array(":sessionid" => $_SESSION['id']));
 		$table_data->get('serverside_user_superadministrador','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
 	}else if ($fetch_rol_dep -> rolnom == "Administrador"){
-		$table_data->get('serverside_user_administrador','id',array('id', 'username','usnom','apellido_pat','apellido_mat', 'correo', 'roles_id', 'foto_identificador', 'rolnom', 'depa_id', 'depanom', 'estatus'));
+		$table_data->get('serverside_user_administrador','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
 	}else if (Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "false" && $fetch_rol_dep -> rolnom != "Superadministrador" && $fetch_rol_dep -> rolnom != "Administrador"){ 
 		$set_session = $object -> _db -> prepare("SET @var = :sessionid");
 		$set_session -> execute(array(":sessionid" => $_SESSION['id']));
-		$table_data->get('serverside_user_vistausuarios','id',array('id', 'username','usnom','apellido_pat','apellido_mat', 'correo', 'roles_id', 'foto_identificador', 'rolnom', 'depa_id', 'depanom', 'estatus'));
+		$table_data->get('serverside_user_vistausuarios','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
 	}else if (Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "true" && $fetch_rol_dep -> rolnom != "Superadministrador" && $fetch_rol_dep -> rolnom != "Administrador"){
-		$table_data->get('serverside_user_vistatecnicos','id',array('id', 'username','usnom','apellido_pat','apellido_mat', 'correo', 'roles_id', 'foto_identificador', 'rolnom', 'depa_id', 'depanom', 'estatus'));
+		$table_data->get('serverside_user_vistatecnicos','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
 	}
 ?>

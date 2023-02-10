@@ -12,7 +12,7 @@
             buttons: [
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                     {
-                        text: "<i class='mdi mdi-account-outline text-white font-semibold text-lg'></i> Agregar usuario",
+                        text: "Agregar usuario",
                         attr: {
                             'id': 'Usuario',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -100,6 +100,12 @@
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span class='bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs'>Sin datos</span>" +
+                                "</div>"
+                            );
+                        }else if(row[3] == "EXCEPCION"){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>Excepción</span>" +
                                 "</div>"
                             );
                         }
