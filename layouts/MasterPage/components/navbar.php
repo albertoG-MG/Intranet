@@ -8,7 +8,7 @@
     </div>
 
     <div class="flex items-center">
-        <div x-data="{ dropdownOpen: false }" class="relative cursor-pointer">
+        <div x-data="{ dropdownOpen: false }" class="relative">
             <button @click="dropdownOpen = ! dropdownOpen" class="flex items-center gap-3">
                 <div class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
                     <?php
