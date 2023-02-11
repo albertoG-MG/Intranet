@@ -177,7 +177,7 @@
         }
         var row = table.row(rowSelector);
         var data = row.data();
-        window.location.href = "ver_usuario.php?idUser="+data[0]+""; 
+        window.location.href = "ver_usuario.php?idUser="+data[6]+""; 
     });
 <?php 
 }
@@ -195,7 +195,7 @@ if (Permissions::CheckPermissions($_SESSION["id"], "Editar usuario") == "true" |
         }
         var row = table.row(rowSelector);
         var data = row.data();
-        window.location.href = "editar_usuario.php?idUser="+data[0]+""; 
+        window.location.href = "editar_usuario.php?idUser="+data[6]+""; 
     });
 <?php 
 }
@@ -232,7 +232,7 @@ if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar usuario") == "true"
                             title: 'éxito',
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
-                            var eliminarid = data[0];
+                            var eliminarid = data[6];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
                             $.ajax({
