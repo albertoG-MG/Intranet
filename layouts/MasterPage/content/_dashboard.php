@@ -6,7 +6,24 @@
             <div class="container flex flex-col sm:flex-row sm:flex-wrap sm:text-left text-center items-center justify-center">
                 <div class="py-3 px-3">
                     <div class="imagen py-1 px-1 rounded bg-white">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" style="width:120px; height:120px;" alt="kitteh">
+                        <?php
+                            if($profile -> nombre_foto != null && $profile -> foto != null){
+                                $path = __DIR__ . "/../../../src/img/imgs_uploaded/".$profile -> foto;
+                                if(!file_exists($path)){
+                        ?>
+                                    <img style="width:120px; height:120px;" src="../src/img/not_found.jpg">
+                        <?php
+                                }else{
+                        ?>
+                                    <img style="width:120px; height:120px;" src="../src/img/imgs_uploaded/<?php echo $profile -> foto ?>">
+                        <?php          
+                                }
+                            }else{
+                        ?>
+                                <img style="width:120px; height:120px;" src="../src/img/default-user.png">
+                        <?php
+                            }
+                        ?>
                     </div>
                 </div>
                 <div class="text flex flex-col flex-grow text-white py-0 px-15">
