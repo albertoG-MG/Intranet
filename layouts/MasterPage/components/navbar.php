@@ -10,7 +10,7 @@
     <div class="flex items-center">
         <div x-data="{ dropdownOpen: false }" class="relative">
             <button @click="dropdownOpen = ! dropdownOpen" class="flex items-center gap-3">
-                <div class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
+                <div class="relative shrink-0 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
                     <?php
                         $select_photo_user = $object -> _db -> prepare("SELECT nombre_foto, foto_identificador FROM usuarios WHERE id=:id");
                         $select_photo_user -> execute(array(":id" => $_SESSION["id"]));
@@ -33,7 +33,6 @@
                         }
                     ?>
                 </div>
-                <span><?php echo $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"] ?></span>
                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
             </button>
 
