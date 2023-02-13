@@ -31,7 +31,7 @@
                     <p><?php if($profile->rolnom == null){print_r("Sin rol");}else{print_r($profile->rolnom);} ?></p>
                 </div>
                 <div class="button py-15 px-3">
-                    <a href="http://localhost:8000/user/profile"><button class="text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" style="width:100%; height:40px;">Editar perfil</button></a>
+                    <a href="perfil.php"><button class="text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" style="width:100%; height:40px;">Editar perfil</button></a>
                 </div>
             </div>
             <ul class="flex flex-col sm:flex-row sm:flex-wrap sm:justify-evenly items-center bg-white text-black text-center" id="tabProfile" role="tablist">
