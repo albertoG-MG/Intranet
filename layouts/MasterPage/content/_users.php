@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
-                            <table class="w-full" id="datatable" style="display:none;">
+                            <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Nombre</th>

@@ -26,7 +26,7 @@
                                 }
                             ?>
                         </div>
-                        <div class="flex-1 flex flex-col min-w-0 sm:ml-5 text-center md:text-left sm:mt-2" style="word-wrap: break-word;">
+                        <div class="flex-1 flex flex-col min-w-0 sm:ml-5 text-center md:text-left sm:mt-2" style="word-break: break-word;">
 							<span class="text-lg text-white font-bold leading-none">
 								<?php echo $profile->nombre. " " .$profile->apellido_pat. " " .$profile->apellido_mat;?>
 							</span>
