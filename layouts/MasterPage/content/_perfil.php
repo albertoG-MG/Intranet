@@ -866,7 +866,7 @@
                                     </span>
                                  </div>
                               </div>
-                              <div x-data="{ showfamiliar:  <?php if($view -> efam_nombre == null){ echo "false";  }else{ echo "true";} ?>}">
+                              <div x-data="{ showfamiliar:  <?php if($view -> efam_dentro_empresa == "no"){ echo "false";  }else{ echo "true";} ?>}">
                                  <div x-show="showfamiliar">
                                     <div class="flex flex-col mx-7">
                                        <div class="flex-1 flex flex-col mt-5">

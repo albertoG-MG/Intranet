@@ -166,9 +166,9 @@
 				if(i == 0){
 					var div = document.createElement("div");
 					if(number > 1){
-						div.classList.add('flex', 'flex-col', 'lg:flex-row', 'lg:items-center', 'justify-between', 'gap-3', 'p-4', 'border-b', 'border-gray-200');
+						div.classList.add('flex', 'flex-col', 'md:flex-row', 'md:items-center', 'justify-between', 'gap-3', 'p-4', 'border-b', 'border-gray-200');
 					}else{
-						div.classList.add('flex', 'flex-col', 'lg:flex-row', 'lg:items-center', 'justify-between', 'gap-3', 'p-4');
+						div.classList.add('flex', 'flex-col', 'md:flex-row', 'md:items-center', 'justify-between', 'gap-3', 'p-4');
 					}
 					divrow.appendChild(div);
 					var div2 = document.createElement("div");
@@ -193,7 +193,7 @@
 					div3.appendChild(span3);
 				}else if(i > 0 && i < number-1){
 					var div4 = document.createElement("div");
-					div4.classList.add('flex', 'flex-col', 'lg:flex-row', 'lg:items-center', 'justify-between', 'gap-3', 'p-4', 'border-b', 'border-gray-200');
+					div4.classList.add('flex', 'flex-col', 'md:flex-row', 'md:items-center', 'justify-between', 'gap-3', 'p-4', 'border-b', 'border-gray-200');
 					divrow.appendChild(div4);
 					var div5 = document.createElement("div");
 					div5.classList.add('flex-1', 'flex', 'flex-col');
@@ -217,7 +217,7 @@
 					div6.appendChild(span6);
 				}else if(i == number-1){
 					var div7 = document.createElement("div");
-					div7.classList.add('flex', 'flex-col', 'lg:flex-row', 'lg:items-center', 'justify-between', 'gap-3', 'p-4');
+					div7.classList.add('flex', 'flex-col', 'md:flex-row', 'md:items-center', 'justify-between', 'gap-3', 'p-4');
 					divrow.appendChild(div7);
 					var div8 = document.createElement("div");
 					div8.classList.add('flex-1', 'flex', 'flex-col');
