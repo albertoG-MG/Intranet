@@ -903,6 +903,79 @@
                                     </div>
                                  </div>
                               </div>
+                              <div class="flex flex-col mt-5 mx-7">
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
+                                 <span class="text-[#64748b]">En esta sección se encuentran las credenciales bancarias personales del empleado.</span>
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                              </div>
+                              <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Banco personal:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> ebanco_personal == null){ echo "No hay datos"; }else{echo "{$view -> ebanco_personal}";} ?>
+                                    </span>
+                                 </div>
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Cuenta personal:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> ecuenta_personal == null){ echo "No hay datos"; }else{echo "{$view -> ecuenta_personal}";} ?>
+                                    </span>
+                                 </div>
+                              </div>
+                              <div class="flex flex-col mx-7">
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Clabe personal:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> eclabe_personal == null){ echo "Sin observaciones"; }else{echo "{$view -> eclabe_personal}";} ?>
+                                    </span>
+                                 </div>
+                              </div>
+                              <div class="flex flex-col mt-5 mx-7">
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria asignada por la empresa</h2>
+                                 <span class="text-[#64748b]">En esta sección se encuentra la nómina asignada al empleado.</span>
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                              </div>
+                              <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Banco personal:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> ebanco_nomina == null){ echo "No hay datos"; }else{echo "{$view -> ebanco_nomina}";} ?>
+                                    </span>
+                                 </div>
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Cuenta personal:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> ecuenta_nomina == null){ echo "No hay datos"; }else{echo "{$view -> ecuenta_nomina}";} ?>
+                                    </span>
+                                 </div>
+                              </div>
+                              <div class="flex flex-col mx-7">
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Clabe personal:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> eclabe_nomina == null){ echo "Sin observaciones"; }else{echo "{$view -> eclabe_nomina}";} ?>
+                                    </span>
+                                 </div>
+                              </div>
+                              <div class="flex flex-col mt-5 mx-7">
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <div class="self-end mt-3">
+                                    <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Anterior</button>
+                                    <button type="button" id="siguiente3" name="siguiente3" class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2">Siguiente</button>
+                                 </div>
+                              </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
                            </div>

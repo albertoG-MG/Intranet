@@ -152,6 +152,47 @@
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
 		});
+
+		$("#siguiente3").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+		});
+		
+			
+		$("#anterior2").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
+		});
 		
 		<?php if($cont_referencias > 0){ ?>
 			var number = <?php echo $cont_referencias; ?>;
