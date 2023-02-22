@@ -889,6 +889,20 @@
                               </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
+                              <div class="flex flex-col mt-5 mx-7">
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Datos bancarios del empleado</h2>
+                                 <span class="text-[#64748b]">En esta sección encontrará información sobre los datos bancarios del empleado.</span>
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                              </div>
+                              <div class="flex flex-col mx-7">
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Referencias bancarias:
+                                    </div>
+                                    <div id="ref" class="mt-5">
+                                    </div>
+                                 </div>
+                              </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
                            </div>

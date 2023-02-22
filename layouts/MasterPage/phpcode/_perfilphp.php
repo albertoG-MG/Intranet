@@ -51,4 +51,24 @@ while ($row_ref = $referencias_laborales->fetch(PDO::FETCH_OBJ)) {
 }
 $json = json_encode($array, JSON_UNESCAPED_UNICODE);
 
+/*REFERENCIAS BANCARIAS*/
+$array2 = [];
+$contador_array2 = 0;
+$datos_bancarios = $object->_db->prepare("select ref_bancarias.nombre as refbancnom, ref_bancarias.parentesco as refbancparent, ref_bancarias.rfc as refbancrfc, ref_bancarias.curp as refbanccurp, ref_bancarias.prcnt_derecho as refbancderecho from ref_bancarias inner join expedientes on expedientes.id=ref_bancarias.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
+$datos_bancarios->bindParam("sessionid", $_SESSION["id"], PDO::PARAM_INT);
+$datos_bancarios->execute();
+$cont_datos = $datos_bancarios->rowCount();
+while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
+	$array2[$contador_array2] = ($row_datos->refbancnom);
+	$contador_array2++;
+	$array2[$contador_array2] = ($row_datos->refbancparent);
+	$contador_array2++;
+	$array2[$contador_array2] = ($row_datos->refbancrfc);
+	$contador_array2++;
+	$array2[$contador_array2] = ($row_datos->refbanccurp);
+	$contador_array2++;
+	$array2[$contador_array2] = ($row_datos->refbancderecho);
+	$contador_array2++;
+}
+$json2 = json_encode($array2, JSON_UNESCAPED_UNICODE);
 ?>

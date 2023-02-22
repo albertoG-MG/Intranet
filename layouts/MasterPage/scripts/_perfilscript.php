@@ -253,5 +253,137 @@
 			span10.textContent = "No hay referencias laborales";
 			div11.appendChild(span10);
 		<?php } ?>
+
+		<?php if($cont_datos > 0){ ?>
+			var number2 = <?php echo $cont_datos; ?>;
+			var container2 = document.getElementById("ref");
+			var json2 = '<?php echo $json2; ?>';
+			const miArr = JSON.parse(json2);
+			var y = 0;
+			var divrow2 = document.createElement("div");
+			divrow2.classList.add('rounded-lg', 'border', 'border-gray-200');
+			container2.appendChild(divrow2);
+			for (a = 0; a < number2; a++) {
+			var div12 = document.createElement("div");
+			div12.classList.add('flex', 'flex-col', 'md:flex-row', 'md:items-center', 'justify-between', 'gap-3', 'p-4');
+			divrow2.appendChild(div12);
+			var div13 = document.createElement("div");
+			div13.classList.add('flex-1', 'flex', 'flex-col');
+			div12.appendChild(div13);
+			var span11 = document.createElement("span");
+			span11.classList.add('text-[#64748b]', 'font-semibold');
+			span11.textContent = miArr[y];
+			div13.appendChild(span11);
+			y++;
+			var span12 = document.createElement("span");
+			span12.textContent = miArr[y];
+			div13.appendChild(span12);
+			y++;
+			var div14 = document.createElement("div");
+			div14.classList.add('flex-1', 'md:flex', 'md:justify-end', 'md:items-center', 'md:gap-3');
+			div12.appendChild(div14);
+			span13 = document.createElement("span");
+			span13.classList.add('text-[#64748b]', 'font-semibold');
+			span13.textContent = "P. de derecho:";
+			div14.appendChild(span13);
+			span14 = document.createElement("span");
+			span14.textContent = miArr[miArr.length-1];
+			div14.appendChild(span14);
+			if(a == 0){
+					var div15 = document.createElement("div");
+					if(number2 > 1){
+						div15.classList.add('flex', 'flex-row', 'border-b', 'border-gray-200', 'gap-3', 'p-4');
+					}else{
+						div15.classList.add('flex', 'flex-row', 'gap-3', 'p-4');
+					}
+					divrow2.appendChild(div15);
+					var div16 = document.createElement("div");
+					div16.classList.add('flex-1', 'flex', 'flex-col', 'md:flex-row', 'md:flex-wrap', 'md:justify-start', 'gap-3');
+					div15.appendChild(div16);
+					span15 = document.createElement("span");
+					span15.classList.add('text-[#64748b]', 'font-semibold');
+					span15.textContent = "RFC:";
+					div16.appendChild(span15);
+					span16 = document.createElement("span");
+					span16.textContent = miArr[y];
+					div16.appendChild(span16);
+					y++;
+					var div17 = document.createElement("div");
+					div17.classList.add('flex-1', 'flex', 'flex-col', 'md:flex-row', 'md:flex-wrap', 'md:justify-end', 'gap-3');
+					div15.appendChild(div17);
+					span17 = document.createElement("span");
+					span17.classList.add('text-[#64748b]', 'font-semibold');
+					span17.textContent = "CURP:";
+					div17.appendChild(span17);
+					span18 = document.createElement("span");
+					span18.textContent = miArr[y];
+					div17.appendChild(span18);
+					y = y+2;
+				}else if(a > 0 && a < number2-1){
+					var div20 = document.createElement("div");
+					div20.classList.add('flex', 'flex-row', 'border-b', 'border-gray-200', 'gap-3', 'p-4');
+					divrow2.appendChild(div20);
+					var div21 = document.createElement("div");
+					div21.classList.add('flex-1', 'flex', 'flex-col', 'md:flex-row', 'md:flex-wrap', 'md:justify-start', 'gap-3');
+					div20.appendChild(div21);
+					span20 = document.createElement("span");
+					span20.classList.add('text-[#64748b]', 'font-semibold');
+					span20.textContent = "RFC:";
+					div21.appendChild(span20);
+					span21 = document.createElement("span");
+					span21.textContent = miArr[y];
+					div21.appendChild(span21);
+					y++;
+					var div22 = document.createElement("div");
+					div22.classList.add('flex-1', 'flex', 'flex-col', 'md:flex-row', 'md:flex-wrap', 'md:justify-end', 'gap-3');
+					div20.appendChild(div22);
+					span22 = document.createElement("span");
+					span22.classList.add('text-[#64748b]', 'font-semibold');
+					span22.textContent = "CURP:";
+					div22.appendChild(span22);
+					span23 = document.createElement("span");
+					span23.textContent = miArr[y];
+					div22.appendChild(span23);
+					y = y+2;
+				}else if(a == number2-1){
+					var div23 = document.createElement("div");
+					div23.classList.add('flex', 'flex-row', 'gap-3', 'p-4');
+					divrow2.appendChild(div23);
+					var div24 = document.createElement("div");
+					div24.classList.add('flex-1', 'flex', 'flex-col', 'md:flex-row', 'md:flex-wrap', 'md:justify-start', 'gap-3');
+					div23.appendChild(div24);
+					span24 = document.createElement("span");
+					span24.classList.add('text-[#64748b]', 'font-semibold');
+					span24.textContent = "RFC:";
+					div24.appendChild(span24);
+					span25 = document.createElement("span");
+					span25.textContent = miArr[y];
+					div24.appendChild(span25);
+					y++;
+					var div25 = document.createElement("div");
+					div25.classList.add('flex-1', 'flex', 'flex-col', 'md:flex-row', 'md:flex-wrap', 'md:justify-end', 'gap-3');
+					div23.appendChild(div25);
+					span26 = document.createElement("span");
+					span26.classList.add('text-[#64748b]', 'font-semibold');
+					span26.textContent = "CURP:";
+					div25.appendChild(span26);
+					span27 = document.createElement("span");
+					span27.textContent = miArr[y];
+					div25.appendChild(span27);
+					y = y+2;
+				}
+			}			   
+		<?php }else{ ?>
+			var container2 = document.getElementById("ref");
+			var div18 = document.createElement("div");
+			div18.classList.add('rounded-lg', 'border', 'border-gray-200');
+			container2.appendChild(div18);
+			var div19 = document.createElement("div");
+			div19.classList.add('flex', 'flex-col', 'items-center', 'gap-3', 'p-4');
+			div18.appendChild(div19);
+			var span19 = document.createElement("span");
+			span19.textContent = "No hay referencias bancarias";
+			div19.appendChild(span19);
+		<?php } ?>
 	});
 </script>
