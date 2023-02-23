@@ -1144,6 +1144,9 @@ select {
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
 }
+.flex-row {
+  flex-direction: row !important;
+}
 .flex-col {
   flex-direction: column !important;
 }
@@ -1573,6 +1576,10 @@ select {
 .px-8 {
   padding-left: 2rem !important;
   padding-right: 2rem !important;
+}
+.px-7 {
+  padding-left: 1.75rem !important;
+  padding-right: 1.75rem !important;
 }
 .px-16 {
   padding-left: 4rem !important;
@@ -2383,6 +2390,10 @@ select {
 
   .md\:items-center {
     align-items: center !important;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start !important;
   }
 
   .md\:justify-end {
