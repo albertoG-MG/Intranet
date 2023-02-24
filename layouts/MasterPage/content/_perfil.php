@@ -100,12 +100,15 @@
                                     }
                                     ?>
                                  <div class="absolute bottom-0 right-0 flex items-center justify-center rounded-full bg-white">
-                                    <button class="outline-none h-6 w-6 rounded-full border border-slate-200 p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25">
+                                    <button type="button" onclick="document.getElementById('foto_perfil').click();" class="outline-none h-6 w-6 rounded-full border border-slate-200 p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25">
+                                       <input type='file' id="foto_perfil" name="foto_perfil" class="hidden" />
                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 m-auto" viewBox="0 0 20 20" fill="currentColor">
                                           <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                        </svg>
                                     </button>
                                  </div>
+                              </div>
+                              <div id="error">
                               </div>
                            </div>
                            <div class="my-7 h-px bg-slate-200"></div>
@@ -119,7 +122,7 @@
                                        <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
                                     </svg>
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nombre" name="nombre" placeholder="i.e. José Juan" aria-describedby="nombre_help" value="">
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nombre" name="nombre" placeholder="i.e. José Juan" aria-describedby="nombre_help" value="<?php echo $_SESSION["nombre"]; ?>">
                               </div>
                               <div id="nombre_help" class="text-[#64748b]">
                                  Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
@@ -135,7 +138,7 @@
                                        <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
                                     </svg>
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="apellido_pat" name="apellido_pat" placeholder="i.e. Caballero-Plasencia" aria-describedby="apellido_pat_help" value="">
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="apellido_pat" name="apellido_pat" placeholder="i.e. Caballero-Plasencia" aria-describedby="apellido_pat_help" value="<?php echo $_SESSION["apellidopat"]; ?>">
                               </div>
                               <div id="apellido_pat_help" class="text-[#64748b]">
                                  Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
@@ -151,7 +154,7 @@
                                        <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
                                     </svg>
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="apellido_mat" name="apellido_mat" placeholder="i.e. Plasencia'Ramírez" aria-describedby="apellido_mat_help" value="">
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="apellido_mat" name="apellido_mat" placeholder="i.e. Plasencia'Ramírez" aria-describedby="apellido_mat_help" value="<?php echo $_SESSION["apellidomat"]; ?>">
                               </div>
                               <div id="apellido_mat_help" class="text-[#64748b]">
                                  Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
@@ -167,17 +170,32 @@
                                        <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                     </svg>
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="correo" name="correo" placeholder="i.e. example@example.com" value="">
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="correo" name="correo" placeholder="i.e. example@example.com" value="<?php echo $_SESSION["correo"]; ?>">
+                              </div>
+                              <div id="myloader" class="hidden mt-5">
+                                 <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+                                 <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
+                                 </svg>
+                                 <span>Cargando...</span>
+                              </div>
+                              <div class="hidden" id="correct-email">
+                                 <li class="flex items-center">
+                                 <svg aria-hidden="true" class="w-5 h-5 mr-1.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                 <p class="text-green-600">Correo electrónico válido y disponible</p>
+                                 </li>
                               </div>
                            </div>
                            <div class="mt-12 h-px bg-slate-200"></div>
                            <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                               <button class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2" id="reset_general" type="button">
-                              Resetear
+                                 Resetear
                               </button>
-                              <button class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2" id="guardar_general" type="submit">
-                              Guardar
-                              </button>
+                              <div id="submit-button">
+                                 <button class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2" id="guardar_general" type="submit">
+                                    Guardar
+                                 </button>
+                              </div>
                            </div>
                         </form>
                      </div>
@@ -207,6 +225,19 @@
                                        </svg>
                                     </button>
                                  </div>
+                              </div>
+                              <div id="loader-password" class="hidden mt-5">
+                                 <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
+                                 </svg>
+                                 <span>Cargando...</span>
+                              </div>
+                              <div class="hidden" id="correct-password">
+                                 <li class="flex items-center">
+                                    <svg aria-hidden="true" class="w-5 h-5 mr-1.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p class="text-green-600">Contraseña válida</p>
+                                 </li>
                               </div>
                               <div id="new_password_help" class="text-[#64748b]">
                                  La contraseña debe contener un número, una letra en mayúscula y en minúscula y un simbolo especial(!@#$%&*). 
@@ -252,11 +283,13 @@
                            <div class="mt-12 h-px bg-slate-200"></div>
                            <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                               <button class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2" id="reset_password" type="button">
-                              Resetear
+                                 Resetear
                               </button>
-                              <button class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2" id="guardar_password" type="submit">
-                              Guardar
-                              </button>
+                              <div id="button-submit">
+                                 <button class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2" id="guardar_password" type="submit">
+                                    Guardar
+                                 </button>
+                              </div>   
                            </div>
                         </form>
                      </div>
