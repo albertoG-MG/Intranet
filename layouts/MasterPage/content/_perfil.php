@@ -31,7 +31,7 @@
                      <h3 class="text-base font-medium text-slate-700" style="word-break: break-word;">
                         <?php echo $profile->nombre. " " .$profile->apellido_pat. " " .$profile->apellido_mat;?>
                      </h3>
-                     <p class="text-[.8125rem] leading-[1.125rem]" style="word-break: break-word;"><?php echo $profile->rolnom; ?></p>
+                     <p class="text-[.8125rem] leading-[1.125rem]" style="word-break: break-word;"><?php if(!(is_null($profile->rolnom))){ echo $profile->rolnom;}else{ echo "Sin rol"; } ?></p>
                   </div>
                </div>
                <ul class="mt-6 space-y-1.5 font-medium" id="tabAjustes" role="tablist">
@@ -53,6 +53,7 @@
                         <span>Cambiar contraseña</span>
                      </button>
                   </li>
+                  <?php if($switchExpedientes == "true"){ ?>
                   <li role="presentation">
                      <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100" id="expediente-tab" data-tabs-target="#expediente" type="button" role="tab" aria-controls="expediente" aria-selected="false">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
@@ -62,6 +63,7 @@
                         <span>Mostrar expediente</span>
                      </button>
                   </li>
+                  <?php } ?>
                </ul>
             </div>
          </div>
@@ -259,8 +261,12 @@
                         </form>
                      </div>
                   </div>
+                  <?php if($switchExpedientes == "true"){ ?>
                   <div class="hidden bg-transparent rounded-lg" id="expediente" role="tabpanel" aria-labelledby="expediente-tab">
                      <div class="p-4 sm:p-5">
+                        <?php  
+                           if($checkcurrentuserxexpediente  > 0){
+                        ?>
                         <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full p-4 mt-5 gap-3'>
                            <li role="presentation" class="w-full md:w-max">
                               <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#4f46e5] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="datosG-tab" data-tabs-target="#datosG" type="button" role="tab" aria-controls="datosG" aria-selected="false">
@@ -1031,8 +1037,23 @@
                               </div>
                            </div>
                         </div>
+                        <?php }else{ ?>
+                              <div class="flex items-center" style="word-break:break-word;">
+                                 <div class="w-full flex flex-col items-center justify-center">
+                                    <div class="text-center">
+                                       <h2 class="flex flex-col lg:flex-row lg:gap-5 md:text-9xl text-5xl mb-8 font-extrabold">
+                                          <span>Error </span>
+                                          <span>404</span>
+                                       </h2>
+                                       <p class="text-2xl font-semibold md:text-3xl">No tienes un expediente asignado.</p>
+                                       <p class="mt-4 mb-8">Por favor, contacta a un administrador.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                        <?php } ?>
                      </div>
                   </div>
+                  <?php } ?>
                </div>
             </div>
          </div>

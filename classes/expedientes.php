@@ -242,6 +242,15 @@ class expedientes {
 	    return $usuarioexp_count;
     }
 
+    public static function Checkifcurrentuserxexpediente($id){
+	    $object = new connection_database();
+	    $sql = "SELECT * FROM expedientes INNER JOIN usuarios ON expedientes.users_id = usuarios.id WHERE usuarios.id=:sessionid";
+	    $fetchexpedientexcurrentuser = $object-> _db ->prepare($sql);
+	    $fetchexpedientexcurrentuser -> execute(array(":sessionid" => $id));
+	    $count_expedientexcurrentuser = $fetchexpedientexcurrentuser->rowCount();
+	    return $count_expedientexcurrentuser;
+    }
+
     public static function Checkpapeleria($id){
         $object = new connection_database();
 	    $sql = "SELECT * FROM tipo_papeleria WHERE id=:papeleriaid";

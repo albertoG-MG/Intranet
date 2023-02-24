@@ -832,6 +832,9 @@ select {
 .mt-12 {
   margin-top: 3rem !important;
 }
+.mb-8 {
+  margin-bottom: 2rem !important;
+}
 .mb-4 {
   margin-bottom: 1rem !important;
 }
@@ -1671,6 +1674,10 @@ select {
 .text-\[\.8125rem\] {
   font-size: .8125rem !important;
 }
+.text-5xl {
+  font-size: 3rem !important;
+  line-height: 1 !important;
+}
 .font-bold {
   font-weight: 700 !important;
 }
@@ -1679,6 +1686,9 @@ select {
 }
 .font-medium {
   font-weight: 500 !important;
+}
+.font-extrabold {
+  font-weight: 800 !important;
 }
 .uppercase {
   text-transform: uppercase !important;
@@ -2462,6 +2472,16 @@ select {
     line-height: 2rem !important;
   }
 
+  .md\:text-9xl {
+    font-size: 8rem !important;
+    line-height: 1 !important;
+  }
+
+  .md\:text-3xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+
   .md\:text-lg {
     font-size: 1.125rem !important;
     line-height: 1.75rem !important;
@@ -2523,6 +2543,10 @@ select {
 
   .lg\:gap-6 {
     gap: 1.5rem !important;
+  }
+
+  .lg\:gap-5 {
+    gap: 1.25rem !important;
   }
 
   .lg\:space-x-7 > :not([hidden]) ~ :not([hidden]) {

@@ -16,6 +16,16 @@ $perfil->bindParam("sessionid", $_SESSION['id'], PDO::PARAM_INT);
 $perfil->execute();
 $profile = $perfil -> fetch(PDO::FETCH_OBJ);
 
+$checkcurrentuserxexpediente = Expedientes::Checkifcurrentuserxexpediente($_SESSION["id"]);
+
+$rolname = Roles::FetchSessionRol($_SESSION["rol"]);
+
+if($rolname != "Superadministrador" && $rolname != "Administrador" && $rolname != "Usuario externo" && !(is_null($rolname))) {
+	$switchExpedientes = "true";
+}else{
+	$switchExpedientes = "false";
+}
+
 $view=Expedientes::Fetchownexpediente($_SESSION["id"]);
 
 $estado_perfil = $object->_db->prepare("select estados.nombre from estados inner join expedientes on estados.id=expedientes.estado_id inner join usuarios ON usuarios.id=expedientes.users_id where usuarios.id=:usuarioid");

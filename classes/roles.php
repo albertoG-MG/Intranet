@@ -153,11 +153,15 @@ class roles {
 	}
     
     public static function FetchSessionRol($id){
-		$object = new connection_database();
-		$check_rol = $object->_db->prepare("select nombre from roles where id=:sessionrol");
-		$check_rol ->execute(array(':sessionrol' => $id));
-		$fetch_rol = $check_rol -> fetch(PDO::FETCH_OBJ);
-		return $fetch_rol->nombre;
+        $object = new connection_database();
+        if(!(is_null($id))){
+            $check_rol = $object->_db->prepare("select nombre from roles where id=:sessionrol");
+            $check_rol ->execute(array(':sessionrol' => $id));
+            $fetch_rol = $check_rol -> fetch(PDO::FETCH_OBJ);
+            return $fetch_rol->nombre;
+        }else{
+            return $id;
+        }
     }
 
     public static function FetchUserDepartamento($id){

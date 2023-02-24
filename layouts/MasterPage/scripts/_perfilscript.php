@@ -10,13 +10,14 @@
 			triggerEl: document.querySelector('#password-tab'),
 			targetEl: document.querySelector('#password'),
 			value: 'Cambiar contraseña'
-		},
+		}<?php if($switchExpedientes == "true"){ echo ","; ?>
 		{
 			id: 'expediente',
 			triggerEl: document.querySelector('#expediente-tab'),
 			targetEl: document.querySelector('#expediente'),
 			value: 'Mostrar expediente'
 		}
+		<?php } ?>
 	];
 
 	tabElements.forEach((tab) => {
@@ -43,6 +44,10 @@
 			"group-hover:text-slate-500", "group-focus:text-slate-500");
 		})
 	});
+	<?php 
+		if($switchExpedientes == "true"){ 
+   			if($checkcurrentuserxexpediente  > 0){	
+	?>
 	const menuExpedientes = [{
 			id: 'datosG',
 			triggerMenu: document.querySelector('#datosG-tab'),
@@ -87,8 +92,17 @@
 			"group-hover:text-slate-500", "group-focus:text-slate-500");
 		})
 	});
+	<?php 
+			}
+		}
+	?>
 	$( document ).ready(function() {
 		$("main").removeClass("overflow-y-auto").addClass("overflow-y-scroll");
+
+		<?php 
+			if($switchExpedientes == "true"){ 
+   				if($checkcurrentuserxexpediente  > 0){	
+		?>
 
 		let tabsContainer = document.querySelector("#menu");
 		let tabTogglers = tabsContainer.querySelectorAll("button");
@@ -446,5 +460,9 @@
 			span19.textContent = "No hay referencias bancarias";
 			div19.appendChild(span19);
 		<?php } ?>
+		<?php 
+				}
+			}
+		?>
 	});
 </script>
