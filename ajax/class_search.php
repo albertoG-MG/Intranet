@@ -902,8 +902,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             $nombre_archivo=null;
             $foto_perfil=null;
         }
+
+        $delete=$_POST['delete'];
         
-        User::Editarperfilgeneral($nombre, $apellido_pat, $apellido_mat, $correo, $nombre_archivo, $foto_perfil, $_SESSION["id"]);
+        User::Editarperfilgeneral($nombre, $apellido_pat, $apellido_mat, $correo, $nombre_archivo, $foto_perfil, $_SESSION["id"], $delete);
         die(json_encode(array("success", "Se ha editado tu información general!")));
     }
 }else if(isset($_POST["app"]) && $_POST["app"] == "perfil_password"){

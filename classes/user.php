@@ -172,7 +172,7 @@ class user {
         }
 	}
 
-    public static function Editarperfilgeneral($name, $father_surname, $mother_surname, $email, $filename, $photo, $id){
+    public static function Editarperfilgeneral($name, $father_surname, $mother_surname, $email, $filename, $photo, $id, $delete){
         $crud = new crud();
         $object = new connection_database();
         $checkphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:sessionid");
@@ -199,10 +199,21 @@ class user {
             }
         //Cuando existe la foto y no se sube nada
         }else if($fetch_photo -> nombre_foto != null && $fetch_photo -> foto_identificador != null && $filename == null && $photo == null){
-                
-                
-                
-                
+            if($delete == "false"){
+                $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                'correo' => $email, 'nombre_foto' => $fetch_photo -> nombre_foto, 'foto_identificador' => $fetch_photo -> foto_identificador], "id=:sessionid", ['sessionid' => $id]);
+            }else{
+                $directory = "../src/img/imgs_uploaded/";
+                $path = "../src/img/imgs_uploaded/".$fetch_photo -> foto_identificador;
+                if(!file_exists($path)){
+                    $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                    'correo' => $email, 'nombre_foto' => $filename, 'foto_identificador' => $photo], "id=:sessionid", ['sessionid' => $id]);
+                }else{
+                    unlink($directory.$fetch_photo -> foto_identificador);
+                    $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                    'correo' => $email, 'nombre_foto' => $filename, 'foto_identificador' => $photo], "id=:sessionid", ['sessionid' => $id]);
+                }
+            }     
         //Cuando no existe la foto y se sube algo
         }else if($fetch_photo -> nombre_foto == null && $fetch_photo -> foto_identificador == null && $filename != null && $photo != null){
                 $directory = "../src/img/imgs_uploaded/";

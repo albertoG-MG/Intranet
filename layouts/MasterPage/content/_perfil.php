@@ -13,16 +13,16 @@
                         	$path = __DIR__ . "/../../../src/img/imgs_uploaded/".$profile -> foto;
                         	if(!file_exists($path)){
                         ?>
-                     <img class="rounded-full" src="../src/img/not_found.jpg">
+                     <img id="photo-perfil" class="rounded-full" src="../src/img/not_found.jpg">
                      <?php
                         }else{
                         ?>
-                     <img class="rounded-full" src="../src/img/imgs_uploaded/<?php echo $profile -> foto ?>">
+                     <img id="photo-perfil" class="rounded-full" src="../src/img/imgs_uploaded/<?php echo $profile -> foto ?>">
                      <?php          
                         }
                         }else{
                         ?>
-                     <img class="rounded-full" src="../src/img/default-user.png">
+                     <img id="photo-perfil" class="rounded-full" src="../src/img/default-user.png">
                      <?php
                         }
                         ?>
@@ -78,38 +78,29 @@
                   <div class="block bg-transparent rounded-lg" id="general" role="tabpanel" aria-labelledby="general-tab">
                      <div class="p-4 sm:p-5">
                         <form id="formGeneral">
-                           <div class="flex flex-col items-center md:items-start mx-7">
-                              <span class="text-[#64748b] font-semibold">Avatar</span>
-                              <div class="inline-flex shrink-0 relative mt-1.5 h-20 w-20">
-                                 <?php
-                                    if($profile -> nombre_foto != null && $profile -> foto != null){
-                                    $path = __DIR__ . "/../../../src/img/imgs_uploaded/".$profile -> foto;
-                                    if(!file_exists($path)){
-                                    ?>
-                                 <img src="../src/img/not_found.jpg" class="rounded-xl">
-                                 <?php
-                                    }else{
-                                    ?>
-                                 <img src="../src/img/imgs_uploaded/<?php echo $profile -> foto ?>" class="rounded-xl">
-                                 <?php          
-                                    }
-                                    }else{
-                                    ?>
-                                 <img src="../src/img/default-user.png" class="rounded-xl">
-                                 <?php
-                                    }
-                                    ?>
-                                 <div class="absolute bottom-0 right-0 flex items-center justify-center rounded-full bg-white">
-                                    <button type="button" onclick="document.getElementById('foto_perfil').click();" class="outline-none h-6 w-6 rounded-full border border-slate-200 p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25">
-                                       <input type='file' id="foto_perfil" name="foto_perfil" class="hidden" />
-                                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 m-auto" viewBox="0 0 20 20" fill="currentColor">
-                                          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                                       </svg>
-                                    </button>
-                                 </div>
+                           <div class="grid grid-cols-1 mt-5 mx-7">
+                              <label class="text-[#64748b] font-semibold">Avatar</label>
+                              <div class='flex items-center justify-center w-full'>
+                                 <label class='flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group'>
+                                    <div id="img_information" class='flex flex-col items-center justify-center pt-7'>
+                                       <div id="svg">
+                                          <svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                          </svg>
+                                       </div>
+                                       <img id="preview" class="hidden" />
+                                       <p id="archivo" style="word-break:break-word;" class='lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider'>Selecciona una fotografía</p>
+                                    </div>
+                                    <input type='file' id="foto_perfil" name="foto_perfil" class="hidden" />
+                                 </label>
                               </div>
-                              <div id="error">
-                              </div>
+                              <div id="error"></div>
+                           </div>
+                           <div id="div_actions_foto" class="hidden flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
+                              <button type="button" id="delete_foto" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
+                                 <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24"><path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" /></svg>
+                                 Eliminar
+                              </button>
                            </div>
                            <div class="my-7 h-px bg-slate-200"></div>
                            <div class="grid grid-cols-1 mt-5 mx-7">
