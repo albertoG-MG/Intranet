@@ -906,5 +906,79 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         User::Editarperfilgeneral($nombre, $apellido_pat, $apellido_mat, $correo, $nombre_archivo, $foto_perfil, $_SESSION["id"]);
         die(json_encode(array("success", "Se ha editado tu información general!")));
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "perfil_password"){
+    if(isset($_POST["password"], $_POST["password_confirm"], $_POST["current_password"])){
+		$password = $_POST["password"];
+		$password_confirm = $_POST["password_confirm"];
+		$current_password = $_POST["current_password"];
+		$sessionid = $_SESSION["id"];
+		if(empty($password)){
+			die(json_encode(array("error", "La contraseña no puede estar vacía")));
+		}else if(strlen($password) < 8 ){
+			die(json_encode(array("error", "La contraseña debe ser 8 dígitos ó más")));
+		}else if(!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]+$/", $password)){
+			die(json_encode(array("error", "La contraseña debe contener al menos un número, una letra en mayúscula, una letra en minúscula y un simbolo especial(!@#$%&*) y no se permiten espacios")));
+		}else if(empty($password_confirm)){
+			die(json_encode(array("error", "La confirmación de la contraseña no puede estar vacía")));
+		}else if(strlen($password_confirm) < 8 ){
+			die(json_encode(array("error", "La confirmación de la contraseña debe de tener como mínimo 8 caracteres")));
+		}else if($password_confirm!=$password){
+			die(json_encode(array("error", "Las contraseñas no coinciden")));
+		}else if(empty($current_password)){
+			die(json_encode(array("error", "Por favor, ingrese la contraseña actual")));
+		}else{
+			$blacklist_query = $object ->_db->prepare("SELECT password from blacklist_password");
+			$blacklist_query -> execute();
+			$fetch_blacklist = $blacklist_query -> fetchAll(PDO::FETCH_ASSOC);
+			foreach($fetch_blacklist as $badword_blacklist){
+				if(strpos($password, $badword_blacklist["password"]) !== false)
+				{
+					die(json_encode(array("error", "La contraseña no puede contener: " .$badword_blacklist["password"]. ", Por favor, modifique la contraseña")));
+				}
+			}
+			$password_sha1 = sha1($password); 
+			$check_password = $object ->_db->prepare("SELECT usuarios.password FROM usuarios WHERE id=:sessionid");
+			$check_password->execute(array(':sessionid' => $sessionid));
+			$fetch_password = $check_password -> fetch(PDO::FETCH_OBJ);
+			if($fetch_password -> password == $password_sha1){
+				die(json_encode(array("error", "La nueva contraseña no puede ser igual a la vieja contraseña, por favor, escriba otra contraseña")));
+			}else{
+				$password_repeat = $object ->_db->prepare("SELECT historial_password.password, historial_password.today_date FROM usuarios INNER JOIN historial_password ON historial_password.user_id=usuarios.id WHERE usuarios.id=:sessionidcache");
+				$password_repeat -> execute(array(':sessionidcache' => $sessionid));
+				$check_password_repeat = $password_repeat -> rowCount();
+				if($check_password_repeat > 0){
+					date_default_timezone_set("America/Monterrey");
+					$date_database = date('y-m-d');
+					$database_date = date_create($date_database);
+					date_format($database_date,"y-m-d");
+					$fetch_password_repeat = $password_repeat -> fetchAll(PDO::FETCH_ASSOC);
+					foreach($fetch_password_repeat as $repeated_password){
+						if(!preg_match("/^[0-9a-f]{40}$/i", $repeated_password["password"])){
+							$hashing = sha1($repeated_password["password"]);
+						}else{
+							$hashing = $repeated_password["password"];
+						}
+						if($hashing == $password_sha1){
+							$used_date = date_create($repeated_password["today_date"]);
+							date_format($used_date,"y-m-d");
+							$difference=date_diff($used_date, $database_date);
+							if($difference -> days < 366){
+								die(json_encode(array("error", "Deben pasar más de 365 días para que esta contraseña vuelva a ser usable")));
+							}
+						}
+					}	
+				}
+				$check_pass = $object -> _db -> prepare("SELECT password from usuarios where id=:checkidpass");
+				$check_pass -> execute(array(":checkidpass" => $sessionid));
+				$fetch_pass = $check_pass -> fetch(PDO::FETCH_OBJ);		
+				$current_psha1 = sha1($current_password); 
+				if ($current_psha1 != $fetch_pass -> password) {
+					die(json_encode(array("error", "La contraseña actual no coincide con la contraseña registrada")));
+				}
+				User::Editarperfilpassword($password_sha1, $sessionid);
+				die(json_encode(array("success", "La contraseña ha sido cambiada")));
+			}
+		}
+	}
 }
 ?>

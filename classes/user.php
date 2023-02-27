@@ -228,6 +228,11 @@ class user {
         $_SESSION["apellidomat"] = $mother_surname;
         $_SESSION["correo"] = $email;	
     }
+
+    public static function Editarperfilpassword($password_sha1, $id){
+        $crud = new crud();
+        $crud->update('usuarios', ['password' => $password_sha1], 'id=:sessionidchange', ['sessionidchange' => $id]);
+    }
     
     public static function tempnam_sfx($path, $suffix){
         do {
