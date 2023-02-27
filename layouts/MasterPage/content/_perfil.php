@@ -28,7 +28,7 @@
                         ?>
                   </div>
                   <div>
-                     <h3 class="text-base font-medium text-slate-700" style="word-break: break-word;">
+                     <h3 class="text-base font-medium text-slate-700" id="profile-name" style="word-break: break-word;">
                         <?php echo $profile->nombre. " " .$profile->apellido_pat. " " .$profile->apellido_mat;?>
                      </h3>
                      <p class="text-[.8125rem] leading-[1.125rem]" style="word-break: break-word;"><?php if(!(is_null($profile->rolnom))){ echo $profile->rolnom;}else{ echo "Sin rol"; } ?></p>

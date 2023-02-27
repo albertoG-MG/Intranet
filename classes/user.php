@@ -171,6 +171,63 @@ class user {
             $crud->delete('usuarios', 'id=:iduser', ['iduser' => $id]);
         }
 	}
+
+    public static function Editarperfilgeneral($name, $father_surname, $mother_surname, $email, $filename, $photo, $id){
+        $crud = new crud();
+        $object = new connection_database();
+        $checkphoto = $object -> _db -> prepare("select nombre_foto, foto_identificador from usuarios where id=:sessionid");
+        $checkphoto -> execute(array(':sessionid' => $id));
+        $fetch_photo = $checkphoto -> fetch(PDO::FETCH_OBJ);
+        //Cuando existe la foto y se sube algo
+        if($fetch_photo -> nombre_foto != null && $fetch_photo -> foto_identificador != null && $filename != null && $photo != null){
+            //Aquí se debe de eliminar la foto anterior
+            $path = "../src/img/imgs_uploaded/".$fetch_photo -> foto_identificador;
+            $directory = "../src/img/imgs_uploaded/";
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            $uploadfile = User::tempnam_sfx($directory, $ext);
+            if(!file_exists($path)){
+                if(move_uploaded_file($photo['tmp_name'],$uploadfile)){
+                    $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                    'correo' => $email, 'nombre_foto' => $filename, 'foto_identificador' => basename($uploadfile)], "id=:sessionid", ['sessionid' => $id]);
+                }
+            }else{
+                unlink($directory.$fetch_photo -> foto_identificador);
+                if(move_uploaded_file($photo['tmp_name'],$uploadfile)){
+                    $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                    'correo' => $email, 'nombre_foto' => $filename, 'foto_identificador' => basename($uploadfile)], "id=:sessionid", ['sessionid' => $id]);
+                }
+            }
+        //Cuando existe la foto y no se sube nada
+        }else if($fetch_photo -> nombre_foto != null && $fetch_photo -> foto_identificador != null && $filename == null && $photo == null){
+                
+                
+                
+                
+        //Cuando no existe la foto y se sube algo
+        }else if($fetch_photo -> nombre_foto == null && $fetch_photo -> foto_identificador == null && $filename != null && $photo != null){
+                $directory = "../src/img/imgs_uploaded/";
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                $uploadfile = User::tempnam_sfx($directory, $ext);
+                if(move_uploaded_file($photo['tmp_name'],$uploadfile)){
+                    $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                    'correo' => $email, 'nombre_foto' => $filename, 'foto_identificador' => basename($uploadfile)], "id=:sessionid", ['sessionid' => $id]);
+                }    
+        //Cuando no existe la foto y no se sube algo      
+        }else if($fetch_photo -> nombre_foto == null && $fetch_photo -> foto_identificador == null && $filename == null && $photo == null){
+                $crud->update('usuarios', ['nombre' => $name, 'apellido_pat' => $father_surname, 'apellido_mat' => $mother_surname, 
+                'correo' => $email, 'nombre_foto' => $filename, 'foto_identificador' => $photo], "id=:sessionid", ['sessionid' => $id]);
+        }
+            
+        unset($_SESSION['nombre']);
+        unset($_SESSION['apellidopat']);
+        unset($_SESSION['apellidomat']);
+        unset($_SESSION['correo']);
+        
+        $_SESSION["nombre"] = $name;
+        $_SESSION["apellidopat"] = $father_surname;
+        $_SESSION["apellidomat"] = $mother_surname;
+        $_SESSION["correo"] = $email;	
+    }
     
     public static function tempnam_sfx($path, $suffix){
         do {

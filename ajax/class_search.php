@@ -839,5 +839,72 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "perfil_general"){
+    if(isset($_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"])){
+        /*Nombre del empleado*/
+        if(empty($_POST["nombre"])){
+            die(json_encode(array("error", "Por favor, ingrese un nombre")));
+        }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["nombre"])){
+            die(json_encode(array("error", "Nombre no válido")));
+        }else{
+            $nombre = $_POST["nombre"];
+        }
+        /*Apellido paterno del empleado*/
+        if(empty($_POST["apellido_pat"])){
+            die(json_encode(array("error", "Por favor, ingrese un apellido paterno")));
+        }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["apellido_pat"])){
+            die(json_encode(array("error", "Apellido paterno no válido")));
+        }else{
+            $apellido_pat = $_POST["apellido_pat"];
+        }
+        /*Apellido materno del empleado*/
+        if(empty($_POST["apellido_mat"])){
+            die(json_encode(array("error", "Por favor, ingrese un apellido materno")));
+        }else if(!preg_match("/^(?=.{1,40}$)[a-zA-Z\x{00C0}-\x{00FF}]+(?:[-'\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["apellido_mat"])){
+            die(json_encode(array("error", "Apellido materno no válido")));
+        }else{
+            $apellido_mat = $_POST["apellido_mat"];
+        }
+        /*Correo*/
+        if(empty($_POST["correo"])){
+            die(json_encode(array("error", "Por favor, ingrese un correo electrónico")));
+        }else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $_POST["correo"])){
+            die(json_encode(array("error", "Asegúrese que el texto ingresado este en formato de email")));
+        }else{
+            $check_edit_correo = $object ->_db->prepare("SELECT correo from usuarios where correo=:correo and id!=:sessionid");
+            $check_edit_correo -> execute(array(":correo" => $_POST["correo"], ":sessionid" => $_SESSION["id"]));
+            $count_edit_correo = $check_edit_correo -> rowCount();
+            
+            if($count_edit_correo > 0){
+                die(json_encode(array("error", "Este correo ya existe, por favor, escriba otro")));
+            }
+            $correo = $_POST["correo"];
+        }
+        /*Foto de perfil*/
+        if(isset($_FILES['foto_perfil']['name'])){
+            $allowed = array('jpeg', 'png', 'jpg');
+            $nombre_archivo = $_FILES['foto_perfil']['name'];
+            $ext = pathinfo($nombre_archivo, PATHINFO_EXTENSION);
+            if (!in_array($ext, $allowed)) {
+                die(json_encode(array("error", "Solo se permite jpg, jpeg y pngs")));
+            }else if($_FILES['foto_perfil']['size'] > 10485760){
+                die(json_encode(array("error", "Las imágenes deben pesar ser menos de 10 MB")));
+            }else{
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimetype = finfo_file($finfo, $_FILES["foto_perfil"]["tmp_name"]);
+                finfo_close($finfo);
+                if($mimetype != "image/jpeg" && $mimetype != "image/png"){
+                    die(json_encode(array("error", "Por favor, asegurese que la imagen sea originalmente un archivo png, jpg y jpeg")));
+                }
+            }
+            $foto_perfil=$_FILES['foto_perfil'];
+        }else{
+            $nombre_archivo=null;
+            $foto_perfil=null;
+        }
+        
+        User::Editarperfilgeneral($nombre, $apellido_pat, $apellido_mat, $correo, $nombre_archivo, $foto_perfil, $_SESSION["id"]);
+        die(json_encode(array("success", "Se ha editado tu información general!")));
+    }
 }
 ?>

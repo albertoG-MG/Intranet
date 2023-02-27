@@ -624,10 +624,27 @@
 								contentType: false,
 								success: function(data) {
 									setTimeout(function(){
-										
-										
-										
-										
+										var array = $.parseJSON(data);
+										if (array[0] == "success") {
+											Swal.fire({
+												title: "Información general editada",
+												text: array[1],
+												icon: "success"
+											}).then(function() {
+												window.removeEventListener('beforeunload', unloadHandler);
+												$('#submit-button').html("<button class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='guardar_general' type='submit'>Guardar</button>");
+												$('#profile-name').html(nombre+ " " +apellido_pat+ " " +apellido_mat);
+											});
+										} else if(array[0] == "error") {
+											Swal.fire({
+												title: "Error",
+												text: array[1],
+												icon: "error"
+											}).then(function() {
+												window.removeEventListener('beforeunload', unloadHandler);
+												$('#submit-button').html("<button class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='guardar_general' type='submit'>Guardar</button>");
+											});
+										}	
 									},3000);
 								},
 								error: function(data) {
