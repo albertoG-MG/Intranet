@@ -19,16 +19,16 @@
                             $path = __DIR__ . "/../../../src/img/imgs_uploaded/".$fetch_photo_user -> foto_identificador;
                             if(!file_exists($path)){
                     ?>
-                                <img class="h-full w-full object-cover" src="../src/img/not_found.jpg">
+                                <img id="navbar-photo" class="h-full w-full object-cover" src="../src/img/not_found.jpg">
                     <?php
                             }else{
                     ?>
-                                <img class="h-full w-full object-cover" src="../src/img/imgs_uploaded/<?php echo $fetch_photo_user -> foto_identificador ?>">
+                                <img id="navbar-photo" class="h-full w-full object-cover" src="../src/img/imgs_uploaded/<?php echo $fetch_photo_user -> foto_identificador ?>">
                     <?php          
                             }
                         }else{
                     ?>
-                                <img class="h-full w-full object-cover" src="../src/img/default-user.png">
+                                <img id="navbar-photo" class="h-full w-full object-cover" src="../src/img/default-user.png">
                     <?php
                         }
                     ?>

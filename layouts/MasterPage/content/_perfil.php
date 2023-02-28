@@ -94,7 +94,7 @@
                                     <input type='file' id="foto_perfil" name="foto_perfil" class="hidden" />
                                  </label>
                               </div>
-                              <div id="error"></div>
+                              <div id="error" class="m-auto"></div>
                            </div>
                            <div id="div_actions_foto" class="hidden flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
                               <button type="button" id="delete_foto" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">

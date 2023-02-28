@@ -662,10 +662,13 @@
 												$("#foto_perfil").val("");
 												var getSrc = $('#preview').attr('src');
 												$("#photo-perfil").removeAttr('src');
+												$("#navbar-photo").removeAttr('src');
 												if(getSrc == null){
 													$("#photo-perfil").attr('src', '../src/img/default-user.png');
+													$("#navbar-photo").attr('src', '../src/img/default-user.png');
 												}else{
 													$("#photo-perfil").attr('src', getSrc);
+													$("#navbar-photo").attr('src', getSrc);
 												}
 												$('#profile-name').html(nombre+ " " +apellido_pat+ " " +apellido_mat);
 											});
