@@ -111,6 +111,8 @@
 
 		var originalState = $("#img_information").clone();
 
+		$('#formPassword').data('old-state', $('#formPassword').html());
+
 		<?php  if($profile->foto != null && $profile->nombre_foto != null){ ?>
 			if (window.FileReader && window.Blob) {
 				console.log('FileReader ó Blob es compatible con este navegador.');
@@ -138,6 +140,53 @@
 		if (!($("#correo").val().length == 0)){
 			$("#correo").valid();
 		}
+
+		$("#reset_general").on("click", function () {
+			var fd = new FormData();
+			var sessionid = <?php echo $_SESSION["id"]; ?>;
+			var validationapp = "resetformGeneral";
+			fd.append('sessionid', sessionid);
+			fd.append('validationapp', validationapp);
+			$.ajax({
+				type: "POST",
+				url: "../ajax/perfil/resetformGeneral.php",
+				data: fd,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					var array = $.parseJSON(response);
+					var validator = $( "#formGeneral" ).validate();
+					validator.resetForm();
+					$('#error-container-general').html("");
+					$("#nombre").val(array["nombre"]);
+					$("#apellido_pat").val(array["apellido_pat"]);
+					$("#apellido_mat").val(array["apellido_mat"]);
+					$("#correo").val(array["correo"]);
+					if (!($("#correo").val().length == 0)){
+						$("#correo").removeData("previousValue");
+						$("#correo").valid();
+					}
+					$("#div_actions_foto").addClass("hidden");
+					$("#img_information").replaceWith(originalState.clone());
+					$("#foto_perfil").val("");
+					if(array["status"] == "not_found"){
+						$('#preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/not_found.jpg');
+						$('#svg').addClass('hidden');
+						$('#archivo').text("no se encontró la imagen");
+						$("#div_actions_foto").removeClass("hidden");
+					}else if(array["status"] == "found"){
+						$('#preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/imgs_uploaded/'+array["identificador"]);
+						$('#svg').addClass('hidden');
+						$('#archivo').text(array["nombre_archivo"]);
+						$("#div_actions_foto").removeClass("hidden");
+					}
+				}
+			});
+		});
+
+		$(document).on("click", "#reset_password", function () {
+			$('#formPassword').html($('#formPassword').data('old-state'));
+		});
 
 		<?php 
 			if($switchExpedientes == "true"){ 
