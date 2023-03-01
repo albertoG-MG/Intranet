@@ -17,4 +17,12 @@
     $countuserscheck = $object->_db->prepare("SELECT count(*) AS total FROM usuarios");
     $countuserscheck -> execute();
     $countusers = $countuserscheck -> fetch(PDO::FETCH_OBJ);
+
+    $checkexpedientes = $object->_db->prepare("SELECT count(*) AS totalexpedientes FROM expedientes");
+    $checkexpedientes -> execute();
+    $countexpedientes = $checkexpedientes -> fetch(PDO::FETCH_OBJ);
+
+    $checkdocumentos = $object->_db->prepare("SELECT count(*) AS totalpapeleria FROM tipo_papeleria");
+    $checkdocumentos -> execute();
+    $countdocumentos = $checkdocumentos -> fetch(PDO::FETCH_OBJ);
 ?>
