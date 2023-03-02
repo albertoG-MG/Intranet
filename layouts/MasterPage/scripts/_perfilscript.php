@@ -130,7 +130,7 @@
 	
 		$('#delete_foto').on('click', function() {
 			$("#img_information").replaceWith(originalState.clone());
-			$("#foto").val("");
+			$("#foto_perfil").val("");
 			$("#div_actions_foto").addClass("hidden");
 			delete_switch = "true";
 		});
