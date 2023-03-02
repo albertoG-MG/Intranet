@@ -17,7 +17,7 @@
                             'id': 'Usuario',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                         },
-                        className: 'Agregar bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                        className: 'button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2',
                         action: function(e, dt, node, config) {
                             window.location.href = "crear_usuario.php";
                         }
@@ -326,6 +326,7 @@ if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar usuario") == "true"
 
     .search {
         margin: auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover,

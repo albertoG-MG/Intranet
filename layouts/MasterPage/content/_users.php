@@ -1,5 +1,7 @@
 <div class="container mx-auto px-6 py-8">
-    <h3 class="text-gray-700 text-3xl font-medium">Usuarios</h3>
+    <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+        Usuarios
+    </h2>
     <div class="mt-4">
         <div class="flex flex-col mt-8">
             <div class="overflow-x-auto">
@@ -7,26 +9,19 @@
                     <div class="w-full">
                         <div class="bg-gray-50 shadow-md rounded-t">
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                                <a href="dashboard.php" class="text-gray-600">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                                    </svg>
+                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-[#4f46e5]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
+                                    Home
                                 </a>
-
-                                <span class="mx-5 rotate-90 sm:rotate-0 text-gray-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                <span class="mx-3 rotate-90 sm:rotate-0 text-gray-500 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                     </svg>
                                 </span>
-
-                                <a href="users.php" class="flex items-center text-blue-600 -px-2 hover:underline">
-                                    <svg class="w-6 h-6 mx-2" viewBox="0 0 24 24">
-                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                    </svg>
-
-                                    <span class="mx-2">Usuarios</span>
-                                </a>
-
+                                <div class="flex items-center text-gray-400">
+                                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+                                    <span class="text-sm font-medium">Usuarios</span>
+                                </div>
                             </div>
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
