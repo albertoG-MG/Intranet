@@ -477,6 +477,30 @@
                     break;
                 }
             });
+
+            var passwords_div = $("#passwords_div").clone();
+
+            var slider = $("#slider-container").clone();
+
+            $(document).on("click", "#reset_form", function () {
+                var validator = $( "#Guardar" ).validate();
+                validator.resetForm();
+                $("#usuario").val("");
+                $("#loader-usuario").addClass("hidden");
+                $("#correct-usuario").addClass("hidden");
+                $("#passwords_div").replaceWith(passwords_div.clone());
+                $("#slider-container").replaceWith(slider.clone());
+                $("#nombre").val("");
+                $("#apellido_pat").val("");
+                $("#apellido_mat").val("");
+                $("#correo").val("");
+                $("#myloader").addClass("hidden");
+                $("#correct-email").addClass("hidden");
+                $("#rol").val("").trigger('change');
+                $("#img_information").replaceWith(originalState.clone());
+                $("#foto").val("");
+                $("#div_actions_foto").addClass("hidden");
+            });
         });
     </script>
     <style>
