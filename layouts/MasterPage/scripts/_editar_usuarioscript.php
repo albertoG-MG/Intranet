@@ -601,6 +601,77 @@
                     break;
                 }
             });
+
+            var passwords_div = $("#passwords_div").clone();
+
+            var slider = $("#slider-container").clone();
+
+            $(document).on("click", "#reset_form", function () {
+                var fd = new FormData();
+                var editarid = <?php echo $editarid; ?>;
+                var validationapp = "reseteditusuarios";
+                fd.append('editarid', editarid);
+                fd.append('validationapp', validationapp);
+                $.ajax({
+                    type: "POST",
+                    url: "../ajax/usuarios/reseteditusuarios.php",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        var array = $.parseJSON(response);
+                        var validator = $( "#Guardar" ).validate();
+                        validator.resetForm();
+                        $('#error-container').html("");
+                        $("#usuario").val(array["usuario"]);
+                        if (!($("#usuario").val().length == 0)){
+                            $("#usuario").removeData("previousValue");
+                            $("#usuario").valid();
+                        }
+                        $("#passwords_div").replaceWith(passwords_div.clone());
+                        $("#slider-container").replaceWith(slider.clone());
+                        $("#nombre").val(array["nombre"]);
+                        $("#apellido_pat").val(array["apellido_pat"]);
+                        $("#apellido_mat").val(array["apellido_mat"]);
+                        $("#correo").val(array["correo"]);
+                        if (!($("#correo").val().length == 0)){
+                            $("#correo").removeData("previousValue");
+                            $("#correo").valid();
+                        }
+                        $("#rol").val(array["rol_id"]).trigger('change');
+                        $.ajax({
+                            type: "POST",
+                            url: "../ajax/usuarios/reseteditusuariossubrol.php",
+                            data: {
+                                "subrol_id": array["subrol_id"]
+                            },
+                            success: function (response) {
+                                $("#subrol").val(response);
+                            }
+                        });
+                        if(array["departamentos_id"] != null){
+                            $("#departamento").val(array["departamentos_id"]);
+                        }else{
+                            $("#departamento").val("");
+                        }
+                        $("#div_actions_foto").addClass("hidden");
+                        $("#img_information").replaceWith(originalState.clone());
+                        $("#foto_perfil").val("");
+                        if(array["status"] == "not_found"){
+                            $('#preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/not_found.jpg');
+                            $('#svg').addClass('hidden');
+                            $('#archivo').text("no se encontró la imagen");
+                            $("#div_actions_foto").removeClass("hidden");
+                        }else if(array["status"] == "found"){
+                            $('#preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/imgs_uploaded/'+array["identificador"]);
+                            $('#svg').addClass('hidden');
+                            $('#archivo').text(array["nombre_archivo"]);
+                            $("#div_actions_foto").removeClass("hidden");
+                        }
+
+                    }
+                });
+            });
         });
     </script>
     <style>
