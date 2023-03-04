@@ -243,7 +243,7 @@
                                                     icon: "success"
                                                 }).then(function() {
                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                    $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
+                                                    $('#submit-button').html("<button disabled class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='grabar' name='grabar' type='submit'>Guardar</button>");
                                                     window.location.href = 'users.php'; 
                                                 });
                                             } else if(array[0] == "error") {
@@ -253,7 +253,7 @@
                                                     icon: "error"
                                                 }).then(function() {
                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                    $('#submit-button').html("<button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>");
+                                                    $('#submit-button').html("<button class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='grabar' name='grabar' type='submit'>Guardar</button>");
                                                 });
                                             }
                                         },3000);
@@ -268,7 +268,7 @@
                                     text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
                                     icon: "error"
                                 }).then(function() {
-                                    $('#submit-button').html("<button disabled class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' type='submit' id='grabar' name='grabar'>Guardar</button>");
+                                    $('#submit-button').html("<button disabled class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='grabar' name='grabar' type='submit'>Guardar</button>");
                                     window.location.href = "login.php";
                                 });
                             }
