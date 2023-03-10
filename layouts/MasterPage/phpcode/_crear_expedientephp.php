@@ -62,33 +62,4 @@
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
     $checktipospapeleria -> execute();
     $counttipospapeleria = $checktipospapeleria -> rowCount();
-
-    $colorscont = 0;
-    $arrayColors = array(
-        0 => array(
-            'border' => 'border-purple-600',
-            'text' => 'text-purple-600'
-        ),
-        1 => array(
-            'border' => 'border-red-600',
-            'text' => 'text-red-600'
-        ),
-        2 => array(
-            'border' => 'border-green-500',
-            'text' => 'text-green-500'
-        ),
-        3 => array(
-            'border' => 'border-yellow-500',
-            'text' => 'text-yellow-500'
-        ),
-        4 => array(
-            'border' => 'border-blue-600 ',
-            'text' => 'text-blue-600'
-        ),
-        5 => array(
-            'border' => 'border-gray-800',
-            'text' => 'text-gray-800'
-        ),
-    );
-
 ?>
