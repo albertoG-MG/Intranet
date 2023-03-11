@@ -138,6 +138,21 @@
                                     </div>
                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" aria-describedby="numempleado_help" id="numempleado" name="numempleado" placeholder="i.e. L-35">
                                  </div>
+                                 <div id="loader-numempleado" class="hidden mt-5">
+                                    <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+                                       <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
+                                    </svg>
+                                    <span>Cargando...</span>
+                                 </div>
+                                 <div class="hidden" id="correct-numempleado">
+                                    <li class="flex items-center">
+                                       <svg aria-hidden="true" class="w-5 h-5 mr-1.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                       </svg>
+                                       <p class="text-green-600">Número de empleado válido y disponible</p>
+                                    </li>
+                                 </div>
                                  <div id="numempleado_help" class="text-[#64748b]">
                                     El número de empleado debe estar compuesto de una letra, un guión y varios números.
                                  </div>
@@ -200,16 +215,58 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Desea agregar un correo electrónico adicional?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" checked="">
+                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="rcorreoadicional; open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" checked="">
                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2">
+                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="rcorreoadicional; open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2">
                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
+                                 <script>
+                                    function rcorreoadicional(e) {
+                                       if(e.target.value == "no"){
+                                       if (!($("#correo_adicional").val().length == 0)){
+                                          $("#correo_adicional").removeData("previousValue");
+                                       }
+                                       $("#correo_adicional").val("");
+                                       $("#correo_adicional").rules("remove");
+                                       $("#correo_adicional").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                       $("#correo_adicional").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#correo_adicional-error").css("display", "none");
+                                       $('#loader-correo').addClass('hidden');
+                                       $('#correct-correo').addClass('hidden');
+                                       }else if(e.target.value == "si"){
+                                       $("#correo_adicional").rules("add", {
+                                          required: true,
+                                          email_verification: true,
+                                          remote: {
+                                             url: "../ajax/validacion/expedientes/checkemail.php",
+                                             type: "GET",
+                                             beforeSend: function () {
+                                                $('#loader-correo').removeClass('hidden');
+                                                $('#correct-correo').addClass('hidden');
+                                             },
+                                             complete: function(data){
+                                                if(data.responseText == "true") {
+                                                $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                                $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                                }else{
+                                                $('#loader-correo').addClass('hidden');
+                                                $('#correct-correo').addClass('hidden');
+                                                }
+                                             }
+                                          },
+                                          messages: {
+                                             required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },
+                                             email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
+                                          }
+                                       });	
+                                       }
+                                    }
+                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Correo electrónico adicional</label>
@@ -219,7 +276,22 @@
                                                 <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" aria-describedby="correoadicional_help" id="correo_adicional" name="correo_adicional" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. example@example.com">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" aria-describedby="correoadicional_help" id="correo_adicional" name="correo_adicional" placeholder="i.e. example@example.com">
+                                       </div>
+                                       <div id="loader-correo" class="hidden mt-5">
+                                          <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+                                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
+                                          </svg>
+                                          <span>Cargando...</span>
+                                       </div>
+                                       <div class="hidden" id="correct-correo">
+                                          <li class="flex items-center">
+                                             <svg aria-hidden="true" class="w-5 h-5 mr-1.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                             </svg>
+                                             <p class="text-green-600">Correo electrónico válido y disponible</p>
+                                          </li>
                                        </div>
                                        <div id="correoadicional_help" class="text-[#64748b]">
                                           El correo electrónico adicional no se utilizará para las notificaciones ni para las diversas funciones del sistema.
@@ -340,16 +412,36 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="rtelmov; open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
+                                 <script>
+                                    function rtelmov(e) {
+                                       if(e.target.value == "no"){
+                                       $("#telmov").val("");
+                                       $("#telmov").rules("remove");
+                                       $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                       $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#telmov-error").css("display", "none");
+                                       }else if(e.target.value == "si"){
+                                       $("#telmov").rules("add", {
+                                          required: true,
+                                          digits: true,
+                                          messages: {
+                                             required: 'Este campo es requerido',
+                                             digits: 'Solo se permiten números'
+                                          }
+                                       });	
+                                       }
+                                    }
+                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Teléfono móvil propio</label>
@@ -359,7 +451,7 @@
                                                 <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="telmov" name="telmov" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="Télefono móvil propio">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="telmov" name="telmov"  placeholder="Télefono móvil propio">
                                        </div>
                                     </div>
                                  </div>
@@ -373,16 +465,87 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="telempresa; open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                        <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="telempresa; open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
                                        <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
+                                 <script>
+                                    function telempresa(e) {
+                                       if(e.target.value == "no"){
+                                       const array = ["#marcacion", "#serie", "#sim", "#numred", "#modelotel", "#marcatel", "#imei"];
+                                       for(var i=0; i < array.length; i++){
+                                       $(""+array[i]+"").val("");
+                                       $(""+array[i]+"").rules("remove");
+                                       $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                       $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $(""+array[i]+"-error").css("display", "none");
+                                       }
+                                       }else if(e.target.value == "si"){
+                                       $("#marcacion").rules("add", {
+                                          required: true,
+                                          digits:true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             digits: "Solo se permiten números"
+                                          }
+                                       });
+                                       $("#serie").rules("add", {
+                                          required: true,
+                                          alphanumeric: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                                          }
+                                       });
+                                       $("#sim").rules("add", {
+                                          required: true,
+                                          digits: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             digits: "Solo se permiten números"
+                                          }
+                                       });
+                                       $("#numred").rules("add", {
+                                          required: true,
+                                          digits:true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             digits: "Solo se permiten números"
+                                          }
+                                       });
+                                       $("#modelotel").rules("add", {
+                                          required: true,
+                                          model_validation: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             model_validation: 'Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios'
+                                          }
+                                       });
+                                       $("#marcatel").rules("add", {
+                                          required: true,
+                                          field_validation: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                                          }
+                                       });
+                                       $("#imei").rules("add", {
+                                          required: true,
+                                          digits: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             digits: "Solo se permiten números"
+                                          }
+                                       });
+                                       }
+                                    }
+                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                        <div class="grid grid-cols-1">
@@ -393,7 +556,7 @@
                                                    <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marcacion" name="marcacion" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. 767">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marcacion" name="marcacion" placeholder="i.e. 767">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -404,7 +567,7 @@
                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie" name="serie" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. DB168091200530">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie" name="serie" placeholder="i.e. DB168091200530">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -415,7 +578,7 @@
                                                    <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="sim" name="sim" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e 89014103211118510720">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="sim" name="sim" placeholder="i.e 89014103211118510720">
                                           </div>
                                        </div>
                                     </div>
@@ -428,7 +591,7 @@
                                                    <path fill="currentColor" d="M4.93,4.93C3.12,6.74 2,9.24 2,12C2,14.76 3.12,17.26 4.93,19.07L6.34,17.66C4.89,16.22 4,14.22 4,12C4,9.79 4.89,7.78 6.34,6.34L4.93,4.93M19.07,4.93L17.66,6.34C19.11,7.78 20,9.79 20,12C20,14.22 19.11,16.22 17.66,17.66L19.07,19.07C20.88,17.26 22,14.76 22,12C22,9.24 20.88,6.74 19.07,4.93M7.76,7.76C6.67,8.85 6,10.35 6,12C6,13.65 6.67,15.15 7.76,16.24L9.17,14.83C8.45,14.11 8,13.11 8,12C8,10.89 8.45,9.89 9.17,9.17L7.76,7.76M16.24,7.76L14.83,9.17C15.55,9.89 16,10.89 16,12C16,13.11 15.55,14.11 14.83,14.83L16.24,16.24C17.33,15.15 18,13.65 18,12C18,10.35 17.33,8.85 16.24,7.76M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numred" name="numred" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. 310260">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numred" name="numred" placeholder="i.e. 310260">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -439,7 +602,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="modelotel" name="modelotel" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. TP802A">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="modelotel" name="modelotel" placeholder="i.e. TP802A">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -450,7 +613,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marcatel" name="marcatel" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. Samsung Galaxy">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marcatel" name="marcatel" placeholder="i.e. Samsung Galaxy">
                                           </div>
                                        </div>
                                     </div>
@@ -462,7 +625,7 @@
                                                 <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="imei" name="imei" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. 861536030196001">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="imei" name="imei" placeholder="i.e. 861536030196001">
                                        </div>
                                     </div>
                                  </div>
@@ -471,16 +634,55 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Laptop asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" checked="">
+                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="laptopempresa; open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" checked="">
                                        <label for="option-laptop-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2">
+                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="laptopempresa; open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2">
                                        <label for="option-laptop-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
+                                 <script>
+                                    function laptopempresa(e){
+                                       if(e.target.value == "no"){
+                                       const array = ["#marca_laptop", "#modelo_laptop", "#serie_laptop"];
+                                       for(var i=0; i < array.length; i++){
+                                          $(""+array[i]+"").val("");
+                                          $(""+array[i]+"").rules("remove");
+                                          $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                          $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $(""+array[i]+"-error").css("display", "none");
+                                       }
+                                       }else if(e.target.value == "si"){
+                                       $("#marca_laptop").rules("add", {
+                                          required: true,
+                                          field_validation: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                                          }
+                                       });
+                                       $("#modelo_laptop").rules("add", {
+                                          required: true,
+                                          model_validation: true,
+                                          messages: {
+                                             required: "Por favor, ingrese el modelo de la laptop",
+                                             model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
+                                          }
+                                       });
+                                       $("#serie_laptop").rules("add", {
+                                          required: true,
+                                          alphanumeric: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                                          }
+                                       });
+                                       }
+                                    }
+                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                        <div class="grid grid-cols-1">
@@ -491,7 +693,7 @@
                                                    <path fill="currentColor" d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marca_laptop" name="marca_laptop" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. Lenovo">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marca_laptop" name="marca_laptop" placeholder="i.e. Lenovo">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -502,7 +704,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="modelo_laptop" name="modelo_laptop" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. Lenovo Ideapad 330-15ARR">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="modelo_laptop" name="modelo_laptop" placeholder="i.e. Lenovo Ideapad 330-15ARR">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -510,11 +712,10 @@
                                           <div class="group flex">
                                              <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <title>key-variant</title>
                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie_laptop" name="serie_laptop" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="i.e. S100NWDJ">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie_laptop" name="serie_laptop" placeholder="i.e. S100NWDJ">
                                           </div>
                                        </div>
                                     </div>
@@ -559,16 +760,36 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Posee retención?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="rretencion; open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
+                                 <script>
+                                    function rretencion(e){
+                                       if(e.target.value == "no"){
+                                       $("#monto_mensual").val('');
+                                       $("#monto_mensual").rules("remove");
+                                       $("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                       $("#monto_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#monto_mensual-error").css("display", "none");
+                                       }else if(e.target.value == "si"){
+                                       $("#monto_mensual").rules("add", {
+                                          required: true,
+                                          number: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             number: "Solo se permiten números"
+                                          }
+                                       }); 
+                                       }
+                                    }
+                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Monto mensual</label>
@@ -578,7 +799,7 @@
                                                 <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="monto_mensual" name="monto_mensual" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="Monto mensual">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="monto_mensual" name="monto_mensual" placeholder="Monto mensual">
                                        </div>
                                     </div>
                                  </div>
@@ -691,13 +912,33 @@
                                           </svg>
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="identificacion" name="identificacion">
-                                          <option value="" x-on:click="open = false">--Seleccione--</option>
-                                          <option value="INE" x-on:click="open = true">INE</option>
-                                          <option value="PASAPORTE" x-on:click="open = true">PASAPORTE</option>
-                                          <option value="CEDULA" x-on:click="open = true">CEDULA</option>
+                                          <option value="" x-on:click="tidentificacion; open = false">--Seleccione--</option>
+                                          <option value="INE" x-on:click="tidentificacion; open = true">INE</option>
+                                          <option value="PASAPORTE" x-on:click="tidentificacion; open = true">PASAPORTE</option>
+                                          <option value="CEDULA" x-on:click="tidentificacion; open = true">CEDULA</option>
                                        </select>
                                     </div>
                                  </div>
+                                 <script>
+                                    function tidentificacion(e){
+                                       if(e.target.value == ""){
+                                       $("#numeroidentificacion").val("");
+                                       $("#numeroidentificacion").rules("remove");
+                                       $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                       $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#numeroidentificacion-error").css("display", "none");
+                                       }else {
+                                       $("#numeroidentificacion").rules("add", {
+                                          required: true,
+                                          alphanumeric: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                                          }
+                                       }); 
+                                       }
+                                    }
+                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Número de identificación</label>
@@ -707,7 +948,7 @@
                                                 <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numeroidentificacion" name="numeroidentificacion" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" placeholder="Número de identificación">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
                                        </div>
                                     </div>
                                  </div>

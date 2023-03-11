@@ -3,12 +3,12 @@
 	$object = new connection_database();
 
 	
-	$correo = $_GET["correo_personal"];
-	$get_correo = $object -> _db -> prepare("SELECT * from expedientes where correo_personal=:correo");
-	$get_correo -> execute(array(':correo' => $correo));
+	$correo = $_GET["correo_adicional"];
+	$get_correo = $object -> _db -> prepare("SELECT correo_adicional from expedientes where correo_adicional=:correo1 UNION ALL SELECT correo from usuarios where correo=:correo2");
+	$get_correo -> execute(array(':correo1' => $correo, ':correo2' => $correo));
 	$count_query = $get_correo -> rowCount();
 	if($count_query > 0){
-		$output = false;
+		$output = "Este correo está repetido, por favor, ingrese otro correo";
 	}else{
 		$output = true;
 	}

@@ -325,6 +325,338 @@
 
         //Termina la configuración de los fileupload
 
+        //EMPIEZA EL JQUERY VALIDATION
+        $.validator.addMethod('email_verification', function (value) {
+            return /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
+        }, 'not a valid email.');
+
+        $.validator.addMethod('num_empleado', function (value) {
+            return /^([RL]){1}-([0-9])+$/.test(value);
+        }, 'invalid employee number.');
+
+        $.validator.addMethod('field_validation', function (value) {
+            return /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+        }, 'not a valid field.');
+
+        $.validator.addMethod('location_validation', function (value) {
+            return /^(?:([a-zA-Z0-9\u00C0-\u00FF][?:\.|,]?)+([?:\s|-][a-zA-Z0-9\u00C0-\u00FF]+[?:\.|,]?)*)?$/.test(value);
+        }, 'not a valid field.');
+
+        jQuery.validator.addMethod("model_validation", function(value, element) {
+            return this.optional(element) || /^([a-zA-Z0-9\u00C0-\u00FF])+([?:\s|\-|\_][a-zA-Z0-9\u00C0-\u00FF]+)*$/i.test(value);
+        }, "invalid model");
+
+        $.validator.addMethod("maxDate", function(value, element) {
+            var curDate = new Date();
+            var inputDate = new Date(value);
+            if (inputDate < curDate)
+                return true;
+            return false;
+        }, "Invalid Date!");
+
+        if($('#Guardar').length > 0 ){
+            $('#Guardar').validate({
+                ignore: [],
+                onkeyup: false,
+                errorPlacement: function(error, element) {
+                    if($(element).attr("type") === "file"){
+                        error.insertAfter($(element));
+                    }else{
+                        error.insertAfter(element.parent('.group.flex'));
+                    }
+                },
+                invalidHandler: function(e, validator){
+                    if(!($('#error-container').length)){
+                        this.$div = $('<div id="error-container" class="grid grid-cols-1 mx-7 py-4"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex items-center"><div class="p-2"><div class="flex items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-lg">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#menu");
+                    }
+                    $("#arrayerrors").html(""); 
+                    $.each(validator.errorMap, function( index, value ) { 
+                        this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
+                        $("#arrayerrors").append(this.$arrayerror);
+                    });
+                    if(validator.errorList.length){
+                        //Agregar los tabpane
+                        var taberror = jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id');
+                        if(taberror != "documentos"){
+                            $('#menu button[data-tabs-target="#' + jQuery(validator.errorList[0].element).closest(".tab-pane").removeClass("hidden") + '"]');
+                            $('#menu > li > button[data-tabs-target="#'+taberror+'"]').addClass("menu-active bg-[#4f46e5] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+                            $('#menu > li > button:last').removeClass("bg-[#4f46e5] text-white menu-active").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+                            $("#menu-contents > div:last").addClass("hidden");
+                        }
+                    }
+                },
+                highlight: function(element) {
+                    var elem = $(element);
+                    if (elem.hasClass("select2-hidden-accessible")) {
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600"); 
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border-2 border-rose-500 border-2"); 
+                    }else{
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                    }
+                },
+                unhighlight: function(element) {
+                    var elem = $(element);
+                    if (elem.hasClass("select2-hidden-accessible")) {
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border-2 border-rose-500 border-2");
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600"); 
+                    }else{
+                        $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                    }
+                },
+                rules: {
+                    user: {
+                        required:true
+                    },
+                    numempleado: {
+                        required: true,
+                        num_empleado: true,
+                        remote: {
+                            url: "../ajax/expedientes/check_num_empleado.php",
+                            type: "GET",
+                            beforeSend: function () {
+                                $('#loader-numempleado').removeClass('hidden');
+                                $('#correct-numempleado').addClass('hidden');
+                            },
+                            complete: function(data){
+                                if(data.responseText == "true") {
+                                    $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                    $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                }else{
+                                    $('#loader-numempleado').addClass('hidden');
+                                    $('#correct-numempleado').addClass('hidden');
+                                }
+                            }
+                        }
+                    },
+                    puesto: {
+                        required:true,
+                        minlength: 4,
+                        field_validation:true
+                    },
+                    correo_adicional: {
+                        required: true,
+                        email_verification: true,
+                        remote: {
+                            url: "../ajax/validacion/expedientes/checkemail.php",
+                            type: "GET",
+                            beforeSend: function () {
+                                $('#loader-correo').removeClass('hidden');
+                                $('#correct-correo').addClass('hidden');
+                            },
+                            complete: function(data){
+                                if(data.responseText == "true") {
+                                    $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                    $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                }else{
+                                    $('#loader-correo').addClass('hidden');
+                                    $('#correct-correo').addClass('hidden');
+                                }
+                            }
+                        }
+                    },
+                    calle: {
+                        location_validation:true
+                    },
+                    ninterior: {
+                        digits:true
+                    },
+                    nexterior: {
+                        digits:true
+                    },
+                    colonia: {
+                        location_validation:true
+                    },
+                    codigo: {
+                        digits:true
+                    },
+                    teldom: {
+                        digits:true
+                    },
+                    telmov: {
+                        required:true,
+                        digits:true
+                    },
+                    marcacion:{
+                        required: true,
+                        digits:true
+                    },
+                    serie:{
+                        required: true,
+                        alphanumeric: true
+                    },
+                    sim:{
+                        required: true,
+                        digits: true
+                    },
+                    numred:{
+                        required: true,
+                        digits:true
+                    },
+                    modelotel:{
+                        required: true,
+                        model_validation: true
+                    },
+                    marcatel:{
+                        required: true,
+                        field_validation: true
+                    },
+                    imei:{
+                        required: true,
+                        digits: true
+                    },
+                    marca_laptop:{
+                        required: true,
+                        field_validation: true
+                    },
+                    modelo_laptop:{
+                        required: true,
+                        model_validation: true
+                    },
+                    serie_laptop:{
+                        required: true,
+                        alphanumeric: true
+                    },
+                    monto_mensual:{
+                        required: true,
+                        number: true
+                    },
+                    fechanac:{
+                        maxDate: true
+                    },
+                    salario_contrato:{
+                        number:true
+                    },
+                    salario_fechaalta:{
+                        number: true
+                    },
+                    curp:{
+                        alphanumeric: true
+                    },
+                    nss:{
+                        number: true
+                    },
+                    rfc:{
+                        alphanumeric: true
+                    }
+                },
+                messages: {
+                    user:{
+                        required: 'Este campo es requerido'
+                    },
+                    numempleado: {
+                        required:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Este campo es requerido"; },
+                        num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
+                        remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
+                    },
+                    puesto: {
+                        required:'Este campo es requerido',
+                        minlength: 'El puesto debe de contener 4 caracteres como mínimo',
+                        field_validation:'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    correo_adicional: {
+                        required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Este campo es requerido"; },
+                        email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
+                    },
+                    calle: {
+                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                    },
+                    ninterior: {
+                        digits: 'Solo se permiten números'
+                    },
+                    nexterior: {
+                        digits: 'Solo se permiten números'
+                    },
+                    colonia: {
+                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                    },
+                    codigo: {
+                        digits: 'Solo se permiten números'
+                    },
+                    teldom: {
+                        digits: 'Solo se permiten números'
+                    },
+                    telmov: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números'
+                    },
+                    marcacion:{
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números'
+                    },
+                    serie:{
+                        required: 'Este campo es requerido',
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                    },
+                    sim:{
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    numred:{
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números'
+                    },
+                    modelotel:{
+                        required: 'Este campo es requerido',
+                        model_validation: 'Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios'
+                    },
+                    marcatel:{
+                        required: 'Este campo es requerido',
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    imei:{
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números'
+                    },
+                    marca_laptop:{
+                        required: 'Este campo es requerido',
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    modelo_laptop:{
+                        required: 'Este campo es requerido',
+                        model_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    serie_laptop:{
+                        required: 'Este campo es requerido',
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                    },
+                    monto_mensual:{
+                        required: "Este campo es requerido",
+                        number: "Solo se permiten números"
+                    },
+                    fechanac:{
+                        maxDate: 'No se permiten las fechas posteriores al día de hoy'
+                    },
+                    salario_contrato:{
+                        number: 'Solo se permiten números'
+                    },
+                    salario_fechaalta:{
+                        number: 'Solo se permiten números'
+                    },
+                    curp: {
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                    },
+                    nss:{
+                        number: 'Solo se permiten números'
+                    },
+                    rfc:{
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                    }
+                },
+                submitHandler: function(form) {
+                
+                return false;
+                }
+            });
+        }
+        //TERMINA EL JQUERY VALIDATION
+
+        //Este metodo es para quitar el error en el select 2
+        $('#user').on("change", function (e) {
+            $(this).valid()
+        });
+
 	});
 
 	//Aquí empiezan las referencias laborales
@@ -563,6 +895,10 @@
 
 </script>
 <style>
+
+    .error{
+        color: red;
+    }
 
     .select2-results{
         overflow-y: scroll;
