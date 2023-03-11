@@ -349,7 +349,7 @@
         $.validator.addMethod("maxDate", function(value, element) {
             var curDate = new Date();
             var inputDate = new Date(value);
-            if (inputDate < curDate)
+            if (value == "" || inputDate < curDate)
                 return true;
             return false;
         }, "Invalid Date!");
@@ -535,7 +535,7 @@
                         alphanumeric: true
                     },
                     nss:{
-                        number: true
+                        digits: true
                     },
                     rfc:{
                         alphanumeric: true
@@ -615,7 +615,7 @@
                     },
                     modelo_laptop:{
                         required: 'Este campo es requerido',
-                        model_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                        model_validation: 'Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios'
                     },
                     serie_laptop:{
                         required: 'Este campo es requerido',
@@ -623,22 +623,22 @@
                     },
                     monto_mensual:{
                         required: "Este campo es requerido",
-                        number: "Solo se permiten números"
+                        number: "Solo se permiten números y decimales"
                     },
                     fechanac:{
                         maxDate: 'No se permiten las fechas posteriores al día de hoy'
                     },
                     salario_contrato:{
-                        number: 'Solo se permiten números'
+                        number: 'Solo se permiten números y decimales'
                     },
                     salario_fechaalta:{
-                        number: 'Solo se permiten números'
+                        number: 'Solo se permiten números y decimales'
                     },
                     curp: {
                         alphanumeric: 'Solo se permiten carácteres alfanúmericos'
                     },
                     nss:{
-                        number: 'Solo se permiten números'
+                        digits: 'Solo se permiten números'
                     },
                     rfc:{
                         alphanumeric: 'Solo se permiten carácteres alfanúmericos'

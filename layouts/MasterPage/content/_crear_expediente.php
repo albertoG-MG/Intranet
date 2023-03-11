@@ -784,7 +784,7 @@
                                           number: true,
                                           messages: {
                                              required: "Este campo es requerido",
-                                             number: "Solo se permiten números"
+                                             number: "Solo se permiten números y decimales"
                                           }
                                        }); 
                                        }
@@ -817,7 +817,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Fecha de inicio de contrato</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Inicio de contrato</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
