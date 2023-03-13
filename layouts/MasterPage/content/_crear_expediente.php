@@ -1134,33 +1134,53 @@
                                  </div>
                               </div>
                               <div x-data="{ open: true }">
-                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">Tiene familiares dentro de la empresa?</label>
-                                    <div class="group flex mt-3 items-center">
-                                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
-                                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                       Sí
-                                       </label>
-                                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
-                                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                       No
-                                       </label>
-                                    </div>
-                                 </div>
-                                 <div x-show.important="open">
-                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                       <label class="text-[#64748b] font-semibold mb-2">Nombre completo del familiar</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                             </svg>
-                                          </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" x-bind:data-rule-required="open == true ? true : false" x-bind:data-msg-required="open == true ? 'Este campo es requerido' : false" id="nomfam" name="nomfam" placeholder="Nombre completo del familiar">
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
+			                     <div class="grid grid-cols-1 mt-5 mx-7">
+				                    <label class="text-[#64748b] font-semibold mb-2">Tiene familiares dentro de la empresa?</label>
+				                    <div class="group flex mt-3 items-center">
+				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+				                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+				                       Sí
+				                       </label>
+				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="rfamiliarempresa; open = false" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-600" aria-labelledby="option-2" aria-describedby="option-2">
+				                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
+				                       No
+				                       </label>
+				                    </div>
+			                     </div>
+			                     <script>
+				                    function rfamiliarempresa(e){
+				                       if(e.target.value == "no"){
+					                      $("#nomfam").val('');
+						                     $("#nomfam").rules("remove");
+						                     $("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+						                     $("#nomfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+						                     $("#nomfam-error").css("display", "none");
+				                       }else if(e.target.value == "si"){
+					                      $("#nomfam").rules("add", {
+						                     required: true,
+						                     names_validation: true,
+						                     messages: {
+							                    required: "Este campo es requerido",
+							                    names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios"
+						                     }
+					                      }); 
+				                       }
+				                    }
+			                     </script>
+			                     <div x-show.important="open">
+				                    <div class="grid grid-cols-1 mt-5 mx-7">
+				                       <label class="text-[#64748b] font-semibold mb-2">Nombre completo del familiar</label>
+				                       <div class="group flex">
+					                      <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+						                     <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+						                     </svg>
+					                      </div>
+					                      <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre completo del familiar">
+				                       </div>
+				                    </div>
+			                     </div>
+		                      </div>
                               <div class="flex flex-col mt-5 mx-7">
                                  <div class="my-3 h-px bg-slate-200"></div>
                                  <div class="self-end mt-3">

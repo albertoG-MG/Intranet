@@ -326,16 +326,16 @@
         //Termina la configuración de los fileupload
 
         //EMPIEZA EL JQUERY VALIDATION
-        $.validator.addMethod('email_verification', function (value) {
-            return /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
+        $.validator.addMethod('email_verification', function (value, element) {
+            return this.optional(element) || /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
         }, 'not a valid email.');
-
-        $.validator.addMethod('num_empleado', function (value) {
-            return /^([RL]){1}-([0-9])+$/.test(value);
+		
+		$.validator.addMethod('num_empleado', function (value, element) {
+            return this.optional(element) || /^([RL]){1}-([0-9])+$/.test(value);
         }, 'invalid employee number.');
-
-        $.validator.addMethod('field_validation', function (value) {
-            return /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+		
+		$.validator.addMethod('field_validation', function (value, element) {
+            return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
         }, 'not a valid field.');
 
         $.validator.addMethod('location_validation', function (value) {
@@ -353,6 +353,10 @@
                 return true;
             return false;
         }, "Invalid Date!");
+
+        $.validator.addMethod('names_validation', function (value, element) {
+			return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+		}, 'not a valid name.');
 
         if($('#Guardar').length > 0 ){
             $('#Guardar').validate({
@@ -539,7 +543,44 @@
                     },
                     rfc:{
                         alphanumeric: true
-                    }
+                    },
+                    cantidadpolo:{
+			            digits: true
+		            },
+		            tallapolo:{
+			            field_validation: true
+		            },
+		            emergencianom:{
+			            names_validation: true
+		            },
+		            emergencianom2:{
+			            names_validation: true
+		            },
+		            emergenciaparentesco:{
+			            field_validation: true
+		            },
+		            emergenciaparentesco2:{
+			            field_validation: true
+		            },
+		            emergenciatel:{
+			            digits: true
+		            },
+		            emergenciatel2:{
+			            digits: true
+		            },
+		            capacitacion:{
+			            field_validation: true
+		            },
+		            antidoping:{
+			            field_validation: true
+		            },
+		            vacante:{
+			            field_validation: true
+		            },
+		            nomfam:{
+			            required: true,
+			            names_validation: true
+	                }
                 },
                 messages: {
                     user:{
@@ -642,7 +683,44 @@
                     },
                     rfc:{
                         alphanumeric: 'Solo se permiten carácteres alfanúmericos'
-                    }
+                    },
+                    cantidadpolo:{
+			            digits: 'Solo se permiten números'
+		            },
+		            tallapolo:{
+			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		            },
+		            emergencianom:{
+			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+		            },
+		            emergencianom2:{
+			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+		            },
+		            emergenciaparentesco:{
+			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		            },
+		            emergenciaparentesco2:{
+			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		            },
+		            emergenciatel:{
+			            digits: 'Solo se permiten números'
+		            },
+		            emergenciatel2:{
+			            digits: 'Solo se permiten números'
+		            },
+		            capacitacion:{
+			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		            },
+		            antidoping:{
+			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		            },
+		            vacante:{
+			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		            },
+		            nomfam:{
+			            required: 'Este campo es requerido',
+			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+		            }
                 },
                 submitHandler: function(form) {
                 
@@ -707,7 +785,7 @@
                     input.setAttribute("data-rule-required", "true");
                     input.setAttribute("data-msg-required", "Este campo es requerido");
                     input.setAttribute("data-rule-names_validation", "true");
-                    input.setAttribute("data-msg-names_validation", "Nombre completo" +count+ " inválido");
+                    input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
                     input.setAttribute("placeholder", "Nombre " +(count)); 
                     grupo.appendChild(input);
                     div2.appendChild(document.createTextNode("Relación " + (count) + " *"));
@@ -724,8 +802,8 @@
                     input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
                     input2.setAttribute("data-rule-required", "true");
                     input2.setAttribute("data-msg-required", "Este campo es requerido");
-                    input2.setAttribute("data-rule-lettersonly", "true");
-                    input2.setAttribute("data-msg-lettersonly", "Relación" +count+ " inválida");
+                    input2.setAttribute("data-rule-field_validation", "true");
+                    input2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
                     input2.setAttribute("placeholder", "Relación " +(count));
                     grupo2.appendChild(input2);
                     div3.appendChild(document.createTextNode("Teléfono " + (count) + " *"));
@@ -743,7 +821,7 @@
                     input3.setAttribute("data-rule-required", "true");
                     input3.setAttribute("data-msg-required", "Este campo es requerido");
                     input3.setAttribute("data-rule-digits", "true");
-                    input3.setAttribute("data-msg-digits", "Teléfono" +count+  "inválido");
+                    input3.setAttribute("data-msg-digits", "Solo se permiten números");
                     input3.setAttribute("placeholder", "Teléfono " +(count));
                     grupo3.appendChild(input3);
                     count++;
