@@ -580,7 +580,28 @@
 		            nomfam:{
 			            required: true,
 			            names_validation: true
-	                }
+	                },
+                    banco_personal:{
+				        field_validation:true
+			        },
+			        cuenta_personal:{
+				        digits:true
+			        },
+			        clabe_personal:{
+				        digits:true
+			        },
+			        banco_nomina:{
+				        field_validation:true
+			        },
+			        cuenta_nomina:{
+				        digits:true
+			        },
+			        clabe_nomina:{
+				        digits:true
+			        },
+			        plastico:{
+				        digits:true
+			        }
                 },
                 messages: {
                     user:{
@@ -720,7 +741,28 @@
 		            nomfam:{
 			            required: 'Este campo es requerido',
 			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            }
+		            },
+                    banco_personal:{
+				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+			        },
+			        cuenta_personal:{
+				        digits: 'Solo se permiten números'
+			        },
+			        clabe_personal:{
+				        digits: 'Solo se permiten números'
+			        },
+			        banco_nomina:{
+				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+			        },
+			        cuenta_nomina:{
+				        digits: 'Solo se permiten números'
+			        },
+			        clabe_nomina:{
+				        digits: 'Solo se permiten números'
+			        },
+			        plastico:{
+				        digits: 'Solo se permiten números'
+			        }
                 },
                 submitHandler: function(form) {
                 
@@ -886,7 +928,7 @@
                     input.setAttribute("data-rule-required", "true"); 
                     input.setAttribute("data-msg-required", "Este campo es requerido");
                     input.setAttribute("data-rule-names_validation", "true"); 
-                    input.setAttribute("data-msg-names_validation", "Nombre completo" +count+ " inválido");  
+                    input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
                     input.setAttribute("placeholder", "Nombre " +(count)); 
                     grupo.appendChild(input);
                     div2.appendChild(document.createTextNode("Relación " + (count) + " *"));
@@ -903,8 +945,8 @@
                     input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
                     input2.setAttribute("data-rule-required", "true");
                     input2.setAttribute("data-msg-required", "Este campo es requerido");
-                    input2.setAttribute("data-rule-lettersonly", "true");
-                    input2.setAttribute("data-msg-lettersonly", "Relación" +count+ " inválida");
+                    input2.setAttribute("data-rule-field_validation", "true");
+			        input2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
                     input2.setAttribute("placeholder", "Relación " +(count)); 
                     grupo2.appendChild(input2);
                     div3.appendChild(document.createTextNode("RFC " + (count) + " *"));
@@ -922,7 +964,7 @@
                     input3.setAttribute("data-rule-required", "true");
                     input3.setAttribute("data-msg-required", "Este campo es requerido");
                     input3.setAttribute("data-rule-alphanumeric", "true");
-                    input3.setAttribute("data-msg-alphanumeric", "RFC" +count+ " inválido");
+                    input3.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
                     input3.setAttribute("placeholder", "RFC " +(count)); 
                     grupo3.appendChild(input3);
                     div7.appendChild(document.createTextNode("CURP " + (count) + " *"));
@@ -940,7 +982,7 @@
                     input4.setAttribute("data-rule-required", "true");
                     input4.setAttribute("data-msg-required", "Este campo es requerido");
                     input4.setAttribute("data-rule-alphanumeric", "true");
-                    input4.setAttribute("data-msg-alphanumeric", "CURP" +count+ " inválido");
+                    input4.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
                     input4.setAttribute("placeholder", "CURP " +(count));  
                     grupo4.appendChild(input4);
                     div9.appendChild(document.createTextNode("Porcentaje de derecho " + (count) + " *"));
@@ -958,7 +1000,7 @@
                     input5.setAttribute("data-rule-required", "true");
                     input5.setAttribute("data-msg-required", "Este campo es requerido");
                     input5.setAttribute("data-rule-digits", "true");
-                    input5.setAttribute("data-msg-digits", "Porcentaje de derecho" +count+ " inválido");
+                    input5.setAttribute("data-msg-digits", "Solo se permiten números");
                     input5.setAttribute("placeholder", "Porcentaje de derecho " +(count)); 
                     grupo5.appendChild(input5);
                     count++;
