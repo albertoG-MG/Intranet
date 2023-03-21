@@ -47,14 +47,14 @@ $ver_municipio = $municipio_perfil->fetch(PDO::FETCH_OBJ);
 /*REFERENCIAS LABORALES*/
 $array = [];
 $contador_array = 0;
-$referencias_laborales = $object->_db->prepare("select ref_laborales.nombre as reflabnom, ref_laborales.telefono as reflabtel, ref_laborales.parentesco as reflabparent from ref_laborales inner join expedientes on expedientes.id=ref_laborales.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
+$referencias_laborales = $object->_db->prepare("select ref_laborales.nombre as reflabnom, ref_laborales.telefono as reflabtel, ref_laborales.relacion as reflabrelacion from ref_laborales inner join expedientes on expedientes.id=ref_laborales.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
 $referencias_laborales->bindParam("sessionid", $_SESSION["id"], PDO::PARAM_INT);
 $referencias_laborales->execute();
 $cont_referencias = $referencias_laborales->rowCount();
 while ($row_ref = $referencias_laborales->fetch(PDO::FETCH_OBJ)) {
 	$array[$contador_array] = ($row_ref->reflabnom);
 	$contador_array++;
-	$array[$contador_array] = ($row_ref->reflabparent);
+	$array[$contador_array] = ($row_ref->reflabrelacion);
 	$contador_array++;
 	$array[$contador_array] = ($row_ref->reflabtel);
 	$contador_array++;
@@ -64,14 +64,14 @@ $json = json_encode($array, JSON_UNESCAPED_UNICODE);
 /*REFERENCIAS BANCARIAS*/
 $array2 = [];
 $contador_array2 = 0;
-$datos_bancarios = $object->_db->prepare("select ref_bancarias.nombre as refbancnom, ref_bancarias.parentesco as refbancparent, ref_bancarias.rfc as refbancrfc, ref_bancarias.curp as refbanccurp, ref_bancarias.prcnt_derecho as refbancderecho from ref_bancarias inner join expedientes on expedientes.id=ref_bancarias.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
+$datos_bancarios = $object->_db->prepare("select ref_bancarias.nombre as refbancnom, ref_bancarias.relacion as refbancrelacion, ref_bancarias.rfc as refbancrfc, ref_bancarias.curp as refbanccurp, ref_bancarias.prcnt_derecho as refbancderecho from ref_bancarias inner join expedientes on expedientes.id=ref_bancarias.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
 $datos_bancarios->bindParam("sessionid", $_SESSION["id"], PDO::PARAM_INT);
 $datos_bancarios->execute();
 $cont_datos = $datos_bancarios->rowCount();
 while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
 	$array2[$contador_array2] = ($row_datos->refbancnom);
 	$contador_array2++;
-	$array2[$contador_array2] = ($row_datos->refbancparent);
+	$array2[$contador_array2] = ($row_datos->refbancrelacion);
 	$contador_array2++;
 	$array2[$contador_array2] = ($row_datos->refbancrfc);
 	$contador_array2++;
