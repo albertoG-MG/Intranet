@@ -1066,6 +1066,17 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$antidoping = $_POST["antidoping"];
 			}
 		}
+
+        //VACANTE
+        if(empty($_POST["vacante"])){
+			$vacante = null;
+		}else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["vacante"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el campo de la vacante")));
+			}else{
+				$vacante = $_POST["vacante"];
+			}
+		}
 		
 		//POSEE FAMILIAR EN LA EMPRESA
         if($_POST["radio2"] == "si"){
