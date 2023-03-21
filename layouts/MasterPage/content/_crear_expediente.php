@@ -866,6 +866,7 @@
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">Observaciones</label>
                                  <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones" name="observaciones" placeholder="Observaciones"></textarea>
+                                 <div id="error_observaciones"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -953,9 +954,9 @@
                                     </div>
                                  </div>
                               </div>
-                              <div class="flex flex-col mt-5 mx-7">
-                                 <div class="my-3 h-px bg-slate-200"></div>
-                                 <div class="self-end mt-3">
+                              <div class="mt-12 h-px bg-slate-200"></div>
+                              <div class="grid grid-cols-1 mx-7 mt-5">
+                                 <div class="text-center md:text-right">	
                                     <button type="button" id="siguiente" name="siguiente" class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2">Siguiente</button>
                                  </div>
                               </div>
@@ -974,7 +975,7 @@
                                           <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" value="" placeholder="Número de referencias laborales">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de referencias laborales">
                                  </div>
                               </div>
                               <div id="referencias">
@@ -1123,7 +1124,7 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">¿Cómo se entero de la vacante?</label>
+                                 <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1180,13 +1181,11 @@
 				                       </div>
 				                    </div>
 			                     </div>
-		                      </div>
-                              <div class="flex flex-col mt-5 mx-7">
-                                 <div class="my-3 h-px bg-slate-200"></div>
-                                 <div class="self-end mt-3">
-                                    <button type="button" id="anterior" name="anterior" class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Anterior</button>
-                                    <button type="button" id="siguiente2" name="siguiente2" class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2">Siguiente</button>
-                                 </div>
+		                     </div>
+                           <div class="mt-12 h-px bg-slate-200"></div>
+                              <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
+                                 <button type="button" id="anterior" name="anterior" class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Anterior</button>
+                                 <button type="button" id="siguiente2" name="siguiente2" class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2">Siguiente</button>
                               </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
@@ -1203,7 +1202,7 @@
                                           <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" value="" placeholder="Número de beneficiarios bancarios">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de beneficiarios bancarios">
                                  </div>
                               </div>
                               <div id="ref">
@@ -1299,12 +1298,10 @@
                                     </div>
                                  </div>
                               </div>
-                              <div class="flex flex-col mt-5 mx-7">
-                                 <div class="my-3 h-px bg-slate-200"></div>
-                                 <div class="self-end mt-3">
-                                    <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Anterior</button>
-                                    <button type="button" id="siguiente3" name="siguiente3" class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2">Siguiente</button>
-                                 </div>
+                              <div class="mt-12 h-px bg-slate-200"></div>
+                              <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
+                                 <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Anterior</button>
+                                 <button type="button" id="siguiente3" name="siguiente3" class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2">Siguiente</button>
                               </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">

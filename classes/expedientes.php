@@ -6,7 +6,7 @@ class expedientes {
     private $puesto;
     private $estudios;
     private $posee_correo;
-	private $correo_personal;
+	private $correo_adicional;
     private $calle;
     private $num_interior;
     private $num_exterior; 
@@ -35,7 +35,7 @@ class expedientes {
     private $monto_mensual; 
     private $fecha_nacimiento; 
     private $fecha_inicioc; 
-    public $fecha_alta;
+    private $fecha_alta;
     private $salario_contrato; 
     private $salario_fechaalta; 
     private $observaciones; 
@@ -69,12 +69,12 @@ class expedientes {
     private $ref_banc;
     private $arraypapeleria;
 
-    public function __construct($number_e, $job, $studies, $ownemail, $personalemail, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $have_own_phone, $phone_mobile, $have_business_phone, $marcation, $serial, $simi, $rednum, $telmodel, $telbrand, $ime, $ownlaptop, $brandlaptop, $modellaptop, $seriallaptop, $own_house, $civil_status, $have_retention, $money_retention, $birth_date, $contract_date, $discharge_date, $contract_money, $date_money, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_parent, $emergency_phone, $emergency_name2, $emergency_parent2, $emergency_phone2, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $personal_bank, $personal_account, $personal_clabe, $payroll_bank, $payroll_account, $payroll_clabe, $plastic, $referencies_banc, $documentsarray){
+    public function __construct($number_e, $job, $studies, $ownemail, $aditionalemail, $street, $interior_num, $exterior_ext, $suburb, $state, $city, $postal_address, $phone_home, $have_own_phone, $phone_mobile, $have_business_phone, $marcation, $serial, $simi, $rednum, $telmodel, $telbrand, $ime, $ownlaptop, $brandlaptop, $modellaptop, $seriallaptop, $own_house, $civil_status, $have_retention, $money_retention, $birth_date, $contract_date, $discharge_date, $contract_money, $date_money, $observations, $uprk, $social_security_number, $rfcs, $identification_type, $identification_number, $referencies, $capacitation, $date_uniform, $quantity_polo, $size_polo, $emergency_name, $emergency_parent, $emergency_phone, $emergency_name2, $emergency_parent2, $emergency_phone2, $antidoping_result, $vacancy, $family_inside_bussiness, $family_fib, $personal_bank, $personal_account, $personal_clabe, $payroll_bank, $payroll_account, $payroll_clabe, $plastic, $referencies_banc, $documentsarray){
         $this->num_empleado= $number_e;
         $this->puesto= $job;
         $this->estudios= $studies;
         $this->posee_correo = $ownemail;
-		$this->correo_personal = $personalemail;
+		$this->correo_adicional = $aditionalemail;
         $this->calle= $street;
         $this->num_interior= $interior_num;
         $this->num_exterior= $exterior_ext; 
@@ -141,16 +141,16 @@ class expedientes {
     public function Crear_expediente($id){
         $crud = new crud();
         $object = new connection_database();
-        $crud->store('expedientes', ['users_id' => $id, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_personal' => $this->correo_personal, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]); 
+        $crud->store('expedientes', ['users_id' => $id, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]); 
         $exp_id = $object -> _db -> lastInsertId();
-	    $jsonData = stripslashes(html_entity_decode($this->referencias));
-	    $ref = json_decode($jsonData);
-        if(!(empty($ref))){
+        if(!(is_null($this->referencias))){
+            $jsonData = stripslashes(html_entity_decode($this->referencias));
+            $ref = json_decode($jsonData);
             expedientes::Crear_referenciaslab($exp_id, $ref);
         }
-        $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
-        $ref_banc = json_decode($jsonData2);
-        if(!(empty($ref_banc))){
+        if(!(is_null($this->ref_banc))){
+            $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+            $ref_banc = json_decode($jsonData2);
             expedientes::Crear_referenciasbanc($exp_id, $ref_banc);
         }
         $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
@@ -162,7 +162,7 @@ class expedientes {
                 $crud = new crud();
                 $papeleria = $i;
                 $filename = $this->arraypapeleria[$i]["name"];
-                $location = "../src/pdfs_uploaded/";
+                $location = "../src/documentos/";
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 $uploadfile = Expedientes::tempnam_sfx($location, $ext);
                 if(move_uploaded_file($this->arraypapeleria[$i]['tmp_name'],$uploadfile)){
@@ -172,7 +172,7 @@ class expedientes {
                 }
             }
         }
-        $crud -> store('estatus_empleado', ['expedientes_id' => $exp_id, 'situacion_del_empleado' => "ACTIVO", 'estatus_del_empleado' => "NUEVO INGRESO"]);
+        $crud -> store('estatus_empleado', ['expedientes_id' => $exp_id, 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO"]);
     }
 
     public static function Crear_referenciaslab($exp_id, $ref){
@@ -181,9 +181,9 @@ class expedientes {
         try{
             for($i=0; $i<$numero; $i++){
                 $refnombre= $ref[$i]->nombre;
-                $refparentesco = $ref[$i]->parentesco;
+                $refrelacion = $ref[$i]->relacion;
                 $reftelefono = $ref[$i]->telefono;
-                $refcrud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco, 'expediente_id' => $exp_id]);
+                $refcrud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion, 'expediente_id' => $exp_id]);
             }
         } catch (Exception $e) {
                 $refcrud -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
@@ -197,12 +197,12 @@ class expedientes {
         try{
             for($a=0; $a<$numerocont; $a++){
                 $brefnombre= $ref_banc[$a]->nombre;
-                $brefparentesco = $ref_banc[$a]->parentesco;
+                $brefrelacion = $ref_banc[$a]->relacion;
                 $brefrfc = $ref_banc[$a]->rfc;
                 $brefcurp = $ref_banc[$a]->curp;
                 $brefporcentaje = $ref_banc[$a]->porcentaje;
 
-                $refcrud_banc->store('ref_bancarias', ['expediente_id' => $exp_id, 'nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
+                $refcrud_banc->store('ref_bancarias', ['expediente_id' => $exp_id, 'nombre' => $brefnombre, 'relacion' => $brefrelacion, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
             }
         } catch (Exception $e) {
                 $refcrud_banc -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);

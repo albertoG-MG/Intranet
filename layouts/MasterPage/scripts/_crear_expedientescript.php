@@ -445,6 +445,8 @@
                 errorPlacement: function(error, element) {
                     if($(element).attr("type") === "file"){
                         error.insertAfter($(element));
+                    }else if((element.attr('name') === 'observaciones')){
+                        error.appendTo("div#error_observaciones");  
                     }else{
                         error.insertAfter(element.parent('.group.flex'));
                     }
@@ -615,6 +617,9 @@
                     salario_fechaalta:{
                         number: true
                     },
+                    observaciones:{
+                        field_validation:true
+                    },
                     curp:{
                         alphanumeric: true
                     },
@@ -623,6 +628,9 @@
                     },
                     rfc:{
                         alphanumeric: true
+                    },
+                    reflab:{
+                        digits:true
                     },
                     cantidadpolo:{
 			            digits: true
@@ -661,6 +669,9 @@
 			            required: true,
 			            names_validation: true
 	                },
+                    refban:{
+                        digits:true
+                    },
                     banco_personal:{
 				        field_validation:true
 			        },
@@ -776,6 +787,9 @@
                     salario_fechaalta:{
                         number: 'Solo se permiten números y decimales'
                     },
+                    observaciones:{
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
                     curp: {
                         alphanumeric: 'Solo se permiten carácteres alfanúmericos'
                     },
@@ -784,6 +798,9 @@
                     },
                     rfc:{
                         alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                    },
+                    reflab:{
+                        digits: 'Solo se permiten números'
                     },
                     cantidadpolo:{
 			            digits: 'Solo se permiten números'
@@ -822,6 +839,9 @@
 			            required: 'Este campo es requerido',
 			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
 		            },
+                    refban:{
+                        digits: 'Solo se permiten números'
+                    },
                     banco_personal:{
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 			        },
@@ -885,6 +905,10 @@
 	//Aquí empiezan las referencias laborales
 	function AgregarReferencias(){
         var number = document.getElementById("reflab").value;
+        number = number.replace(/[^0-9]/g, function replacing() {
+            document.getElementById("reflab").value = 0;
+            return "0";
+        });
         var container = document.getElementById("referencias");
         var childrenCount = container.childElementCount;
         var count = childrenCount + 1;
@@ -980,6 +1004,10 @@
      //Aquí empiezan las referencias bancarias
      function AgregarBanco(){
         var number = document.getElementById("refban").value;
+        number = number.replace(/[^0-9]/g, function replacing() {
+            document.getElementById("refban").value = 0;
+            return "0";
+        });
         var container = document.getElementById("ref");
         var childrenCount = container.childElementCount;
         var count = childrenCount + 1;
@@ -1148,6 +1176,7 @@
     
         /*Inputs*/
         var select2 = $("#user").val();
+        var select2text = $("#user option:selected").text();
         var numempleado = $("#numempleado").val();
         var puesto = $("#puesto").val();
         var estudios = $("#estudios").val();
@@ -1158,7 +1187,9 @@
         var nexterior = $("#nexterior").val();
         var colonia = $("#colonia").val();
         var estado = $("#estado").val();
+        var estadotext = $("#estado option:selected").text();
         var municipio = $("#municipio").val();
+        var municipiotext = $("#municipio option:selected").text();
         var codigo = $("#codigo").val();
         var teldom = $("#teldom").val();
         var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
@@ -1190,6 +1221,7 @@
         var rfc = $("#rfc").val();
         var tipoidentificacion = $("#identificacion").val();
         var numeroidentificacion = $("#numeroidentificacion").val();
+        var numeroreferenciaslab = $("#reflab").val();
         var fechauniforme = $("#fechauniforme").val();
         var cantidadpolo = $("#cantidadpolo").val();
         var tallapolo = $("#tallapolo").val();
@@ -1204,6 +1236,7 @@
         var vacante = $("#vacante").val();
         var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
         var nomfam = $("#nomfam").val();
+        var numeroreferenciasban = $("#refban").val();
         var banco_personal = $("#banco_personal").val();
         var cuenta_personal = $("#cuenta_personal").val();
         var clabe_personal = $("#clabe_personal").val();
@@ -1249,6 +1282,7 @@
     
         /*Inputs*/
         fd.append('select2', select2);
+        fd.append('select2text', select2text);
         fd.append('numempleado', numempleado);
         fd.append('puesto', puesto);
         fd.append('estudios', estudios);
@@ -1259,7 +1293,9 @@
         fd.append('nexterior', nexterior);
         fd.append('colonia', colonia);
         fd.append('estado', estado);
+        fd.append('estadotext', estadotext);
         fd.append('municipio', municipio);
+        fd.append('municipiotext', municipiotext);
         fd.append('codigo', codigo);
         fd.append('teldom', teldom);
         fd.append('posee_telmov', posee_telmov);
@@ -1291,6 +1327,7 @@
         fd.append('rfc', rfc);
         fd.append('identificacion', tipoidentificacion);
         fd.append('numeroidentificacion', numeroidentificacion);
+        fd.append('numeroreferenciaslab', numeroreferenciaslab);
         fd.append('fechauniforme', fechauniforme);
         fd.append('cantidadpolo', cantidadpolo);
         fd.append('tallapolo', tallapolo);
@@ -1305,6 +1342,7 @@
         fd.append('vacante', vacante);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
+        fd.append('numeroreferenciasban', numeroreferenciasban);
         fd.append('banco_personal', banco_personal);
         fd.append('cuenta_personal', cuenta_personal);
         fd.append('clabe_personal', clabe_personal);
@@ -1339,8 +1377,27 @@
             contentType: false,
             success: function (response) {
                 setTimeout(function(){
-					
-				 
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Creado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button disabled class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='finish' name='finish' type='submit'>Guardar</button>");
+                            window.location.href = "expedientes.php";	
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }
 				},3000);
             }
         });
