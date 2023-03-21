@@ -162,7 +162,7 @@ class expedientes {
                 $crud = new crud();
                 $papeleria = $i;
                 $filename = $this->arraypapeleria[$i]["name"];
-                $location = "../src/documentos/";
+                $location = "../src/documents/";
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 $uploadfile = Expedientes::tempnam_sfx($location, $ext);
                 if(move_uploaded_file($this->arraypapeleria[$i]['tmp_name'],$uploadfile)){
