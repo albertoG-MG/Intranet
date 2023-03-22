@@ -37,7 +37,7 @@
 							</span>
                         </div>
 						<div class="text-center ">
-	                        <a href="perfil.php"><button style="height:40px;" class="button w-full bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Ver mi perfil</button></a>
+	                        <a class="outline-none" href="perfil.php"><button style="height:40px;" class="button w-full bg-white border border-gray-300 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2">Ver mi perfil</button></a>
                         </div>
                     </div>
                 </div>
