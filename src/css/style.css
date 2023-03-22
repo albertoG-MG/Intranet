@@ -1746,6 +1746,10 @@ select {
   --tw-text-opacity: 1 !important;
   color: rgb(148 163 184 / var(--tw-text-opacity)) !important;
 }
+.text-indigo-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(79 70 229 / var(--tw-text-opacity)) !important;
+}
 .text-red-700 {
   --tw-text-opacity: 1 !important;
   color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
@@ -1986,6 +1990,10 @@ select {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity)) !important;
 }
+.focus\:text-\[\#4f46e5\]:focus {
+  --tw-text-opacity: 1 !important;
+  color: rgb(79 70 229 / var(--tw-text-opacity)) !important;
+}
 .focus\:text-slate-800:focus {
   --tw-text-opacity: 1 !important;
   color: rgb(30 41 59 / var(--tw-text-opacity)) !important;
@@ -2021,9 +2029,11 @@ select {
   --tw-ring-opacity: 1 !important;
   --tw-ring-color: rgb(79 70 229 / var(--tw-ring-opacity)) !important;
 }
-.focus\:ring-blue-600:focus {
-  --tw-ring-opacity: 1 !important;
-  --tw-ring-color: rgb(37 99 235 / var(--tw-ring-opacity)) !important;
+.focus\:ring-\[\#4F46E5\]\/50:focus {
+  --tw-ring-color: rgb(79 70 229 / 0.5) !important;
+}
+.focus\:ring-\[\#d1d5db\]\/50:focus {
+  --tw-ring-color: rgb(209 213 219 / 0.5) !important;
 }
 .focus\:ring-black:focus {
   --tw-ring-opacity: 1 !important;
@@ -2051,12 +2061,6 @@ select {
 .focus\:ring-purple-300:focus {
   --tw-ring-opacity: 1 !important;
   --tw-ring-color: rgb(216 180 254 / var(--tw-ring-opacity)) !important;
-}
-.focus\:ring-\[\#d1d5db\]\/50:focus {
-  --tw-ring-color: rgb(209 213 219 / 0.5) !important;
-}
-.focus\:ring-\[\#4F46E5\]\/50:focus {
-  --tw-ring-color: rgb(79 70 229 / 0.5) !important;
 }
 .focus\:focus\:ring-indigo-600:focus:focus {
   --tw-ring-opacity: 1 !important;
