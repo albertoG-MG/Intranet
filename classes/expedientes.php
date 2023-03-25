@@ -300,90 +300,96 @@ class expedientes {
         return $view;
     }
 
-    public function Editar_expediente($id_user, $id_expediente, $situacion, $estatus_empleado, $motivo_estatus, $fecha_estatus){
-        $object = new connection_database();
+    public function Editar_expediente($id_user, $id_expediente, $delete){
         $crud = new crud();
-        $crud->update('expedientes', ['users_id' => $id_user, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_personal' => $this->correo_personal, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico], "id=:idexpediente", ['idexpediente' => $id_expediente]);
-        $array = [];
-        $jsonData = stripslashes(html_entity_decode($this->referencias));
-        $ref = json_decode($jsonData);
-        $checkreflab = $object -> _db ->prepare("SELECT * FROM ref_laborales WHERE expediente_id=:expedienteid");
-        $checkreflab -> bindParam('expedienteid', $id_expediente, PDO::PARAM_INT);
-        $checkreflab -> execute();
+        $object = new connection_database();
+        //SE ACTUALIZA LA INFORMACIÓN DEL EXPEDIENTE
+        $crud->update('expedientes', ['users_id' => $id_user, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico], "id=:idexpediente", ['idexpediente' => $id_expediente]);	
+        //SE ACTUALIZA LAS REFERENCIAS LABORALES
+        $checkreflab = $object -> _db ->prepare("SELECT id FROM ref_laborales WHERE expediente_id=:expedienteid");
+        $checkreflab -> execute(array(':expedienteid' => $id_expediente));
         $countreflab = $checkreflab -> rowCount();
-        while ($row = $checkreflab->fetch(PDO::FETCH_OBJ)) { 
-            $array[]=array('id'=>$row->id);
-        }
         if($countreflab > 0){
-            if(empty($ref)){
+            $array_ids = $checkreflab->fetchAll(PDO::FETCH_ASSOC);
+            if(is_null($this->referencias)){
                 $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $id_expediente]);
             }else{
-                expedientes::Editar_referenciaslab($id_expediente, $countreflab, $array, $ref);
+                $jsonData = stripslashes(html_entity_decode($this->referencias));
+                $ref = json_decode($jsonData);
+                expedientes::Editar_referenciaslab($id_expediente, $countreflab, $array_ids, $ref);
             }
         }else{
-            if(!(empty($ref))){
+            if(!(is_null($this->referencias))){
+                $jsonData = stripslashes(html_entity_decode($this->referencias));
+                $ref = json_decode($jsonData);
                 expedientes::Crear_referenciaslab($id_expediente, $ref);
             }
         }
-
-        $array2 = [];
-        $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
-        $ref_banc = json_decode($jsonData2);
-        $checkrefbanc = $object -> _db ->prepare("SELECT * FROM ref_bancarias WHERE expediente_id=:expedienteid");
-        $checkrefbanc -> bindParam('expedienteid', $id_expediente, PDO::PARAM_INT);
-        $checkrefbanc -> execute();
+        //SE ACTUALIZA LAS REFERENCIAS BANCARIAS
+        $checkrefbanc = $object -> _db ->prepare("SELECT id FROM ref_bancarias WHERE expediente_id=:expedienteid");
+        $checkrefbanc -> execute(array(':expedienteid' => $id_expediente));
         $countrefbanc = $checkrefbanc -> rowCount();
-        while ($row_banc = $checkrefbanc->fetch(PDO::FETCH_OBJ)) { 
-            $array2[]=array('id'=>$row_banc->id);
-        }
         if($countrefbanc > 0){
-            if(empty($ref_banc)){
+            $array_ids = $checkrefbanc->fetchAll(PDO::FETCH_ASSOC);
+            if(is_null($this->ref_banc)){
                 $crud -> delete('ref_bancarias', 'expediente_id=:idexpediente', ['idexpediente' => $id_expediente]);
             }else{
-                expedientes::Editar_referenciasbanc($id_expediente, $countrefbanc, $array2, $ref_banc);
+                $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                $ref_banc = json_decode($jsonData2);
+                expedientes::Editar_referenciasbanc($id_expediente, $countrefbanc, $array_ids, $ref_banc);
             }
         }else{
-            if(!(empty($ref))){
+            if(!(is_null($this->ref_banc))){
+                $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                $ref_banc = json_decode($jsonData2);
                 expedientes::Crear_referenciasbanc($id_expediente, $ref_banc);
             }
         }
-
+        //PAPELERÍA
         $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
         $checktipospapeleria -> execute();
         $counttipospapeleria = $checktipospapeleria -> rowCount();
-
         for($i = 1; $i <= $counttipospapeleria; $i++){
-            if(!(empty($this->arraypapeleria[$i]))){
-                $crud = new crud();
-                $papeleria = $i;
-                $filename = $this->arraypapeleria[$i]["name"];
-                $location = "../src/pdfs_uploaded/";
-                $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+            $selectarchivo = $object -> _db -> prepare("select nombre_archivo, identificador from papeleria_empleado where tipo_archivo=:tipo and expediente_id=:idexpediente");
+            $selectarchivo -> execute(array(':tipo' => $i, ':idexpediente' => $id_expediente));
+            $fetch_row_archivo = $selectarchivo -> fetch(PDO::FETCH_OBJ);
+            //Cuando existe el archivo y se sube algo
+            if(isset($fetch_row_archivo -> nombre_archivo) && isset($fetch_row_archivo -> identificador) && isset($this->arraypapeleria[$i]) && isset($this->arraypapeleria[$i]["name"])){
+                $directory = "../src/documents/";
+                $ext = pathinfo($this->arraypapeleria[$i]["name"], PATHINFO_EXTENSION);
+                $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
+                date_default_timezone_set("America/Monterrey");
+				$date = date('Y-m-d H:i:s');
                 if(move_uploaded_file($this->arraypapeleria[$i]['tmp_name'],$uploadfile)){
-                    date_default_timezone_set("America/Monterrey");
-                    $fecha_subida = date('y-m-d h:i:s');
-                    $checkpapeleria = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
-                    $checkpapeleria -> execute(array(':expedienteid' => $id_expediente, ':tipo' => $papeleria));
-                    $countpapeleria = $checkpapeleria -> rowCount();
-                    if($countpapeleria > 0){
-                        $oldrecord = $object -> _db -> prepare("INSERT INTO historial_papeleria_empleado(expediente_id, tipo_archivo, viejo_nombre_archivo, viejo_identificador, vieja_fecha_subida) SELECT expediente_id, tipo_archivo, nombre_archivo, identificador, fecha_subida  FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo");
-                        $oldrecord -> execute(array(':expedienteid' => $id_expediente, ':tipo' => $papeleria));
-                        $crud -> update('papeleria_empleado', ['nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida], "expediente_id=:expedienteid AND tipo_archivo=:tipo", ['expedienteid' => $id_expediente, 'tipo' => $papeleria]);
+                    $crud->update('papeleria_empleado', ['nombre_archivo' => $this->arraypapeleria[$i]["name"],
+                    'identificador' => basename($uploadfile), 'fecha_subida' => $date], "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $i, 'idexpediente' => $id_expediente]);
+                }
+            //Cuando existe el archivo y no se sube nada
+            }else if(isset($fetch_row_archivo -> nombre_archivo) && isset($fetch_row_archivo -> identificador) && !(isset($this->arraypapeleria[$i])) && !(isset($this->arraypapeleria[$i]["name"]))){
+                if($delete[$i-1] == "true"){
+                    $directory = "../src/documents/";
+                    $path = "../src/documents/".$fetch_row_archivo -> identificador;
+                    if(!file_exists($path)){
+                        $crud -> delete('papeleria_empleado', "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $i, ":idexpediente" => $id_expediente]);
                     }else{
-                        $crud -> store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                        unlink($directory.$fetch_row_archivo -> identificador);
+                        $crud -> delete('papeleria_empleado', "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $i, ":idexpediente" => $id_expediente]);
                     }
+                }
+            //cuando no existe el archivo y se sube algo
+            }else if(!isset($fetch_row_archivo -> nombre_archivo) && !isset($fetch_row_archivo -> identificador) && isset($this->arraypapeleria[$i]) && isset($this->arraypapeleria[$i]["name"])){
+                $directory = "../src/documents/";
+                $ext = pathinfo($this->arraypapeleria[$i]["name"], PATHINFO_EXTENSION);
+                $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
+                date_default_timezone_set("America/Monterrey");
+				$date = date('Y-m-d H:i:s');
+                if(move_uploaded_file($this->arraypapeleria[$i]['tmp_name'],$uploadfile)){
+                    $crud->store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $i, 'nombre_archivo' => $this->arraypapeleria[$i]["name"],
+                    'identificador' => basename($uploadfile), 'fecha_subida' => $date]);
                 }
             }
         }
-        $check_not_duplicated = $object -> _db -> prepare("SELECT * from estatus_empleado WHERE NOT EXISTS(SELECT 1 FROM estatus_empleado WHERE expedientes_id=:expedienteid AND situacion_del_empleado = :situacion AND estatus_del_empleado = :estatus)");
-        $check_not_duplicated -> execute(array(':expedienteid' => $id_expediente, ':situacion' => $situacion, 'estatus' => $estatus_empleado));
-        $row_count = $check_not_duplicated -> rowCount();
-        if($row_count > 0){
-        $insertar_historial = $object -> _db -> prepare("INSERT INTO historial_estatus_empleado(historial_estatus_empleado.estatus_empleado_id, historial_estatus_empleado.vieja_situacion_del_empleado, historial_estatus_empleado.viejo_estatus_del_empleado, historial_estatus_empleado.viejo_motivo, historial_estatus_empleado.vieja_fecha) SELECT estatus_empleado.id, estatus_empleado.situacion_del_empleado, estatus_empleado.estatus_del_empleado, estatus_empleado.motivo, estatus_empleado.fecha FROM estatus_empleado WHERE estatus_empleado.expedientes_id=:expedienteid");
-        $insertar_historial -> execute(array(':expedienteid' => $id_expediente));
-        }
-        $crud -> update('estatus_empleado', ['situacion_del_empleado' => $situacion, 'estatus_del_empleado' => $estatus_empleado, 'motivo' => $motivo_estatus,  'fecha' => $fecha_estatus], 'expedientes_id=:expediente', ['expediente' => $id_expediente]);
+        //AQUÍ VA EL ESTATUS DE EL EMPLEADO
     }
 
     public static function Editar_referenciaslab($id_expediente, $countreflab, $array, $ref){
@@ -393,12 +399,12 @@ class expedientes {
             try{
                 for($i=0; $i<$numero; $i++){
                     $refnombre= $ref[$i]->nombre;
-                    $refparentesco = $ref[$i]->parentesco;
+                    $refrelacion = $ref[$i]->relacion;
                     $reftelefono = $ref[$i]->telefono;
                     if($i < $countreflab){
-                        $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+                        $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
                     }else{
-                        $crud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco, 'expediente_id' => $id_expediente]);
+                        $crud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion, 'expediente_id' => $id_expediente]);
                     }
                 }
             } catch (Exception $e) {
@@ -409,9 +415,9 @@ class expedientes {
                 for($i=0; $i<$countreflab; $i++){
                     if($i < $numero){
                         $refnombre= $ref[$i]->nombre;
-                        $refparentesco = $ref[$i]->parentesco;
+                        $refrelacion = $ref[$i]->relacion;
                         $reftelefono = $ref[$i]->telefono;
-                        $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+                        $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
                     }else{
                         $crud->delete('ref_laborales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);	
                     }
@@ -423,9 +429,9 @@ class expedientes {
             try{
                 for($i=0; $i<$numero; $i++){
                     $refnombre= $ref[$i]->nombre;
-                    $refparentesco = $ref[$i]->parentesco;
+                    $refrelacion = $ref[$i]->relacion;
                     $reftelefono = $ref[$i]->telefono;
-                    $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'parentesco' => $refparentesco], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+                    $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
                 }
             } catch (Exception $e) {
                     exit('Ocurrio un error al momento de grabar las referencias laborales');   
@@ -440,14 +446,14 @@ class expedientes {
             try{
                 for($i=0; $i<$numero; $i++){
                     $brefnombre= $ref_banc[$i]->nombre;
-                    $brefparentesco = $ref_banc[$i]->parentesco;
+                    $brefrelacion = $ref_banc[$i]->relacion;
                     $brefrfc = $ref_banc[$i]->rfc;
                     $brefcurp = $ref_banc[$i]->curp;
                     $brefporcentaje = $ref_banc[$i]->porcentaje;
                     if($i < $countrefbanc){
-                        $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
+                        $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'relacion' => $brefrelacion, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
                     }else{
-                        $crud->store('ref_bancarias', ['expediente_id' => $id_expediente, 'nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
+                        $crud->store('ref_bancarias', ['expediente_id' => $id_expediente, 'nombre' => $brefnombre, 'relacion' => $brefrelacion, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
                     }
                 }
             } catch (Exception $e) {
@@ -458,11 +464,11 @@ class expedientes {
                 for($i=0; $i<$countrefbanc; $i++){
                     if($i < $numero){
                         $brefnombre= $ref_banc[$i]->nombre;
-                        $brefparentesco = $ref_banc[$i]->parentesco;
+                        $brefrelacion = $ref_banc[$i]->relacion;
                         $brefrfc = $ref_banc[$i]->rfc;
                         $brefcurp = $ref_banc[$i]->curp;
                         $brefporcentaje = $ref_banc[$i]->porcentaje;
-                        $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
+                        $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'relacion' => $brefrelacion, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
                     }else{
                         $crud->delete('ref_bancarias', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);	
                     }
@@ -474,11 +480,11 @@ class expedientes {
             try{
                 for($i=0; $i<$numero; $i++){
                     $brefnombre= $ref_banc[$i]->nombre;
-                    $brefparentesco = $ref_banc[$i]->parentesco;
+                    $brefrelacion = $ref_banc[$i]->relacion;
                     $brefrfc = $ref_banc[$i]->rfc;
                     $brefcurp = $ref_banc[$i]->curp;
                     $brefporcentaje = $ref_banc[$i]->porcentaje;
-                    $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'parentesco' => $brefparentesco, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
+                    $crud->update('ref_bancarias', ['nombre' => $brefnombre, 'relacion' => $brefrelacion, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array2[$i]["id"], 'expedienteid' => $id_expediente]);
                 }
             } catch (Exception $e) {
                     exit('Ocurrio un error al momento de grabar las referencias bancarias');   

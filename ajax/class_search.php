@@ -497,7 +497,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					}
 				}else if($_POST["method"] == "edit"){
 					$get_correo = $object -> _db -> prepare("SELECT correo_adicional from expedientes where correo_adicional=:correo1 AND id!=:idexpediente UNION ALL SELECT correo from usuarios where correo=:correo2");
-					$get_correo -> execute(array(':correo' => $_POST["correo_adicional"], ':idexpediente' => $_POST["id_expediente"], ':correo2' => $_POST["correo_adicional"]));
+					$get_correo -> execute(array(':correo1' => $_POST["correo_adicional"], ':idexpediente' => $_POST["id_expediente"], ':correo2' => $_POST["correo_adicional"]));
 					$count_query = $get_correo -> rowCount();
 					if($count_query > 0){
 						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
@@ -1279,20 +1279,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
             case "edit":
                 $id_expediente = $_POST["id_expediente"];
-                $situacion = $_POST["situacion"];
-                $estatus_empleado = $_POST["estatus_empleado"];
-                if(!(empty($_POST["motivo_estatus"]))){
-                        $motivo_estatus = $_POST["motivo_estatus"];
-                }else {
-                        $motivo_estatus = null;
-                }
-                if(!(empty($_POST["estatus_fecha"]))){
-                    $fecha_estatus =  $_POST["estatus_fecha"];
-                }else {
-                    $fecha_estatus = null;
-                }
+                $delete_array = explode(",", $_POST["delete_array"]);
                 $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
-                $expediente ->Editar_expediente($select2, $id_expediente, $situacion, $estatus_empleado, $motivo_estatus, $fecha_estatus);
+                $expediente ->Editar_expediente($select2, $_POST["id_expediente"], $delete_array);
                 die(json_encode(array("success", "Se ha editado un expediente")));
             break;
         }
