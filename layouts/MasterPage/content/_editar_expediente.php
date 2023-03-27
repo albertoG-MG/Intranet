@@ -303,6 +303,115 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Estatus del empleado</h2>
+                                 <span class="text-[#64748b]">Esta sección es para modificar el estatus del empleado en la empresa.</span>
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                              </div>
+                              <div x-data="{ open: true }">
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">Situación del empleado</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12 0L11.34 .03L15.15 3.84L16.5 2.5C19.75 4.07 22.09 7.24 22.45 11H23.95C23.44 4.84 18.29 0 12 0M12 4C10.07 4 8.5 5.57 8.5 7.5C8.5 9.43 10.07 11 12 11C13.93 11 15.5 9.43 15.5 7.5C15.5 5.57 13.93 4 12 4M.05 13C.56 19.16 5.71 24 12 24L12.66 23.97L8.85 20.16L7.5 21.5C4.25 19.94 1.91 16.76 1.55 13H.05M12 13C8.13 13 5 14.57 5 16.5V18H19V16.5C19 14.57 15.87 13 12 13Z" />
+                                          </svg>
+                                       </div>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="situacion" name="situacion">
+                                          <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?> x-on:click="rsituaciondelempleado">Alta</option>
+                                          <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?> x-on:click="rsituaciondelempleado">Baja</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <script>
+                                    function rsituaciondelempleado(e) {
+                                       if(e.target.value == "ALTA"){
+                                       $('#estatus_empleado').html(
+                                          "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Nuevo ingreso</option>"+
+                                          "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?>>Reingreso</option>");
+                                       }else if(e.target.value == "BAJA"){
+                                       $('#estatus_empleado').html(
+                                       "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Fallecimiento</option>"+
+                                       "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Renuncia voluntaria</option>"+
+                                       "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Liquidación</option>");
+                                       }
+                                    }	
+                                 </script>
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">Estatus del empleado</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
+                                          </svg>
+                                       </div>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado">
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <script>
+                                    function changedateestatus(e) {
+                                       var now = new Date();
+                                       var day = ("0" + now.getDate()).slice(-2);
+                                       var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                       var today = now.getFullYear()+"-"+(month)+"-"+(day);
+                                       $('#fecha_estatus').val(today);
+                                       $('#estatus_motivo').val('');
+                                       if(e.target.value == "RENUNCIA VOLUNTARIA" || e.target.value == "LIQUIDACION"){
+                                       $("#estatus_motivo").rules("add", {
+                                          required: true,
+                                          field_validation: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                          }
+                                       });
+                                       }else{
+                                       $("#estatus_motivo").rules("remove");
+                                          $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                          $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $("#estatus_motivo-error").css("display", "none");
+                                       }
+                                    }
+                                    function restoredateestatus(e) {
+                                       $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
+                                       $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
+                                       if(e.target.value == "RENUNCIA VOLUNTARIA" || e.target.value == "LIQUIDACION"){
+                                       $("#estatus_motivo").rules("add", {
+                                          required: true,
+                                          field_validation: true,
+                                          messages: {
+                                             required: "Este campo es requerido",
+                                             field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                          }
+                                       });
+                                       }else{
+                                       $("#estatus_motivo").rules("remove");
+                                          $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                          $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $("#estatus_motivo-error").css("display", "none");
+                                       }
+                                    }
+                                 </script>
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">Fecha de estatus</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fecha_estatus" name="fecha_estatus" value="<?php echo "{$edit->eestatus_fecha}"; ?>">
+                                    </div>
+                                 </div>
+                                 <div x-show.important="open">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label class="text-[#64748b] font-semibold mb-2">Motivo del estatus</label>
+                                       <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_motivo" name="estatus_motivo" placeholder="Ingrese el motivo"><?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }?></textarea>
+                                       <div id="error_estatus_motivo"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Datos de ubicación</h2>
                                  <span class="text-[#64748b]">Datos de ubicación del empleado.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>

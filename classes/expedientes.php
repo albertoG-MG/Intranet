@@ -300,7 +300,7 @@ class expedientes {
         return $view;
     }
 
-    public function Editar_expediente($id_user, $id_expediente, $delete){
+    public function Editar_expediente($id_user, $id_expediente, $delete, $situacion, $estatus_empleado, $fecha_estatus, $motivo_estatus){
         $crud = new crud();
         $object = new connection_database();
         //SE ACTUALIZA LA INFORMACIÓN DEL EXPEDIENTE
@@ -390,6 +390,14 @@ class expedientes {
             }
         }
         //AQUÍ VA EL ESTATUS DE EL EMPLEADO
+        $check_not_duplicated = $object -> _db -> prepare("SELECT * from estatus_empleado WHERE NOT EXISTS(SELECT 1 FROM estatus_empleado WHERE expedientes_id=:expedienteid AND situacion_del_empleado = :situacion AND estatus_del_empleado = :estatus)");
+        $check_not_duplicated -> execute(array(':expedienteid' => $id_expediente, ':situacion' => $situacion, 'estatus' => $estatus_empleado));
+        $row_count = $check_not_duplicated -> rowCount();
+        if($row_count > 0){
+        $insertar_historial = $object -> _db -> prepare("INSERT INTO historial_estatus_empleado(historial_estatus_empleado.estatus_empleado_id, historial_estatus_empleado.vieja_situacion_del_empleado, historial_estatus_empleado.viejo_estatus_del_empleado, historial_estatus_empleado.viejo_motivo, historial_estatus_empleado.vieja_fecha) SELECT estatus_empleado.id, estatus_empleado.situacion_del_empleado, estatus_empleado.estatus_del_empleado, estatus_empleado.motivo, estatus_empleado.fecha FROM estatus_empleado WHERE estatus_empleado.expedientes_id=:expedienteid");
+        $insertar_historial -> execute(array(':expedienteid' => $id_expediente));
+        }
+        $crud -> update('estatus_empleado', ['situacion_del_empleado' => $situacion, 'estatus_del_empleado' => $estatus_empleado, 'motivo' => $motivo_estatus,  'fecha' => $fecha_estatus], 'expedientes_id=:expediente', ['expediente' => $id_expediente]);
     }
 
     public static function Editar_referenciaslab($id_expediente, $countreflab, $array, $ref){

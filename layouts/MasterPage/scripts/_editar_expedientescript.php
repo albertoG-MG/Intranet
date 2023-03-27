@@ -455,7 +455,9 @@
                     if($(element).attr("type") === "file"){
                         error.insertAfter($(element));
                     }else if((element.attr('name') === 'observaciones')){
-                        error.appendTo("div#error_observaciones");  
+                        error.appendTo("div#error_observaciones");
+                    }else if((element.attr('name') === 'estatus_motivo')){
+                        error.appendTo("div#error_estatus_motivo");  
                     }else{
                         error.insertAfter(element.parent('.group.flex'));
                     }
@@ -556,6 +558,15 @@
                                 }
                             }
                         }
+                    },
+                    situacion: {
+                        required: true
+                    },
+                    estatus_empleado: {
+                        required: true
+                    },
+                    fecha_estatus:{
+                        required: true
                     },
                     calle: {
                         location_validation:true
@@ -726,6 +737,15 @@
                     correo_adicional: {
                         required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Este campo es requerido"; },
                         email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
+                    },
+                    situacion: {
+                        required: "Este campo es requerido"
+                    },
+                    estatus_empleado: {
+                        required: "Este campo es requerido"
+                    },
+                    fecha_estatus:{
+                        required: "Este campo es requerido"
                     },
                     calle: {
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
@@ -944,6 +964,30 @@
             $('input[name="posee_correo"][value="no"]').trigger('click');
         <?php }else if($edit->eposee_correo == 'si'){ ?>
             $('#correo_adicional').valid();
+        <?php } ?>
+
+        //CARGA DE ESTATUS
+        if ($('#situacion').val() == "ALTA") {
+            $('#estatus_empleado').html(
+                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected"; echo " x-on:click='restoredateestatus; open = false' x-init='open = false'";}else{ echo " x-on:click='changedateestatus; open = false'"; } ?>>Nuevo ingreso</option>"+
+                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected"; echo " x-on:click='restoredateestatus; open = false' x-init='open = false'";}else{ echo " x-on:click='changedateestatus; open = false'"; } ?>>Reingreso</option>");
+        }else if ($('#situacion').val() == "BAJA"){
+            $('#estatus_empleado').html(
+                "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected"; echo " x-on:click='restoredateestatus; open = false' x-init='open = false'";}else{ echo " x-on:click='changedateestatus; open = false'"; } ?>>Fallecimiento</option>"+
+                "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected"; echo " x-on:click='restoredateestatus; open = true' x-init='open = true'";}else{ echo " x-on:click='changedateestatus; open = true'"; } ?>>Renuncia voluntaria</option>"+
+                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected"; echo " x-on:click='restoredateestatus; open = true' x-init='open = true'";}else{ echo " x-on:click='changedateestatus; open = true'"; } ?>>Liquidación</option>");
+        }
+
+        //JQUERY VALIDATION ESTATUS
+        <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA" || $edit -> eestatus_del_empleado == "LIQUIDACION"){ ?>
+            $("#estatus_motivo").rules("add", {
+                required: true,
+                field_validation: true,
+                messages: {
+                    required: "Este campo es requerido",
+                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                }
+            });
         <?php } ?>
 
         //MUNICIPIOS
@@ -1500,6 +1544,10 @@
         var estudios = $("#estudios").val();
         var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
         var correo_adicional = $("#correo_adicional").val();
+        var situacion = $('#situacion').val();
+        var estatus_empleado = $('#estatus_empleado').val();
+        var estatus_fecha = $('#fecha_estatus').val();
+        var motivo_estatus = $('#estatus_motivo').val();
         var calle = $("#calle").val();
         var ninterior = $("#ninterior").val();
         var nexterior = $("#nexterior").val();
@@ -1607,6 +1655,10 @@
         fd.append('estudios', estudios);
         fd.append('posee_correo', posee_correo);
         fd.append('correo_adicional', correo_adicional);
+        fd.append('situacion', situacion);
+        fd.append('estatus_empleado', estatus_empleado);
+        fd.append('estatus_fecha', estatus_fecha);
+        fd.append('motivo_estatus', motivo_estatus);
         fd.append('calle', calle);
         fd.append('ninterior', ninterior);
         fd.append('nexterior', nexterior);
