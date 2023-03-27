@@ -301,7 +301,8 @@
     }
 
     .search{
-        margin:auto !important;
+        margin: auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover, tr.even:hover{
