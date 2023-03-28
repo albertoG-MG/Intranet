@@ -12,12 +12,12 @@
             buttons: [
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                     {
-                        text: "Agregar usuario",
+                        text: "Crear usuario",
                         attr: {
                             'id': 'Usuario',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                         },
-                        className: 'button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2',
+                        className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                         action: function(e, dt, node, config) {
                             window.location.href = "crear_usuario.php";
                         }
@@ -39,10 +39,11 @@
                 {data: [2], visible: false, searchable: false},
                 {data: [3]},
                 {data: [4]},
-                {data: [5], visible: false, searchable: false},
+                {data: [5]},
                 {data: [6], searchable: false},
             ],
-            "columnDefs": [
+            "columnDefs": 
+            [
                 {
                     target: [0],
                     render: function (data, type, row) {
@@ -78,37 +79,11 @@
                 {
                     target: [3],
                     render: function (data, type, row) {
-                        if(row[3] == "ACTIVO"){
-                            return (
-                                "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs'>Activo</span>" +
-                                "</div>"
-                            );
-                        }else if(row[3] == "INACTIVO"){
-                            return (
-                                "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>Inactivo</span>" +
-                                "</div>"
-                            );
-                        }else if(row[3] == "PENDIENTE"){
-                            return (
-                                "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs'>Pendiente</span>" +
-                                "</div>"
-                            );
-                        }else if(row[3] == "SIN DATOS"){
-                            return (
-                                "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs'>Sin datos</span>" +
-                                "</div>"
-                            );
-                        }else if(row[3] == "EXCEPCION"){
-                            return (
-                                "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>Excepción</span>" +
-                                "</div>"
-                            );
-                        }
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[3] + "</span>" +
+                            "</div>"
+                        );
                     }
                 },
                 {
@@ -117,6 +92,16 @@
                         return (
                             "<div class='text-left lg:text-center'>" +
                                 "<span>" + row[4] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [5],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[5] + "</span>" +
                             "</div>"
                         );
                     }
@@ -164,107 +149,107 @@
         attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
     });
 
-<?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-    $('#datatable').on('click', 'tr .Ver', function () {
-        var table = $('#datatable').DataTable();
-        var rowSelector;
-        var li = $(this).closest('li');
-        if ( li.length ) {
-            rowSelector = table.cell( li ).index().row;
-        }
-        else {
-            rowSelector =  $(this).closest('tr');
-        }
-        var row = table.row(rowSelector);
-        var data = row.data();
-        window.location.href = "ver_usuario.php?idUser="+data[6]+""; 
-    });
-<?php 
-}
-if (Permissions::CheckPermissions($_SESSION["id"], "Editar usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") {
-?>
-    $('#datatable').on('click', 'tr .Editar', function () {
-        var table = $('#datatable').DataTable();
-        var rowSelector;
-        var li = $(this).closest('li');
-        if ( li.length ) {
-            rowSelector = table.cell( li ).index().row;
-        }
-        else {
-            rowSelector =  $(this).closest('tr');
-        }
-        var row = table.row(rowSelector);
-        var data = row.data();
-        window.location.href = "editar_usuario.php?idUser="+data[6]+""; 
-    });
-<?php 
-}
-if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
-?>
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+        $('#datatable').on('click', 'tr .Ver', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            window.location.href = "ver_usuario.php?idUser="+data[6]+""; 
+        });
+    <?php 
+    }
+    if (Permissions::CheckPermissions($_SESSION["id"], "Editar usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") {
+    ?>
+        $('#datatable').on('click', 'tr .Editar', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            window.location.href = "editar_usuario.php?idUser="+data[6]+""; 
+        });
+    <?php 
+    }
+    if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+    ?>
 
-    $('#datatable').on('click', 'tr .Eliminar', function() {
-        var table = $('#datatable').DataTable();
-        var rowSelector;
-        var li = $(this).closest('li');
-        if ( li.length ) {
-            rowSelector = table.cell( li ).index().row;
-        }
-        else {
-            rowSelector =  $(this).closest('tr');
-        }
-        var row = table.row(rowSelector);
-        var data = row.data();
-        Swal.fire({
-            title: '¿Estas seguro?',
-            text: "No podras recuperar la información!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí!',
-            cancelButtonText: 'cancelar'
-        }).then((result) => {
-            check_user_logged().then((response) => {
-		        if(response == "true"){
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'éxito',
-                            text: 'La fila ha sido eliminada!'
-                        }).then(function() {
-                            var eliminarid = data[6];
-                            var fd = new FormData();
-                            fd.append('id', eliminarid);
-                            $.ajax({
-                                url: "../ajax/eliminar/tabla_users/eliminaruser.php",
-                                type: "post",
-                                data: fd,
-                                processData: false,
-                                contentType: false,
-                                success: function(result) {
-                                    table
-                                        .row($(this).parents('tr'))
-                                        .remove()
-                                        .draw();
-                                }
+        $('#datatable').on('click', 'tr .Eliminar', function() {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras recuperar la información!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'éxito',
+                                text: 'La fila ha sido eliminada!'
+                            }).then(function() {
+                                var eliminarid = data[6];
+                                var fd = new FormData();
+                                fd.append('id', eliminarid);
+                                $.ajax({
+                                    url: "../ajax/eliminar/tabla_users/eliminaruser.php",
+                                    type: "post",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result) {
+                                        table
+                                            .row($(this).parents('tr'))
+                                            .remove()
+                                            .draw();
+                                    }
+                                });
                             });
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
                         });
                     }
-                }else{
-                    Swal.fire({
-                        title: "Ocurrió un error",
-                        text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
-                        icon: "error"
-                    }).then(function() {
-                        window.location.href = "login.php";
-                    });
-                }
-            }).catch((error) => {
-		        console.log(error)
-	        })
-        })
-    });
-<?php } ?>
+                }).catch((error) => {
+                    console.log(error)
+                })
+            })
+        });
+    <?php } ?>
 
 
     <?php

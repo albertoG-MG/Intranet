@@ -9,7 +9,7 @@
                     <div class="w-full">
                         <div class="bg-gray-50 shadow-md rounded-t">
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-[#4f46e5]">
+                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
                                     Home
                                 </a>
@@ -27,13 +27,13 @@
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                 <thead>
-                                    <tr class="bg-black text-white uppercase text-sm leading-normal">
+                                    <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Nombre</th>
                                         <th class="py-3 text-left desktop">Correo</th>
                                         <th>Foto_identificador</th>
-                                        <th class="py-3 text-center desktop">Estatus</th>
-                                        <th class="py-3 text-center desktop">Departamento</th>
-                                        <th>Rol</th>
+                                        <th class="py-3 text-center desktop">Dep.</th>
+                                        <th class="py-3 text-center desktop">Rol</th>
+                                        <th class="py-3 text-center desktop">Subrol</th>
                                         <th class="py-3 text-center min-tablet">Acción</th>
                                     </tr>
                                 </thead>

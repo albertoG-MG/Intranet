@@ -10,14 +10,14 @@ session_start();
 	if($fetch_rol_dep -> rolnom == "Superadministrador"){
 		$set_session = $object -> _db -> prepare("SET @var = :sessionid");
 		$set_session -> execute(array(":sessionid" => $_SESSION['id']));
-		$table_data->get('serverside_user_superadministrador','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
+		$table_data->get('serverside_user_superadministrador','id',array('nombre', 'correo', 'foto_identificador', 'departamento', 'rol', 'subrol', 'id'));
 	}else if ($fetch_rol_dep -> rolnom == "Administrador"){
-		$table_data->get('serverside_user_administrador','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
+		$table_data->get('serverside_user_administrador','id',array('nombre', 'correo', 'foto_identificador', 'departamento', 'rol', 'subrol', 'id'));
 	}else if (Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "false" && $fetch_rol_dep -> rolnom != "Superadministrador" && $fetch_rol_dep -> rolnom != "Administrador"){ 
 		$set_session = $object -> _db -> prepare("SET @var = :sessionid");
 		$set_session -> execute(array(":sessionid" => $_SESSION['id']));
-		$table_data->get('serverside_user_vistausuarios','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
+		$table_data->get('serverside_user_vistausuarios','id',array('nombre', 'correo', 'foto_identificador', 'departamento', 'rol', 'subrol', 'id'));
 	}else if (Permissions::CheckPermissions($_GET["sessionid"], "Acceso a usuarios") == "true" && Permissions::CheckPermissions($_GET["sessionid"], "Vista tecnico") == "true" && $fetch_rol_dep -> rolnom != "Superadministrador" && $fetch_rol_dep -> rolnom != "Administrador"){
-		$table_data->get('serverside_user_vistatecnicos','id',array('nombre', 'correo', 'foto_identificador', 'estatus', 'departamento', 'rol', 'id'));
+		$table_data->get('serverside_user_vistatecnicos','id',array('nombre', 'correo', 'foto_identificador', 'departamento', 'rol', 'subrol', 'id'));
 	}
 ?>
