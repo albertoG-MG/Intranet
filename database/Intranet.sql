@@ -2621,7 +2621,7 @@ CREATE TABLE `expedientes` (
   `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
   `estudios` varchar(100) DEFAULT NULL,
   `posee_correo` varchar(100) DEFAULT NULL,
-	`correo_personal` varchar(100) DEFAULT NULL UNIQUE,
+  `correo_adicional` varchar(100) DEFAULT NULL UNIQUE,
   `puesto` varchar(100) DEFAULT NULL,
   `calle` varchar(100) DEFAULT NULL,
   `num_interior` varchar(100) DEFAULT NULL,
@@ -2638,8 +2638,8 @@ CREATE TABLE `expedientes` (
   `serie` varchar(100) DEFAULT NULL,
   `sim` varchar(100) DEFAULT NULL,
   `numerored_empresa` varchar(100) DEFAULT NULL,
-	`modelotel_empresa` varchar(100) DEFAULT NULL,
-	`marcatel_empresa` varchar(100) DEFAULT NULL,
+  `modelotel_empresa` varchar(100) DEFAULT NULL,
+  `marcatel_empresa` varchar(100) DEFAULT NULL,
   `imei` varchar(200) DEFAULT NULL,
   `posee_laptop` varchar(200) DEFAULT NULL,
   `marca_laptop` varchar(200) DEFAULT NULL,
@@ -2651,7 +2651,7 @@ CREATE TABLE `expedientes` (
   `monto_mensual` float DEFAULT NULL,  
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_inicioc` date DEFAULT NULL,
-  `fecha_alta` date NOT NULL,
+  `fecha_alta` date DEFAULT NULL,
   `salario_contrato` float DEFAULT NULL,
   `salario_fechaalta` float DEFAULT NULL,
   `observaciones` text DEFAULT NULL,
@@ -2681,9 +2681,9 @@ CREATE TABLE `expedientes` (
   `cuenta_nomina` varchar(100) DEFAULT NULL,
   `clabe_nomina` varchar(100) DEFAULT NULL,
   `plastico` varchar(100) DEFAULT NULL,
-   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-   FOREIGN KEY (estado_id) REFERENCES estados(id),
-   FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
+  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  FOREIGN KEY (estado_id) REFERENCES estados(id),
+  FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2694,11 +2694,11 @@ CREATE TABLE `expedientes` (
 
 CREATE TABLE `ref_laborales` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL,
-  `telefono` varchar(100) DEFAULT NULL,
-  `parentesco` varchar(100) DEFAULT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `telefono` varchar(100) NOT NULL,
+  `relacion` varchar(100) NOT NULL,
   `expediente_id` int NOT NULL,
-   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2710,12 +2710,12 @@ CREATE TABLE `ref_laborales` (
 CREATE TABLE `ref_bancarias` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  `parentesco` varchar(100) DEFAULT NULL,
-  `rfc` varchar(100) DEFAULT NULL,
-  `curp` varchar(100) DEFAULT NULL,
-  `prcnt_derecho` varchar(100) DEFAULT NULL,
-   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+  `nombre` varchar(100) NOT NULL,
+  `relacion` varchar(100) NOT NULL,
+  `rfc` varchar(100) NOT NULL,
+  `curp` varchar(100) NOT NULL,
+  `prcnt_derecho` varchar(100) NOT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2730,8 +2730,8 @@ CREATE TABLE `estatus_empleado` (
   `situacion_del_empleado` varchar(100) NOT NULL,
   `estatus_del_empleado` varchar(100) NOT NULL,
   `motivo` varchar(100) DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
-   FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
+  `fecha` date NOT NULL,
+  FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3494,7 +3494,7 @@ DELIMITER ;
 --
 DROP TABLE IF EXISTS `serverside_user_superadministrador`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_superadministrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`estatus_empleado`.`situacion_del_empleado` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo')) then 'EXCEPCION' when (`roles`.`nombre` is null) then 'SIN DATOS' else 'PENDIENTE' end) else `estatus_empleado`.`situacion_del_empleado` end) AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rol`, `usuarios`.`id` AS `id` FROM ((((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `expedientes` on((`expedientes`.`users_id` = `usuarios`.`id`))) left join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) WHERE (`usuarios`.`id` <> `sessionid`())  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_superadministrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (`usuarios`.`id` <> `sessionid`())  ;
 
 -- --------------------------------------------------------
 
@@ -3503,7 +3503,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_administrador`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_administrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`estatus_empleado`.`situacion_del_empleado` is null) then (case when (`roles`.`nombre` = 'Usuario externo') then 'EXCEPCION' when (`roles`.`nombre` is null) then 'SIN DATOS' else 'PENDIENTE' end) else `estatus_empleado`.`situacion_del_empleado` end) AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rol`, `usuarios`.`id` AS `id` FROM ((((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `expedientes` on((`expedientes`.`users_id` = `usuarios`.`id`))) left join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador')) OR (`roles`.`nombre` is null))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_administrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador')) OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 
@@ -3512,7 +3512,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_vistausuarios`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`estatus_empleado`.`situacion_del_empleado` is null) then (case when (`roles`.`nombre` = 'Usuario externo') then 'EXCEPCION' when (`roles`.`nombre` is null) then 'SIN DATOS' else 'PENDIENTE' end) else `estatus_empleado`.`situacion_del_empleado` end) AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rol`, `usuarios`.`id` AS `id` FROM ((((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `expedientes` on((`expedientes`.`users_id` = `usuarios`.`id`))) left join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador') AND (`usuarios`.`id` <> `sessionid`())) OR (`roles`.`nombre` is null))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador') AND (`usuarios`.`id` <> `sessionid`())) OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 
@@ -3521,7 +3521,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_vistatecnicos`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`estatus_empleado`.`situacion_del_empleado` is null) then (case when (`roles`.`nombre` is null) then 'SIN DATOS' else 'PENDIENTE' end) else `estatus_empleado`.`situacion_del_empleado` end) AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rol`, `usuarios`.`id` AS `id` FROM ((((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `expedientes` on((`expedientes`.`users_id` = `usuarios`.`id`))) left join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) WHERE ((`roles`.`nombre` = 'Tecnico') OR (`roles`.`nombre` is null))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE ((`roles`.`nombre` = 'Tecnico') OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 
@@ -3530,7 +3530,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_expuser`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT `expedientes`.`id` AS `exp_id`, `usuarios`.`nombre` AS `usernom`, `usuarios`.`apellido_pat` AS `userpat`, `usuarios`.`apellido_mat` AS `usermat`, `expedientes`.`fecha_alta` AS `fechaalta` FROM (`expedientes` join `usuarios` on((`expedientes`.`users_id` = `usuarios`.`id`)))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT (case when (`expedientes`.`num_empleado` is null) then 'Sin asignar' else `expedientes`.`num_empleado` end) AS `num_empleado`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `estatus_empleado`.`situacion_del_empleado` AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `usuarios`.`foto_identificador` AS `foto`, `expedientes`.`id` AS `expediente_id` FROM (((`expedientes` join `usuarios` on((`usuarios`.`id` = `expedientes`.`users_id`))) join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`)))  ;
 
 -- --------------------------------------------------------
 
