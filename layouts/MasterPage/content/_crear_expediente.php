@@ -112,7 +112,7 @@
                                           }
                                           $usuarios = user::FetchUsuarios();
                                           foreach ($usuarios as $row) {
-                                             if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador")
+                                             if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
                                              {
                                                 if(!in_array($row->id, $arr))
                                                 {
