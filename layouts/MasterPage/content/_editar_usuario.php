@@ -9,7 +9,7 @@
                <div class="w-full">
                   <div class="bg-gray-50 shadow-md rounded-t">
                      <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                        <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-[#4f46e5]">
+                        <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
                            </svg>
@@ -20,7 +20,7 @@
                               <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                            </svg>
                         </span>
-                        <a href="users.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-[#4f46e5]">
+                        <a href="users.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
                            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                            </svg>
@@ -83,14 +83,14 @@
                                  <label class="text-[#64748b] font-semibold mb-2">
                                  Contraseña (opcional)
                                  </label>
-                                 <div class="group flex" x-data="{isshow:false}">
+                                 <div class="group flex items-center" x-data="{isshow:false}">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
                                           <path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
                                        </svg>
                                     </div>
                                     <input class="w-full -ml-10 -mr-10 px-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-bind:type="isshow ? 'text' : 'password'" type="password" aria-describedby="password_help" id="password" name="password" placeholder="Contraseña">
-                                    <button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
+                                    <button type="button" @click="isshow=!isshow" class="z-30 text-gray-600 h-max focus:outline-none focus:ring-2 focus:focus:ring-indigo-600">
                                        <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -125,14 +125,14 @@
                                  <label class="text-[#64748b] font-semibold mb-2">
                                  Confirmar contraseña
                                  </label>
-                                 <div class="group flex" x-data="{isshow:false}">
+                                 <div class="group flex items-center" x-data="{isshow:false}">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
                                           <path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
                                        </svg>
                                     </div>
                                     <input class="w-full -ml-10 -mr-10 px-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-bind:type="isshow ? 'text' : 'password'" type="password" id="cpassword" name="cpassword" placeholder="Confirmar contraseña">
-                                    <button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
+                                    <button type="button" @click="isshow=!isshow" class="z-30 text-gray-600 h-max focus:outline-none focus:ring-2 focus:focus:ring-indigo-600">
                                        <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -330,11 +330,11 @@
                         </div>
                         <div class="mt-12 h-px bg-slate-200"></div>
                         <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
-                           <button class="button bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 text-gray-600 rounded-md h-11 px-8 py-2" id="reset_form" type="button">
+                           <button class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" id="reset_form" type="button">
                            Resetear
                            </button>
                            <div id="submit-button">
-                              <button class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white rounded-md h-11 px-8 py-2" id='grabar' name='grabar' type="submit">
+                              <button class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" id='grabar' name='grabar' type="submit">
                               Guardar
                               </button>
                            </div>
