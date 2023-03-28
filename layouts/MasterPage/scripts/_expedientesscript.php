@@ -157,7 +157,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "ver_expediente.php?idExpediente="+data[0]+""; 
+            window.location.href = "ver_expediente.php?idExpediente="+data[5]+""; 
         });
     <?php } ?>
 
@@ -174,7 +174,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "editar_expediente.php?idExpediente="+data[0]+""; 
+            window.location.href = "editar_expediente.php?idExpediente="+data[5]+""; 
         });
     <?php } ?>
 
@@ -209,7 +209,7 @@
                             title: 'éxito',
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
-                            var eliminarid = data[0];
+                            var eliminarid = data[5];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
                             $.ajax({
