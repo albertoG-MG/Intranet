@@ -215,9 +215,9 @@
         }
 	}
 
-    $ver=Expedientes::Fetcheditexpediente($Verid);
+    $ver=Expedientes::Fetchverexpediente($Verid);
 
-    $bringuser = $object -> _db -> prepare("SELECT usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, departamentos.departamento as departamento FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id LEFT JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE expedientes.id=:expedienteid"); 
+    $bringuser = $object -> _db -> prepare("SELECT usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, usuarios.correo as correo, departamentos.departamento as departamento FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id LEFT JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE expedientes.id=:expedienteid"); 
     $bringuser -> bindParam('expedienteid', $Verid, PDO::PARAM_INT); 
     $bringuser -> execute();
     $selected = $bringuser->fetch(PDO::FETCH_OBJ);
@@ -240,51 +240,23 @@
 
 
     /*REFERENCIAS LABORALES*/
-    $array = [];
-    $contador_array = 0;
-    $referencias_laborales = $object->_db->prepare("select * from ref_laborales where expediente_id =:expedienteid");
-    $referencias_laborales->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
-    $referencias_laborales->execute();
-    $cont_referencias = $referencias_laborales->rowCount();
-    while ($row_ref = $referencias_laborales->fetch(PDO::FETCH_OBJ)) {
-        $array[$contador_array] = ($row_ref->nombre);
-        $contador_array++;
-        $array[$contador_array] = ($row_ref->parentesco);
-        $contador_array++;
-        $array[$contador_array] = ($row_ref->telefono);
-        $contador_array++;
-    }
-    $json = json_encode($array, JSON_UNESCAPED_UNICODE);
+    $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
+    $referencias_laborales->execute(array(':expedienteid' => $Verid));
+    $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
+    $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
 
     /*REFERENCIAS BANCARIAS*/
-    $array2 = [];
-    $contador_array2 = 0;
-    $datos_bancarios = $object->_db->prepare("select * from ref_bancarias where expediente_id =:expedienteid");
-    $datos_bancarios->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
-    $datos_bancarios->execute();
-    $cont_datos = $datos_bancarios->rowCount();
-    while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
-        $array2[$contador_array2] = ($row_datos->nombre);
-        $contador_array2++;
-        $array2[$contador_array2] = ($row_datos->parentesco);
-        $contador_array2++;
-        $array2[$contador_array2] = ($row_datos->rfc);
-        $contador_array2++;
-        $array2[$contador_array2] = ($row_datos->curp);
-        $contador_array2++;
-        $array2[$contador_array2] = ($row_datos->prcnt_derecho);
-        $contador_array2++;
-    }
-    $json2 = json_encode($array2, JSON_UNESCAPED_UNICODE);
+    $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
+    $referencias_bancarias->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
+    $referencias_bancarias->execute();
+    $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
+    $refban_json = json_encode($array_refban, JSON_UNESCAPED_UNICODE);
 
-    /*PAPELERIAS*/
-    $array3 = [];
+    /*PAPELERIA*/
     $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
     $papeleria->execute(array(':expedienteid' => $Verid));
-
-    while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
-        $array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'identificador'=>$papel->identificador, 'fecha_subida'=>$papel->fecha_subida);
-    }
+    $array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
+    $papeleria_contador = 0;
 
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
     $checktipospapeleria -> execute();
