@@ -796,6 +796,69 @@
                      </div>
                   </div>
                   <div class="hidden bg-transparent rounded-lg tab-pane" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
+                     <div class="flex flex-col mt-5 mx-7">
+                        <h2 class="text-2xl text-[#64748b] font-semibold">Documentos necesarios</h2>
+                        <span class="text-[#64748b]">En esta sección encontrará todos los documentos entregados por el empleado.</span>
+                        <div class="my-3 h-px bg-slate-200"></div>
+                     </div>
+                     <div class="mt-5 px-7">
+                        <table class="min-w-full border-collapse block md:table">
+                           <thead class="block md:table-header-group">
+                              <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative ">
+                                 <th class="bg-gray-800 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Nombre del documento</th>
+                                 <th class="bg-gray-800 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Archivo</th>
+                              </tr>
+                           </thead>
+                           <tbody class="block md:table-row-group">
+                              <?php foreach($array_papeleria as $documents){ ?>
+                              <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
+                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                    <span class="inline-block w-1/3 md:hidden font-bold">Nombre del documento</span>
+                                    <p><?php echo ucfirst(strtolower($documents["nombre"])); ?></p>
+                                 </td>
+                                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                    <span class="inline-block w-1/3 md:hidden font-bold">
+                                    Archivo
+                                    </span>
+                                    <?php
+                                       $checkdocument = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:archivo");
+                                       $checkdocument -> execute(array(":expedienteid" => $Verid, ":archivo" => $documents["id"]));
+                                       $countdocument = $checkdocument -> rowCount();
+                                       if($countdocument > 0){
+                                       $path = __DIR__ . "/../../../src/documents/".$documents["identificador"];  
+                                       if(is_file($path)){  
+                                       echo "<p><a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/{$documents["identificador"]}'>{$documents["nombre_archivo"]}</a></p>"; 
+                                       }else{ 
+                                       echo "<p style='color: rgb(244 63 94);'>El sistema no puede encontrar el archivo especificado.</p>"; 
+                                       } 
+                                       }else{
+                                       echo "<p>No hay registros del archivo.</p>";
+                                       }
+                                       $historial_expedientes = $object -> _db -> prepare("SELECT * FROM historial_papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo UNION SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid2 AND tipo_archivo=:tipo2");
+                                       $historial_expedientes -> execute(array(':expedienteid' => $Verid, ':tipo' => $documents["id"], ':expedienteid2' => $Verid, ':tipo2' => $documents["id"]));
+                                       $count_historial = $historial_expedientes -> rowCount();
+                                       if($count_historial > 0){
+                                       ?>  
+                                    <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?idExpediente=<?php echo $Verid; ?>&tipo_papeleria=<?php print ($documents['id']); ?>">
+                                    <?php echo "Ver historial de archivos subidos de " .ucfirst(strtolower($documents["nombre"])). "..."?>
+                                    </a>
+                                    <?php
+                                       }
+                                       ?>
+                                 </td>
+                              </tr>
+                              <?php 
+                                 } 
+                                 ?>
+                           </tbody>
+                        </table>
+                     </div>
+                     <div class="flex flex-col mt-5 mx-7">
+                        <div class="my-3 h-px bg-slate-200"></div>
+                        <div class="self-end mt-3">
+                           <button type="button" id="anterior3" name="anterior3" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
