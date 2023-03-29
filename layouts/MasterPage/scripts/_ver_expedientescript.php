@@ -279,7 +279,7 @@
 				span13.textContent = "P. de derecho:";
 				div14.appendChild(span13);
 				span14 = document.createElement("span");
-				span14.textContent = miArr[miArr.length-1]["prcnt_derecho"];
+				span14.textContent = miArr[y]["prcnt_derecho"];
 				div14.appendChild(span14);
 				if(a == 0){
 					var div15 = document.createElement("div");
@@ -331,7 +331,7 @@
 					span22.textContent = "CURP:";
 					div22.appendChild(span22);
 					span23 = document.createElement("span");
-					span18.textContent = miArr[y]["curp"];
+					span23.textContent = miArr[y]["curp"];
 					div22.appendChild(span23);
 				}else if(a == number2-1){
 					var div23 = document.createElement("div");
