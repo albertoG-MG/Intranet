@@ -824,27 +824,27 @@
                                        $checkdocument = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:archivo");
                                        $checkdocument -> execute(array(":expedienteid" => $Verid, ":archivo" => $documents["id"]));
                                        $countdocument = $checkdocument -> rowCount();
-                                       if($countdocument > 0){
-                                       $path = __DIR__ . "/../../../src/documents/".$documents["identificador"];  
-                                       if(is_file($path)){  
-                                       echo "<p><a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/{$documents["identificador"]}'>{$documents["nombre_archivo"]}</a></p>"; 
-                                       }else{ 
-                                       echo "<p style='color: rgb(244 63 94);'>El sistema no puede encontrar el archivo especificado.</p>"; 
-                                       } 
-                                       }else{
-                                       echo "<p>No hay registros del archivo.</p>";
-                                       }
                                        $historial_expedientes = $object -> _db -> prepare("SELECT * FROM historial_papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo UNION SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid2 AND tipo_archivo=:tipo2");
                                        $historial_expedientes -> execute(array(':expedienteid' => $Verid, ':tipo' => $documents["id"], ':expedienteid2' => $Verid, ':tipo2' => $documents["id"]));
                                        $count_historial = $historial_expedientes -> rowCount();
+                                       if($countdocument > 0){
+                                          $path = __DIR__ . "/../../../src/documents/".$documents["identificador"];  
+                                          if(is_file($path)){  
+                                             echo "<p><a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/{$documents["identificador"]}'>{$documents["nombre_archivo"]}</a></p>"; 
+                                          }else{ 
+                                             echo "<p style='color: rgb(244 63 94);'>El sistema no puede encontrar el archivo especificado.</p>"; 
+                                          } 
+                                       }else{
+                                          if($count_historial > 0){ echo "<p style='color: rgb(244 63 94);'>No existe un archivo vinculado.</p>"; }else{ echo "<p>No hay registros del archivo.</p>"; }
+                                       }
                                        if($count_historial > 0){
-                                       ?>  
-                                    <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?idExpediente=<?php echo $Verid; ?>&tipo_papeleria=<?php print ($documents['id']); ?>">
-                                    <?php echo "Ver historial de archivos subidos de " .ucfirst(strtolower($documents["nombre"])). "..."?>
-                                    </a>
+                                    ?>  
+                                          <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?idExpediente=<?php echo $Verid; ?>&tipo_papeleria=<?php print ($documents['id']); ?>">
+                                             <?php echo "Ver historial de archivos subidos de " .ucfirst(strtolower($documents["nombre"])). "..."?>
+                                          </a>
                                     <?php
                                        }
-                                       ?>
+                                    ?>
                                  </td>
                               </tr>
                               <?php 
