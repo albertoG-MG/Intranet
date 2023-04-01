@@ -146,7 +146,7 @@
     });
     $(document).ready(function() {
         $('.dataTables_filter input[type="search"]').
-        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
+        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
     });
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver usuario") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>

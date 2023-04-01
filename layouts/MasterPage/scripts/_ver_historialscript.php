@@ -60,7 +60,7 @@
 
 
     $(document).ready(function () {
-		$('.dataTables_filter input[type="search"]').attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+		$('.dataTables_filter input[type="search"]').attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
 		<?php
         if (basename($_SERVER['PHP_SELF']) == 'ver_historial.php') { ?>
             var dropdown = document.getElementById('catalogos');
