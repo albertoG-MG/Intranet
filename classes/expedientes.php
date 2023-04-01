@@ -361,12 +361,13 @@ class expedientes {
         $checktipospapeleria -> execute();
         $counttipospapeleria = $checktipospapeleria -> rowCount();
         for($i = 1; $i <= $counttipospapeleria; $i++){
-            $selectarchivo = $object -> _db -> prepare("select nombre_archivo, identificador from papeleria_empleado where tipo_archivo=:tipo and expediente_id=:idexpediente");
+            $selectarchivo = $object -> _db -> prepare("select nombre_archivo, identificador, fecha_subida from papeleria_empleado where tipo_archivo=:tipo and expediente_id=:idexpediente");
             $selectarchivo -> execute(array(':tipo' => $i, ':idexpediente' => $id_expediente));
             $fetch_row_archivo = $selectarchivo -> fetch(PDO::FETCH_OBJ);
             //Cuando existe el archivo y se sube algo
             if(isset($fetch_row_archivo -> nombre_archivo) && isset($fetch_row_archivo -> identificador) && isset($this->arraypapeleria[$i]) && isset($this->arraypapeleria[$i]["name"])){
                 $directory = "../src/documents/";
+                $path = "../src/documents/".$fetch_row_archivo -> identificador;
                 $ext = pathinfo($this->arraypapeleria[$i]["name"], PATHINFO_EXTENSION);
                 $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
                 date_default_timezone_set("America/Monterrey");
@@ -374,6 +375,9 @@ class expedientes {
                 if(move_uploaded_file($this->arraypapeleria[$i]['tmp_name'],$uploadfile)){
                     $crud->update('papeleria_empleado', ['nombre_archivo' => $this->arraypapeleria[$i]["name"],
                     'identificador' => basename($uploadfile), 'fecha_subida' => $date], "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $i, 'idexpediente' => $id_expediente]);
+                    if(file_exists($path)){
+                        $crud->store('historial_papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $i, 'viejo_nombre_archivo' => $fetch_row_archivo -> nombre_archivo, 'viejo_identificador' => $fetch_row_archivo -> identificador, 'vieja_fecha_subida' => $fetch_row_archivo -> fecha_subida]);
+                    }
                 }
             //Cuando existe el archivo y no se sube nada
             }else if(isset($fetch_row_archivo -> nombre_archivo) && isset($fetch_row_archivo -> identificador) && !(isset($this->arraypapeleria[$i])) && !(isset($this->arraypapeleria[$i]["name"]))){
