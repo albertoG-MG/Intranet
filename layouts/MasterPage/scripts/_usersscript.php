@@ -70,7 +70,7 @@
                         var email = row[1].split("@");
                         return(
                             "<div class='flex items-center gap-3'>" +
-                            "<svg class='w-5 h-5 text-gray-500 shrink-0' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><title>email</title><path fill='currentColor' d='M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z' /></svg>" +
+                            "<svg class='w-5 h-5 text-gray-500 shrink-0' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z' /></svg>" +
                                 "<span>" + email[0] + ' @ ' + email[1] + "</span>" +
                             "</div>"
                         );
