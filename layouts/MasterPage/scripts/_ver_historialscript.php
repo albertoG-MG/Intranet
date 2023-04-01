@@ -185,8 +185,10 @@
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
                             var eliminarid = data["id"];
+                            var rowdefault = data["predeterminado"];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
+                            fd.append('rowdefault', rowdefault);
                             $.ajax({
                                 url: "../ajax/eliminar/tabla_historial/eliminarrecord.php",
                                 type: "post",

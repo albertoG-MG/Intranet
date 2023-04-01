@@ -229,7 +229,18 @@ class expedientes {
         $selectarchivos = $object -> _db ->prepare("SELECT identificador from papeleria_empleado WHERE expediente_id=:expedienteid");
         $selectarchivos -> execute(array(":expedienteid" => $id));
         while($fetcharchivos = $selectarchivos -> fetch(PDO::FETCH_OBJ)){
-            unlink(__DIR__ . "/../src/pdfs_uploaded/" .$fetcharchivos->identificador);
+            $path = __DIR__ . "/../src/documents/" .$fetcharchivos -> identificador; 
+            if(file_exists($path)){
+                unlink($path);
+            }
+        }
+        $selectarchivosenhistorial = $object -> _db ->prepare("SELECT viejo_identificador from historial_papeleria_empleado WHERE expediente_id=:expedienteid2");
+        $selectarchivosenhistorial -> execute(array(":expedienteid2" => $id));
+        while($fetcharchivosenhistorial = $selectarchivosenhistorial -> fetch(PDO::FETCH_OBJ)){
+            $path2 = __DIR__ . "/../src/documents/" .$fetcharchivosenhistorial -> viejo_identificador;
+            if(file_exists($path2)){
+                unlink($path2);
+            }
         }
         $crud -> delete ('expedientes', 'id=:id', ['id' => $id]);
     }
@@ -271,17 +282,28 @@ class expedientes {
 	    return $recordscount;
 	}
 
-    public static function Eliminar_Historial_Papeleria($id){
+    public static function Eliminar_Historial_Papeleria($id, $rowdefault){
         $object = new connection_database();
-		$crud = new Crud();
-		$check_if_doc_exist = $object -> _db -> prepare("SELECT * FROM historial_papeleria_empleado WHERE id=:idhistorial");
-		$check_if_doc_exist -> execute(array(':idhistorial' => $id));
-		$fetch_doc = $check_if_doc_exist -> fetch(PDO::FETCH_OBJ);
-		$filepath = __DIR__ . "/../src/pdfs_uploaded/"; 
-        if(is_file($filepath.$fetch_doc -> viejo_identificador)){ 
-			unlink($filepath.$fetch_doc -> viejo_identificador);
-		}
-	    $crud -> delete('historial_papeleria_empleado', "id=:id", [":id" => $id]);
+        $crud = new Crud();
+        if($rowdefault == "vinculado"){
+            $check_if_doc_exist = $object -> _db -> prepare("SELECT identificador FROM papeleria_empleado WHERE id=:idpapeleria");
+            $check_if_doc_exist -> execute(array(':idpapeleria' => $id));
+            $fetch_if_doc_exist = $check_if_doc_exist -> fetch(PDO::FETCH_OBJ);
+            $filepath = __DIR__ . "/../src/documents/"; 
+            if(is_file($filepath.$fetch_if_doc_exist -> identificador)){ 
+                unlink($filepath.$fetch_if_doc_exist -> identificador);
+            }
+            $crud -> delete('papeleria_empleado', "id=:id", [":id" => $id]);
+        }else{
+            $check_if_doc_exist = $object -> _db -> prepare("SELECT viejo_identificador FROM historial_papeleria_empleado WHERE id=:idhistorial");
+            $check_if_doc_exist -> execute(array(':idhistorial' => $id));
+            $fetch_if_doc_exist = $check_if_doc_exist -> fetch(PDO::FETCH_OBJ);
+            $filepath = __DIR__ . "/../src/documents/"; 
+            if(is_file($filepath.$fetch_if_doc_exist -> viejo_identificador)){ 
+                unlink($filepath.$fetch_if_doc_exist -> viejo_identificador);
+            }
+            $crud -> delete('historial_papeleria_empleado', "id=:id", [":id" => $id]);
+        }
     }
     
     public static function Fetcheditexpediente($id){
