@@ -209,4 +209,6 @@
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
     $checktipospapeleria -> execute();
     $counttipospapeleria = $checktipospapeleria -> rowCount();
+
+    $logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
 ?>

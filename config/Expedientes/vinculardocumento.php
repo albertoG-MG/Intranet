@@ -1,8 +1,13 @@
 <?php
 	include_once __DIR__ . "/../../config/conexion.php";
 	include_once __DIR__ . "/../../classes/crud.php";
+
+	session_start();
+
 	$object = new connection_database();
 	$crud = new crud();
+
+	$logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
 
 	$id = $_POST["id"];
     $nombre_archivo = $_POST["nombre_archivo"];
@@ -11,6 +16,8 @@
     $predeterminado = $_POST["predeterminado"];
     $expedienteid = $_POST["expedienteid"];
 	$tipo_papeleriaid = $_POST["tipo_papeleriaid"];
+	$set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
+	$set_logged_user -> execute(array(':loggeduser' => $logged_user));
 	//Checa si el documento a vincular ya se encuentra actualmente vinculado
 	if($predeterminado == "vinculado"){
 		die("El documento seleccionado con el identificador " .$identificador. " ya está vinculado");

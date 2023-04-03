@@ -1244,6 +1244,7 @@
         var cuenta_nomina = $("#cuenta_nomina").val();
         var clabe_nomina = $("#clabe_nomina").val();
         var plastico = $("#plastico").val();
+        var logged_user = "<?php echo $logged_user; ?>";
         var method = "store";
         var app = "expediente";
     
@@ -1350,6 +1351,7 @@
         fd.append('cuenta_nomina', cuenta_nomina);
         fd.append('clabe_nomina', clabe_nomina);
         fd.append('plastico', plastico);
+        fd.append('logged_user', logged_user);
         fd.append('method', method);
         fd.append('app', app);
         
