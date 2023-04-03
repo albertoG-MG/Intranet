@@ -3386,6 +3386,38 @@ CREATE TABLE `tabla_usuarios_log`(
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `tabla_expedientes_log`
+--
+
+CREATE TABLE `tabla_expedientes_log`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`num_empleado` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `tabla_papeleria_log`
+--
+
+CREATE TABLE `tabla_papeleria_log`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`num_empleado` varchar(100) NOT NULL,
+	`tipo_papeleria` varchar(100) NOT NULL,
+	`nombre_archivo` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Trigger que inserta en la tabla Transicion_estatus_incidencia
 --
 
@@ -3484,6 +3516,103 @@ DELIMITER $$
 	BEGIN
 		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
 		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(OLD.nombre, ' ', OLD.apellido_pat, ' ', OLD.apellido_mat), 'Eliminar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log  `log_expedientes_insert`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_expedientes_insert AFTER INSERT on expedientes
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.num_empleado, "INSERTAR" FROM usuarios WHERE NEW.users_id = usuarios.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla expedientes en la tabla_expedientes_log  `log_expedientes_update`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_expedientes_update AFTER UPDATE on expedientes
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.num_empleado, "ACTUALIZAR" FROM usuarios WHERE NEW.users_id = usuarios.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla papeleria_empleado en la tabla_papeleria_log  `log_papeleria_insert`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_papeleria_insert
+AFTER INSERT on papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, NEW.nombre_archivo, "INSERTAR" FROM usuarios INNER JOIN expedientes INNER JOIN tipo_papeleria WHERE expedientes.users_id = usuarios.id AND NEW.expediente_id=expedientes.id AND NEW.tipo_archivo=tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla papeleria_empleado en la tabla_papeleria_log  `log_papeleria_update`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_papeleria_update
+AFTER UPDATE on papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, NEW.nombre_archivo, "ACTUALIZAR" FROM usuarios INNER JOIN expedientes INNER JOIN tipo_papeleria WHERE expedientes.users_id = usuarios.id AND NEW.expediente_id=expedientes.id AND NEW.tipo_archivo=tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla papeleria_empleado en la tabla_papeleria_log  `log_papeleria_eliminar`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_papeleria_eliminar 
+BEFORE DELETE ON papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, OLD.nombre_archivo, "ELIMINAR" FROM usuarios INNER JOIN expedientes INNER JOIN tipo_papeleria WHERE expedientes.users_id = usuarios.id AND OLD.expediente_id=expedientes.id AND OLD.tipo_archivo=tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla expedientes con su llave foránea papeleria_empleado en la tabla_papeleria_log  `log_expedientesypapeleria_eliminar`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_expedientesypapeleria_eliminar 
+BEFORE DELETE ON expedientes
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), OLD.num_empleado, "ELIMINAR" FROM usuarios WHERE OLD.users_id = usuarios.id;
+		
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), OLD.num_empleado, tipo_papeleria.nombre, papeleria_empleado.nombre_archivo, "ELIMINAR" FROM usuarios INNER JOIN papeleria_empleado INNER JOIN tipo_papeleria WHERE OLD.users_id = usuarios.id AND OLD.id = papeleria_empleado.expediente_id AND papeleria_empleado.tipo_archivo = tipo_papeleria.id;
 	END$$
 DELIMITER ;
 
