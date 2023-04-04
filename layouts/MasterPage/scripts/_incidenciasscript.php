@@ -16,12 +16,12 @@
                             if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
-                            text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i>Mis Pendientes",
+                            text: "Mis Pendientes",
                             attr: {
                                 'id': 'mis_incidencias_pendientes',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                             action: function ( e, dt, node, config ) {
                                 $.ajax({
                                     url: "../config/incidencias/mi_incidencia_pendiente.php",
@@ -55,12 +55,12 @@
                             if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
-							text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i>Mis Aprobadas",
+							text: "Mis Aprobadas",
 							attr: {
 								'id': 'mis_incidencias_aprobadas',
 								'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 							},
-							className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+							className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/incidencias/mi_incidencia_aprobada.php",
@@ -94,12 +94,12 @@
                             if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
-                            text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i>Mis Rechazadas",
+                            text: "Mis Rechazadas",
                             attr: {
                                 'id': 'mis_incidencias_rechazadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/incidencias/mi_incidencia_rechazada.php",
@@ -133,12 +133,12 @@
                             if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
-                            text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i>Mis Canceladas",
+                            text: "Mis Canceladas",
                             attr: {
                                 'id': 'mis_incidencias_canceladas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/incidencias/mi_incidencia_cancelada.php",
@@ -172,12 +172,12 @@
                             if(!(is_null($fetch_jerarquia -> jerarquia_id))){
                         ?>
                         {
-                            text: "<i class='mdi mdi-newspaper-variant text-white font-semibold text-lg'></i> Mis incidencias evaluadas",
+                            text: "Mis incidencias evaluadas",
                             attr: {
                                 'id': 'mis_incidencias',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/ajax_incidencias.php",
@@ -209,12 +209,12 @@
                         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>	
                             {
-                                text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Pendientes",
+                                text: "Pendientes",
                                 attr: {
                                     'id': 'incidencias_pendientes',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencia_pendiente.php",
@@ -246,12 +246,12 @@
                         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
-                                text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Aprobadas",
+                                text: "Aprobadas",
                                 attr: {
                                     'id': 'incidencias_aprobadas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencia_aprobada.php",
@@ -283,12 +283,12 @@
                         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
-                                text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i> Rechazadas",
+                                text: "Rechazadas",
                                 attr: {
                                     'id': 'incidencias_rechazadas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencia_rechazada.php",
@@ -320,12 +320,12 @@
                         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
-                                text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i> Canceladas",
+                                text: "Canceladas",
                                 attr: {
                                     'id': 'incidencias_canceladas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencia_cancelada.php",
@@ -357,12 +357,12 @@
                         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Director general" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Recursos humanos" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
                         ?>
                             {
-                                text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver incidencias evaluadas",
+                                text: "Ver incidencias evaluadas",
                                 attr: {
                                     'id': 'incidencias_desplieguetodo',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencia_desplieguetodo.php",
@@ -390,24 +390,24 @@
                         }
                         ?>   
                         {
-                            text: "<i class='mdi mdi-bus text-white font-semibold text-lg'></i> Solicitar vacaciones",
+                            text: "Solicitar vacaciones",
                             attr: {
                                 'id': 'vacaciones',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                             action: function ( e, dt, node, config ) {
                                 
                             }
                         },
                         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud incidencias") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                         {
-                            text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver Solicitudes",
+                            text: "Ver Solicitudes",
                             attr: {
                                 'id': 'incidencias_solpendientes',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								window.location.href = "solicitud_incidencia.php";
 							}
@@ -419,12 +419,12 @@
                                 if($fetch_jerarquia != null){
                         ?>
 						{
-                            text: "<i class='mdi mdi-beaker-plus text-white font-semibold text-lg'></i> Crear Incidencia",
+                            text: "Crear Incidencia",
                             attr: {
                                 'id': 'Incidencia',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white <?php if($count_block > 0){ echo "disabled"; } ?>',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 <?php if($count_block > 0){ echo "disabled"; } ?>',
                             action: function(e, dt, node, config) {
                                 window.location.href = "crear_incidencia.php";
                             }
@@ -527,7 +527,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_18%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_18%]', 'flex', 'justify-between');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -541,7 +541,7 @@
 
 	$(document).ready(function () {
 		$('.dataTables_filter input[type="search"]').
-		attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
 
         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
         $('#datatable').on('click', 'tr .Ver', function () {
@@ -694,6 +694,7 @@
 
     .search{
         margin:auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover, tr.even:hover{
