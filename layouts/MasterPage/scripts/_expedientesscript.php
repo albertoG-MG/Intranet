@@ -11,17 +11,19 @@
             },
             dom: '<"top"fB>rt<"bottom"ip><"clear">',
             buttons: [
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                         {
-                            text: "<i class='mdi mdi-account-box text-white font-semibold text-lg'></i> Crear Expediente",
+                            text: "Crear Expediente",
                             attr: {
                                 'id': 'Expediente',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                             action: function(e, dt, node, config) {
                                 window.location.href = "crear_expediente.php";
                             }
                         }
+                <?php } ?>
                     ],
             "processing": true,
             "serverSide": true,
@@ -31,62 +33,106 @@
             },
             "columns": 
             [
+                {data: [0]},
+                {data: [1]},
+                {data: [2]},
+                {data: [3]},
+                {data: [4], visible: false, searchable: false},
+                {data: [5], searchable: false}
+            ],
+            "columnDefs": 
+            [
                 {
-                    data: null,
-                    render: function(data, type, row){
+                    target: [0],
+                    render: function (data, type, row) {
                         return (
-                            "<div class='py-3 text-left'>" +
-                            "<span>"+row[0]+"</span>" +
-                            "</div>");
+                            "<div class='text-left'>" +
+                                "<span>" + row[0] + "</span>" +
+                            "</div>"
+                        );
                     }
                 },
                 {
-                    data: null,
-                    render: function(data, type, row){
-                        return (
-                            "<div class='py-3 text-left'>" +
-                            "<div class='flex items-center'>" +
-                            "<div class='mr-2 shrink-0'>" +
-                            "<img class='w-6 h-6 rounded-full' src='https://randomuser.me/api/portraits/men/1.jpg'>" +
-                            "</div>" +
-                            "<span>" + row[1] + ' ' + row[2] + ' ' + row[3] + "</span>" +
-                            "</div>" +
-                            "</div>");
+                    target: [1],
+                    render: function (data, type, row) {
+                        if(row[4] === null){
+                            return(
+                                "<div class='flex items-center gap-3'>" +
+                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/default-user.png'>"+
+                                    "<span>" + row[1] + "</span>" +
+                                "</div>"
+                            );
+                        }else{
+                            return(
+                                "<div class='flex items-center gap-3'>" +
+                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[4]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
+                                    "<span>" + row[1] + "</span>" +
+                                "</div>"
+                            );
+                        }
                     }
                 },
                 {
-                    data: null,
-                    render: function(data, type, row){
-                        return (
-                            "<div class='py-3 text-left'>" +
-                            "<span>"+row[4]+"</span>" +
-                            "</div>");
+                    target: [2],
+                    render: function (data, type, row) {
+                        if(row[2] == "ALTA"){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span class='bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs'>ALTA</span>" +
+                                "</div>"
+                            );
+                        }else if(row[2] == "BAJA"){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span class='bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs'>BAJA</span>" +
+                                "</div>"
+                            );
+                        }
                     }
                 },
                 {
-                    data: null,
-                    render: function(data, type, row){
+                    target: [3],
+                    render: function (data, type, row) {
                         return (
-                            "<div class='py-3 text-left'>" +
-                            "<div class='flex item-center justify-center'>" +
-                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
-                            "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
-                            "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
-                            "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
-                            "</svg>"+
-                            "</div>" +
-                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Editar'>" +
-                            "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
-                            "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>" +
-                            "</svg>" +
-                            "</div>" +
-                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>" +
-                            "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
-                            "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>" +
-                            "</svg>" +
-                            "</div>" +
-                            "</div>" +
-                            "</div>");
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[3] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [5],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='flex item-center justify-start md:justify-center gap-3'>" +
+                                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                                "<div class='w-4 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
+                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
+                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
+                                    "</svg>"+
+                                "</div>" +
+                                <?php 
+                                }
+                                if (Permissions::CheckPermissions($_SESSION["id"], "Editar expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+                                ?>
+                                "<div class='w-4 transform hover:text-purple-500 hover:scale-110 cursor-pointer Editar'>" +
+                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
+                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>" +
+                                    "</svg>" +
+                                "</div>" +
+                                <?php 
+                                } 
+                                if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") {
+                                ?>
+                                "<div class='w-4 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>" +
+                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
+                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>" +
+                                    "</svg>" +
+                                "</div>" +
+                                <?php } ?>
+                            "</div>"
+                        );
                     }
                 }
             ]
@@ -96,24 +142,43 @@
 
     $(document).ready(function () {
     $('.dataTables_filter input[type="search"]').
-    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
 
-    $('#datatable').on('click', 'tr .Editar', function () {
-        var table = $('#datatable').DataTable();
-        var rowSelector;
-        var li = $(this).closest('li');
-        if ( li.length ) {
-            rowSelector = table.cell( li ).index().row;
-        }
-        else {
-            rowSelector =  $(this).closest('tr');
-        }
-        var row = table.row(rowSelector);
-        var data = row.data();
-        window.location.href = "editar_expediente.php?idExpediente="+data[0]+""; 
-    });
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+        $('#datatable').on('click', 'tr .Ver', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            window.location.href = "ver_expediente.php?idExpediente="+data[5]+""; 
+        });
+    <?php } ?>
 
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+        $('#datatable').on('click', 'tr .Editar', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            window.location.href = "editar_expediente.php?idExpediente="+data[5]+""; 
+        });
+    <?php } ?>
 
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
     $('#datatable').on('click', 'tr .Eliminar', function() {
         var table = $('#datatable').DataTable();
         var rowSelector;
@@ -136,32 +201,65 @@
             confirmButtonText: 'Sí!',
             cancelButtonText: 'cancelar'
         }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'éxito',
-                    text: 'La fila ha sido eliminada!'
-                }).then(function() {
-                    var eliminarid = data[0];
-                    var fd = new FormData();
-                    fd.append('id', eliminarid);
-                    $.ajax({
-                        url: "../ajax/eliminar/tabla_expedientes/eliminarexpediente.php",
-                        type: "post",
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        success: function(result) {
-                            table
-                                .row($(this).parents('tr'))
-                                .remove()
-                                .draw();
-                        }
+            check_user_logged().then((response) => {
+		        if(response == "true"){
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'éxito',
+                            text: 'La fila ha sido eliminada!'
+                        }).then(function() {
+                            var eliminarid = data[5];
+                            var fd = new FormData();
+                            fd.append('id', eliminarid);
+                            $.ajax({
+                                url: "../ajax/eliminar/tabla_expedientes/eliminarexpediente.php",
+                                type: "post",
+                                data: fd,
+                                processData: false,
+                                contentType: false,
+                                success: function(result) {
+                                    table
+                                        .row($(this).parents('tr'))
+                                        .remove()
+                                        .draw();
+                                }
+                            });
+                        });
+                    }
+                }else{
+                    Swal.fire({
+                        title: "Ocurrió un error",
+                        text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                        icon: "error"
+                    }).then(function() {
+                        window.location.href = "login.php";
                     });
-                });
-            }
+                }
+            }).catch((error) => {
+		        console.log(error);
+	        })
         })
     });
+    <?php } ?>
+
+    function check_user_logged(){
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "POST",
+                url: "../ajax/check_user_logged.php",
+                data:{
+                    pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                },
+                success: function (response) {
+                    resolve(response)
+                },
+                error: function (error) {
+                    reject(error)
+                }
+            });
+        })
+    }
 
     <?php
     if(basename($_SERVER['PHP_SELF']) == 'expedientes.php'){?>
@@ -203,7 +301,8 @@
     }
 
     .search{
-        margin:auto !important;
+        margin: auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover, tr.even:hover{

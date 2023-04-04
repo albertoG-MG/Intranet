@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		},
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
 				{
 					text: "<i class='mdi mdi-account-eye text-white font-semibold text-lg'></i> Crear Rol",
 					attr: {
@@ -21,10 +22,23 @@ document.addEventListener("DOMContentLoaded", function() {
 						window.location.href = "crear_rol.php";
 					}
 				},
+            <?php } ?>
+                {
+                    text: "<i class='mdi mdi-account-supervisor-circle text-white font-semibold text-lg'></i>Administrar subroles",
+                    attr: {
+                        'id': 'Subroles',
+                        'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                    },
+                    className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                    action: function(e, dt, node, config) {
+                        window.location.href = "subroles.php";
+                    }
+                },
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a permisos") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                 {
                     text: "<i class='mdi mdi-account-lock text-white font-semibold text-lg'></i> Ver Permisos",
 					attr: {
-						'id': 'Rol',
+						'id': 'Permisos',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
 					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
@@ -32,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						window.location.href = "permisos.php";
 					}
                 }
+            <?php } ?>
 				],
         "processing": true,
 		"serverSide": true,
@@ -54,89 +69,125 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         {
             data: null,
+            "render": function(data, type, row) {
+                return (
+                    "<div class='py-3 text-left'>" +
+                    "<div class='flex items-center'>" +
+                    "<div class='mr-2 shrink-0'>" +
+                    "<svg style='width:24px;height:24px' viewBox='0 0 24 24'><path fill='currentColor' d='M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z' /></svg>" +
+                    "</div>" +
+					(row[2] == null && row[3] == null ? "<span>Sin jerarquia</span>" : (row[2] != null && row[3] == null ? "<span>Sin jefe</span>" : "<span>" + row[3] + "</span>"))+
+                    "</div>" +
+                    "</div>");
+            }
+        },
+        {
+            data: null,
             render: function(data, type, row) {
                 return (
                     "<div class='py-3 text-left'>" +
                     "<div class='flex item-center justify-end'>" +
+                    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                     "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Editar'>" +
                     "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>" +
                     "</svg>" +
                     "</div>" +
+                    <?php } ?>
+                    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                     "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>" +
                     "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>" +
                     "</svg>" +
                     "</div>" +
+                    <?php } ?>
                     "</div>" +
                     "</div>");
             }
         }
         ]
     });
-    $('#datatable').on('click', 'tr .Editar', function () {
-        var table = $('#datatable').DataTable();
-        var rowSelector;
-        var li = $(this).closest('li');
-        if ( li.length ) {
-            rowSelector = table.cell( li ).index().row;
-        }
-        else {
-            rowSelector =  $(this).closest('tr');
-        }
-        var row = table.row(rowSelector);
-        var data = row.data();
-        window.location.href = "editar_rol.php?idRol="+data[0]+""; 
-    });
-
-    $('#datatable').on('click', 'tr .Eliminar', function(){
-        var table = $('#datatable').DataTable();
-        var rowSelector;
-        var li = $(this).closest('li');
-        if ( li.length ) {
-            rowSelector = table.cell( li ).index().row;
-        }
-        else {
-            rowSelector =  $(this).closest('tr');
-        }
-        var row = table.row(rowSelector);
-        var data = row.data();
-        Swal.fire({
-            title: '¿Estas seguro?',
-            text: "No podras recuperar la información!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí!',
-            cancelButtonText: 'cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'éxito',
-                    text: 'La fila ha sido eliminada!'
-                }).then(function() {
-                    var eliminarid = data[0];
-                    var fd = new FormData();
-                    fd.append('id', eliminarid);
-                    $.ajax({
-                        url: "../ajax/eliminar/tabla_roles/eliminarrol.php",
-                        type: "post",
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        success: function(result) {
-                            table
-                                .row($(this).parents('tr'))
-                                .remove()
-                                .draw();
-                        }
-                    });
-                });
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
+        $('#datatable').on('click', 'tr .Editar', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
             }
-        })
-    });
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            window.location.href = "editar_rol.php?idRol="+data[0]+""; 
+        });
+    <?php } ?>
+
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar roles") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
+        $('#datatable').on('click', 'tr .Eliminar', function(){
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras recuperar la información!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                check_user_logged().then((response) => {
+		            if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'éxito',
+                                text: 'La fila ha sido eliminada!'
+                            }).then(function() {
+                                var eliminarid = data[0];
+                                var fd = new FormData();
+                                fd.append('id', eliminarid);
+                                $.ajax({
+                                    url: "../ajax/eliminar/tabla_roles/eliminarrol.php",
+                                    type: "post",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result) {
+                                        table
+                                            .row($(this).parents('tr'))
+                                            .remove()
+                                            .draw();
+                                    }
+                                });
+                            });
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            })
+        });
+    <?php } ?>
 
 
 });
@@ -144,6 +195,24 @@ $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
     attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium')
 });
+
+function check_user_logged(){
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: "POST",
+			url: "../ajax/check_user_logged.php",
+			data:{
+				pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+			},
+			success: function (response) {
+				resolve(response)
+			},
+			error: function (error) {
+				reject(error)
+			}
+		});
+	})
+}
 
 <?php
 if(basename($_SERVER['PHP_SELF']) == 'roles.php'){?>

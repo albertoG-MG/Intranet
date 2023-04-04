@@ -1,0 +1,14 @@
+# Deny access to all dot files and folders
+RewriteEngine on
+RewriteRule (^\.|/\.) – [F]
+# deny access to contents in a specific folder
+<Files ~ "^\.git">
+    Order allow,deny
+    Deny from all 
+</Files>
+# Disable Directory Indexing
+<IfModule mod_rewrite.c>
+	<IfModule mod_negotiation.c>
+		Options -MultiViews -Indexes
+	</IfModule>
+</IfModule>

@@ -72,22 +72,41 @@
             </div>
 
             <div class="grid grid-cols-1 mt-5 mx-7">
-              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Permisos</label>
-              <div id="permissionarray" class="flex flex-col gap-3 sm:flex-wrap sm:flex-row">
-                <?php
-                $permisos = permissions::FetchPermisos();
-                foreach ($permisos as $row) {
-                  echo "<div class='flex gap-3 items-center' style='flex: 1 0 21%'>";
-                  echo "<input type='checkbox' value='" . $row->id . "'>" . $row->nombre . "</>";
-                  echo "</div>";
-                }
-                ?>
+              <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Jerarquía</label>
+              <div class="group flex">
+                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-school text-gray-400 text-lg"></i></div>
+                  <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="jerarquia" name="jerarquia">
+                    <option value="">Sin jerarquía</option>
+                    <option value="SIN JEFE">Sin jefe</option>
+                      <?php 
+                      $jerarquia = roles::FetchJerarquia();
+                      foreach ($jerarquia as $row) {
+                        echo "<option value='" . $row->id . "'>";
+                        echo "$row->nombre";
+                        echo "</option>";
+                      }
+                      ?>
+                  </select>
               </div>
             </div>
 
+            <div class="grid grid-cols-1 mt-5 mx-7">
+                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Categorías de permisos a desplegar</label>
+                <div id="categoriasarray" class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-8">
+                  <?php
+                  $categorias = Categorias::FetchCategorias();
+                  foreach ($categorias as $row) {
+                    echo "<div class='flex gap-3 items-center'>";
+                    echo "<input type='checkbox' value='" . $row->id . "'>" . $row->nombre . "</>";
+                    echo "</div>";
+                  }
+                  ?>
+                </div>
+            </div>
+
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-              <button class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Cancelar</button>
-              <button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2'>Guardar</button>
+              <a href="roles.php" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2' id='regresar' name='regresar'>Regresar</a>
+              <button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>
             </div>
           </form>
         </div>

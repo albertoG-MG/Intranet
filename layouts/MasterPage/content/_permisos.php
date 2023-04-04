@@ -47,6 +47,7 @@
                                 <thead>
                                     <tr class="bg-black text-white uppercase text-sm leading-normal">
                                         <th class="py-3 text-left all">Permiso</th>
+                                        <th class="py-3 text-left min-tablet">Categoria</th>
                                         <th class="py-3 text-left min-tablet"></th>
                                     </tr>
                                 </thead>
@@ -58,6 +59,7 @@
         </div>
     </div>
 </div>
+<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Editar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
 <div id="modal-component-container" class="modal-component-container hidden fixed inset-0">
     <div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="modal-bg-container fixed inset-0 bg-gray-700 bg-opacity-75"></div>
@@ -78,6 +80,23 @@
                                     <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent" type="text" id="crearpermiso" name="crearpermiso" placeholder="Input 1">
                                 </div>
                             </div>
+                            <div class="grid grid-cols-1 mt-5 mx-6 px-3">
+                                <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Seleccionar categoría</label>
+                                <div class="group flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-lock text-gray-400 text-lg"></i></div>
+                                    <select class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" id="category" name="category">
+                                        <option value="">---Seleccione---</option>
+                                        <?php
+                                        $categorias = categorias::FetchCategorias();
+                                        foreach ($categorias as $row) {
+                                            echo "<option value='" . $row->id . "'>";
+                                            echo "" . $row->nombre . "";
+                                            echo "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,3 +108,4 @@
         </div>
     </div>
 </div>
+<?php } ?>

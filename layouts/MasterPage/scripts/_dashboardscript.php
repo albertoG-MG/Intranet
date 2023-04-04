@@ -29,26 +29,23 @@
     tabElements.forEach((tab) => {
         tab.triggerEl.addEventListener('click', () => {
             target = tab;
-            svg = tab.triggerEl.firstChild;
 
             tabElements.forEach((t) => {
                 t.targetEl.classList.remove("block")
                 t.targetEl.classList.add("hidden");
-                t.triggerEl.classList.remove("text-blue-600", "border-blue-600", "active",
-                    "border-b-2");
-                t.triggerEl.firstChild.classList.remove("text-blue-600");
-                t.triggerEl.classList.add("border-transparent", "border-b-2",
-                    "hover:text-gray-600", "hover:border-gray-300");
-                t.triggerEl.firstChild.classList.add("text-gray-400",
-                    "group-hover:text-gray-500");
+                t.triggerEl.classList.remove("bg-[#4f46e5]", "text-white", "menu-active");
+                t.triggerEl.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
+                "focus:bg-slate-100", "focus:text-slate-800");
+                t.triggerEl.firstElementChild.classList.add("text-slate-400", "transition-colors", 
+                "group-hover:text-slate-500", "group-focus:text-slate-500");
             })
             target.targetEl.classList.remove("hidden");
             target.targetEl.classList.add("block");
-            target.triggerEl.classList.add("text-blue-600", "border-blue-600", "active", "border-b-2");
-            target.triggerEl.classList.remove("border-transparent", "hover:text-gray-600",
-                "hover:border-gray-300");
-            target.triggerEl.firstChild.classList.remove("text-gray-400", "group-hover:text-gray-500");
-            svg.classList.add("text-blue-600");
+            target.triggerEl.classList.add("bg-[#4f46e5]", "text-white", "menu-active");
+            target.triggerEl.classList.remove("hover:bg-slate-100", "hover:text-slate-800", 
+            "focus:bg-slate-100", "focus:text-slate-800");
+            target.triggerEl.firstElementChild.classList.remove("text-slate-400", "transition-colors", 
+            "group-hover:text-slate-500", "group-focus:text-slate-500");
         })
-    })
+    });
 </script>

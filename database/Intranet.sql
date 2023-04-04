@@ -2,6 +2,16 @@
 -- Database: `Intranetpuro`
 --
 
+DELIMITER $$
+--
+-- Functions
+--
+CREATE DEFINER=CURRENT_USER FUNCTION `sessionid` () RETURNS INT DETERMINISTIC RETURN @var$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
 --
 -- Estructura de tabla para la tabla `roles`
 --
@@ -9,14 +19,72 @@
 CREATE TABLE `roles` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 -- Insert into para la tabla `roles`
 
 INSERT INTO `roles` (`id`, `nombre`) VALUES
-(1, 'Superadministrador');
+(1, 'Superadministrador'),
+(2, 'Administrador'),
+(3, 'Director general'),
+(4, 'Director'),
+(5, 'Gerente'),
+(6, 'Empleado'),
+(7, 'Supervisor'),
+(8, 'Tecnico'),
+(9, 'Usuario externo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jerarquia`
+--
+
+CREATE TABLE `jerarquia`(
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `rol_id` int NOT NULL,
+  `jerarquia_id` int DEFAULT NULL,
+   FOREIGN KEY (rol_id) REFERENCES roles(id) ON DELETE CASCADE,
+   FOREIGN KEY (jerarquia_id) REFERENCES jerarquia(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `jerarquia`
+
+INSERT INTO `jerarquia` (`id`, `rol_id`, `jerarquia_id`) VALUES
+(1, 3, NULL),
+(2, 4, 1),
+(3, 5, 2),
+(4, 6, 3),
+(5, 7, 3),
+(6, 8 ,3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `subroles`
+--
+
+CREATE TABLE `subroles` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `roles_id` int NOT NULL,
+  `subrol_nombre` varchar(100) NOT NULL,
+  FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -25,9 +93,39 @@ INSERT INTO `roles` (`id`, `nombre`) VALUES
 --
 
 CREATE TABLE `permisos` (
+`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`nombre` varchar(100) NOT NULL UNIQUE,
+`categoria_id` int DEFAULT NULL,
+FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rolesxcategorias`
+--
+
+CREATE TABLE `rolesxcategorias` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `roles_id` int NOT NULL,
+  `categorias_id` int NOT NULL,
+  FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE,
+  FOREIGN KEY (categorias_id) REFERENCES categorias(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subrolesxpermisos`
+--
+
+CREATE TABLE `subrolesxpermisos` (
+`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`subroles_id` int NOT NULL,
+`permisos_id` int NOT NULL,
+ FOREIGN KEY (subroles_id) REFERENCES subroles(id) ON DELETE CASCADE,
+ FOREIGN KEY (permisos_id) REFERENCES permisos(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -41,7 +139,7 @@ CREATE TABLE `rolesxpermisos` (
   `permisos_id` int NOT NULL,
   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE CASCADE,
   FOREIGN KEY (permisos_id) REFERENCES permisos(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -52,7 +150,22 @@ CREATE TABLE `rolesxpermisos` (
 CREATE TABLE `departamentos` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departamento` varchar(100) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Insert into para la tabla departamentos
+--
+
+INSERT INTO `departamentos` (`id`, `departamento`) VALUES
+(1, 'Soporte tecnico'),
+(2, 'Recursos humanos'),
+(3, 'Finanzas'),
+(4, 'Call center'),
+(5, 'Laboratorio'),
+(6, 'Almacen'),
+(7, 'Operaciones');
 
 -- --------------------------------------------------------
 
@@ -70,11 +183,13 @@ CREATE TABLE `usuarios` (
   `password` varchar(100) NOT NULL,
   `departamento_id` int DEFAULT NULL,
   `roles_id` int DEFAULT NULL,
+  `subrol_id` int DEFAULT NULL,
   `nombre_foto` longtext DEFAULT NULL,
-  `foto` longtext DEFAULT NULL,
+  `foto_identificador` longtext DEFAULT NULL,
    FOREIGN KEY (departamento_id) REFERENCES departamentos(id) ON DELETE SET NULL,
-   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+   FOREIGN KEY (roles_id) REFERENCES roles(id) ON DELETE SET NULL,
+   FOREIGN KEY (subrol_id) REFERENCES subroles(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -84,8 +199,8 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `estados` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` char(45) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -137,10 +252,10 @@ INSERT INTO `estados` (`id`, `nombre`) VALUES
 CREATE TABLE `municipios` (
   `Id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `estado` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `clave` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `clave` varchar(100) NOT NULL,
    FOREIGN KEY (estado) REFERENCES estados(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2503,8 +2618,10 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 CREATE TABLE `expedientes` (
   `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
-  `num_empleado` bigint(100) DEFAULT NULL,
+  `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
   `estudios` varchar(100) DEFAULT NULL,
+  `posee_correo` varchar(100) DEFAULT NULL,
+  `correo_adicional` varchar(100) DEFAULT NULL UNIQUE,
   `puesto` varchar(100) DEFAULT NULL,
   `calle` varchar(100) DEFAULT NULL,
   `num_interior` varchar(100) DEFAULT NULL,
@@ -2514,11 +2631,29 @@ CREATE TABLE `expedientes` (
   `municipio_id` int DEFAULT NULL,
   `codigo` varchar(100) DEFAULT NULL,
   `tel_dom` varchar(100) DEFAULT NULL,
+  `posee_telmov` varchar(100) DEFAULT NULL,
   `tel_mov` varchar(100) DEFAULT NULL,
-  `casa_propia` varchar(100) DEFAULT NULL, 
+  `posee_telempresa` varchar(100) DEFAULT NULL,
+  `marcacion` varchar(100) DEFAULT NULL,
+  `serie` varchar(100) DEFAULT NULL,
+  `sim` varchar(100) DEFAULT NULL,
+  `numerored_empresa` varchar(100) DEFAULT NULL,
+  `modelotel_empresa` varchar(100) DEFAULT NULL,
+  `marcatel_empresa` varchar(100) DEFAULT NULL,
+  `imei` varchar(200) DEFAULT NULL,
+  `posee_laptop` varchar(200) DEFAULT NULL,
+  `marca_laptop` varchar(200) DEFAULT NULL,
+  `modelo_laptop` varchar(200) DEFAULT NULL,
+  `serie_laptop` varchar(200) DEFAULT NULL,
+  `casa_propia` varchar(100) DEFAULT NULL,
+  `ecivil` varchar(100) DEFAULT NULL,
+  `posee_retencion` varchar(100) DEFAULT NULL,
+  `monto_mensual` float DEFAULT NULL,  
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_inicioc` date DEFAULT NULL,
-  `fecha_alta` date NOT NULL,
+  `fecha_alta` date DEFAULT NULL,
+  `salario_contrato` float DEFAULT NULL,
+  `salario_fechaalta` float DEFAULT NULL,
   `observaciones` text DEFAULT NULL,
   `curp` varchar(100) DEFAULT NULL,
   `nss` varchar(100) DEFAULT NULL,
@@ -2530,15 +2665,26 @@ CREATE TABLE `expedientes` (
   `cantidad_polo` varchar(100) DEFAULT NULL,
   `talla_polo` varchar(100) DEFAULT NULL,
   `emergencia_nombre` varchar(100) DEFAULT NULL,
+  `emergencia_parentesco` varchar(100) DEFAULT NULL,
   `emergencia_telefono` varchar(100) DEFAULT NULL,
+  `emergencia_nombre2` varchar(100) DEFAULT NULL,
+  `emergencia_parentesco2` varchar(100) DEFAULT NULL,
+  `emergencia_telefono2` varchar(100) DEFAULT NULL,
   `resultado_antidoping` varchar(100) DEFAULT NULL,
   `vacante` varchar(100) DEFAULT NULL,
   `fam_dentro_empresa` varchar(100) DEFAULT NULL,
   `fam_nombre` varchar(100) DEFAULT NULL,
-   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-   FOREIGN KEY (estado_id) REFERENCES estados(id),
-   FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `banco_personal` varchar(100) DEFAULT NULL,
+  `cuenta_personal` varchar(100) DEFAULT NULL,
+  `clabe_personal` varchar(100) DEFAULT NULL,
+  `banco_nomina` varchar(100) DEFAULT NULL,
+  `cuenta_nomina` varchar(100) DEFAULT NULL,
+  `clabe_nomina` varchar(100) DEFAULT NULL,
+  `plastico` varchar(100) DEFAULT NULL,
+  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  FOREIGN KEY (estado_id) REFERENCES estados(id),
+  FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2548,12 +2694,12 @@ CREATE TABLE `expedientes` (
 
 CREATE TABLE `ref_laborales` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL,
-  `telefono` varchar(100) DEFAULT NULL,
-  `parentesco` varchar(100) DEFAULT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `telefono` varchar(100) NOT NULL,
+  `relacion` varchar(100) NOT NULL,
   `expediente_id` int NOT NULL,
-   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2564,13 +2710,45 @@ CREATE TABLE `ref_laborales` (
 CREATE TABLE `ref_bancarias` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  `parentesco` varchar(100) DEFAULT NULL,
-  `rfc` varchar(100) DEFAULT NULL,
-  `curp` varchar(100) DEFAULT NULL,
-  `prcnt_derecho` varchar(100) DEFAULT NULL,
-   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `nombre` varchar(100) NOT NULL,
+  `relacion` varchar(100) NOT NULL,
+  `rfc` varchar(100) NOT NULL,
+  `curp` varchar(100) NOT NULL,
+  `prcnt_derecho` varchar(100) NOT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `estatus_empleado`
+--
+
+CREATE TABLE `estatus_empleado` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expedientes_id` int  NOT NULL,
+  `situacion_del_empleado` varchar(100) NOT NULL,
+  `estatus_del_empleado` varchar(100) NOT NULL,
+  `motivo` varchar(100) DEFAULT NULL,
+  `fecha` date NOT NULL,
+  FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `historial_estatus_empleado`
+--
+
+CREATE TABLE `historial_estatus_empleado` (
+  `id` bigint  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `estatus_empleado_id` int  NOT NULL,
+  `vieja_situacion_del_empleado` varchar(100) NOT NULL,
+  `viejo_estatus_del_empleado` varchar(100) NOT NULL,
+  `viejo_motivo` varchar(100) DEFAULT NULL,
+  `vieja_fecha` date DEFAULT NULL,
+   FOREIGN KEY (estatus_empleado_id) REFERENCES estatus_empleado(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2580,8 +2758,8 @@ CREATE TABLE `ref_bancarias` (
 
 CREATE TABLE `tipo_papeleria` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(254) COLLATE latin1_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `nombre` varchar(254) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tipo_papeleria`
@@ -2600,7 +2778,17 @@ INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
 (10, 'AVISO DE RETENCION CREDITO INFONAVIT'),
 (11, 'CARTA DE SEGUNDO TRABAJO'),
 (12, 'ALTA DE IMSS'),
-(13, 'CONTRATO NOMINA BANCARIA');
+(13, 'CONTRATO NOMINA BANCARIA'),
+(14, 'CONTRATO DE PRUEBA'),
+(15, 'CONTRATO DEFINITIVO'),
+(16, 'CONTRATO INTERNO'),
+(17, 'CONTRATO SUPERVIVENCIA'),
+(18, 'SITUACION FISCAL'),
+(19, 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS'),
+(20, 'BAJA ANTE IMSS'),
+(21, 'MODIFICACION SALARIAL'),
+(22, 'COMPROBANTE DE ESTUDIOS'),
+(23, 'CARATULA DE DATOS BANCARIOS');
 
 
 -- --------------------------------------------------------
@@ -2613,22 +2801,924 @@ CREATE TABLE `papeleria_empleado` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
   `tipo_archivo` int NOT NULL,
-  `nombre_archivo` varchar(100) DEFAULT NULL,
-  `archivo` longtext DEFAULT NULL,
-  `fecha_subida` datetime DEFAULT NULL,
+  `nombre_archivo` longtext NOT NULL,
+  `identificador` longtext NOT NULL,
+  `fecha_subida` datetime NOT NULL,
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
-  FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historial_papeleria_empleado`
+--
+
+CREATE TABLE `historial_papeleria_empleado` (
+  `id` bigint  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `tipo_archivo` int  NOT NULL,
+  `viejo_nombre_archivo` longtext NOT NULL,
+  `viejo_identificador` longtext NOT NULL,
+  `vieja_fecha_subida` datetime NOT NULL,
+   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
+   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_estatus_incidencia`
+--
+
+
+CREATE TABLE `tipo_estatus_incidencia`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_estado` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `tipo_estatus_incidencia`
+
+
+INSERT INTO `tipo_estatus_incidencia` (`id`, `descripcion_estado`) VALUES
+   (1, 'Aprobada'),
+   (2, 'Cancelada'),
+   (3, 'Rechazada'),
+   (4, 'Pendiente'),
+   (5, 'Sin jefe'),
+   (6, 'Sin jerarquía');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estatus_incidencia`
+--
+	
+CREATE TABLE `estatus_incidencia`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `tipo_estatus_id` int NOT NULL,
+   `nombre` varchar(200) NOT NULL,
+	FOREIGN KEY (tipo_estatus_id) REFERENCES tipo_estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `estatus_incidencia`
+
+
+INSERT INTO `estatus_incidencia` (`id`, `tipo_estatus_id`, `nombre`) VALUES
+   (1, 1, "Esta incidencia ha sido aprobada"),
+   (2, 2, "Esta incidencia ha sido cancelada"),
+   (3, 3, "Esta incidencia ha sido rechazada"),
+   (4, 4, "En proceso de evaluación"),
+   (5, 5, "Ústed no tiene un superior"),
+   (6, 6, "Ústed no tiene jerarquía");
 
 -- --------------------------------------------------------								
 
 --
--- Structure for view `serverside_user`
+-- Structure for view `incidencias`
 --
-DROP TABLE IF EXISTS `serverside_user`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user`  AS SELECT `usuarios`.`id` AS `id`, `usuarios`.`username` AS `username`, `usuarios`.`nombre` AS `usnom`, `usuarios`.`apellido_pat` AS `apellido_pat`, `usuarios`.`apellido_mat` AS `apellido_mat`, `usuarios`.`correo` AS `correo`, `usuarios`.`departamento_id` AS `depa_id`, `usuarios`.`roles_id` AS `roles_id`, `usuarios`.`foto` AS `foto`, `departamentos`.`departamento` AS `depanom`, `roles`.`nombre` AS `rolnom` FROM ((`usuarios` left join `roles` on((`usuarios`.`roles_id` = `roles`.`id`))) left join `departamentos` on((`usuarios`.`departamento_id` = `departamentos`.`id`)));
+CREATE TABLE `incidencias` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `titulo` varchar(500) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `tipo_incidencia` varchar(500) NOT NULL,
+  `descripcion` varchar(500) NOT NULL,
+  `filename` longtext DEFAULT NULL,
+  `foto` longtext DEFAULT NULL,
+  `incidencia_creada` date NOT NULL,
+  `notificado_a` int DEFAULT NULL,
+  `estatus_id` int DEFAULT '4',
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (notificado_a) REFERENCES roles(id),
+   FOREIGN KEY (estatus_id) REFERENCES estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transicion_estatus_incidencia`
+--
+
+
+CREATE TABLE `transicion_estatus_incidencia`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `incidencias_id` bigint(20) NOT NULL,
+   `estatus_actual` int NOT NULL,
+   `estatus_siguiente` int NOT NULL,
+   FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus_actual) REFERENCES estatus_incidencia(id),
+   FOREIGN KEY (estatus_siguiente) REFERENCES estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_accion_incidencias`
+--
+
+CREATE TABLE `tipo_accion_incidencias`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_accion` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `tipo_accion_incidencias`
+
+
+INSERT INTO `tipo_accion_incidencias` (`id`, `descripcion_accion`) VALUES
+   (1, 'Aprobar'),
+   (2, 'Cancelar'),
+   (3, 'Rechazar');
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accion_incidencias`
+--
+
+CREATE TABLE `accion_incidencias`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`incidencias_id` bigint(20) NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+  `goce_de_sueldo` tinyint(1) DEFAULT NULL,
+  `comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` varchar(200) NOT NULL,
+	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transición_acción_incidencias`
+--
+
+CREATE TABLE `transicion_accion_incidencias`(
+   id_transicion int NOT NULL,
+   id_accion int NOT NULL,
+   FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_incidencia(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_accion) REFERENCES accion_incidencias(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `reset_password`
+--
+
+CREATE TABLE `reset_password`(
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `reset_link_token` varchar(255) NOT NULL,
+  `exp_date` TIMESTAMP NULL,
+   FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `historial_password`
+--
+
+CREATE TABLE `historial_password`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`user_id` int NOT NULL,
+	`password` varchar(255) NOT NULL,
+	`today_date` date NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `blacklist_password`
+--
+
+CREATE TABLE `blacklist_password` (
+    `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `blacklist_password`
+
+
+INSERT INTO `blacklist_password` VALUES
+    (1,'12345'),
+    (2,'123456'),
+    (3,'123456789'),
+    (4,'test1'),
+    (5,'password'),
+    (6,'12345678'),
+    (7,'zinch'),
+    (8,'g_czechout'),
+    (9,'asdf'),
+    (10,'qwerty'),
+    (11,'1234567890'),
+    (12,'1234567'),
+    (13,'Aa123456'),
+    (14,'iloveyou'),
+    (15,'1234'),
+    (16,'abc123'),
+    (17,'111111'),
+    (18,'123123'),
+    (19,'dubsmash'),
+    (20,'test'),
+    (21,'princess'),
+    (22,'qwertyuiop'),
+    (23,'sunshine'),
+    (24,'BvtTest123'),
+    (25,'11111'),
+    (26,'ashley'),
+    (27,'password1'),
+    (28,'monkey'),
+    (29,'livetest'),
+    (30,'55555'),
+    (31,'soccer'),
+    (32,'charlie'),
+    (33,'asdfghjkl'),
+    (34,'654321'),
+    (35,'family'),
+    (36,'michael'),
+    (37,'123321'),
+    (38,'football'),
+    (39,'baseball'),
+    (40,'q1w2e3r4t5y6'),
+    (41,'nicole'),
+    (42,'jessica'),
+    (43,'purple'),
+    (44,'shadow'),
+    (45,'hannah'),
+    (46,'chocolate'),
+    (47,'michelle'),
+    (48,'daniel'),
+    (49,'maggie'),
+    (50,'qwerty123'),
+    (51,'hello'),
+    (52,'112233'),
+    (53,'jordan'),
+    (54,'tigger'),
+    (55,'666666'),
+    (56,'987654321'),
+    (57,'superman'),
+    (58,'12345678910'),
+    (59,'summer'),
+    (60,'1q2w3e4r5t'),
+    (61,'fitness'),
+    (62,'bailey'),
+    (63,'zxcvbnm'),
+    (64,'fuckyou'),
+    (65,'121212'),
+    (66,'buster'),
+    (67,'butterfly'),
+    (68,'dragon'),
+    (69,'jennifer'),
+    (70,'amanda'),
+    (71,'justin'),
+    (72,'cookie'),
+    (73,'basketball'),
+    (74,'shopping'),
+    (75,'pepper'),
+    (76,'joshua'),
+    (77,'hunter'),
+    (78,'ginger'),
+    (79,'matthew'),
+    (80,'abcd1234'),
+    (81,'taylor'),
+    (82,'samantha'),
+    (83,'whatever'),
+    (84,'andrew'),
+    (85,'1qaz2wsx3edc'),
+    (86,'thomas'),
+    (87,'jasmine'),
+    (88,'animoto'),
+    (89,'madison'),
+    (90,'54321'),
+    (91,'flower'),
+    (92,'maria'),
+    (93,'babygirl'),
+    (94,'lovely'),
+    (95,'sophie'),
+    (96,'Chegg123'),
+    (97,'computer'),
+    (98,'qwe123'),
+    (99,'anthony'),
+    (100,'1q2w3e4r'),
+    (101,'peanut'),
+    (102,'bubbles'),
+    (103,'asdasd'),
+    (104,'qwert'),
+    (105,'1qaz2wsx'),
+    (106,'pakistan'),
+    (107,'123qwe'),
+    (108,'liverpool'),
+    (109,'elizabeth'),
+    (110,'harley'),
+    (111,'chelsea'),
+    (112,'familia'),
+    (113,'yellow'),
+    (114,'william'),
+    (115,'george'),
+    (116,'7777777'),
+    (117,'loveme'),
+    (118,'123abc'),
+    (119,'letmein'),
+    (120,'oliver'),
+    (121,'batman'),
+    (122,'cheese'),
+    (123,'banana'),
+    (124,'testing'),
+    (125,'secret'),
+    (126,'angel'),
+    (127,'friends'),
+    (128,'jackson'),
+    (129,'aaaaaa'),
+    (130,'softball'),
+    (131,'chicken'),
+    (132,'lauren'),
+    (133,'andrea'),
+    (134,'welcome'),
+    (135,'asdfgh'),
+    (136,'robert'),
+    (137,'orange'),
+    (138,'Testing1'),
+    (139,'pokemon'),
+    (140,'555555'),
+    (141,'melissa'),
+    (142,'morgan'),
+    (143,'123123123'),
+    (144,'qazwsx'),
+    (145,'diamond'),
+    (146,'brandon'),
+    (147,'jesus'),
+    (148,'mickey'),
+    (149,'olivia'),
+    (150,'changeme'),
+    (151,'danielle'),
+    (152,'victoria'),
+    (153,'gabriel'),
+    (154,'123456a'),
+    (155,'loveyou'),
+    (156,'hockey'),
+    (157,'freedom'),
+    (158,'azerty'),
+    (159,'snoopy'),
+    (160,'skinny'),
+    (161,'myheritage'),
+    (162,'qwerty1'),
+    (163,'159753'),
+    (164,'forever'),
+    (165,'iloveu'),
+    (166,'killer'),
+    (167,'joseph'),
+    (168,'master'),
+    (169,'mustang'),
+    (170,'hellokitty'),
+    (171,'school'),
+    (172,'patrick'),
+    (173,'blink182'),
+    (174,'tinkerbell'),
+    (175,'rainbow'),
+    (176,'nathan'),
+    (177,'cooper'),
+    (178,'onedirection'),
+    (179,'alexander'),
+    (180,'jordan23'),
+    (181,'lol123'),
+    (182,'jasper'),
+    (183,'junior'),
+    (184,'q1w2e3r4'),
+    (185,'222222'),
+    (186,'11111111'),
+    (187,'benjamin'),
+    (188,'jonathan'),
+    (189,'passw0rd'),
+    (190,'a123456'),
+    (191,'samsung'),
+    (192,'123'),
+    (193,'love123'),
+    (194,'picture1'),
+    (195,'senha'),
+    (196,'Million2'),
+    (197,'aaron431'),
+    (198,'qqww1122'),
+    (199,'omgpop'),
+    (200,'qwer123456'),
+    (201,'unknown'),
+    (202,'chatbooks'),
+    (203,'20100728'),
+    (204,'jacket025'),
+    (205,'evite'),
+    (206,'5201314'),
+    (207,'Bangbang123'),
+    (208,'jobandtalent'),
+    (209,'default'),
+    (210,'123654'),
+    (211,'ohmnamah23'),
+    (212,'zing'),
+    (213,'102030'),
+    (214,'147258369'),
+    (215,'party'),
+    (216,'myspace1'),
+    (217,'asd123'),
+    (218,'a123456789'),
+    (219,'888888'),
+    (220,'1234qwer'),
+    (221,'147258'),
+    (222,'999999'),
+    (223,'159357'),
+    (224,'88888888'),
+    (225,'789456123'),
+    (226,'anhyeuem'),
+    (227,'1q2w3e'),
+    (228,'789456'),
+    (229,'6655321'),
+    (230,'naruto'),
+    (231,'123456789a'),
+    (232,'password123'),
+    (233,'686584'),
+    (234,'iloveyou1'),
+    (235,'25251325'),
+    (236,'love'),
+    (237,'987654'),
+    (238,'princess1'),
+    (239,'101010'),
+    (240,'12341234'),
+    (241,'a801016'),
+    (242,'1111'),
+    (243,'1111111'),
+    (244,'yugioh'),
+    (245,'fuckyou1'),
+    (246,'asdf1234'),
+    (247,'trustno1'),
+    (248,'x4ivygA51F'),
+    (249,'starwars'),
+    (250,'michael1');
+INSERT INTO `blacklist_password` VALUES
+    (251,'jakcgt333'),
+    (252,'babygirl1'),
+    (253,'456789'),
+    (254,'qwer1234'),
+    (255,'hello123'),
+    (256,'10203'),
+    (257,'12345a'),
+    (258,'131313'),
+    (259,'123456b'),
+    (260,'Sample123'),
+    (261,'777777'),
+    (262,'football1'),
+    (263,'jesus1'),
+    (264,'b123456'),
+    (265,'333333'),
+    (266,'1111111111'),
+    (267,'a12345'),
+    (268,'142536'),
+    (269,'11223344'),
+    (270,'angel1'),
+    (271,'aa12345678'),
+    (272,'123456q'),
+    (273,'zxcvbn'),
+    (274,'qazwsxedc'),
+    (275,'target123'),
+    (276,'asdasd123'),
+    (277,'qweasdzxc'),
+    (278,'tinkle'),
+    (279,'q1w2e3r4t5'),
+    (280,'1g2w3e4r'),
+    (281,'gwerty123'),
+    (282,'zag12wsx'),
+    (283,'gwerty'),
+    (284,'qweqwe'),
+    (285,'12344321'),
+    (286,'12qwaszx'),
+    (287,'1234561'),
+    (288,'Status'),
+    (289,'qwerty12'),
+    (290,'qweasd'),
+    (291,'12345qwert'),
+    (292,'1qazxsw2'),
+    (293,'marina'),
+    (294,'111222'),
+    (295,'1234554321'),
+    (296,'qqqqqq'),
+    (297,'123654789'),
+    (298,'12345q'),
+    (299,'internet'),
+    (300,'q1w2e3'),
+    (301,'google'),
+    (302,'mynoob'),
+    (303,'qwertyui'),
+    (304,'qwertyu'),
+    (305,'monkey1'),
+    (306,'nikita'),
+    (307,'7758521'),
+    (308,'87654321'),
+    (309,'147852'),
+    (310,'212121'),
+    (311,'123789'),
+    (312,'147852369'),
+    (313,'123456789q'),
+    (314,'qwe'),
+    (315,'741852963'),
+    (316,'123qweasd'),
+    (317,'123456abc'),
+    (318,'1q2w3e4r5t6y'),
+    (319,'qazxsw'),
+    (320,'232323'),
+    (321,'999999999'),
+    (322,'qwerty12345'),
+    (323,'qwaszx'),
+    (324,'1234567891'),
+    (325,'456123'),
+    (326,'444444'),
+    (327,'qq123456');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `temporal_password`
+--
+
+
+CREATE TABLE `temporal_password`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `user_id` int NOT NULL UNIQUE,
+   FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `loginlogs`
+--
+
+CREATE TABLE `loginlogs`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `user_id` int NOT NULL,
+   `fecha_intento` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `tabla_usuarios_log`
+--
+
+CREATE TABLE `tabla_usuarios_log`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `tabla_expedientes_log`
+--
+
+CREATE TABLE `tabla_expedientes_log`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`num_empleado` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `tabla_papeleria_log`
+--
+
+CREATE TABLE `tabla_papeleria_log`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`num_empleado` varchar(100) NOT NULL,
+	`tipo_papeleria` varchar(100) NOT NULL,
+	`nombre_archivo` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `tabla_historial_papeleria_log`
+--
+
+CREATE TABLE `tabla_historial_papeleria_log`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`logged_usuario` varchar(100) NOT NULL,
+	`data_usuario` varchar(100) NOT NULL,
+	`num_empleado` varchar(100) NOT NULL,
+	`tipo_papeleria` varchar(100) NOT NULL,
+	`nombre_archivo` varchar(100) NOT NULL,
+	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla Transicion_estatus_incidencia
+--
+
+
+DELIMITER $$
+
+CREATE TRIGGER insertar_transicion_estatus_incidencia
+AFTER INSERT ON accion_incidencias FOR EACH ROW
+BEGIN
+	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, incidencias.estatus_id, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla transicion_accion_incidencia
+--
+
+DELIMITER $$
+
+CREATE TRIGGER link_transcicion_accion
+AFTER INSERT ON transicion_estatus_incidencia FOR EACH ROW
+BEGIN
+	 DECLARE AccionId INTEGER(4);
+
+	 SELECT id INTO AccionId from accion_incidencias where incidencias_id=NEW.incidencias_id;
+
+	 INSERT INTO transicion_accion_incidencias(id_transicion, id_accion) VALUES (NEW.id, AccionId);
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que mueve las contraseñas al historial `temp_password`
+--
+
+DELIMITER $$
+
+CREATE TRIGGER temp_password BEFORE UPDATE ON usuarios
+FOR EACH ROW
+BEGIN
+    IF NOT(NEW.password <=> OLD.password) THEN
+      INSERT INTO historial_password(user_id, password, today_date) SELECT NEW.id, OLD.password, CURDATE() FROM usuarios WHERE usuarios.id=NEW.id;
+    END IF;
+END$$    
+
+DELIMITER ;
+
+-- --------------------------------------------------------								
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_insertar`
+--
+
+DELIMITER $$
+	CREATE TRIGGER log_usuarios_insertar AFTER INSERT ON usuarios
+	FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
+		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(NEW.nombre, ' ', NEW.apellido_pat, ' ', NEW.apellido_mat), 'Insertar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_actualizar`
+--
+
+DELIMITER $$
+	CREATE TRIGGER log_usuarios_actualizar AFTER UPDATE ON usuarios
+	FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
+		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(OLD.nombre, ' ', OLD.apellido_pat, ' ', OLD.apellido_mat), 'Actualizar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_eliminar`
+--
+
+DELIMITER $$
+	CREATE TRIGGER log_usuarios_eliminar AFTER DELETE ON usuarios
+	FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
+		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(OLD.nombre, ' ', OLD.apellido_pat, ' ', OLD.apellido_mat), 'Eliminar');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log  `log_expedientes_insert`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_expedientes_insert AFTER INSERT on expedientes
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.num_empleado, "INSERTAR" FROM usuarios WHERE NEW.users_id = usuarios.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla expedientes en la tabla_expedientes_log  `log_expedientes_update`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_expedientes_update AFTER UPDATE on expedientes
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.num_empleado, "ACTUALIZAR" FROM usuarios WHERE NEW.users_id = usuarios.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla papeleria_empleado en la tabla_papeleria_log  `log_papeleria_insert`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_papeleria_insert
+AFTER INSERT on papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, NEW.nombre_archivo, "INSERTAR" FROM usuarios INNER JOIN expedientes INNER JOIN tipo_papeleria WHERE expedientes.users_id = usuarios.id AND NEW.expediente_id=expedientes.id AND NEW.tipo_archivo=tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla papeleria_empleado en la tabla_papeleria_log  `log_papeleria_update`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_papeleria_update
+AFTER UPDATE on papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, NEW.nombre_archivo, "ACTUALIZAR" FROM usuarios INNER JOIN expedientes INNER JOIN tipo_papeleria WHERE expedientes.users_id = usuarios.id AND NEW.expediente_id=expedientes.id AND NEW.tipo_archivo=tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla papeleria_empleado en la tabla_papeleria_log  `log_papeleria_eliminar`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_papeleria_eliminar 
+BEFORE DELETE ON papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, OLD.nombre_archivo, "ELIMINAR" FROM usuarios INNER JOIN expedientes INNER JOIN tipo_papeleria WHERE expedientes.users_id = usuarios.id AND OLD.expediente_id=expedientes.id AND OLD.tipo_archivo=tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla expedientes con su llave foránea papeleria_empleado e historial en la tabla_expedientes_log, tabla_papeleria_log y tabla_historial_papeleria_log  `log_expedientespapeleriaehistorial_eliminar`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_expedientespapeleriaehistorial_eliminar 
+BEFORE DELETE ON expedientes
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), OLD.num_empleado, "ELIMINAR" FROM usuarios WHERE OLD.users_id = usuarios.id;
+		
+		INSERT INTO tabla_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), OLD.num_empleado, tipo_papeleria.nombre, papeleria_empleado.nombre_archivo, "ELIMINAR" FROM usuarios INNER JOIN papeleria_empleado INNER JOIN tipo_papeleria WHERE OLD.users_id = usuarios.id AND OLD.id = papeleria_empleado.expediente_id AND papeleria_empleado.tipo_archivo = tipo_papeleria.id;
+		
+		INSERT INTO tabla_historial_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), OLD.num_empleado, tipo_papeleria.nombre, historial_papeleria_empleado.viejo_nombre_archivo, "ELIMINAR" FROM usuarios INNER JOIN historial_papeleria_empleado INNER JOIN tipo_papeleria WHERE OLD.users_id = usuarios.id AND OLD.id = historial_papeleria_empleado.expediente_id AND historial_papeleria_empleado.tipo_archivo = tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla historial_papeleria_empleado en la tabla_historial_papeleria_log  `log_historialpapeleria_insert`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_historialpapeleria_insert
+AFTER INSERT on historial_papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_historial_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, NEW.viejo_nombre_archivo, "INSERTAR" FROM expedientes INNER JOIN usuarios INNER JOIN tipo_papeleria WHERE NEW.expediente_id = expedientes.id AND usuarios.id = expedientes.users_id AND NEW.tipo_archivo = tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de actualizar de la tabla historial_papeleria_empleado en la tabla_historial_papeleria_log  `log_historialpapeleria_update`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_historialpapeleria_update
+AFTER UPDATE on historial_papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_historial_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, NEW.viejo_nombre_archivo, "ACTUALIZAR" FROM expedientes INNER JOIN usuarios INNER JOIN tipo_papeleria WHERE NEW.expediente_id = expedientes.id AND usuarios.id = expedientes.users_id AND NEW.tipo_archivo = tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el evento de eliminar de la tabla historial_papeleria_empleado en la tabla_historial_papeleria_log  `log_historialpapeleria_eliminar`
+--
+
+DELIMITER $$
+CREATE TRIGGER log_historialpapeleria_eliminar
+BEFORE DELETE ON historial_papeleria_empleado
+FOR EACH ROW
+	BEGIN
+		INSERT INTO tabla_historial_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
+		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, OLD.viejo_nombre_archivo, "ELIMINAR" FROM expedientes INNER JOIN usuarios INNER JOIN tipo_papeleria WHERE OLD.expediente_id = expedientes.id AND usuarios.id = expedientes.users_id AND OLD.tipo_archivo = tipo_papeleria.id;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_user_superadministrador`
+--
+DROP TABLE IF EXISTS `serverside_user_superadministrador`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_superadministrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (`usuarios`.`id` <> `sessionid`())  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_user_administrador`
+--
+DROP TABLE IF EXISTS `serverside_user_administrador`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_administrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador')) OR (`roles`.`nombre` is null))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_user_vistausuarios`
+--
+DROP TABLE IF EXISTS `serverside_user_vistausuarios`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador') AND (`usuarios`.`id` <> `sessionid`())) OR (`roles`.`nombre` is null))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_user_vistatecnicos`
+--
+DROP TABLE IF EXISTS `serverside_user_vistatecnicos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE ((`roles`.`nombre` = 'Tecnico') OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 
@@ -2637,6 +3727,32 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_expuser`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT `expedientes`.`id` AS `exp_id`, `usuarios`.`nombre` AS `usernom`, `usuarios`.`apellido_pat` AS `userpat`, `usuarios`.`apellido_mat` AS `usermat`, `expedientes`.`fecha_alta` AS `fechaalta` FROM (`expedientes` join `usuarios` on((`expedientes`.`users_id` = `usuarios`.`id`)))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT (case when (`expedientes`.`num_empleado` is null) then 'Sin asignar' else `expedientes`.`num_empleado` end) AS `num_empleado`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `estatus_empleado`.`situacion_del_empleado` AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `usuarios`.`foto_identificador` AS `foto`, `expedientes`.`id` AS `expediente_id` FROM (((`expedientes` join `usuarios` on((`usuarios`.`id` = `expedientes`.`users_id`))) join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`)))  ;
 
 -- --------------------------------------------------------
+
+--
+-- Estructura para la vista `serverside_rol`
+--
+DROP TABLE IF EXISTS `serverside_rol`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_rol`  AS SELECT `a`.`id` AS `rol_id`, `a`.`nombre` AS `rol`, `t1`.`id` AS `jerarquia_id`, `b`.`nombre` AS `jefe` FROM (((`roles` `a` left join `jerarquia` `t1` on((`t1`.`rol_id` = `a`.`id`))) left join `jerarquia` `t2` on((`t1`.`jerarquia_id` = `t2`.`id`))) left join `roles` `b` on((`t2`.`rol_id` = `b`.`id`)))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `serverside_permisos`
+--
+DROP TABLE IF EXISTS `serverside_permisos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_permisos`  AS SELECT `permisos`.`id` AS `permisoid`, `permisos`.`nombre` AS `pernom`, `categorias`.`nombre` AS `catnom`, `categorias`.`id` AS `catid` FROM (`permisos` join `categorias` on((`categorias`.`id` = `permisos`.`categoria_id`)))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `serverside_subrol`
+--
+
+DROP TABLE IF EXISTS `serverside_subrol`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_subrol`  AS SELECT `subroles`.`id` AS `sbid`, `subroles`.`subrol_nombre` AS `sbnombre`, `roles`.`nombre` AS `rolnom` FROM (`subroles` join `roles` on((`roles`.`id` = `subroles`.`roles_id`)))  ;

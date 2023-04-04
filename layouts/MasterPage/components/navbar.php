@@ -8,47 +8,32 @@
     </div>
 
     <div class="flex items-center">
-        <div x-data="{ notificationOpen: false }" class="relative">
-            <button @click="notificationOpen = ! notificationOpen" class="flex mx-4 text-gray-600 focus:outline-none">
-                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    </path>
-                </svg>
-            </button>
-
-            <div x-show="notificationOpen" @click="notificationOpen = false" class="fixed inset-0 h-full w-full z-10" style="display: none;"></div>
-
-            <div x-show="notificationOpen" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-10" style="width: 20rem; display: none;">
-                <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-white hover:bg-indigo-600 -mx-2">
-                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=334&amp;q=80" alt="avatar">
-                    <p class="text-sm mx-2">
-                        <span class="font-bold" href="#">Sara Salah</span> replied on the <span class="font-bold text-indigo-400" href="#">Upload Image</span> artical . 2m
-                    </p>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-white hover:bg-indigo-600 -mx-2">
-                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt="avatar">
-                    <p class="text-sm mx-2">
-                        <span class="font-bold" href="#">Slick Net</span> start following you . 45m
-                    </p>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-white hover:bg-indigo-600 -mx-2">
-                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1450297350677-623de575f31c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=334&amp;q=80" alt="avatar">
-                    <p class="text-sm mx-2">
-                        <span class="font-bold" href="#">Jane Doe</span> Like Your reply on <span class="font-bold text-indigo-400" href="#">Test with TDD</span> artical . 1h
-                    </p>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-white hover:bg-indigo-600 -mx-2">
-                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80" alt="avatar">
-                    <p class="text-sm mx-2">
-                        <span class="font-bold" href="#">Abigail Bennett</span> start following you . 3h
-                    </p>
-                </a>
-            </div>
-        </div>
-
         <div x-data="{ dropdownOpen: false }" class="relative">
-            <button @click="dropdownOpen = ! dropdownOpen" class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
-                <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80" alt="Your avatar">
+            <button @click="dropdownOpen = ! dropdownOpen" class="flex items-center gap-3">
+                <div class="relative shrink-0 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
+                    <?php
+                        $select_photo_user = $object -> _db -> prepare("SELECT nombre_foto, foto_identificador FROM usuarios WHERE id=:id");
+                        $select_photo_user -> execute(array(":id" => $_SESSION["id"]));
+                        $fetch_photo_user = $select_photo_user -> fetch(PDO::FETCH_OBJ);
+                        if($fetch_photo_user -> nombre_foto != null && $fetch_photo_user -> foto_identificador != null){
+                            $path = __DIR__ . "/../../../src/img/imgs_uploaded/".$fetch_photo_user -> foto_identificador;
+                            if(!file_exists($path)){
+                    ?>
+                                <img id="navbar-photo" class="h-full w-full object-cover" src="../src/img/not_found.jpg">
+                    <?php
+                            }else{
+                    ?>
+                                <img id="navbar-photo" class="h-full w-full object-cover" src="../src/img/imgs_uploaded/<?php echo $fetch_photo_user -> foto_identificador ?>">
+                    <?php          
+                            }
+                        }else{
+                    ?>
+                                <img id="navbar-photo" class="h-full w-full object-cover" src="../src/img/default-user.png">
+                    <?php
+                        }
+                    ?>
+                </div>
+                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
             </button>
 
             <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10" style="display: none;"></div>

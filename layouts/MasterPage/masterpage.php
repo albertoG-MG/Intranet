@@ -1,4 +1,8 @@
-<?php include_once __DIR__ . ($codigophp); ?>
+<?php
+include_once __DIR__ . "/../../classes/roles.php";
+include_once __DIR__ . "/../../classes/permissions.php"; 
+include_once __DIR__ . ($codigophp); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 

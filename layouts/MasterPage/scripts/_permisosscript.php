@@ -10,14 +10,27 @@ document.addEventListener("DOMContentLoaded", function() {
 		},
         dom: '<"top"fB>rt<"bottom"ip><"clear">',
         buttons: [
+            {
+                text: "<i class='mdi mdi-account-box-multiple text-white font-semibold text-lg'></i>Administrar categorías",
+                attr: {
+                    'id': 'categorias',
+                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                },
+                className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                action: function(e, dt, node, config) {
+                    window.location.href = "permisocategoria.php";
+                }
+            },
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
 				{
 					text: "<i class='mdi mdi-account-lock text-white font-semibold text-lg'></i> Crear Permiso",
 					attr: {
-						'id': 'open-modal',
+						'id': 'permiso',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
 					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
 				}
+            <?php } ?>
 				],
         "processing": true,
 		"serverSide": true,
@@ -37,27 +50,45 @@ document.addEventListener("DOMContentLoaded", function() {
                     "</div>");
                 }
             },
+            { 
+                data: null, render: function ( data, type, row ) {
+                    return (
+                    "<div class='py-3 text-left'>" +
+                    "<div class='flex items-center'>" +
+                    "<div class='mr-2 shrink-0'>" +
+                    "<svg style='width:24px;height:24px' viewBox='0 0 24 24'><path fill='currentColor' d='M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z' /></svg>" +
+                    "</div>" +
+                    "<span>" + row[2] + "</span>" +
+                    "</div>" +
+                    "</div>");
+                }
+            },
             {
                 data: null, render: function ( data, type, row ) {
                     return  (
                    "<div class='py-3 text-left'>"+
                         "<div class='flex item-center justify-end'>"+
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Edit'>"+
                                 "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>"+
                                 "</svg>"+
                             "</div>"+
+                        <?php } ?>
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
                             "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>"+
                                 "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
                                     "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>"+
                                 "</svg>"+
                             "</div>"+
+                        <?php } ?>
                         "</div>"+
                    "</div>");
                 }
             },
         ]
     });
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Editar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
     const modalContainer = document.querySelector(
         "#modal-component-container"
     );
@@ -73,7 +104,8 @@ document.addEventListener("DOMContentLoaded", function() {
     $.validator.unobtrusive.parse(formId);
     }
 
-    $('.dt-buttons').on('click', '.dt-button', function(){
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
+    $('.dt-buttons').on('click', '#permiso', function(){
         $('.modal-wrapper-flex').html(
             "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
             "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-lock text-black font-semibold text-lg'></i></div>"+
@@ -87,6 +119,23 @@ document.addEventListener("DOMContentLoaded", function() {
                         "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='crearpermiso' name='crearpermiso' placeholder='Input 1'>"+
                     "</div>"+
                 "</div>"+
+                "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
+                    "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Seleccionar categoría</label>"+
+                    "<div class='group flex'>"+
+                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
+                        "<select class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent' id='category' name='category'>"+
+							"<option value=''>---Seleccione---</option>"+
+							"<?php
+							  $categorias = categorias::FetchCategorias();
+							  foreach ($categorias as $row) {
+								echo "<option value='" . $row->id . "'>";
+								echo "" . $row->nombre . "";
+								echo "</option>";
+							  }
+							?>"+
+						"</select>"+
+                    "</div>"+
+                "</div>"+ 
             "</div>");
         $('.modal-actions').html(
             "<button id='crear-permiso' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
@@ -100,51 +149,83 @@ document.addEventListener("DOMContentLoaded", function() {
             errorPlacement: function(error, element) {
                 error.insertAfter(element.parent('.group.flex'));
             },
+            highlight: function(element) {
+                $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+            },
+            unhighlight: function(element) {
+                $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+            },
                     rules: {
                         crearpermiso: {
                             required: true,
                             remote: "../ajax/validacion/permisos/checkpermiso.php"
-                        }
+                        },
+                        category: {
+					        required: true
+				        }
                     },
                     messages: {
                         crearpermiso: {
                             required: 'Por favor, ingresa un permiso',
                             remote: 'Ese permiso ya existe, por favor escriba otro'
-                        }
+                        },
+                        category: {
+					        required: 'Por favor, selecciona una categoria, en caso de que no exista, crear una'
+				        }
                     },
                     submitHandler: function(form) {
-                        var fd = new FormData();
-                        var permisos = $("input[name=crearpermiso]").val();
-                        var app = "permisos";
-                        var method = "store";
-                        fd.append('permisos', permisos);
-                        fd.append('app', app);
-                        fd.append('method', method);
-                        var table = $('#datatable').DataTable();
-                        $.ajax({
-                            type: "post",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                response = response.replace(/[\r\n]/gm, '');
-                                if(response == "success"){
-                                    Swal.fire({
-                                        title: "Permiso Creado",
-                                        text: "Se ha creado un permiso exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        table.ajax.reload(null, false);
-                                        });
-                                }
+                        check_user_logged().then((response) => {
+		                    if(response == "true"){
+                                var fd = new FormData();
+                                var permisos = $("input[name=crearpermiso]").val();
+                                var categorias = $("#category").val();
+                                var app = "permisos";
+                                var method = "store";
+                                fd.append('permisos', permisos);
+                                fd.append('categorias', categorias);
+                                fd.append('app', app);
+                                fd.append('method', method);
+                                var table = $('#datatable').DataTable();
+                                $.ajax({
+                                    type: "post",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (response) {
+                                        response = response.replace(/[\r\n]/gm, '');
+                                        if(response == "success"){
+                                            Swal.fire({
+                                                title: "Permiso Creado",
+                                                text: "Se ha creado un permiso exitosamente!",
+                                                icon: "success"
+                                            }).then(function() {
+                                                table.ajax.reload(null, false);
+                                                });
+                                        }
+                                    }
+                                });
+                            }else{
+                                Swal.fire({
+                                    title: "Ocurrió un error",
+                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                    icon: "error"
+                                }).then(function() {
+                                    window.location.href = "login.php";
+                                });
                             }
-                        });
+                        }).catch((error) => {
+		                    console.log(error);
+	                    })
                         return false;
                     }
         });
     });
+    <?php } ?>
 
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
     $('#datatable').on( 'click', 'tr .Edit', function () {
         var table = $('#datatable').DataTable();
         var rowSelector;
@@ -167,7 +248,24 @@ document.addEventListener("DOMContentLoaded", function() {
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el permiso</label>"+
                     "<div class='group flex'>"+
                         "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editpermiso' name='editpermiso' value='"+data[1]+"'>"+
+                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editpermiso' name='editpermiso' placeholder='Input 1' value='"+data[1]+"'>"+
+                    "</div>"+
+                "</div>"+
+                "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
+                    "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Seleccionar categoría</label>"+
+                    "<div class='group flex'>"+
+                        "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
+                        "<select class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent' id='editarcategory' name='editarcategory'>"+
+							"<option value=''>---Seleccione---</option>"+
+							"<?php
+							  $categorias = categorias::FetchCategorias();
+							  foreach ($categorias as $row) {
+								echo "<option value='" . $row->id . "'>";
+								echo "" . $row->nombre . "";
+								echo "</option>";
+							  }
+							?>"+
+						"</select>"+
                     "</div>"+
                 "</div>"+
             "</div>");
@@ -175,6 +273,8 @@ document.addEventListener("DOMContentLoaded", function() {
             "<button id='editar-permiso' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
             "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
         );
+        let element = document.getElementById('editarcategory');
+		element.value = data[3];
         openModal();
         resetFormValidator("#Guardar");
         $('#Guardar').unbind('submit'); 		
@@ -182,6 +282,14 @@ document.addEventListener("DOMContentLoaded", function() {
             ignore: [],
             errorPlacement: function(error, element) {
                 error.insertAfter(element.parent('.group.flex'));
+            },
+            highlight: function(element) {
+                $(element).removeClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
+                $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+            },
+            unhighlight: function(element) {
+                $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                $(element).addClass("border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent");
             },
                     rules: {
                         editpermiso: {
@@ -193,48 +301,71 @@ document.addEventListener("DOMContentLoaded", function() {
                                     "editarid": data[0]
                                 }
                             }
-                        }
+                        },
+                        editarcategory: {
+					        required: true
+				        }
                     },
                     messages: {
                         editpermiso: {
                             required: 'Por favor, ingresa un permiso',
                             remote: 'Ese permiso ya existe, por favor, escriba otro'
-                        }
+                        },
+                        editarcategory: {
+					        required: 'Por favor, selecciona una categoria'
+				        }
                     },
                     submitHandler: function(form) {
-                        var fd = new FormData();
-                        var permisos = $("input[name=editpermiso]").val();
-                        var app = "permisos";
-                        var method = "edit";
-                        var id = data[0];
-                        fd.append('permisos', permisos);
-                        fd.append('app', app);
-                        fd.append('method', method);
-                        fd.append('editarid', id);
-                        var table = $('#datatable').DataTable();
-                        $.ajax({
-                            type: "post",
-                            url: "../ajax/class_search.php",
-                            data: fd,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                response = response.replace(/[\r\n]/gm, '');
-                                if(response == "success"){
-                                    Swal.fire({
-                                        title: "Permiso Editado",
-                                        text: "Se ha editado un permiso exitosamente!",
-                                        icon: "success"
-                                    }).then(function() {
-                                        table.ajax.reload(null, false);
-                                        });
-                                }
+                        check_user_logged().then((response) => {
+		                    if(response == "true"){
+                                var fd = new FormData();
+                                var permisos = $("input[name=editpermiso]").val();
+                                var categorias = $("#editarcategory").val();
+                                var app = "permisos";
+                                var method = "edit";
+                                var id = data[0];
+                                fd.append('permisos', permisos);
+                                fd.append('categorias', categorias);
+                                fd.append('app', app);
+                                fd.append('method', method);
+                                fd.append('editarid', id);
+                                var table = $('#datatable').DataTable();
+                                $.ajax({
+                                    type: "post",
+                                    url: "../ajax/class_search.php",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (response) {
+                                        response = response.replace(/[\r\n]/gm, '');
+                                        if(response == "success"){
+                                            Swal.fire({
+                                                title: "Permiso Editado",
+                                                text: "Se ha editado un permiso exitosamente!",
+                                                icon: "success"
+                                            }).then(function() {
+                                                table.ajax.reload(null, false);
+                                                });
+                                        }
+                                    }
+                                });
+                            }else{
+                                Swal.fire({
+                                    title: "Ocurrió un error",
+                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                    icon: "error"
+                                }).then(function() {
+                                    window.location.href = "login.php";
+                                });
                             }
-                        });
+                        }).catch((error) => {
+		                    console.log(error);
+	                    })
                         return false;
                     }
         });
     });
+    <?php } ?>
 
 
     function openModal(){
@@ -252,6 +383,7 @@ document.addEventListener("DOMContentLoaded", function() {
         element.classList.remove( ...classessToRemove);
         element.classList.add( ...classesToAdd);
     }
+    <?php } ?>
 });
 $(document).ready(function() {
     $('.dataTables_filter input[type="search"]').
@@ -263,6 +395,7 @@ $(document).ready(function() {
     <?php } ?>
 });
 
+<?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar permiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador") { ?>
 $('#datatable').on( 'click', 'tr .Eliminar', function () {
     var table = $('#datatable').DataTable();
     var rowSelector;
@@ -285,34 +418,73 @@ $('#datatable').on( 'click', 'tr .Eliminar', function () {
     confirmButtonText: 'Sí!',
     cancelButtonText: 'cancelar'
     }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                icon: 'success',
-                title: 'éxito',
-                text: 'La fila ha sido eliminada!'
-            }).then(function() {
-                var eliminarid = data[0];
-                var fd = new FormData();
-                fd.append('id', eliminarid);
-                $.ajax({
-                    url: "../ajax/eliminar/tabla_permisos/eliminarpermiso.php",
-                    type: "post",
-                    data: fd,
-                    processData: false,
-                    contentType: false,
-                    success: function(result) {
-                            table
-                            .row($(this).parents('tr'))
-                            .remove()
-                            .draw();
-                    }
+        check_user_logged().then((response) => {
+		    if(response == "true"){
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'éxito',
+                        text: 'La fila ha sido eliminada!'
+                    }).then(function() {
+                        var eliminarid = data[0];
+                        var fd = new FormData();
+                        fd.append('id', eliminarid);
+                        $.ajax({
+                            url: "../ajax/eliminar/tabla_permisos/eliminarpermiso.php",
+                            type: "post",
+                            data: fd,
+                            processData: false,
+                            contentType: false,
+                            success: function(result) {
+                                    table
+                                    .row($(this).parents('tr'))
+                                    .remove()
+                                    .draw();
+                            }
+                        });
+                    });
+                }
+            }else{
+                Swal.fire({
+                    title: "Ocurrió un error",
+                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                    icon: "error"
+                }).then(function() {
+                    window.location.href = "login.php";
                 });
-            });
-        }
+            }
+        }).catch((error) => {
+		    console.log(error);
+	    })
     })
 });
+<?php } ?>
+
+function check_user_logged(){
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: "POST",
+			url: "../ajax/check_user_logged.php",
+			data:{
+				pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+			},
+			success: function (response) {
+				resolve(response)
+			},
+			error: function (error) {
+				reject(error)
+			}
+		});
+	})
+}
+
 </script>
 <style>
+
+    .error{
+        color: rgb(244 63 94);
+    }
+    
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
