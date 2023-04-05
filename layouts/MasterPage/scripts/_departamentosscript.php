@@ -12,12 +12,12 @@
         buttons: [
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
 				{
-					text: "<i class='mdi mdi-account-box-multiple text-white font-semibold text-lg'></i> Crear Departamento",
+					text: "Crear Departamento",
 					attr: {
 						'id': 'Departamento',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
-					className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
+					className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700'
 				}
             <?php } ?>
 				],
@@ -25,45 +25,49 @@
         "serverSide": true,
         "sAjaxSource": '../config/serverside_departamento.php',
         "initComplete": () => {$("#datatable").show();},
-        "columns": [
-            { 
-                data: null, render: function ( data, type, row ) {
-                    return (
-                    "<div class='py-3 text-left'>" +
-                    "<div class='flex items-center'>" +
-                    "<div class='mr-2 shrink-0'>" +
-                    "<svg style='width:24px;height:24px' viewBox='0 0 24 24'><path fill='currentColor' d='M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H8A2,2 0 0,1 6,16V4A2,2 0 0,1 8,2H20M17,7A3,3 0 0,0 14,4A3,3 0 0,0 11,7A3,3 0 0,0 14,10A3,3 0 0,0 17,7M8,15V16H20V15C20,13 16,11.9 14,11.9C12,11.9 8,13 8,15Z' /></svg>" +
-                    "</div>" +
-                    "<span>" + row[1] + "</span>" +
-                    "</div>" +
-                    "</div>");
+        "columns": 
+        [
+            {data: [1]},
+            {data: [0], searchable: false}
+        ],
+        "columnDefs": 
+        [
+            {
+                target: [0],
+                render: function (data, type, row) {
+                    return(
+                        "<div class='flex items-center gap-3'>" +
+                            "<svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z'></path></svg>"+
+                            "<span>" + row[1] + "</span>" +
+                        "</div>"
+                    );
                 }
             },
             {
-                data: null, render: function ( data, type, row ) {
-                    return  (
-                   "<div class='py-3 text-left'>"+
-                        "<div class='flex item-center justify-end'>"+
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Edit'>"+
-                                "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
-                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>"+
-                                "</svg>"+
-                            "</div>"+
-                        <?php } ?>
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
-                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>"+
-                                "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
-                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>"+
-                                "</svg>"+
-                            "</div>"+
-                        <?php } ?>    
-                        "</div>"+
-                   "</div>");
+                target: [1],
+                render: function (data, type, row) {
+                    return (
+                        "<div class='flex item-center justify-start md:justify-center gap-3'>" +
+                            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                                "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Edit'>"+
+                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+                                        "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>"+
+                                    "</svg>"+
+                                "</div>"+
+                            <?php } ?>
+                            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
+                                "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar'>"+
+                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+                                        "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>"+
+                                    "</svg>"+
+                                "</div>"+
+                            <?php } ?>
+                        "</div>"
+                    );
                 }
-            },
+            }
         ]
-        });
+    });
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
         const modalContainer = document.querySelector(
         "#modal-component-container"
@@ -83,22 +87,25 @@
         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
             $('.dt-buttons').on('click', '.dt-button', function(){
                 $('.modal-wrapper-flex').html(
-                "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
-                "<h3 class='text-lg font-medium text-gray-900'>Crear departamento</h3>"+
-                "</div>"+
-                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
-                    "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
-                        "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del departamento</label>"+
-                        "<div class='group flex'>"+
-                            "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
-                            "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='creardepartamento' name='creardepartamento' placeholder='Input 1'>"+
-                        "</div>"+
+                    "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
+                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg></div>"+
+                    "<h3 class='text-lg font-medium text-gray-900'>Crear departamento</h3>"+
                     "</div>"+
-                "</div>");
+                    "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left'>"+
+                        "<div class='grid grid-cols-1 mt-5'>"+
+                            "<label class='text-[#64748b] font-semibold mb-2'>Nombre del departamento</label>"+
+                            "<div class='group flex'>"+
+                                "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'>"+
+                                    "<svg class='w-5 h-5 text-gray-500' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg>"+
+                                "</div>"+
+                                "<input class='w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600' type='text' id='creardepartamento' name='creardepartamento' placeholder='Crear departamento'>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>"
+                );
                 $('.modal-actions').html(
-                    "<button id='crear-departamento' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
-                    "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
+                    "<button id='crear-departamento' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Crear departamento</button>"+
+                    "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"
                 );
                 openModal();
                 resetFormValidator("#Guardar");
@@ -183,21 +190,24 @@
                 var data = row.data();
                 $('.modal-wrapper-flex').html(
                     "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-account-box-multiple text-black font-semibold text-lg'></i></div>"+
+                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg></div>"+
                     "<h3 class='text-lg font-medium text-gray-900'>Editar departamento</h3>"+
                     "</div>"+
-                    "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
-                        "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
-                            "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el departamento</label>"+
+                    "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left'>"+
+                        "<div class='grid grid-cols-1 mt-5'>"+
+                            "<label class='text-[#64748b] font-semibold mb-2'>Editar el departamento</label>"+
                             "<div class='group flex'>"+
-                                "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-box-multiple text-gray-400 text-lg'></i></div>"+
-                                "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editdepartamento' name='editdepartamento' value='"+data[1]+"'>"+
+                                "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'>"+
+                                    "<svg class='w-5 h-5 text-gray-500' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg>"+
+                                "</div>"+
+                                "<input class='w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600' type='text' id='editdepartamento' name='editdepartamento' placeholder='Editar departamento' value='"+data[1]+"'>"+
                             "</div>"+
                         "</div>"+
-                    "</div>");
+                    "</div>"
+                );
                 $('.modal-actions').html(
-                    "<button id='editar-departamento' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
-                    "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
+                    "<button id='editar-departamento' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar departamento</button>"+
+                    "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"
                 );
                 openModal();
                 resetFormValidator("#Guardar");
@@ -294,7 +304,7 @@
     });
     $(document).ready(function() {
         $('.dataTables_filter input[type="search"]').
-        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
         <?php
         if(basename($_SERVER['PHP_SELF']) == 'departamentos.php'){?>
             var dropdown = document.getElementById('catalogos');
@@ -420,6 +430,7 @@
 
     .search{
         margin:auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover, tr.even:hover{
