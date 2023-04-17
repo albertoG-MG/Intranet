@@ -1020,31 +1020,31 @@
                                              <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="identificacion" name="identificacion">
-                                          <option value="" x-on:click="tidentificacion; open = false">--Seleccione--</option>
-                                          <option value="INE" x-on:click="tidentificacion; open = true">INE</option>
-                                          <option value="PASAPORTE" x-on:click="tidentificacion; open = true">PASAPORTE</option>
-                                          <option value="CEDULA" x-on:click="tidentificacion; open = true">CEDULA</option>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-init="<?php if($edit->etipo_identificacion == 'INE'){ ?> open = true; <?php }else if($edit->etipo_identificacion == 'PASAPORTE'){ ?> open = true; <?php }else if($edit->etipo_identificacion == 'CEDULA'){ ?> open = true; <?php } ?>" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
+                                          <option value="">--Seleccione--</option>
+                                          <option value="INE">INE</option>
+                                          <option value="PASAPORTE">PASAPORTE</option>
+                                          <option value="CEDULA">CEDULA</option>
                                        </select>
                                     </div>
                                  </div>
                                  <script>
-                                    function tidentificacion(e){
-                                       if(e.target.value == ""){
-                                       $("#numeroidentificacion").val("");
-                                       $("#numeroidentificacion").rules("remove");
-                                       $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                       $("#numeroidentificacion-error").css("display", "none");
+                                    function tidentificacion(value){
+                                       if(value == ""){
+                                          $("#numeroidentificacion").val("");
+                                          $("#numeroidentificacion").rules("remove");
+                                          $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                          $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $("#numeroidentificacion-error").css("display", "none");
                                        }else {
-                                       $("#numeroidentificacion").rules("add", {
-                                          required: true,
-                                          alphanumeric: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             alphanumeric: "Solo se permiten carácteres alfanúmericos"
-                                          }
-                                       }); 
+                                          $("#numeroidentificacion").rules("add", {
+                                             required: true,
+                                             alphanumeric: true,
+                                             messages: {
+                                                required: "Este campo es requerido",
+                                                alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                                             }
+                                          }); 
                                        }
                                     }
                                  </script>

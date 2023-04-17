@@ -1035,11 +1035,35 @@
 
         //IDENTIFICACIÓN
         <?php if($edit->etipo_identificacion == 'INE'){ ?>
-            $('#identificacion').find('option:nth-child(2)').prop('selected',true).trigger('click');
+            $('#identificacion').find('option:nth-child(2)').prop('selected',true);
+            $("#numeroidentificacion").rules("add", {
+                required: true,
+                alphanumeric: true,
+                messages: {
+                    required: "Este campo es requerido",
+                    alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                }
+            }); 
         <?php }else if($edit->etipo_identificacion == 'PASAPORTE'){ ?>
-            $('#identificacion').find('option:nth-child(3)').prop('selected',true).trigger('click');
+            $('#identificacion').find('option:nth-child(3)').prop('selected',true);
+            $("#numeroidentificacion").rules("add", {
+                required: true,
+                alphanumeric: true,
+                messages: {
+                    required: "Este campo es requerido",
+                    alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                }
+            });
         <?php }else if($edit->etipo_identificacion == 'CEDULA'){ ?>
-            $('#identificacion').find('option:nth-child(4)').prop('selected',true).trigger('click');
+            $('#identificacion').find('option:nth-child(4)').prop('selected',true);
+            $("#numeroidentificacion").rules("add", {
+                required: true,
+                alphanumeric: true,
+                messages: {
+                    required: "Este campo es requerido",
+                    alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                }
+            });
         <?php } ?>
 
         //CARGA DE REFERENCIAS LABORALES
