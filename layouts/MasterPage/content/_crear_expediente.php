@@ -99,26 +99,28 @@
                                     </div>
                                     <select id="user" name="user">
                                        <option></option>
-                                       <?php
-                                          $arr = array();
-                                          $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id"); 
-                                          $checkexpuser -> execute();
-                                          while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
-                                             $arr[] = $fetchuserexp->id;
-                                          }
-                                          $usuarios = user::FetchUsuarios();
-                                          foreach ($usuarios as $row) {
-                                             if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
-                                             {
-                                                if(!in_array($row->id, $arr))
+                                       <optgroup label="Usuarios">
+                                          <?php
+                                             $arr = array();
+                                             $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id"); 
+                                             $checkexpuser -> execute();
+                                             while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
+                                                $arr[] = $fetchuserexp->id;
+                                             }
+                                             $usuarios = user::FetchUsuarios();
+                                             foreach ($usuarios as $row) {
+                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
                                                 {
-                                                      echo "<option value='" . $row->id . "'>";
-                                                      echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                      echo "</option>";
+                                                   if(!in_array($row->id, $arr))
+                                                   {
+                                                         echo "<option value='" . $row->id . "'>";
+                                                         echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                         echo "</option>";
+                                                   }
                                                 }
                                              }
-                                          }
                                           ?>
+                                       </optgroup>
                                     </select>
                                  </div>
                               </div>
