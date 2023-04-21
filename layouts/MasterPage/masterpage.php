@@ -12,6 +12,7 @@ include_once __DIR__ . ($codigophp);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/bundle.css">
     <link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../src/css/datatables.min.css">
 </head>
