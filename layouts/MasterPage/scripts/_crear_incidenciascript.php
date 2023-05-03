@@ -1201,12 +1201,16 @@
 							var fecha_acta = $("#fecha_acta").val();
 							var motivo_acta = $("#motivo_acta").val();
 							var obcomen_acta = $("#obcomen_acta").val();
+							var method = "store";
+							var app = "Incidencias"
 							//TODO EL APPEND DE LAS ACTAS ADMINISTRATIVAS
 							fd.append('titulo_acta', titulo_acta);
 							fd.append('caja_empleado', caja_empleado);
 							fd.append('fecha_acta', fecha_acta);
 							fd.append('motivo_acta', motivo_acta);
 							fd.append('obcomen_acta', obcomen_acta);
+							fd.append('method', method);
+							fd.append('app', app);
 							$.ajax({
 								url: '../ajax/class_search.php',
 								type: 'POST',
