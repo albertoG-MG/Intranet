@@ -854,6 +854,7 @@
 									var periodo_pnr_f = $("#periodo_pnr_f").val();
 								}
 							}
+							var tipo_incidencia_papel = "Permiso";
 							var method = "store";
 							var app = "Incidencias";
 
@@ -881,6 +882,7 @@
 									fd.append('periodo_pnr_f', periodo_pnr_f);
 								}
 							}
+							fd.append('tipo_incidencia_papel', tipo_incidencia_papel);
 							fd.append('method', method);
 							fd.append('app', app);
 							$.ajax({
@@ -1032,6 +1034,7 @@
 							var periodo_incapacidad = $("#periodo_incapacidad").val();
 							var motivo_incapacidad = $("#motivo_incapacidad").val();
 							var comprobante_incapacidad = $('#comprobante_incapacidad')[0].files[0];
+							var tipo_incidencia_papel = "Incapacidad";
 							var method = "store";
 							var app = "Incidencias"
 							//TODO EL APPEND DE INCAPACIDADES
@@ -1039,6 +1042,7 @@
 							fd.append('periodo_incapacidad', periodo_incapacidad);
 							fd.append('motivo_incapacidad', motivo_incapacidad);
 							fd.append('comprobante_incapacidad', comprobante_incapacidad);
+							fd.append('tipo_incidencia_papel', tipo_incidencia_papel);
 							fd.append('method', method);
 							fd.append('app', app);
 							$.ajax({
@@ -1201,6 +1205,7 @@
 							var fecha_acta = $("#fecha_acta").val();
 							var motivo_acta = $("#motivo_acta").val();
 							var obcomen_acta = $("#obcomen_acta").val();
+							var tipo_incidencia_papel = "Acta_administrativa";
 							var method = "store";
 							var app = "Incidencias"
 							//TODO EL APPEND DE LAS ACTAS ADMINISTRATIVAS
@@ -1209,6 +1214,7 @@
 							fd.append('fecha_acta', fecha_acta);
 							fd.append('motivo_acta', motivo_acta);
 							fd.append('obcomen_acta', obcomen_acta);
+							fd.append('tipo_incidencia_papel', tipo_incidencia_papel);
 							fd.append('method', method);
 							fd.append('app', app);
 							$.ajax({
