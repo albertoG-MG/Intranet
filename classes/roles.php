@@ -165,11 +165,11 @@ class roles {
     }
 
     public static function FetchUserDepartamento($id){
-		$object = new connection_database();
-		$check_departamento = $object->_db->prepare("select departamentos.departamento from usuarios inner join roles on roles.id=usuarios.roles_id left join departamentos on departamentos.id=usuarios.departamento_id where usuarios.id=:sessionrol");
-		$check_departamento ->execute(array(':sessionrol' => $id));
-		$fetch_departamento = $check_departamento -> fetch(PDO::FETCH_OBJ);
-		return $fetch_departamento->departamento;
+        $object = new connection_database();
+        $check_departamento = $object->_db->prepare("select departamentos.departamento from usuarios inner join roles on roles.id=usuarios.roles_id left join departamentos on departamentos.id=usuarios.departamento_id where usuarios.id=:userid");
+        $check_departamento ->execute(array(':userid' => $id));
+        $fetch_departamento = $check_departamento -> fetch(PDO::FETCH_OBJ);
+        return $fetch_departamento->departamento;
     }
 }
 ?>
