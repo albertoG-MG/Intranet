@@ -846,7 +846,7 @@
 							}else if(tipo_permiso == "NO_REGLAMENTARIA"){
 								var permiso_nr = $("#permiso_nr").val();
 								var motivo_permiso_nr = $("#motivo_permiso_nr").val();
-								var posee_jpermiso_nr = $("input[name='posee_jpermiso_nr']").val();
+								var posee_jpermiso_nr = $("input[name='posee_jpermiso_nr']:checked").val();
 								var justificante_permiso_nr = $('#justificante_permiso_nr')[0].files[0];
 								if(permiso_nr == "RETARDO" || permiso_nr == "SALIDA"){
 									var periodo_pnr_fh = $("#periodo_pnr_fh").val();
@@ -1202,6 +1202,7 @@
 							var fd = new FormData();
 							var titulo_acta = $("#titulo_acta").val();
 							var caja_empleado = $("#caja_empleado").val();
+							var caja_empleado_text =  $("#caja_empleado option:selected").text();
 							var fecha_acta = $("#fecha_acta").val();
 							var motivo_acta = $("#motivo_acta").val();
 							var obcomen_acta = $("#obcomen_acta").val();
@@ -1211,6 +1212,7 @@
 							//TODO EL APPEND DE LAS ACTAS ADMINISTRATIVAS
 							fd.append('titulo_acta', titulo_acta);
 							fd.append('caja_empleado', caja_empleado);
+							fd.append('caja_empleado_text', caja_empleado_text);
 							fd.append('fecha_acta', fecha_acta);
 							fd.append('motivo_acta', motivo_acta);
 							fd.append('obcomen_acta', obcomen_acta);
@@ -1322,6 +1324,37 @@
 		// Chrome requires returnValue to be set
 		e.returnValue = '';
 	}
+
+	function waitForElm(selector) {
+		return new Promise(resolve => {
+			if (document.querySelector(selector)) {
+				return resolve(document.querySelector(selector));
+			}
+
+			const observer = new MutationObserver(mutations => {
+				if (document.querySelector(selector)) {
+					resolve(document.querySelector(selector));
+					observer.disconnect();
+				}
+			});
+
+			observer.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
+		});
+	}
+
+	$('#caja_empleado').on('select2:open', function (e) {
+		waitForElm('.select2-results__options').then((elm) => {
+			if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
+				var usuarios_group = $('#caja_empleado').find('optgroup[label=Usuarios]');
+				$(usuarios_group).prop('disabled', 'true');
+				$(".select2-results__option.select2-results__option--group").css("display","none");
+				$('#select2-caja_empleado-results.select2-results__options').append("<span class='px-3'>No hay resultados</span>");
+			}
+		});
+	});
 
 </script>
 <style>

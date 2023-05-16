@@ -1340,45 +1340,353 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
 	}
-}else if(isset($_POST["app"]) && $_POST["app"] == "incidencias"){
-	if(isset($_POST["titulo"]) && isset($_POST["fechainicio"]) && isset($_POST["fechafin"]) && isset($_POST["tipo"]) && isset($_POST["descripcion"]) && isset($_POST["method"])){
-		$titulo = $_POST["titulo"];
-		$fechainicio = $_POST["fechainicio"];
-		$fechafin = $_POST["fechafin"];
-		$tipo = $_POST["tipo"];
-		$descripcion = $_POST["descripcion"];
-		$filename=null;
-		$foto=null;
+}else if(isset($_POST["app"]) && $_POST["app"] == "Incidencias"){
+	if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Permiso"){
+		//TÍTULO DEL PERMISO
+		if(empty($_POST["titulo_permiso"])){
+			die(json_encode(array("error", "El título del permiso no puede estar vacío")));
+		}else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_permiso"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título del permiso")));
+			}else{
+				$titulo_permiso = $_POST["titulo_permiso"];
+			}
+		}
 		
-		if(isset($_FILES['foto']['name'])){
-            $filename = $_FILES['foto']['name'];
-            $location = "../src/img/tmp/".$filename;
-            $target_file = $location . basename($_FILES['foto']['name']);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            if(move_uploaded_file($_FILES['foto']['tmp_name'],$location)){
-                $image_base64 = base64_encode(file_get_contents('../src/img/tmp/'.$filename));
-                $foto = 'data:image/'.$imageFileType.';base64,'.$image_base64;
-                $files = glob('../src/img/tmp/*.{png,jpg,jpeg}', GLOB_BRACE); // get all file names
-                foreach($files as $file){ // iterate files
-                    if(is_file($file)) {
-                        unlink($file); // delete file
-                    }
-                }
-            }
+		//TIPO DE PERMISO
+		$tipopermiso_array = array("REGLAMENTARIA", "NO_REGLAMENTARIA");
+		if (in_array($_POST["tipo_permiso"], $tipopermiso_array)) {
+             $tipo_permiso = $_POST["tipo_permiso"];
+        }else if(empty($_POST["tipo_permiso"])){
+            die(json_encode(array("error", "El tipo de permiso no puede estar vacío")));
+        }else{
+             die(json_encode(array("error", "El valor escogido en el dropdown de tipo de permiso está modificado, por favor, vuelva a poner el valor original en el dropdown")));
         }
+
+		if($tipo_permiso == "REGLAMENTARIA"){
+			//PERMISO_R
+			$permisor_array = array("FALLECIMIENTO", "MATRIMONIO", "ESCOLARIDAD", "NACIMIENTO_ADOPCION_ABORTO", "HOME_OFFICE", "OTRO");
+			if (in_array($_POST["permiso_r"], $permisor_array)) {
+				 $permiso_r = $_POST["permiso_r"];
+			}else if(empty($_POST["permiso_r"])){
+				die(json_encode(array("error", "Por favor, seleccione una opción de permiso reglamentario")));
+			}else{
+				 die(json_encode(array("error", "El valor escogido en el dropdown para eligir un permiso reglamentario está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+			}
+
+			//ARCHIVO - PERMISO REGLAMENTARIO
+			if(isset($_FILES['justificante_permiso_r']['name'])){
+				$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+				$filename_justificante_permiso_r = $_FILES['justificante_permiso_r']['name'];
+				$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
+				if (!in_array($ext, $allowed)) {
+					die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+				}else if($_FILES['justificante_permiso_r']['size'] > 10485760){
+					die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+				}else{
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mimetype = finfo_file($finfo, $_FILES["justificante_permiso_r"]["tmp_name"]);
+					finfo_close($finfo);
+					if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+						die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+					}
+				}
+				$justificante_permiso_r=$_FILES['justificante_permiso_r'];
+			}else{
+				$filename_justificante_permiso_r=null;
+				$justificante_permiso_r=null;
+			}
+
+			if($permiso_r == "FALLECIMIENTO" || $permiso_r == "MATRIMONIO" || $permiso_r == "ESCOLARIDAD" || $permiso_r == "NACIMIENTO_ADOPCION_ABORTO"){
+				//FECHA DE INICIO DE PERMISO
+				if(empty($_POST["fechainicio_pd"])){
+					die(json_encode(array("error", "Por favor, ingrese una fecha de inicio del permiso reglamentario")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fechainicio_pd"])){
+					die(json_encode(array("error", "Formato incorrecto, asegúrese que escoger la fecha de inicio del permiso usando el asistente")));
+				}else{
+					$fechainicio_pd= $_POST["fechainicio_pd"];
+				}
+
+				//FECHA FIN DE PERMISO
+				if(empty($_POST["fechafin_pd"])){
+					die(json_encode(array("error", "La fecha de fin no puede estar vacía, asegúrese de escoger la fecha de inicio usando el asistente")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fechafin_pd"])){
+					die(json_encode(array("error", "Formato incorrecto, asegúrese que escoger la fecha de inicio del permiso para calcular la fecha de fin")));
+				}else{
+					$fechafin_pd= $_POST["fechafin_pd"];
+				}
+
+				//Metodo para guardar Permiso reglamentario FALLECIMIENTO, MATRIMONIO, ESCOLARIDAD Y NACIMIENTO
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"], $titulo_permiso, $tipo_permiso);
+						$permiso -> reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $filename_justificante_permiso_r, $justificante_permiso_r);
+						die(json_encode(array("success", "FUNCIONA!")));
+					break;
+				}
+
+			}else if($permiso_r == "HOME_OFFICE" || $permiso_r == "OTRO"){
+				//PERIODO DE AUSENCIA
+				if(empty($_POST["periodo_pnd"])){
+					die(json_encode(array("error", "El periodo de permiso reglamentario no puede estar vacío")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]+[\s]-[\s]\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/", $_POST["periodo_pnd"])){
+					die(json_encode(array("error", "El periodo de permiso REGLAMENTARIO HOME OFFICE/OTRO no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+				}else{
+					$periodo_pnd = $_POST["periodo_pnd"];
+				}
+			
+				//MOTIVO DEL PERMISO REGLAMENTARIO HOME OFFICE/OTRO
+				if(empty($_POST["motivo_pnd"])){
+					die(json_encode(array("error", "El motivo del permiso reglametario HOME OFFICE/OTRO no puede estar vacío")));
+				}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_pnd"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del permiso reglametario HOME OFFICE/OTRO")));
+				}else{
+					$motivo_pnd = $_POST["motivo_pnd"];
+				}
+
+				//Metodo para guardar Permiso reglamentario HOME OFFICE/OTRO
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"], $titulo_permiso, $tipo_permiso);
+						$permiso -> reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $filename_justificante_permiso_r, $justificante_permiso_r);
+						die(json_encode(array("success", "FUNCIONA!")));
+					break;
+				}
+			}else{
+				die(json_encode(array("error", "Por favor, asegúrese de seleccionar un permiso reglamentario del dropdown y no uno modificado por la consola")));
+			}
+		}else if($tipo_permiso == "NO_REGLAMENTARIA"){
+			//PERMISO_NR
+			$permiso_nr = array("RETARDO", "SALIDA", "AUSENCIA");
+			if (in_array($_POST["permiso_nr"], $permiso_nr)) {
+				 $permiso_nr = $_POST["permiso_nr"];
+			}else if(empty($_POST["permiso_nr"])){
+				die(json_encode(array("error", "Por favor, selecciona una opción de permiso no reglamentario")));
+			}else{
+				 die(json_encode(array("error", "El valor escogido en el dropdown para eligir un permiso no reglamentario está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+			}
+
+			//MOTIVO DEL PERMISO NO REGLAMENTARIO
+			if(empty($_POST["motivo_permiso_nr"])){
+				die(json_encode(array("error", "El motivo del permiso no reglametario no puede estar vacío")));
+			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_permiso_nr"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del permiso no reglametario")));
+			}else{
+				$motivo_permiso_nr = $_POST["motivo_permiso_nr"];
+			}
+
+			//POSEE JUSTICANTE, PERMISO NO REGLAMENTARIO
+			if(empty($_POST["posee_jpermiso_nr"])){
+				die(json_encode(array("error", "Necesitamos saber si tiene justificante o no!")));
+			}else if($_POST["posee_jpermiso_nr"] != "si" && $_POST["posee_jpermiso_nr"] != "no"){
+				die(json_encode(array("error", "Solo se puede elegir si ó no en el radiobutton de justificantes, por favor, regrese el valor original")));
+			}else{
+				$posee_jpermiso_nr = $_POST["posee_jpermiso_nr"];
+			}
+
+			//JUSTIFICANTE NO REGLAMENTARIO	
+			if($posee_jpermiso_nr  == "si"){
+				if(isset($_FILES['justificante_permiso_nr']['name'])){
+					$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+					$filename_justificante_permiso_nr = $_FILES['justificante_permiso_nr']['name'];
+					$ext = pathinfo($filename_justificante_permiso_nr, PATHINFO_EXTENSION);
+					if (!in_array($ext, $allowed)) {
+						die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+					}else if($_FILES['justificante_permiso_nr']['size'] > 10485760){
+						die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+					}else{
+						$finfo = finfo_open(FILEINFO_MIME_TYPE);
+						$mimetype = finfo_file($finfo, $_FILES["justificante_permiso_nr"]["tmp_name"]);
+						finfo_close($finfo);
+						if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+							die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+						}
+					}
+					$justificante_permiso_nr=$_FILES['justificante_permiso_nr'];
+				}else{
+					$filename_justificante_permiso_nr=null;
+					$justificante_permiso_nr=null;
+				}
+			}else if($posee_jpermiso_nr  == "no"){
+				$filename_justificante_permiso_nr=null;
+				$justificante_permiso_nr=null;
+			}
+
+			if($permiso_nr == "RETARDO" || $permiso_nr == "SALIDA"){
+				//PERMISO NO REGLAMENTARIO - PERIODO RETARDO/SALIDA
+				if(empty($_POST["periodo_pnr_fh"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario RETARDO/SALIDA no puede estar vacío")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]+[\s]-[\s]\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/", $_POST["periodo_pnr_fh"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario RETARDO/SALIDA no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+				}else{
+					$periodo_pnr_fh = $_POST["periodo_pnr_fh"];
+				}
+
+
+				//Metodo para guardar Permiso no reglamentario RETARDO Y SALIDA
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"], $titulo_permiso, $tipo_permiso);
+						$permiso -> no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
+						die(json_encode(array("success", "FUNCIONA!")));
+					break;
+				}	
+			}else if($permiso_nr == "AUSENCIA"){
+				//PERMISO NO REGLAMENTARIO - PERIODO AUSENCIA
+				if(empty($_POST["periodo_pnr_f"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario AUSENCIA no puede estar vacío")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_pnr_f"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario AUSENCIA no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+				}else{
+					$periodo_pnr_f = $_POST["periodo_pnr_f"];
+				}
+
+				//Metodo para guardar Permiso no reglamentario AUSENCIA
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"], $titulo_permiso, $tipo_permiso);
+						$permiso -> no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
+						die(json_encode(array("success", "FUNCIONA!")));
+					break;
+				}	
+			}else{
+				die(json_encode(array("error", "Por favor, asegúrese de seleccionar un permiso no reglamentario del dropdown y no uno modificado por la consola")));
+			}
+		}
+	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Incapacidad"){
+		//TÍTULO DE LA INCAPACIDAD
+		if(empty($_POST["titulo_incapacidad"])){
+			die(json_encode(array("error", "El título de la incapacidad  no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_incapacidad"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título del incapacidad")));
+		}else{
+			$titulo_incapacidad = $_POST["titulo_incapacidad"];
+		}
+		
+		//PERIODO DE LA INCAPACIDAD
+		if(empty($_POST["periodo_incapacidad"])){
+			die(json_encode(array("error", "El periodo de la incapacidad no puede estar vacío")));
+		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_incapacidad"])){
+			die(json_encode(array("error", "El periodo de la incapacidad no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+		}else{
+			$periodo_incapacidad = $_POST["periodo_incapacidad"];
+		}
+		
+		//MOTIVO DE LA INCAPACIDAD
+		if(empty($_POST["motivo_incapacidad"])){
+			die(json_encode(array("error", "El motivo de la incapacidad  no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_incapacidad"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo de la incapacidad")));
+		}else{
+			$motivo_incapacidad = $_POST["motivo_incapacidad"];
+		}
+		
+		//JUSTIFICANTE - INCAPACIDAD
+		if(isset($_FILES['comprobante_incapacidad']['name'])){
+			$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_comprobante_incapacidad = $_FILES['comprobante_incapacidad']['name'];
+			$ext = pathinfo($filename_comprobante_incapacidad, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['comprobante_incapacidad']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["comprobante_incapacidad"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$comprobante_incapacidad=$_FILES['comprobante_incapacidad'];
+		}else{
+			$filename_comprobante_incapacidad=null;
+			$comprobante_incapacidad=null;
+		}	
+
+		//Metodo para guardar INCAPACIDADES
 		switch($_POST["method"]){
 			case "store":
-                $userid = $_POST["userid"];
-				$incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
-                $incidencia->CrearIncidencias($userid);
-                die(json_encode(array("success")));
+				$incapacidad = new Incapacidades($_SESSION["id"], $_SESSION["rol"], $titulo_incapacidad);
+				$incapacidad -> crear_incapacidad($periodo_incapacidad, $motivo_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad);
+				die(json_encode(array("success", "FUNCIONA!")));
 			break;
-			case "edit":
-                $incidenciaid = $_POST["editarid"];
-                $incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
-                $incidencia->EditarIncidencias($incidenciaid);
-                die(json_encode(array("success")));
+		}
+	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Acta_administrativa"){
+		//TÍTULO DEL ACTA ADMINISTRATIVA
+		if(empty($_POST["titulo_acta"])){
+			die(json_encode(array("error", "El título del acta administrativa no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_acta"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título del acta administrativa")));
+		}else{
+			$titulo_acta = $_POST["titulo_acta"];
+		}
+		
+		if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+		    $select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+		    $select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+		    $deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_ASSOC);
+		}
+		
+		//SELECT 2 - INCOMPLETO
+		if($_POST["caja_empleado"] != null && $_POST["caja_empleado_text"] != null){
+			//FALTA AQUÍ LA VERSIÓN DE LOS USUARIOS EXTERNOS, ADMINISTRADORES Y GENTE SIN ROL
+			if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Usuario externo" && Roles::FetchSessionRol($_SESSION["rol"]) != null){
+				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				$key_select_deploy_empleados = array_search($_POST['caja_empleado_text'], $deploy_empleados);
+				if ($key_select_deploy_empleados !== false) {
+					if($key_select_deploy_empleados != $_POST["caja_empleado"]){
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+					}
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+				$caja_empleado = $_POST["caja_empleado"];
+				$caja_empleado_text = $_POST["caja_empleado_text"];
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario al acta administrativa")));
+		}
+		
+		//FECHA DEL ACTA ADMINISTRATIVA
+        if(empty($_POST["fecha_acta"])){
+			die(json_encode(array("error", "La fecha del acta administrativa no puede estar vacío")));
+		}else{
+			if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_acta"])){
+				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del acta administrativa")));
+			}else{
+                $fecha_acta = $_POST["fecha_acta"];
+			}
+		}
+		
+		//MOTIVO DEL ACTA ADMINISTRATIVA
+		if(empty($_POST["motivo_acta"])){
+			die(json_encode(array("error", "El motivo del acta administrativa no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_acta"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del acta administrativa")));
+		}else{
+			$motivo_acta = $_POST["motivo_acta"];
+		}
+		
+		//OBSERVACIONES DEL ACTA ADMINISTRATIVA
+		if(!empty($_POST["obcomen_acta"])){
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["obcomen_acta"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones del acta administrativa")));
+			}else{
+				$obcomen_acta = $_POST["obcomen_acta"];
+			}
+		}else{
+			$obcomen_acta = null;
+		}
+		
+		//Metodo para guardar ACTAS ADMINISTRATIVAS
+		switch($_POST["method"]){
+			case "store":
+				$acta = new Actas($_SESSION["id"], $_SESSION["rol"], $titulo_acta);
+				$acta -> crear_acta($caja_empleado, $caja_empleado_text, $fecha_acta, $motivo_acta, $obcomen_acta);
+				die(json_encode(array("success", "FUNCIONA!")));
 			break;
 		}
 	}
