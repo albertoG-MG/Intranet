@@ -13,12 +13,12 @@
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
 						{
-                            text: "<i class='mdi mdi-clock text-white font-semibold text-lg'></i> Solicitudes pendientes",
+                            text: "Solicitudes pendientes",
                             attr: {
                                 'id': 'sol_pendientes',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/ajax_solicitud_incidencia.php",
@@ -35,9 +35,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=0;
 										 goce_sueldo=0;
-                                         var status = table.column(5);
-                                         status.visible(false);
-                                         var evaluation = table.column(7);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(true);
 										 table.column().cells().invalidate().render();
 									
@@ -49,12 +47,12 @@
                         },
 						
 						{
-                            text: "<i class='mdi mdi-check-bold text-white font-semibold text-lg'></i> Solicitudes Aprobadas",
+                            text: "Solicitudes Aprobadas",
                             attr: {
                                 'id': 'sol_aprobadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/solicitud_aprobada.php",
@@ -71,9 +69,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var status = table.column(5);
-                                         status.visible(true);
-                                         var evaluation = table.column(7);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -85,12 +81,12 @@
                         },
 
                         {
-                            text: "<i class='mdi mdi-close-thick text-white font-semibold text-lg'></i> Solicitudes Rechazadas",
+                            text: "Solicitudes Rechazadas",
                             attr: {
                                 'id': 'sol_rechazadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/solicitud_rechazada.php",
@@ -107,9 +103,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var status = table.column(5);
-                                         status.visible(true);
-                                         var evaluation = table.column(7);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -121,12 +115,12 @@
                         },
 
                         {
-                            text: "<i class='mdi mdi-alert-circle text-white font-semibold text-lg'></i> Solicitudes Canceladas",
+                            text: "Solicitudes Canceladas",
                             attr: {
                                 'id': 'sol_canceladas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/solicitud_cancelada.php",
@@ -143,9 +137,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var status = table.column(5);
-                                         status.visible(true);
-                                         var evaluation = table.column(7);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -157,12 +149,12 @@
                         },
 
                         {
-                            text: "<i class='mdi mdi-eye text-white font-semibold text-lg'></i> Ver todo",
+                            text: "Ver todo",
                             attr: {
                                 'id': 'ver_todo',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_incidencia/ver_todo.php",
@@ -179,9 +171,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var status = table.column(5);
-                                         status.visible(true);
-                                         var evaluation = table.column(7);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -203,48 +193,89 @@
                 }
             },
             "columns":[
-                {"data": "incidenciaid"},
-                { data: null, render: function ( data, type, row ) {
-                    return (data.nombre+ ' ' +data.apellido_pat+ ' ' +data.apellido_mat); 
-                }},
-                {"data": "tipo_incidencia"},
-                {"data": "fecha_inicio"},
-                {"data": "fecha_fin"},
-                {"data": "estatus_nombre", "visible": false},
-				{"data": null, render: function ( data, type, row ) {
-                    if(goce_sueldo == 0){
-							return "<div class='text-center'><input type='checkbox' id='"+data['incidenciaid']+"' value='Check'></div>";
-                    }else if(goce_sueldo == 1){
-                        if(row["sueldo"] == 0){
-                            return "<div class='w-full text-center'><span>No</span></div>";
-                        }else if(row["sueldo"] == 1){
-                            return "<div class='w-full text-center'><span>Sí</span></div>";
+                {"data": "solicitud_id", visible: false, searchable: false},
+                {"data": "nombre"},
+                {"data": "tipo_permiso"},
+                {"data": "periodo"},
+                {"data": "sueldo", searchable: false},
+                {"data": "estatus_id", searchable: false},
+                {"data": "Incidenciaid", searchable: false}
+            ],
+            "columnDefs": 
+            [
+                {
+                    target: [1],
+                    render: function (data, type, row) {
+                        return(
+                            "<div class='text-left'>" +
+                                "<span>" + row["nombre"] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [2],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left'>" +
+                                "<span>" + row["tipo_permiso"] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [3],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left'>" +
+                                "<span>" + row["periodo"] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [4],
+                    render: function (data, type, row) {
+                        if(goce_sueldo == 0){
+                            return "<div class='text-center'><input type='checkbox' id='"+row["Incidenciaid"]+"' value='Check'></div>";
+                        }else if(goce_sueldo == 1){
+                            if(row["sueldo"] == 0){
+                                return "<div class='w-full text-center'><span>No</span></div>";
+                            }else if(row["sueldo"] == 1){
+                                return "<div class='w-full text-center'><span>Sí</span></div>";
+                            }else{
+                                return "<div class='w-full text-center'><span>Sin datos</span></div>";
+                            } 
+                        }
+                    }
+                },
+                {
+                    target: [5],
+                    render: function (data, type, row) {
+                        if(evaluation_buttons == 0){
+                            return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="Aprobar focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" class="Rechazar focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" class="Cancelar text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';
                         }else{
-                            return "<div class='w-full text-center'><span>Sin datos</span></div>";
-                        } 
+                            return null;
+                        }
                     }
-                }},
-				{ data: null, render: function ( data, type, row ) {
-                    if(evaluation_buttons == 0){
-							return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="Aprobar focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">Aprobar</button><button type="button" class="Rechazar focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Rechazar</button><button type="button" class="Cancelar text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Cancelar</button></div>';
-                    }else{
-                        return null;
+                },
+                {
+                    target: [6],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='py-3 text-left'>" +
+                            "<div class='flex item-center justify-center data'>" +
+                            "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
+                            "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+                            "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
+                            "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
+                            "</svg>"+
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                        );	
                     }
-                }},
-                { data: null, render: function ( data, type, row ) {
-                    return (
-                        "<div class='py-3 text-left'>" +
-                        "<div class='flex item-center justify-center data'>" +
-                        "<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Ver'>" +
-                        "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
-                        "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
-                        "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
-                        "</svg>"+
-                        "</div>" +
-                        "</div>" +
-                        "</div>"
-                    );	
-                }}
+                }
             ],
             "initComplete": () => {
                 var table = $('#datatable').DataTable();
@@ -303,7 +334,7 @@
 	
 	$(document).ready(function() {
 		$('.dataTables_filter input[type="search"]').
-		attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium');
+        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
 
         $('#datatable').on('click', 'tr .Aprobar', function () {
             var estatus=1;
@@ -984,7 +1015,7 @@
 	        var row = table.row(rowSelector);
 	        var data = row.data();
 	
-	        window.location.href = "ver_incidencia.php?idIncidencia="+data['incidenciaid']+"";
+	        window.location.href = "ver_incidencia.php?idIncidencia="+data['Incidenciaid']+"";
         });
 
         function check_user_logged(){
@@ -1041,6 +1072,7 @@
 
     .search{
         margin:auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover, tr.even:hover{
