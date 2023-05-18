@@ -86,6 +86,20 @@ CREATE TABLE `categorias` (
   `nombre` varchar(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Insert into para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nombre`) VALUES
+(1, 'Usuarios'),
+(2, 'Expedientes'),
+(3, 'Roles'),
+(4, 'Permisos'),
+(5, 'Departamentos'),
+(6, 'Incidencias'),
+(7, 'Solicitud incidencias'),
+(8, 'Vacaciones');
+
 -- --------------------------------------------------------
 
 --
@@ -98,6 +112,42 @@ CREATE TABLE `permisos` (
 `categoria_id` int DEFAULT NULL,
 FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Insert into para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
+(1, 'Acceso a usuarios', 1),
+(2, 'Vista tecnico', 1),
+(3, 'Crear usuario', 1),
+(4, 'Ver usuario', 1),
+(5, 'Editar usuario', 1),
+(6, 'Eliminar usuario', 1),
+(7, 'Acceso a expedientes', 2),
+(8, 'Crear expediente', 2),
+(9, 'Ver expediente', 2),
+(10, 'Editar expediente', 2),
+(11, 'Eliminar expediente', 2),
+(12, 'Acceso a roles', 3),
+(13, 'Crear roles', 3),
+(14, 'Editar roles', 3),
+(15, 'Eliminar roles', 3),
+(16, 'Acceso a permisos', 4),
+(17, 'Crear permiso', 4),
+(18, 'Editar permiso', 4),
+(19, 'Eliminar permiso', 4),
+(20, 'Acceso a departamentos', 5),
+(21, 'Crear departamento', 5),
+(22, 'Editar departamento', 5),
+(23, 'Eliminar departamento', 5),
+(24, 'Acceso a incidencias', 6),
+(25, 'Crear incidencia', 6),
+(26, 'Editar incidencia', 6),
+(27, 'Ver incidencia', 6),
+(28, 'Eliminar incidencia', 6),
+(29, 'Acceso a solicitud incidencias', 7),
+(30, 'Acceso a vacaciones', 8);
 
 -- --------------------------------------------------------
 
@@ -160,12 +210,13 @@ CREATE TABLE `departamentos` (
 
 INSERT INTO `departamentos` (`id`, `departamento`) VALUES
 (1, 'Soporte tecnico'),
-(2, 'Recursos humanos'),
+(2, 'Capital humano'),
 (3, 'Finanzas'),
 (4, 'Call center'),
 (5, 'Laboratorio'),
 (6, 'Almacen'),
-(7, 'Operaciones');
+(7, 'Operaciones'),
+(8, 'TI');
 
 -- --------------------------------------------------------
 
