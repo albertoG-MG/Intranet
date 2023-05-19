@@ -32,7 +32,7 @@ class incidencias {
 	public static function sendEmail($incidencia_id, $jefe_array, $tipoincidencia){
 		$object = new connection_database();
 		$crud = new crud();
-		$sql = $object->_db->prepare('SELECT CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
+		$sql = $object->_db->prepare('SELECT CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, solicitudes_incidencias.fecha_solicitud as fecha_solicitud FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
 		$sql -> execute(array(':incidenciaid' => $incidencia_id));
 		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -67,7 +67,7 @@ class incidencias {
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
 		$mail->Subject  = "Solicitud de aprobación de incidencias";
-		$mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_incidencia -> nombre." ha solicitado un " .$tipoincidencia. " <br> Haga clic en el link a continuación para ver la incidencia y evaluarla: <br> $links";
+		$mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_incidencia -> nombre." ha solicitado un " .$tipoincidencia. " en la fecha " .$row_user_incidencia -> fecha_solicitud. " <br> Haga clic en el link a continuación para ver la incidencia y evaluarla: <br> $links";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {
