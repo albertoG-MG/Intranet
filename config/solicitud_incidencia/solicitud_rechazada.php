@@ -1,7 +1,7 @@
 <?php
-require 'conexion.php';
-include_once __DIR__ . "/../classes/permissions.php";
-include_once __DIR__ . "/../classes/roles.php";
+require '../conexion.php';
+include_once __DIR__ . "/../../classes/permissions.php";
+include_once __DIR__ . "/../../classes/roles.php";
 $object = new connection_database();
 
 $idrol = $_POST["rol"];
