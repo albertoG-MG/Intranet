@@ -35,7 +35,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=0;
 										 goce_sueldo=0;
-                                         var evaluation = table.column(5);
+                                         var evaluation = table.column(6);
                                          evaluation.visible(true);
 										 table.column().cells().invalidate().render();
 									
@@ -69,7 +69,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var evaluation = table.column(5);
+                                         var evaluation = table.column(6);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -103,7 +103,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var evaluation = table.column(5);
+                                         var evaluation = table.column(6);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -137,7 +137,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var evaluation = table.column(5);
+                                         var evaluation = table.column(6);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -171,7 +171,7 @@
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
 										 goce_sueldo=1;
-                                         var evaluation = table.column(5);
+                                         var evaluation = table.column(6);
                                          evaluation.visible(false);
 										 table.column().cells().invalidate().render();
 									
@@ -197,6 +197,7 @@
                 {"data": "nombre"},
                 {"data": "tipo_permiso"},
                 {"data": "periodo"},
+                {"data": "fecha_solicitud"},
                 {"data": "sueldo", searchable: false},
                 {"data": "estatus_id", searchable: false},
                 {"data": "Incidenciaid", searchable: false}
@@ -236,6 +237,16 @@
                 {
                     target: [4],
                     render: function (data, type, row) {
+                        return (
+                            "<div class='text-left'>" +
+                                "<span>" + row["fecha_solicitud"] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [5],
+                    render: function (data, type, row) {
                         if(goce_sueldo == 0){
                             return "<div class='text-left lg:text-center'><input type='checkbox' id='"+row["Incidenciaid"]+"' value='Check'></div>";
                         }else if(goce_sueldo == 1){
@@ -250,7 +261,7 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [6],
                     render: function (data, type, row) {
                         if(evaluation_buttons == 0){
                             return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="Aprobar focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" /></svg></button><button type="button" class="Rechazar focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" /></svg></button><button type="button" class="Cancelar text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" stroke-width="2" stroke="white" d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z" /></svg></button></div>';
@@ -260,7 +271,7 @@
                     }
                 },
                 {
-                    target: [6],
+                    target: [7],
                     render: function (data, type, row) {
                         return (
                             "<div class='py-3 text-left'>" +

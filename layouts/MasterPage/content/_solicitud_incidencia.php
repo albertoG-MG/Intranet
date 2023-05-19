@@ -44,6 +44,7 @@
                                             <th class="py-3 text-left min-tablet">Nombre</th>
                                             <th class="py-3 text-left desktop">Tipo</th>
                                             <th class="py-3 text-left desktop">Periodo</th>
+                                            <th class="py-3 text-left desktop">F. solicitud</th>
                                             <th class="py-3 text-center desktop">Goce de sueldo?</th>
                                             <th></th>
                                             <th class="py-3 text-center min-tablet"></th>
