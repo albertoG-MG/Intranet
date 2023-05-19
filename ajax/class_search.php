@@ -1693,18 +1693,43 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
 		$incidenciaid= $_POST["incidenciaid"];
-        $estatus= $_POST["estatus"];
-        $sueldo=null;
+		//Checar el estatus y ver que sea diferente entre 4, 5 y 6
+		$check_estatus = $object -> _db -> prepare("SELECT estatus_incidencia.id as estatus_id FROM estatus_incidencia INNER JOIN tipo_estatus_incidencia ON tipo_estatus_incidencia.id=estatus_incidencia.tipo_estatus_id WHERE tipo_estatus_incidencia.descripcion_estado='Aprobada' OR tipo_estatus_incidencia.descripcion_estado='Rechazada' OR tipo_estatus_incidencia.descripcion_estado='Cancelada'");
+		$check_estatus -> execute();
+		$fetch_estatus = $check_estatus -> fetchAll(PDO::FETCH_ASSOC);
+		$estatus_array = [];
+		foreach($fetch_estatus as $select_array){
+			foreach($select_array as $select_estatus){
+				$estatus_array[] = $select_estatus;
+			}
+		}
+		if (in_array($_POST["estatus"], $estatus_array, true)) {
+			$estatus= $_POST["estatus"];
+		}else{
+			die(json_encode(array("failed", "El estatus no existe ó no tiene permitido elegir ese estatus!")));
+		}
+		//Goce de sueldo solamente puede ser 0 y 1
         if(isset($_POST["sueldo"])){
-		    $sueldo= $_POST["sueldo"];
-        }
-		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
-		$select_user -> execute(array(':iduser' => $_POST["iduser"]));
-        $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
-        if(!(empty($_POST["comentario"]))){
-            $comentario = $_POST["comentario"];
+			$sueldo_array = array(0, 1);
+                if (in_array($_POST["sueldo"], $sueldo_array)) {
+		    		$sueldo= $_POST["sueldo"];
+				}else{
+					die(json_encode(array("failed", "El sueldo solamente puede tener un valor definido, por favor, vuelva a cargar la página!")));
+				}
         }else{
+			$sueldo=null;
+		}
+		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
+		$select_user -> execute(array(':iduser' => $_SESSION["id"]));
+        $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
+        if(empty($_POST["comentario"])){
             $comentario = null;
+        }else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["comentario"])){
+				die(json_encode(array("failed", "Solo se permiten carácteres alfabéticos y espacios en los comentarios")));
+			}else{
+				$comentario = $_POST["comentario"];
+			}
         }
         switch($_POST["method"]){
             case "store":

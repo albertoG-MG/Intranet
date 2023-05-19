@@ -75,6 +75,30 @@ class incidencias {
 			echo 'Mailer error: ' . $mail->ErrorInfo;
 		}
 	}
+
+	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat, $comentario){
+		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
+		if($check_incidencia > 0 ){
+			$object = new connection_database();
+			$crud = new crud();
+			$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
+			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
+			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
+			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
+			/*Incidencias::getResponse($incidenciaid, $estatus);*/
+		}else{
+			die(json_encode(array("failed", "La incidencia ya no existe!")));
+		}
+	}
+	
+	public static function Checkincidencia($id){
+		$object = new connection_database();
+		$editar = $object -> _db->prepare("SELECT * FROM incidencias WHERE id=:incidenciaid");
+		$editar->bindParam("incidenciaid", $id ,PDO::PARAM_INT);
+		$editar->execute();
+		$check_incidencia=$editar->rowCount();
+		return $check_incidencia;
+	}
 }
 
 interface tipo_permiso {
