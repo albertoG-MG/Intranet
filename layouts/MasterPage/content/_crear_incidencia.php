@@ -70,6 +70,16 @@
                     <span>Acta A.</span>
                   </button>
                 </li>
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                  <li role="presentation" class="w-full md:w-max">
+                    <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="cartaC-tab" data-tabs-target="#cartaC" type="button" role="tab" aria-controls="cartaC" aria-selected="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M12 .64L8.23 3H5V5L2.97 6.29C2.39 6.64 2 7.27 2 8V18C2 19.11 2.9 20 4 20H20C21.11 20 22 19.11 22 18V8C22 7.27 21.61 6.64 21.03 6.29L19 5V3H15.77M7 5H17V9.88L12 13L7 9.88M8 6V7.5H16V6M5 7.38V8.63L4 8M19 7.38L20 8L19 8.63M8 8.5V10H16V8.5Z" />
+                    </svg>
+                    <span>Carta C.</span>
+                    </button>
+                  </li>
+                <?php } ?>
               </ul>
               <div id='menu-contents' style="word-break: break-word;">
                 <div class="block bg-transparent rounded-lg tab-pane" id="permiso" role="tabpanel" aria-labelledby="permiso-tab">
@@ -469,6 +479,59 @@
                     </div>
                   </form>
                 </div>
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                  <div class="hidden bg-transparent rounded-lg tab-pane" id="cartaC" role="tabpanel" aria-labelledby="cartaC-tab">
+                    <form id="carta-form" method="post">
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">Asigne una fecha a la carta compromiso</label>
+                        <div class="group flex">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
+                          </svg>
+                        </div>
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fecha_carta" name="fecha_carta" placeholder="Asigne una fecha a la carta compromiso" autocomplete="off">
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">
+                          Asignar carta compromiso a:
+                        </label>
+                        <div class="group flex" id="groupempleado" style="display:none !important; position:relative;">
+                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                          </svg>
+                          </div>
+                          <select id="array_empleado" name="array_empleado">
+                          <option></option>
+                          <optgroup label="Usuarios">
+                            <?php
+                            foreach ($deploy_empleados as $empleado) {
+                            echo "<option value='" . $empleado["userid"] . "'>";
+                            echo $empleado["nombre"];
+                            echo "</option>";
+                            }
+                            ?>
+                          </optgroup>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">Responsabilidades a cumplir</label>
+                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="responsabilidad_carta" name="responsabilidad_carta" placeholder="Responsabilidades a cumplir"></textarea>
+                        <div id="error_responsabilidad_carta"></div>
+                      </div>
+                      <div class="mt-12 h-px bg-slate-200"></div>
+                      <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
+                        <button type="button" id="reset-carta" name="reset-carta" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
+                        <div id="submit-carta">
+                        <button type="submit" id="Guardar-carta" name="Guardar-carta" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                <?php } ?>
               </div>
             </div>
           </div>

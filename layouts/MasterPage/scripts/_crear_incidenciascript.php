@@ -17,7 +17,13 @@
 			id: 'actaA',
 			triggerMenu: document.querySelector('#actaA-tab'),
 			targetMenu: document.querySelector('#actaA')
-		}
+		}<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { echo ","; ?>
+			{
+				id: 'cartaC',
+				triggerMenu: document.querySelector('#cartaC-tab'),
+				targetMenu: document.querySelector('#cartaC')
+			}
+		<?php } ?>
 	];
 
 	menuIncidencias.forEach((menu) => {
@@ -35,6 +41,12 @@
 						resetFormValidator("#acta-form");
 						$('#acta-form').unbind('submit');
 					}
+					<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+						else if(formAnterior == "cartaC"){
+							resetFormValidator("#carta-form");
+							$('#carta-form').unbind('submit');
+						}
+					<?php } ?>
 					formPermiso();
 					formAnterior = "permiso";
 				}else if(objective.id == "incapacidad"){
@@ -45,6 +57,12 @@
 						resetFormValidator("#acta-form");
 						$('#acta-form').unbind('submit');
 					}
+					<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+						else if(formAnterior == "cartaC"){
+							resetFormValidator("#carta-form");
+							$('#carta-form').unbind('submit');
+						}
+					<?php } ?>
 					formIncapacidad();
 					formAnterior = "incapacidad";
 				}else if(objective.id == "actaA"){
@@ -52,12 +70,34 @@
 						resetFormValidator("#permiso-form");
 						$('#permiso-form').unbind('submit');
 					}else if(formAnterior == "incapacidad"){
-						resetFormValidator("#acta-form");
-						$('#acta-form').unbind('submit');
+						resetFormValidator("#incapacidad-form");
+						$('#incapacidad-form').unbind('submit');
 					}
+					<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+						else if(formAnterior == "cartaC"){
+							resetFormValidator("#carta-form");
+							$('#carta-form').unbind('submit');
+						}
+					<?php } ?>
 					formActa();
 					formAnterior = "actaA";
 				}
+				<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+					else if(objective.id == "cartaC"){
+						if(formAnterior == "permiso"){
+							resetFormValidator("#permiso-form");
+							$('#permiso-form').unbind('submit');
+						}else if(formAnterior == "incapacidad"){
+							resetFormValidator("#incapacidad-form");
+							$('#incapacidad-form').unbind('submit');
+						}else if(formAnterior == "actaA"){
+							resetFormValidator("#acta-form");
+							$('#acta-form').unbind('submit');
+						}
+						formCarta();
+						formAnterior = "cartaC";
+					}
+				<?php } ?>
 			}
 
 			menuIncidencias.forEach((trigger) => {
@@ -111,6 +151,30 @@
     });
 	//Termina la configuración del SELECT 2
 
+	<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+		//Empieza la configuración del segundo SELECT 2
+		$('#array_empleado').select2({
+			theme: ["tailwind"],
+			placeholder: '-- Seleccione --',
+			dropdownParent: $('#groupempleado'),
+			"language": {
+				"noResults": function(){
+					return "No hay resultados";
+				}
+			}
+		});
+
+		$('#array_empleado').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 h-11 border rounded-md border-[#d1d5db]');
+		$("#groupempleado").show();
+
+		$('#array_empleado').on('select2:open', function (e) {
+			const evt = "scroll.select2";
+			$(e.target).parents().off(evt);
+			$(window).off(evt);
+		});
+		//Termina la configuración del segundo SELECT 2
+	<?php } ?>
+
 	$(document).ready(function() {
 
 		var img_permiso_r = $("#img_permiso_r").clone();
@@ -127,6 +191,11 @@
 		//Acta Administrativa
 		$('input[name="fecha_acta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
+		<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+			/*Carta Compromiso*/
+			$('input[name="fecha_carta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+		<?php } ?>
+
 		formPermiso();
 
 		$('form#permiso-form input[type="text"]').on('keypress', function(e) {
@@ -140,6 +209,12 @@
 		$('form#acta-form input[type="text"]').on('keypress', function(e) {
 		    return e.which !== 13;
 	    });
+
+		<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+			$('form#carta-form input[type="text"]').on('keypress', function(e) {
+				return e.which !== 13;
+			});
+		<?php } ?>
 
 		//Permisos Reglamentarios - Delete
 		$('#permiso-form').on('click', '#delete_archivo_permiso_r', function() {
@@ -1273,6 +1348,162 @@
 		}
 	}
 
+	<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+		function formCarta(){
+			$.validator.addMethod('field_validation', function (value, element) {
+				return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+			}, 'not a valid field.');
+
+			if ($('#carta-form').length > 0) {
+				$('#carta-form').validate({
+					ignore: [],
+					onkeyup: false,
+					errorPlacement: function(error, element) {
+						if(element.attr('name') === 'responsabilidad_carta'){
+							error.appendTo("div#error_responsabilidad_carta");  
+						}else{
+							error.insertAfter(element.parent('.group.flex'));
+						}
+					},
+					invalidHandler: function(e, validator){
+						if(!($('#error-container-carta').length)){
+							this.$div = $('<div id="error-container-carta" class="grid grid-cols-1 mt-5"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex flex-col md:flex-row items-center"><div class="p-2"><div class="flex flex-col md:flex-row items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-3 py-4 text-red-900 font-semibold text-sm md:text-lg text-center">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors-carta" class="md:px-5 mb-4"></div></div></div></div>').insertBefore("#carta-form");
+						}
+						$("#arrayerrors-carta").html(""); 
+						$.each(validator.errorMap, function( index, value ) { 
+							this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
+							$("#arrayerrors-carta").append(this.$arrayerror);
+						});
+					},
+					highlight: function(element) {
+						var elem = $(element);
+						if (elem.hasClass("select2-hidden-accessible")) {
+							$("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600"); 
+							$("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border-2 border-rose-500 border-2"); 
+						}else{
+							$(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+							$(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+						}
+					},
+					unhighlight: function(element) {
+						var elem = $(element);
+						if (elem.hasClass("select2-hidden-accessible")) {
+							$("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border-2 border-rose-500 border-2");
+							$("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600"); 
+						}else{
+							$(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+							$(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+						}
+					},
+					rules: {
+						fecha_carta:{
+							required: true
+						},
+						array_empleado:{
+							required: true
+						},
+						responsabilidad_carta: {
+							required: true,
+							field_validation: true
+						}
+					},
+					messages: {
+						fecha_carta:{
+							required: 'Este campo es requerido'
+						},
+						array_empleado:{
+							required: 'Este campo es requerido'
+						},
+						responsabilidad_carta: {
+							required: 'Este campo es requerido',
+							field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+						}
+					},
+					submitHandler: function(form) {
+						$('#submit-carta').html(
+							'<button disabled id="Guardar-carta" name="Guardar-carta" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" type="submit">'+
+								'<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+								'<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+								'<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+								'</svg>'+
+								'Cargando...'+
+							'</button>');
+						$('#error-container-carta').html("");
+						check_user_logged().then((response) => {
+							if(response == "true"){
+								//TODO EL AJAX DE LAS ACTAS ADMINISTRATIVAS
+								window.addEventListener('beforeunload', unloadHandler);
+								var fd = new FormData();
+								var fecha_carta = $("#fecha_carta").val();
+								var array_empleado = $("#array_empleado").val();
+								var array_empleado_text =  $("#array_empleado option:selected").text();
+								var responsabilidad_carta = $("#responsabilidad_carta").val();
+								var tipo_incidencia_papel = "Carta_compromiso";
+								var method = "store";
+								var app = "Incidencias"
+								//TODO EL APPEND DE LAS ACTAS ADMINISTRATIVAS
+								fd.append('fecha_carta', fecha_carta);
+								fd.append('array_empleado', array_empleado);
+								fd.append('array_empleado_text', array_empleado_text);
+								fd.append('responsabilidad_carta', responsabilidad_carta);
+								fd.append('tipo_incidencia_papel', tipo_incidencia_papel);
+								fd.append('method', method);
+								fd.append('app', app);
+								$.ajax({
+									url: '../ajax/class_search.php',
+									type: 'POST',
+									data: fd,
+									processData: false,
+									contentType: false,
+									success: function(data) {
+										setTimeout(function(){
+											var array = $.parseJSON(data);
+											if (array[0] == "success") {
+												Swal.fire({
+													title: "Carta Compromiso Creada",
+													text: array[1],
+													icon: "success"
+												}).then(function() {
+													window.removeEventListener('beforeunload', unloadHandler);
+													$('#submit-acta').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-acta' name='Guardar-acta' type='submit'>Guardar</button>");
+													window.location.href = 'incidencias.php'; 
+												});
+											} else if(array[0] == "error") {
+												Swal.fire({
+													title: "Error",
+													text: array[1],
+													icon: "error"
+												}).then(function() {
+													window.removeEventListener('beforeunload', unloadHandler);
+													$('#submit-acta').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-acta' name='Guardar-acta' type='submit'>Guardar</button>");
+												});
+											}
+										},3000);
+									},
+									error: function(data) {
+										$("#ajax-error").text('Fail to send request');
+									}
+								});
+							}else{
+								Swal.fire({
+									title: "Ocurrió un error",
+									text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+									icon: "error"
+								}).then(function() {
+									$('#submit-acta').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-acta' name='Guardar-acta' type='submit'>Guardar</button>");
+									window.location.href = "login.php";
+								});
+							}
+						}).catch((error) => {
+							console.log(error);
+						})
+						return false;
+					}
+				});
+			}
+		}
+	<?php } ?>
+
 	function formatDate(date) {
 		var d = new Date(date),
 			month = '' + (d.getMonth() + 1),
@@ -1345,6 +1576,18 @@
 		});
 	}
 
+	//Este metodo es para quitar el error en el select 2
+	$('#caja_empleado').on("change", function (e) {
+		$(this).valid()
+	});
+
+	<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+		//Este metodo es para quitar el error en el segundo select 2
+		$('#array_empleado').on("change", function (e) {
+			$(this).valid()
+		});
+	<?php } ?>
+
 	$('#caja_empleado').on('select2:open', function (e) {
 		waitForElm('.select2-results__options').then((elm) => {
 			if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
@@ -1355,6 +1598,19 @@
 			}
 		});
 	});
+
+	<?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+		$('#array_empleado').on('select2:open', function (e) {
+			waitForElm('.select2-results__options').then((elm) => {
+				if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
+					var usuarios_group = $('#array_empleado').find('optgroup[label=Usuarios]');
+					$(usuarios_group).prop('disabled', 'true');
+					$(".select2-results__option.select2-results__option--group").css("display","none");
+					$('#select2-array_empleado-results.select2-results__options').append("<span class='px-3'>No hay resultados</span>");
+				}
+			});
+		});
+	<?php } ?>
 
 </script>
 <style>
