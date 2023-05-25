@@ -62,14 +62,16 @@
                     <span>Incapacidad</span>
                   </button>
                 </li>
-                <li role="presentation" class="w-full md:w-max">
-                  <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="actaA-tab" data-tabs-target="#actaA" type="button" role="tab" aria-controls="actaA" aria-selected="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
-                      <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
-                    </svg>
-                    <span>Acta A.</span>
-                  </button>
-                </li>
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                  <li role="presentation" class="w-full md:w-max">
+                    <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="actaA-tab" data-tabs-target="#actaA" type="button" role="tab" aria-controls="actaA" aria-selected="false">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
+                      </svg>
+                      <span>Acta A.</span>
+                    </button>
+                  </li>
+                <?php } ?>
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                   <li role="presentation" class="w-full md:w-max">
                     <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="cartaC-tab" data-tabs-target="#cartaC" type="button" role="tab" aria-controls="cartaC" aria-selected="false">
@@ -412,73 +414,64 @@
                     </div>
                   </form>
                 </div>
-                <div class="hidden bg-transparent rounded-lg tab-pane" id="actaA" role="tabpanel" aria-labelledby="actaA-tab">
-                  <form id="acta-form" method="post">
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">Título del acta administrativa</label>
-                      <div class="group flex">
-                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />
-                          </svg>
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                  <div class="hidden bg-transparent rounded-lg tab-pane" id="actaA" role="tabpanel" aria-labelledby="actaA-tab">
+                    <form id="acta-form" method="post">
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">Asigne una fecha a la acta administrativa</label>
+                        <div class="group flex">
+                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                            <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
+                            </svg>
+                          </div>
+                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fecha_acta" name="fecha_acta" placeholder="Fecha en la que se realiza" autocomplete="off">
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_acta" name="titulo_acta" placeholder="Título del acta administrativa">
                       </div>
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">
-                        Asignar acta administrativa a:
-                      </label>
-                      <div class="group flex" id="selectempleado" style="display:none !important; position:relative;">
-                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                          </svg>
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">
+                          Asignar acta administrativa a:
+                        </label>
+                        <div class="group flex" id="selectempleado" style="display:none !important; position:relative;">
+                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                            </svg>
+                          </div>
+                          <select id="caja_empleado" name="caja_empleado">
+                            <option></option>
+                            <optgroup label="Usuarios">
+                              <?php
+                                foreach ($deploy_empleados as $item) {
+                                  echo "<option value='" . $item["userid"] . "'>";
+                                  echo $item["nombre"];
+                                  echo "</option>";
+                                }
+                              ?>
+                            </optgroup>
+                          </select>
                         </div>
-                        <select id="caja_empleado" name="caja_empleado">
-                          <option></option>
-                          <optgroup label="Usuarios">
-                            <?php
-                              foreach ($deploy_empleados as $item) {
-                                echo "<option value='" . $item["userid"] . "'>";
-                                echo $item["nombre"];
-                                echo "</option>";
-                              }
-                            ?>
-                          </optgroup>
-                        </select>
                       </div>
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">La fecha en la que se realiza</label>
-                      <div class="group flex">
-                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
-                          </svg>
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">Motivo por el que se realiza el acta</label>
+                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_acta" name="motivo_acta" placeholder="Motivo por el que se realiza el acta"></textarea>
+                        <div id="error_motivo_acta"></div>
+                      </div>
+                      <div class="grid grid-cols-1 mt-5 mx-7">
+                        <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
+                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="obcomen_acta" name="obcomen_acta" placeholder="Observaciones y/o Comentarios"></textarea>
+                        <div id="error_obcomen_acta"></div>
+                      </div>
+                      <div class="mt-12 h-px bg-slate-200"></div>
+                      <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
+                        <button type="button" id="reset-acta" name="reset-acta" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
+                        <div id="submit-acta">
+                          <button type="submit" id="Guardar-acta" name="Guardar-acta" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fecha_acta" name="fecha_acta" placeholder="Fecha en la que se realiza" autocomplete="off">
                       </div>
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">Motivo por el que se realiza el acta</label>
-                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_acta" name="motivo_acta" placeholder="Motivo por el que se realiza el acta"></textarea>
-                      <div id="error_motivo_acta"></div>
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
-                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="obcomen_acta" name="obcomen_acta" placeholder="Observaciones y/o Comentarios"></textarea>
-                      <div id="error_obcomen_acta"></div>
-                    </div>
-                    <div class="mt-12 h-px bg-slate-200"></div>
-                    <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
-                      <button type="button" id="reset-acta" name="reset-acta" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
-                      <div id="submit-acta">
-                        <button type="submit" id="Guardar-acta" name="Guardar-acta" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+                    </form>
+                  </div>
+                <?php } ?>
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                   <div class="hidden bg-transparent rounded-lg tab-pane" id="cartaC" role="tabpanel" aria-labelledby="cartaC-tab">
                     <form id="carta-form" method="post">
