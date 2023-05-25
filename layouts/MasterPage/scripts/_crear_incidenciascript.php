@@ -1105,7 +1105,7 @@
 					},
 					observaciones_incapacidad:{
 						field_validation: true
-					}
+					},
 					comprobante_incapacidad: {
 						extension: "pdf|jpg|jpeg|png",
 						filesize: 10
@@ -1135,7 +1135,7 @@
 					},
 					observaciones_incapacidad:{
 						field_validation: "Solo se permiten carácteres alfabéticos y espacios"
-					}
+					},
 					comprobante_incapacidad: {
 						extension: "Solo se permiten pdf, jpg, jpeg y png",
 						filesize: "No se permiten archivos con más de 10 mb"
