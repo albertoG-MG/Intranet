@@ -431,7 +431,7 @@
                       <div id="error_observaciones_incapacidad"></div>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7" id="img_incapacidad">
-                      <label class="text-[#64748b] font-semibold mb-2">Subir incapacidad (Puede subirse después)</label>
+                      <label class="text-[#64748b] font-semibold mb-2">Subir incapacidad</label>
                       <div class="flex items-center justify-center w-full">
                         <label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">
                           <div class="flex flex-col items-center justify-center pt-7">
