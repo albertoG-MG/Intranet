@@ -351,15 +351,62 @@
                 </div>
                 <div class="hidden bg-transparent rounded-lg tab-pane" id="incapacidad" role="tabpanel" aria-labelledby="incapacidad-tab">
                   <form id="incapacidad-form" method="post">
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">Título de la incapacidad</label>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                      <div class="grid grid-cols-1">
+                      <label class="text-[#64748b] font-semibold mb-2">Número de la incapacidad</label>
                       <div class="group flex">
                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />
-                          </svg>
+                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
+                        </svg>
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_incapacidad" name="titulo_incapacidad" placeholder="Título de la incapacidad">
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numero_incapacidad" name="numero_incapacidad" placeholder="Número de la incapacidad">
+                      </div>
+                      </div>
+                      <div class="grid grid-cols-1">
+                      <label class="text-[#64748b] font-semibold mb-2">Serie y folio de la incapacidad</label>
+                      <div class="group flex">
+                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path fill="currentColor" d="M3,22L4.5,20.5L6,22L7.5,20.5L9,22L10.5,20.5L12,22L13.5,20.5L15,22L16.5,20.5L18,22L19.5,20.5L21,22V2L19.5,3.5L18,2L16.5,3.5L15,2L13.5,3.5L12,2L10.5,3.5L9,2L7.5,3.5L6,2L4.5,3.5L3,2M18,9H6V7H18M18,13H6V11H18M18,17H6V15H18V17Z" />
+                        </svg>
+                        </div>
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie_folio_incapacidad" name="serie_folio_incapacidad" placeholder="Serie y folio de la incapacidad">
+                      </div>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                      <label class="text-[#64748b] font-semibold mb-2">Tipo de incapacidad</label>
+                      <div class="group flex">
+                      <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M5,9.5L7.5,14H2.5L5,9.5M3,4H7V8H3V4M5,20A2,2 0 0,0 7,18A2,2 0 0,0 5,16A2,2 0 0,0 3,18A2,2 0 0,0 5,20M9,5V7H21V5H9M9,19H21V17H9V19M9,13H21V11H9V13Z" />
+                        </svg>
+                      </div>
+                      <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_incapacidad" name="tipo_incapacidad">
+                        <option value="">--Seleccione--</option>
+                        <option value="INICIAL">Inicial</option>
+                        <option value="SUBSECUENTE">Subsecuente</option>
+                        <option value="POR RECAIDA">Por recaída</option>
+                        <option value="POR MATERNIDAD">Por maternidad</option>
+                        <option value="ENLACE">Enlace</option>
+                      </select>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                      <label class="text-[#64748b] font-semibold mb-2">Ramo de seguro</label>
+                      <div class="group flex">
+                      <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M3,3V5A2,2 0 0,1 5,7V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V7A2,2 0 0,1 21,5V3H3M7,9H10V10H7V9M7,11H10V12H7V11M10,16H7V15H10V16M12,14H7V13H12V14M12,8H7V7H12V8Z" />
+                        </svg>
+                      </div>
+                      <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="ramo_seguro_incapacidad" name="ramo_seguro_incapacidad">
+                        <option value="">--Seleccione--</option>
+                        <option value="RIESGO DE TRABAJO">Riesgo de trabajo</option>
+                        <option value="ENFERMEDAD GENERAL">Enfermedad general</option>
+                        <option value="MATERNIDAD">Maternidad</option>
+                      </select>
                       </div>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
@@ -377,6 +424,11 @@
                       <label class="text-[#64748b] font-semibold mb-2">Motivo de la incapacidad</label>
                       <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_incapacidad" name="motivo_incapacidad" placeholder="Motivo de la incapacidad"></textarea>
                       <div id="error_motivo_incapacidad"></div>
+                    </div>
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                      <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
+                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones_incapacidad" name="observaciones_incapacidad" placeholder="Observaciones y/o Comentarios"></textarea>
+                      <div id="error_observaciones_incapacidad"></div>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7" id="img_incapacidad">
                       <label class="text-[#64748b] font-semibold mb-2">Subir incapacidad (Puede subirse después)</label>

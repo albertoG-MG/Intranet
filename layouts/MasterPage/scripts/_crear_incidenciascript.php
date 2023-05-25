@@ -1055,6 +1055,8 @@
 						error.appendTo('div#error_motivo_incapacidad');
 					}else if(element.attr('name') === 'comprobante_incapacidad'){
 						error.appendTo('div#error_comprobante_incapacidad');
+					}else if(element.attr('name') === 'observaciones_incapacidad'){
+						error.appendTo('div#error_observaciones_incapacidad');
 					}else{
 						error.insertAfter(element.parent('.group.flex'));
 					}
@@ -1080,9 +1082,19 @@
                     $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
 				},
 				rules:{
-					titulo_incapacidad:{
+					numero_incapacidad:{
 						required: true,
-						field_validation: true
+						digits: true
+					},
+					serie_folio_incapacidad:{
+						required: true,
+						alphanumeric: true
+					},
+					tipo_incapacidad:{
+						required: true
+					},
+					ramo_seguro_incapacidad:{
+						required: true
 					},
 					periodo_incapacidad: {
 						required: true
@@ -1091,15 +1103,28 @@
 						required: true,
 						field_validation: true
 					},
+					observaciones_incapacidad:{
+						field_validation: true
+					}
 					comprobante_incapacidad: {
 						extension: "pdf|jpg|jpeg|png",
 						filesize: 10
 					}
 				},
 				messages:{
-					titulo_incapacidad:{
-						required: "Este campo es requerido",
-						field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+					numero_incapacidad:{
+						required: 'Este campo es requerido',
+						digits: 'Solo se permiten números'
+					},
+					serie_folio_incapacidad:{
+						required: 'Este campo es requerido',
+						alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+					},
+					tipo_incapacidad:{
+						required: 'Este campo es requerido'
+					},
+					ramo_seguro_incapacidad:{
+						required: 'Este campo es requerido'
 					},
 					periodo_incapacidad: {
 						required: "Este campo es requerido"
@@ -1108,6 +1133,9 @@
 						required: "Este campo es requerido",
 						field_validation: "Solo se permiten carácteres alfabéticos y espacios"
 					},
+					observaciones_incapacidad:{
+						field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+					}
 					comprobante_incapacidad: {
 						extension: "Solo se permiten pdf, jpg, jpeg y png",
 						filesize: "No se permiten archivos con más de 10 mb"
@@ -1128,17 +1156,25 @@
 							//TODO EL AJAX DE INCAPACIDADES
 							window.addEventListener('beforeunload', unloadHandler);
 							var fd = new FormData();
-							var titulo_incapacidad = $("#titulo_incapacidad").val();
+							var numero_incapacidad = $("#numero_incapacidad").val();
+							var serie_folio_incapacidad = $("#serie_folio_incapacidad").val();
+							var tipo_incapacidad = $("#tipo_incapacidad").val();
+							var ramo_seguro_incapacidad = $("#ramo_seguro_incapacidad").val();
 							var periodo_incapacidad = $("#periodo_incapacidad").val();
 							var motivo_incapacidad = $("#motivo_incapacidad").val();
+							var observaciones_incapacidad = $("#observaciones_incapacidad").val();
 							var comprobante_incapacidad = $('#comprobante_incapacidad')[0].files[0];
 							var tipo_incidencia_papel = "Incapacidad";
 							var method = "store";
 							var app = "Incidencias"
 							//TODO EL APPEND DE INCAPACIDADES
-							fd.append('titulo_incapacidad', titulo_incapacidad);
+							fd.append('numero_incapacidad', numero_incapacidad);
+							fd.append('serie_folio_incapacidad', serie_folio_incapacidad);
+							fd.append('tipo_incapacidad', tipo_incapacidad);
+							fd.append('ramo_seguro_incapacidad', ramo_seguro_incapacidad);
 							fd.append('periodo_incapacidad', periodo_incapacidad);
 							fd.append('motivo_incapacidad', motivo_incapacidad);
+							fd.append('observaciones_incapacidad', observaciones_incapacidad);
 							fd.append('comprobante_incapacidad', comprobante_incapacidad);
 							fd.append('tipo_incidencia_papel', tipo_incidencia_papel);
 							fd.append('method', method);
