@@ -309,7 +309,7 @@
                           </script>
                           <div x-show.important="open">
                             <div class="grid grid-cols-1 mt-5 mx-7" id="img_permisos_nr">
-                              <label class="text-[#64748b] font-semibold mb-2">Subir justificante (Puede subirse después)</label>
+                              <label class="text-[#64748b] font-semibold mb-2">Subir justificante</label>
                               <div class="flex items-center justify-center w-full">
                                 <label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">
                                   <div class="flex flex-col items-center justify-center pt-7">
