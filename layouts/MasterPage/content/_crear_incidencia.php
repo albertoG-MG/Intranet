@@ -86,17 +86,6 @@
               <div id='menu-contents' style="word-break: break-word;">
                 <div class="block bg-transparent rounded-lg tab-pane" id="permiso" role="tabpanel" aria-labelledby="permiso-tab">
                   <form id="permiso-form" method="post">
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                      <label class="text-[#64748b] font-semibold mb-2">Título del permiso</label>
-                      <div class="group flex">
-                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />
-                          </svg>
-                        </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_permiso" name="titulo_permiso" placeholder="Título del permiso">
-                      </div>
-                    </div>
                     <div x-data="{ reglamentaria: false, no_reglamentaria: false }">
                       <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="text-[#64748b] font-semibold mb-2">Tipo de permiso</label>
@@ -202,8 +191,13 @@
                             </div>
                           </div>
                         </div>
+                        <div class="grid grid-cols-1 mt-5 mx-7">
+                          <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
+                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones_permiso_r" name="observaciones_permiso_r" placeholder="Observaciones y/o Comentarios"></textarea>
+                          <div id="error_observaciones_permiso_r"></div>
+                        </div>
                         <div class="grid grid-cols-1 mt-5 mx-7" id="img_permiso_r">
-                          <label class="text-[#64748b] font-semibold mb-2">Subir justificante (Puede subirse después)</label>
+                          <label class="text-[#64748b] font-semibold mb-2">Subir justificante</label>
                           <div class="flex items-center justify-center w-full">
                             <label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">
                               <div class="flex flex-col items-center justify-center pt-7">
@@ -279,6 +273,11 @@
                           <label class="text-[#64748b] font-semibold mb-2">Motivo del permiso</label>
                           <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_permiso_nr" name="motivo_permiso_nr" placeholder="Motivo del permiso"></textarea>
                           <div id="error_motivo_permiso_nr"></div>
+                        </div>
+                        <div class="grid grid-cols-1 mt-5 mx-7">
+                          <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
+                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones_permiso_nr" name="observaciones_permiso_nr" placeholder="Observaciones y/o Comentarios"></textarea>
+                          <div id="error_observaciones_permiso_nr"></div>
                         </div>
                         <div x-data="{ open: true }">
                           <div class="grid grid-cols-1 mt-5 mx-7">

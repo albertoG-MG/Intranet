@@ -598,10 +598,14 @@
 				errorPlacement: function(error, element) {
 					if(element.attr('name') === 'justificante_permiso_r'){
 						error.appendTo('div#error_justificante_permiso_r');
+					}else if(element.attr('name') === 'observaciones_permiso_r'){
+						error.appendTo('div#error_observaciones_permiso_r');
 					}else if(element.attr('name') === 'motivo_pnd'){
 						error.appendTo('div#error_motivo_pnd');
 					}else if(element.attr('name') === 'motivo_permiso_nr'){
 						error.appendTo('div#error_motivo_permiso_nr');
+					}else if(element.attr('name') === 'observaciones_permiso_nr'){
+						error.appendTo('div#error_observaciones_permiso_nr');
 					}else if(element.attr('name') === 'justificante_permiso_nr'){
 						error.appendTo('div#error_justificante_permiso_nr');
 					}else{
@@ -629,10 +633,6 @@
                     $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
 				},
 				rules: {
-					titulo_permiso: {
-						required: true,
-						field_validation: true
-					},
 					tipo_permiso:{
 						required: {
 							depends: function(element) {
@@ -671,7 +671,27 @@
 							}
 						}
 					},
+					observaciones_permiso_r:{
+						field_validation: {
+							depends: function(element) {
+								if($('#tipo_permiso').val() == "REGLAMENTARIA"){
+									return true;
+								}else{
+									return false;
+								}
+							}
+						}
+					},
 					justificante_permiso_r: {
+						required: {
+							depends: function(element) {
+								if($('#tipo_permiso').val() == "REGLAMENTARIA"){
+									return true;
+								}else{
+									return false;
+								}
+							}
+						},
 						extension: {
 							depends: function(element) {
 								if($('#tipo_permiso').val() == "REGLAMENTARIA"){
@@ -790,6 +810,17 @@
 							}
 						}
 					},
+					observaciones_permiso_nr:{
+						field_validation: {
+							depends: function(element) {
+								if($('#tipo_permiso').val() == "NO_REGLAMENTARIA"){
+									return true;
+								}else{
+									return false;
+								}
+							}
+						}
+					},
 					posee_jpermiso_nr: {
 						required: {
 							depends: function(element) {
@@ -806,6 +837,21 @@
 						}
 					},
 					justificante_permiso_nr: {
+						required: {
+							depends: function(element) {
+								if($('#tipo_permiso').val() == "NO_REGLAMENTARIA"){
+									if($('input[name="posee_jpermiso_nr"][value="si"]').is(":checked")){
+										return true;
+									}else if($('input[name="posee_jpermiso_nr"][value="no"]').is(":checked")){
+										return false;
+									}else{
+										return false;
+									}
+								}else{
+									return false;
+								}
+							}
+						},
 						extension: {
 							depends: function(element) {
 								if($('#tipo_permiso').val() == "NO_REGLAMENTARIA"){
@@ -869,17 +915,17 @@
 					}
 				},
 				messages: {
-					titulo_permiso: {
-						required: 'Este campo es requerido',
-						field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-					},
 					tipo_permiso: {
 						required: 'Este campo es requerido'
 					},
 					permiso_r: {
 						required: 'Este campo es requerido'
 					},
+					observaciones_permiso_r:{
+						field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+					},
 					justificante_permiso_r: {
+						required: 'Este campo es requerido',
 						extension: 'Solo se permiten pdf, jpg, jpeg y png',
 						filesize: 'No se permiten archivos con más de 10 mb'
 					},
@@ -900,10 +946,14 @@
 						required: 'Este campo es requerido',
 						field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 					},
+					observaciones_permiso_nr:{
+						field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+					},
 					posee_jpermiso_nr:{
 						required: 'Este campo es requerido'
 					},
 					justificante_permiso_nr: {
+						required: 'Este campo es requerido',
 						extension: 'Solo se permiten pdf, jpg, jpeg y png',
 						filesize: 'No se permiten archivos con más de 10 mb'
 					},
@@ -929,10 +979,10 @@
 							//TODO EL AJAX DE PERMISOS
 							window.addEventListener('beforeunload', unloadHandler);
 							var fd = new FormData();
-							var titulo_permiso = $("#titulo_permiso").val();
 							var tipo_permiso = $("#tipo_permiso").val();
 							if(tipo_permiso == "REGLAMENTARIA"){
 								var permiso_r = $("#permiso_r").val();
+								var observaciones_permiso_r = $("#observaciones_permiso_r").val();
 								var justificante_permiso_r = $('#justificante_permiso_r')[0].files[0];
 								if(permiso_r == "FALLECIMIENTO" || permiso_r == "MATRIMONIO" || permiso_r == "ESCOLARIDAD" || permiso_r == "NACIMIENTO_ADOPCION_ABORTO"){
 									var fechainicio_pd = $("#fechainicio_pd").val();
@@ -944,6 +994,7 @@
 							}else if(tipo_permiso == "NO_REGLAMENTARIA"){
 								var permiso_nr = $("#permiso_nr").val();
 								var motivo_permiso_nr = $("#motivo_permiso_nr").val();
+								var observaciones_permiso_nr = $("#observaciones_permiso_nr").val();
 								var posee_jpermiso_nr = $("input[name='posee_jpermiso_nr']:checked").val();
 								var justificante_permiso_nr = $('#justificante_permiso_nr')[0].files[0];
 								if(permiso_nr == "RETARDO" || permiso_nr == "SALIDA"){
@@ -957,10 +1008,10 @@
 							var app = "Incidencias";
 
 							//TODO EL APPEND DE PERMISOS
-							fd.append('titulo_permiso', titulo_permiso);
 							fd.append('tipo_permiso', tipo_permiso);
 							if(tipo_permiso == "REGLAMENTARIA"){
 								fd.append('permiso_r', permiso_r);
+								fd.append('observaciones_permiso_r', observaciones_permiso_r);
 								fd.append('justificante_permiso_r', justificante_permiso_r);
 								if(permiso_r == "FALLECIMIENTO" || permiso_r == "MATRIMONIO" || permiso_r == "ESCOLARIDAD" || permiso_r == "NACIMIENTO_ADOPCION_ABORTO"){
 									fd.append('fechainicio_pd', fechainicio_pd);
@@ -972,6 +1023,7 @@
 							}else if(tipo_permiso == "NO_REGLAMENTARIA"){
 								fd.append('permiso_nr', permiso_nr);
 								fd.append('motivo_permiso_nr', motivo_permiso_nr);
+								fd.append('observaciones_permiso_nr', observaciones_permiso_nr);
 								fd.append('posee_jpermiso_nr', posee_jpermiso_nr);
 								fd.append('justificante_permiso_nr', justificante_permiso_nr);
 								if(permiso_nr == "RETARDO" || permiso_nr == "SALIDA"){
