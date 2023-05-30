@@ -75,6 +75,83 @@ class incidencias {
 		}
 	}
 
+	public static function getResponse($incidencia_id, $estatus, $sueldo, $comentario){
+		$object = new connection_database();
+		$crud = new crud();
+		$array = [];
+		$sql = $object->_db->prepare('SELECT usuarios.correo FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
+		$sql -> execute(array(':incidenciaid' => $incidencia_id));
+		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
+		array_push($array, $row_user_incidencia -> correo);
+		
+		$check_gerente_capital_finanzas = $object -> _db -> prepare("SELECT usuarios.correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE roles.nombre='Gerente' AND departamentos.departamento='Capital humano' || roles.nombre='Gerente' AND departamentos.departamento='Finanzas'");
+		$check_gerente_capital_finanzas -> execute();
+		$count_gerente_capital_finanzas = $check_gerente_capital_finanzas -> rowCount();
+		$fetch_gerente_capital_finanzas = $check_gerente_capital_finanzas ->fetchAll(PDO::FETCH_ASSOC);
+		if($count_gerente_capital_finanzas == 2){
+			foreach($fetch_gerente_capital_finanzas as $array_gerentes){
+				foreach($array_gerentes as $correos_array){
+					array_push($array, $correos_array);
+				}
+			}
+		}else if($count_gerente_capital_finanzas == 1){
+			foreach($fetch_gerente_capital_finanzas as $array_gerentes){
+				foreach($array_gerentes as $correos_array){
+					array_push($array, $correos_array);
+				}
+			}
+		}else if($count_gerente_capital_finanzas == 0){
+			array_push($array, "alberto.martinez@sinttecom.com");
+		}
+		if($sueldo == 1){
+			$sueldo_message = "con goce de sueldo";
+		}else if($sueldo == 0){
+			$sueldo_message = "sin goce de sueldo";
+		}
+		if($estatus == 3){
+			$status = "Rechazada";
+		}else if($estatus == 2){
+			$status = "Cancelada";
+		}else if ($estatus == 1){
+			$status = "Aprobada";
+		}
+		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+		$path = dirname($path);
+		$links = $path. "/layouts/incidencias.php";		
+		$mail=new PHPMailer\PHPMailer\PHPMailer();
+		$mail->IsSMTP();  // telling the class to use SMTP
+		$mail->SMTPDebug = 0;
+		$mail->SMTPSecure = 'tls'; 
+		$mail->Host = 'mail.sinttecom.com'; 
+		$mail->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true
+			)
+		);
+		$mail->Port = 587;
+		$mail->SMTPAuth = true; // turn on SMTP authentication
+		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
+		$mail->Password = "k8@SY#xR"; // SMTP password
+		$mail->IsHTML(true);
+		foreach($array as $correo)
+		{
+			$mail->AddAddress($correo);
+		}
+		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
+		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
+		$mail->Subject  = "La incidencia ha sido evaluada";
+		$mail->Body     = "Buen día: <br> La incidencia evaluada tiene el siguiente estatus: ".$status. ' ' .$sueldo_message.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a> <br> Comentarios:  ".$comentario."";
+		$mail->WordWrap = 50;
+		$mail->CharSet = "UTF-8";
+		if(!$mail->Send()) {
+			echo 'Message was not sent.';
+			echo 'Mailer error: ' . $mail->ErrorInfo;
+		}
+	}
+
 	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat, $comentario){
 		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
 		if($check_incidencia > 0 ){
@@ -84,7 +161,7 @@ class incidencias {
 			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
 			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
 			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
-			/*Incidencias::getResponse($incidenciaid, $estatus);*/
+			Incidencias::getResponse($incidenciaid, $estatus, $sueldo, $comentario);
 		}else{
 			die(json_encode(array("failed", "La incidencia ya no existe!")));
 		}
