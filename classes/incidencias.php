@@ -12,10 +12,9 @@ class incidencias {
 	public $usuario_rol;
 	public $titulo_incidencia;
     
-	public function __construct($user_id, $user_rol, $incident_title){
+	public function __construct($user_id, $user_rol){
 		$this->usuario_id = $user_id;
 		$this->usuario_rol = $user_rol;
-        $this->titulo_incidencia = $incident_title;
 	}
 
 	public static function tempnam_sfx($path, $suffix){
@@ -102,23 +101,20 @@ class incidencias {
 }
 
 interface tipo_permiso {
-	public function reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $filename_justificante_permiso_r, $justificante_permiso_r);
-	public function reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $filename_justificante_permiso_r, $justificante_permiso_r);
-	public function no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
-	public function no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
+	public function reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r);
+	public function reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r);
+	public function no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
+	public function no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
 }
 
 class permiso extends incidencias implements tipo_permiso {
-	public $tipo_permiso;
-	public function __construct($user_id, $user_rol, $incident_title, $permission_type) {
+	public function __construct($user_id, $user_rol) {
 		$this->usuario_id = $user_id;
 		$this->usuario_rol = $user_rol;
-		$this->titulo_incidencia = $incident_title;
-		$this->tipo_permiso = $permission_type;
 	}
 
 	//CREACION DE PERMISOS
-	public function reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $filename_justificante_permiso_r, $justificante_permiso_r){
+	public function reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r){
 		$object = new connection_database();
 		$crud = new crud();
 		if(Roles::FetchSessionRol($this->usuario_rol) != "Superadministrador" && Roles::FetchSessionRol($this->usuario_rol) != "Administrador" && Roles::FetchSessionRol($this->usuario_rol) != "Director general" && Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
@@ -141,17 +137,12 @@ class permiso extends incidencias implements tipo_permiso {
 							$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 						}
 					}
-					if($filename_justificante_permiso_r != null && $justificante_permiso_r != null){
-						$fecha_periodo = $fechainicio_pd. " - " .$fechafin_pd;
-						$location = "../src/permisos_reglamentarios/permisos_descriptivos/";
-						$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
-						$uploadfile = Incidencias::tempnam_sfx($location, $ext);
-						if(move_uploaded_file($justificante_permiso_r['tmp_name'],$uploadfile)){
-							$crud -> store ('permisos_reglamentarios', ['titulo_permiso_reglamentario' => $this->titulo_incidencia, 'permiso_r' => $permiso_r, 'periodo_ausencia_r' => $fecha_periodo, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
-						}
-					}else{
-						$crud -> store ('permisos_reglamentarios', ['titulo_permiso_reglamentario' => $this->titulo_incidencia, 'permiso_r' => $permiso_r, 'periodo_ausencia_r' => $fecha_periodo, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => $justificante_permiso_r]);
-					}
+					$fecha_periodo = $fechainicio_pd. " - " .$fechafin_pd;
+					$location = "../src/permisos_reglamentarios/permisos_descriptivos/";
+					$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
+					$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+					move_uploaded_file($justificante_permiso_r['tmp_name'],$uploadfile);
+					$crud -> store ('permisos_reglamentarios', ['permiso_r' => $permiso_r, 'periodo_ausencia_r' => $fecha_periodo, 'observaciones_permiso_r' => $observaciones_permiso_r, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
 					$permiso_id = $object -> _db -> lastInsertId();
 					$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_reglamentario' => $permiso_id]);
 					$incidencia_id = $object -> _db -> lastInsertId();
@@ -166,7 +157,7 @@ class permiso extends incidencias implements tipo_permiso {
 	}
 
 	//Permiso reglamentario OTRO/HOME OFFICE
-	public function reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $filename_justificante_permiso_r, $justificante_permiso_r){
+	public function reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r){
 		$object = new connection_database();
 		$crud = new crud();
 		if(Roles::FetchSessionRol($this->usuario_rol) != "Superadministrador" && Roles::FetchSessionRol($this->usuario_rol) != "Administrador" && Roles::FetchSessionRol($this->usuario_rol) != "Director general" && Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
@@ -189,16 +180,11 @@ class permiso extends incidencias implements tipo_permiso {
 							$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 						}
 					}
-					if($filename_justificante_permiso_r != null && $justificante_permiso_r != null){
-						$location = "../src/permisos_reglamentarios/permisos_no_descriptivos/";
-						$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
-						$uploadfile = Incidencias::tempnam_sfx($location, $ext);
-						if(move_uploaded_file($justificante_permiso_r['tmp_name'],$uploadfile)){
-							$crud -> store ('permisos_reglamentarios', ['titulo_permiso_reglamentario' => $this->titulo_incidencia, 'permiso_r' => $permiso_r, 'periodo_ausencia_r' => $periodo_pnd, 'motivo_permiso_r' => $motivo_pnd, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
-						}
-					}else{
-						$crud -> store ('permisos_reglamentarios', ['titulo_permiso_reglamentario' => $this->titulo_incidencia, 'permiso_r' => $permiso_r, 'periodo_ausencia_r' => $periodo_pnd, 'motivo_permiso_r' => $motivo_pnd, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => $justificante_permiso_r]);
-					}
+					$location = "../src/permisos_reglamentarios/permisos_no_descriptivos/";
+					$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
+					$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+					move_uploaded_file($justificante_permiso_r['tmp_name'],$uploadfile);
+					$crud -> store ('permisos_reglamentarios', ['permiso_r' => $permiso_r, 'periodo_ausencia_r' => $periodo_pnd, 'motivo_permiso_r' => $motivo_pnd, 'observaciones_permiso_r' => $observaciones_permiso_r, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
 					$permiso_id = $object -> _db -> lastInsertId();
 					$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_reglamentario' => $permiso_id]);
 					$incidencia_id = $object -> _db -> lastInsertId();
@@ -212,7 +198,7 @@ class permiso extends incidencias implements tipo_permiso {
 		}
 	}
 
-	public function no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr){
+	public function no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr){
 		$object = new connection_database();
 		$crud = new crud();
 		if(Roles::FetchSessionRol($this->usuario_rol) != "Superadministrador" && Roles::FetchSessionRol($this->usuario_rol) != "Administrador" && Roles::FetchSessionRol($this->usuario_rol) != "Director general" && Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
@@ -240,10 +226,10 @@ class permiso extends incidencias implements tipo_permiso {
 						$ext = pathinfo($filename_justificante_permiso_nr, PATHINFO_EXTENSION);
 						$uploadfile = Incidencias::tempnam_sfx($location, $ext);
 						if(move_uploaded_file($justificante_permiso_nr['tmp_name'],$uploadfile)){
-							$crud -> store ('permisos_no_reglamentarios', ['titulo_permiso_no_reglamentario' => $this->titulo_incidencia, 'permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_fh, 'motivo_permiso_nr' => $motivo_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr,'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => basename($uploadfile)]);
+							$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_fh, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr,'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => basename($uploadfile)]);
 						}
 					}else{
-						$crud -> store ('permisos_no_reglamentarios', ['titulo_permiso_no_reglamentario' => $this->titulo_incidencia, 'permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_fh, 'motivo_permiso_nr' => $motivo_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
+						$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_fh, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
 					}
 					$permiso_id = $object -> _db -> lastInsertId();
 					$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);
@@ -258,7 +244,7 @@ class permiso extends incidencias implements tipo_permiso {
 		}
 	}
 
-	public function no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr){
+	public function no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr){
 		$object = new connection_database();
 		$crud = new crud();
 		if(Roles::FetchSessionRol($this->usuario_rol) != "Superadministrador" && Roles::FetchSessionRol($this->usuario_rol) != "Administrador" && Roles::FetchSessionRol($this->usuario_rol) != "Director general" && Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
@@ -286,10 +272,10 @@ class permiso extends incidencias implements tipo_permiso {
 						$ext = pathinfo($filename_justificante_permiso_nr, PATHINFO_EXTENSION);
 						$uploadfile = Incidencias::tempnam_sfx($location, $ext);
 						if(move_uploaded_file($justificante_permiso_nr['tmp_name'],$uploadfile)){
-							$crud -> store ('permisos_no_reglamentarios', ['titulo_permiso_no_reglamentario' => $this->titulo_incidencia, 'permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr,'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => basename($uploadfile)]);
+							$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr,'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => basename($uploadfile)]);
 						}
 					}else{
-						$crud -> store ('permisos_no_reglamentarios', ['titulo_permiso_no_reglamentario' => $this->titulo_incidencia, 'permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
+						$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
 					}
 					$permiso_id = $object -> _db -> lastInsertId();
 					$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);
@@ -307,13 +293,12 @@ class permiso extends incidencias implements tipo_permiso {
 }
 
 class incapacidades extends incidencias{
-	public function __construct($user_id, $user_rol, $incident_title) {
+	public function __construct($user_id, $user_rol) {
 		$this->usuario_id = $user_id;
 		$this->usuario_rol = $user_rol;
-		$this->titulo_incidencia = $incident_title;
 	}
 
-	public function crear_incapacidad($periodo_incapacidad, $motivo_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad){
+	public function crear_incapacidad($numero_incapacidad, $serie_folio_incapacidad, $tipo_incapacidad, $ramo_seguro_incapacidad, $periodo_incapacidad, $motivo_incapacidad, $observaciones_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad){
 		$object = new connection_database();
 		$crud = new crud();
 		if(Roles::FetchSessionRol($this->usuario_rol) != "Superadministrador" && Roles::FetchSessionRol($this->usuario_rol) != "Administrador" && Roles::FetchSessionRol($this->usuario_rol) != "Director general" && Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
@@ -336,16 +321,11 @@ class incapacidades extends incidencias{
 							$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 						}
 					}
-					if($filename_comprobante_incapacidad != null && $comprobante_incapacidad != null){
-						$location = "../src/incapacidades/";
-						$ext = pathinfo($filename_comprobante_incapacidad, PATHINFO_EXTENSION);
-						$uploadfile = Incidencias::tempnam_sfx($location, $ext);
-						if(move_uploaded_file($comprobante_incapacidad['tmp_name'],$uploadfile)){
-							$crud -> store ('incapacidades', ['titulo_incapacidad' => $this->titulo_incidencia, 'periodo_incapacidad' => $periodo_incapacidad, 'motivo_incapacidad' => $motivo_incapacidad, 'nombre_justificante_incapacidad' => $filename_comprobante_incapacidad, 'archivo_identificador_incapacidad' => basename($uploadfile)]);
-						}
-					}else{
-						$crud -> store ('incapacidades', ['titulo_incapacidad' => $this->titulo_incidencia, 'periodo_incapacidad' => $periodo_incapacidad, 'motivo_incapacidad' => $motivo_incapacidad, 'nombre_justificante_incapacidad' => $filename_comprobante_incapacidad, 'archivo_identificador_incapacidad' => $comprobante_incapacidad]);
-					}
+					$location = "../src/incapacidades/";
+					$ext = pathinfo($filename_comprobante_incapacidad, PATHINFO_EXTENSION);
+					$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+					move_uploaded_file($comprobante_incapacidad['tmp_name'],$uploadfile);
+					$crud -> store ('incapacidades', ['numero_incapacidad' => $numero_incapacidad, 'serie_folio_incapacidad' => $serie_folio_incapacidad, 'tipo_incapacidad' => $tipo_incapacidad, 'ramo_seguro_incapacidad' => $ramo_seguro_incapacidad, 'periodo_incapacidad' => $periodo_incapacidad, 'motivo_incapacidad' => $motivo_incapacidad, 'observaciones_incapacidad' => $observaciones_incapacidad, 'nombre_justificante_incapacidad' => $filename_comprobante_incapacidad, 'archivo_identificador_incapacidad' => basename($uploadfile)]);
 					$incapacidad_id = $object -> _db -> lastInsertId();
 					$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_incapacidades' => $incapacidad_id]);
 					$incidencia_id = $object -> _db -> lastInsertId();
@@ -361,17 +341,31 @@ class incapacidades extends incidencias{
 }
 
 class actas extends incidencias{
-	public function __construct($user_id, $user_rol, $incident_title) {
+	public function __construct($user_id, $user_rol) {
 		$this->usuario_id = $user_id;
 		$this->usuario_rol = $user_rol;
-		$this->titulo_incidencia = $incident_title;
 	}
 
-	public function crear_acta($caja_empleado, $caja_empleado_text, $fecha_acta, $motivo_acta, $obcomen_acta){
+	public function crear_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta){
 		$object = new connection_database();
 		$crud = new crud();
 		if(Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
-			$crud -> store ('incidencias_acta_administrativas', ['users_id' => $this->usuario_id, 'titulo_acta' => $this->titulo_incidencia, 'asignada_a' => $caja_empleado_text, 'fecha_acta' => $fecha_acta, 'motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta]);
+			$crud -> store ('incidencias_acta_administrativas', ['users_id' => $this->usuario_id, 'fecha_acta' => $fecha_acta, 'asignada_a' => $caja_empleado, 'motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta]);
+		}
+	}
+}
+
+class cartas extends incidencias{
+	public function __construct($user_id, $user_rol) {
+		$this->usuario_id = $user_id;
+		$this->usuario_rol = $user_rol;
+	}
+
+	public function crear_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta){
+		$object = new connection_database();
+		$crud = new crud();
+		if(Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
+			$crud -> store ('incidencias_carta_compromiso', ['users_id' => $this->usuario_id, 'fecha_carta' => $fecha_carta, 'asignada_a' => $array_empleado, 'resposabilidades_carta' => $responsabilidad_carta]);
 		}
 	}
 }
