@@ -1666,17 +1666,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-		if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
-		    $select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
-		    $select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
-		    $deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_ASSOC);
-		}
-		
-		//SELECT 2 - INCOMPLETO
+		//SELECT 2 - ACTAS ADMINISTRATIVAS
 		if($_POST["caja_empleado"] != null && $_POST["caja_empleado_text"] != null){
 			//FALTA AQUÍ LA VERSIÓN DE LOS USUARIOS EXTERNOS, ADMINISTRADORES Y GENTE SIN ROL
-			if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Usuario externo" && Roles::FetchSessionRol($_SESSION["rol"]) != null){
-				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true")){
+				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
 				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				$key_select_deploy_empleados = array_search($_POST['caja_empleado_text'], $deploy_empleados);
@@ -1689,6 +1683,22 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$caja_empleado = $_POST["caja_empleado"];
 				$caja_empleado_text = $_POST["caja_empleado_text"];
+			}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true"))){
+				$select_empleados = $object -> _db ->prepare("SELECT usuarios.id AS userid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+				$select_empleados -> execute();
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				$key_select_deploy_empleados = array_search($_POST['caja_empleado_text'], $deploy_empleados);
+				if ($key_select_deploy_empleados !== false) {
+					if($key_select_deploy_empleados != $_POST["caja_empleado"]){
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+					}
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+				$caja_empleado = $_POST["caja_empleado"];
+				$caja_empleado_text = $_POST["caja_empleado_text"];
+			}else{
+				die(json_encode(array("error", "Su usuario aún no está configurado para crear actas administrativas")));
 			}
 		}else{
 			die(json_encode(array("error", "Debe asignar un usuario al acta administrativa")));
@@ -1734,17 +1744,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-		if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
-		    $select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
-		    $select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
-		    $deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_ASSOC);
-		}
-		
-		//SELECT 2 - INCOMPLETO
+		//SELECT 2 - CARTAS COMPROMISO
 		if($_POST["array_empleado"] != null && $_POST["array_empleado_text"] != null){
 			//FALTA AQUÍ LA VERSIÓN DE LOS USUARIOS EXTERNOS, ADMINISTRADORES Y GENTE SIN ROL
-			if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Usuario externo" && Roles::FetchSessionRol($_SESSION["rol"]) != null){
-				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true")){
+				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
 				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				$key_select_deploy_empleados = array_search($_POST['array_empleado_text'], $deploy_empleados);
@@ -1757,6 +1761,22 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$array_empleado = $_POST["array_empleado"];
 				$array_empleado_text = $_POST["array_empleado_text"];
+			}else if ((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true"))){
+				$select_empleados = $object -> _db ->prepare("SELECT usuarios.id AS userid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+				$select_empleados -> execute();
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				$key_select_deploy_empleados = array_search($_POST['array_empleado_text'], $deploy_empleados);
+				if ($key_select_deploy_empleados !== false) {
+					if($key_select_deploy_empleados != $_POST["array_empleado"]){
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+					}
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+				$array_empleado = $_POST["array_empleado"];
+				$array_empleado_text = $_POST["array_empleado_text"];	
+			}else{
+				die(json_encode(array("error", "Su usuario aún no está configurado para crear cartas compromiso")));
 			}
 		}else{
 			die(json_encode(array("error", "Debe asignar un usuario a la carta compromiso")));
