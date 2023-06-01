@@ -31,13 +31,13 @@
                                 <table class="w-full" id="datatable">
                                     <thead>
                                         <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
-                                            <th class="py-3 text-left desktop">Id</th>
+                                            <th>Solicitud_id</th>
                                             <th class="py-3 text-left all">Nombre</th>
-                                            <th class="py-3 text-left desktop">Tipo</th>
-                                            <th class="py-3 text-left desktop">Fecha inicio</th>
-                                            <th class="py-3 text-left desktop">Fecha fin</th>
-                                            <th class="py-3 text-left desktop">Estado</th>
-                                            <th class="py-3 text-center min-tablet">Goce de sueldo?</th>
+                                            <th class="py-3 text-center desktop">Tipo</th>
+                                            <th class="py-3 text-center desktop">Periodo</th>
+                                            <th class="py-3 text-center desktop">F. solicitud</th>
+                                            <th class="py-3 text-center desktop">Goce de sueldo?</th>
+                                            <th class="py-3 text-center desktop">Estatus</th>
                                             <th class="py-3 text-center min-tablet"></th>
                                         </tr>
                                     </thead>
