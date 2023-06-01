@@ -10,7 +10,7 @@ if ($_SESSION['loggedin'] != true) {
     die();
 }
 
-if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || (Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") != "false" && Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") != "false")) && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || (Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") != "true" && Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") != "true")) && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
     header("HTTP/1.0 403 Forbidden");
     echo "
     <html>
