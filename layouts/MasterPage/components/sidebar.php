@@ -80,7 +80,7 @@
     <?php } ?>
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-        <?php if(basename($_SERVER['PHP_SELF']) == 'incidencias.php' || basename($_SERVER['PHP_SELF']) == 'crear_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'editar_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'ver_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'solicitud_incidencia.php'){?>
+        <?php if(basename($_SERVER['PHP_SELF']) == 'incidencias.php' || basename($_SERVER['PHP_SELF']) == 'crear_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'editar_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'ver_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'solicitud_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'actas_cartas.php'){?>
             <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="incidencias.php">
         <?php }else{ ?>
             <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="incidencias.php">
