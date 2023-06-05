@@ -426,9 +426,9 @@ class actas extends incidencias{
 	public function crear_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta){
 		$object = new connection_database();
 		$crud = new crud();
-		if(Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
-			$crud -> store ('incidencias_acta_administrativas', ['users_id' => $this->usuario_id, 'fecha_acta' => $fecha_acta, 'asignada_a' => $caja_empleado, 'motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta]);
-		}
+		$crud -> store ('incidencias_acta_administrativas', ['motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta]);
+		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $caja_empleado, 'fecha_expedicion' => $fecha_acta, 'id_acta_administrativa' => $incapacidad_administrativa_id]);
 	}
 }
 
@@ -441,9 +441,9 @@ class cartas extends incidencias{
 	public function crear_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta){
 		$object = new connection_database();
 		$crud = new crud();
-		if(Roles::FetchSessionRol($this->usuario_rol) != "Usuario externo" && Roles::FetchSessionRol($this->usuario_rol) != ""){
-			$crud -> store ('incidencias_carta_compromiso', ['users_id' => $this->usuario_id, 'fecha_carta' => $fecha_carta, 'asignada_a' => $array_empleado, 'resposabilidades_carta' => $responsabilidad_carta]);
-		}
+		$crud -> store ('incidencias_carta_compromiso', ['resposabilidades_carta' => $responsabilidad_carta]);
+		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $array_empleado, 'fecha_expedicion' => $fecha_carta, 'id_carta_compromiso' => $incapacidad_administrativa_id]);
 	}
 }
 ?>
