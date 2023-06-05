@@ -1457,7 +1457,7 @@
             $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');	
         });
 
-        var file_editar_carta:
+        var file_editar_carta;
 
         $(document).on('click',  '#edit_carta', function () {
 	        file_editar_carta = $("#edit_carta").clone();
