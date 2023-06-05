@@ -1022,6 +1022,12 @@
             });
         });
 
+        var file_subir_acta;
+
+        $(document).on('click',  '#subir_acta', function () {
+	        file_subir_acta = $("#subir_acta").clone();
+        });
+
         $(document).on('change',  '#subir_acta', function () {
             if (window.FileReader && window.Blob) {
                 var files = $('#subir_acta').get(0).files;
@@ -1097,6 +1103,8 @@
                         }
                     };
                     fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#subir_acta").replaceWith(file_subir_acta.clone());
                 }
             } else {
                 console.error('FileReader ó Blob no es compatible con este navegador.');
@@ -1157,6 +1165,12 @@
             $('#upload-text-acta').html('No hay ningún archivo seleccionado');
             $('#upload-delete-acta').addClass('hidden');
             $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');	
+        });
+
+        var file_subir_carta;
+
+        $(document).on('click',  '#subir_carta', function () {
+	        file_subir_carta = $("#subir_carta").clone();
         });
 
         $(document).on('change',  '#subir_carta', function () {
@@ -1234,6 +1248,8 @@
                         }
                     };
                     fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#subir_carta").replaceWith(file_subir_carta.clone());
                 }
             } else {
                 console.error('FileReader ó Blob no es compatible con este navegador.');
@@ -1294,6 +1310,12 @@
             $('#upload-text-carta').html('No hay ningún archivo seleccionado');
             $('#upload-delete-carta').addClass('hidden');
             $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');	
+        });
+
+        var file_editar_acta;
+
+        $(document).on('click',  '#edit_acta', function () {
+	        file_editar_acta = $("#edit_acta").clone();
         });
 
         $(document).on('change',  '#edit_acta', function () {
@@ -1371,6 +1393,8 @@
                         }
                     };
                     fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#edit_acta").replaceWith(file_editar_acta.clone());
                 }
             } else {
                 console.error('FileReader ó Blob no es compatible con este navegador.');
@@ -1431,6 +1455,12 @@
             $('#edit-text-acta').html('No hay ningún archivo seleccionado');
             $('#edit-delete-acta').addClass('hidden');
             $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');	
+        });
+
+        var file_editar_carta:
+
+        $(document).on('click',  '#edit_carta', function () {
+	        file_editar_carta = $("#edit_carta").clone();
         });
 
         $(document).on('change',  '#edit_carta', function () {
@@ -1508,6 +1538,8 @@
                         }
                     };
                     fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#edit_carta").replaceWith(file_editar_carta.clone());
                 }
             } else {
                 console.error('FileReader ó Blob no es compatible con este navegador.');
