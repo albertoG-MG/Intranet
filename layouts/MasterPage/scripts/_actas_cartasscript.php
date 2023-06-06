@@ -496,12 +496,14 @@
                         if(response == "true"){
                             window.addEventListener('beforeunload', unloadHandler);
                             var fd = new FormData();
-                            var archivo = "acta_administrativa";
-                            var upload_acta = $('#subir_acta')[0].files[0];
+                            var incidenciaid = data["id"];
+                            var tipo = "acta_administrativa";
+                            var archivo = $('#subir_acta')[0].files[0];
                             var app = "actas_cartas";
                             var method = "store";
+                            fd.append('incidenciaid', incidenciaid);
+                            fd.append('tipo', tipo);
                             fd.append('archivo', archivo);
-                            fd.append('upload_acta', upload_acta);
                             fd.append('app', app);
                             fd.append('method', method);
                             $.ajax({
@@ -647,12 +649,14 @@
                         if(response == "true"){
                             window.addEventListener('beforeunload', unloadHandler);
                             var fd = new FormData();
-                            var archivo = "carta_compromiso";
-                            var upload_carta = $('#subir_carta')[0].files[0];
+                            var incidenciaid = data["id"];
+                            var tipo = "carta_compromiso";
+                            var archivo = $('#subir_carta')[0].files[0];
                             var app = "actas_cartas";
                             var method = "store";
+                            fd.append('incidenciaid', incidenciaid);
+                            fd.append('tipo', tipo);
                             fd.append('archivo', archivo);
-                            fd.append('upload_carta', upload_carta);
                             fd.append('app', app);
                             fd.append('method', method);
                             $.ajax({
@@ -802,12 +806,14 @@
                         if(response == "true"){
                             window.addEventListener('beforeunload', unloadHandler);
                             var fd = new FormData();
-                            var archivo = "acta_administrativa";
-                            var edit_acta = $('#edit_acta')[0].files[0];
+                            var incidenciaid = data["id"];
+                            var tipo = "acta_administrativa";
+                            var archivo = $('#edit_acta')[0].files[0];
                             var app = "actas_cartas";
                             var method = "edit";
+                            fd.append('incidenciaid', incidenciaid);
+                            fd.append('tipo', tipo);
                             fd.append('archivo', archivo);
-                            fd.append('edit_acta', edit_acta);
                             fd.append('app', app);
                             fd.append('method', method);
                             $.ajax({
@@ -959,12 +965,14 @@
                         if(response == "true"){
                             window.addEventListener('beforeunload', unloadHandler);
                             var fd = new FormData();
-                            var archivo = "carta_compromiso";
-                            var edit_carta = $('#edit_carta')[0].files[0];
+                            var incidenciaid = data["id"];
+                            var tipo = "carta_compromiso";
+                            var archivo = $('#edit_carta')[0].files[0];
                             var app = "actas_cartas";
                             var method = "edit";
+                            fd.append('incidenciaid', incidenciaid);
+                            fd.append('tipo', tipo);
                             fd.append('archivo', archivo);
-                            fd.append('edit_carta', edit_carta);
                             fd.append('app', app);
                             fd.append('method', method);
                             $.ajax({
