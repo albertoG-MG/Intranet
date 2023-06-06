@@ -433,7 +433,7 @@
                             "<div id='upload-button-acta' onclick='upload_acta_click()' class='inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900'>"+
                                 "Subir archivo"+
                             "</div>"+
-                            "<div class='flex-1 md:flex items-center justify-between'>"+
+                            "<div class='flex items-center justify-between'>"+
                                 "<span id='upload-text-acta' style='word-break: break-word;'>No hay ningún archivo seleccionado</span>"+
                                 "<button type='button' id='upload-delete-acta' class='hidden cursor-pointer'>"+
                                     "<svg xmlns='http://www.w3.org/2000/svg' class='fill-current text-red-700 w-3 h-3' viewBox='0 0 320 512'>"+
@@ -584,7 +584,7 @@
                             "<div id='upload-button-carta' onclick='upload_carta_click()' class='inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900'>"+
                                 "Subir archivo"+
                             "</div>"+
-                            "<div class='flex-1 md:flex items-center justify-between'>"+
+                            "<div class='flex items-center justify-between'>"+
                                 "<span id='upload-text-carta' style='word-break: break-word;'>No hay ningún archivo seleccionado</span>"+
                                 "<button type='button' id='upload-delete-carta' class='hidden cursor-pointer'>"+
                                     "<svg xmlns='http://www.w3.org/2000/svg' class='fill-current text-red-700 w-3 h-3' viewBox='0 0 320 512'>"+
@@ -734,7 +734,7 @@
                             "<div id='edit-button-acta' onclick='edit_acta_click()' class='inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900'>"+
                                 "Editar acta"+
                             "</div>"+
-                            "<div class='flex-1 md:flex items-center justify-between'>"+
+                            "<div class='flex items-center justify-between'>"+
                                 "<span id='edit-text-acta' style='word-break: break-word;'>1 archivo seleccionado</span>"+
                                 "<button type='button' id='edit-delete-acta' class='cursor-pointer'>"+
                                     "<svg xmlns='http://www.w3.org/2000/svg' class='fill-current text-red-700 w-3 h-3' viewBox='0 0 320 512'>"+
@@ -891,7 +891,7 @@
                             "<div id='edit-button-carta' onclick='edit_carta_click()' class='inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900'>"+
                                 "Editar carta"+
                             "</div>"+
-                            "<div class='flex-1 md:flex items-center justify-between'>"+
+                            "<div class='flex items-center justify-between'>"+
                                 "<span id='edit-text-carta' style='word-break: break-word;'>1 archivo seleccionado</span>"+
                                 "<button type='button' id='edit-delete-carta' class='cursor-pointer'>"+
                                     "<svg xmlns='http://www.w3.org/2000/svg' class='fill-current text-red-700 w-3 h-3' viewBox='0 0 320 512'>"+
