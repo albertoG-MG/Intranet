@@ -430,6 +430,16 @@ class actas extends incidencias{
 		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $caja_empleado, 'fecha_expedicion' => $fecha_acta, 'id_acta_administrativa' => $incapacidad_administrativa_id]);
 	}
+
+	public function vincular_acta($incidenciaid, $archivo){
+		$crud = new crud();
+		$object = new connection_database();
+		$location = "../src/acta_administrativa/";
+		$ext = pathinfo($archivo['name'], PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($archivo['tmp_name'],$uploadfile);
+		$crud -> update('incidencias_administrativas', ['nombre_archivo_firmado' => $archivo['name'], 'identificador_archivo_firmado' => basename($uploadfile)], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
 }
 
 class cartas extends incidencias{
@@ -444,6 +454,16 @@ class cartas extends incidencias{
 		$crud -> store ('incidencias_carta_compromiso', ['resposabilidades_carta' => $responsabilidad_carta]);
 		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $array_empleado, 'fecha_expedicion' => $fecha_carta, 'id_carta_compromiso' => $incapacidad_administrativa_id]);
+	}
+
+	public function vincular_carta($incidenciaid, $archivo){
+		$crud = new crud();
+		$object = new connection_database();
+		$location = "../src/carta_compromiso/";
+		$ext = pathinfo($archivo['name'], PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($archivo['tmp_name'],$uploadfile);
+		$crud -> update('incidencias_administrativas', ['nombre_archivo_firmado' => $archivo['name'], 'identificador_archivo_firmado' => basename($uploadfile)], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
 	}
 }
 ?>

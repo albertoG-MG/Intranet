@@ -1849,6 +1849,86 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "actas_cartas"){
+	if(isset($_POST["incidenciaid"], $_POST["tipo"], $_FILES["archivo"], $_POST["method"])){
+		if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+		
+		$check_incident_exist = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas WHERE id=:incidenciadminid");
+		$check_incident_exist -> execute(array(":incidenciadminid" => $_POST["incidenciaid"]));
+		$count_incident = $check_incident_exist -> rowCount();
+		if($count_incident == 0){
+			die(json_encode(array("error", "No tienes permiso para subir archivos a este tipo de usuario")));
+		}
+		
+		if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente"){
+			$check_empleado = $object -> _db -> prepare("SELECT roles.nombre as rolnom, departamentos.departamento as depanom FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias_administrativas.id=:incidenciaid");
+			$check_empleado -> execute(array(":incidenciaid" => $_POST["incidenciaid"]));
+			$fetch_empleado = $check_empleado -> fetch(PDO::FETCH_OBJ);
+			if($fetch_emplado -> rolnom != "Empleado"){
+				die(json_encode(array("error", "No tienes permiso para subir archivos a este tipo de usuario")));
+			}else{
+				if($fetch_empleado -> depanom != Roles::FetchUserDepartamento($_SESSION["id"])){
+					die(json_encode(array("error", "No tienes permiso para subir archivos a este usuario de este departamento")));
+				}
+			}
+		}
+		
+		$tipo_incidencia_administrativa_array = array("acta_administrativa", "carta_compromiso");
+		if (!(in_array($_POST["tipo"], $tipo_incidencia_administrativa_array))) {
+            die(json_encode(array("error", "Por favor, no modifique el tipo de incidencia administrativa por medio de la consola")));
+        }
+		
+		if(isset($_FILES['archivo']['name'])){
+			$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_documento_administrativo = $_FILES['archivo']['name'];
+			$ext = pathinfo($filename_documento_administrativo, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['archivo']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["archivo"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que el archivo sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$file_documento_administrativo=$_FILES['archivo'];
+		}else{
+			die(json_encode(array("error", "Se necesita subir un archivo firmado para el documento administrativo elegido")));
+		}
+		
+		if($_POST['tipo'] == "acta_administrativa"){
+			switch($_POST["method"]){
+				case "store":
+					$actas = new Actas($_SESSION["id"], $_SESSION["rol"]);
+					$actas -> vincular_acta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha subido el archivo firmado para la acta administrativa!")));
+				break;
+				case "edit":
+					$actas = new Actas($_SESSION["id"], $_SESSION["rol"]);
+					$actas -> vincular_acta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha modificado el archivo firmado para la acta administrativa!")));
+				break;
+			}
+		}else if($_POST['tipo'] == "carta_compromiso"){
+			switch($_POST["method"]){
+				case "store":
+					$cartas = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+					$cartas -> vincular_carta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha subido el archivo firmado para la carta compromiso!")));
+				break;
+				case "edit":
+					$cartas = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+					$cartas -> vincular_carta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha modificado el archivo firmado para la carta compromiso!")));
+				break;
+			}
+		}
+	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "categorias"){
     if(isset($_POST["categorias"]) && isset($_POST["method"])){
         $categorias = $_POST["categorias"];
