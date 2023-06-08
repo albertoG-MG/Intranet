@@ -216,30 +216,24 @@
         die();
     }else if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "true"){
         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
-            $check_empleado = $object -> _db -> prepare("SELECT roles.nombre as rolnom, departamentos.departamento as depanom FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias_administrativas.id=:incidenciaid");
-            $check_empleado -> execute(array(":incidenciaid" => $_POST["incidenciaid"]));
-            $count_empleado = $check_empleado -> rowCount();
-            if($count_empleado > 0){
-                $fetch_empleado = $check_empleado -> fetch(PDO::FETCH_OBJ);
-                if($fetch_emplado -> rolnom != "Empleado"){
-                    header('Location: actas_cartas.php');
-                    die();
-                }else{
-                    if($fetch_empleado -> depanom != Roles::FetchUserDepartamento($_SESSION["id"])){
+            $check_user_owns = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a WHERE incidencias_administrativas.id=:incidenciaid AND usuarios.id=:userid");
+            $check_user_owns -> execute(array(':incidenciaid' => $verid, ':userid' => $_SESSION['id']));
+            $count_user = $check_user_owns -> rowCount();
+            if($count_user == 0){
+                $check_empleado = $object -> _db -> prepare("SELECT roles.nombre as rolnom, departamentos.departamento as depanom FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias_administrativas.id=:incidenciaid");
+                $check_empleado -> execute(array(":incidenciaid" => $verid));
+                $count_empleado = $check_empleado -> rowCount();
+                if($count_empleado > 0){
+                    $fetch_empleado = $check_empleado -> fetch(PDO::FETCH_OBJ);
+                    if($fetch_emplado -> rolnom != "Empleado" && $fetch_empleado -> depanom != Roles::FetchUserDepartamento($_SESSION["id"])){
                         header('Location: actas_cartas.php');
                         die();
                     }
                 }
             }
-            $check_user_owns = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a WHERE incidencias_administrativas.id=:incidenciaid AND usuarios.id=:userid");
-            $check_user_owns -> execute(array(':incidenciaid' => $verid, ':userid' => $_SESSION['id']));
-            $count_user = $check_user_owns -> rowCount();
-            if($count_user == 0){
-                header('Location: actas_cartas.php');
-                die();
-            }
         }
     }
+
     //Sacamos la información de la incidencia de la base de datos
     $retrieve_information = $object -> _db -> prepare("SELECT * FROM (SELECT CONCAT(u1.nombre, ' ', u1.apellido_pat, ' ', u1.apellido_mat) AS creada_por, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) AS asignada_a, d2.departamento AS departamento_del_asignado, CASE WHEN ia.id_acta_administrativa IS NOT NULL THEN 'ACTA ADMINISTRATIVA' ELSE 'CARTA COMPROMISO' END AS tipo, iaa.motivo_acta AS motivo_acta, iaa.observaciones_acta AS observaciones_acta, icc.resposabilidades_carta as responsabilidades_carta, ia.fecha_expedicion AS fecha, ia.nombre_archivo_firmado AS filename, ia.identificador_archivo_firmado AS file FROM incidencias_administrativas as ia INNER JOIN usuarios u1 ON u1.id=ia.users_id INNER JOIN usuarios u2 ON u2.id=ia.asignada_a INNER JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN incidencias_acta_administrativas AS iaa ON iaa.id=ia.id_acta_administrativa LEFT JOIN incidencias_carta_compromiso AS icc ON icc.id=ia.id_carta_compromiso WHERE ia.id=:incidenciaid) AS x");
     $retrieve_information -> execute(array(':incidenciaid' => $verid));
