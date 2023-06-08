@@ -440,6 +440,26 @@ class actas extends incidencias{
 		move_uploaded_file($archivo['tmp_name'],$uploadfile);
 		$crud -> update('incidencias_administrativas', ['nombre_archivo_firmado' => $archivo['name'], 'identificador_archivo_firmado' => basename($uploadfile)], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
 	}
+
+	public static function EliminarActa($incidenciaid, $idacta){
+		$crud = new crud();
+		$object = new connection_database();
+		$select_acta = $object -> _db -> prepare("SELECT nombre_archivo_firmado, identificador_archivo_firmado FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$select_acta -> execute(array(':incidenciaid' => $incidenciaid));
+		$fetch_select_acta = $select_acta -> fetch(PDO::FETCH_OBJ);
+		if($fetch_select_acta -> nombre_archivo_firmado != null && $fetch_select_acta -> identificador_archivo_firmado != null){
+			$directory = __DIR__ . "/../src/acta_administrativa/";
+			$path = __DIR__ . "/../src/acta_administrativa/".$fetch_select_acta -> identificador_archivo_firmado;
+			if(!file_exists($path)){
+				$crud->delete('incidencias_acta_administrativas', 'id=:actaid', ['actaid' => $idacta]);
+			}else{
+				unlink($directory.$fetch_select_acta -> identificador_archivo_firmado);
+				$crud->delete('incidencias_acta_administrativas', 'id=:actaid', ['actaid' => $idacta]);
+			}
+		}else{
+			$crud->delete('incidencias_acta_administrativas', 'id=:actaid', ['actaid' => $idacta]);
+		}
+	}
 }
 
 class cartas extends incidencias{
@@ -464,6 +484,26 @@ class cartas extends incidencias{
 		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
 		move_uploaded_file($archivo['tmp_name'],$uploadfile);
 		$crud -> update('incidencias_administrativas', ['nombre_archivo_firmado' => $archivo['name'], 'identificador_archivo_firmado' => basename($uploadfile)], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
+
+	public static function EliminarCarta($incidenciaid, $idcarta){
+		$crud = new crud();
+		$object = new connection_database();
+		$select_carta = $object -> _db -> prepare("SELECT nombre_archivo_firmado, identificador_archivo_firmado FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$select_carta -> execute(array(':incidenciaid' => $incidenciaid));
+		$fetch_select_carta = $select_carta -> fetch(PDO::FETCH_OBJ);
+		if($fetch_select_carta -> nombre_archivo_firmado != null && $fetch_select_carta -> identificador_archivo_firmado != null){
+			$directory = __DIR__ . "/../src/carta_compromiso/";
+			$path = __DIR__ . "/../src/carta_compromiso/".$fetch_select_carta -> identificador_archivo_firmado;
+			if(!file_exists($path)){
+				$crud->delete('incidencias_carta_compromiso', 'id=:cartaid', ['cartaid' => $idcarta]);
+			}else{
+				unlink($directory.$fetch_select_carta -> identificador_archivo_firmado);
+				$crud->delete('incidencias_carta_compromiso', 'id=:cartaid', ['cartaid' => $idcarta]);
+			}
+		}else{
+			$crud->delete('incidencias_carta_compromiso', 'id=:cartaid', ['cartaid' => $idcarta]);
+		}
 	}
 }
 ?>
