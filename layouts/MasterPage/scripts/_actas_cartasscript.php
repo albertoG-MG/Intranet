@@ -424,6 +424,75 @@
             window.location.href = "ver_documento_administrativo.php?idIncidenciaAdministrativa="+data["id"]+""; 
         });
 
+        $('#datatable').on('click', 'tr .Eliminar', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras recuperar la información!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'éxito',
+                                text: 'La fila ha sido eliminada!'
+                            }).then(function() {
+                                var eliminarid = data["id"];
+                                var tipo_incidencia = data["tipo"];
+                                var fd = new FormData();
+                                fd.append('id', eliminarid);
+                                fd.append('tipo_incidencia', tipo_incidencia);
+                                if(tipo_incidencia == "ACTA ADMINISTRATIVA"){
+                                    var id_acta = data["id_acta_administrativa"];
+                                    fd.append('id_acta', id_acta);
+                                }else{
+                                    var id_carta = data["id_carta_compromiso"];
+                                    fd.append('id_carta', id_carta);
+                                }
+                                $.ajax({
+                                    url: "../ajax/eliminar/tabla_actas_cartas/eliminardocumento.php",
+                                    type: "post",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result) {
+                                        table.row(row).remove().draw();
+                                    }
+                                });
+                            });
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            })
+        });
+
         $('#datatable').on('click', 'tr .subir_acta', function () {
             var table = $('#datatable').DataTable();
             var rowSelector;
