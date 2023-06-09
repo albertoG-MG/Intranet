@@ -1413,6 +1413,38 @@
         });
     }
 
+    function waitForElm(selector) {
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
+
+    $('#user').on('select2:open', function (e) {
+        waitForElm('.select2-results__options').then((elm) => {
+            if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
+                var usuarios_group = $('#user').find('optgroup[label=Usuarios]');
+                $(usuarios_group).prop('disabled', 'true');
+                $(".select2-results__option.select2-results__option--group").css("display","none");
+                $('#select2-user-results.select2-results__options').append("<span class='px-3'>No hay resultados</span>");
+            }
+        });
+    });
+
 </script>
 <style>
 

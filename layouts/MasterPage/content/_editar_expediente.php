@@ -1427,11 +1427,11 @@
                                        <?php while($fetchtipopapeleria = $checktipospapeleria -> fetch(PDO::FETCH_OBJ)){ ?>
                                        <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                           <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                             <span class="inline-block w-1/3 md:hidden font-bold">Nombre</span>
+                                             <span class="inline-block md:hidden font-bold">Nombre</span>
                                              <p><?php echo ucfirst(strtolower($fetchtipopapeleria->nombre)); ?></p>
                                           </td>
                                           <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                             <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                             <span class="inline-block md:hidden font-bold">Acción</span>
                                              <div class="flex flex-col w-full justify-center">
                                                 <div id="upload-button<?php echo $fetchtipopapeleria->id ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
                                                    Subir archivo
