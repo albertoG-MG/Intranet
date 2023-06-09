@@ -571,52 +571,49 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 		
 		//ESTADO
-		if(empty($_POST["estado"])){
+		if(empty($_POST["estado"]) && empty($_POST["estadotext"])){
 			$estado = null;
 		}else{
 			$retrieve_estados = $object -> _db -> prepare("SELECT id, nombre FROM estados");
 			$retrieve_estados -> execute();
 			$fetch_retrieve_estados = $retrieve_estados -> fetchAll(PDO::FETCH_KEY_PAIR);
-			$key_retrieve_estados = array_search($_POST['estadotext'], $fetch_retrieve_estados);
-				
-			if ($key_retrieve_estados !== false) {
-				if($key_retrieve_estados != $_POST["estado"]){
-					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los estados registrados")));
+			if (array_key_exists($_POST["estado"], $fetch_retrieve_estados)) {
+				$array_key_state_value = $fetch_retrieve_estados[$_POST["estado"]];
+				if($_POST['estadotext'] == $array_key_state_value){
+					$estado = $_POST["estado"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegúrese que el estado escogido se encuentre en el dropdown")));
 				}
 			}else{
-				die(json_encode(array("error", "Por favor, asegurese que el estado escogido se encuentre en el dropdown")));
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los estados registrados")));
 			}
-			$estado = $_POST["estado"];
-		
 		}
 		
 		//MUNICIPIO
-        if(empty($_POST["estado"]) && empty($_POST["municipio"])){
+        if(empty($_POST["municipio"]) && empty($_POST["municipiotext"])){
 			$municipio = null;
-        }else if(!(empty($_POST["estado"])) && empty($_POST["municipio"])){
-            die(json_encode(array("error", "Por favor, seleccione un municipio")));
-        }else if(empty($_POST["estado"]) && !(empty($_POST["municipio"]))){
-            die(json_encode(array("error", "Por favor, seleccione un estado y luego un municipio")));
-        }else{
-            $retrieve_estados_municipio = $object -> _db -> prepare("SELECT id, nombre from municipios where estado=:estado");
-            $retrieve_estados_municipio -> execute(array(':estado' => $_POST["estado"]));
-            $count_retrieve_estados_municipio = $retrieve_estados_municipio -> rowCount();
-            if($count_retrieve_estados_municipio > 0){
-                $fetch_retrieve_estados_municipio = $retrieve_estados_municipio -> fetchAll(PDO::FETCH_KEY_PAIR);
-                $key_retrieve_estados_municipio = array_search($_POST['municipiotext'],  $fetch_retrieve_estados_municipio);
-				
-			    if ($key_retrieve_estados_municipio !== false) {
-				    if($key_retrieve_estados_municipio != $_POST["municipio"]){
-					    die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los municipios registrados")));
-				    }
-			    }else{
-				    die(json_encode(array("error", "Por favor, asegurese que el municipio escogido se encuentre en el dropdown")));
-			    }
-                $municipio = $_POST["municipio"];
-            }else{
-                die(json_encode(array("error", "No se encontró el estado ó el estado no existe ó el estado no tiene municipios, por favor, eliga otro estado")));
-            }
-        }
+		}else if((empty($_POST["estado"]) && empty($_POST["estadotext"])) && !(empty($_POST["municipio"]) && empty($_POST["municipiotext"]))){
+			die(json_encode(array("error", "Por favor, seleccione un estado y luego un municipio")));
+		}else{
+			$retrieve_estados_municipio = $object -> _db -> prepare("SELECT id, nombre from municipios where estado=:estado");
+			$retrieve_estados_municipio -> execute(array(':estado' => $_POST["estado"]));
+			$count_retrieve_estados_municipio = $retrieve_estados_municipio -> rowCount();
+			if($count_retrieve_estados_municipio > 0){
+				$fetch_retrieve_estados_municipio = $retrieve_estados_municipio -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["municipio"], $fetch_retrieve_estados_municipio)) {
+					$array_key_municipio_value = $fetch_retrieve_estados_municipio[$_POST["municipio"]];
+					if($_POST['municipiotext'] == $array_key_municipio_value){
+						$municipio = $_POST["municipio"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegúrese que el municipio escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los municipios registrados")));
+				}
+			}else{
+				die(json_encode(array("error", "El estado elegido no tiene ningún municipio, el dropdown de municipios debe estar vacío")));
+			}
+		}
 		
 		//CÓDIGO POSTAL
         if(empty($_POST["codigo"])){
