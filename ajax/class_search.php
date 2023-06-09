@@ -1342,6 +1342,30 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "Incidencias"){
 	if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Permiso"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//CHECA SI EL USUARIO TIENE ASIGANDO UN JEFE EN LA TABLA JERARQUÍA
+		$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+		$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
+		$count_jerarquia = $check_jerarquia -> rowCount();
+		if($count_jerarquia == 0){
+			die(json_encode(array("error", "Su usuario no tiene asignado un jefe")));
+		}
+
+		//CHECA SI EL JEFE DEL USUARIO ESTÁ REGISTRADO EN LA INTRANET
+		$select = $object -> _db ->prepare("SELECT u1.correo FROM jerarquia j1 INNER JOIN roles r1 ON r1.id = j1.rol_id INNER JOIN usuarios u1 ON u1.roles_id = r1.id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id WHERE IF(d1.departamento IS NULL, d1.departamento IS NULL, d1.departamento = :departamento1) AND r1.nombre =(SELECT CASE WHEN r6.nombre = 'Director' THEN (SELECT r2.nombre FROM jerarquia j2 INNER JOIN roles r2 ON j2.rol_id = r2.id INNER JOIN usuarios u2 ON u2.roles_id = r2.id LEFT JOIN departamentos d2 ON d2.id = u2.departamento_id WHERE r2.nombre =(SELECT r4.nombre FROM jerarquia j3 INNER JOIN roles r3 ON r3.id=j3.rol_id INNER JOIN jerarquia j4 ON j4.id = j3.jerarquia_id INNER JOIN roles r4 ON r4.id = j4.rol_id WHERE r4.nombre = 'Director') AND d2.departamento = :departamento2 UNION SELECT 'Director general' LIMIT 1) ELSE r6.nombre END FROM jerarquia j5 INNER JOIN roles r5 ON r5.id = j5.rol_id INNER JOIN jerarquia j6 ON j6.id = j5.jerarquia_id INNER JOIN roles r6 ON r6.id = j6.rol_id WHERE r5.nombre = :rolnom)");
+		$select -> execute(array(':departamento1' => Roles::FetchUserDepartamento($_SESSION["id"]), ':departamento2' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => Roles::FetchSessionRol($_SESSION["rol"])));
+		$select_count = $select -> rowCount();
+		if($select_count > 0){
+			$jefe_array = $select -> fetchAll(PDO::FETCH_ASSOC);
+		}else{
+			die(json_encode(array("error", "Su jefe asignado no está registrado, por favor, contacte a un administrador")));
+		}
+
 		//TIPO DE PERMISO
 		$tipopermiso_array = array("REGLAMENTARIA", "NO_REGLAMENTARIA");
 		if (in_array($_POST["tipo_permiso"], $tipopermiso_array)) {
@@ -1417,7 +1441,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				switch($_POST["method"]){
 					case "store":
 						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
-						$permiso -> reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r);
+						$permiso -> reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array);
 						die(json_encode(array("success", "Se ha creado un permiso reglamentario descriptivo!")));
 					break;
 				}
@@ -1445,10 +1469,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				switch($_POST["method"]){
 					case "store":
 						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
-						$permiso -> reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r);
+						$permiso -> reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array);
 						die(json_encode(array("success", "Se ha creado un permiso reglamentario no descriptivo!")));
 					break;
 				}
+
 			}else{
 				die(json_encode(array("error", "Por favor, asegúrese de seleccionar un permiso reglamentario del dropdown y no uno modificado por la consola")));
 			}
@@ -1532,10 +1557,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				switch($_POST["method"]){
 					case "store":
 						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
-						$permiso -> no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
+						$permiso -> no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array);
 						die(json_encode(array("success", "Se ha creado un permiso no reglamentario general!")));
 					break;
 				}	
+
 			}else if($permiso_nr == "AUSENCIA"){
 				//PERMISO NO REGLAMENTARIO - PERIODO AUSENCIA
 				if(empty($_POST["periodo_pnr_f"])){
@@ -1550,15 +1576,40 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				switch($_POST["method"]){
 					case "store":
 						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
-						$permiso -> no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr);
+						$permiso -> no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array);
 						die(json_encode(array("success", "Se ha creado un permiso no reglamentario ausencia!")));
 					break;
-				}	
+				}
+
 			}else{
 				die(json_encode(array("error", "Por favor, asegúrese de seleccionar un permiso no reglamentario del dropdown y no uno modificado por la consola")));
 			}
 		}
 	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Incapacidad"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//CHECA SI EL USUARIO TIENE ASIGANDO UN JEFE EN LA TABLA JERARQUÍA
+		$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+		$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
+		$count_jerarquia = $check_jerarquia -> rowCount();
+		if($count_jerarquia == 0){
+			die(json_encode(array("error", "Su usuario no tiene asignado un jefe")));
+		}
+
+		//CHECA SI EL JEFE DEL USUARIO ESTÁ REGISTRADO EN LA INTRANET
+		$select = $object -> _db ->prepare("SELECT u1.correo FROM jerarquia j1 INNER JOIN roles r1 ON r1.id = j1.rol_id INNER JOIN usuarios u1 ON u1.roles_id = r1.id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id WHERE IF(d1.departamento IS NULL, d1.departamento IS NULL, d1.departamento = :departamento1) AND r1.nombre =(SELECT CASE WHEN r6.nombre = 'Director' THEN (SELECT r2.nombre FROM jerarquia j2 INNER JOIN roles r2 ON j2.rol_id = r2.id INNER JOIN usuarios u2 ON u2.roles_id = r2.id LEFT JOIN departamentos d2 ON d2.id = u2.departamento_id WHERE r2.nombre =(SELECT r4.nombre FROM jerarquia j3 INNER JOIN roles r3 ON r3.id=j3.rol_id INNER JOIN jerarquia j4 ON j4.id = j3.jerarquia_id INNER JOIN roles r4 ON r4.id = j4.rol_id WHERE r4.nombre = 'Director') AND d2.departamento = :departamento2 UNION SELECT 'Director general' LIMIT 1) ELSE r6.nombre END FROM jerarquia j5 INNER JOIN roles r5 ON r5.id = j5.rol_id INNER JOIN jerarquia j6 ON j6.id = j5.jerarquia_id INNER JOIN roles r6 ON r6.id = j6.rol_id WHERE r5.nombre = :rolnom)");
+		$select -> execute(array(':departamento1' => Roles::FetchUserDepartamento($_SESSION["id"]), ':departamento2' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => Roles::FetchSessionRol($_SESSION["rol"])));
+		$select_count = $select -> rowCount();
+		if($select_count > 0){
+			$jefe_array = $select -> fetchAll(PDO::FETCH_ASSOC);
+		}else{
+			die(json_encode(array("error", "Su jefe asignado no está registrado, por favor, contacte a un administrador")));
+		}
+
 		//NÚMERO DE LA INCAPACIDAD
 		if(empty($_POST["numero_incapacidad"])){
 			die(json_encode(array("error", "El número de la incapacidad no puede estar vacío")));
@@ -1650,11 +1701,18 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		switch($_POST["method"]){
 			case "store":
 				$incapacidad = new Incapacidades($_SESSION["id"], $_SESSION["rol"]);
-				$incapacidad -> crear_incapacidad($numero_incapacidad, $serie_folio_incapacidad, $tipo_incapacidad, $ramo_seguro_incapacidad, $periodo_incapacidad, $motivo_incapacidad, $observaciones_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad);
+				$incapacidad -> crear_incapacidad($numero_incapacidad, $serie_folio_incapacidad, $tipo_incapacidad, $ramo_seguro_incapacidad, $periodo_incapacidad, $motivo_incapacidad, $observaciones_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad, $jefe_array);
 				die(json_encode(array("success", "Se ha creado una incapacidad!")));
 			break;
 		}
+
 	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Acta_administrativa"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
 		//FECHA DEL ACTA ADMINISTRATIVA
         if(empty($_POST["fecha_acta"])){
 			die(json_encode(array("error", "La fecha del acta administrativa no puede estar vacío")));
@@ -1668,9 +1726,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		//SELECT 2 - ACTAS ADMINISTRATIVAS
 		if($_POST["caja_empleado"] != null && $_POST["caja_empleado_text"] != null){
-			//FALTA AQUÍ LA VERSIÓN DE LOS USUARIOS EXTERNOS, ADMINISTRADORES Y GENTE SIN ROL
-			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true")){
-				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
 				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				$key_select_deploy_empleados = array_search($_POST['caja_empleado_text'], $deploy_empleados);
@@ -1683,8 +1740,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$caja_empleado = $_POST["caja_empleado"];
 				$caja_empleado_text = $_POST["caja_empleado_text"];
-			}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true"))){
-				$select_empleados = $object -> _db ->prepare("SELECT usuarios.id AS userid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+			}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id AS expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
 				$select_empleados -> execute();
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				$key_select_deploy_empleados = array_search($_POST['caja_empleado_text'], $deploy_empleados);
@@ -1697,8 +1754,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$caja_empleado = $_POST["caja_empleado"];
 				$caja_empleado_text = $_POST["caja_empleado_text"];
-			}else{
-				die(json_encode(array("error", "Su usuario aún no está configurado para crear actas administrativas")));
 			}
 		}else{
 			die(json_encode(array("error", "Debe asignar un usuario al acta administrativa")));
@@ -1729,10 +1784,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			case "store":
 				$acta = new Actas($_SESSION["id"], $_SESSION["rol"]);
 				$acta -> crear_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta);
-				die(json_encode(array("success", "Se ha asignado un acta administrativa al usuario seleccionado!")));
+				die(json_encode(array("success", "Se ha asignado un acta administrativa al expediente del usuario seleccionado!")));
 			break;
 		}
 	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Carta_compromiso"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
 		//FECHA DE LA CARTA COMPROMISO
         if(empty($_POST["fecha_carta"])){
 			die(json_encode(array("error", "La fecha de la carta compromiso no puede estar vacía")));
@@ -1746,9 +1807,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		//SELECT 2 - CARTAS COMPROMISO
 		if($_POST["array_empleado"] != null && $_POST["array_empleado_text"] != null){
-			//FALTA AQUÍ LA VERSIÓN DE LOS USUARIOS EXTERNOS, ADMINISTRADORES Y GENTE SIN ROL
-			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true")){
-				$select_empleados = $object -> _db ->prepare("SELECT u2.id as userid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
 				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				$key_select_deploy_empleados = array_search($_POST['array_empleado_text'], $deploy_empleados);
@@ -1761,8 +1821,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$array_empleado = $_POST["array_empleado"];
 				$array_empleado_text = $_POST["array_empleado_text"];
-			}else if ((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" && (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true"))){
-				$select_empleados = $object -> _db ->prepare("SELECT usuarios.id AS userid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+			}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
 				$select_empleados -> execute();
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				$key_select_deploy_empleados = array_search($_POST['array_empleado_text'], $deploy_empleados);
@@ -1775,8 +1835,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$array_empleado = $_POST["array_empleado"];
 				$array_empleado_text = $_POST["array_empleado_text"];	
-			}else{
-				die(json_encode(array("error", "Su usuario aún no está configurado para crear cartas compromiso")));
 			}
 		}else{
 			die(json_encode(array("error", "Debe asignar un usuario a la carta compromiso")));
@@ -1797,7 +1855,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			case "store":
 				$carta = new Cartas($_SESSION["id"], $_SESSION["rol"]);
 				$carta -> crear_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta);
-				die(json_encode(array("success", "Se ha asignado una carta compromiso al usuario seleccionado!")));
+				die(json_encode(array("success", "Se ha asignado una carta compromiso al expediente del usuario seleccionado!")));
 			break;
 		}
 	}

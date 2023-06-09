@@ -200,6 +200,9 @@
 		var img_permiso_r = $("#img_permiso_r").clone();
 		var img_permisos_nr = $("#img_permisos_nr").clone();
 		var img_incapacidad = $("#img_incapacidad").clone();
+		var file_permisos_reglamentarios;
+		var file_permisos_no_reglamentarios;
+		var file_incapacidades;
 
 		//Permiso
 		$('input[name="periodo_pnr_fh"]').daterangepicker({ showDropdowns: true, parentEl: "main", timePicker: true, locale: { format: 'YYYY/MM/DD hh:mm A' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
@@ -258,6 +261,11 @@
 			$("#img_incapacidad").replaceWith(img_incapacidad.clone());
 			$("#comprobante_incapacidad").val("");
 			$("#div_actions_archivo_incapacidad").addClass("hidden");
+		});
+
+		//Permisos Reglamentarios - validator ONCLICK
+		$('#permiso-form').on('click', '#justificante_permiso_r', function() {
+			file_permisos_reglamentarios = $("#justificante_permiso_r").clone();
 		});
 
 		//Permisos Reglamentarios - validator ONCHANGE
@@ -336,6 +344,8 @@
 						}
 					};
 					fileReader.readAsArrayBuffer(file.slice(0, 4));
+				}else{
+					$("#justificante_permiso_r").replaceWith(file_permisos_reglamentarios.clone());
 				}
 			} else {
 				console.error('FileReader ó Blob no es compatible con este navegador.');
@@ -357,6 +367,11 @@
 					}
 				}
 			}
+		});
+
+		//Permisos No Reglamentarios - validator ONCLICK
+		$('#permiso-form').on('click', '#justificante_permiso_nr', function() {
+			file_permisos_no_reglamentarios = $("#justificante_permiso_nr").clone();
 		});
 
 		//Permisos No Reglamentarios - validator ONCHANGE
@@ -435,6 +450,8 @@
 						}
 					};
 					fileReader.readAsArrayBuffer(file.slice(0, 4));
+				}else{
+					$("#justificante_permiso_nr").replaceWith(file_permisos_no_reglamentarios.clone());
 				}
 			} else {
 				console.error('FileReader ó Blob no es compatible con este navegador.');
@@ -456,6 +473,11 @@
 					}
 				}
 			}
+		});
+
+		//Incapacidades - validator ONCLICK
+		$('#incapacidad-form').on('click', '#comprobante_incapacidad', function() {
+			file_incapacidades = $("#comprobante_incapacidad").clone();
 		});
 
 		//Incapacidad - Validator on change
@@ -534,6 +556,8 @@
 						}
 					};
 					fileReader.readAsArrayBuffer(file.slice(0, 4));
+				}else{
+					$("#comprobante_incapacidad").replaceWith(file_incapacidades.clone());
 				}
 			} else {
 				console.error('FileReader ó Blob no es compatible con este navegador.');

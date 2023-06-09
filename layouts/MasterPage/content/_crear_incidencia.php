@@ -215,13 +215,15 @@
                           </div>
                           <div id="error_justificante_permiso_r" class="m-auto"></div>
                         </div>
-                        <div id="div_actions_archivo_permiso_r" class="hidden flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
-                          <button type="button" id="delete_archivo_permiso_r" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
-                            <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />
-                            </svg>
-                            Eliminar
-                          </button>
+                        <div id="div_actions_archivo_permiso_r" class="hidden">
+                          <div class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
+                            <button type="button" id="delete_archivo_permiso_r" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
+                              <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />
+                              </svg>
+                              Eliminar
+                            </button>
+                          </div>
                         </div>
                       </div>
                       <div x-show.important="no_reglamentaria" style="display:none;">
@@ -327,13 +329,15 @@
                               </div>
                               <div id="error_justificante_permiso_nr" class="m-auto"></div>
                             </div>
-                            <div id="div_actions_archivo_permiso_nr" class="hidden flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
-                              <button type="button" id="delete_archivo_permiso_nr" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
-                                <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">
-                                  <path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />
-                                </svg>
-                                Eliminar
-                              </button>
+                            <div id="div_actions_archivo_permiso_nr" class="hidden">
+                              <div class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
+                                <button type="button" id="delete_archivo_permiso_nr" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
+                                  <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />
+                                  </svg>
+                                  Eliminar
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -448,13 +452,15 @@
                       </div>
                       <div id="error_comprobante_incapacidad" class="m-auto"></div>
                     </div>
-                    <div id="div_actions_archivo_incapacidad" class="hidden flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
-                      <button type="button" id="delete_archivo_incapacidad" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
-                        <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">
-                          <path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />
-                        </svg>
-                        Eliminar
-                      </button>
+                    <div id="div_actions_archivo_incapacidad" class="hidden">
+                      <div class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">
+                        <button type="button" id="delete_archivo_incapacidad" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">
+                          <svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />
+                          </svg>
+                          Eliminar
+                        </button>
+                      </div>
                     </div>
                     <div class="mt-12 h-px bg-slate-200"></div>
                     <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
@@ -494,7 +500,7 @@
                             <optgroup label="Usuarios">
                               <?php
                                 foreach ($deploy_empleados as $item) {
-                                  echo "<option value='" . $item["userid"] . "'>";
+                                  echo "<option value='" . $item["expedienteid"] . "'>";
                                   echo $item["nombre"];
                                   echo "</option>";
                                 }
@@ -552,7 +558,7 @@
                           <optgroup label="Usuarios">
                             <?php
                             foreach ($deploy_empleados as $empleado) {
-                            echo "<option value='" . $empleado["userid"] . "'>";
+                            echo "<option value='" . $empleado["expedienteid"] . "'>";
                             echo $empleado["nombre"];
                             echo "</option>";
                             }
