@@ -258,10 +258,16 @@
 
         //Empieza la configuración de los fileupload
         <?php for($i = 1; $i <= $counttipospapeleria; $i++){
+
+        echo ("var papeleria_clone{$i};");
+
 	    echo (" $('#upload-button{$i}').on('click', function () {
 				    $('#infp_papeleria{$i}').click();
-			    });	
-	
+			    });
+                
+                $('#infp_papeleria{$i}').on('click', function () {
+                    papeleria_clone{$i} = $('#infp_papeleria{$i}').clone();
+                });
 	
 			    $('#infp_papeleria{$i}').on('change', function () {
 				    if (window.FileReader && window.Blob) {
@@ -338,7 +344,9 @@
 							    }
 						    };
 						    fileReader.readAsArrayBuffer(file.slice(0, 4));
-					    }
+					    }else{
+                            $('#infp_papeleria{$i}').replaceWith(papeleria_clone{$i}.clone());
+                        }
 				    } else {
 					    console.error('FileReader ó Blob no es compatible con este navegador.');
 					    if(!($('#infp_papeleria{$i}').get(0).files.length === 0)){
