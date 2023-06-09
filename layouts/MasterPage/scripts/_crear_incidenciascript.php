@@ -1594,7 +1594,7 @@
 													icon: "success"
 												}).then(function() {
 													window.removeEventListener('beforeunload', unloadHandler);
-													$('#submit-acta').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-acta' name='Guardar-acta' type='submit'>Guardar</button>");
+													$('#submit-carta').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-carta' name='Guardar-carta' type='submit'>Guardar</button>");
 													window.location.href = 'incidencias.php'; 
 												});
 											} else if(array[0] == "error") {
@@ -1604,7 +1604,7 @@
 													icon: "error"
 												}).then(function() {
 													window.removeEventListener('beforeunload', unloadHandler);
-													$('#submit-acta').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-acta' name='Guardar-acta' type='submit'>Guardar</button>");
+													$('#submit-carta').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-carta' name='Guardar-carta' type='submit'>Guardar</button>");
 												});
 											}
 										},3000);
@@ -1619,7 +1619,7 @@
 									text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
 									icon: "error"
 								}).then(function() {
-									$('#submit-acta').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-acta' name='Guardar-acta' type='submit'>Guardar</button>");
+									$('#submit-carta').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='Guardar-carta' name='Guardar-carta' type='submit'>Guardar</button>");
 									window.location.href = "login.php";
 								});
 							}
