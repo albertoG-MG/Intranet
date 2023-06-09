@@ -396,6 +396,17 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 die(json_encode(array("expediente_deleted", "Este expediente ya no existe!")));
             }
         }
+
+		//CHECA SI EL USUARIO TIENE PERMISO PARA REALIZAR LAS ACCIONES DE CREAR Y EDITAR EXPEDIENTES
+		if($_POST["method"] == "store"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}
+		}else if($_POST["method"] == "edit"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}       
+		}
 		
 		/*
 		=============================================
@@ -405,28 +416,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		
 		//SELECT2
 		if($_POST["select2"] != null && $_POST["select2text"] != null){
-			$check_select2_session = $object -> _db -> prepare("SELECT roles_id FROM usuarios WHERE id=:userid");
-			$check_select2_session -> execute(array(':userid' => $_POST["select2"]));
-			$fetch_select2_session = $check_select2_session -> fetch(PDO::FETCH_OBJ);
-			
-			if($fetch_select2_session -> roles_id != "Superadministrador" && $fetch_select2_session -> roles_id != "Administrador" && $fetch_select2_session -> roles_id != "Usuario externo" && $fetch_select2_session -> roles_id != null){
-			
-				$select2_content = $object -> _db -> prepare("SELECT id, concat(nombre,' ',apellido_pat,' ',apellido_mat) AS nombre FROM usuarios");
-				$select2_content -> execute();
-				$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
-				
-				$key_select2 = array_search($_POST['select2text'], $fetch_select2_content);
-				
-				if ($key_select2 !== false) {
-					if($key_select2 != $_POST["select2"]){
-						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
-					}
+			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
+			$select2_content -> execute();
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if($_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
 				}else{
 					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
 				}
-				$select2 = $_POST["select2"];
 			}else{
-				die(json_encode(array("error", "Este tipo de usuario no pueden tener expedientes")));
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
 			}
 		}else{
 			die(json_encode(array("error", "Debe asignar un usuario al expediente")));
@@ -435,7 +437,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//NÚM. EMPLEADO
 		if(empty($_POST["numempleado"])){
             die(json_encode(array("error", "Por favor, ingrese un número de empleado")));
-        }else if(!preg_match("/^([RL]){1}-([0-9])+$/", $_POST["numempleado"])){
+        }else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numempleado"])){
             die(json_encode(array("error", "Por favor, escriba el número de empleado en el formato correcto")));
         }else{
             if($_POST["method"] == "store"){

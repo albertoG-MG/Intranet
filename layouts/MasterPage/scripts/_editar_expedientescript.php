@@ -420,7 +420,7 @@
         }, 'not a valid email.');
 		
 		$.validator.addMethod('num_empleado', function (value, element) {
-            return this.optional(element) || /^([RL]){1}-([0-9])+$/.test(value);
+            return this.optional(element) || /^([FL]){1}-([0-9])+$/.test(value);
         }, 'invalid employee number.');
 		
 		$.validator.addMethod('field_validation', function (value, element) {

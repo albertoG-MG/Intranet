@@ -12,7 +12,7 @@
         die();
     }
 
-    if (Permissions::CheckPermissions($_SESSION["id"], "Ver expediente") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+    if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Ver expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
 		header("HTTP/1.0 403 Forbidden");
 	    echo "
 	    <html>
