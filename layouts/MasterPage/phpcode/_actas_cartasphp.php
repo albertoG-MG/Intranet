@@ -193,7 +193,7 @@ if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "
     die();
 }
 
-$check_jerarquia = $object -> _db -> prepare("SELECT * FROM jerarquia INNER JOIN roles ON roles.id=jerarquia.rol_id INNER JOIN usuarios ON usuarios.roles_id=roles.id WHERE usuarios.id=:userid AND jerarquia.jerarquia_id is NOT NULL");
-$check_jerarquia -> execute(array(":userid" => $_SESSION["id"]));
+$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+$check_jerarquia -> execute(array(':rolid' => $_SESSION['rol']));
 $count_jerarquia = $check_jerarquia -> rowCount();
 ?>
