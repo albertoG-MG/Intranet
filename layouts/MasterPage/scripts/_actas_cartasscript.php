@@ -86,7 +86,7 @@
                         }
                     },
                <?php } ?>
-               <?php if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "true" || Roles::FetchSessionRol($_SESSION["id"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["id"]) == "Administrador"){ ?>
+               <?php if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
                 {
                         text: "Administrar actas administrativas",
                         attr: {
