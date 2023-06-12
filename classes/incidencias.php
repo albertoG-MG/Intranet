@@ -352,6 +352,16 @@ class actas extends incidencias{
 		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $caja_empleado, 'fecha_expedicion' => $fecha_acta, 'id_acta_administrativa' => $incapacidad_administrativa_id]);
 	}
 
+	public function editar_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta, $incidenciaid){
+		$object = new connection_database();
+		$crud = new crud();
+		$get_actaid = $object -> _db -> prepare("SELECT id_acta_administrativa FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$get_actaid -> execute(array(":incidenciaid" => $incidenciaid));
+		$fetch_actaid = $get_actaid -> fetch(PDO::FETCH_OBJ);
+		$crud -> update('incidencias_acta_administrativas', ['motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta], "id=:idacta", [":idacta" => $fetch_actaid -> id_acta_administrativa]);
+		$crud -> update('incidencias_administrativas', ['asignada_a' => $caja_empleado, 'fecha_expedicion' => $fecha_acta], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
+
 	public function vincular_acta($incidenciaid, $archivo){
 		$crud = new crud();
 		$object = new connection_database();
@@ -395,6 +405,16 @@ class cartas extends incidencias{
 		$crud -> store ('incidencias_carta_compromiso', ['resposabilidades_carta' => $responsabilidad_carta]);
 		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $array_empleado, 'fecha_expedicion' => $fecha_carta, 'id_carta_compromiso' => $incapacidad_administrativa_id]);
+	}
+
+	public function editar_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta, $incidenciaid){
+		$object = new connection_database();
+		$crud = new crud();
+		$get_cartaid = $object -> _db -> prepare("SELECT id_carta_compromiso FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$get_cartaid -> execute(array(":incidenciaid" => $incidenciaid));
+		$fetch_cartaid = $get_cartaid -> fetch(PDO::FETCH_OBJ);
+		$crud -> update('incidencias_carta_compromiso', ['resposabilidades_carta' => $responsabilidad_carta], "id=:idcarta", [":idcarta" => $fetch_cartaid -> id_carta_compromiso]);
+		$crud -> update('incidencias_administrativas', ['asignada_a' => $array_empleado, 'fecha_expedicion' => $fecha_acta], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
 	}
 
 	public function vincular_carta($incidenciaid, $archivo){

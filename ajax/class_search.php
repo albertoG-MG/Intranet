@@ -1862,6 +1862,177 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			break;
 		}
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "Editar_incidencias"){
+	if(isset($_POST["method"])){
+		if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Acta_administrativa"){
+			//Checa si el usuario tiene permisos para realizar la acción
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}
+			//Checar si la incidencia todavía existe
+			$check_incidencia = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas WHERE id=:incidenciaid");
+			$check_incidencia -> execute(array(':incidenciaid' => $_POST["incidenciaid"]));
+			$count_incidencia = $check_incidencia -> rowCount();
+			if($count_incidencia > 0){
+				$incidenciaid = $_POST["incidenciaid"];
+			}else{
+				die(json_encode(array("incidencia_desconocida", "La incidencia ya no existe!")));
+			}
+			//FECHA DEL ACTA ADMINISTRATIVA
+			if(empty($_POST["fecha_acta"])){
+				die(json_encode(array("error", "La fecha del acta administrativa no puede estar vacío")));
+			}else{
+				if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_acta"])){
+					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del acta administrativa")));
+				}else{
+					$fecha_acta = $_POST["fecha_acta"];
+				}
+			}
+			//SELECT 2 - ACTAS ADMINISTRATIVAS
+			if($_POST["caja_empleado"] != null && $_POST["caja_empleado_text"] != null){
+				if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+					$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
+						$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
+						if($_POST['caja_empleado_text'] == $array_key_acta_value){
+							$caja_empleado = $_POST["caja_empleado"];
+							$caja_empleado_text = $_POST["caja_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}
+				}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id AS expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+					$select_empleados -> execute();
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
+						$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
+						if($_POST['caja_empleado_text'] == $array_key_acta_value){
+							$caja_empleado = $_POST["caja_empleado"];
+							$caja_empleado_text = $_POST["caja_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}
+				}
+			}else{
+				die(json_encode(array("error", "Debe asignar un usuario al acta administrativa")));
+			}
+			//MOTIVO DEL ACTA ADMINISTRATIVA
+			if(empty($_POST["motivo_acta"])){
+				die(json_encode(array("error", "El motivo del acta administrativa no puede estar vacío")));
+			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_acta"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del acta administrativa")));
+			}else{
+				$motivo_acta = $_POST["motivo_acta"];
+			}
+			
+			//OBSERVACIONES DEL ACTA ADMINISTRATIVA
+			if(!empty($_POST["obcomen_acta"])){
+				if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["obcomen_acta"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones del acta administrativa")));
+				}else{
+					$obcomen_acta = $_POST["obcomen_acta"];
+				}
+			}else{
+				$obcomen_acta = null;
+			}
+			//Metodo para editar las ACTAS ADMINISTRATIVAS
+			switch($_POST["method"]){
+				case "edit":
+					$acta = new Actas($_SESSION["id"], $_SESSION["rol"]);
+					$acta -> editar_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta, $incidenciaid);
+					die(json_encode(array("success", "Se ha editado un acta administrativa al expediente del usuario seleccionado!")));
+				break;
+			}
+		}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Carta_compromiso"){
+			//Checa si el usuario tiene permisos para realizar la acción
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}
+			//Checar si la incidencia todavía existe
+			$check_incidencia = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas WHERE id=:incidenciaid");
+			$check_incidencia -> execute(array(':incidenciaid' => $_POST["incidenciaid"]));
+			$count_incidencia = $check_incidencia -> rowCount();
+			if($count_incidencia > 0){
+				$incidenciaid = $_POST["incidenciaid"];
+			}else{
+				die(json_encode(array("incidencia_desconocida", "La incidencia ya no existe!")));
+			}
+			//FECHA DE LA CARTA COMPROMISO
+			if(empty($_POST["fecha_carta"])){
+				die(json_encode(array("error", "La fecha de la carta compromiso no puede estar vacía")));
+			}else{
+				if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_carta"])){
+					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del de la carta compromiso")));
+				}else{
+					$fecha_carta = $_POST["fecha_carta"];
+				}
+			}
+
+			//SELECT 2 - CARTAS COMPROMISO
+			if($_POST["array_empleado"] != null && $_POST["array_empleado_text"] != null){
+				if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+					$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
+						$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
+						if($_POST['array_empleado_text'] == $array_key_carta_value){
+							$array_empleado = $_POST["array_empleado"];
+							$array_empleado_text = $_POST["array_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}
+				}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+					$select_empleados -> execute();
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
+						$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
+						if($_POST['array_empleado_text'] == $array_key_carta_value){
+							$array_empleado = $_POST["array_empleado"];
+							$array_empleado_text = $_POST["array_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}	
+				}
+			}else{
+				die(json_encode(array("error", "Debe asignar un usuario a la carta compromiso")));
+			}
+			
+			//RESPONSABILIDADES A CUMPLIR
+			if(!empty($_POST["responsabilidad_carta"])){
+				if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["responsabilidad_carta"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el campo de las reposabilidades de la carta compromiso")));
+				}else{
+					$responsabilidad_carta = $_POST["responsabilidad_carta"];
+				}
+			}else{
+				die(json_encode(array("error", "El campo de resposabilidades no puede estar vacía")));
+			}
+			//Metodo para guardar CARTAS COMPROMISO
+			switch($_POST["method"]){
+				case "edit":
+					$carta = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+					$carta -> editar_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta, $incidenciaid);
+					die(json_encode(array("success", "Se ha editado una carta administrativa al expediente del usuario seleccionado!")));
+				break;
+			}
+		}
+	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
 		$incidenciaid= $_POST["incidenciaid"];
