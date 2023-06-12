@@ -88,7 +88,7 @@
                     <p>En la ciudad de Monterrey, NL. Fecha <?php echo $fetch_information -> fecha; ?></p>
                     <p class="mt-5"> Hacemos constar que el C. <u><?php echo $fetch_information -> asignada_a; ?></u>, quien es empleado de la empresa SNTTCM INTEGRACIÓN DE TECNOLOGÍA Y COMUNICACIÓN, S.C. incurrió en la siguiente falta a las políticas y reglamentos de la empresa.</p>
                     <p class="mt-5">Motivo:</p>
-                    <p class="block border-b-2 border-black mt-5"><?php echo $fetch_information -> motivo_acta; ?>.</p>
+                    <p class="block border-b-2 border-black mt-5"><?php echo $fetch_information -> motivo_acta; ?></p>
                     <p class="mt-5"> En uso de la palabra el trabajador involucrado, Sr.(a) <u><?php echo $fetch_information -> asignada_a; ?></u> manifestó con relación a los hechos que se le atribuyen lo siguiente:</p>
                     <p class="mt-5"> Observaciones y/o Comentarios: </p>
                     <p class="block border-b-2 border-black mt-5"> <?php echo $fetch_information -> observaciones_acta; ?> </p>
@@ -128,7 +128,7 @@
                   <div id="texto-carta" class="grid grid-cols-1 mt-10 mx-7">
                     <p class="mt-5">Yo __________________________________colaborando en el departamento de <?php echo $fetch_information -> departamento_del_asignado; ?> en Sinttecom, estoy consciente de que en caso de no cumplir con este compromiso, se levantará un acta administrativa el cuál se vinculará al expediente.</p>
                     <p class="mt-5">Me comprometo a:</p>
-                    <p class="block border-b-2 border-black mt-5"><?php echo $fetch_information -> responsabilidades_carta; ?>.</p>
+                    <p class="block border-b-2 border-black mt-5"><?php echo $fetch_information -> responsabilidades_carta; ?></p>
                     <p class="mt-5">De igual forma me comprometo a cumplir con cada punto del reglamento firmado para un buen desempeño dentro de la organización.</p>
                   </div>
                   <div id="firmas" class="mt-20">
