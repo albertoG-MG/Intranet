@@ -216,20 +216,12 @@
         die();
     }else if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "true"){
         if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
-            $check_user_owns = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a WHERE incidencias_administrativas.id=:incidenciaid AND usuarios.id=:userid");
-            $check_user_owns -> execute(array(':incidenciaid' => $verid, ':userid' => $_SESSION['id']));
-            $count_user = $check_user_owns -> rowCount();
-            if($count_user == 0){
-                $check_empleado = $object -> _db -> prepare("SELECT roles.nombre as rolnom, departamentos.departamento as depanom FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias_administrativas.id=:incidenciaid");
-                $check_empleado -> execute(array(":incidenciaid" => $verid));
-                $count_empleado = $check_empleado -> rowCount();
-                if($count_empleado > 0){
-                    $fetch_empleado = $check_empleado -> fetch(PDO::FETCH_OBJ);
-                    if($fetch_emplado -> rolnom != "Empleado" && $fetch_empleado -> depanom != Roles::FetchUserDepartamento($_SESSION["id"])){
-                        header('Location: actas_cartas.php');
-                        die();
-                    }
-                }
+            $check_user_access = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas ia INNER JOIN usuarios u1 ON u1.id=ia.users_id INNER JOIN roles r1 ON r1.id=u1.roles_id INNER JOIN departamentos d1 ON d1.id=u1.departamento_id INNER JOIN expedientes e ON e.id=ia.asignada_a INNER JOIN usuarios u2 ON u2.id=e.users_id INNER JOIN roles r2 ON r2.id=u2.roles_id WHERE r1.nombre='Gerente' AND  d1.departamento=:depanom AND ia.id=:incidenciaid AND r2.nombre IN (SELECT r4.nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j2.jerarquia_id=j1.id INNER JOIN roles r3 ON r3.id=j1.rol_id INNER JOIN roles r4 ON j2.rol_id=r4.id  WHERE j1.rol_id=5)");
+            $check_user_access -> execute(array(':incidenciaid' => $verid, ':depanom' => Roles::FetchUserDepartamento($_SESSION["id"])));
+            $count_user_access = $check_user_access -> rowCount();
+            if($count_user_access == 0){
+                header('Location: actas_cartas.php');
+                die();
             }
         }
     }
