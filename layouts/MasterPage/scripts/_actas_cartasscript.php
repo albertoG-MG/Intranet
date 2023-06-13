@@ -10,7 +10,7 @@
             },
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
-                <?php if($count_jerarquia > 0){ ?>
+                <?php if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" && $count_jerarquia > 0){ ?>
                     {
                         text: "Actas administrativas vinculadas a mi expediente",
                         attr: {
@@ -48,6 +48,8 @@
                             })
                         }
                     },
+                <?php } ?>
+                <?php if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true" && $count_jerarquia > 0){ ?>
                     {
                         text: "Cartas compromiso vinculadas a mi expediente",
                         attr: {
@@ -164,8 +166,10 @@
                <?php } ?>
             ],
             "ajax":{
-                <?php if($count_jerarquia > 0){ ?>
+                <?php if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" && $count_jerarquia > 0){ ?>
                     "url": "../config/documentos_administrativos/actas_vinculadas.php",
+                <?php } else if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true" && $count_jerarquia > 0){ ?>
+                    "url": "../config/documentos_administrativos/cartas_vinculadas.php",
                 <?php }else{ ?>
                     "url": "../config/documentos_administrativos/ajax_actas.php",
                 <?php } ?>
@@ -182,7 +186,7 @@
                 {"data": "asignada_a"},
                 {"data": "tipo"},
                 {"data": "fecha"},
-                <?php if($count_jerarquia > 0){ ?>
+                <?php if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true") && $count_jerarquia > 0){ ?>
                     {"data": "documento_nombre", searchable: false},
                     {"data": "documento", visible: false, searchable: false},
                     {"data": "id", searchable: false},
