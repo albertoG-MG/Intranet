@@ -428,6 +428,21 @@
             window.location.href = "editar_documento_administrativo.php?idIncidenciaAdministrativa="+data["id"]+""; 
         });
 
+        $('#datatable').on('click', 'tr .Ver', function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            window.location.href = "ver_documento_vinculado.php?idIncidenciaAdministrativa="+data["id"]+""; 
+        });
+
         $('#datatable').on('click', 'tr .VerImprimir', function () {
             var table = $('#datatable').DataTable();
             var rowSelector;
