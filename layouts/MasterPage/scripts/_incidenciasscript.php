@@ -426,99 +426,20 @@
 	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
 
         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Ver incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
-        $('#datatable').on('click', 'tr .Ver', function () {
-            var table = $('#datatable').DataTable();
-            var rowSelector;
-            var li = $(this).closest('li');
-            if ( li.length ) {
-                rowSelector = table.cell( li ).index().row;
-            }
-            else {
-                rowSelector =  $(this).closest('tr');
-            }
-            var row = table.row(rowSelector);
-            var data = row.data();
-            window.location.href = "ver_incidencia.php?idIncidencia="+data['incidenciaid']+""; 
-        });
-        <?php } ?>
-
-        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Editar incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>    
-        $('#datatable').on('click', 'tr .Editar', function () {
-            var table = $('#datatable').DataTable();
-            var rowSelector;
-            var li = $(this).closest('li');
-            if ( li.length ) {
-                rowSelector = table.cell( li ).index().row;
-            }
-            else {
-                rowSelector =  $(this).closest('tr');
-            }
-            var row = table.row(rowSelector);
-            var data = row.data();
-            window.location.href = "editar_incidencia.php?idIncidencia="+data['incidenciaid']+""; 
-        });
-        <?php } ?>
-
-        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Eliminar incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-        $('#datatable').on('click', 'tr .Eliminar', function() {
-            var table = $('#datatable').DataTable();
-            var rowSelector;
-            var li = $(this).closest('li');
-            if ( li.length ) {
-                rowSelector = table.cell( li ).index().row;
-            }
-            else {
-                rowSelector =  $(this).closest('tr');
-            }
-            var row = table.row(rowSelector);
-            var data = row.data();
-            Swal.fire({
-                title: '¿Estas seguro?',
-                text: "No podras recuperar la información!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí!',
-                cancelButtonText: 'cancelar'
-            }).then((result) => {
-                check_user_logged().then((response) => {
-		            if(response == "true"){
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'éxito',
-                                text: 'La fila ha sido eliminada!'
-                            }).then(function() {
-                                var eliminarid = data["incidenciaid"];
-                                var fd = new FormData();
-                                fd.append('id', eliminarid);
-                                $.ajax({
-                                    url: "../ajax/eliminar/tabla_incidencias/eliminarincidencia.php",
-                                    type: "post",
-                                    data: fd,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function(result) {
-                                        table.ajax.reload();
-                                    }
-                                });
-                            });
-                        }
-                    }else{
-                        Swal.fire({
-                            title: "Ocurrió un error",
-                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
-                            icon: "error"
-                        }).then(function() {
-                            window.location.href = "login.php";
-                        });
-                    }
-                }).catch((error) => {
-		            console.log(error);
-	            })
-            })
-        });
+            $('#datatable').on('click', 'tr .Ver', function () {
+                var table = $('#datatable').DataTable();
+                var rowSelector;
+                var li = $(this).closest('li');
+                if ( li.length ) {
+                    rowSelector = table.cell( li ).index().row;
+                }
+                else {
+                    rowSelector =  $(this).closest('tr');
+                }
+                var row = table.row(rowSelector);
+                var data = row.data();
+                window.location.href = "ver_incidencia.php?idIncidencia="+data['Incidenciaid']+""; 
+            });
         <?php } ?>
 
         function check_user_logged(){
