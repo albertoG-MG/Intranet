@@ -415,14 +415,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		*/
 		
 		//SELECT2
-		if($_POST["select2"] != null && $_POST["select2text"] != null){
+		if($_POST["select2"] != null){
 			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
 			$select2_content -> execute();
 			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
 		
 			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
 				$array_key_value = $fetch_select2_content[$_POST["select2"]];
-				if($_POST['select2text'] == $array_key_value){
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
 					$select2 = $_POST["select2"];
 				}else{
 					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
@@ -571,7 +571,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 		
 		//ESTADO
-		if(empty($_POST["estado"]) && empty($_POST["estadotext"])){
+		if(empty($_POST["estado"])){
 			$estado = null;
 		}else{
 			$retrieve_estados = $object -> _db -> prepare("SELECT id, nombre FROM estados");
@@ -579,7 +579,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$fetch_retrieve_estados = $retrieve_estados -> fetchAll(PDO::FETCH_KEY_PAIR);
 			if (array_key_exists($_POST["estado"], $fetch_retrieve_estados)) {
 				$array_key_state_value = $fetch_retrieve_estados[$_POST["estado"]];
-				if($_POST['estadotext'] == $array_key_state_value){
+				if(isset($_POST["estadotext"]) && $_POST['estadotext'] == $array_key_state_value){
 					$estado = $_POST["estado"];
 				}else{
 					die(json_encode(array("error", "Por favor, asegúrese que el estado escogido se encuentre en el dropdown")));
@@ -590,9 +590,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 		
 		//MUNICIPIO
-        if(empty($_POST["municipio"]) && empty($_POST["municipiotext"])){
+        if(empty($_POST["municipio"])){
 			$municipio = null;
-		}else if((empty($_POST["estado"]) && empty($_POST["estadotext"])) && !(empty($_POST["municipio"]) && empty($_POST["municipiotext"]))){
+		}else if(empty($_POST["estado"]) && !(empty($_POST["municipio"]))){
 			die(json_encode(array("error", "Por favor, seleccione un estado y luego un municipio")));
 		}else{
 			$retrieve_estados_municipio = $object -> _db -> prepare("SELECT id, nombre from municipios where estado=:estado");
@@ -602,7 +602,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$fetch_retrieve_estados_municipio = $retrieve_estados_municipio -> fetchAll(PDO::FETCH_KEY_PAIR);
 				if (array_key_exists($_POST["municipio"], $fetch_retrieve_estados_municipio)) {
 					$array_key_municipio_value = $fetch_retrieve_estados_municipio[$_POST["municipio"]];
-					if($_POST['municipiotext'] == $array_key_municipio_value){
+					if(isset($_POST["municipiotext"]) && $_POST['municipiotext'] == $array_key_municipio_value){
 						$municipio = $_POST["municipio"];
 					}else{
 						die(json_encode(array("error", "Por favor, asegúrese que el municipio escogido se encuentre en el dropdown")));
@@ -1724,14 +1724,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		//SELECT 2 - ACTAS ADMINISTRATIVAS
-		if($_POST["caja_empleado"] != null && $_POST["caja_empleado_text"] != null){
+		if($_POST["caja_empleado"] != null){
 			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
 				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
 				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
 					$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
-					if($_POST['caja_empleado_text'] == $array_key_acta_value){
+					if(isset($_POST["caja_empleado_text"]) && $_POST['caja_empleado_text'] == $array_key_acta_value){
 						$caja_empleado = $_POST["caja_empleado"];
 						$caja_empleado_text = $_POST["caja_empleado_text"];
 					}else{
@@ -1746,7 +1746,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
 					$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
-					if($_POST['caja_empleado_text'] == $array_key_acta_value){
+					if(isset($_POST["caja_empleado_text"]) && $_POST['caja_empleado_text'] == $array_key_acta_value){
 						$caja_empleado = $_POST["caja_empleado"];
 						$caja_empleado_text = $_POST["caja_empleado_text"];
 					}else{
@@ -1807,14 +1807,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		//SELECT 2 - CARTAS COMPROMISO
-		if($_POST["array_empleado"] != null && $_POST["array_empleado_text"] != null){
+		if($_POST["array_empleado"] != null){
 			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
 				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
 				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
 					$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
-					if($_POST['array_empleado_text'] == $array_key_carta_value){
+					if(isset($_POST["array_empleado_text"]) && $_POST['array_empleado_text'] == $array_key_carta_value){
 						$array_empleado = $_POST["array_empleado"];
 						$array_empleado_text = $_POST["array_empleado_text"];
 					}else{
@@ -1829,7 +1829,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
 				if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
 					$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
-					if($_POST['array_empleado_text'] == $array_key_carta_value){
+					if(isset($_POST["array_empleado_text"]) && $_POST['array_empleado_text'] == $array_key_carta_value){
 						$array_empleado = $_POST["array_empleado"];
 						$array_empleado_text = $_POST["array_empleado_text"];
 					}else{
