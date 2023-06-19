@@ -2929,25 +2929,144 @@ INSERT INTO `estatus_incidencia` (`id`, `tipo_estatus_id`, `nombre`) VALUES
 -- --------------------------------------------------------								
 
 --
--- Structure for view `incidencias`
+-- Estructura de tabla para la tabla `solicitudes_incidencias`
+--
+
+CREATE TABLE `solicitudes_incidencias` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `fecha_solicitud` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `estatus` int DEFAULT 4,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus) REFERENCES estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificaciones_incidencias`
+--
+
+CREATE TABLE `notificaciones_incidencias` (
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`id_solicitud_incidencias` bigint NOT NULL,
+	`id_notificado` int NOT NULL,
+	FOREIGN KEY (id_solicitud_incidencias) REFERENCES solicitudes_incidencias(id) ON DELETE CASCADE,
+	FOREIGN KEY (id_notificado) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incapacidades`
+--
+
+CREATE TABLE `incapacidades` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `numero_incapacidad` int NOT NULL,
+  `serie_folio_incapacidad` varchar(100) NOT NULL,
+  `tipo_incapacidad` varchar(100) NOT NULL,
+  `ramo_seguro_incapacidad` varchar(100) NOT NULL,
+  `periodo_incapacidad` varchar(100) NOT NULL,
+  `motivo_incapacidad` varchar(100) NOT NULL,
+  `observaciones_incapacidad` varchar(100) DEFAULT NULL,
+  `nombre_justificante_incapacidad` longtext NOT NULL,
+  `archivo_identificador_incapacidad` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permisos_reglamentarios`
+--
+
+CREATE TABLE `permisos_reglamentarios` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `permiso_r` varchar(100) NOT NULL,
+  `periodo_ausencia_r` varchar(100) NOT NULL,
+  `motivo_permiso_r` varchar(100) DEFAULT NULL,
+  `observaciones_permiso_r` varchar(100) DEFAULT NULL,
+  `nombre_justificante_r` longtext NOT NULL,
+  `identificador_justificante_r` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permisos_no_reglamentarios`
+--
+
+CREATE TABLE `permisos_no_reglamentarios` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `permiso_nr` varchar(100) NOT NULL,
+  `periodo_ausencia_nr` varchar(100) NOT NULL,
+  `motivo_permiso_nr` varchar(100) DEFAULT NULL,
+  `observaciones_permiso_nr` varchar(100) DEFAULT NULL,
+  `posee_jpermiso_nr` varchar(100) NOT NULL,
+  `nombre_justificante_nr` longtext DEFAULT NULL,
+  `identificador_justificante_nr` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias`
 --
 
 CREATE TABLE `incidencias` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_solicitud_incidencias` bigint NOT NULL,
+  `id_permiso_reglamentario` bigint DEFAULT NULL,
+  `id_permiso_no_reglamentario` bigint DEFAULT NULL,
+  `id_incapacidades` bigint DEFAULT NULL,
+   FOREIGN KEY (id_solicitud_incidencias) REFERENCES solicitudes_incidencias(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_permiso_reglamentario) REFERENCES permisos_reglamentarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_permiso_no_reglamentario) REFERENCES permisos_no_reglamentarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_incapacidades) REFERENCES incapacidades(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias_acta_administrativas`
+--
+
+CREATE TABLE `incidencias_acta_administrativas` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `motivo_acta` varchar(100) NOT NULL,
+  `observaciones_acta` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias_carta_compromiso`
+--
+
+CREATE TABLE `incidencias_carta_compromiso` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `resposabilidades_carta` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias_administrativas`
+--
+
+CREATE TABLE `incidencias_administrativas` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
-  `titulo` varchar(500) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `tipo_incidencia` varchar(500) NOT NULL,
-  `descripcion` varchar(500) NOT NULL,
-  `filename` longtext DEFAULT NULL,
-  `foto` longtext DEFAULT NULL,
-  `incidencia_creada` date NOT NULL,
-  `notificado_a` int DEFAULT NULL,
-  `estatus_id` int DEFAULT '4',
+  `asignada_a` int NOT NULL,
+  `fecha_expedicion` varchar(100) NOT NULL,
+  `id_acta_administrativa` bigint DEFAULT NULL,
+  `id_carta_compromiso` bigint DEFAULT NULL,
+  `nombre_archivo_firmado` longtext DEFAULT NULL,
+  `identificador_archivo_firmado` longtext DEFAULT NULL,
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-   FOREIGN KEY (notificado_a) REFERENCES roles(id),
-   FOREIGN KEY (estatus_id) REFERENCES estatus_incidencia(id)
+   FOREIGN KEY (asignada_a) REFERENCES expedientes(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_acta_administrativa) REFERENCES incidencias_acta_administrativas(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_carta_compromiso) REFERENCES incidencias_carta_compromiso(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3495,7 +3614,7 @@ DELIMITER $$
 CREATE TRIGGER insertar_transicion_estatus_incidencia
 AFTER INSERT ON accion_incidencias FOR EACH ROW
 BEGIN
-	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, incidencias.estatus_id, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
 END;
 $$
 
