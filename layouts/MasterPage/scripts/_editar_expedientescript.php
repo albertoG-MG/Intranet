@@ -715,6 +715,9 @@
 			        clabe_personal:{
 				        digits:true
 			        },
+                    plastico_personal:{
+                        digits: true
+                    },
 			        banco_nomina:{
 				        field_validation:true
 			        },
@@ -894,6 +897,9 @@
 			        clabe_personal:{
 				        digits: 'Solo se permiten números'
 			        },
+                    plastico_personal:{
+                        digits: 'Solo se permiten números'
+                    },
 			        banco_nomina:{
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 			        },
@@ -1631,6 +1637,7 @@
         var emergenciatel2 = $("#emergenciatel2").val();
 		var capacitacion = $("#capacitacion").val();
         var antidoping = $("#antidoping").val();
+        var tipo_sangre = $("#tipo_sangre").val();
         var vacante = $("#vacante").val();
         var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
         var nomfam = $("#nomfam").val();
@@ -1638,6 +1645,7 @@
         var banco_personal = $("#banco_personal").val();
         var cuenta_personal = $("#cuenta_personal").val();
         var clabe_personal = $("#clabe_personal").val();
+        var plastico_personal = $("#plastico_personal").val();
         var banco_nomina = $("#banco_nomina").val();
         var cuenta_nomina = $("#cuenta_nomina").val();
         var clabe_nomina = $("#clabe_nomina").val();
@@ -1743,6 +1751,7 @@
         fd.append('emergenciatel2', emergenciatel2);
 		fd.append('capacitacion', capacitacion);
         fd.append('antidoping', antidoping);
+        fd.append('tipo_sangre', tipo_sangre);
         fd.append('vacante', vacante);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
@@ -1750,6 +1759,7 @@
         fd.append('banco_personal', banco_personal);
         fd.append('cuenta_personal', cuenta_personal);
         fd.append('clabe_personal', clabe_personal);
+        fd.append('plastico_personal', plastico_personal);
         fd.append('banco_nomina', banco_nomina);
         fd.append('cuenta_nomina', cuenta_nomina);
         fd.append('clabe_nomina', clabe_nomina);

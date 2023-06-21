@@ -109,7 +109,7 @@
                                              }
                                              $usuarios = user::FetchUsuarios();
                                              foreach ($usuarios as $row) {
-                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
+                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo")
                                                 {
                                                    if(!in_array($row->id, $arr))
                                                    {
@@ -1122,6 +1122,27 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
+                                 <label class="text-[#64748b] font-semibold mb-2">Tipo de sangre</label>
+                                 <div class="group flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                          <path fill="currentColor" d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20Z" />
+                                       </svg>
+                                    </div>
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_sangre" name="tipo_sangre">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="A_POSITIVO">A+</option>
+                                       <option value="A_NEGATIVO">A-</option>
+                                       <option value="B_POSITIVO">B+</option>
+                                       <option value="B_NEGATIVO">B-</option>
+                                       <option value="AB_POSITIVO">AB+</option>
+                                       <option value="AB_NEGATIVO">AB-</option>
+                                       <option value="O_POSITIVO">O+</option>
+                                       <option value="O_NEGATIVO">O-</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -1242,6 +1263,17 @@
                                           </svg>
                                        </div>
                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="clabe_personal" name="clabe_personal" placeholder="Clabe">
+                                    </div>
+                                 </div>
+                                 <div class="grid grid-cols-1 lg:col-span-3">
+                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"></path>
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico_personal" name="plastico_personal" placeholder="Plástico asignado">
                                     </div>
                                  </div>
                               </div>

@@ -110,7 +110,7 @@
                                              }
                                              $usuarios = user::FetchUsuarios();
                                              foreach ($usuarios as $row) {
-                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
+                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo")
                                                 {
                                                    if(!in_array($row->id, $arr))
                                                    {
@@ -314,19 +314,19 @@
                                              <path fill="currentColor" d="M12 0L11.34 .03L15.15 3.84L16.5 2.5C19.75 4.07 22.09 7.24 22.45 11H23.95C23.44 4.84 18.29 0 12 0M12 4C10.07 4 8.5 5.57 8.5 7.5C8.5 9.43 10.07 11 12 11C13.93 11 15.5 9.43 15.5 7.5C15.5 5.57 13.93 4 12 4M.05 13C.56 19.16 5.71 24 12 24L12.66 23.97L8.85 20.16L7.5 21.5C4.25 19.94 1.91 16.76 1.55 13H.05M12 13C8.13 13 5 14.57 5 16.5V18H19V16.5C19 14.57 15.87 13 12 13Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="situacion" name="situacion">
-                                          <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?> x-on:click="rsituaciondelempleado">Alta</option>
-                                          <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?> x-on:click="rsituaciondelempleado">Baja</option>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="rsituaciondelempleado($el.value);" id="situacion" name="situacion">
+                                          <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?>>Alta</option>
+                                          <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?>>Baja</option>
                                        </select>
                                     </div>
                                  </div>
                                  <script>
                                     function rsituaciondelempleado(e) {
-                                       if(e.target.value == "ALTA"){
+                                       if(value == "ALTA"){
                                        $('#estatus_empleado').html(
                                           "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Nuevo ingreso</option>"+
                                           "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?>>Reingreso</option>");
-                                       }else if(e.target.value == "BAJA"){
+                                       }else if(value == "BAJA"){
                                        $('#estatus_empleado').html(
                                        "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Fallecimiento</option>"+
                                        "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Renuncia voluntaria</option>"+
@@ -1234,6 +1234,27 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
+                                 <label class="text-[#64748b] font-semibold mb-2">Tipo de sangre</label>
+                                 <div class="group flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                          <path fill="currentColor" d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20Z" />
+                                       </svg>
+                                    </div>
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_sangre" name="tipo_sangre">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="A_POSITIVO" <?php if ($edit->etipo_sangre == "A_POSITIVO") echo 'selected="selected"'; ?>>A+</option>
+                                       <option value="A_NEGATIVO" <?php if ($edit->etipo_sangre == "A_NEGATIVO") echo 'selected="selected"'; ?>>A-</option>
+                                       <option value="B_POSITIVO" <?php if ($edit->etipo_sangre == "B_POSITIVO") echo 'selected="selected"'; ?>>B+</option>
+                                       <option value="B_NEGATIVO" <?php if ($edit->etipo_sangre == "B_NEGATIVO") echo 'selected="selected"'; ?>>B-</option>
+                                       <option value="AB_POSITIVO" <?php if ($edit->etipo_sangre == "AB_POSITIVO") echo 'selected="selected"'; ?>>AB+</option>
+                                       <option value="AB_NEGATIVO" <?php if ($edit->etipo_sangre == "AB_NEGATIVO") echo 'selected="selected"'; ?>>AB-</option>
+                                       <option value="O_POSITIVO" <?php if ($edit->etipo_sangre == "O_POSITIVO") echo 'selected="selected"'; ?>>O+</option>
+                                       <option value="O_NEGATIVO" <?php if ($edit->etipo_sangre == "O_NEGATIVO") echo 'selected="selected"'; ?>>O-</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -1354,6 +1375,17 @@
                                           </svg>
                                        </div>
                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="clabe_personal" name="clabe_personal" value="<?php echo "{$edit -> eclabe_personal}"; ?>" placeholder="Clabe">
+                                    </div>
+                                 </div>
+                                 <div class="grid grid-cols-1 lg:col-span-3">
+                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"></path>
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico_personal" name="plastico_personal" value="<?php echo "{$edit -> eplastico_personal}"; ?>" placeholder="Plástico asignado">
                                     </div>
                                  </div>
                               </div>

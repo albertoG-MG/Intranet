@@ -383,8 +383,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     $_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"], $_POST["numeroreferenciaslab"], 
     $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], $_POST["emergencianom"], $_POST["emergenciaparentesco"], 
     $_POST["emergenciatel"], $_POST["emergencianom2"], $_POST["emergenciaparentesco2"], $_POST["emergenciatel2"], $_POST["capacitacion"],
-    $_POST["antidoping"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], 
-    $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], 
+    $_POST["antidoping"], $_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], 
+    $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], 
     $_POST["plastico"], $_POST["logged_user"], $_POST["method"])){
         
         //CHECA SI EL EXPEDIENTE EXISTE
@@ -416,7 +416,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		
 		//SELECT2
 		if($_POST["select2"] != null){
-			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
+			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
 			$select2_content -> execute();
 			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
 		
@@ -1066,6 +1066,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
+		//TIPO DE SANGRE
+		$tiposangre_array = array("A_POSITIVO", "A_NEGATIVO", "B_POSITIVO", "B_NEGATIVO", "AB_POSITIVO", "AB_NEGATIVO", "O_POSITIVO", "O_NEGATIVO");
+		if(in_array($_POST["tipo_sangre"], $tiposangre_array)) {
+			$tipo_sangre = $_POST["tipo_sangre"];
+		}else if(empty($_POST["tipo_sangre"])){
+			$tipo_sangre = null;
+		}else{
+			die(json_encode(array("error", "El valor escogido en el dropdown de nivel de tipo de sangre está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+		}
+
         //VACANTE
         if(empty($_POST["vacante"])){
 			$vacante = null;
@@ -1177,6 +1187,17 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
+		//PLÁSTICO PERSONAL
+		if(empty($_POST["plastico_personal"])){
+			$plastico_personal = null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["plastico_personal"])){
+				die(json_encode(array("error", "Solo se permiten números en el plástico personal de la cuenta personal bancaria")));
+			}else{
+				$plastico_personal = $_POST["plastico_personal"];
+			}
+		}
+
         //BANCO NÓMINA
         if(empty($_POST["banco_nomina"])){
 			$banco_nomina = null;
@@ -1272,7 +1293,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		
 		switch($_POST["method"]){
             case "store":
-                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
+                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Crear_expediente($select2, $_POST["logged_user"]);
                 die(json_encode(array("success", "Se ha creado un expediente")));
             break;
@@ -1333,7 +1354,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                     }
                 }
                 $delete_array = explode(",", $_POST["delete_array"]);
-                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
+                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Editar_expediente($select2, $_POST["id_expediente"], $delete_array, $situacion, $estatus_empleado, $estatus_fecha, $motivo, $_POST["logged_user"]);
                 die(json_encode(array("success", "Se ha editado un expediente")));
             break;
