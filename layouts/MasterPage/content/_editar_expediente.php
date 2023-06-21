@@ -321,7 +321,7 @@
                                     </div>
                                  </div>
                                  <script>
-                                    function rsituaciondelempleado(e) {
+                                    function rsituaciondelempleado(value) {
                                        if(value == "ALTA"){
                                        $('#estatus_empleado').html(
                                           "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Nuevo ingreso</option>"+
