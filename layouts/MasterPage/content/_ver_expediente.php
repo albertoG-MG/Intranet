@@ -669,28 +669,28 @@
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
+                              Tipo de sangre:
+                           </div>
+                           <span>
+                           <?php if($ver->etipo_sangre == null){ echo "No hay datos"; }else{echo "{$ver->etipo_sangre}";} ?>
+                           </span>
+                        </div>
+                        <div class="flex-1 flex flex-col mt-5">
+                           <div class="text-[#64748b] font-semibold">
                               ¿Cómo se entero de la vacante?:
                            </div>
                            <span>
                            <?php if($ver->evacante == null){ echo "No hay datos"; }else{echo "{$ver->evacante}";} ?>
                            </span>
                         </div>
+                     </div>
+                     <div class="flex flex-col mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
                               ¿Tiene familiares en la empresa?:
                            </div>
                            <span>
                            <?php if($ver->efam_dentro_empresa == null){ echo "No hay datos"; }else{echo "{$ver->efam_dentro_empresa}";} ?>
-                           </span>
-                        </div>
-                     </div>
-                     <div class="flex flex-col mx-7">
-                        <div class="flex-1 flex flex-col mt-5">
-                           <div class="text-[#64748b] font-semibold">
-                           Tipo de sangre:
-                           </div>
-                           <span>
-                           <?php if($ver->etipo_sangre == null){ echo "No hay datos"; }else{echo "{$ver->etipo_sangre}";} ?>
                            </span>
                         </div>
                      </div>
