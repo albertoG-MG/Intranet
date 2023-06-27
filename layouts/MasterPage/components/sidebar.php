@@ -9,6 +9,20 @@
 </div>
 
 <nav class="mt-10">
+
+    <div class="px-6">
+        <div class="text-indigo-400 text-xs font-semibold tracking-wider uppercase">
+            <span> 
+                Dashboard
+            </span>
+        </div>
+        <div class="bg-opacity-25 text-gray-500" style="font-size: 11px; line-height: 1.5">
+            <span> 
+                El dashboard de la intranet
+            </span>
+        </div>
+    </div>
+
     <?php if(basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'perfil.php'){?>
     <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="dashboard.php">
     <?php }else{ ?>
@@ -21,6 +35,19 @@
 
         <span class="mx-3">Dashboard</span>
     </a>
+
+    <div class="px-6 mt-5">
+        <div class="text-indigo-400 text-xs font-semibold tracking-wider uppercase">
+            <span> 
+                Navegación
+            </span>
+        </div>
+        <div class="bg-opacity-25 text-gray-500" style="font-size: 11px; line-height: 1.5">
+            <span> 
+                Secciones de la intranet
+            </span>
+        </div>
+    </div>
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
     <button class="flex w-full items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 group hover:text-gray-100" data-collapse-toggle="catalogos">
