@@ -1,5 +1,5 @@
 <div class="flex items-center">
-    <img class="h-12 w-12" src="../../../src/img/Sinttecom logo.jpg" alt="Sinttecom">
+    <img class="h-12 w-12" src="../../../src/img/Sinttecom_logo.jpg" alt="Sinttecom">
 
     <span class="text-white text-2xl mx-2 font-semibold">inttecom</span>
 </div>
