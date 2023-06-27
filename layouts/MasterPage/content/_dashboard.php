@@ -81,40 +81,42 @@
         <div class="block bg-transparent rounded-lg" id="vision" role="tabpanel" aria-labelledby="vision-tab-profile">
 
             <?php if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0" style="word-break: break-word;">
-                    <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Usuarios</div>
-                        <div class="-mt-2">
-                            <div class="flex flex-col items-center mt-2">
-                                <div class="text-6xl font-bold tracking-tight leading-none text-blue-500"><?php print_r($countusers->total); ?></div>
-                                <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Usuario(s)</div>
+                <div class="mt-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0" style="word-break: break-word;">
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Usuarios</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-blue-500"><?php print_r($countusers->total); ?></div>
+                                    <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Usuario(s)</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Expedientes</div>
-                        <div class="-mt-2">
-                            <div class="flex flex-col items-center mt-2">
-                                <div class="text-6xl font-bold tracking-tight leading-none text-red-500"><?php echo $countexpedientes->totalexpedientes;?></div>
-                                <div class="text-lg font-medium text-red-600 dark:text-red-500">Expediente(s)</div>
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Expedientes</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-red-500"><?php echo $countexpedientes->totalexpedientes;?></div>
+                                    <div class="text-lg font-medium text-red-600 dark:text-red-500">Expediente(s)</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Departamentos</div>
-                        <div class="-mt-2">
-                            <div class="flex flex-col items-center mt-2">
-                                <div class="text-6xl font-bold tracking-tight leading-none text-amber-500"><?php echo $countdepartamentos->totaldepartamentos;?></div>
-                                <div class="text-lg font-medium text-amber-600 dark:text-amber-500">departamento(s)</div>
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Departamentos</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-amber-500"><?php echo $countdepartamentos->totaldepartamentos;?></div>
+                                    <div class="text-lg font-medium text-amber-600 dark:text-amber-500">departamento(s)</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Documentos</div>
-                        <div class="-mt-2">
-                            <div class="flex flex-col items-center mt-2">
-                                <div class="text-6xl font-bold tracking-tight leading-none text-green-500"><?php echo $countdocumentos->totalpapeleria;?></div>
-                                <div class="text-lg font-medium text-green-600 dark:text-green-500">documentos(s)</div>
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Documentos</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-green-500"><?php echo $countdocumentos->totalpapeleria;?></div>
+                                    <div class="text-lg font-medium text-green-600 dark:text-green-500">documentos(s)</div>
+                                </div>
                             </div>
                         </div>
                     </div>
