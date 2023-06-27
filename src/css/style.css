@@ -1649,11 +1649,11 @@ select {
 .leading-\[1\.125rem\] {
   line-height: 1.125rem !important;
 }
-.tracking-wide {
-  letter-spacing: 0.025em !important;
-}
 .tracking-wider {
   letter-spacing: 0.05em !important;
+}
+.tracking-wide {
+  letter-spacing: 0.025em !important;
 }
 .tracking-tight {
   letter-spacing: -0.025em !important;
@@ -1697,6 +1697,10 @@ select {
 .text-gray-700 {
   --tw-text-opacity: 1 !important;
   color: rgb(55 65 81 / var(--tw-text-opacity)) !important;
+}
+.text-indigo-400 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(129 140 248 / var(--tw-text-opacity)) !important;
 }
 .text-gray-100 {
   --tw-text-opacity: 1 !important;
