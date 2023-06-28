@@ -131,6 +131,12 @@
 
 	$(document).ready(function() {
 
+        <?php
+		    if(basename($_SERVER['PHP_SELF']) == 'editar_expediente.php'){?>
+			    var dropdown = document.getElementById('catalogos');
+			    dropdown.classList.remove("hidden");
+	    <?php } ?>
+
 		//Empieza la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 		let tabsContainer = document.querySelector("#menu");
 		let tabTogglers = tabsContainer.querySelectorAll("button");
