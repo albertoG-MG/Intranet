@@ -323,14 +323,14 @@
                                  <script>
                                     function rsituaciondelempleado(value) {
                                        if(value == "ALTA"){
-                                       $('#estatus_empleado').html(
-                                          "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Nuevo ingreso</option>"+
-                                          "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?>>Reingreso</option>");
+                                          $('#estatus_empleado').html(
+                                          "<option value=\"NUEVO INGRESO\" x-init=\"open = false\">Nuevo ingreso</option>"+
+                                          "<option value=\"REINGRESO\">Reingreso</option>");
                                        }else if(value == "BAJA"){
-                                       $('#estatus_empleado').html(
-                                       "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Fallecimiento</option>"+
-                                       "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Renuncia voluntaria</option>"+
-                                       "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Liquidación</option>");
+                                          $('#estatus_empleado').html(
+                                          "<option value=\"FALLECIMIENTO\" x-init=\"open = false\">Fallecimiento</option>"+
+                                          "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
+                                          "<option value=\"LIQUIDACION\">Liquidación</option>");
                                        }
                                     }	
                                  </script>
@@ -342,7 +342,7 @@
                                              <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado" x-on:change="if($el.value == 'NUEVO INGRESO'){ <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "restoredateestatus; open = false";  }else{ echo "changedateestatus; open = false"; }?> }else if($el.value == 'REINGRESO'){ <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "restoredateestatus; open = false";  }else{ echo "changedateestatus; open = false"; }?> }else if($el.value == 'FALLECIMIENTO'){ <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "restoredateestatus; open = false";  }else{ echo "changedateestatus; open = false"; }?> }else if($el.value == 'RENUNCIA VOLUNTARIA'){ <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "restoredateestatus; open = true";  }else{ echo "changedateestatus; open = true"; }?> }else if($el.value == 'LIQUIDACION'){ <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "restoredateestatus; open = true";  }else{ echo "changedateestatus; open = true"; }?> }">
                                        </select>
                                     </div>
                                  </div>
