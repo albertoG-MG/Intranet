@@ -741,6 +741,14 @@ select {
   margin-left: 1.5rem !important;
   margin-right: 1.5rem !important;
 }
+.my-5 {
+  margin-top: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
+}
+.my-4 {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
 .mt-5 {
   margin-top: 1.25rem !important;
 }
@@ -818,6 +826,9 @@ select {
 }
 .mb-8 {
   margin-bottom: 2rem !important;
+}
+.ml-auto {
+  margin-left: auto !important;
 }
 .mt-20 {
   margin-top: 5rem !important;
@@ -898,6 +909,12 @@ select {
 }
 .h-14 {
   height: 3.5rem !important;
+}
+.h-auto {
+  height: auto !important;
+}
+.h-64 {
+  height: 16rem !important;
 }
 .min-h-screen {
   min-height: 100vh !important;
@@ -1209,6 +1226,16 @@ select {
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse))) !important;
   margin-bottom: calc(1rem * var(--tw-space-y-reverse)) !important;
 }
+.space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0 !important;
+  margin-right: calc(0.75rem * var(--tw-space-x-reverse)) !important;
+  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse))) !important;
+}
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0 !important;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse))) !important;
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse)) !important;
+}
 .self-start {
   align-self: flex-start !important;
 }
@@ -1266,6 +1293,14 @@ select {
 .rounded-b {
   border-bottom-right-radius: 0.25rem !important;
   border-bottom-left-radius: 0.25rem !important;
+}
+.rounded-t-lg {
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+}
+.rounded-b-lg {
+  border-bottom-right-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
 }
 .border {
   border-width: 1px !important;
@@ -1458,6 +1493,9 @@ select {
 .p-6 {
   padding: 1.5rem !important;
 }
+.p-5 {
+  padding: 1.25rem !important;
+}
 .px-5 {
   padding-left: 1.25rem !important;
   padding-right: 1.25rem !important;
@@ -1518,13 +1556,17 @@ select {
   padding-left: 2rem !important;
   padding-right: 2rem !important;
 }
-.px-16 {
-  padding-left: 4rem !important;
-  padding-right: 4rem !important;
-}
 .py-1 {
   padding-top: 0.25rem !important;
   padding-bottom: 0.25rem !important;
+}
+.px-2 {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+.px-16 {
+  padding-left: 4rem !important;
+  padding-right: 4rem !important;
 }
 .pl-1 {
   padding-left: 0.25rem !important;
@@ -1648,6 +1690,9 @@ select {
 }
 .leading-\[1\.125rem\] {
   line-height: 1.125rem !important;
+}
+.leading-8 {
+  line-height: 2rem !important;
 }
 .tracking-wider {
   letter-spacing: 0.05em !important;
@@ -1788,6 +1833,11 @@ select {
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color) !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
 .outline-none {
   outline: 2px solid transparent !important;
   outline-offset: 2px !important;
@@ -1922,6 +1972,10 @@ select {
 .hover\:text-slate-800:hover {
   --tw-text-opacity: 1 !important;
   color: rgb(30 41 59 / var(--tw-text-opacity)) !important;
+}
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1 !important;
+  color: rgb(55 65 81 / var(--tw-text-opacity)) !important;
 }
 .hover\:text-purple-500:hover {
   --tw-text-opacity: 1 !important;
@@ -2265,6 +2319,16 @@ select {
     margin: 0px !important;
   }
 
+  .md\:-mx-2 {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+  }
+
+  .md\:mx-2 {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+  }
+
   .md\:ml-1 {
     margin-left: 0.25rem !important;
   }
@@ -2313,6 +2377,10 @@ select {
 
   .md\:w-9\/12 {
     width: 75% !important;
+  }
+
+  .md\:w-3\/12 {
+    width: 25% !important;
   }
 
   .md\:grid-cols-2 {
@@ -2368,6 +2436,10 @@ select {
   .md\:break-normal {
     overflow-wrap: normal !important;
     word-break: normal !important;
+  }
+
+  .md\:rounded-lg {
+    border-radius: 0.5rem !important;
   }
 
   .md\:border {
