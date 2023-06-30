@@ -1,5 +1,6 @@
 <?php
     include_once __DIR__ . "/../../../config/conexion.php";
+    include_once __DIR__ . "/../../../classes/expedientes.php";
     $object = new connection_database();
 
     session_start();
@@ -192,4 +193,16 @@
 		die();
     }
 
+    $perfil = $object->_db->prepare("SELECT usuarios.nombre AS nombre, usuarios.apellido_pat AS apellido_pat, usuarios.apellido_mat AS apellido_mat, usuarios.correo as correo, roles.nombre AS rolnom, usuarios.nombre_foto as nombre_foto, usuarios.foto_identificador as foto, departamentos.departamento as departamento FROM usuarios LEFT JOIN roles ON usuarios.roles_id=roles.id LEFT JOIN departamentos ON usuarios.departamento_id=departamentos.id WHERE usuarios.id=:sessionid");
+    $perfil->bindParam("sessionid", $_SESSION['id'], PDO::PARAM_INT);
+    $perfil->execute();
+    $profile = $perfil -> fetch(PDO::FETCH_OBJ);
+
+    $checkifhasexpediente = $object -> _db -> prepare("SELECT * FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE usuarios.id=:usuarioid");
+    $checkifhasexpediente -> execute(array(':usuarioid' => $_SESSION['id']));
+    $countexpediente = $checkifhasexpediente -> rowCount();
+    
+    if($countexpediente > 0){
+        $view=Expedientes::Fetchownexpediente($_SESSION["id"]);
+    }
 ?>
