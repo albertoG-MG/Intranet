@@ -56,10 +56,8 @@ class incidencias {
 		$mail->IsHTML(true);
 		$lista_correos = Array();
 		foreach($jefe_array as $correo){
-			foreach($correo as $value){
-				$mail->AddAddress($value);
-				$lista_correos[]=$value;
-			}
+			$mail->AddAddress($correo);
+			$lista_correos[]=$correo;
 		}
 		$correos= implode(', ', $lista_correos);
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
@@ -198,13 +196,11 @@ class permiso extends incidencias implements tipo_permiso {
 		$crud = new crud();
 		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
 		$solicitud_id = $object -> _db -> lastInsertId();
-		foreach($jefe_array as $correos){
-			foreach($correos as $correo){
-				$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
-				$selectid -> execute(array('correo' => $correo));
-				$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
-				$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
-			}
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 		}
 		$fecha_periodo = $fechainicio_pd. " - " .$fechafin_pd;
 		$location = "../src/permisos_reglamentarios/permisos_descriptivos/";
@@ -224,13 +220,11 @@ class permiso extends incidencias implements tipo_permiso {
 		$crud = new crud();
 		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
 		$solicitud_id = $object -> _db -> lastInsertId();
-		foreach($jefe_array as $correos){
-			foreach($correos as $correo){
-				$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
-				$selectid -> execute(array('correo' => $correo));
-				$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
-				$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
-			}
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 		}
 		$location = "../src/permisos_reglamentarios/permisos_no_descriptivos/";
 		$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
@@ -249,13 +243,11 @@ class permiso extends incidencias implements tipo_permiso {
 		$crud = new crud();
 		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
 		$solicitud_id = $object -> _db -> lastInsertId();
-		foreach($jefe_array as $correos){
-			foreach($correos as $correo){
-				$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
-				$selectid -> execute(array('correo' => $correo));
-				$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
-				$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
-			}
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 		}
 		if($filename_justificante_permiso_nr != null && $justificante_permiso_nr != null){
 			$location = "../src/permisos_no_reglamentarios/no_reglamentario_g/";
@@ -279,13 +271,11 @@ class permiso extends incidencias implements tipo_permiso {
 		$crud = new crud();
 		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
 		$solicitud_id = $object -> _db -> lastInsertId();
-		foreach($jefe_array as $correos){
-			foreach($correos as $correo){
-				$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
-				$selectid -> execute(array('correo' => $correo));
-				$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
-				$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
-			}
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 		}
 		if($filename_justificante_permiso_nr != null && $justificante_permiso_nr != null){
 			$location = "../src/permisos_no_reglamentarios/no_reglamentario_a/";
@@ -318,13 +308,11 @@ class incapacidades extends incidencias{
 		$crud = new crud();
 		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
 		$solicitud_id = $object -> _db -> lastInsertId();
-		foreach($jefe_array as $correos){
-			foreach($correos as $correo){
-				$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
-				$selectid -> execute(array('correo' => $correo));
-				$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
-				$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
-			}
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 		}
 		$location = "../src/incapacidades/";
 		$ext = pathinfo($filename_comprobante_incapacidad, PATHINFO_EXTENSION);
