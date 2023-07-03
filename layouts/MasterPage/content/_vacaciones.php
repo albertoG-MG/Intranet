@@ -32,19 +32,43 @@
                         <p class="text-gray-600 font-lg text-semibold leading-6"><?php if(!(is_null($profile->departamento))){ echo $profile->departamento;}else{ echo "Sin departamento"; } ?></p>
                         <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                             <li class="flex items-center py-3">
-                                <span>Estatus</span>
+                                <span>Situación</span>
                                 <span class="ml-auto">
                                     <?php if($countexpediente > 0){ ?>
-                                        <span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Activo</span>
+                                        <?php if($fetch_information -> esituacion_del_empleado == "ALTA"){ ?>
+                                            <span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Alta</span>
+                                        <?php }else{ ?>
+                                            <span class="bg-red-200 py-1 px-2 rounded text-white text-sm">Baja</span>
+                                        <?php } ?>
                                     <?php }else{ ?>
                                         <span class="bg-black py-1 px-2 rounded text-white text-sm">N/A</span>
                                     <?php } ?>
                                 </span>
                             </li>
                             <li class="flex items-center py-3" style="word-break:break-word;">
-                                <span>Fecha de alta</span>
+                                <span>Estatus</span>
                                 <?php if($countexpediente > 0){ ?>
-                                    <span class="ml-auto"><?php echo $view -> efecha_alta; ?></span>
+                                    <?php if($fetch_information -> eestatus_del_empleado == "NUEVO INGRESO"){ ?>
+                                        <span class="ml-auto"><?php echo "NI"; ?></span>
+                                    <?php }else if($fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>
+                                        <span class="ml-auto"><?php echo "R"; ?></span>
+                                    <?php }else if($fetch_information -> eestatus_del_empleado == "FALLECIMIENTO"){ ?>
+                                        <span class="ml-auto"><?php echo "F"; ?></span>
+                                    <?php }else if($fetch_information -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ ?>
+                                        <span class="ml-auto"><?php echo "RV"; ?></span>
+                                    <?php }else if($fetch_information -> eestatus_del_empleado == "LIQUIDACION"){ ?>
+                                        <span class="ml-auto"><?php echo "L"; ?></span>
+                                    <?php }else if($fetch_information -> eestatus_del_empleado == "ABANDONO DE TRABAJO"){ ?>
+                                        <span class="ml-auto"><?php echo "ADT"; ?></span>
+                                    <?php } ?>
+                                <?php }else{ ?>
+                                    <span class="ml-auto">No hay datos</span>
+                                <?php } ?>
+                            </li>
+                            <li class="flex items-center py-3" style="word-break:break-word;">
+                                <span>Fecha</span>
+                                <?php if($countexpediente > 0){ ?>
+                                    <span class="ml-auto"><?php echo $fetch_information -> eestatus_fecha; ?></span>
                                 <?php }else{ ?>
                                     <span class="ml-auto">No hay datos</span>
                                 <?php } ?>
@@ -70,7 +94,15 @@
                                 Vacaciones disponibles
                             </div>
                             <?php if($countexpediente > 0){ ?>
-                                <span class="px-4 py-2">5</span>
+                                <span class="px-4 py-2"><?php echo $vacaciones. " días"; ?></span>
+                            <?php }else{ ?>
+                                <div class="px-4 py-2">N/A</div>
+                            <?php } ?>
+                            <div class="px-4 py-2 font-semibold">
+                                Vacaciones restantes
+                            </div>
+                            <?php if($countexpediente > 0){ ?>
+                                <span class="px-4 py-2"><?php echo $vacaciones. " días"; ?></span>
                             <?php }else{ ?>
                                 <div class="px-4 py-2">N/A</div>
                             <?php } ?>
@@ -78,7 +110,7 @@
                                 Fecha de vencimiento
                             </div>
                             <?php if($countexpediente > 0){ ?>
-                                <span class="px-4 py-2">5</span>
+                                <span class="px-4 py-2"><?php echo $fecha_vencimiento; ?></span>
                             <?php }else{ ?>
                                 <div class="px-4 py-2">N/A</div>
                             <?php } ?>

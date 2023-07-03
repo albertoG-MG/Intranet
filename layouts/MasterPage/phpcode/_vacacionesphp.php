@@ -203,6 +203,51 @@
     $countexpediente = $checkifhasexpediente -> rowCount();
     
     if($countexpediente > 0){
-        $view=Expedientes::Fetchownexpediente($_SESSION["id"]);
+        $fecha_estatus;
+        $hoy =  date("Y-m-d");
+
+        $check_information = $object->_db->prepare("SELECT expedientes.id as expid, expedientes.users_id as userid, expedientes.num_empleado as enum_empleado, expedientes.estudios as eestudios, expedientes.puesto as epuesto, expedientes.posee_correo as eposee_correo, expedientes.correo_adicional as ecorreo_adicional, expedientes.calle as ecalle, expedientes.num_interior as enum_interior, expedientes.num_exterior as enum_exterior, expedientes.colonia as ecolonia, expedientes.estado_id as eestado, expedientes.municipio_id as emunicipio, expedientes.codigo as ecodigo, expedientes.tel_dom as etel_dom, expedientes.posee_telmov as eposee_telmov, expedientes.tel_mov as etel_mov, expedientes.posee_telempresa as eposee_telempresa, expedientes.marcacion as emarcacion, expedientes.serie as eserie, expedientes.sim as esim, expedientes.numerored_empresa as enumred, expedientes.modelotel_empresa as modeltel, expedientes.marcatel_empresa as marcatel, expedientes.imei as eimei, expedientes.posee_laptop as eposee_laptop, expedientes.marca_laptop as emarca_laptop, expedientes.modelo_laptop as emodelo_laptop, expedientes.serie_laptop as eserie_laptop, expedientes.casa_propia as ecasa_propia, expedientes.ecivil as eecivil, expedientes.posee_retencion as eposee_retencion, expedientes.monto_mensual as emonto_mensual, expedientes.fecha_nacimiento as efecha_nacimiento, expedientes.fecha_inicioc as efecha_inicioc, expedientes.fecha_alta as efecha_alta, expedientes.salario_contrato as esalario_contrato, expedientes.salario_fechaalta as esalario_fechaalta, expedientes.observaciones as eobservaciones, expedientes.curp as ecurp, expedientes.nss as enss, expedientes.rfc as erfc, expedientes.tipo_identificacion as etipo_identificacion, expedientes.num_identificacion as enum_identificacion, expedientes.capacitacion as ecapacitacion, expedientes.fecha_enuniforme as efecha_enuniforme, expedientes.cantidad_polo as ecantidad_polo, expedientes.talla_polo as etalla_polo, expedientes.emergencia_nombre as eemergencia_nombre, expedientes.emergencia_parentesco as eemergencia_parentesco, expedientes.emergencia_telefono as eemergencia_telefono, expedientes.emergencia_nombre2 as eemergencia_nombre2, expedientes.emergencia_parentesco2 as eemergencia_parentesco2, expedientes.emergencia_telefono2 as eemergencia_telefono2, expedientes.resultado_antidoping as eresultado_antidoping, expedientes.tipo_sangre as etipo_sangre, expedientes.vacante as evacante, expedientes.fam_dentro_empresa as efam_dentro_empresa, expedientes.fam_nombre as efam_nombre, expedientes.banco_personal as ebanco_personal, expedientes.cuenta_personal as ecuenta_personal, expedientes.clabe_personal as eclabe_personal, expedientes.plastico_personal as eplastico_personal, expedientes.banco_nomina as ebanco_nomina, expedientes.cuenta_nomina as ecuenta_nomina, expedientes.clabe_nomina as eclabe_nomina, expedientes.plastico as eplastico, estatus_empleado.situacion_del_empleado as esituacion_del_empleado, estatus_empleado.estatus_del_empleado as eestatus_del_empleado, estatus_empleado.motivo as emotivo, estatus_empleado.fecha as eestatus_fecha from expedientes inner join usuarios on usuarios.id=expedientes.users_id left join estatus_empleado on estatus_empleado.expedientes_id = expedientes.id where usuarios.id=:userid");
+        $check_information -> execute(array(':userid' => $_SESSION["id"]));
+        $fetch_information = $check_information -> fetch(PDO::FETCH_OBJ);
+
+        $getyear =  date("Y");
+        $año_vencimiento = date('Y', strtotime($getyear. ' + 1 year'));
+        $getday= date('d', strtotime($fetch_information->eestatus_fecha));
+        $getmonth= date('m', strtotime($fetch_information->eestatus_fecha));
+        $fecha_vencimiento = $año_vencimiento. "-" .$getmonth. "-" .$getday;
+
+        if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){
+            $fecha_estatus = $fetch_information -> eestatus_fecha;
+            $d1 = new DateTime($hoy);
+            $d2 = new DateTime($fecha_estatus);
+            $diff = $d2->diff($d1);
+            if ($diff->y == 1) {
+                $vacaciones=12;
+            }else if($diff->y == 2){
+                $vacaciones=14;
+            }else if($diff->y == 3){
+                $vacaciones=16;
+            }else if($diff->y == 4){
+                $vacaciones=18;
+            }else if($diff->y == 5){
+                $vacaciones=20;
+            }else{
+                $acum=6;
+                $acum2=10;
+                $vacaciones=22;
+                $bool = "false";
+                do{
+                    if(($acum <= $diff->y) && ($diff->y <= $acum2)){
+                        $bool = "true";
+                    }else{
+                        $vacaciones = $vacaciones+2;
+                        $acum=$acum + 5;
+                        $acum2=$acum2 + 5;
+                    }
+                }while($bool == "true");
+            }
+        }else{
+            
+        }
     }
 ?>
