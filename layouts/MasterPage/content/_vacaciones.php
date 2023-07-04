@@ -97,7 +97,11 @@
                                 Vacaciones disponibles
                             </div>
                             <?php if($countexpediente > 0){ ?>
-                                <span class="px-4 py-2"><?php echo $vacaciones. " días"; ?></span>
+                                <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>
+                                    <span class="px-4 py-2"><?php echo $vacaciones. " días"; ?></span>
+                                <?php }else{ ?>
+                                    <span class="px-4 py-2">N/A</span>
+                                <?php } ?>
                             <?php }else{ ?>
                                 <div class="px-4 py-2">N/A</div>
                             <?php } ?>
@@ -105,7 +109,11 @@
                                 Vacaciones restantes
                             </div>
                             <?php if($countexpediente > 0){ ?>
-                                <span class="px-4 py-2"><?php echo $vacaciones. " días"; ?></span>
+                                <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>
+                                    <span class="px-4 py-2"><?php echo $dias_restantes. " días"; ?></span>
+                                <?php }else{ ?>
+                                    <span class="px-4 py-2">N/A</span>
+                                <?php } ?>
                             <?php }else{ ?>
                                 <div class="px-4 py-2">N/A</div>
                             <?php } ?>
@@ -113,7 +121,11 @@
                                 Fecha de vencimiento
                             </div>
                             <?php if($countexpediente > 0){ ?>
-                                <span class="px-4 py-2"><?php echo $fecha_vencimiento; ?></span>
+                                <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>
+                                    <span class="px-4 py-2"><?php echo $fecha_vencimiento; ?></span>
+                                <?php }else{ ?>
+                                    <span class="px-4 py-2">N/A</span>
+                                <?php } ?>
                             <?php }else{ ?>
                                 <div class="px-4 py-2">N/A</div>
                             <?php } ?>

@@ -210,19 +210,20 @@
         $check_information -> execute(array(':userid' => $_SESSION["id"]));
         $fetch_information = $check_information -> fetch(PDO::FETCH_OBJ);
 
-        function get_next_anniversary($anniversary) {
-            $date = new DateTime($anniversary);
-            $date->modify('+' . date('Y') - $date->format('Y') . ' years');
-            if($date < new DateTime()) {
-                $date->modify('+1 year');
-            }
-        
-            return $date->format('Y/m/d');
-        }
-        
-        $fecha_vencimiento = get_next_anniversary($fetch_information->eestatus_fecha);
-
         if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){
+            
+            function get_next_anniversary($anniversary) {
+                $date = new DateTime($anniversary);
+                $date->modify('+' . date('Y') - $date->format('Y') . ' years');
+                if($date < new DateTime()) {
+                    $date->modify('+1 year');
+                }
+            
+                return $date->format('Y/m/d');
+            }
+            
+            $fecha_vencimiento = get_next_anniversary($fetch_information->eestatus_fecha);
+                
             $fecha_estatus = $fetch_information -> eestatus_fecha;
             $d1 = new DateTime($hoy);
             $d2 = new DateTime($fecha_estatus);
@@ -252,8 +253,12 @@
                     }
                 }while($bool == "true");
             }
-        }else{
-            
+
+            $check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid");
+            $check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+            $fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
+
+            $dias_restantes = $vacaciones - $fetch_sum_vacaciones -> dias_solicitados;
         }
     }
 ?>
