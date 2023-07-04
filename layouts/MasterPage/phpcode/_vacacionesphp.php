@@ -210,11 +210,17 @@
         $check_information -> execute(array(':userid' => $_SESSION["id"]));
         $fetch_information = $check_information -> fetch(PDO::FETCH_OBJ);
 
-        $getyear =  date("Y");
-        $año_vencimiento = date('Y', strtotime($getyear. ' + 1 year'));
-        $getday= date('d', strtotime($fetch_information->eestatus_fecha));
-        $getmonth= date('m', strtotime($fetch_information->eestatus_fecha));
-        $fecha_vencimiento = $año_vencimiento. "-" .$getmonth. "-" .$getday;
+        function get_next_anniversary($anniversary) {
+            $date = new DateTime($anniversary);
+            $date->modify('+' . date('Y') - $date->format('Y') . ' years');
+            if($date < new DateTime()) {
+                $date->modify('+1 year');
+            }
+        
+            return $date->format('Y/m/d');
+        }
+        
+        $fecha_vencimiento = get_next_anniversary($fetch_information->eestatus_fecha);
 
         if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){
             $fecha_estatus = $fetch_information -> eestatus_fecha;
