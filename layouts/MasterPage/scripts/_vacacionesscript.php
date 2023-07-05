@@ -58,7 +58,7 @@
                             var fd = new FormData();
                             var periodo_vacaciones = $("#periodo_vacaciones").val();
                             var method = "store";
-                            var app = "Incidencias"
+                            var app = "Vacaciones"
                             //TODO EL APPEND DE LAS ACTAS ADMINISTRATIVAS
                             fd.append('periodo_vacaciones', periodo_vacaciones);
                             fd.append('method', method);
@@ -72,7 +72,18 @@
                                 success: function(data) {
                                     setTimeout(function(){
                                         var array = $.parseJSON(data);
-                                        
+                                        if(array[0] == "success"){
+
+                                        }else if(array[0] == "error"){
+                                            Swal.fire({
+                                                title: "Error",
+                                                text: array[1],
+                                                icon: "error"
+                                            }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#submit-vacaciones').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
+                                            });
+                                        }
                                     },3000);
                                 },
                                 error: function(data) {
@@ -85,7 +96,7 @@
                                 text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
                                 icon: "error"
                             }).then(function() {
-                                $('#submit-vacaciones').html("<button disabled id='guardar_general' name='guardar_general' class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' type='submit'>Guardar</button>");
+                                $('#submit-vacaciones').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
                                 window.location.href = "login.php";
                             });
                         }

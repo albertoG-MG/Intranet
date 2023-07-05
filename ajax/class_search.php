@@ -7,6 +7,7 @@ include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
+include_once __DIR__ . "/../classes/vacaciones.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
@@ -2529,6 +2530,223 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				die(json_encode(array("success", "La contraseña ha sido cambiada")));
 			}
 		}
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "Vacaciones"){
+	if(isset($_POST["periodo_vacaciones"]) && isset($_POST["method"])){
+		//Checa si el usuario tiene expediente
+		$check_expediente = $object -> _db -> prepare("SELECT * FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE usuarios.id=:userid");
+		$check_expediente -> execute(array(':userid' => $_SESSION["id"]));
+		$count_expediente = $check_expediente -> rowCount();
+		if($count_expediente == 0){
+			die(json_encode(array("error", "Este usuario no tiene un expediente asignado")));
+		}else{
+			//Checa si el usuario tiene estatus de ALTA ó BAJA
+			$check_status = $object -> _db -> prepare("SELECT estatus_empleado.situacion_del_empleado AS situacion_del_empleado, estatus_empleado.estatus_del_empleado AS estatus_del_empleado, estatus_empleado.fecha AS estatus_fecha FROM estatus_empleado INNER JOIN expedientes ON expedientes.id=estatus_empleado.expedientes_id INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE usuarios.id=:iduser");
+			$check_status -> execute(array(':iduser' => $_SESSION["id"]));
+			$count_status = $check_status -> rowCount();
+			if($count_status == 0){
+				die(json_encode(array("error", "El usuario no tiene un estatus asignado")));
+			}else{
+				$fetch_status = $check_status -> fetch(PDO::FETCH_OBJ);
+				if($fetch_status -> situacion_del_empleado == "BAJA"){
+					die(json_encode(array("error", "El usuario está dado de baja y no puede pedir vacaciones")));
+				}
+			}
+		}
+
+		//Checar si el usuario pertenece a la jerarquía
+		$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+		$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
+		$count_jerarquia = $check_jerarquia -> rowCount();
+		if($count_jerarquia == 0){
+			die(json_encode(array("error", "Su usuario no tiene asignado un jefe")));
+		}
+
+		//Sacar al jefe directo
+		switch(Roles::FetchSessionRol($_SESSION["rol"])){
+			case "Director":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id WHERE r1.nombre = 'Director general' AND r2.nombre = 'Director'");
+				$check_path -> execute();
+				$i = 0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+					$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Gerente":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente' UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente'");
+				$check_path -> execute();
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado="ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+							$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Empleado":
+			case "Supervisor":
+			case "Tecnico":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r3.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre =:rolnom1 UNION ALL SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom2 UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom3");
+				$check_path -> execute(array(':rolnom1' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom2' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom3' => Roles::FetchSessionRol($_SESSION["rol"])));
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+							$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			default:
+				die(json_encode(array("error", "Su usuario no se encuentra en la jerarquía, por favor, contacte a un administrador")));
+		}
+		
+		//Validación de la fecha escogida
+		function validateDate($date, $format = 'Y-m-d H:i:s')
+		{
+			$d = DateTime::createFromFormat($format, $date);
+			return $d && $d->format($format) == $date;
+		}
+
+		function dateDiffInDays($date1, $date2)
+		{
+			$diff = strtotime($date2) - strtotime($date1);
+			return abs(round($diff / 86400));
+		}
+
+		function check_negative($value){
+			if (isset($value)){
+				if (substr(strval($value), 0, 1) == "-"){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+		if(empty($_POST["periodo_vacaciones"])){
+			die(json_encode(array("error", "El período vacacional no puede estar vacío")));
+		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_vacaciones"])){
+			die(json_encode(array("error", "La fecha elegida en el periodo vacacional no tiene el formato adecuado")));
+		}else{
+			$break_date = explode(" - ",$_POST["periodo_vacaciones"]);
+			$check_validdate0 = validateDate($break_date[0], 'Y/m/d');
+			$check_validdate1 = validateDate($break_date[1], 'Y/m/d');
+			if($check_validdate0 = false){
+				die(json_encode(array("error", "La fecha de inicio en el periodo vacacional es inválida")));
+			}else if($check_validdate1 = false){
+				die(json_encode(array("error", "La fecha de fin en el periodo vacacional es inválida")));
+			}
+
+			$days = dateDiffInDays($break_date[0], $break_date[1]);
+			$days = $days + 1;
+
+			$periodo_vacaciones = $_POST["periodo_vacaciones"];
+		}
+
+		//Se calcula las vacaciones disponibles
+		$fecha_estatus = $fetch_status -> estatus_fecha;
+		$hoy =  date("Y-m-d");
+
+		$d1 = new DateTime($hoy);
+		$d2 = new DateTime($fecha_estatus);
+		$diff = $d2->diff($d1);
+		if ($diff->y == 1) {
+			$vacaciones=12;
+		}else if($diff->y == 2){
+			$vacaciones=14;
+		}else if($diff->y == 3){
+			$vacaciones=16;
+		}else if($diff->y == 4){
+			$vacaciones=18;
+		}else if($diff->y == 5){
+			$vacaciones=20;
+		}else{
+			$acum=6;
+			$acum2=10;
+			$vacaciones=22;
+			$bool = "false";
+			do{
+				if(($acum <= $diff->y) && ($diff->y <= $acum2)){
+					$bool = "true";
+				}else{
+					$vacaciones = $vacaciones+2;
+					$acum=$acum + 5;
+					$acum2=$acum2 + 5;
+				}
+			}while($bool == "true");
+		}
+
+		//Se calculan los días ya usados y se obtienen las vacaciones restantes
+		$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid");
+		$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+		$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
+
+		$dias_restantes = $vacaciones - $fetch_sum_vacaciones -> dias_solicitados;
+		$dias_restantes = $dias_restantes - $days;
+
+		if(check_negative($dias_restantes)){
+			die(json_encode(array("error", "El número de días solicitados sobrepasa el número de vacaciones restantes")));
+		}
+
+
+		switch($_POST["method"]){
+            case "store":
+                $vacaciones = new Vacaciones($periodo_vacaciones);
+                $vacaciones->CrearSolicitudVacaciones($_SESSION['id'], $days);
+                exit("success");
+                break;
+            break;
+        }
 	}
 }
 ?>
