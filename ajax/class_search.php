@@ -2727,7 +2727,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		//Se calculan los días ya usados y se obtienen las vacaciones restantes
-		$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid");
+		$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
 		$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
 		$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
 
@@ -2743,7 +2743,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "store":
                 $vacas = new Vacaciones($periodo_vacaciones);
                 $vacas->CrearSolicitudVacaciones($_SESSION['id'], $days, $jefe_array);
-				$check_update_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid");
+				$check_update_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
 				$check_update_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
 				$fetch_update_sum_vacaciones = $check_update_vacaciones -> fetch(PDO::FETCH_OBJ);
 				$new_dias_restantes = $vacaciones - $fetch_update_sum_vacaciones -> dias_solicitados;
