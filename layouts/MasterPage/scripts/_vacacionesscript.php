@@ -446,7 +446,17 @@
                                     setTimeout(function(){
                                         var array = $.parseJSON(data);
                                         if(array[0] == "success"){
-
+                                            Swal.fire({
+                                                title: "Solicitud creada",
+                                                text: array[1],
+                                                icon: "success"
+                                            }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#submit-vacaciones').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
+                                                var table = $('#datatable').DataTable();
+                                                table.ajax.reload();
+                                                $("#dias_restantes").html(array[2]+ " día(s)");
+                                            });
                                         }else if(array[0] == "error"){
                                             Swal.fire({
                                                 title: "Error",

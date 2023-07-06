@@ -110,7 +110,7 @@
                             </div>
                             <?php if($countexpediente > 0){ ?>
                                 <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>
-                                    <span class="px-4 py-2"><?php echo $dias_restantes. " días"; ?></span>
+                                    <span id="dias_restantes" class="px-4 py-2"><?php echo $dias_restantes. " día(s)"; ?></span>
                                 <?php }else{ ?>
                                     <span class="px-4 py-2">N/A</span>
                                 <?php } ?>
