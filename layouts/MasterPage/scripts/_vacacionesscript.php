@@ -281,7 +281,7 @@
                 {"data": "nombre"},
                 {"data": "periodo_solicitado"},
                 {"data": "fecha_solicitud"},
-                {"data": "estatus", searchable: false},
+                {"data": "estatus"}
             ],
             "columnDefs": [
                 {
@@ -317,11 +317,31 @@
                 {
                     target: [4],
                     render: function (data, type, row) {
-                        return (
-                            "<div class='text-left lg:text-center'>" +
-                                "<span>" + row["estatus"] + "</span>" +
-                            "</div>"
-                        );
+                        if(row["estatus"] == 4){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span>Pendiente</span>" +
+                                "</div>"
+                            );
+                        }else if(row["estatus"] == 3){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span>Rechazada</span>" +
+                                "</div>"
+                            ); 
+                        }else if(row["estatus"] == 2){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span>Cancelada</span>" +
+                                "</div>"
+                            ); 
+                        }else if(row["estatus"] == 1){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span>Aprobada</span>" +
+                                "</div>"
+                            );
+                        }
                     }
                 }
             ],
