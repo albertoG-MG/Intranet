@@ -248,7 +248,7 @@
                         <?php } ?>
                         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud vacaciones") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             {
-                                text: "Ver Solicitudes",
+                                text: "Evaluar solicitudes",
                                 attr: {
                                     'id': 'vacaciones_solicitudes',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
