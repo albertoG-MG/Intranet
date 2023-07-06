@@ -170,6 +170,19 @@
                             </svg>
                             <span class="tracking-wide">Tabla de vacaciones</span>
                         </div>
+                        <div id="DT-div" style="display:none;">
+                            <table class="w-full" id="datatable">
+                                <thead>
+                                    <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                        <th>Solicitud_id</th>
+                                        <th class="py-3 text-left all">Nombre</th>
+                                        <th class="py-3 text-center desktop">Periodo</th>
+                                        <th class="py-3 text-center desktop">F. solicitud</th>
+                                        <th class="py-3 text-center desktop">Estatus</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

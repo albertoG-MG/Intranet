@@ -261,4 +261,8 @@
             $dias_restantes = $vacaciones - $fetch_sum_vacaciones -> dias_solicitados;
         }
     }
+
+    $check_jerarquia = $object -> _db -> prepare("SELECT * FROM jerarquia INNER JOIN roles ON roles.id=jerarquia.rol_id INNER JOIN usuarios ON usuarios.roles_id=roles.id WHERE usuarios.id=:userid AND jerarquia.jerarquia_id is NOT NULL");
+    $check_jerarquia -> execute(array(":userid" => $_SESSION["id"]));
+    $count_jerarquia = $check_jerarquia -> rowCount();
 ?>
