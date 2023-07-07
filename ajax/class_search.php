@@ -2751,5 +2751,45 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_vacaciones"){
+    if(isset($_POST["solicitud_vacaciones"]) && isset($_POST["estatus"]) && isset($_POST["method"])){
+		//Checar si la solicitud existe
+		$check_request = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE id=:solicitudid");
+		$check_request -> execute(array(':solicitudid' => $_POST["solicitud_vacaciones"]));
+		$count_request = $check_request -> rowCount();
+		if($count_request == 0){
+			die(json_encode(array("failed", "Esta solicitud no existe!")));
+		}else{
+			$solicitud_vacaciones = $_POST["solicitud_vacaciones"];
+		}
+		
+		//El estatus solo puede estar entre 1, 2 y 3
+		$estatus_array = array(1, 2, 3);
+		if (in_array($_POST["estatus"], $estatus_array)) {
+			$estatus= $_POST["estatus"];
+		}else{
+			die(json_encode(array("failed", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
+		}
+		
+		//Obtener el nombre completo del usuario
+		$nombre_completo = $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
+		
+		//Obtener el comentario de evaluación
+        if(empty($_POST["comentario"])){
+            $comentario = null;
+        }else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["comentario"])){
+				die(json_encode(array("failed", "Solo se permiten carácteres alfabéticos y espacios en los comentarios")));
+			}else{
+				$comentario = $_POST["comentario"];
+			}
+        }
+        switch($_POST["method"]){
+            case "store":
+                Vacaciones::Almacenar_estatus($solicitud_vacaciones, $estatus, $nombre_completo, $comentario);
+                die(json_encode(array("success")));
+            break;
+        }
+    }
 }
 ?>
