@@ -690,25 +690,37 @@
 				        field_validation:true
 			        },
 			        cuenta_personal:{
-				        digits:true
+				        digits:true,
+                        minlength: 10,
+                        maxlength: 10
 			        },
 			        clabe_personal:{
-				        digits:true
+				        digits:true,
+                        minlength: 18,
+                        maxlength: 18
 			        },
                     plastico_personal:{
-                        digits: true
+                        digits: true,
+                        minlength: 16,
+	                    maxlength: 16
                     },
 			        banco_nomina:{
 				        field_validation:true
 			        },
 			        cuenta_nomina:{
-				        digits:true
+				        digits:true,
+                        minlength: 10,
+                        maxlength: 10
 			        },
 			        clabe_nomina:{
-				        digits:true
+				        digits:true,
+                        minlength: 18,
+                        maxlength: 18
 			        },
 			        plastico:{
-				        digits:true
+				        digits:true,
+                        minlength: 16,
+	                    maxlength: 16
 			        }
                 },
                 messages: {
@@ -863,25 +875,37 @@
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 			        },
 			        cuenta_personal:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+	                    maxlength: 'No puede ser mayor a 10 dígitos'
 			        },
 			        clabe_personal:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+	                    maxlength: 'No puede ser mayor a 18 dígitos'
 			        },
                     plastico_personal:{
-                        digits: 'Solo se permiten números'
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+	                    maxlength: 'No puede ser mayor a 16 dígitos'
                     },
 			        banco_nomina:{
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 			        },
 			        cuenta_nomina:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+	                    maxlength: 'No puede ser mayor a 10 dígitos'
 			        },
 			        clabe_nomina:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+	                    maxlength: 'No puede ser mayor a 18 dígitos'
 			        },
 			        plastico:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+	                    maxlength: 'No puede ser mayor a 16 dígitos'
 			        }
                 },
                 submitHandler: function(form) {

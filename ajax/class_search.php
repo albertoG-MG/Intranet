@@ -1171,12 +1171,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-        //CUENTA PERSONAL
+		//CUENTA PERSONAL
         if(empty($_POST["cuenta_personal"])){
 			$cuenta_personal = null;
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["cuenta_personal"])){
                 die(json_encode(array("error", "Solo se permiten números en la cuenta personal")));
+			}else if(strlen($_POST["cuenta_personal"]) < 10){	
+				die(json_encode(array("error", "La cuenta personal no puede ser menor a 10 dígitos")));
+			}else if(strlen($_POST["cuenta_personal"]) > 10){	
+				die(json_encode(array("error", "La cuenta personal no puede ser mayor a 10 dígitos")));
 			}else{
 				$cuenta_personal = $_POST["cuenta_personal"];
 			}
@@ -1188,6 +1192,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["clabe_personal"])){
                 die(json_encode(array("error", "Solo se permiten números en la clabe personal")));
+			}else if(strlen($_POST["clabe_personal"]) < 18){
+				die(json_encode(array("error", "La clabe personal no puede ser menor a 18 dígitos")));
+			}else if(strlen($_POST["clabe_personal"]) > 18){	
+				die(json_encode(array("error", "La clabe personal no puede ser mayor a 18 dígitos")));	
 			}else{
 				$clabe_personal = $_POST["clabe_personal"];
 			}
@@ -1199,6 +1207,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["plastico_personal"])){
 				die(json_encode(array("error", "Solo se permiten números en el plástico personal de la cuenta personal bancaria")));
+			}else if(strlen($_POST["plastico_personal"]) < 16){	
+				die(json_encode(array("error", "La plástico asignado personal no puede ser menor a 16 dígitos")));
+			}else if(strlen($_POST["plastico_personal"]) > 16){	
+				die(json_encode(array("error", "La plástico asignado personal no puede ser mayor a 16 dígitos")));
 			}else{
 				$plastico_personal = $_POST["plastico_personal"];
 			}
@@ -1215,12 +1227,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-        //CUENTA NÓMINA
+		//CUENTA NÓMINA
         if(empty($_POST["cuenta_nomina"])){
 			$cuenta_nomina = null;
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["cuenta_nomina"])){
                 die(json_encode(array("error", "Solo se permiten números en la cuenta asignada por la empresa")));
+			}else if(strlen($_POST["cuenta_nomina"]) < 10){	
+				die(json_encode(array("error", "La cuenta de nómina no puede ser menor a 10 dígitos")));
+			}else if(strlen($_POST["cuenta_nomina"]) > 10){	
+				die(json_encode(array("error", "La cuenta de nómina no puede ser mayor a 10 dígitos")));
 			}else{
 				$cuenta_nomina = $_POST["cuenta_nomina"];
 			}
@@ -1232,6 +1248,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["clabe_nomina"])){
                 die(json_encode(array("error", "Solo se permiten números en la clabe asignada por la empresa")));
+			}else if(strlen($_POST["clabe_nomina"]) < 18){
+				die(json_encode(array("error", "La clabe de nómina no puede ser menor a 18 dígitos")));
+			}else if(strlen($_POST["clabe_nomina"]) > 18){	
+				die(json_encode(array("error", "La clabe de nómina no puede ser mayor a 18 dígitos")));
 			}else{
 				$clabe_nomina = $_POST["clabe_nomina"];
 			}
@@ -1243,6 +1263,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["plastico"])){
                 die(json_encode(array("error", "Solo se permiten números en el plástico asignado por la empresa")));
+			}else if(strlen($_POST["plastico"]) < 16){	
+				die(json_encode(array("error", "La plástico asignado de nómina no puede ser menor a 16 dígitos")));
+			}else if(strlen($_POST["plastico"]) > 16){	
+				die(json_encode(array("error", "La plástico asignado de nómina no puede ser mayor a 16 dígitos")));
 			}else{
 				$plastico = $_POST["plastico"];
 			}
