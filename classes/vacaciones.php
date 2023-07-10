@@ -139,8 +139,8 @@
             }
             $mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
             $mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-            $mail->Subject  = "La solicitud de vacaciones de ".$row_user_solicitud -> nombre." ha sido evaluada (ID: ".$row_user_incidencia -> solicitudid.")";
-            $mail->Body     = "Buen día: <br> La solicitud de vacaciones con ID ".$row_user_incidencia -> solicitudid." tiene el siguiente estatus: ".$status.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar solicitud de vacaciones</a> <br> Comentarios:  ".$comentario."";
+            $mail->Subject  = "La solicitud de vacaciones de ".$row_user_solicitud -> nombre." ha sido evaluada (ID: ".$row_user_solicitud -> solicitudid.")";
+            $mail->Body     = "Buen día: <br> La solicitud de vacaciones con ID ".$row_user_solicitud -> solicitudid." tiene el siguiente estatus: ".$status.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar solicitud de vacaciones</a> <br> Comentarios:  ".$comentario."";
             $mail->WordWrap = 50;
             $mail->CharSet = "UTF-8";
             if(!$mail->Send()) {
