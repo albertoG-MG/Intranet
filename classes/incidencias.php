@@ -30,7 +30,7 @@ class incidencias {
 	public static function sendEmail($incidencia_id, $jefe_array, $tipoincidencia){
 		$object = new connection_database();
 		$crud = new crud();
-		$sql = $object->_db->prepare('SELECT CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, solicitudes_incidencias.fecha_solicitud as fecha_solicitud FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
+		$sql = $object->_db->prepare('SELECT solicitudes_incidencias.id as solicitudid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, solicitudes_incidencias.fecha_solicitud as fecha_solicitud FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
 		$sql -> execute(array(':incidenciaid' => $incidencia_id));
 		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -63,7 +63,7 @@ class incidencias {
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
 		$mail->Subject  = "El usuario ". $row_user_incidencia -> nombre ." te ha envíado una solicitud de incidencia (ID: ".$row_user_incidencia -> solicitudid.")";
-		$mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_incidencia -> nombre." ha solicitado una incidencia con ID: ".$row_user_incidencia -> solicitudid." del tipo " .$tipoincidencia. " en la fecha " .$row_user_incidencia -> fecha_solicitud. " <br> Haga clic en el link a continuación para ver la incidencia y evaluarla: <br> $links";
+		$mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_incidencia -> nombre." ha solicitado una incidencia con ID ".$row_user_incidencia -> solicitudid." del tipo " .$tipoincidencia. " en la fecha " .$row_user_incidencia -> fecha_solicitud. " <br> Haga clic en el link a continuación para ver la incidencia y evaluarla: <br> $links";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {
@@ -140,7 +140,7 @@ class incidencias {
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
 		$mail->Subject  = "La solicitud de incidencia del usuario " .$row_user_incidencia -> nombre. " ha sido evaluada (ID: ".$row_user_incidencia -> solicitudid.")";
-		$mail->Body     = "Buen día: <br> La solicitud de incidencia evaluada que envió el usuario ".$row_user_incidencia -> nombre." con id ".$row_user_incidencia -> solicitudid." expedido en la fecha ".$row_user_incidencia -> fecha_solicitud." tiene el siguiente estatus: ".$status. ' ' .$sueldo_message.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a> <br> Comentarios:  ".$comentario."";
+		$mail->Body     = "Buen día: <br> La solicitud de incidencia evaluada que envió el usuario ".$row_user_incidencia -> nombre." con ID ".$row_user_incidencia -> solicitudid." expedido en la fecha ".$row_user_incidencia -> fecha_solicitud." tiene el siguiente estatus: ".$status. ' ' .$sueldo_message.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a> <br> Comentarios:  ".$comentario."";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {

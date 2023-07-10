@@ -35,7 +35,7 @@
         public static function sendEmail($solicitud_id, $jefe_array){
             $object = new connection_database();
             $crud = new crud();
-            $sql = $object->_db->prepare('SELECT CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre, solicitud_vacaciones.dias_solicitados AS dias_solicitados, solicitud_vacaciones.fecha_solicitud AS fecha_solicitud FROM solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE solicitud_vacaciones.id=:solicitudid');
+            $sql = $object->_db->prepare('SELECT solicitud_vacaciones.id as solicitudid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre, solicitud_vacaciones.dias_solicitados AS dias_solicitados, solicitud_vacaciones.fecha_solicitud AS fecha_solicitud FROM solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE solicitud_vacaciones.id=:solicitudid');
             $sql -> execute(array(':solicitudid' => $solicitud_id));
             $row_user_solicitud = $sql ->fetch(PDO::FETCH_OBJ);
             $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -67,8 +67,8 @@
             $correos= implode(', ', $lista_correos);
             $mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
             $mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-            $mail->Subject  = "El usuario ".$row_user_solicitud -> nombre." te envió una solicitud de vacaciones";
-            $mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_solicitud -> nombre." ha realizado una solicitud de vacaciones en la fecha ".$row_user_solicitud -> fecha_solicitud." para un total de ".$row_user_solicitud -> dias_solicitados." día(s) de vacaciones <br> Haga clic en el link a continuación para ver la solicitud y evaluarla: <br> $links";
+            $mail->Subject  = "El usuario ".$row_user_solicitud -> nombre." te envió una solicitud de vacaciones (ID: ".$row_user_solicitud -> solicitudid.")";
+            $mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_solicitud -> nombre." te ha enviado una solicitud de vacaciones con ID ".$row_user_solicitud -> solicitudid."  en la fecha ".$row_user_solicitud -> fecha_solicitud." para un total de ".$row_user_solicitud -> dias_solicitados." día(s) de vacaciones <br> Haga clic en el link a continuación para ver la solicitud y evaluarla: <br> $links";
             $mail->WordWrap = 50;
             $mail->CharSet = "UTF-8";
             if(!$mail->Send()) {
@@ -81,7 +81,7 @@
             $object = new connection_database();
             $crud = new crud();
             $array = [];
-            $sql = $object->_db->prepare('SELECT CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre, usuarios.correo FROM solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE solicitud_vacaciones.id=:solicitudid');
+            $sql = $object->_db->prepare('SELECT solicitud_vacaciones.id as solicitudid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre, usuarios.correo FROM solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE solicitud_vacaciones.id=:solicitudid');
             $sql -> execute(array(':solicitudid' => $solicitud_vacaciones));
             $row_user_solicitud = $sql ->fetch(PDO::FETCH_OBJ);
             array_push($array, $row_user_solicitud -> correo);
@@ -139,8 +139,8 @@
             }
             $mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
             $mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-            $mail->Subject  = "La solicitud de vacaciones de ".$row_user_solicitud -> nombre."  ha sido evaluada";
-            $mail->Body     = "Buen día: <br> La solicitud de vacaciones tiene el siguiente estatus: ".$status.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar solicitud de vacaciones</a> <br> Comentarios:  ".$comentario."";
+            $mail->Subject  = "La solicitud de vacaciones de ".$row_user_solicitud -> nombre." ha sido evaluada (ID: ".$row_user_incidencia -> solicitudid.")";
+            $mail->Body     = "Buen día: <br> La solicitud de vacaciones con ID ".$row_user_incidencia -> solicitudid." tiene el siguiente estatus: ".$status.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar solicitud de vacaciones</a> <br> Comentarios:  ".$comentario."";
             $mail->WordWrap = 50;
             $mail->CharSet = "UTF-8";
             if(!$mail->Send()) {
