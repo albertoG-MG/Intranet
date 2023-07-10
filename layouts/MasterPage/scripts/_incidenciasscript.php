@@ -288,10 +288,14 @@
             "ajax":{
                 <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
                     "url": "../config/incidencias/incidencias_abiertas.php",
-                <?php }else if($count_jerarquia > 0){ ?>
+                <?php }else if($count_jerarquia > 0 && Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "false"){ ?>
                     "url": "../config/incidencias/mi_incidencia_pendiente.php",
-                <?php }else if($count_jerarquia == 0 && Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
-                    "url": "../config/incidencias/incidencias_abiertas.php",
+                <?php }else if($count_jerarquia == 0 || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
+                    <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){ ?>
+                        "url": "../config/incidencias/incidencias_abiertas.php",
+                    <?php }else{ ?>
+                        "url": "../config/vacaciones/mi_incidencia_pendiente.php",
+                    <?php } ?>
                 <?php } ?>
                 "type": "POST",
                 "dataSrc": "",

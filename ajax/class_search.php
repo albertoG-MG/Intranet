@@ -2219,21 +2219,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
 		$incidenciaid= $_POST["incidenciaid"];
-		//Checar el estatus y ver que sea diferente entre 4, 5 y 6
-		$check_estatus = $object -> _db -> prepare("SELECT estatus_incidencia.id as estatus_id FROM estatus_incidencia INNER JOIN tipo_estatus_incidencia ON tipo_estatus_incidencia.id=estatus_incidencia.tipo_estatus_id WHERE tipo_estatus_incidencia.descripcion_estado='Aprobada' OR tipo_estatus_incidencia.descripcion_estado='Rechazada' OR tipo_estatus_incidencia.descripcion_estado='Cancelada'");
-		$check_estatus -> execute();
-		$fetch_estatus = $check_estatus -> fetchAll(PDO::FETCH_ASSOC);
-		$estatus_array = [];
-		foreach($fetch_estatus as $select_array){
-			foreach($select_array as $select_estatus){
-				$estatus_array[] = $select_estatus;
-			}
-		}
-		if (in_array($_POST["estatus"], $estatus_array, true)) {
+		
+		//El estatus solo puede estar entre 1, 2 y 3
+		$estatus_array = array(1, 2, 3);
+		if (in_array($_POST["estatus"], $estatus_array)) {
 			$estatus= $_POST["estatus"];
 		}else{
-			die(json_encode(array("failed", "El estatus no existe ó no tiene permitido elegir ese estatus!")));
+			die(json_encode(array("failed", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
 		}
+
 		//Goce de sueldo solamente puede ser 0 y 1
         if(isset($_POST["sueldo"])){
 			$sueldo_array = array(0, 1);

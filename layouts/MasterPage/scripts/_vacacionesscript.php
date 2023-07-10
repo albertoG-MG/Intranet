@@ -263,10 +263,14 @@
             "ajax":{
                 <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
                     "url": "../config/vacaciones/vacaciones_abiertas.php",
-                <?php }else if($count_jerarquia > 0){ ?>
+                <?php }else if($count_jerarquia > 0 && Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "false"){ ?>
                     "url": "../config/vacaciones/mis_vacaciones_pendientes.php",
-                <?php }else if($count_jerarquia == 0 && Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
-                    "url": "../config/vacaciones/vacaciones_abiertas.php",
+                <?php }else if($count_jerarquia == 0 || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
+                    <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){ ?>
+                        "url": "../config/vacaciones/vacaciones_abiertas.php",
+                    <?php }else{ ?>
+                        "url": "../config/vacaciones/mis_vacaciones_pendientes.php",
+                    <?php } ?>
                 <?php } ?>
                 "type": "POST",
                 "dataSrc": "",
