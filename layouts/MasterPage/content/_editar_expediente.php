@@ -324,11 +324,11 @@
                                     function rsituaciondelempleado(value) {
                                        if(value == "ALTA"){
                                           $('#estatus_empleado').html(
-                                          "<option value=\"NUEVO INGRESO\" x-init=\"open = false\">Nuevo ingreso</option>"+
+                                          "<option value=\"NUEVO INGRESO\" x-init=\"statusmethod($el.value,status); open = false;\">Nuevo ingreso</option>"+
                                           "<option value=\"REINGRESO\">Reingreso</option>");
                                        }else if(value == "BAJA"){
                                           $('#estatus_empleado').html(
-                                          "<option value=\"FALLECIMIENTO\" x-init=\"open = false\">Fallecimiento</option>"+
+                                          "<option value=\"FALLECIMIENTO\" x-init=\"statusmethod($el.value,status); open = false;\">Fallecimiento</option>"+
                                           "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
                                           "<option value=\"LIQUIDACION\">Liquidación</option>");
                                        }
