@@ -98,7 +98,8 @@ INSERT INTO `categorias` (`id`, `nombre`) VALUES
 (5, 'Departamentos'),
 (6, 'Incidencias'),
 (7, 'Solicitud incidencias'),
-(8, 'Vacaciones');
+(8, 'Vacaciones'),
+(9, 'Acceso a solicitud vacaciones');
 
 -- --------------------------------------------------------
 
@@ -151,7 +152,9 @@ INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
 (31, 'Ver todas las incidencias', 6),
 (32, 'Ver todos los documentos administrativos', 6),
 (33, 'Acceso a solicitud incidencias', 7),
-(34, 'Acceso a vacaciones', 8);
+(34, 'Acceso a vacaciones', 8),
+(35, 'Ver todas las vacaciones', 8),
+(36, 'Acceso a solicitud vacaciones', 9);
 
 -- --------------------------------------------------------
 
@@ -220,7 +223,8 @@ INSERT INTO `departamentos` (`id`, `departamento`) VALUES
 (5, 'Laboratorio'),
 (6, 'Almacen'),
 (7, 'Operaciones'),
-(8, 'TI');
+(8, 'TI'),
+(9, 'Ventas');
 
 -- --------------------------------------------------------
 
@@ -2845,7 +2849,8 @@ INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
 (20, 'BAJA ANTE IMSS'),
 (21, 'MODIFICACION SALARIAL'),
 (22, 'COMPROBANTE DE ESTUDIOS'),
-(23, 'CARATULA DE DATOS BANCARIOS');
+(23, 'CARATULA DE DATOS BANCARIOS'),
+(24, 'ACTA DE MATRIMONIO');
 
 
 -- --------------------------------------------------------
