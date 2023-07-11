@@ -329,6 +329,7 @@
                                        }else if(value == "BAJA"){
                                           $('#estatus_empleado').html(
                                           "<option value=\"FALLECIMIENTO\" x-init=\"statusmethod($el.value,status); open = false;\">Fallecimiento</option>"+
+                                          "<option value=\"ABANDONO DE TRABAJO\">Abandono de trabajo</option>"+
                                           "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
                                           "<option value=\"LIQUIDACION\">Liquidación</option>");
                                        }
@@ -342,7 +343,7 @@
                                              <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado" x-init="status=retrieveselected(); if(status == 'RENUNCIA VOLUNTARIA' || status == 'LIQUIDACION'){ open=true; }else{ open=false; }" x-on:change="if($el.value == 'NUEVO INGRESO'){  statusmethod($el.value,status); open=false; }else if($el.value == 'REINGRESO'){ statusmethod($el.value,status); open=false; }else if($el.value == 'FALLECIMIENTO'){ statusmethod($el.value,status); open=false;  }else if($el.value == 'RENUNCIA VOLUNTARIA'){ statusmethod($el.value,status); open=true; }else if($el.value == 'LIQUIDACION'){ statusmethod($el.value,status); open=true; }">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado" x-init="status=retrieveselected(); if(status == 'ABANDONO DE TRABAJO' || status == 'RENUNCIA VOLUNTARIA' || status == 'LIQUIDACION'){ open=true; }else{ open=false; }" x-on:change="if($el.value == 'NUEVO INGRESO'){  statusmethod($el.value,status); open=false; }else if($el.value == 'REINGRESO'){ statusmethod($el.value,status); open=false; }else if($el.value == 'FALLECIMIENTO'){ statusmethod($el.value,status); open=false; }else if($el.value == 'ABANDONO DE TRABAJO'){ statusmethod($el.value,status); open=true; }else if($el.value == 'RENUNCIA VOLUNTARIA'){ statusmethod($el.value,status); open=true; }else if($el.value == 'LIQUIDACION'){ statusmethod($el.value,status); open=true; }">
                                        </select>
                                     </div>
                                  </div>
@@ -351,7 +352,7 @@
                                        if(value == statusretrieved){
                                           $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
                                           $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
-                                          if(value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
+                                          if(value == "ABANDONO DE TRABAJO" || value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: true,
                                                 field_validation: true,
@@ -373,7 +374,7 @@
                                           var today = now.getFullYear()+"-"+(month)+"-"+(day);
                                           $('#fecha_estatus').val(today);
                                           $('#estatus_motivo').val('');
-                                          if(value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
+                                          if(value == "ABANDONO DE TRABAJO" || value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: true,
                                                 field_validation: true,
