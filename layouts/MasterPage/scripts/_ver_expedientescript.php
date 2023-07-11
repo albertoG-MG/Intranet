@@ -46,6 +46,13 @@
 	});
 
 	$( document ).ready(function() {
+
+		<?php
+			if(basename($_SERVER['PHP_SELF']) == 'ver_expediente.php'){?>
+				var dropdown = document.getElementById('catalogos');
+				dropdown.classList.remove("hidden");
+		<?php } ?>
+
 		//PARA NAVEGAR ENTRE TABS CON LOS BOTONES
 		let tabsContainer = document.querySelector("#menu");
 		let tabTogglers = tabsContainer.querySelectorAll("button");

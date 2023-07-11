@@ -62,9 +62,9 @@
         }
     });
 
-    $('#user').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600')
+    $('#user').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 h-11 border rounded-md border-[#d1d5db]');
 
-    $('.select2-selection--single').addClass("flex");
+    $('.select2-selection--single').addClass("flex focus:outline-none");
 
     $('.select2-selection__rendered').addClass("flex-1");
 
@@ -128,6 +128,12 @@
 	//Termina la configuración del estado y municipio
 
 	$(document).ready(function() {
+
+        <?php
+		    if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
+			    var dropdown = document.getElementById('catalogos');
+			    dropdown.classList.remove("hidden");
+	    <?php } ?>
 
 		//Empieza la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 		let tabsContainer = document.querySelector("#menu");
@@ -258,10 +264,16 @@
 
         //Empieza la configuración de los fileupload
         <?php for($i = 1; $i <= $counttipospapeleria; $i++){
+
+        echo ("var papeleria_clone{$i};");
+
 	    echo (" $('#upload-button{$i}').on('click', function () {
 				    $('#infp_papeleria{$i}').click();
-			    });	
-	
+			    });
+                
+                $('#infp_papeleria{$i}').on('click', function () {
+                    papeleria_clone{$i} = $('#infp_papeleria{$i}').clone();
+                });
 	
 			    $('#infp_papeleria{$i}').on('change', function () {
 				    if (window.FileReader && window.Blob) {
@@ -338,7 +350,9 @@
 							    }
 						    };
 						    fileReader.readAsArrayBuffer(file.slice(0, 4));
-					    }
+					    }else{
+                            $('#infp_papeleria{$i}').replaceWith(papeleria_clone{$i}.clone());
+                        }
 				    } else {
 					    console.error('FileReader ó Blob no es compatible con este navegador.');
 					    if(!($('#infp_papeleria{$i}').get(0).files.length === 0)){
@@ -411,7 +425,7 @@
         }, 'not a valid email.');
 		
 		$.validator.addMethod('num_empleado', function (value, element) {
-            return this.optional(element) || /^([RL]){1}-([0-9])+$/.test(value);
+            return this.optional(element) || /^([FL]){1}-([0-9])+$/.test(value);
         }, 'invalid employee number.');
 		
 		$.validator.addMethod('field_validation', function (value, element) {
@@ -676,22 +690,37 @@
 				        field_validation:true
 			        },
 			        cuenta_personal:{
-				        digits:true
+				        digits:true,
+                        minlength: 10,
+                        maxlength: 10
 			        },
 			        clabe_personal:{
-				        digits:true
+				        digits:true,
+                        minlength: 18,
+                        maxlength: 18
 			        },
+                    plastico_personal:{
+                        digits: true,
+                        minlength: 16,
+	                    maxlength: 16
+                    },
 			        banco_nomina:{
 				        field_validation:true
 			        },
 			        cuenta_nomina:{
-				        digits:true
+				        digits:true,
+                        minlength: 10,
+                        maxlength: 10
 			        },
 			        clabe_nomina:{
-				        digits:true
+				        digits:true,
+                        minlength: 18,
+                        maxlength: 18
 			        },
 			        plastico:{
-				        digits:true
+				        digits:true,
+                        minlength: 16,
+	                    maxlength: 16
 			        }
                 },
                 messages: {
@@ -846,22 +875,37 @@
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 			        },
 			        cuenta_personal:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+	                    maxlength: 'No puede ser mayor a 10 dígitos'
 			        },
 			        clabe_personal:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+	                    maxlength: 'No puede ser mayor a 18 dígitos'
 			        },
+                    plastico_personal:{
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+	                    maxlength: 'No puede ser mayor a 16 dígitos'
+                    },
 			        banco_nomina:{
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
 			        },
 			        cuenta_nomina:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+	                    maxlength: 'No puede ser mayor a 10 dígitos'
 			        },
 			        clabe_nomina:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+	                    maxlength: 'No puede ser mayor a 18 dígitos'
 			        },
 			        plastico:{
-				        digits: 'Solo se permiten números'
+				        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+	                    maxlength: 'No puede ser mayor a 16 dígitos'
 			        }
                 },
                 submitHandler: function(form) {
@@ -1233,6 +1277,7 @@
         var emergenciatel2 = $("#emergenciatel2").val();
 		var capacitacion = $("#capacitacion").val();
         var antidoping = $("#antidoping").val();
+        var tipo_sangre = $("#tipo_sangre").val();
         var vacante = $("#vacante").val();
         var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
         var nomfam = $("#nomfam").val();
@@ -1240,6 +1285,7 @@
         var banco_personal = $("#banco_personal").val();
         var cuenta_personal = $("#cuenta_personal").val();
         var clabe_personal = $("#clabe_personal").val();
+        var plastico_personal = $("#plastico_personal").val();
         var banco_nomina = $("#banco_nomina").val();
         var cuenta_nomina = $("#cuenta_nomina").val();
         var clabe_nomina = $("#clabe_nomina").val();
@@ -1340,6 +1386,7 @@
         fd.append('emergenciatel2', emergenciatel2);
 		fd.append('capacitacion', capacitacion);
         fd.append('antidoping', antidoping);
+        fd.append('tipo_sangre', tipo_sangre);
         fd.append('vacante', vacante);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
@@ -1347,6 +1394,7 @@
         fd.append('banco_personal', banco_personal);
         fd.append('cuenta_personal', cuenta_personal);
         fd.append('clabe_personal', clabe_personal);
+        fd.append('plastico_personal', plastico_personal);
         fd.append('banco_nomina', banco_nomina);
         fd.append('cuenta_nomina', cuenta_nomina);
         fd.append('clabe_nomina', clabe_nomina);
@@ -1405,6 +1453,38 @@
         });
     }
 
+    function waitForElm(selector) {
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
+
+    $('#user').on('select2:open', function (e) {
+        waitForElm('.select2-results__options').then((elm) => {
+            if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
+                var usuarios_group = $('#user').find('optgroup[label=Usuarios]');
+                $(usuarios_group).prop('disabled', 'true');
+                $(".select2-results__option.select2-results__option--group").css("display","none");
+                $('#select2-user-results.select2-results__options').append("<span class='px-3'>No hay resultados</span>");
+            }
+        });
+    });
+
 </script>
 <style>
 
@@ -1412,14 +1492,34 @@
         color: red;
     }
 
-    .select2-results{
-        overflow-y: scroll;
+    .select2-container--tailwind .select2-results > .select2-results__options{
+        overflow-y: auto;
         max-height: 110px;
     }
-    
-    .select2-results__option--selectable:hover{
-        background: #5897fb;
+
+    .select2-container--tailwind .select2-results__option--group{
+        padding:0;
+    }
+
+    .select2-container--tailwind .select2-results__group{
+        cursor: default;
+        display:block;
+        padding: 6px;
+    }
+
+    .select2-results__option--highlighted{
+        background: rgb(129 140 248) !important;
         color:white;
+    }
+
+    .select2-container--above.select2-container--open{
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+    }
+
+    .select2-container--below.select2-container--open{
+        border-bottom-right-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
     }
 
     .select2-results__option--selected{
@@ -1427,6 +1527,22 @@
     }
 
     .select2-dropdown{
-        border: 1px solid #e5e7eb;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(209 213 219 / var(--tw-border-opacity));
+        --tw-border-opacity: 1;
+    }
+
+    .select2-search__field{
+        border-radius: 0.375rem;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        height: 2.75rem;
+        --tw-border-opacity: 1;
+        border-color: rgb(209 213 219 / var(--tw-border-opacity));
+    }
+
+    .select2-search__field:focus{
+        box-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        --tw-ring-color: rgb(79 70 229);
     }
 </style>

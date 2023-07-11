@@ -7,6 +7,7 @@ include_once __DIR__ . "/../classes/expedientes.php";
 include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
+include_once __DIR__ . "/../classes/vacaciones.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
@@ -383,8 +384,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     $_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"], $_POST["numeroreferenciaslab"], 
     $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], $_POST["emergencianom"], $_POST["emergenciaparentesco"], 
     $_POST["emergenciatel"], $_POST["emergencianom2"], $_POST["emergenciaparentesco2"], $_POST["emergenciatel2"], $_POST["capacitacion"],
-    $_POST["antidoping"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], 
-    $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], 
+    $_POST["antidoping"], $_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], 
+    $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], 
     $_POST["plastico"], $_POST["logged_user"], $_POST["method"])){
         
         //CHECA SI EL EXPEDIENTE EXISTE
@@ -396,6 +397,17 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 die(json_encode(array("expediente_deleted", "Este expediente ya no existe!")));
             }
         }
+
+		//CHECA SI EL USUARIO TIENE PERMISO PARA REALIZAR LAS ACCIONES DE CREAR Y EDITAR EXPEDIENTES
+		if($_POST["method"] == "store"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}
+		}else if($_POST["method"] == "edit"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}       
+		}
 		
 		/*
 		=============================================
@@ -404,29 +416,25 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		*/
 		
 		//SELECT2
-		if($_POST["select2"] != null && $_POST["select2text"] != null){
-			$check_select2_session = $object -> _db -> prepare("SELECT roles_id FROM usuarios WHERE id=:userid");
-			$check_select2_session -> execute(array(':userid' => $_POST["select2"]));
-			$fetch_select2_session = $check_select2_session -> fetch(PDO::FETCH_OBJ);
-			
-			if($fetch_select2_session -> roles_id != "Superadministrador" && $fetch_select2_session -> roles_id != "Administrador" && $fetch_select2_session -> roles_id != "Usuario externo" && $fetch_select2_session -> roles_id != null){
-			
-				$select2_content = $object -> _db -> prepare("SELECT id, concat(nombre,' ',apellido_pat,' ',apellido_mat) AS nombre FROM usuarios");
+		if($_POST["select2"] != null){
+			if($_POST["method"] == "store"){
+				$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
 				$select2_content -> execute();
-				$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
-				
-				$key_select2 = array_search($_POST['select2text'], $fetch_select2_content);
-				
-				if ($key_select2 !== false) {
-					if($key_select2 != $_POST["select2"]){
-						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
-					}
+			}else if($_POST["method"] == "edit"){
+				$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id AND expedientes.id!=:expedienteid)");
+				$select2_content -> execute(array(':expedienteid' => $_POST["id_expediente"]));
+			}
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
 				}else{
 					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
 				}
-				$select2 = $_POST["select2"];
 			}else{
-				die(json_encode(array("error", "Este tipo de usuario no pueden tener expedientes")));
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
 			}
 		}else{
 			die(json_encode(array("error", "Debe asignar un usuario al expediente")));
@@ -435,7 +443,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//NÚM. EMPLEADO
 		if(empty($_POST["numempleado"])){
             die(json_encode(array("error", "Por favor, ingrese un número de empleado")));
-        }else if(!preg_match("/^([RL]){1}-([0-9])+$/", $_POST["numempleado"])){
+        }else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numempleado"])){
             die(json_encode(array("error", "Por favor, escriba el número de empleado en el formato correcto")));
         }else{
             if($_POST["method"] == "store"){
@@ -575,46 +583,43 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$retrieve_estados = $object -> _db -> prepare("SELECT id, nombre FROM estados");
 			$retrieve_estados -> execute();
 			$fetch_retrieve_estados = $retrieve_estados -> fetchAll(PDO::FETCH_KEY_PAIR);
-			$key_retrieve_estados = array_search($_POST['estadotext'], $fetch_retrieve_estados);
-				
-			if ($key_retrieve_estados !== false) {
-				if($key_retrieve_estados != $_POST["estado"]){
-					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los estados registrados")));
+			if (array_key_exists($_POST["estado"], $fetch_retrieve_estados)) {
+				$array_key_state_value = $fetch_retrieve_estados[$_POST["estado"]];
+				if(isset($_POST["estadotext"]) && $_POST['estadotext'] == $array_key_state_value){
+					$estado = $_POST["estado"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegúrese que el estado escogido se encuentre en el dropdown")));
 				}
 			}else{
-				die(json_encode(array("error", "Por favor, asegurese que el estado escogido se encuentre en el dropdown")));
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los estados registrados")));
 			}
-			$estado = $_POST["estado"];
-		
 		}
 		
 		//MUNICIPIO
-        if(empty($_POST["estado"]) && empty($_POST["municipio"])){
+        if(empty($_POST["municipio"])){
 			$municipio = null;
-        }else if(!(empty($_POST["estado"])) && empty($_POST["municipio"])){
-            die(json_encode(array("error", "Por favor, seleccione un municipio")));
-        }else if(empty($_POST["estado"]) && !(empty($_POST["municipio"]))){
-            die(json_encode(array("error", "Por favor, seleccione un estado y luego un municipio")));
-        }else{
-            $retrieve_estados_municipio = $object -> _db -> prepare("SELECT id, nombre from municipios where estado=:estado");
-            $retrieve_estados_municipio -> execute(array(':estado' => $_POST["estado"]));
-            $count_retrieve_estados_municipio = $retrieve_estados_municipio -> rowCount();
-            if($count_retrieve_estados_municipio > 0){
-                $fetch_retrieve_estados_municipio = $retrieve_estados_municipio -> fetchAll(PDO::FETCH_KEY_PAIR);
-                $key_retrieve_estados_municipio = array_search($_POST['municipiotext'],  $fetch_retrieve_estados_municipio);
-				
-			    if ($key_retrieve_estados_municipio !== false) {
-				    if($key_retrieve_estados_municipio != $_POST["municipio"]){
-					    die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los municipios registrados")));
-				    }
-			    }else{
-				    die(json_encode(array("error", "Por favor, asegurese que el municipio escogido se encuentre en el dropdown")));
-			    }
-                $municipio = $_POST["municipio"];
-            }else{
-                die(json_encode(array("error", "No se encontró el estado ó el estado no existe ó el estado no tiene municipios, por favor, eliga otro estado")));
-            }
-        }
+		}else if(empty($_POST["estado"]) && !(empty($_POST["municipio"]))){
+			die(json_encode(array("error", "Por favor, seleccione un estado y luego un municipio")));
+		}else{
+			$retrieve_estados_municipio = $object -> _db -> prepare("SELECT id, nombre from municipios where estado=:estado");
+			$retrieve_estados_municipio -> execute(array(':estado' => $_POST["estado"]));
+			$count_retrieve_estados_municipio = $retrieve_estados_municipio -> rowCount();
+			if($count_retrieve_estados_municipio > 0){
+				$fetch_retrieve_estados_municipio = $retrieve_estados_municipio -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["municipio"], $fetch_retrieve_estados_municipio)) {
+					$array_key_municipio_value = $fetch_retrieve_estados_municipio[$_POST["municipio"]];
+					if(isset($_POST["municipiotext"]) && $_POST['municipiotext'] == $array_key_municipio_value){
+						$municipio = $_POST["municipio"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegúrese que el municipio escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los municipios registrados")));
+				}
+			}else{
+				die(json_encode(array("error", "El estado elegido no tiene ningún municipio, el dropdown de municipios debe estar vacío")));
+			}
+		}
 		
 		//CÓDIGO POSTAL
         if(empty($_POST["codigo"])){
@@ -1067,6 +1072,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
+		//TIPO DE SANGRE
+		$tiposangre_array = array("A_POSITIVO", "A_NEGATIVO", "B_POSITIVO", "B_NEGATIVO", "AB_POSITIVO", "AB_NEGATIVO", "O_POSITIVO", "O_NEGATIVO");
+		if(in_array($_POST["tipo_sangre"], $tiposangre_array)) {
+			$tipo_sangre = $_POST["tipo_sangre"];
+		}else if(empty($_POST["tipo_sangre"])){
+			$tipo_sangre = null;
+		}else{
+			die(json_encode(array("error", "El valor escogido en el dropdown de nivel de tipo de sangre está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+		}
+
         //VACANTE
         if(empty($_POST["vacante"])){
 			$vacante = null;
@@ -1156,12 +1171,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-        //CUENTA PERSONAL
+		//CUENTA PERSONAL
         if(empty($_POST["cuenta_personal"])){
 			$cuenta_personal = null;
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["cuenta_personal"])){
                 die(json_encode(array("error", "Solo se permiten números en la cuenta personal")));
+			}else if(strlen($_POST["cuenta_personal"]) < 10){	
+				die(json_encode(array("error", "La cuenta personal no puede ser menor a 10 dígitos")));
+			}else if(strlen($_POST["cuenta_personal"]) > 10){	
+				die(json_encode(array("error", "La cuenta personal no puede ser mayor a 10 dígitos")));
 			}else{
 				$cuenta_personal = $_POST["cuenta_personal"];
 			}
@@ -1173,8 +1192,27 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["clabe_personal"])){
                 die(json_encode(array("error", "Solo se permiten números en la clabe personal")));
+			}else if(strlen($_POST["clabe_personal"]) < 18){
+				die(json_encode(array("error", "La clabe personal no puede ser menor a 18 dígitos")));
+			}else if(strlen($_POST["clabe_personal"]) > 18){	
+				die(json_encode(array("error", "La clabe personal no puede ser mayor a 18 dígitos")));	
 			}else{
 				$clabe_personal = $_POST["clabe_personal"];
+			}
+		}
+
+		//PLÁSTICO PERSONAL
+		if(empty($_POST["plastico_personal"])){
+			$plastico_personal = null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["plastico_personal"])){
+				die(json_encode(array("error", "Solo se permiten números en el plástico personal de la cuenta personal bancaria")));
+			}else if(strlen($_POST["plastico_personal"]) < 16){	
+				die(json_encode(array("error", "La plástico asignado personal no puede ser menor a 16 dígitos")));
+			}else if(strlen($_POST["plastico_personal"]) > 16){	
+				die(json_encode(array("error", "La plástico asignado personal no puede ser mayor a 16 dígitos")));
+			}else{
+				$plastico_personal = $_POST["plastico_personal"];
 			}
 		}
 
@@ -1189,12 +1227,16 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-        //CUENTA NÓMINA
+		//CUENTA NÓMINA
         if(empty($_POST["cuenta_nomina"])){
 			$cuenta_nomina = null;
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["cuenta_nomina"])){
                 die(json_encode(array("error", "Solo se permiten números en la cuenta asignada por la empresa")));
+			}else if(strlen($_POST["cuenta_nomina"]) < 10){	
+				die(json_encode(array("error", "La cuenta de nómina no puede ser menor a 10 dígitos")));
+			}else if(strlen($_POST["cuenta_nomina"]) > 10){	
+				die(json_encode(array("error", "La cuenta de nómina no puede ser mayor a 10 dígitos")));
 			}else{
 				$cuenta_nomina = $_POST["cuenta_nomina"];
 			}
@@ -1206,6 +1248,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["clabe_nomina"])){
                 die(json_encode(array("error", "Solo se permiten números en la clabe asignada por la empresa")));
+			}else if(strlen($_POST["clabe_nomina"]) < 18){
+				die(json_encode(array("error", "La clabe de nómina no puede ser menor a 18 dígitos")));
+			}else if(strlen($_POST["clabe_nomina"]) > 18){	
+				die(json_encode(array("error", "La clabe de nómina no puede ser mayor a 18 dígitos")));
 			}else{
 				$clabe_nomina = $_POST["clabe_nomina"];
 			}
@@ -1217,6 +1263,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			if(!preg_match("/^[0-9]*$/", $_POST["plastico"])){
                 die(json_encode(array("error", "Solo se permiten números en el plástico asignado por la empresa")));
+			}else if(strlen($_POST["plastico"]) < 16){	
+				die(json_encode(array("error", "La plástico asignado de nómina no puede ser menor a 16 dígitos")));
+			}else if(strlen($_POST["plastico"]) > 16){	
+				die(json_encode(array("error", "La plástico asignado de nómina no puede ser mayor a 16 dígitos")));
 			}else{
 				$plastico = $_POST["plastico"];
 			}
@@ -1273,7 +1323,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		
 		switch($_POST["method"]){
             case "store":
-                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
+                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Crear_expediente($select2, $_POST["logged_user"]);
                 die(json_encode(array("success", "Se ha creado un expediente")));
             break;
@@ -1334,69 +1384,896 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                     }
                 }
                 $delete_array = explode(",", $_POST["delete_array"]);
-                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
+                $expediente = new Expedientes($num_empleado, $puesto, $estudios, $_POST["posee_correo"], $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $_POST["posee_telmov"], $telmov, $_POST["posee_telempresa"], $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $_POST["posee_laptop"], $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $_POST["posee_retencion"], $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $_POST["radio2"], $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $refbanc, $arraypapeleria);
                 $expediente ->Editar_expediente($select2, $_POST["id_expediente"], $delete_array, $situacion, $estatus_empleado, $estatus_fecha, $motivo, $_POST["logged_user"]);
                 die(json_encode(array("success", "Se ha editado un expediente")));
             break;
         }
 	}
-}else if(isset($_POST["app"]) && $_POST["app"] == "incidencias"){
-	if(isset($_POST["titulo"]) && isset($_POST["fechainicio"]) && isset($_POST["fechafin"]) && isset($_POST["tipo"]) && isset($_POST["descripcion"]) && isset($_POST["method"])){
-		$titulo = $_POST["titulo"];
-		$fechainicio = $_POST["fechainicio"];
-		$fechafin = $_POST["fechafin"];
-		$tipo = $_POST["tipo"];
-		$descripcion = $_POST["descripcion"];
-		$filename=null;
-		$foto=null;
-		
-		if(isset($_FILES['foto']['name'])){
-            $filename = $_FILES['foto']['name'];
-            $location = "../src/img/tmp/".$filename;
-            $target_file = $location . basename($_FILES['foto']['name']);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+}else if(isset($_POST["app"]) && $_POST["app"] == "Incidencias"){
+	if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Permiso"){
 
-            if(move_uploaded_file($_FILES['foto']['tmp_name'],$location)){
-                $image_base64 = base64_encode(file_get_contents('../src/img/tmp/'.$filename));
-                $foto = 'data:image/'.$imageFileType.';base64,'.$image_base64;
-                $files = glob('../src/img/tmp/*.{png,jpg,jpeg}', GLOB_BRACE); // get all file names
-                foreach($files as $file){ // iterate files
-                    if(is_file($file)) {
-                        unlink($file); // delete file
-                    }
-                }
-            }
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//CHECA SI EL USUARIO TIENE ASIGANDO UN JEFE EN LA TABLA JERARQUÍA
+		$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+		$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
+		$count_jerarquia = $check_jerarquia -> rowCount();
+		if($count_jerarquia == 0){
+			die(json_encode(array("error", "Su usuario no tiene asignado un jefe")));
+		}
+
+		//CHECA SI EL JEFE DEL USUARIO ESTÁ REGISTRADO EN LA INTRANET
+		switch(Roles::FetchSessionRol($_SESSION["rol"])){
+			case "Director":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id WHERE r1.nombre = 'Director general' AND r2.nombre = 'Director'");
+				$check_path -> execute();
+				$i = 0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+					$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Gerente":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente' UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente'");
+				$check_path -> execute();
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado="ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+							$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Empleado":
+			case "Supervisor":
+			case "Tecnico":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r3.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre =:rolnom1 UNION ALL SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom2 UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom3");
+				$check_path -> execute(array(':rolnom1' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom2' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom3' => Roles::FetchSessionRol($_SESSION["rol"])));
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+							$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			default:
+				die(json_encode(array("error", "Su usuario no se encuentra en la jerarquía, por favor, contacte a un administrador")));
+		}		
+
+		//TIPO DE PERMISO
+		$tipopermiso_array = array("REGLAMENTARIA", "NO_REGLAMENTARIA");
+		if (in_array($_POST["tipo_permiso"], $tipopermiso_array)) {
+             $tipo_permiso = $_POST["tipo_permiso"];
+        }else if(empty($_POST["tipo_permiso"])){
+            die(json_encode(array("error", "El tipo de permiso no puede estar vacío")));
+        }else{
+             die(json_encode(array("error", "El valor escogido en el dropdown de tipo de permiso está modificado, por favor, vuelva a poner el valor original en el dropdown")));
         }
+
+		if($tipo_permiso == "REGLAMENTARIA"){
+			//PERMISO_R
+			$permisor_array = array("FALLECIMIENTO", "MATRIMONIO", "ESCOLARIDAD", "NACIMIENTO_ADOPCION_ABORTO", "HOME_OFFICE", "OTRO");
+			if (in_array($_POST["permiso_r"], $permisor_array)) {
+				 $permiso_r = $_POST["permiso_r"];
+			}else if(empty($_POST["permiso_r"])){
+				die(json_encode(array("error", "Por favor, seleccione una opción de permiso reglamentario")));
+			}else{
+				 die(json_encode(array("error", "El valor escogido en el dropdown para eligir un permiso reglamentario está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+			}
+
+			//OBSERVACIONES Y/O COMENTARIOS  - PERMISO REGLAMENTARIO
+			if(empty($_POST["observaciones_permiso_r"])){
+				$observaciones_permiso_r = null;
+			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["observaciones_permiso_r"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones de permisos reglamentarios")));
+			}else{
+				$observaciones_permiso_r = $_POST["observaciones_permiso_r"];
+			}
+
+			//ARCHIVO - PERMISO REGLAMENTARIO
+			if(isset($_FILES['justificante_permiso_r']['name'])){
+				$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+				$filename_justificante_permiso_r = $_FILES['justificante_permiso_r']['name'];
+				$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
+				if (!in_array($ext, $allowed)) {
+					die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+				}else if($_FILES['justificante_permiso_r']['size'] > 10485760){
+					die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+				}else{
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mimetype = finfo_file($finfo, $_FILES["justificante_permiso_r"]["tmp_name"]);
+					finfo_close($finfo);
+					if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+						die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+					}
+				}
+				$justificante_permiso_r=$_FILES['justificante_permiso_r'];
+			}else{
+				die(json_encode(array("error", "Se necesita subir un justificante para los permisos reglamentarios")));
+			}
+
+			if($permiso_r == "FALLECIMIENTO" || $permiso_r == "MATRIMONIO" || $permiso_r == "ESCOLARIDAD" || $permiso_r == "NACIMIENTO_ADOPCION_ABORTO"){
+				//FECHA DE INICIO DE PERMISO
+				if(empty($_POST["fechainicio_pd"])){
+					die(json_encode(array("error", "Por favor, ingrese una fecha de inicio del permiso reglamentario")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fechainicio_pd"])){
+					die(json_encode(array("error", "Formato incorrecto, asegúrese que escoger la fecha de inicio del permiso usando el asistente")));
+				}else{
+					$fechainicio_pd= $_POST["fechainicio_pd"];
+				}
+
+				//FECHA FIN DE PERMISO
+				if(empty($_POST["fechafin_pd"])){
+					die(json_encode(array("error", "La fecha de fin no puede estar vacía, asegúrese de escoger la fecha de inicio usando el asistente")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fechafin_pd"])){
+					die(json_encode(array("error", "Formato incorrecto, asegúrese que escoger la fecha de inicio del permiso para calcular la fecha de fin")));
+				}else{
+					$fechafin_pd= $_POST["fechafin_pd"];
+				}
+
+				//Metodo para guardar Permiso reglamentario FALLECIMIENTO, MATRIMONIO, ESCOLARIDAD Y NACIMIENTO
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
+						$permiso -> reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array);
+						die(json_encode(array("success", "Se ha creado un permiso reglamentario descriptivo!")));
+					break;
+				}
+
+			}else if($permiso_r == "HOME_OFFICE" || $permiso_r == "OTRO"){
+				//PERIODO DE AUSENCIA
+				if(empty($_POST["periodo_pnd"])){
+					die(json_encode(array("error", "El periodo de permiso reglamentario no puede estar vacío")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]+[\s]-[\s]\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/", $_POST["periodo_pnd"])){
+					die(json_encode(array("error", "El periodo de permiso REGLAMENTARIO HOME OFFICE/OTRO no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+				}else{
+					$periodo_pnd = $_POST["periodo_pnd"];
+				}
+			
+				//MOTIVO DEL PERMISO REGLAMENTARIO HOME OFFICE/OTRO
+				if(empty($_POST["motivo_pnd"])){
+					die(json_encode(array("error", "El motivo del permiso reglametario HOME OFFICE/OTRO no puede estar vacío")));
+				}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_pnd"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del permiso reglametario HOME OFFICE/OTRO")));
+				}else{
+					$motivo_pnd = $_POST["motivo_pnd"];
+				}
+
+				//Metodo para guardar Permiso reglamentario HOME OFFICE/OTRO
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
+						$permiso -> reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array);
+						die(json_encode(array("success", "Se ha creado un permiso reglamentario no descriptivo!")));
+					break;
+				}
+
+			}else{
+				die(json_encode(array("error", "Por favor, asegúrese de seleccionar un permiso reglamentario del dropdown y no uno modificado por la consola")));
+			}
+		}else if($tipo_permiso == "NO_REGLAMENTARIA"){
+			//PERMISO_NR
+			$permiso_nr = array("RETARDO", "SALIDA", "AUSENCIA");
+			if (in_array($_POST["permiso_nr"], $permiso_nr)) {
+				 $permiso_nr = $_POST["permiso_nr"];
+			}else if(empty($_POST["permiso_nr"])){
+				die(json_encode(array("error", "Por favor, selecciona una opción de permiso no reglamentario")));
+			}else{
+				 die(json_encode(array("error", "El valor escogido en el dropdown para eligir un permiso no reglamentario está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+			}
+
+			//MOTIVO DEL PERMISO NO REGLAMENTARIO
+			if(empty($_POST["motivo_permiso_nr"])){
+				die(json_encode(array("error", "El motivo del permiso no reglametario no puede estar vacío")));
+			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_permiso_nr"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del permiso no reglametario")));
+			}else{
+				$motivo_permiso_nr = $_POST["motivo_permiso_nr"];
+			}
+
+			//OBSERVACIONES Y/O COMENTARIOS  - PERMISO NO REGLAMENTARIO
+			if(empty($_POST["observaciones_permiso_nr"])){
+				$observaciones_permiso_nr = null;
+			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["observaciones_permiso_nr"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones de permisos no reglamentarios")));
+			}else{
+				$observaciones_permiso_nr = $_POST["observaciones_permiso_nr"];
+			}
+
+			//POSEE JUSTICANTE, PERMISO NO REGLAMENTARIO
+			if(empty($_POST["posee_jpermiso_nr"])){
+				die(json_encode(array("error", "Necesitamos saber si tiene justificante o no!")));
+			}else if($_POST["posee_jpermiso_nr"] != "si" && $_POST["posee_jpermiso_nr"] != "no"){
+				die(json_encode(array("error", "Solo se puede elegir si ó no en el radiobutton de justificantes, por favor, regrese el valor original")));
+			}else{
+				$posee_jpermiso_nr = $_POST["posee_jpermiso_nr"];
+			}
+
+			//JUSTIFICANTE NO REGLAMENTARIO	
+			if($posee_jpermiso_nr  == "si"){
+				if(isset($_FILES['justificante_permiso_nr']['name'])){
+					$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+					$filename_justificante_permiso_nr = $_FILES['justificante_permiso_nr']['name'];
+					$ext = pathinfo($filename_justificante_permiso_nr, PATHINFO_EXTENSION);
+					if (!in_array($ext, $allowed)) {
+						die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+					}else if($_FILES['justificante_permiso_nr']['size'] > 10485760){
+						die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+					}else{
+						$finfo = finfo_open(FILEINFO_MIME_TYPE);
+						$mimetype = finfo_file($finfo, $_FILES["justificante_permiso_nr"]["tmp_name"]);
+						finfo_close($finfo);
+						if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+							die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+						}
+					}
+					$justificante_permiso_nr=$_FILES['justificante_permiso_nr'];
+				}else{
+					die(json_encode(array("error", "Por favor, si no tiene justificante, eliga la opción de no!")));
+				}
+			}else if($posee_jpermiso_nr  == "no"){
+				$filename_justificante_permiso_nr=null;
+				$justificante_permiso_nr=null;
+			}
+
+			if($permiso_nr == "RETARDO" || $permiso_nr == "SALIDA"){
+				//PERMISO NO REGLAMENTARIO - PERIODO RETARDO/SALIDA
+				if(empty($_POST["periodo_pnr_fh"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario RETARDO/SALIDA no puede estar vacío")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]+[\s]-[\s]\d{4}\/\d{2}\/\d{2}+[\s](0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/", $_POST["periodo_pnr_fh"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario RETARDO/SALIDA no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+				}else{
+					$periodo_pnr_fh = $_POST["periodo_pnr_fh"];
+				}
+
+
+				//Metodo para guardar Permiso no reglamentario RETARDO Y SALIDA
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
+						$permiso -> no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array);
+						die(json_encode(array("success", "Se ha creado un permiso no reglamentario general!")));
+					break;
+				}	
+
+			}else if($permiso_nr == "AUSENCIA"){
+				//PERMISO NO REGLAMENTARIO - PERIODO AUSENCIA
+				if(empty($_POST["periodo_pnr_f"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario AUSENCIA no puede estar vacío")));
+				}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_pnr_f"])){
+					die(json_encode(array("error", "El periodo de permiso no reglamentario AUSENCIA no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+				}else{
+					$periodo_pnr_f = $_POST["periodo_pnr_f"];
+				}
+
+				//Metodo para guardar Permiso no reglamentario AUSENCIA
+				switch($_POST["method"]){
+					case "store":
+						$permiso = new Permiso($_SESSION["id"], $_SESSION["rol"]);
+						$permiso -> no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array);
+						die(json_encode(array("success", "Se ha creado un permiso no reglamentario ausencia!")));
+					break;
+				}
+
+			}else{
+				die(json_encode(array("error", "Por favor, asegúrese de seleccionar un permiso no reglamentario del dropdown y no uno modificado por la consola")));
+			}
+		}
+	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Incapacidad"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//CHECA SI EL USUARIO TIENE ASIGANDO UN JEFE EN LA TABLA JERARQUÍA
+		$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+		$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
+		$count_jerarquia = $check_jerarquia -> rowCount();
+		if($count_jerarquia == 0){
+			die(json_encode(array("error", "Su usuario no tiene asignado un jefe")));
+		}
+
+		//CHECA SI EL JEFE DEL USUARIO ESTÁ REGISTRADO EN LA INTRANET
+		switch(Roles::FetchSessionRol($_SESSION["rol"])){
+			case "Director":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id WHERE r1.nombre = 'Director general' AND r2.nombre = 'Director'");
+				$check_path -> execute();
+				$i = 0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+					$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Gerente":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente' UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente'");
+				$check_path -> execute();
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado="ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+							$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Empleado":
+			case "Supervisor":
+			case "Tecnico":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r3.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre =:rolnom1 UNION ALL SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom2 UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom3");
+				$check_path -> execute(array(':rolnom1' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom2' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom3' => Roles::FetchSessionRol($_SESSION["rol"])));
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+							$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			default:
+				die(json_encode(array("error", "Su usuario no se encuentra en la jerarquía, por favor, contacte a un administrador")));
+		}		
+
+		//NÚMERO DE LA INCAPACIDAD
+		if(empty($_POST["numero_incapacidad"])){
+			die(json_encode(array("error", "El número de la incapacidad no puede estar vacío")));
+		}else if(!preg_match("/^[0-9]*$/", $_POST["numero_incapacidad"])){
+			die(json_encode(array("error", "Solo se permiten números en el número de la incapacidad")));
+		}else{
+			$numero_incapacidad = $_POST["numero_incapacidad"];
+		}
+
+		//SERIE Y FOLIO DE LA INCAPACIDAD
+		if(empty($_POST["serie_folio_incapacidad"])){
+			die(json_encode(array("error", "La serie_folio de la incapacidad no puede estar vacía")));
+		}else if(!preg_match("/^[\w]+$/i", $_POST["serie_folio_incapacidad"])){
+			die(json_encode(array("error", "Solo se permiten caracteres alfanúmericos en la serie_folio de la incapacidad")));
+		}else{
+			$serie_folio_incapacidad = $_POST["serie_folio_incapacidad"];
+		}
+
+		//TIPO DE INCAPACIDAD
+		$tipoincapacidad_array = array("INICIAL", "SUBSECUENTE", "POR RECAIDA", "POR MATERNIDAD", "ENLACE");
+		if (in_array($_POST["tipo_incapacidad"], $tipoincapacidad_array)) {
+            $tipo_incapacidad = $_POST["tipo_incapacidad"];
+        }else if(empty($_POST["tipo_incapacidad"])){
+            die(json_encode(array("error", "El tipo de incapacidad no puede estar vacía")));
+        }else{
+            die(json_encode(array("error", "El valor escogido en el dropdown de tipo incapacidad está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+        }
+
+		//RAMO DE SEGURO
+		$ramodeseguro_array = array("RIESGO DE TRABAJO", "ENFERMEDAD GENERAL", "MATERNIDAD");
+		if (in_array($_POST["ramo_seguro_incapacidad"], $ramodeseguro_array)) {
+            $ramo_seguro_incapacidad = $_POST["ramo_seguro_incapacidad"];
+        }else if(empty($_POST["ramo_seguro_incapacidad"])){
+            die(json_encode(array("error", "El ramo de seguro de la incapacidad no puede estar vacía")));
+        }else{
+            die(json_encode(array("error", "El valor escogido en el dropdown de ramo de seguro en la incapacidad está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+        }
+		
+		//PERIODO DE LA INCAPACIDAD
+		if(empty($_POST["periodo_incapacidad"])){
+			die(json_encode(array("error", "El periodo de la incapacidad no puede estar vacío")));
+		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_incapacidad"])){
+			die(json_encode(array("error", "El periodo de la incapacidad no tiene el formato requerido, por favor, escoga una fecha usando el asistente")));
+		}else{
+			$periodo_incapacidad = $_POST["periodo_incapacidad"];
+		}
+		
+		//MOTIVO DE LA INCAPACIDAD
+		if(empty($_POST["motivo_incapacidad"])){
+			die(json_encode(array("error", "El motivo de la incapacidad  no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_incapacidad"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo de la incapacidad")));
+		}else{
+			$motivo_incapacidad = $_POST["motivo_incapacidad"];
+		}
+
+		//OBSERVACIONES Y/O COMENTARIOS  - INCAPACIDAD
+		if(empty($_POST["observaciones_incapacidad"])){
+			$observaciones_incapacidad = null;
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["observaciones_incapacidad"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones de las incapacidades")));
+		}else{
+			$observaciones_incapacidad = $_POST["observaciones_incapacidad"];
+		}
+		
+		//JUSTIFICANTE - INCAPACIDAD
+		if(isset($_FILES['comprobante_incapacidad']['name'])){
+			$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_comprobante_incapacidad = $_FILES['comprobante_incapacidad']['name'];
+			$ext = pathinfo($filename_comprobante_incapacidad, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['comprobante_incapacidad']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["comprobante_incapacidad"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$comprobante_incapacidad=$_FILES['comprobante_incapacidad'];
+		}else{
+			die(json_encode(array("error", "Se necesita subir un justificante para las incapacidades")));
+		}	
+
+		//Metodo para guardar INCAPACIDADES
 		switch($_POST["method"]){
 			case "store":
-                $userid = $_POST["userid"];
-				$incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
-                $incidencia->CrearIncidencias($userid);
-                die(json_encode(array("success")));
+				$incapacidad = new Incapacidades($_SESSION["id"], $_SESSION["rol"]);
+				$incapacidad -> crear_incapacidad($numero_incapacidad, $serie_folio_incapacidad, $tipo_incapacidad, $ramo_seguro_incapacidad, $periodo_incapacidad, $motivo_incapacidad, $observaciones_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad, $jefe_array);
+				die(json_encode(array("success", "Se ha creado una incapacidad!")));
 			break;
-			case "edit":
-                $incidenciaid = $_POST["editarid"];
-                $incidencia = new Incidencias($titulo, $fechainicio, $fechafin, $tipo, $descripcion, $filename, $foto);
-                $incidencia->EditarIncidencias($incidenciaid);
-                die(json_encode(array("success")));
+		}
+
+	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Acta_administrativa"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//FECHA DEL ACTA ADMINISTRATIVA
+        if(empty($_POST["fecha_acta"])){
+			die(json_encode(array("error", "La fecha del acta administrativa no puede estar vacío")));
+		}else{
+			if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_acta"])){
+				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del acta administrativa")));
+			}else{
+                $fecha_acta = $_POST["fecha_acta"];
+			}
+		}
+
+		//SELECT 2 - ACTAS ADMINISTRATIVAS
+		if($_POST["caja_empleado"] != null){
+			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
+					$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
+					if(isset($_POST["caja_empleado_text"]) && $_POST['caja_empleado_text'] == $array_key_acta_value){
+						$caja_empleado = $_POST["caja_empleado"];
+						$caja_empleado_text = $_POST["caja_empleado_text"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+				}
+			}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id AS expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+				$select_empleados -> execute();
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
+					$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
+					if(isset($_POST["caja_empleado_text"]) && $_POST['caja_empleado_text'] == $array_key_acta_value){
+						$caja_empleado = $_POST["caja_empleado"];
+						$caja_empleado_text = $_POST["caja_empleado_text"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+				}
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario al acta administrativa")));
+		}
+		
+		//MOTIVO DEL ACTA ADMINISTRATIVA
+		if(empty($_POST["motivo_acta"])){
+			die(json_encode(array("error", "El motivo del acta administrativa no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_acta"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del acta administrativa")));
+		}else{
+			$motivo_acta = $_POST["motivo_acta"];
+		}
+		
+		//OBSERVACIONES DEL ACTA ADMINISTRATIVA
+		if(!empty($_POST["obcomen_acta"])){
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["obcomen_acta"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones del acta administrativa")));
+			}else{
+				$obcomen_acta = $_POST["obcomen_acta"];
+			}
+		}else{
+			$obcomen_acta = null;
+		}
+		
+		//Metodo para guardar ACTAS ADMINISTRATIVAS
+		switch($_POST["method"]){
+			case "store":
+				$acta = new Actas($_SESSION["id"], $_SESSION["rol"]);
+				$acta -> crear_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta);
+				die(json_encode(array("success", "Se ha asignado un acta administrativa al expediente del usuario seleccionado!")));
 			break;
+		}
+	}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Carta_compromiso"){
+
+		//CHECAR SI EL USUARIO TIENE PERMISO PARA REALIZAR ACCIONES
+		if((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//FECHA DE LA CARTA COMPROMISO
+        if(empty($_POST["fecha_carta"])){
+			die(json_encode(array("error", "La fecha de la carta compromiso no puede estar vacía")));
+		}else{
+			if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_carta"])){
+				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del de la carta compromiso")));
+			}else{
+                $fecha_carta = $_POST["fecha_carta"];
+			}
+		}
+
+		//SELECT 2 - CARTAS COMPROMISO
+		if($_POST["array_empleado"] != null){
+			if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+				$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
+					$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
+					if(isset($_POST["array_empleado_text"]) && $_POST['array_empleado_text'] == $array_key_carta_value){
+						$array_empleado = $_POST["array_empleado"];
+						$array_empleado_text = $_POST["array_empleado_text"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+				}
+			}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+				$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+				$select_empleados -> execute();
+				$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
+					$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
+					if(isset($_POST["array_empleado_text"]) && $_POST['array_empleado_text'] == $array_key_carta_value){
+						$array_empleado = $_POST["array_empleado"];
+						$array_empleado_text = $_POST["array_empleado_text"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+				}	
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario a la carta compromiso")));
+		}
+		
+		//RESPONSABILIDADES A CUMPLIR
+		if(!empty($_POST["responsabilidad_carta"])){
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["responsabilidad_carta"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el campo de las reposabilidades de la carta compromiso")));
+			}else{
+				$responsabilidad_carta = $_POST["responsabilidad_carta"];
+			}
+		}else{
+			die(json_encode(array("error", "El campo de resposabilidades no puede estar vacía")));
+		}
+		//Metodo para guardar CARTAS COMPROMISO
+		switch($_POST["method"]){
+			case "store":
+				$carta = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+				$carta -> crear_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta);
+				die(json_encode(array("success", "Se ha asignado una carta compromiso al expediente del usuario seleccionado!")));
+			break;
+		}
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "Editar_incidencias"){
+	if(isset($_POST["method"])){
+		if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Acta_administrativa"){
+			//Checa si el usuario tiene permisos para realizar la acción
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}
+			//Checar si la incidencia todavía existe
+			$check_incidencia = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas WHERE id=:incidenciaid");
+			$check_incidencia -> execute(array(':incidenciaid' => $_POST["incidenciaid"]));
+			$count_incidencia = $check_incidencia -> rowCount();
+			if($count_incidencia > 0){
+				$incidenciaid = $_POST["incidenciaid"];
+			}else{
+				die(json_encode(array("incidencia_desconocida", "La incidencia ya no existe!")));
+			}
+			//FECHA DEL ACTA ADMINISTRATIVA
+			if(empty($_POST["fecha_acta"])){
+				die(json_encode(array("error", "La fecha del acta administrativa no puede estar vacío")));
+			}else{
+				if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_acta"])){
+					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del acta administrativa")));
+				}else{
+					$fecha_acta = $_POST["fecha_acta"];
+				}
+			}
+			//SELECT 2 - ACTAS ADMINISTRATIVAS
+			if($_POST["caja_empleado"] != null && $_POST["caja_empleado_text"] != null){
+				if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+					$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
+						$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
+						if($_POST['caja_empleado_text'] == $array_key_acta_value){
+							$caja_empleado = $_POST["caja_empleado"];
+							$caja_empleado_text = $_POST["caja_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}
+				}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear acta administrativa") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id AS expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+					$select_empleados -> execute();
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["caja_empleado"], $deploy_empleados)) {
+						$array_key_acta_value = $deploy_empleados[$_POST["caja_empleado"]];
+						if($_POST['caja_empleado_text'] == $array_key_acta_value){
+							$caja_empleado = $_POST["caja_empleado"];
+							$caja_empleado_text = $_POST["caja_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}
+				}
+			}else{
+				die(json_encode(array("error", "Debe asignar un usuario al acta administrativa")));
+			}
+			//MOTIVO DEL ACTA ADMINISTRATIVA
+			if(empty($_POST["motivo_acta"])){
+				die(json_encode(array("error", "El motivo del acta administrativa no puede estar vacío")));
+			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_acta"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del acta administrativa")));
+			}else{
+				$motivo_acta = $_POST["motivo_acta"];
+			}
+			
+			//OBSERVACIONES DEL ACTA ADMINISTRATIVA
+			if(!empty($_POST["obcomen_acta"])){
+				if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["obcomen_acta"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones del acta administrativa")));
+				}else{
+					$obcomen_acta = $_POST["obcomen_acta"];
+				}
+			}else{
+				$obcomen_acta = null;
+			}
+			//Metodo para editar las ACTAS ADMINISTRATIVAS
+			switch($_POST["method"]){
+				case "edit":
+					$acta = new Actas($_SESSION["id"], $_SESSION["rol"]);
+					$acta -> editar_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta, $incidenciaid);
+					die(json_encode(array("success", "Se ha editado un acta administrativa al expediente del usuario seleccionado!")));
+				break;
+			}
+		}else if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Carta_compromiso"){
+			//Checa si el usuario tiene permisos para realizar la acción
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+				die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+			}
+			//Checar si la incidencia todavía existe
+			$check_incidencia = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas WHERE id=:incidenciaid");
+			$check_incidencia -> execute(array(':incidenciaid' => $_POST["incidenciaid"]));
+			$count_incidencia = $check_incidencia -> rowCount();
+			if($count_incidencia > 0){
+				$incidenciaid = $_POST["incidenciaid"];
+			}else{
+				die(json_encode(array("incidencia_desconocida", "La incidencia ya no existe!")));
+			}
+			//FECHA DE LA CARTA COMPROMISO
+			if(empty($_POST["fecha_carta"])){
+				die(json_encode(array("error", "La fecha de la carta compromiso no puede estar vacía")));
+			}else{
+				if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_carta"])){
+					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha del de la carta compromiso")));
+				}else{
+					$fecha_carta = $_POST["fecha_carta"];
+				}
+			}
+
+			//SELECT 2 - CARTAS COMPROMISO
+			if($_POST["array_empleado"] != null && $_POST["array_empleado_text"] != null){
+				if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) != "Capital humano"){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(u2.nombre, ' ', u2.apellido_pat, ' ', u2.apellido_mat) as nombre FROM jerarquia j1 INNER JOIN jerarquia j2 ON j1.id=j2.jerarquia_id INNER JOIN roles r2 ON r2.id=j2.rol_id INNER JOIN usuarios u2 ON u2.roles_id=r2.id INNER JOIN departamentos d2 ON d2.id=u2.departamento_id INNER JOIN expedientes ON expedientes.users_id=u2.id WHERE j2.jerarquia_id in (SELECT j3.jerarquia_id FROM jerarquia j3 GROUP BY j3.jerarquia_id HAVING j3.jerarquia_id >= (SELECT j4.id FROM jerarquia j4 INNER JOIN roles r3 ON r3.id=j4.rol_id WHERE r3.nombre=:rolnom AND IF(r3.nombre='Director general', d2.departamento IS NOT NULL, d2.departamento = (SELECT d3.departamento from usuarios u3 INNER JOIN departamentos d3 ON d3.id=u3.departamento_id WHERE u3.id=:sessionid))))");
+					$select_empleados -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"]), ':sessionid' => $_SESSION["id"]));
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
+						$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
+						if($_POST['array_empleado_text'] == $array_key_carta_value){
+							$array_empleado = $_POST["array_empleado"];
+							$array_empleado_text = $_POST["array_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}
+				}else if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Crear carta compromiso") == "true" && (Roles::FetchSessionRol($_SESSION["rol"]) != "Gerente" || Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente" && Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano"))){
+					$select_empleados = $object -> _db ->prepare("SELECT expedientes.id as expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+					$select_empleados -> execute();
+					$deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_KEY_PAIR);
+					if (array_key_exists($_POST["array_empleado"], $deploy_empleados)) {
+						$array_key_carta_value = $deploy_empleados[$_POST["array_empleado"]];
+						if($_POST['array_empleado_text'] == $array_key_carta_value){
+							$array_empleado = $_POST["array_empleado"];
+							$array_empleado_text = $_POST["array_empleado_text"];
+						}else{
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los expedientes registrados")));
+					}	
+				}
+			}else{
+				die(json_encode(array("error", "Debe asignar un usuario a la carta compromiso")));
+			}
+			
+			//RESPONSABILIDADES A CUMPLIR
+			if(!empty($_POST["responsabilidad_carta"])){
+				if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["responsabilidad_carta"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el campo de las reposabilidades de la carta compromiso")));
+				}else{
+					$responsabilidad_carta = $_POST["responsabilidad_carta"];
+				}
+			}else{
+				die(json_encode(array("error", "El campo de resposabilidades no puede estar vacía")));
+			}
+			//Metodo para guardar CARTAS COMPROMISO
+			switch($_POST["method"]){
+				case "edit":
+					$carta = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+					$carta -> editar_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta, $incidenciaid);
+					die(json_encode(array("success", "Se ha editado una carta administrativa al expediente del usuario seleccionado!")));
+				break;
+			}
 		}
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
 		$incidenciaid= $_POST["incidenciaid"];
-        $estatus= $_POST["estatus"];
-        $sueldo=null;
+		
+		//El estatus solo puede estar entre 1, 2 y 3
+		$estatus_array = array(1, 2, 3);
+		if (in_array($_POST["estatus"], $estatus_array)) {
+			$estatus= $_POST["estatus"];
+		}else{
+			die(json_encode(array("failed", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
+		}
+
+		//Goce de sueldo solamente puede ser 0 y 1
         if(isset($_POST["sueldo"])){
-		    $sueldo= $_POST["sueldo"];
-        }
-		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
-		$select_user -> execute(array(':iduser' => $_POST["iduser"]));
-        $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
-        if(!(empty($_POST["comentario"]))){
-            $comentario = $_POST["comentario"];
+			$sueldo_array = array(0, 1);
+                if (in_array($_POST["sueldo"], $sueldo_array)) {
+		    		$sueldo= $_POST["sueldo"];
+				}else{
+					die(json_encode(array("failed", "El sueldo solamente puede tener un valor definido, por favor, vuelva a cargar la página!")));
+				}
         }else{
+			$sueldo=null;
+		}
+		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
+		$select_user -> execute(array(':iduser' => $_SESSION["id"]));
+        $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
+        if(empty($_POST["comentario"])){
             $comentario = null;
+        }else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["comentario"])){
+				die(json_encode(array("failed", "Solo se permiten carácteres alfabéticos y espacios en los comentarios")));
+			}else{
+				$comentario = $_POST["comentario"];
+			}
         }
         switch($_POST["method"]){
             case "store":
@@ -1405,6 +2282,86 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "actas_cartas"){
+	if(isset($_POST["incidenciaid"], $_POST["tipo"], $_FILES["archivo"], $_POST["method"])){
+		if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("error", "No tiene permisos para realizar estas acciones")));
+		}
+		
+		$check_incident_exist = $object -> _db -> prepare("SELECT * FROM incidencias_administrativas WHERE id=:incidenciadminid");
+		$check_incident_exist -> execute(array(":incidenciadminid" => $_POST["incidenciaid"]));
+		$count_incident = $check_incident_exist -> rowCount();
+		if($count_incident == 0){
+			die(json_encode(array("error", "No tienes permiso para subir archivos a este tipo de usuario")));
+		}
+		
+		if(Roles::FetchSessionRol($_SESSION["rol"]) == "Gerente"){
+			$check_empleado = $object -> _db -> prepare("SELECT roles.nombre as rolnom, departamentos.departamento as depanom FROM incidencias_administrativas INNER JOIN usuarios ON usuarios.id=incidencias_administrativas.asignada_a INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias_administrativas.id=:incidenciaid");
+			$check_empleado -> execute(array(":incidenciaid" => $_POST["incidenciaid"]));
+			$fetch_empleado = $check_empleado -> fetch(PDO::FETCH_OBJ);
+			if($fetch_emplado -> rolnom != "Empleado"){
+				die(json_encode(array("error", "No tienes permiso para subir archivos a este tipo de usuario")));
+			}else{
+				if($fetch_empleado -> depanom != Roles::FetchUserDepartamento($_SESSION["id"])){
+					die(json_encode(array("error", "No tienes permiso para subir archivos a este usuario de este departamento")));
+				}
+			}
+		}
+		
+		$tipo_incidencia_administrativa_array = array("acta_administrativa", "carta_compromiso");
+		if (!(in_array($_POST["tipo"], $tipo_incidencia_administrativa_array))) {
+            die(json_encode(array("error", "Por favor, no modifique el tipo de incidencia administrativa por medio de la consola")));
+        }
+		
+		if(isset($_FILES['archivo']['name'])){
+			$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_documento_administrativo = $_FILES['archivo']['name'];
+			$ext = pathinfo($filename_documento_administrativo, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['archivo']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["archivo"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"  && $mimetype != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que el archivo sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$file_documento_administrativo=$_FILES['archivo'];
+		}else{
+			die(json_encode(array("error", "Se necesita subir un archivo firmado para el documento administrativo elegido")));
+		}
+		
+		if($_POST['tipo'] == "acta_administrativa"){
+			switch($_POST["method"]){
+				case "store":
+					$actas = new Actas($_SESSION["id"], $_SESSION["rol"]);
+					$actas -> vincular_acta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha subido el archivo firmado para la acta administrativa!")));
+				break;
+				case "edit":
+					$actas = new Actas($_SESSION["id"], $_SESSION["rol"]);
+					$actas -> vincular_acta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha modificado el archivo firmado para la acta administrativa!")));
+				break;
+			}
+		}else if($_POST['tipo'] == "carta_compromiso"){
+			switch($_POST["method"]){
+				case "store":
+					$cartas = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+					$cartas -> vincular_carta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha subido el archivo firmado para la carta compromiso!")));
+				break;
+				case "edit":
+					$cartas = new Cartas($_SESSION["id"], $_SESSION["rol"]);
+					$cartas -> vincular_carta($_POST["incidenciaid"], $file_documento_administrativo);
+					die(json_encode(array("success", "Se ha modificado el archivo firmado para la carta compromiso!")));
+				break;
+			}
+		}
+	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "categorias"){
     if(isset($_POST["categorias"]) && isset($_POST["method"])){
         $categorias = $_POST["categorias"];
@@ -1592,5 +2549,265 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "Vacaciones"){
+	if(isset($_POST["periodo_vacaciones"]) && isset($_POST["method"])){
+		//Checa si el usuario tiene expediente
+		$check_expediente = $object -> _db -> prepare("SELECT * FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE usuarios.id=:userid");
+		$check_expediente -> execute(array(':userid' => $_SESSION["id"]));
+		$count_expediente = $check_expediente -> rowCount();
+		if($count_expediente == 0){
+			die(json_encode(array("error", "Este usuario no tiene un expediente asignado")));
+		}else{
+			//Checa si el usuario tiene estatus de ALTA ó BAJA
+			$check_status = $object -> _db -> prepare("SELECT estatus_empleado.situacion_del_empleado AS situacion_del_empleado, estatus_empleado.estatus_del_empleado AS estatus_del_empleado, estatus_empleado.fecha AS estatus_fecha FROM estatus_empleado INNER JOIN expedientes ON expedientes.id=estatus_empleado.expedientes_id INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE usuarios.id=:iduser");
+			$check_status -> execute(array(':iduser' => $_SESSION["id"]));
+			$count_status = $check_status -> rowCount();
+			if($count_status == 0){
+				die(json_encode(array("error", "El usuario no tiene un estatus asignado")));
+			}else{
+				$fetch_status = $check_status -> fetch(PDO::FETCH_OBJ);
+				if($fetch_status -> situacion_del_empleado == "BAJA"){
+					die(json_encode(array("error", "El usuario está dado de baja y no puede pedir vacaciones")));
+				}
+			}
+		}
+
+		//Checar si el usuario pertenece a la jerarquía
+		$check_jerarquia = $object -> _db -> prepare("select jerarquia_id from jerarquia where rol_id=:rolid AND jerarquia_id is not null");
+		$check_jerarquia -> execute(array(':rolid' => $_SESSION["rol"]));
+		$count_jerarquia = $check_jerarquia -> rowCount();
+		if($count_jerarquia == 0){
+			die(json_encode(array("error", "Su usuario no tiene asignado un jefe")));
+		}
+
+		//Sacar al jefe directo
+		switch(Roles::FetchSessionRol($_SESSION["rol"])){
+			case "Director":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id WHERE r1.nombre = 'Director general' AND r2.nombre = 'Director'");
+				$check_path -> execute();
+				$i = 0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+					$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Gerente":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente' UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id WHERE r1.nombre = 'Director general' AND r3.nombre = 'Gerente'");
+				$check_path -> execute();
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado="ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare("SELECT correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre=:rolnom AND usuarios.correo='servicios_al_colaborador@sinttecom.com'");
+							$check_user_exists -> execute(array(':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			case "Empleado":
+			case "Supervisor":
+			case "Tecnico":
+				$jefe_array = array();
+				$check_path = $object -> _db -> prepare("SELECT r3.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre =:rolnom1 UNION ALL SELECT r2.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom2 UNION ALL SELECT r1.nombre AS level FROM jerarquia AS t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia AS t2 ON t2.jerarquia_id = t1.id INNER JOIN roles r2 ON r2.id=t2.rol_id LEFT JOIN jerarquia AS t3 ON t3.jerarquia_id = t2.id INNER JOIN roles r3 ON r3.id=t3.rol_id LEFT JOIN jerarquia AS t4 ON t4.jerarquia_id = t3.id INNER JOIN roles r4 ON r4.id=t4.rol_id WHERE r1.nombre = 'Director general' AND r4.nombre = :rolnom3");
+				$check_path -> execute(array(':rolnom1' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom2' => Roles::FetchSessionRol($_SESSION["rol"]), ':rolnom3' => Roles::FetchSessionRol($_SESSION["rol"])));
+				$i=0;
+				while($fetch_path = $check_path -> fetch(PDO::FETCH_ASSOC)){
+					$i++;
+					if(Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchUserDepartamento($_SESSION["id"]) == "TI" || Roles::FetchUserDepartamento($_SESSION["id"]) == "Finanzas"){
+						$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+						$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+					}else{
+						if($fetch_path["level"] != "Director"){
+							$check_user_exists = $object -> _db -> prepare('SELECT correo FROM usuarios INNER JOIN roles ON roles.id = usuarios.roles_id LEFT JOIN departamentos ON departamentos.id = usuarios.departamento_id LEFT JOIN expedientes ON expedientes.users_id = usuarios.id LEFT JOIN estatus_empleado ON estatus_empleado.expedientes_id = expedientes.id WHERE IF(departamentos.departamento IS NULL, departamentos.departamento IS NULL, departamentos.departamento = :departamento) AND roles.nombre = :rolnom AND IF(roles.nombre != "Director general", estatus_empleado.situacion_del_empleado = "ALTA", usuarios.correo="servicios_al_colaborador@sinttecom.com")');
+							$check_user_exists -> execute(array(':departamento' => Roles::FetchUserDepartamento($_SESSION["id"]), ':rolnom' => $fetch_path["level"]));
+						}else{
+							$check_user_exists = $object -> _db -> prepare('SELECT u1.correo FROM usuarios u1 INNER JOIN roles r1 ON r1.id = u1.roles_id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id LEFT JOIN expedientes e1 ON e1.users_id = u1.id LEFT JOIN estatus_empleado ee ON ee.expedientes_id = e1.id WHERE d1.departamento = "Operaciones" AND r1.nombre = :rolnom1 AND ee.situacion_del_empleado = "ALTA" UNION ALL SELECT u2.correo FROM usuarios u2 INNER JOIN roles r2 ON r2.id=u2.roles_id LEFT JOIN departamentos d2 ON d2.id=u2.departamento_id LEFT JOIN expedientes e2 ON e2.users_id = u2.id LEFT JOIN estatus_empleado ee2 ON ee2.expedientes_id = e2.id WHERE NOT EXISTS(SELECT u3.correo FROM usuarios u3 INNER JOIN roles r3 ON r3.id = u3.roles_id LEFT JOIN departamentos d3 ON d3.id = u3.departamento_id LEFT JOIN expedientes e3 ON e3.users_id = u3.id LEFT JOIN estatus_empleado ee3 ON ee3.expedientes_id = e3.id WHERE d3.departamento = "Operaciones" AND r3.nombre = :rolnom3 AND ee3.situacion_del_empleado = "ALTA") AND r2.nombre= :rolnom2 AND d2.departamento="Ventas" AND ee2.situacion_del_empleado = "ALTA"');
+							$check_user_exists -> execute(array(':rolnom1' => $fetch_path["level"], ':rolnom2' => $fetch_path["level"], ':rolnom3' => $fetch_path["level"]));
+						}
+					}
+					$count_users = $check_user_exists -> rowCount();
+					if($count_users > 0){
+						$fetch_users = $check_user_exists -> fetch(PDO::FETCH_ASSOC);
+						$jefe_array[] = $fetch_users["correo"];
+						break;
+					}
+					if($i == $check_path->rowCount()){
+						die(json_encode(array("error", "Siguiendo la jerarquía de la empresa, no existe ningún usuario asociado con los roles")));
+					}
+				}
+			break;
+			default:
+				die(json_encode(array("error", "Su usuario no se encuentra en la jerarquía, por favor, contacte a un administrador")));
+		}
+		
+		//Validación de la fecha escogida
+		function validateDate($date, $format = 'Y-m-d H:i:s')
+		{
+			$d = DateTime::createFromFormat($format, $date);
+			return $d && $d->format($format) == $date;
+		}
+
+		function dateDiffInDays($date1, $date2)
+		{
+			$diff = strtotime($date2) - strtotime($date1);
+			return abs(round($diff / 86400));
+		}
+
+		function check_negative($value){
+			if (isset($value)){
+				if (substr(strval($value), 0, 1) == "-"){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+		if(empty($_POST["periodo_vacaciones"])){
+			die(json_encode(array("error", "El período vacacional no puede estar vacío")));
+		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_vacaciones"])){
+			die(json_encode(array("error", "La fecha elegida en el periodo vacacional no tiene el formato adecuado")));
+		}else{
+			$break_date = explode(" - ",$_POST["periodo_vacaciones"]);
+			$check_validdate0 = validateDate($break_date[0], 'Y/m/d');
+			$check_validdate1 = validateDate($break_date[1], 'Y/m/d');
+			if($check_validdate0 = false){
+				die(json_encode(array("error", "La fecha de inicio en el periodo vacacional es inválida")));
+			}else if($check_validdate1 = false){
+				die(json_encode(array("error", "La fecha de fin en el periodo vacacional es inválida")));
+			}
+
+			$days = dateDiffInDays($break_date[0], $break_date[1]);
+			$days = $days + 1;
+
+			$periodo_vacaciones = $_POST["periodo_vacaciones"];
+		}
+
+		//Se calcula las vacaciones disponibles
+		$fecha_estatus = $fetch_status -> estatus_fecha;
+		$hoy =  date("Y-m-d");
+
+		$d1 = new DateTime($hoy);
+		$d2 = new DateTime($fecha_estatus);
+		$diff = $d2->diff($d1);
+		if ($diff->y == 1) {
+			$vacaciones=12;
+		}else if($diff->y == 2){
+			$vacaciones=14;
+		}else if($diff->y == 3){
+			$vacaciones=16;
+		}else if($diff->y == 4){
+			$vacaciones=18;
+		}else if($diff->y == 5){
+			$vacaciones=20;
+		}else{
+			$acum=6;
+			$acum2=10;
+			$vacaciones=22;
+			$bool = "false";
+			do{
+				if(($acum <= $diff->y) && ($diff->y <= $acum2)){
+					$bool = "true";
+				}else{
+					$vacaciones = $vacaciones+2;
+					$acum=$acum + 5;
+					$acum2=$acum2 + 5;
+				}
+			}while($bool == "true");
+		}
+
+		//Se calculan los días ya usados y se obtienen las vacaciones restantes
+		$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
+		$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+		$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
+
+		$dias_restantes = $vacaciones - $fetch_sum_vacaciones -> dias_solicitados;
+		$dias_restantes = $dias_restantes - $days;
+
+		if(check_negative($dias_restantes)){
+			die(json_encode(array("error", "El número de días solicitados sobrepasa el número de vacaciones restantes")));
+		}
+
+
+		switch($_POST["method"]){
+            case "store":
+                $vacas = new Vacaciones($periodo_vacaciones);
+                $vacas->CrearSolicitudVacaciones($_SESSION['id'], $days, $jefe_array);
+				$check_update_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
+				$check_update_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+				$fetch_update_sum_vacaciones = $check_update_vacaciones -> fetch(PDO::FETCH_OBJ);
+				$new_dias_restantes = $vacaciones - $fetch_update_sum_vacaciones -> dias_solicitados;
+                die(json_encode(array("success", "Se ha subido su solicitud de vacaciones!", $new_dias_restantes)));
+            break;
+        }
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_vacaciones"){
+    if(isset($_POST["solicitud_vacaciones"]) && isset($_POST["estatus"]) && isset($_POST["method"])){
+		//Checar si la solicitud existe
+		$check_request = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE id=:solicitudid");
+		$check_request -> execute(array(':solicitudid' => $_POST["solicitud_vacaciones"]));
+		$count_request = $check_request -> rowCount();
+		if($count_request == 0){
+			die(json_encode(array("failed", "Esta solicitud no existe!")));
+		}else{
+			$solicitud_vacaciones = $_POST["solicitud_vacaciones"];
+		}
+		
+		//El estatus solo puede estar entre 1, 2 y 3
+		$estatus_array = array(1, 2, 3);
+		if (in_array($_POST["estatus"], $estatus_array)) {
+			$estatus= $_POST["estatus"];
+		}else{
+			die(json_encode(array("failed", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
+		}
+		
+		//Obtener el nombre completo del usuario
+		$nombre_completo = $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
+		
+		//Obtener el comentario de evaluación
+        if(empty($_POST["comentario"])){
+            $comentario = null;
+        }else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["comentario"])){
+				die(json_encode(array("failed", "Solo se permiten carácteres alfabéticos y espacios en los comentarios")));
+			}else{
+				$comentario = $_POST["comentario"];
+			}
+        }
+        switch($_POST["method"]){
+            case "store":
+                Vacaciones::Almacenar_estatus($solicitud_vacaciones, $estatus, $nombre_completo, $comentario);
+                die(json_encode(array("success")));
+            break;
+        }
+    }
 }
 ?>

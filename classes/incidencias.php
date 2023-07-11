@@ -1,74 +1,38 @@
 <?php
 include_once __DIR__ . "/../config/conexion.php";
 include_once __DIR__ . "/crud.php";
+include_once __DIR__ . "/../classes/permissions.php";
+include_once __DIR__ . "/../classes/roles.php";
+include_once __DIR__ . "/../classes/departamentos.php";
 require_once __DIR__ . "/../config/PHPMailer/src/PHPMailer.php";
 require_once __DIR__ . "/../config/PHPMailer/src/Exception.php";
 require_once __DIR__ . "/../config/PHPMailer/src/SMTP.php";
 class incidencias {
-	
-    public $titulo;
-	public $fechainicio;
-	public $fechafin;
-	public $tipo;
-	public $descripcion;
-	private $filename;
-	private $foto;
-	
-	public function __construct($title, $initialdate, $finaldate, $type, $description, $nombre, $photo){
-        $this->titulo = $title;
-		$this->fechainicio = $initialdate;
-		$this->fechafin = $finaldate;
-		$this->tipo = $type;
-		$this->descripcion = $description;
-		$this->filename = $nombre;
-		$this->foto = $photo;
-	}
-	
-	public function CrearIncidencias($userid){
-		$object = new connection_database();
-		$crud = new crud();
-		$user_datos = $object->_db->prepare('SELECT departamentos.departamento as depanom, roles.nombre as rolnom FROM usuarios inner join roles ON roles.id=usuarios.roles_id left join departamentos ON departamentos.id=usuarios.departamento_id WHERE usuarios.id=:userid');
-		$user_datos -> execute(array(':userid' => $userid));
-		$row_user_datos = $user_datos ->fetch(PDO::FETCH_OBJ);
-		$select = $object -> _db ->prepare("SELECT u1.correo FROM jerarquia j1 INNER JOIN roles r1 ON r1.id = j1.rol_id INNER JOIN usuarios u1 ON u1.roles_id = r1.id LEFT JOIN departamentos d1 ON d1.id = u1.departamento_id WHERE IF(d1.departamento IS NULL, d1.departamento IS NULL, d1.departamento = :departamento1) AND r1.nombre =(SELECT CASE WHEN r6.nombre = 'Director' THEN (SELECT r2.nombre FROM jerarquia j2 INNER JOIN roles r2 ON j2.rol_id = r2.id INNER JOIN usuarios u2 ON u2.roles_id = r2.id LEFT JOIN departamentos d2 ON d2.id = u2.departamento_id WHERE r2.nombre =(SELECT r4.nombre FROM jerarquia j3 INNER JOIN roles r3 ON r3.id=j3.rol_id INNER JOIN jerarquia j4 ON j4.id = j3.jerarquia_id INNER JOIN roles r4 ON r4.id = j4.rol_id WHERE r4.nombre = 'Director') AND d2.departamento = :departamento2 UNION SELECT 'Director general' LIMIT 1) ELSE r6.nombre END FROM jerarquia j5 INNER JOIN roles r5 ON r5.id = j5.rol_id INNER JOIN jerarquia j6 ON j6.id = j5.jerarquia_id INNER JOIN roles r6 ON r6.id = j6.rol_id WHERE r5.nombre = :rolnom)");
-		$select -> execute(array(':departamento1' => $row_user_datos->depanom, ':departamento2' => $row_user_datos->depanom, ':rolnom' => $row_user_datos->rolnom));
-		$select_count = $select -> rowCount();
-		if($select_count > 0 || $row_user_datos == "Superadministrador" || $row_user_datos == "Administrador" || $row_user_datos == "Director general"){
-			$sql = $object -> _db -> prepare("SELECT t1.id AS jerarquiaid, b.nombre as jefe FROM jerarquia t1 RIGHT JOIN roles a ON t1.rol_id=a.id LEFT JOIN usuarios u ON u.roles_id=a.id LEFT JOIN jerarquia t2 ON t1.jerarquia_id = t2.id LEFT JOIN roles b ON t2.rol_id=b.id WHERE u.id=:userid");
-			$sql -> execute(array(':userid' => $userid));
-			$row_jefe = $sql->fetch(PDO::FETCH_OBJ);
-			$todaydate = date("Y-m-d");
-			$numero=0;
-			if(!(is_null($row_jefe -> jerarquiaid)) && !(is_null($row_jefe->jefe))){
-				$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate]);
-				$incidencia_id = $object -> _db -> lastInsertId();
-				Incidencias::sendEmail($incidencia_id, $select);
-			}else if(!(is_null($row_jefe -> jerarquiaid)) && is_null($row_jefe->jefe)){
-				$numero = 5;
-				$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate, 'estatus_id' => $numero]);
-			}else if(is_null($row_jefe -> jerarquiaid) && is_null($row_jefe->jefe)){
-				$numero = 6;
-				$crud -> store ('incidencias', ['users_id' => $userid, 'titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto, 'incidencia_creada' => $todaydate, 'estatus_id' => $numero]);
-			}
-		}else{
-			die(json_encode(array("failed", "No se encontró su superior, por favor, contacte a un administrador")));
-		}
+	public $usuario_id;
+	public $usuario_rol;
+    
+	public function __construct($user_id, $user_rol){
+		$this->usuario_id = $user_id;
+		$this->usuario_rol = $user_rol;
 	}
 
-	public static function sendEmail($incidencia_id, $select){
+	public static function tempnam_sfx($path, $suffix){
+        do {
+            $file = $path."/".mt_rand().".".$suffix;
+            $fp = @fopen($file, 'x');
+        }
+        while(!$fp);
+    
+        fclose($fp);
+        return $file;
+    }
+
+	public static function sendEmail($incidencia_id, $jefe_array, $tipoincidencia){
 		$object = new connection_database();
 		$crud = new crud();
-		$sql = $object->_db->prepare('SELECT incidencias.id AS id, incidencias.users_id AS userid, incidencias.titulo AS titulo, incidencias.fecha_inicio AS fecha_inicio, incidencias.fecha_fin AS fecha_fin, incidencias.tipo_incidencia AS tipo_incidencia, incidencias.estatus_id AS estatus_id, incidencias.filename AS filename, incidencias.foto AS foto, incidencias.incidencia_creada AS incidencia_creada, departamentos.departamento AS depanom, roles.nombre AS rolnom from incidencias INNER JOIN usuarios ON incidencias.users_id = usuarios.id LEFT JOIN departamentos ON usuarios.departamento_id = departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id WHERE incidencias.id=:incidenciaid');
+		$sql = $object->_db->prepare('SELECT solicitudes_incidencias.id as solicitudid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, solicitudes_incidencias.fecha_solicitud as fecha_solicitud FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
 		$sql -> execute(array(':incidenciaid' => $incidencia_id));
 		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
-		$array = array();
-		while($row_jefe = $select -> fetch(PDO::FETCH_OBJ)){
-			$array[]=$row_jefe->correo;
-		}
-		$notificado_a = $object -> _db ->prepare("select roles.id from usuarios inner join roles on roles.id=usuarios.roles_id where usuarios.correo=:correo");
-		$notificado_a -> execute(array(":correo" => $array[0]));
-		$fetch_notificacion = $notificado_a -> fetch(PDO::FETCH_OBJ);
-		$crud -> update('incidencias', ['notificado_a' => $fetch_notificacion->id], 'id=:incidenciaid', ['incidenciaid' => $incidencia_id]);
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		$path = dirname($path);
@@ -87,108 +51,67 @@ class incidencias {
 		);
 		$mail->Port = 587;
 		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "botsinttecom@sinttecom.com"; // SMTP username
-		$mail->Password = "sinttecom1994"; // SMTP password
+		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
+		$mail->Password = "k8@SY#xR"; // SMTP password
 		$mail->IsHTML(true);
-		if(count($array) >= 2){
-			foreach($array as $correo)
-			{
-				$mail->AddAddress($correo);
-			}
-		}else{
-			$correo = reset($array);
+		$lista_correos = Array();
+		foreach($jefe_array as $correo){
 			$mail->AddAddress($correo);
+			$lista_correos[]=$correo;
 		}
-		$correos= implode(', ', $array);
+		$correos= implode(', ', $lista_correos);
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-		$mail->Subject  = "Solicitud de aprobación de incidencias";
-		$mail->Body     = "Buen día ".$correos.": <br> Toca aquí para evaluar la incidencia <br> $links";
+		$mail->Subject  = "El usuario ". $row_user_incidencia -> nombre ." te ha envíado una solicitud de incidencia (ID: ".$row_user_incidencia -> solicitudid.")";
+		$mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_incidencia -> nombre." ha solicitado una incidencia con ID ".$row_user_incidencia -> solicitudid." del tipo " .$tipoincidencia. " en la fecha " .$row_user_incidencia -> fecha_solicitud. " <br> Haga clic en el link a continuación para ver la incidencia y evaluarla: <br> $links";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {
-			echo 'Message was not sent.' .$correo;
+			echo 'Message was not sent.';
 			echo 'Mailer error: ' . $mail->ErrorInfo;
 		}
 	}
 
-	public static function EliminarIncidencias($id){
-		$crud = new crud();
-		$crud->delete('incidencias', 'id=:idincidencia', ['idincidencia' => $id]);
-	}
-
-	public static function Checkincidencia($id){
-        $object = new connection_database();
-	    $editar = $object -> _db->prepare("SELECT * FROM incidencias WHERE id=:incidenciaid");
-		$editar->bindParam("incidenciaid", $id ,PDO::PARAM_INT);
-		$editar->execute();
-        $check_incidencia=$editar->rowCount();
-	    return $check_incidencia;
-    }
-
-	
-   public static function Fetcheditincidencia($id){
-        $object = new connection_database();
-        $row = $object->_db->prepare("SELECT * from incidencias where id=:incidenciaid");
-        $row->bindParam("incidenciaid", $id, PDO::PARAM_INT);
-        $row->execute();
-        $editar = $row->fetch(PDO::FETCH_OBJ);
-        return $editar;
-    }
-
-	public function EditarIncidencias($incidenciaid){
-		$check = Incidencias::Checkincidencia($incidenciaid);
-		if($check > 0){
-			$crud=new crud();
-			$crud -> update ('incidencias', ['titulo' => $this->titulo, 'fecha_inicio' => $this->fechainicio, 'fecha_fin' => $this->fechafin, 'tipo_incidencia' => $this->tipo, 'descripcion' => $this->descripcion, 'filename' => $this->filename, 'foto' => $this->foto], 'id=:idincidencia', ['idincidencia' => $incidenciaid]);
-		}else{
-			die(json_encode(array("failed", "La incidencia ya no existe!")));
-		}
-	}
-
-	public static function Fetchverincidencia($id){
-        $object = new connection_database();
-        $row = $object->_db->prepare("SELECT i.id as incidenciaid, u.nombre, u.apellido_pat, u.apellido_mat, i.titulo, i.fecha_inicio, i.fecha_fin, i.tipo_incidencia, ei.nombre as estatus_incidencia, i.descripcion, i.filename, i.foto, i.incidencia_creada FROM incidencias i INNER JOIN usuarios u ON i.users_id=u.id INNER JOIN estatus_incidencia ei ON i.estatus_id=ei.id WHERE i.id=:incidenciaid");
-        $row->bindParam("incidenciaid", $id, PDO::PARAM_INT);
-        $row->execute();
-        $ver_incidencia = $row->fetch(PDO::FETCH_OBJ);
-        return $ver_incidencia;
-    }
-
-	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat, $comentario){
-		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
-		if($check_incidencia > 0 ){
-			$object = new connection_database();
-			$crud = new crud();
-			$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
-			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
-			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id SET i.estatus_id = temp.estatus_siguiente");
-			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
-			Incidencias::getResponse($incidenciaid, $estatus);
-		}else{
-			die(json_encode(array("failed", "La incidencia ya no existe!")));
-		}
-	}
-
-	public static function getResponse($incidencia_id, $estatus){
+	public static function getResponse($incidencia_id, $estatus, $sueldo, $comentario){
 		$object = new connection_database();
 		$crud = new crud();
 		$array = [];
-		$sql = $object->_db->prepare('SELECT incidencias.id AS id, incidencias.users_id AS userid, incidencias.titulo AS titulo, incidencias.fecha_inicio AS fecha_inicio, incidencias.fecha_fin AS fecha_fin, incidencias.tipo_incidencia AS tipo_incidencia, incidencias.estatus_id AS estatus_id, incidencias.filename AS filename, incidencias.foto AS foto, incidencias.incidencia_creada AS incidencia_creada, departamentos.departamento AS depanom, roles.nombre AS rolnom, usuarios.correo as correo from incidencias INNER JOIN usuarios ON incidencias.users_id = usuarios.id LEFT JOIN departamentos ON usuarios.departamento_id = departamentos.id LEFT JOIN roles ON usuarios.roles_id=roles.id WHERE incidencias.id=:incidenciaid');
+		$sql = $object->_db->prepare('SELECT solicitudes_incidencias.id as solicitudid, solicitudes_incidencias.fecha_solicitud as fecha_solicitud, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, usuarios.correo FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
 		$sql -> execute(array(':incidenciaid' => $incidencia_id));
 		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
 		array_push($array, $row_user_incidencia -> correo);
-		$check_if_sup_exist = $object -> _db ->prepare("select usuarios.correo as supcor from usuarios inner join roles on roles.id=usuarios.roles_id inner join departamentos on departamentos.id=usuarios.departamento_id where roles.nombre='Gerente' && departamentos.departamento='Recursos humanos' || departamentos.departamento='Finanzas'");
-		$check_if_sup_exist -> execute();
-		$count_sup = $check_if_sup_exist -> rowCount(); 
-		if($count_sup > 0){
-			while($fetch_sup = $check_if_sup_exist -> fetch(PDO::FETCH_OBJ)){
-				array_push($array, $fetch_sup -> supcor);
+		
+		$check_gerente_capital_finanzas = $object -> _db -> prepare("SELECT usuarios.correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE roles.nombre='Gerente' AND departamentos.departamento='Capital humano' || roles.nombre='Gerente' AND departamentos.departamento='Finanzas'");
+		$check_gerente_capital_finanzas -> execute();
+		$count_gerente_capital_finanzas = $check_gerente_capital_finanzas -> rowCount();
+		$fetch_gerente_capital_finanzas = $check_gerente_capital_finanzas ->fetchAll(PDO::FETCH_ASSOC);
+		if($count_gerente_capital_finanzas == 2){
+			foreach($fetch_gerente_capital_finanzas as $array_gerentes){
+				foreach($array_gerentes as $correos_array){
+					array_push($array, $correos_array);
+				}
 			}
+		}else if($count_gerente_capital_finanzas == 1){
+			foreach($fetch_gerente_capital_finanzas as $array_gerentes){
+				foreach($array_gerentes as $correos_array){
+					array_push($array, $correos_array);
+				}
+			}
+		}else if($count_gerente_capital_finanzas == 0){
+			array_push($array, "alberto.martinez@sinttecom.com");
 		}
-		$check_estatus = $object->_db->prepare("select nombre from estatus_incidencia where tipo_estatus_id=:estatus");
-		$check_estatus -> execute(array(':estatus' => $estatus));
-		$fetch_estatus = $check_estatus -> fetch(PDO::FETCH_OBJ);
+		if($sueldo == 1){
+			$sueldo_message = "con goce de sueldo";
+		}else if($sueldo == 0){
+			$sueldo_message = "sin goce de sueldo";
+		}
+		if($estatus == 3){
+			$status = "Rechazada";
+		}else if($estatus == 2){
+			$status = "Cancelada";
+		}else if ($estatus == 1){
+			$status = "Aprobada";
+		}
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		$path = dirname($path);
@@ -207,8 +130,8 @@ class incidencias {
 		);
 		$mail->Port = 587;
 		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "botsinttecom@sinttecom.com"; // SMTP username
-		$mail->Password = "sinttecom1994"; // SMTP password
+		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
+		$mail->Password = "k8@SY#xR"; // SMTP password
 		$mail->IsHTML(true);
 		foreach($array as $correo)
 		{
@@ -216,8 +139,8 @@ class incidencias {
 		}
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-		$mail->Subject  = "La incidencia ha sido evaluada";
-		$mail->Body     = "Buen día: <br> La incidencia evaluada tiene el siguiente estatus: ".$fetch_estatus->nombre.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a>";
+		$mail->Subject  = "La solicitud de incidencia del usuario " .$row_user_incidencia -> nombre. " ha sido evaluada (ID: ".$row_user_incidencia -> solicitudid.")";
+		$mail->Body     = "Buen día: <br> La solicitud de incidencia evaluada que envió el usuario ".$row_user_incidencia -> nombre." con ID ".$row_user_incidencia -> solicitudid." expedido en la fecha ".$row_user_incidencia -> fecha_solicitud." tiene el siguiente estatus: ".$status. ' ' .$sueldo_message.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a> <br> Comentarios:  ".$comentario."";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {
@@ -226,25 +149,290 @@ class incidencias {
 		}
 	}
 
-	public static function CheckSameDepartment($userid, $incidenciaid){
+	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat, $comentario){
+		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
+		if($check_incidencia > 0 ){
+			$object = new connection_database();
+			$crud = new crud();
+			$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
+			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
+			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
+			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
+			Incidencias::getResponse($incidenciaid, $estatus, $sueldo, $comentario);
+		}else{
+			die(json_encode(array("failed", "La incidencia ya no existe!")));
+		}
+	}
+	
+	public static function Checkincidencia($id){
 		$object = new connection_database();
-		$check_same_departament = $object -> _db ->prepare("SELECT CASE WHEN departamento1 = departamento2 THEN 'true' ELSE 'false' END AS resultado FROM (SELECT (SELECT departamentos.departamento FROM usuarios INNER JOIN incidencias ON incidencias.users_id=usuarios.id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE incidencias.id=:incidenciaid) AS departamento1, (SELECT  departamentos.departamento FROM usuarios INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE usuarios.id=:sessionid) AS departamento2) AS departamentos");
-		$check_same_departament -> execute(array(':incidenciaid' => $incidenciaid, ':sessionid' => $userid));
-		$fetch_resultado = $check_same_departament -> fetch(PDO::FETCH_OBJ);
-		return $fetch_resultado -> resultado;
+		$editar = $object -> _db->prepare("SELECT * FROM incidencias WHERE id=:incidenciaid");
+		$editar->bindParam("incidenciaid", $id ,PDO::PARAM_INT);
+		$editar->execute();
+		$check_incidencia=$editar->rowCount();
+		return $check_incidencia;
+	}
+}
+
+interface tipo_permiso {
+	public function reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array);
+	public function reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array);
+	public function no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array);
+	public function no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array);
+}
+
+class permiso extends incidencias implements tipo_permiso {
+	public function __construct($user_id, $user_rol) {
+		$this->usuario_id = $user_id;
+		$this->usuario_rol = $user_rol;
 	}
 
-	public static function CheckIFIncidentOwnership($incidenciaid, $userid){
+	//CREACION DE PERMISOS
+
+
+	//Permiso reglamentario FALLECIMIENTO, MATRIMONIO, ESCOLARIDAD Y NACIMIENTO
+	public function reglamentario_descriptivo($permiso_r, $fechainicio_pd, $fechafin_pd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array){
 		$object = new connection_database();
-		$check_if_roles_owns_incident = $object -> _db ->prepare("SELECT * FROM usuarios INNER JOIN incidencias ON incidencias.users_id = usuarios.id WHERE usuarios.id=:userid AND incidencias.id=:incidenciaid");
-		$check_if_roles_owns_incident -> execute(array(':userid' => $userid, ':incidenciaid' => $incidenciaid));
-		$count_result = $check_if_roles_owns_incident -> rowCount();
-		if($count_result > 0){
-		 $resultado="true";
-		}else{
-		 $resultado="false";
+		$crud = new crud();
+		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
+		$solicitud_id = $object -> _db -> lastInsertId();
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
 		}
-		return $resultado;
+		$fecha_periodo = $fechainicio_pd. " - " .$fechafin_pd;
+		$location = "../src/permisos_reglamentarios/permisos_descriptivos/";
+		$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($justificante_permiso_r['tmp_name'],$uploadfile);
+		$crud -> store ('permisos_reglamentarios', ['permiso_r' => $permiso_r, 'periodo_ausencia_r' => $fecha_periodo, 'observaciones_permiso_r' => $observaciones_permiso_r, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
+		$permiso_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_reglamentario' => $permiso_id]);
+		$incidencia_id = $object -> _db -> lastInsertId();
+		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso reglamentario descriptivo");
+	}
+
+	//Permiso reglamentario OTRO/HOME OFFICE
+	public function reglamentario_no_descriptivo($permiso_r, $periodo_pnd, $motivo_pnd, $observaciones_permiso_r, $filename_justificante_permiso_r, $justificante_permiso_r, $jefe_array){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
+		$solicitud_id = $object -> _db -> lastInsertId();
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
+		}
+		$location = "../src/permisos_reglamentarios/permisos_no_descriptivos/";
+		$ext = pathinfo($filename_justificante_permiso_r, PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($justificante_permiso_r['tmp_name'],$uploadfile);
+		$crud -> store ('permisos_reglamentarios', ['permiso_r' => $permiso_r, 'periodo_ausencia_r' => $periodo_pnd, 'motivo_permiso_r' => $motivo_pnd, 'observaciones_permiso_r' => $observaciones_permiso_r, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
+		$permiso_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_reglamentario' => $permiso_id]);
+		$incidencia_id = $object -> _db -> lastInsertId();
+		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso reglamentario no descriptivo");
+	}
+
+	//Permiso no reglamentario GENERAL
+	public function no_reglamentario_g($permiso_nr, $periodo_pnr_fh, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
+		$solicitud_id = $object -> _db -> lastInsertId();
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
+		}
+		if($filename_justificante_permiso_nr != null && $justificante_permiso_nr != null){
+			$location = "../src/permisos_no_reglamentarios/no_reglamentario_g/";
+			$ext = pathinfo($filename_justificante_permiso_nr, PATHINFO_EXTENSION);
+			$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+			if(move_uploaded_file($justificante_permiso_nr['tmp_name'],$uploadfile)){
+				$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_fh, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr,'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => basename($uploadfile)]);
+			}
+		}else{
+			$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_fh, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
+		}
+		$permiso_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);
+		$incidencia_id = $object -> _db -> lastInsertId();
+		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso no reglamentario general");
+	}
+
+	//Permiso no reglamentario AUSENCIA
+	public function no_reglamentario_a($permiso_nr, $periodo_pnr_f, $motivo_permiso_nr, $observaciones_permiso_nr, $posee_jpermiso_nr, $filename_justificante_permiso_nr, $justificante_permiso_nr, $jefe_array){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
+		$solicitud_id = $object -> _db -> lastInsertId();
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
+		}
+		if($filename_justificante_permiso_nr != null && $justificante_permiso_nr != null){
+			$location = "../src/permisos_no_reglamentarios/no_reglamentario_a/";
+			$ext = pathinfo($filename_justificante_permiso_nr, PATHINFO_EXTENSION);
+			$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+			if(move_uploaded_file($justificante_permiso_nr['tmp_name'],$uploadfile)){
+				$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr,'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => basename($uploadfile)]);
+			}
+		}else{
+			$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
+		}
+		$permiso_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);
+		$incidencia_id = $object -> _db -> lastInsertId();
+		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso no reglamentario ausencia");	
+	}
+
+	//TERMINA LA CREACION DE PERMISOS
+}
+
+class incapacidades extends incidencias{
+	public function __construct($user_id, $user_rol) {
+		$this->usuario_id = $user_id;
+		$this->usuario_rol = $user_rol;
+	}
+
+	//Incapacidades
+	public function crear_incapacidad($numero_incapacidad, $serie_folio_incapacidad, $tipo_incapacidad, $ramo_seguro_incapacidad, $periodo_incapacidad, $motivo_incapacidad, $observaciones_incapacidad, $filename_comprobante_incapacidad, $comprobante_incapacidad, $jefe_array){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('solicitudes_incidencias', ['users_id' => $this->usuario_id]);
+		$solicitud_id = $object -> _db -> lastInsertId();
+		foreach($jefe_array as $correo){
+			$selectid = $object -> _db -> prepare("SELECT id from usuarios where correo=:correo");
+			$selectid -> execute(array('correo' => $correo));
+			$insertid = $selectid -> fetch(PDO::FETCH_OBJ);
+			$crud -> store ('notificaciones_incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_notificado' => $insertid -> id]);
+		}
+		$location = "../src/incapacidades/";
+		$ext = pathinfo($filename_comprobante_incapacidad, PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($comprobante_incapacidad['tmp_name'],$uploadfile);
+		$crud -> store ('incapacidades', ['numero_incapacidad' => $numero_incapacidad, 'serie_folio_incapacidad' => $serie_folio_incapacidad, 'tipo_incapacidad' => $tipo_incapacidad, 'ramo_seguro_incapacidad' => $ramo_seguro_incapacidad, 'periodo_incapacidad' => $periodo_incapacidad, 'motivo_incapacidad' => $motivo_incapacidad, 'observaciones_incapacidad' => $observaciones_incapacidad, 'nombre_justificante_incapacidad' => $filename_comprobante_incapacidad, 'archivo_identificador_incapacidad' => basename($uploadfile)]);
+		$incapacidad_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_incapacidades' => $incapacidad_id]);
+		$incidencia_id = $object -> _db -> lastInsertId();
+		Incidencias::sendEmail($incidencia_id, $jefe_array, "incapacidad");
+	}
+}
+
+class actas extends incidencias{
+	public function __construct($user_id, $user_rol) {
+		$this->usuario_id = $user_id;
+		$this->usuario_rol = $user_rol;
+	}
+
+	public function crear_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('incidencias_acta_administrativas', ['motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta]);
+		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $caja_empleado, 'fecha_expedicion' => $fecha_acta, 'id_acta_administrativa' => $incapacidad_administrativa_id]);
+	}
+
+	public function editar_acta($fecha_acta, $caja_empleado, $caja_empleado_text, $motivo_acta, $obcomen_acta, $incidenciaid){
+		$object = new connection_database();
+		$crud = new crud();
+		$get_actaid = $object -> _db -> prepare("SELECT id_acta_administrativa FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$get_actaid -> execute(array(":incidenciaid" => $incidenciaid));
+		$fetch_actaid = $get_actaid -> fetch(PDO::FETCH_OBJ);
+		$crud -> update('incidencias_acta_administrativas', ['motivo_acta' => $motivo_acta, 'observaciones_acta' => $obcomen_acta], "id=:idacta", [":idacta" => $fetch_actaid -> id_acta_administrativa]);
+		$crud -> update('incidencias_administrativas', ['asignada_a' => $caja_empleado, 'fecha_expedicion' => $fecha_acta], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
+
+	public function vincular_acta($incidenciaid, $archivo){
+		$crud = new crud();
+		$object = new connection_database();
+		$location = "../src/acta_administrativa/";
+		$ext = pathinfo($archivo['name'], PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($archivo['tmp_name'],$uploadfile);
+		$crud -> update('incidencias_administrativas', ['nombre_archivo_firmado' => $archivo['name'], 'identificador_archivo_firmado' => basename($uploadfile)], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
+
+	public static function EliminarActa($incidenciaid, $idacta){
+		$crud = new crud();
+		$object = new connection_database();
+		$select_acta = $object -> _db -> prepare("SELECT nombre_archivo_firmado, identificador_archivo_firmado FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$select_acta -> execute(array(':incidenciaid' => $incidenciaid));
+		$fetch_select_acta = $select_acta -> fetch(PDO::FETCH_OBJ);
+		if($fetch_select_acta -> nombre_archivo_firmado != null && $fetch_select_acta -> identificador_archivo_firmado != null){
+			$directory = __DIR__ . "/../src/acta_administrativa/";
+			$path = __DIR__ . "/../src/acta_administrativa/".$fetch_select_acta -> identificador_archivo_firmado;
+			if(!file_exists($path)){
+				$crud->delete('incidencias_acta_administrativas', 'id=:actaid', ['actaid' => $idacta]);
+			}else{
+				unlink($directory.$fetch_select_acta -> identificador_archivo_firmado);
+				$crud->delete('incidencias_acta_administrativas', 'id=:actaid', ['actaid' => $idacta]);
+			}
+		}else{
+			$crud->delete('incidencias_acta_administrativas', 'id=:actaid', ['actaid' => $idacta]);
+		}
+	}
+}
+
+class cartas extends incidencias{
+	public function __construct($user_id, $user_rol) {
+		$this->usuario_id = $user_id;
+		$this->usuario_rol = $user_rol;
+	}
+
+	public function crear_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('incidencias_carta_compromiso', ['resposabilidades_carta' => $responsabilidad_carta]);
+		$incapacidad_administrativa_id = $object -> _db -> lastInsertId();
+		$crud -> store ('incidencias_administrativas', ['users_id' => $this->usuario_id, 'asignada_a' => $array_empleado, 'fecha_expedicion' => $fecha_carta, 'id_carta_compromiso' => $incapacidad_administrativa_id]);
+	}
+
+	public function editar_carta($fecha_carta, $array_empleado, $array_empleado_text, $responsabilidad_carta, $incidenciaid){
+		$object = new connection_database();
+		$crud = new crud();
+		$get_cartaid = $object -> _db -> prepare("SELECT id_carta_compromiso FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$get_cartaid -> execute(array(":incidenciaid" => $incidenciaid));
+		$fetch_cartaid = $get_cartaid -> fetch(PDO::FETCH_OBJ);
+		$crud -> update('incidencias_carta_compromiso', ['resposabilidades_carta' => $responsabilidad_carta], "id=:idcarta", [":idcarta" => $fetch_cartaid -> id_carta_compromiso]);
+		$crud -> update('incidencias_administrativas', ['asignada_a' => $array_empleado, 'fecha_expedicion' => $fecha_acta], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
+
+	public function vincular_carta($incidenciaid, $archivo){
+		$crud = new crud();
+		$object = new connection_database();
+		$location = "../src/carta_compromiso/";
+		$ext = pathinfo($archivo['name'], PATHINFO_EXTENSION);
+		$uploadfile = Incidencias::tempnam_sfx($location, $ext);
+		move_uploaded_file($archivo['tmp_name'],$uploadfile);
+		$crud -> update('incidencias_administrativas', ['nombre_archivo_firmado' => $archivo['name'], 'identificador_archivo_firmado' => basename($uploadfile)], "id=:incidenciaid", [":incidenciaid" => $incidenciaid]);
+	}
+
+	public static function EliminarCarta($incidenciaid, $idcarta){
+		$crud = new crud();
+		$object = new connection_database();
+		$select_carta = $object -> _db -> prepare("SELECT nombre_archivo_firmado, identificador_archivo_firmado FROM incidencias_administrativas WHERE id=:incidenciaid");
+		$select_carta -> execute(array(':incidenciaid' => $incidenciaid));
+		$fetch_select_carta = $select_carta -> fetch(PDO::FETCH_OBJ);
+		if($fetch_select_carta -> nombre_archivo_firmado != null && $fetch_select_carta -> identificador_archivo_firmado != null){
+			$directory = __DIR__ . "/../src/carta_compromiso/";
+			$path = __DIR__ . "/../src/carta_compromiso/".$fetch_select_carta -> identificador_archivo_firmado;
+			if(!file_exists($path)){
+				$crud->delete('incidencias_carta_compromiso', 'id=:cartaid', ['cartaid' => $idcarta]);
+			}else{
+				unlink($directory.$fetch_select_carta -> identificador_archivo_firmado);
+				$crud->delete('incidencias_carta_compromiso', 'id=:cartaid', ['cartaid' => $idcarta]);
+			}
+		}else{
+			$crud->delete('incidencias_carta_compromiso', 'id=:cartaid', ['cartaid' => $idcarta]);
+		}
 	}
 }
 ?>

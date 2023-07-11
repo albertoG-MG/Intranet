@@ -12,11 +12,12 @@ include_once __DIR__ . ($codigophp);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/bundle.css">
     <link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../src/css/datatables.min.css">
 </head>
 
-<body>
+<body class="overflow-hidden">
     <div>
         <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
             <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>

@@ -99,29 +99,31 @@
                                     </div>
                                     <select id="user" name="user">
                                        <option></option>
-                                       <?php
-                                          $arr = array();
-                                          $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id WHERE expedientes.id!=:expedienteid"); 
-                                          $checkexpuser -> bindParam('expedienteid', $Editarid, PDO::PARAM_INT); 
-                                          $checkexpuser -> execute();
-                                          while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
-                                              $arr[] = $fetchuserexp->id;
-                                          }
-                                          $usuarios = user::FetchUsuarios();
-                                          foreach ($usuarios as $row) {
-                                              if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
-                                              {
-                                                  if(!in_array($row->id, $arr))
-                                                  {
-                                                      echo "<option value='" . $row->id . "'";
-                                                      if($row->id == $edit->userid){ echo 'selected';}
-                                                      echo ">";
-                                                      echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                      echo "</option>";
-                                                  }
-                                              }
-                                          }
+                                       <optgroup label="Usuarios">
+                                          <?php
+                                             $arr = array();
+                                             $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id WHERE expedientes.id!=:expedienteid"); 
+                                             $checkexpuser -> bindParam('expedienteid', $Editarid, PDO::PARAM_INT); 
+                                             $checkexpuser -> execute();
+                                             while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
+                                                $arr[] = $fetchuserexp->id;
+                                             }
+                                             $usuarios = user::FetchUsuarios();
+                                             foreach ($usuarios as $row) {
+                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo")
+                                                {
+                                                   if(!in_array($row->id, $arr))
+                                                   {
+                                                         echo "<option value='" . $row->id . "'";
+                                                         if($row->id == $edit->userid){ echo 'selected';}
+                                                         echo ">";
+                                                         echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                         echo "</option>";
+                                                   }
+                                                }
+                                             }
                                           ?>
+                                       </optgroup>
                                     </select>
                                  </div>
                               </div>
@@ -303,7 +305,7 @@
                                  <span class="text-[#64748b]">Esta sección es para modificar el estatus del empleado en la empresa.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: true, status }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Situación del empleado</label>
                                     <div class="group flex">
@@ -312,23 +314,24 @@
                                              <path fill="currentColor" d="M12 0L11.34 .03L15.15 3.84L16.5 2.5C19.75 4.07 22.09 7.24 22.45 11H23.95C23.44 4.84 18.29 0 12 0M12 4C10.07 4 8.5 5.57 8.5 7.5C8.5 9.43 10.07 11 12 11C13.93 11 15.5 9.43 15.5 7.5C15.5 5.57 13.93 4 12 4M.05 13C.56 19.16 5.71 24 12 24L12.66 23.97L8.85 20.16L7.5 21.5C4.25 19.94 1.91 16.76 1.55 13H.05M12 13C8.13 13 5 14.57 5 16.5V18H19V16.5C19 14.57 15.87 13 12 13Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="situacion" name="situacion">
-                                          <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?> x-on:click="rsituaciondelempleado">Alta</option>
-                                          <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?> x-on:click="rsituaciondelempleado">Baja</option>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="rsituaciondelempleado($el.value);" id="situacion" name="situacion">
+                                          <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?>>Alta</option>
+                                          <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?>>Baja</option>
                                        </select>
                                     </div>
                                  </div>
                                  <script>
-                                    function rsituaciondelempleado(e) {
-                                       if(e.target.value == "ALTA"){
-                                       $('#estatus_empleado').html(
-                                          "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Nuevo ingreso</option>"+
-                                          "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?>>Reingreso</option>");
-                                       }else if(e.target.value == "BAJA"){
-                                       $('#estatus_empleado').html(
-                                       "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "x-on:click='restoredateestatus; open = false'";  }else{ echo "x-on:click='changedateestatus; open = false'"; }?> x-init=\"open = false\">Fallecimiento</option>"+
-                                       "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Renuncia voluntaria</option>"+
-                                       "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "x-on:click='restoredateestatus; open = true'";  }else{ echo "x-on:click='changedateestatus; open = true'"; }?>>Liquidación</option>");
+                                    function rsituaciondelempleado(value) {
+                                       if(value == "ALTA"){
+                                          $('#estatus_empleado').html(
+                                          "<option value=\"NUEVO INGRESO\" x-init=\"statusmethod($el.value,status); open = false;\">Nuevo ingreso</option>"+
+                                          "<option value=\"REINGRESO\">Reingreso</option>");
+                                       }else if(value == "BAJA"){
+                                          $('#estatus_empleado').html(
+                                          "<option value=\"FALLECIMIENTO\" x-init=\"statusmethod($el.value,status); open = false;\">Fallecimiento</option>"+
+                                          "<option value=\"ABANDONO DE TRABAJO\">Abandono de trabajo</option>"+
+                                          "<option value=\"RENUNCIA VOLUNTARIA\">Renuncia voluntaria</option>"+
+                                          "<option value=\"LIQUIDACION\">Liquidación</option>");
                                        }
                                     }	
                                  </script>
@@ -340,52 +343,58 @@
                                              <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado" x-init="status=retrieveselected(); if(status == 'ABANDONO DE TRABAJO' || status == 'RENUNCIA VOLUNTARIA' || status == 'LIQUIDACION'){ open=true; }else{ open=false; }" x-on:change="if($el.value == 'NUEVO INGRESO'){  statusmethod($el.value,status); open=false; }else if($el.value == 'REINGRESO'){ statusmethod($el.value,status); open=false; }else if($el.value == 'FALLECIMIENTO'){ statusmethod($el.value,status); open=false; }else if($el.value == 'ABANDONO DE TRABAJO'){ statusmethod($el.value,status); open=true; }else if($el.value == 'RENUNCIA VOLUNTARIA'){ statusmethod($el.value,status); open=true; }else if($el.value == 'LIQUIDACION'){ statusmethod($el.value,status); open=true; }">
                                        </select>
                                     </div>
                                  </div>
                                  <script>
-                                    function changedateestatus(e) {
-                                       var now = new Date();
-                                       var day = ("0" + now.getDate()).slice(-2);
-                                       var month = ("0" + (now.getMonth() + 1)).slice(-2);
-                                       var today = now.getFullYear()+"-"+(month)+"-"+(day);
-                                       $('#fecha_estatus').val(today);
-                                       $('#estatus_motivo').val('');
-                                       if(e.target.value == "RENUNCIA VOLUNTARIA" || e.target.value == "LIQUIDACION"){
-                                       $("#estatus_motivo").rules("add", {
-                                          required: true,
-                                          field_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                    function statusmethod(value, statusretrieved){
+                                       if(value == statusretrieved){
+                                          $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
+                                          $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
+                                          if(value == "ABANDONO DE TRABAJO" || value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: true,
+                                                field_validation: true,
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                          }else{
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                             $("#estatus_motivo-error").css("display", "none");
                                           }
-                                       });
                                        }else{
-                                       $("#estatus_motivo").rules("remove");
-                                          $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                          $("#estatus_motivo-error").css("display", "none");
+                                          var now = new Date();
+                                          var day = ("0" + now.getDate()).slice(-2);
+                                          var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                          var today = now.getFullYear()+"-"+(month)+"-"+(day);
+                                          $('#fecha_estatus').val(today);
+                                          $('#estatus_motivo').val('');
+                                          if(value == "ABANDONO DE TRABAJO" || value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: true,
+                                                field_validation: true,
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                          }else{
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+                                          }
                                        }
                                     }
-                                    function restoredateestatus(e) {
-                                       $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
-                                       $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
-                                       if(e.target.value == "RENUNCIA VOLUNTARIA" || e.target.value == "LIQUIDACION"){
-                                       $("#estatus_motivo").rules("add", {
-                                          required: true,
-                                          field_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             field_validation: "Solo se permiten carácteres alfabéticos y espacios"
-                                          }
-                                       });
-                                       }else{
-                                       $("#estatus_motivo").rules("remove");
-                                          $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                          $("#estatus_motivo-error").css("display", "none");
-                                       }
+
+                                    function retrieveselected(){
+                                       var estatus = "<?php echo $edit -> eestatus_del_empleado; ?>";
+                                       return estatus;
                                     }
                                  </script>
                                  <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1020,31 +1029,31 @@
                                              <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="identificacion" name="identificacion">
-                                          <option value="" x-on:click="tidentificacion; open = false">--Seleccione--</option>
-                                          <option value="INE" x-on:click="tidentificacion; open = true">INE</option>
-                                          <option value="PASAPORTE" x-on:click="tidentificacion; open = true">PASAPORTE</option>
-                                          <option value="CEDULA" x-on:click="tidentificacion; open = true">CEDULA</option>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-init="<?php if($edit->etipo_identificacion == 'INE'){ ?> open = true; <?php }else if($edit->etipo_identificacion == 'PASAPORTE'){ ?> open = true; <?php }else if($edit->etipo_identificacion == 'CEDULA'){ ?> open = true; <?php } ?>" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
+                                          <option value="">--Seleccione--</option>
+                                          <option value="INE">INE</option>
+                                          <option value="PASAPORTE">PASAPORTE</option>
+                                          <option value="CEDULA">CEDULA</option>
                                        </select>
                                     </div>
                                  </div>
                                  <script>
-                                    function tidentificacion(e){
-                                       if(e.target.value == ""){
-                                       $("#numeroidentificacion").val("");
-                                       $("#numeroidentificacion").rules("remove");
-                                       $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                       $("#numeroidentificacion-error").css("display", "none");
+                                    function tidentificacion(value){
+                                       if(value == ""){
+                                          $("#numeroidentificacion").val("");
+                                          $("#numeroidentificacion").rules("remove");
+                                          $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                          $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $("#numeroidentificacion-error").css("display", "none");
                                        }else {
-                                       $("#numeroidentificacion").rules("add", {
-                                          required: true,
-                                          alphanumeric: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             alphanumeric: "Solo se permiten carácteres alfanúmericos"
-                                          }
-                                       }); 
+                                          $("#numeroidentificacion").rules("add", {
+                                             required: true,
+                                             alphanumeric: true,
+                                             messages: {
+                                                required: "Este campo es requerido",
+                                                alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                                             }
+                                          }); 
                                        }
                                     }
                                  </script>
@@ -1232,6 +1241,27 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
+                                 <label class="text-[#64748b] font-semibold mb-2">Tipo de sangre</label>
+                                 <div class="group flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                          <path fill="currentColor" d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20Z" />
+                                       </svg>
+                                    </div>
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_sangre" name="tipo_sangre">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="A_POSITIVO" <?php if ($edit->etipo_sangre == "A_POSITIVO") echo 'selected="selected"'; ?>>A+</option>
+                                       <option value="A_NEGATIVO" <?php if ($edit->etipo_sangre == "A_NEGATIVO") echo 'selected="selected"'; ?>>A-</option>
+                                       <option value="B_POSITIVO" <?php if ($edit->etipo_sangre == "B_POSITIVO") echo 'selected="selected"'; ?>>B+</option>
+                                       <option value="B_NEGATIVO" <?php if ($edit->etipo_sangre == "B_NEGATIVO") echo 'selected="selected"'; ?>>B-</option>
+                                       <option value="AB_POSITIVO" <?php if ($edit->etipo_sangre == "AB_POSITIVO") echo 'selected="selected"'; ?>>AB+</option>
+                                       <option value="AB_NEGATIVO" <?php if ($edit->etipo_sangre == "AB_NEGATIVO") echo 'selected="selected"'; ?>>AB-</option>
+                                       <option value="O_POSITIVO" <?php if ($edit->etipo_sangre == "O_POSITIVO") echo 'selected="selected"'; ?>>O+</option>
+                                       <option value="O_NEGATIVO" <?php if ($edit->etipo_sangre == "O_NEGATIVO") echo 'selected="selected"'; ?>>O-</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -1354,6 +1384,17 @@
                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="clabe_personal" name="clabe_personal" value="<?php echo "{$edit -> eclabe_personal}"; ?>" placeholder="Clabe">
                                     </div>
                                  </div>
+                                 <div class="grid grid-cols-1 lg:col-span-3">
+                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"></path>
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico_personal" name="plastico_personal" value="<?php echo "{$edit -> eplastico_personal}"; ?>" placeholder="Plástico asignado">
+                                    </div>
+                                 </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria asignada por la empresa</h2>
@@ -1425,11 +1466,11 @@
                                        <?php while($fetchtipopapeleria = $checktipospapeleria -> fetch(PDO::FETCH_OBJ)){ ?>
                                        <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                           <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                             <span class="inline-block w-1/3 md:hidden font-bold">Nombre</span>
+                                             <span class="inline-block md:hidden font-bold">Nombre</span>
                                              <p><?php echo ucfirst(strtolower($fetchtipopapeleria->nombre)); ?></p>
                                           </td>
                                           <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                             <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                             <span class="inline-block md:hidden font-bold">Acción</span>
                                              <div class="flex flex-col w-full justify-center">
                                                 <div id="upload-button<?php echo $fetchtipopapeleria->id ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
                                                    Subir archivo

@@ -43,7 +43,7 @@
                 </div>
             </div>
             <ul class="flex flex-col sm:flex-row sm:flex-wrap sm:justify-evenly bg-white text-black text-center p-4" id="tabProfile" role="tablist">
-                <li role="presentation">
+                <li role="presentation" class="w-full md:w-max">
                     <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#4f46e5] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="vision-tab-profile" data-tabs-target="#vision" type="button" role="tab" aria-controls="vision" aria-selected="false">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"><path fill="currentColor" d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z" /></svg>
                         <span>Visión general</span>
@@ -80,48 +80,48 @@
     <div id="profileContent">
         <div class="block bg-transparent rounded-lg" id="vision" role="tabpanel" aria-labelledby="vision-tab-profile">
 
-            <div class="mt-8">
-                <div class="flex flex-wrap -mx-6">
-                    <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
-                        <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-                            <div class="p-3 rounded-full bg-indigo-600 bg-opacity-75">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>
-                            </div>
-
-                            <div class="mx-5" style="word-break:break-word;">
-                                <h4 class="text-2xl font-semibold text-gray-700"><?php print_r($countusers->total); ?></h4>
-                                <div class="text-gray-500">Usuario(s)</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
-                        <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-                            <div class="p-3 rounded-full bg-orange-600 bg-opacity-75">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z" /></svg>
-                            </div>
-
-                            <div class="mx-5" style="word-break:break-word;">
-                                <h4 class="text-2xl font-semibold text-gray-700"><?php echo $countexpedientes->totalexpedientes;?></h4>
-                                <div class="text-gray-500">Expediente(s)</div>
+            <?php if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                <div class="mt-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0" style="word-break: break-word;">
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Usuarios</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-blue-500"><?php print_r($countusers->total); ?></div>
+                                    <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Usuario(s)</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-                        <div class="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-                            <div class="p-3 rounded-full bg-pink-600 bg-opacity-75">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" /></svg>
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Expedientes</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-red-500"><?php echo $countexpedientes->totalexpedientes;?></div>
+                                    <div class="text-lg font-medium text-red-600 dark:text-red-500">Expediente(s)</div>
+                                </div>
                             </div>
-
-                            <div class="mx-5" style="word-break:break-word;">
-                                <h4 class="text-2xl font-semibold text-gray-700"><?php echo $countdocumentos->totalpapeleria;?></h4>
-                                <div class="text-gray-500">documento(s) requeridos en los expedientes</div>
+                        </div>
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Departamentos</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-amber-500"><?php echo $countdepartamentos->totaldepartamentos;?></div>
+                                    <div class="text-lg font-medium text-amber-600 dark:text-amber-500">departamento(s)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col flex-auto p-6 bg-white shadow rounded-2xl overflow-hidden">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Documentos</div>
+                            <div class="-mt-2">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="text-6xl font-bold tracking-tight leading-none text-green-500"><?php echo $countdocumentos->totalpapeleria;?></div>
+                                    <div class="text-lg font-medium text-green-600 dark:text-green-500">documentos(s)</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
 
             <div class="mt-8">
 

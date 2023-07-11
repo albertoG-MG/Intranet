@@ -86,6 +86,20 @@ CREATE TABLE `categorias` (
   `nombre` varchar(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Insert into para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nombre`) VALUES
+(1, 'Usuarios'),
+(2, 'Expedientes'),
+(3, 'Roles'),
+(4, 'Permisos'),
+(5, 'Departamentos'),
+(6, 'Incidencias'),
+(7, 'Solicitud incidencias'),
+(8, 'Vacaciones');
+
 -- --------------------------------------------------------
 
 --
@@ -98,6 +112,46 @@ CREATE TABLE `permisos` (
 `categoria_id` int DEFAULT NULL,
 FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Insert into para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
+(1, 'Acceso a usuarios', 1),
+(2, 'Vista tecnico', 1),
+(3, 'Crear usuario', 1),
+(4, 'Ver usuario', 1),
+(5, 'Editar usuario', 1),
+(6, 'Eliminar usuario', 1),
+(7, 'Acceso a expedientes', 2),
+(8, 'Crear expediente', 2),
+(9, 'Ver expediente', 2),
+(10, 'Editar expediente', 2),
+(11, 'Eliminar expediente', 2),
+(12, 'Acceso a roles', 3),
+(13, 'Crear roles', 3),
+(14, 'Editar roles', 3),
+(15, 'Eliminar roles', 3),
+(16, 'Acceso a permisos', 4),
+(17, 'Crear permiso', 4),
+(18, 'Editar permiso', 4),
+(19, 'Eliminar permiso', 4),
+(20, 'Acceso a departamentos', 5),
+(21, 'Crear departamento', 5),
+(22, 'Editar departamento', 5),
+(23, 'Eliminar departamento', 5),
+(24, 'Acceso a incidencias', 6),
+(25, 'Crear incidencia', 6),
+(26, 'Ver incidencia', 6),
+(27, 'Acceso a acta administrativa', 6),
+(28, 'Acceso a carta compromiso', 6),
+(29, 'Crear acta administrativa', 6),
+(30, 'Crear carta compromiso', 6),
+(31, 'Ver todas las incidencias', 6),
+(32, 'Ver todos los documentos administrativos', 6),
+(33, 'Acceso a solicitud incidencias', 7),
+(34, 'Acceso a vacaciones', 8);
 
 -- --------------------------------------------------------
 
@@ -160,12 +214,13 @@ CREATE TABLE `departamentos` (
 
 INSERT INTO `departamentos` (`id`, `departamento`) VALUES
 (1, 'Soporte tecnico'),
-(2, 'Recursos humanos'),
+(2, 'Capital humano'),
 (3, 'Finanzas'),
 (4, 'Call center'),
 (5, 'Laboratorio'),
 (6, 'Almacen'),
-(7, 'Operaciones');
+(7, 'Operaciones'),
+(8, 'TI');
 
 -- --------------------------------------------------------
 
@@ -2671,12 +2726,14 @@ CREATE TABLE `expedientes` (
   `emergencia_parentesco2` varchar(100) DEFAULT NULL,
   `emergencia_telefono2` varchar(100) DEFAULT NULL,
   `resultado_antidoping` varchar(100) DEFAULT NULL,
+  `tipo_sangre` varchar(100) DEFAULT NULL,
   `vacante` varchar(100) DEFAULT NULL,
   `fam_dentro_empresa` varchar(100) DEFAULT NULL,
   `fam_nombre` varchar(100) DEFAULT NULL,
   `banco_personal` varchar(100) DEFAULT NULL,
   `cuenta_personal` varchar(100) DEFAULT NULL,
   `clabe_personal` varchar(100) DEFAULT NULL,
+  `plastico_personal` varchar(100) DEFAULT NULL,
   `banco_nomina` varchar(100) DEFAULT NULL,
   `cuenta_nomina` varchar(100) DEFAULT NULL,
   `clabe_nomina` varchar(100) DEFAULT NULL,
@@ -2878,25 +2935,144 @@ INSERT INTO `estatus_incidencia` (`id`, `tipo_estatus_id`, `nombre`) VALUES
 -- --------------------------------------------------------								
 
 --
--- Structure for view `incidencias`
+-- Estructura de tabla para la tabla `solicitudes_incidencias`
+--
+
+CREATE TABLE `solicitudes_incidencias` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `fecha_solicitud` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `estatus` int DEFAULT 4,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus) REFERENCES estatus_incidencia(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificaciones_incidencias`
+--
+
+CREATE TABLE `notificaciones_incidencias` (
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`id_solicitud_incidencias` bigint NOT NULL,
+	`id_notificado` int NOT NULL,
+	FOREIGN KEY (id_solicitud_incidencias) REFERENCES solicitudes_incidencias(id) ON DELETE CASCADE,
+	FOREIGN KEY (id_notificado) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incapacidades`
+--
+
+CREATE TABLE `incapacidades` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `numero_incapacidad` int NOT NULL,
+  `serie_folio_incapacidad` varchar(100) NOT NULL,
+  `tipo_incapacidad` varchar(100) NOT NULL,
+  `ramo_seguro_incapacidad` varchar(100) NOT NULL,
+  `periodo_incapacidad` varchar(100) NOT NULL,
+  `motivo_incapacidad` varchar(100) NOT NULL,
+  `observaciones_incapacidad` varchar(100) DEFAULT NULL,
+  `nombre_justificante_incapacidad` longtext NOT NULL,
+  `archivo_identificador_incapacidad` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permisos_reglamentarios`
+--
+
+CREATE TABLE `permisos_reglamentarios` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `permiso_r` varchar(100) NOT NULL,
+  `periodo_ausencia_r` varchar(100) NOT NULL,
+  `motivo_permiso_r` varchar(100) DEFAULT NULL,
+  `observaciones_permiso_r` varchar(100) DEFAULT NULL,
+  `nombre_justificante_r` longtext NOT NULL,
+  `identificador_justificante_r` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permisos_no_reglamentarios`
+--
+
+CREATE TABLE `permisos_no_reglamentarios` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `permiso_nr` varchar(100) NOT NULL,
+  `periodo_ausencia_nr` varchar(100) NOT NULL,
+  `motivo_permiso_nr` varchar(100) DEFAULT NULL,
+  `observaciones_permiso_nr` varchar(100) DEFAULT NULL,
+  `posee_jpermiso_nr` varchar(100) NOT NULL,
+  `nombre_justificante_nr` longtext DEFAULT NULL,
+  `identificador_justificante_nr` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias`
 --
 
 CREATE TABLE `incidencias` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_solicitud_incidencias` bigint NOT NULL,
+  `id_permiso_reglamentario` bigint DEFAULT NULL,
+  `id_permiso_no_reglamentario` bigint DEFAULT NULL,
+  `id_incapacidades` bigint DEFAULT NULL,
+   FOREIGN KEY (id_solicitud_incidencias) REFERENCES solicitudes_incidencias(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_permiso_reglamentario) REFERENCES permisos_reglamentarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_permiso_no_reglamentario) REFERENCES permisos_no_reglamentarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_incapacidades) REFERENCES incapacidades(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias_acta_administrativas`
+--
+
+CREATE TABLE `incidencias_acta_administrativas` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `motivo_acta` varchar(100) NOT NULL,
+  `observaciones_acta` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias_carta_compromiso`
+--
+
+CREATE TABLE `incidencias_carta_compromiso` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `resposabilidades_carta` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias_administrativas`
+--
+
+CREATE TABLE `incidencias_administrativas` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
-  `titulo` varchar(500) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `tipo_incidencia` varchar(500) NOT NULL,
-  `descripcion` varchar(500) NOT NULL,
-  `filename` longtext DEFAULT NULL,
-  `foto` longtext DEFAULT NULL,
-  `incidencia_creada` date NOT NULL,
-  `notificado_a` int DEFAULT NULL,
-  `estatus_id` int DEFAULT '4',
+  `asignada_a` int NOT NULL,
+  `fecha_expedicion` varchar(100) NOT NULL,
+  `id_acta_administrativa` bigint DEFAULT NULL,
+  `id_carta_compromiso` bigint DEFAULT NULL,
+  `nombre_archivo_firmado` longtext DEFAULT NULL,
+  `identificador_archivo_firmado` longtext DEFAULT NULL,
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-   FOREIGN KEY (notificado_a) REFERENCES roles(id),
-   FOREIGN KEY (estatus_id) REFERENCES estatus_incidencia(id)
+   FOREIGN KEY (asignada_a) REFERENCES expedientes(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_acta_administrativa) REFERENCES incidencias_acta_administrativas(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_carta_compromiso) REFERENCES incidencias_carta_compromiso(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2967,6 +3143,149 @@ CREATE TABLE `transicion_accion_incidencias`(
    id_accion int NOT NULL,
    FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_incidencia(id) ON DELETE CASCADE,
    FOREIGN KEY (id_accion) REFERENCES accion_incidencias(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_estatus_vacaciones`
+--
+
+
+CREATE TABLE `tipo_estatus_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_estado` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+INSERT INTO `tipo_estatus_vacaciones` (`id`, `descripcion_estado`) VALUES
+   (1, 'Aprobada'),
+   (2, 'Cancelada'),
+   (3, 'Rechazada'),
+   (4, 'Pendiente'),
+   (5, 'Sin jefe'),
+   (6, 'Sin jerarquía');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estatus_vacaciones`
+--
+	
+CREATE TABLE `estatus_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `tipo_estatus_vacaciones_id` int NOT NULL,
+   `nombre` varchar(200) NOT NULL,
+	FOREIGN KEY (tipo_estatus_vacaciones_id) REFERENCES tipo_estatus_vacaciones(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `estatus_vacaciones`
+
+
+INSERT INTO `estatus_vacaciones` (`id`, `tipo_estatus_vacaciones_id`, `nombre`) VALUES
+   (1, 1, "Esta solicitud de vacaciones ha sido aprobada"),
+   (2, 2, "Esta solicitud de vacaciones ha sido cancelada"),
+   (3, 3, "Esta solicitud de vacaciones ha sido rechazada"),
+   (4, 4, "En proceso de evaluación"),
+   (5, 5, "Ústed no tiene un superior"),
+   (6, 6, "Ústed no tiene jerarquía");
+
+-- --------------------------------------------------------	
+
+CREATE TABLE `solicitud_vacaciones` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int  NOT NULL,
+  `periodo_solicitado` varchar(100) NOT NULL,
+  `dias_solicitados` int NOT NULL,
+  `fecha_solicitud` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `estatus` int DEFAULT 4,
+  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  FOREIGN KEY (estatus) REFERENCES estatus_vacaciones(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificaciones_vacaciones`
+--
+
+CREATE TABLE `notificaciones_vacaciones` (
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`id_solicitud_vacaciones` int NOT NULL,
+	`id_notificado` int NOT NULL,
+	FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+	FOREIGN KEY (id_notificado) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transicion_estatus_vacaciones`
+--
+
+
+CREATE TABLE `transicion_estatus_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `id_solicitud_vacaciones` int NOT NULL,
+   `estatus_actual` int NOT NULL,
+   `estatus_siguiente` int NOT NULL,
+   FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus_actual) REFERENCES estatus_vacaciones(id),
+   FOREIGN KEY (estatus_siguiente) REFERENCES estatus_vacaciones(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_accion_vacaciones`
+--
+
+CREATE TABLE `tipo_accion_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_accion` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `tipo_accion_vacaciones`
+
+
+INSERT INTO `tipo_accion_vacaciones` (`id`, `descripcion_accion`) VALUES
+   (1, 'Aprobar'),
+   (2, 'Cancelar'),
+   (3, 'Rechazar');
+
+
+-- --------------------------------------------------------	
+
+--
+-- Estructura de tabla para la tabla `accion_vacaciones`
+--
+
+CREATE TABLE `accion_vacaciones`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`id_solicitud_vacaciones` int NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` varchar(200) NOT NULL,
+	 FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_vacaciones(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transición_acción_vacaciones`
+--
+
+CREATE TABLE `transicion_accion_vacaciones`(
+   id_transicion int NOT NULL,
+   id_accion int NOT NULL,
+   FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_vacaciones(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_accion) REFERENCES accion_vacaciones(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3444,7 +3763,7 @@ DELIMITER $$
 CREATE TRIGGER insertar_transicion_estatus_incidencia
 AFTER INSERT ON accion_incidencias FOR EACH ROW
 BEGIN
-	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, incidencias.estatus_id, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
 END;
 $$
 
@@ -3467,6 +3786,47 @@ BEGIN
 	 SELECT id INTO AccionId from accion_incidencias where incidencias_id=NEW.incidencias_id;
 
 	 INSERT INTO transicion_accion_incidencias(id_transicion, id_accion) VALUES (NEW.id, AccionId);
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla transicion_estatus_vacaciones
+--
+
+
+DELIMITER $$
+
+CREATE TRIGGER insertar_transicion_estatus_vacaciones
+AFTER INSERT ON accion_vacaciones FOR EACH ROW
+BEGIN
+	 INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla transicion_accion_vacaciones
+--
+
+DELIMITER $$
+
+CREATE TRIGGER link_transcicion_accion_vacaciones
+AFTER INSERT ON transicion_estatus_vacaciones FOR EACH ROW
+BEGIN
+	 DECLARE AccionId INTEGER(4);
+
+	 SELECT id INTO AccionId from accion_vacaciones where id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+
+	 INSERT INTO transicion_accion_vacaciones(id_transicion, id_accion) VALUES (NEW.id, AccionId);
 END;
 $$
 
@@ -3691,7 +4051,7 @@ DELIMITER ;
 --
 DROP TABLE IF EXISTS `serverside_user_superadministrador`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_superadministrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (`usuarios`.`id` <> `sessionid`())  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_superadministrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`id` = `usuarios`.`subrol_id`))) WHERE (`usuarios`.`id` <> `sessionid`())  ;
 
 -- --------------------------------------------------------
 
@@ -3700,7 +4060,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_administrador`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_administrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador')) OR (`roles`.`nombre` is null))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_administrador`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`id` = `usuarios`.`subrol_id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador')) OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 
@@ -3709,7 +4069,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_vistausuarios`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador') AND (`usuarios`.`id` <> `sessionid`())) OR (`roles`.`nombre` is null))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistausuarios`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`id` = `usuarios`.`subrol_id`))) WHERE (((`roles`.`nombre` <> 'Superadministrador') AND (`roles`.`nombre` <> 'Administrador') AND (`usuarios`.`id` <> `sessionid`())) OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 
@@ -3718,7 +4078,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_user_vistatecnicos`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`roles_id` = `roles`.`id`))) WHERE ((`roles`.`nombre` = 'Tecnico') OR (`roles`.`nombre` is null))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_user_vistatecnicos`  AS SELECT concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `usuarios`.`correo` AS `correo`, `usuarios`.`foto_identificador` AS `foto_identificador`, (case when (`departamentos`.`departamento` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador') or (`roles`.`nombre` = 'Usuario externo') or (`roles`.`nombre` = 'Director general')) then 'Dep. Indisponible' else 'Sin asignar' end) else `departamentos`.`departamento` end) AS `departamento`, (case when (`roles`.`nombre` is null) then 'Sin rol' else `roles`.`nombre` end) AS `rol`, (case when (`subroles`.`subrol_nombre` is null) then (case when ((`roles`.`nombre` = 'Superadministrador') or (`roles`.`nombre` = 'Administrador')) then 'Subrol indisponible' else 'Sin subrol' end) else `subroles`.`subrol_nombre` end) AS `subrol`, `usuarios`.`id` AS `id` FROM (((`usuarios` left join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`id` = `usuarios`.`subrol_id`))) WHERE ((`roles`.`nombre` = 'Tecnico') OR (`roles`.`nombre` is null))  ;
 
 -- --------------------------------------------------------
 

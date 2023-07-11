@@ -669,12 +669,22 @@
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
+                              Tipo de sangre:
+                           </div>
+                           <span>
+                           <?php if($ver->etipo_sangre == null){ echo "No hay datos"; }else{echo "{$ver->etipo_sangre}";} ?>
+                           </span>
+                        </div>
+                        <div class="flex-1 flex flex-col mt-5">
+                           <div class="text-[#64748b] font-semibold">
                               ¿Cómo se entero de la vacante?:
                            </div>
                            <span>
                            <?php if($ver->evacante == null){ echo "No hay datos"; }else{echo "{$ver->evacante}";} ?>
                            </span>
                         </div>
+                     </div>
+                     <div class="flex flex-col mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
                               ¿Tiene familiares en la empresa?:
@@ -744,13 +754,21 @@
                            </span>
                         </div>
                      </div>
-                     <div class="flex flex-col mx-7">
+                     <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
                               Clabe personal:
                            </div>
                            <span>
                            <?php if($ver -> eclabe_personal == null){ echo "No hay datos"; }else{echo "{$ver -> eclabe_personal}";} ?>
+                           </span>
+                        </div>
+                        <div class="flex-1 flex flex-col mt-5">
+                           <div class="text-[#64748b] font-semibold">
+                              Plástico asignado personal:
+                           </div>
+                           <span>
+                           <?php if($ver -> eplastico_personal == null){ echo "No hay datos"; }else{echo "{$ver -> eplastico_personal}";} ?>
                            </span>
                         </div>
                      </div>
@@ -762,7 +780,7 @@
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
-                              Banco personal:
+                              Banco nómina:
                            </div>
                            <span>
                            <?php if($ver -> ebanco_nomina == null){ echo "No hay datos"; }else{echo "{$ver -> ebanco_nomina}";} ?>
@@ -770,20 +788,28 @@
                         </div>
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
-                              Cuenta personal:
+                              Cuenta nómina:
                            </div>
                            <span>
                            <?php if($ver -> ecuenta_nomina == null){ echo "No hay datos"; }else{echo "{$ver -> ecuenta_nomina}";} ?>
                            </span>
                         </div>
                      </div>
-                     <div class="flex flex-col mx-7">
+                     <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
-                              Clabe personal:
+                              Clabe nómina:
                            </div>
                            <span>
                            <?php if($ver -> eclabe_nomina == null){ echo "No hay datos"; }else{echo "{$ver -> eclabe_nomina}";} ?>
+                           </span>
+                        </div>
+                        <div class="flex-1 flex flex-col mt-5">
+                           <div class="text-[#64748b] font-semibold">
+                              Plástico asignado nómina:
+                           </div>
+                           <span>
+                           <?php if($ver -> eplastico == null){ echo "No hay datos"; }else{echo "{$ver -> eplastico}";} ?>
                            </span>
                         </div>
                      </div>

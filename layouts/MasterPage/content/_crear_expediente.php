@@ -99,26 +99,28 @@
                                     </div>
                                     <select id="user" name="user">
                                        <option></option>
-                                       <?php
-                                          $arr = array();
-                                          $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id"); 
-                                          $checkexpuser -> execute();
-                                          while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
-                                             $arr[] = $fetchuserexp->id;
-                                          }
-                                          $usuarios = user::FetchUsuarios();
-                                          foreach ($usuarios as $row) {
-                                             if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Usuario externo")
-                                             {
-                                                if(!in_array($row->id, $arr))
+                                       <optgroup label="Usuarios">
+                                          <?php
+                                             $arr = array();
+                                             $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id"); 
+                                             $checkexpuser -> execute();
+                                             while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
+                                                $arr[] = $fetchuserexp->id;
+                                             }
+                                             $usuarios = user::FetchUsuarios();
+                                             foreach ($usuarios as $row) {
+                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo")
                                                 {
-                                                      echo "<option value='" . $row->id . "'>";
-                                                      echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                      echo "</option>";
+                                                   if(!in_array($row->id, $arr))
+                                                   {
+                                                         echo "<option value='" . $row->id . "'>";
+                                                         echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                         echo "</option>";
+                                                   }
                                                 }
                                              }
-                                          }
                                           ?>
+                                       </optgroup>
                                     </select>
                                  </div>
                               </div>
@@ -908,31 +910,31 @@
                                              <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="identificacion" name="identificacion">
-                                          <option value="" x-on:click="tidentificacion; open = false">--Seleccione--</option>
-                                          <option value="INE" x-on:click="tidentificacion; open = true">INE</option>
-                                          <option value="PASAPORTE" x-on:click="tidentificacion; open = true">PASAPORTE</option>
-                                          <option value="CEDULA" x-on:click="tidentificacion; open = true">CEDULA</option>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
+                                          <option value="">--Seleccione--</option>
+                                          <option value="INE">INE</option>
+                                          <option value="PASAPORTE">PASAPORTE</option>
+                                          <option value="CEDULA">CEDULA</option>
                                        </select>
                                     </div>
                                  </div>
                                  <script>
-                                    function tidentificacion(e){
-                                       if(e.target.value == ""){
-                                       $("#numeroidentificacion").val("");
-                                       $("#numeroidentificacion").rules("remove");
-                                       $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                       $("#numeroidentificacion-error").css("display", "none");
+                                    function tidentificacion(value){
+                                       if(value == ""){
+                                          $("#numeroidentificacion").val("");
+                                          $("#numeroidentificacion").rules("remove");
+                                          $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                          $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $("#numeroidentificacion-error").css("display", "none");
                                        }else {
-                                       $("#numeroidentificacion").rules("add", {
-                                          required: true,
-                                          alphanumeric: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             alphanumeric: "Solo se permiten carácteres alfanúmericos"
-                                          }
-                                       }); 
+                                          $("#numeroidentificacion").rules("add", {
+                                             required: true,
+                                             alphanumeric: true,
+                                             messages: {
+                                                required: "Este campo es requerido",
+                                                alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                                             }
+                                          }); 
                                        }
                                     }
                                  </script>
@@ -1120,6 +1122,27 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
+                                 <label class="text-[#64748b] font-semibold mb-2">Tipo de sangre</label>
+                                 <div class="group flex">
+                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                          <path fill="currentColor" d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20Z" />
+                                       </svg>
+                                    </div>
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_sangre" name="tipo_sangre">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="A_POSITIVO">A+</option>
+                                       <option value="A_NEGATIVO">A-</option>
+                                       <option value="B_POSITIVO">B+</option>
+                                       <option value="B_NEGATIVO">B-</option>
+                                       <option value="AB_POSITIVO">AB+</option>
+                                       <option value="AB_NEGATIVO">AB-</option>
+                                       <option value="O_POSITIVO">O+</option>
+                                       <option value="O_NEGATIVO">O-</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -1242,6 +1265,17 @@
                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="clabe_personal" name="clabe_personal" placeholder="Clabe">
                                     </div>
                                  </div>
+                                 <div class="grid grid-cols-1 lg:col-span-3">
+                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"></path>
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico_personal" name="plastico_personal" placeholder="Plástico asignado">
+                                    </div>
+                                 </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria asignada por la empresa</h2>
@@ -1313,11 +1347,11 @@
                                        <?php while($fetchtipopapeleria = $checktipospapeleria -> fetch(PDO::FETCH_OBJ)){ ?>
                                        <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                           <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                             <span class="inline-block w-1/3 md:hidden font-bold">Nombre</span>
+                                             <span class="inline-block md:hidden font-bold">Nombre</span>
                                              <p><?php echo ucfirst(strtolower($fetchtipopapeleria->nombre)); ?></p>
                                           </td>
                                           <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                             <span class="inline-block w-1/3 md:hidden font-bold">Acción</span>
+                                             <span class="inline-block md:hidden font-bold">Acción</span>
                                              <div class="flex flex-col w-full justify-center">
                                                 <div id="upload-button<?php echo $fetchtipopapeleria->id ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
                                                    Subir archivo
