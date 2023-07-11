@@ -305,7 +305,7 @@
                                  <span class="text-[#64748b]">Esta sección es para modificar el estatus del empleado en la empresa.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: true, status }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Situación del empleado</label>
                                     <div class="group flex">
@@ -342,52 +342,58 @@
                                              <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado" x-on:change="if($el.value == 'NUEVO INGRESO'){ <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "restoredateestatus; open = false";  }else{ echo "changedateestatus; open = false"; }?> }else if($el.value == 'REINGRESO'){ <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "restoredateestatus; open = false";  }else{ echo "changedateestatus; open = false"; }?> }else if($el.value == 'FALLECIMIENTO'){ <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "restoredateestatus; open = false";  }else{ echo "changedateestatus; open = false"; }?> }else if($el.value == 'RENUNCIA VOLUNTARIA'){ <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "restoredateestatus; open = true";  }else{ echo "changedateestatus; open = true"; }?> }else if($el.value == 'LIQUIDACION'){ <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "restoredateestatus; open = true";  }else{ echo "changedateestatus; open = true"; }?> }">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_empleado" name="estatus_empleado" x-init="status=retrieveselected(); if(status == 'RENUNCIA VOLUNTARIA' || status == 'LIQUIDACION'){ open=true; }else{ open=false; }" x-on:change="if($el.value == 'NUEVO INGRESO'){  statusmethod($el.value,status); open=false; }else if($el.value == 'REINGRESO'){ statusmethod($el.value,status); open=false; }else if($el.value == 'FALLECIMIENTO'){ statusmethod($el.value,status); open=false;  }else if($el.value == 'RENUNCIA VOLUNTARIA'){ statusmethod($el.value,status); open=true; }else if($el.value == 'LIQUIDACION'){ statusmethod($el.value,status); open=true; }">
                                        </select>
                                     </div>
                                  </div>
                                  <script>
-                                    function changedateestatus(e) {
-                                       var now = new Date();
-                                       var day = ("0" + now.getDate()).slice(-2);
-                                       var month = ("0" + (now.getMonth() + 1)).slice(-2);
-                                       var today = now.getFullYear()+"-"+(month)+"-"+(day);
-                                       $('#fecha_estatus').val(today);
-                                       $('#estatus_motivo').val('');
-                                       if(e.target.value == "RENUNCIA VOLUNTARIA" || e.target.value == "LIQUIDACION"){
-                                       $("#estatus_motivo").rules("add", {
-                                          required: true,
-                                          field_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                    function statusmethod(value, statusretrieved){
+                                       if(value == statusretrieved){
+                                          $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
+                                          $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
+                                          if(value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: true,
+                                                field_validation: true,
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                          }else{
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                             $("#estatus_motivo-error").css("display", "none");
                                           }
-                                       });
                                        }else{
-                                       $("#estatus_motivo").rules("remove");
-                                          $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                          $("#estatus_motivo-error").css("display", "none");
+                                          var now = new Date();
+                                          var day = ("0" + now.getDate()).slice(-2);
+                                          var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                          var today = now.getFullYear()+"-"+(month)+"-"+(day);
+                                          $('#fecha_estatus').val(today);
+                                          $('#estatus_motivo').val('');
+                                          if(value == "RENUNCIA VOLUNTARIA" || value == "LIQUIDACION"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: true,
+                                                field_validation: true,
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                          }else{
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+                                          }
                                        }
                                     }
-                                    function restoredateestatus(e) {
-                                       $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
-                                       $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
-                                       if(e.target.value == "RENUNCIA VOLUNTARIA" || e.target.value == "LIQUIDACION"){
-                                       $("#estatus_motivo").rules("add", {
-                                          required: true,
-                                          field_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             field_validation: "Solo se permiten carácteres alfabéticos y espacios"
-                                          }
-                                       });
-                                       }else{
-                                       $("#estatus_motivo").rules("remove");
-                                          $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                                          $("#estatus_motivo-error").css("display", "none");
-                                       }
+
+                                    function retrieveselected(){
+                                       var estatus = "<?php echo $edit -> eestatus_del_empleado; ?>";
+                                       return estatus;
                                     }
                                  </script>
                                  <div class="grid grid-cols-1 mt-5 mx-7">

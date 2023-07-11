@@ -1013,13 +1013,13 @@
         //CARGA DE ESTATUS
         if ($('#situacion').val() == "ALTA") {
             $('#estatus_empleado').html(
-                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected"; echo " x-on:click='restoredateestatus; open = false' x-init='open = false'";}else{ echo " x-on:click='changedateestatus; open = false'"; } ?>>Nuevo ingreso</option>"+
-                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected"; echo " x-on:click='restoredateestatus; open = false' x-init='open = false'";}else{ echo " x-on:click='changedateestatus; open = false'"; } ?>>Reingreso</option>");
+                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected";} ?>>Nuevo ingreso</option>"+
+                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected";} ?>>Reingreso</option>");
         }else if ($('#situacion').val() == "BAJA"){
             $('#estatus_empleado').html(
-                "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected"; echo " x-on:click='restoredateestatus; open = false' x-init='open = false'";}else{ echo " x-on:click='changedateestatus; open = false'"; } ?>>Fallecimiento</option>"+
-                "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected"; echo " x-on:click='restoredateestatus; open = true' x-init='open = true'";}else{ echo " x-on:click='changedateestatus; open = true'"; } ?>>Renuncia voluntaria</option>"+
-                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected"; echo " x-on:click='restoredateestatus; open = true' x-init='open = true'";}else{ echo " x-on:click='changedateestatus; open = true'"; } ?>>Liquidación</option>");
+                "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected";} ?>>Fallecimiento</option>"+
+                "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected";} ?>>Renuncia voluntaria</option>"+
+                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected";} ?>>Liquidación</option>");
         }
 
         //JQUERY VALIDATION ESTATUS
