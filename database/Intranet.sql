@@ -3148,6 +3148,149 @@ CREATE TABLE `transicion_accion_incidencias`(
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipo_estatus_vacaciones`
+--
+
+
+CREATE TABLE `tipo_estatus_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_estado` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+INSERT INTO `tipo_estatus_vacaciones` (`id`, `descripcion_estado`) VALUES
+   (1, 'Aprobada'),
+   (2, 'Cancelada'),
+   (3, 'Rechazada'),
+   (4, 'Pendiente'),
+   (5, 'Sin jefe'),
+   (6, 'Sin jerarquía');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estatus_vacaciones`
+--
+	
+CREATE TABLE `estatus_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `tipo_estatus_vacaciones_id` int NOT NULL,
+   `nombre` varchar(200) NOT NULL,
+	FOREIGN KEY (tipo_estatus_vacaciones_id) REFERENCES tipo_estatus_vacaciones(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `estatus_vacaciones`
+
+
+INSERT INTO `estatus_vacaciones` (`id`, `tipo_estatus_vacaciones_id`, `nombre`) VALUES
+   (1, 1, "Esta solicitud de vacaciones ha sido aprobada"),
+   (2, 2, "Esta solicitud de vacaciones ha sido cancelada"),
+   (3, 3, "Esta solicitud de vacaciones ha sido rechazada"),
+   (4, 4, "En proceso de evaluación"),
+   (5, 5, "Ústed no tiene un superior"),
+   (6, 6, "Ústed no tiene jerarquía");
+
+-- --------------------------------------------------------	
+
+CREATE TABLE `solicitud_vacaciones` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int  NOT NULL,
+  `periodo_solicitado` varchar(100) NOT NULL,
+  `dias_solicitados` int NOT NULL,
+  `fecha_solicitud` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `estatus` int DEFAULT 4,
+  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  FOREIGN KEY (estatus) REFERENCES estatus_vacaciones(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificaciones_vacaciones`
+--
+
+CREATE TABLE `notificaciones_vacaciones` (
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`id_solicitud_vacaciones` int NOT NULL,
+	`id_notificado` int NOT NULL,
+	FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+	FOREIGN KEY (id_notificado) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transicion_estatus_vacaciones`
+--
+
+
+CREATE TABLE `transicion_estatus_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `id_solicitud_vacaciones` int NOT NULL,
+   `estatus_actual` int NOT NULL,
+   `estatus_siguiente` int NOT NULL,
+   FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+   FOREIGN KEY (estatus_actual) REFERENCES estatus_vacaciones(id),
+   FOREIGN KEY (estatus_siguiente) REFERENCES estatus_vacaciones(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_accion_vacaciones`
+--
+
+CREATE TABLE `tipo_accion_vacaciones`(
+   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   `descripcion_accion` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+-- Insert into para la tabla `tipo_accion_vacaciones`
+
+
+INSERT INTO `tipo_accion_vacaciones` (`id`, `descripcion_accion`) VALUES
+   (1, 'Aprobar'),
+   (2, 'Cancelar'),
+   (3, 'Rechazar');
+
+
+-- --------------------------------------------------------	
+
+--
+-- Estructura de tabla para la tabla `accion_vacaciones`
+--
+
+CREATE TABLE `accion_vacaciones`(
+	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`id_solicitud_vacaciones` int NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` varchar(200) NOT NULL,
+	 FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_vacaciones(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transición_acción_vacaciones`
+--
+
+CREATE TABLE `transicion_accion_vacaciones`(
+   id_transicion int NOT NULL,
+   id_accion int NOT NULL,
+   FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_vacaciones(id) ON DELETE CASCADE,
+   FOREIGN KEY (id_accion) REFERENCES accion_vacaciones(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura para la vista `reset_password`
 --
 
@@ -3643,6 +3786,47 @@ BEGIN
 	 SELECT id INTO AccionId from accion_incidencias where incidencias_id=NEW.incidencias_id;
 
 	 INSERT INTO transicion_accion_incidencias(id_transicion, id_accion) VALUES (NEW.id, AccionId);
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla transicion_estatus_vacaciones
+--
+
+
+DELIMITER $$
+
+CREATE TRIGGER insertar_transicion_estatus_vacaciones
+AFTER INSERT ON accion_vacaciones FOR EACH ROW
+BEGIN
+	 INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+END;
+$$
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla transicion_accion_vacaciones
+--
+
+DELIMITER $$
+
+CREATE TRIGGER link_transcicion_accion_vacaciones
+AFTER INSERT ON transicion_estatus_vacaciones FOR EACH ROW
+BEGIN
+	 DECLARE AccionId INTEGER(4);
+
+	 SELECT id INTO AccionId from accion_vacaciones where id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+
+	 INSERT INTO transicion_accion_vacaciones(id_transicion, id_accion) VALUES (NEW.id, AccionId);
 END;
 $$
 
