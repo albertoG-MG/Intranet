@@ -99,7 +99,7 @@ INSERT INTO `categorias` (`id`, `nombre`) VALUES
 (6, 'Incidencias'),
 (7, 'Solicitud incidencias'),
 (8, 'Vacaciones'),
-(9, 'Acceso a solicitud vacaciones');
+(9, 'Solicitud vacaciones');
 
 -- --------------------------------------------------------
 
