@@ -1343,9 +1343,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                             die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
                         }    
                     }else if($_POST["situacion"] == "BAJA"){
-                        $estatus_array = array("FALLECIMIENTO", "RENUNCIA VOLUNTARIA", "LIQUIDACION");
+                        $estatus_array = array("FALLECIMIENTO", "ABANDONO DE TRABAJO", "RENUNCIA VOLUNTARIA", "LIQUIDACION");
                         if (in_array($_POST["estatus_empleado"], $estatus_array)) {
-                            if($_POST["estatus_empleado"] == "RENUNCIA VOLUNTARIA" || $_POST["estatus_empleado"] == "LIQUIDACION"){
+                            if($_POST["estatus_empleado"] == "ABANDONO DE TRABAJO" || $_POST["estatus_empleado"] == "RENUNCIA VOLUNTARIA" || $_POST["estatus_empleado"] == "LIQUIDACION"){
                                 if(empty($_POST["motivo_estatus"])){
                                     die(json_encode(array("error", "El campo motivo del estatus es requerido")));
                                 }else{
