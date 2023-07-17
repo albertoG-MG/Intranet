@@ -12,7 +12,7 @@
             buttons: [
                         <?php if($count_jerarquia > 0){ ?>
                             {
-                                text: "Mis Pendientes",
+                                text: "Mis incidencias pendientes",
                                 attr: {
                                     'id': 'mis_incidencias_pendientes',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -43,7 +43,7 @@
                         <?php } ?>
                         <?php if($count_jerarquia > 0){ ?>
                             {
-                                text: "Mis Aprobadas",
+                                text: "Mis incidencias aprobadas",
                                 attr: {
                                     'id': 'mis_incidencias_aprobadas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -74,7 +74,7 @@
                         <?php } ?>
                         <?php if($count_jerarquia > 0){ ?>
                             {
-                                text: "Mis Rechazadas",
+                                text: "Mis incidencias rechazadas",
                                 attr: {
                                     'id': 'mis_incidencias_rechazadas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -106,7 +106,7 @@
                         <?php } ?>
                         <?php if($count_jerarquia > 0){ ?>
                             {
-                                text: "Mis Canceladas",
+                                text: "Mis incidencias canceladas",
                                 attr: {
                                     'id': 'mis_incidencias_canceladas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -137,7 +137,7 @@
                         <?php } ?>
                         <?php if($count_jerarquia > 0){ ?>
                             {
-                                text: "Ver mis solicitudes",
+                                text: "Ver todas mis solicitudes",
                                 attr: {
                                     'id': 'mis_incidencias',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -167,7 +167,7 @@
                         <?php } ?>
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>	
                             {
-                                text: "Abiertas",
+                                text: "Incidencias pendientes",
                                 attr: {
                                     'id': 'incidencias_abiertas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -194,7 +194,7 @@
                         <?php } ?>
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
                             {
-                                text: "Cerradas",
+                                text: "Incidencias evaluadas",
                                 attr: {
                                     'id': 'incidencias_cerradas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -221,7 +221,7 @@
                         <?php } ?>
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
                             {
-                                text: "Ver todo",
+                                text: "Desplegar todas las incidencias",
                                 attr: {
                                     'id': 'incidencias_desplieguetodo',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
@@ -247,12 +247,12 @@
                         <?php } ?>
                         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){  ?>
                             {
-                                text: "Documentos administrativos",
+                                text: "Administrar documentos administrativos",
                                 attr: {
                                     'id': 'documentos_administrativos',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
                                 action: function(e, dt, node, config) {
                                     window.location.href = "actas_cartas.php";
                                 }
@@ -260,12 +260,12 @@
                         <?php } ?>
                         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud incidencias") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             {
-                                text: "Ver Solicitudes",
+                                text: "Ver solicitudes de incidencia",
                                 attr: {
                                     'id': 'incidencias_solicitudes',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
                                 action: function ( e, dt, node, config ) {
                                     window.location.href = "solicitud_incidencia.php";
                                 }
@@ -278,7 +278,7 @@
                                     'id': 'Incidencia',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
                                 action: function(e, dt, node, config) {
                                     window.location.href = "crear_incidencia.php";
                                 }
@@ -294,7 +294,7 @@
                     <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){ ?>
                         "url": "../config/incidencias/incidencias_abiertas.php",
                     <?php }else{ ?>
-                        "url": "../config/vacaciones/mi_incidencia_pendiente.php",
+                        "url": "../config/incidencias/mi_incidencia_pendiente.php",
                     <?php } ?>
                 <?php } ?>
                 "type": "POST",
@@ -404,19 +404,90 @@
             "initComplete": () => {
                 var table = $('#datatable').DataTable();
                 $('.dt-buttons').attr('id', "botones");
+                $("#botones").addClass("w-full");
+                var botones_incidencia = document.querySelectorAll('#botones > button');
+                var children_count = botones_incidencia.length;
                 var boton = document.getElementById('botones');
-                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
-                var children = boton.childElementCount;
-                let array = [];
-                for(let i=0; i<children; i++){
-                    array[i]=boton.children[i];
+                for(var i=0; i < children_count; i++){
+                    if(botones_incidencia[i].id == "mis_incidencias_pendientes" || botones_incidencia[i].id == "mis_incidencias_aprobadas" || botones_incidencia[i].id == "mis_incidencias_rechazadas" || botones_incidencia[i].id == "mis_incidencias_canceladas" || botones_incidencia[i].id == "mis_incidencias"){
+                        if($("#personal").length){
+                            grid_personal.append(botones_incidencia[i]);
+                        }else{
+                            var container_personal = document.createElement("div");
+                            container_personal.setAttribute("id", "personal");
+                            container_personal.setAttribute("style", "text-align:start;");
+                            container_personal.classList.add('mt-5');
+                            boton.append(container_personal);
+                            var title_personal = document.createElement("h2");
+                            title_personal.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
+                            title_personal.textContent = "Desplegar mis incidencias";
+                            container_personal.append(title_personal);
+                            var span_personal = document.createElement("span");
+                            span_personal.classList.add('text-[#64748b]');
+                            span_personal.textContent = "Sección que despliega todas las incidencias del empleado.";
+                            container_personal.append(span_personal);
+                            var separator_personal = document.createElement("div");
+                            separator_personal.classList.add('my-3', 'h-px', 'bg-slate-200');
+                            container_personal.append(separator_personal);
+                            var grid_personal = document.createElement("div");
+                            grid_personal.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
+                            container_personal.append(grid_personal);
+                            grid_personal.append(botones_incidencia[i]);
+                        }
+                    }else if(botones_incidencia[i].id == "incidencias_abiertas" || botones_incidencia[i].id == "incidencias_cerradas" || botones_incidencia[i].id == "incidencias_desplieguetodo"){
+                        if($("#administrador").length){
+                            grid_administrativo.append(botones_incidencia[i]);
+                        }else{
+                            var container_administrativo = document.createElement("div");
+                            container_administrativo.setAttribute("id", "administrador");
+                            container_administrativo.setAttribute("style", "text-align:start;");
+                            container_administrativo.classList.add('mt-5');
+                            boton.append(container_administrativo);
+                            var title_administrativo = document.createElement("h2");
+                            title_administrativo.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
+                            title_administrativo.textContent = "Desplegar incidencias de todos los empleados";
+                            container_administrativo.append(title_administrativo);
+                            var span_administrativo = document.createElement("span");
+                            span_administrativo.classList.add('text-[#64748b]');
+                            span_administrativo.textContent = "Sección que despliega a todos los empleados.";
+                            container_administrativo.append(span_administrativo);
+                            var separator = document.createElement("div");
+                            separator.classList.add('my-3', 'h-px', 'bg-slate-200');
+                            container_administrativo.append(separator);
+                            var grid_administrativo = document.createElement("div");
+                            grid_administrativo.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
+                            container_administrativo.append(grid_administrativo);
+                            grid_administrativo.append(botones_incidencia[i]);
+                        }
+                    }else{
+                        if($("#otro").length){
+                            grid_otros.append(botones_incidencia[i]);
+                        }else{
+                            var container_otros = document.createElement("div");
+                            container_otros.setAttribute("id", "otro");
+                            container_otros.setAttribute("style", "text-align:start;");
+                            container_otros.classList.add('mt-5');
+                            boton.append(container_otros);
+                            var title_otros = document.createElement("h2");
+                            title_otros.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
+                            title_otros.textContent = "Acción";
+                            container_otros.append(title_otros);
+                            var span_otros = document.createElement("span");
+                            span_otros.classList.add('text-[#64748b]');
+                            span_otros.textContent = "Sección que permite distintos tipos de acciones según el tipo de usuario.";
+                            container_otros.append(span_otros);
+                            var separator_otros = document.createElement("div");
+                            separator_otros.classList.add('my-3', 'h-px', 'bg-slate-200');
+                            container_otros.append(separator_otros);
+                            var grid_otros = document.createElement("div");
+                            grid_otros.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
+                            container_otros.append(grid_otros);
+                            grid_otros.append(botones_incidencia[i]);
+                        }
+                    }
                 }
-                for(let j=0; j<children; j++){
-                    var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_18%]', 'flex', 'justify-between');
-                    boton.append(container);
-                    container.append(array[j]);
-                }
+               // console.log(divsname[0].children[0].id);
+            
                 $('#DT-div').show();
                 table.columns.adjust().responsive.recalc();
             }
