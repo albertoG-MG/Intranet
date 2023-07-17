@@ -153,7 +153,7 @@
                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_vacaciones" name="periodo_vacaciones" placeholder="Periodo de las vacaciones a tomar" autocomplete="off" aria-invalid="false">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 mt-5 mx-7 text-center">
+                            <div class="grid grid-cols-1 mt-5 text-center">
                                 <div id="submit-vacaciones">
                                     <button class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" id="guardar_general" name="guardar_general" type="submit">
                                         Solicitar vacaciones

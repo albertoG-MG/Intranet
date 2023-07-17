@@ -449,7 +449,7 @@
                             container_administrativo.append(title_administrativo);
                             var span_administrativo = document.createElement("span");
                             span_administrativo.classList.add('text-[#64748b]');
-                            span_administrativo.textContent = "Sección que despliega a todos los empleados.";
+                            span_administrativo.textContent = "Sección que despliega todas las incidencias de todos los empleados.";
                             container_administrativo.append(span_administrativo);
                             var separator = document.createElement("div");
                             separator.classList.add('my-3', 'h-px', 'bg-slate-200');
