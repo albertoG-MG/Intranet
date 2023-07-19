@@ -33,18 +33,20 @@
         <span class="mx-3">Dashboard</span>
     </a>
 
-    <div class="px-6 mt-5">
-        <div class="text-indigo-400 text-xs font-semibold tracking-wider uppercase">
-            <span> 
-                Navegación
-            </span>
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a vacaciones") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
+        <div class="px-6 mt-5">
+            <div class="text-indigo-400 text-xs font-semibold tracking-wider uppercase">
+                <span> 
+                    Navegación
+                </span>
+            </div>
+            <div class="bg-opacity-25 text-gray-500" style="font-size: 11px; line-height: 1.5">
+                <span> 
+                    Secciones de la intranet
+                </span>
+            </div>
         </div>
-        <div class="bg-opacity-25 text-gray-500" style="font-size: 11px; line-height: 1.5">
-            <span> 
-                Secciones de la intranet
-            </span>
-        </div>
-    </div>
+    <?php } ?>
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
     <button class="flex w-full items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 group hover:text-gray-100" data-collapse-toggle="catalogos">
