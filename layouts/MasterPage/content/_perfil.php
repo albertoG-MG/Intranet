@@ -61,6 +61,16 @@
                      </button>
                   </li>
                   <?php } ?>
+                  <?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){ ?>
+                  <li role="presentation">
+                     <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100" id="empleados-tab" data-tabs-target="#empleados" type="button" role="tab" aria-controls="empleados" aria-selected="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
+                           <path fill="CurrentColor" d="M13.07 10.41A5 5 0 0 0 13.07 4.59A3.39 3.39 0 0 1 15 4A3.5 3.5 0 0 1 15 11A3.39 3.39 0 0 1 13.07 10.41M5.5 7.5A3.5 3.5 0 1 1 9 11A3.5 3.5 0 0 1 5.5 7.5M7.5 7.5A1.5 1.5 0 1 0 9 6A1.5 1.5 0 0 0 7.5 7.5M16 17V19H2V17S2 13 9 13 16 17 16 17M14 17C13.86 16.22 12.67 15 9 15S4.07 16.31 4 17M15.95 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13Z" />
+                        </svg>
+                        <span>Todos mis empleados</span>
+                     </button>
+                  </li>
+                  <?php } ?>
                </ul>
             </div>
          </div>
@@ -1094,6 +1104,22 @@
                                  </div>
                               </div>
                         <?php } ?>
+                     </div>
+                  </div>
+                  <?php } ?>
+                  <?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){ ?>
+                  <div class="hidden bg-transparent rounded-lg" id="empleados" role="tabpanel" aria-labelledby="empleados-tab">
+                     <div class="p-3">
+                        <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
+                           <thead>
+                              <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                 <th class="py-3 text-left desktop">Tipo de trabajador</th>
+                                 <th class="py-3 text-left all">Nombre</th>
+                                 <th>Usuario_id</th>
+                                 <th class="py-3 text-center min-tablet">Acción</th>
+                              </tr>
+                           </thead>
+                        </table>
                      </div>
                   </div>
                   <?php } ?>

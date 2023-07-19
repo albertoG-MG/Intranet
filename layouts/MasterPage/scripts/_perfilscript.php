@@ -19,6 +19,14 @@
 			value: 'Mostrar expediente'
 		}
 		<?php } ?>
+		<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){ echo ",";  ?>
+		{
+			id: 'empleados',
+			triggerEl: document.querySelector('#empleados-tab'),
+			targetEl: document.querySelector('#empleados'),
+			value: 'Mostrar mis empleados'
+		}
+		<?php } ?>
 	];
 
 	tabElements.forEach((tab) => {
@@ -106,7 +114,99 @@
 			}
 		}
 	?>
+
+	<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
+		document.addEventListener("DOMContentLoaded", function() {
+			$("#datatable").DataTable({
+				responsive: true,
+				"lengthChange": false,
+				"ordering": false,
+				"sPaginationType": "listboxWithButtons",
+				language: {
+					search: ""
+				},
+				dom: '<"top"f>rt<"bottom"ip><"clear">',
+				"ajax":{
+					"url": "../config/perfil/mis_empleados.php",
+					"type": "POST",
+					"dataSrc": "",
+					"data":{
+						"rol": <?php echo $_SESSION["rol"]; ?>,
+						"sessionid": <?php echo $_SESSION["id"]; ?>
+
+					}
+				},
+				"initComplete": () => {
+					$("#datatable").show();
+				},
+				"columns": 
+				[
+					{"data": "tipo_trabajador"},
+					{"data": "nombre",},
+					{"data": "usuario_id", visible: false, searchable: false},
+					{"data": "expediente_id", searchable: false}
+				],
+				"columnDefs": 
+				[
+					{
+						target: [0],
+						render: function (data, type, row) {
+							return(
+								"<div class='text-left'>" +
+									"<span>" + row["tipo_trabajador"] + "</span>" +
+								"</div>"
+							);
+						}
+					},
+					{
+						target: [1],
+						render: function (data, type, row) {
+							return(
+								"<div class='text-left'>" +
+									"<span>" + row["nombre"] + "</span>" +
+								"</div>"
+							);
+						}
+					},
+					{
+						target: [3],
+						render: function (data, type, row) {
+							return (
+								"<div class='py-3 text-left'>" +
+									"<div class='flex item-center md:justify-center'>" +
+										"<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Verusuario'>" +
+											"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+												"<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />"+
+												"<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />"+
+											"</svg>"+
+										"</div>" +
+										"<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Verexpediente'>" +
+											"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+												"<path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.2' d='M14,11C12.34,11 11,9.66 11,8V4H7C5.9,4 5,4.9 5,6V19C5,20.1 5.9,21 7,21H16C17.1,21 18,20.1 18,19V11H14M12,8C12,9.1 12.9,10 14,10H17.59L12,4.41V8M7,3H12L19,10V19C19,20.66 17.66,22 16,22H7C5.34,22 4,20.66 4,19V6C4,4.34 5.34,3 7,3Z'></path>"+
+											"</svg>"+
+										"</div>" +
+										"<div class='w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer Vervacaciones'>" +
+											"<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>"+
+												"<path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.2' d='M5,7H8V5L10,3H13L15,5V7H18C19.66,7 21,8.34 21,10V18C21,19.66 19.66,21 18,21H5C3.34,21 2,19.66 2,18V10C2,8.34 3.34,7 5,7M10.41,4L9,5.41V7H14V5.41L12.59,4H10.41M5,8C3.9,8 3,8.9 3,10V18C3,19.1 3.9,20 5,20H18C19.1,20 20,19.1 20,18V10C20,8.9 19.1,8 18,8H5Z' />"+
+											"</svg>"+
+										"</div>" +
+									"</div>" +
+								"</div>"
+							);	
+						}
+					}
+				]
+			});
+		});
+	<?php } ?>
+
 	$( document ).ready(function() {
+
+		<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
+			$('.dataTables_filter input[type="search"]').
+        	attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+		<?php } ?>
+
 		$("main").removeClass("overflow-y-auto").addClass("overflow-y-scroll");
 
 		var originalState = $("#img_information").clone();
@@ -1053,4 +1153,78 @@
 	.error{
 		color: rgb(244 63 94);
 	}
+
+	<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
+		.dataTables_wrapper .dataTables_filter {
+			float: left;
+			text-align: left;
+			padding-bottom: 5px;
+			padding-top: 5px;
+		}
+
+		@media (max-width: 640px) {
+			.dataTables_filter {
+				width: 100%;
+			}
+		}
+
+		.dataTables_paginate {
+			font-size: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			right: 7px;
+		}
+
+		.dt-buttons {
+			float: right !important;
+			text-align: right;
+		}
+
+		#datatable {
+			border-collapse: collapse !important;
+		}
+
+		.search {
+			margin: auto !important;
+			height: 40px !important;
+		}
+
+		tr.odd:hover,
+		tr.even:hover {
+			background: rgb(243 244 246 / var(--tw-bg-opacity)) !important
+		}
+
+		tr.odd {
+			border-bottom-width: 1px;
+			border-color: rgb(229 231 235 / var(--tw-border-opacity));
+			--tw-border-opacity: 1;
+			background: transparent !important;
+		}
+
+		tr.even {
+			border-bottom-width: 1px;
+			border-color: rgb(229 231 235 / var(--tw-border-opacity));
+			--tw-border-opacity: 1;
+			background: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
+		}
+
+		div.dataTables_filter .search {
+			background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB2ZXJzaW9uPSIxLjEiICAgaWQ9InN2ZzQ0ODUiICAgdmlld0JveD0iMCAwIDIxLjk5OTk5OSAyMS45OTk5OTkiICAgaGVpZ2h0PSIyMiIgICB3aWR0aD0iMjIiPiAgPGRlZnMgICAgIGlkPSJkZWZzNDQ4NyIgLz4gIDxtZXRhZGF0YSAgICAgaWQ9Im1ldGFkYXRhNDQ5MCI+ICAgIDxyZGY6UkRGPiAgICAgIDxjYzpXb3JrICAgICAgICAgcmRmOmFib3V0PSIiPiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+ICAgICAgICA8ZGM6dHlwZSAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4gICAgICAgIDxkYzp0aXRsZT48L2RjOnRpdGxlPiAgICAgIDwvY2M6V29yaz4gICAgPC9yZGY6UkRGPiAgPC9tZXRhZGF0YT4gIDxnICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0xMDMwLjM2MjIpIiAgICAgaWQ9ImxheWVyMSI+ICAgIDxnICAgICAgIHN0eWxlPSJvcGFjaXR5OjAuNSIgICAgICAgaWQ9ImcxNyIgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAuNCw4NjYuMjQxMzQpIj4gICAgICA8cGF0aCAgICAgICAgIGlkPSJwYXRoMTkiICAgICAgICAgZD0ibSAtNTAuNSwxNzkuMSBjIC0yLjcsMCAtNC45LC0yLjIgLTQuOSwtNC45IDAsLTIuNyAyLjIsLTQuOSA0LjksLTQuOSAyLjcsMCA0LjksMi4yIDQuOSw0LjkgMCwyLjcgLTIuMiw0LjkgLTQuOSw0LjkgeiBtIDAsLTguOCBjIC0yLjIsMCAtMy45LDEuNyAtMy45LDMuOSAwLDIuMiAxLjcsMy45IDMuOSwzLjkgMi4yLDAgMy45LC0xLjcgMy45LC0zLjkgMCwtMi4yIC0xLjcsLTMuOSAtMy45LC0zLjkgeiIgICAgICAgICBjbGFzcz0ic3Q0IiAvPiAgICAgIDxyZWN0ICAgICAgICAgaWQ9InJlY3QyMSIgICAgICAgICBoZWlnaHQ9IjUiICAgICAgICAgd2lkdGg9IjAuODk5OTk5OTgiICAgICAgICAgY2xhc3M9InN0NCIgICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjY5NjQsLTAuNzE3NiwwLjcxNzYsMC42OTY0LC0xNDIuMzkzOCwyMS41MDE1KSIgICAgICAgICB5PSIxNzYuNjAwMDEiICAgICAgICAgeD0iLTQ2LjIwMDAwMSIgLz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
+			background-repeat: no-repeat;
+			background-color: #fff;
+			background-position: 3px 7px !important;
+			padding-left: 30px;
+		}
+
+		table{
+			margin: 0 auto;
+			width: 100%;
+			clear: both;
+			border-collapse: collapse;
+			table-layout: fixed;
+			word-wrap:break-word;
+		}
+	<?php } ?>
 </style>

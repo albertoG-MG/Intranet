@@ -90,4 +90,9 @@ $papeleria->execute(array(':sessionid' => $_SESSION["id"]));
 while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
 	$array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'identificador'=>$papel->identificador, 'fecha_subida'=>$papel->fecha_subida);
 }
+
+/*CHECA SI EL USUARIO LOGGEADO TIENE NODOS*/
+$doesnt_have_employees = $object -> _db -> prepare("SELECT nombre FROM (SELECT r1.nombre FROM jerarquia t1 INNER JOIN roles r1 ON r1.id=t1.rol_id LEFT JOIN jerarquia t2 ON t1.id = t2.jerarquia_id WHERE t2.id IS NULL UNION ALL SELECT 'Superadministrador' UNION ALL SELECT 'Administrador' UNION ALL SELECT 'Usuario externo') empleado WHERE empleado.nombre = :rolnom");
+$doesnt_have_employees -> execute(array(':rolnom' => Roles::FetchSessionRol($_SESSION["rol"])));
+$count_doesnt_have_employees = $doesnt_have_employees -> rowCount();
 ?>
