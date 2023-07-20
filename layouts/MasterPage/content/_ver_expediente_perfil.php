@@ -1,6 +1,6 @@
 <div class="container mx-auto px-6 py-8">
 <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
-   Ver Expedientes
+   Ver Expediente
 </h2>
 <div class="mt-4">
 <div class="flex flex-col mt-8">
