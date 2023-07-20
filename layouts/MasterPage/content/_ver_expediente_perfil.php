@@ -18,6 +18,9 @@
                </div>
             </div>
             <div class="bg-white p-3 shadow-md rounded-b">
+               <div class="text-center mt-5 md:text-left md:mx-7">
+	               <a href="perfil.php" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" id="regresar" name="regresar">Regresar</a>
+               </div>
                <div class="flex flex-col mt-5 mx-7">
                   <h2 class="text-2xl text-[#64748b] font-semibold">Expediente del Empleado: <?php echo $selected->nombre. " " .$selected->apellido_pat. " " .$selected->apellido_mat ?></h2>
                   <span class="text-[#64748b]">En esta sección puede visualizar la información de un empleado.</span>
