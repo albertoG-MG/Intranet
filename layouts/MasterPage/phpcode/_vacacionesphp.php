@@ -240,18 +240,18 @@
                 $vacaciones=20;
             }else{
                 $acum=6;
-                $acum2=10;
-                $vacaciones=22;
-                $bool = "false";
-                do{
-                    if(($acum <= $diff->y) && ($diff->y <= $acum2)){
-                        $bool = "true";
-                    }else{
-                        $vacaciones = $vacaciones+2;
-                        $acum=$acum + 5;
-                        $acum2=$acum2 + 5;
-                    }
-                }while($bool == "true");
+	            $acum2=10;
+	            $vacaciones=20;
+	            $counter=0;
+	            do {
+		            if(($acum > $diff->y) && ($diff->y < $acum2)){
+			            $counter++;
+		            }else{
+			            $vacaciones = $vacaciones + 2;
+			            $acum = $acum + 5;
+			            $acum2 = $acum2 + 5;
+		            }
+	            } while($counter <= 1);
             }
 
             $check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");

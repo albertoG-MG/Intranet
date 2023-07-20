@@ -2731,17 +2731,17 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			$acum=6;
 			$acum2=10;
-			$vacaciones=22;
-			$bool = "false";
-			do{
-				if(($acum <= $diff->y) && ($diff->y <= $acum2)){
-					$bool = "true";
+			$vacaciones=20;
+			$counter=0;
+			do {
+				if(($acum > $diff->y) && ($diff->y < $acum2)){
+					$counter++;
 				}else{
-					$vacaciones = $vacaciones+2;
-					$acum=$acum + 5;
-					$acum2=$acum2 + 5;
+					$vacaciones = $vacaciones + 2;
+					$acum = $acum + 5;
+					$acum2 = $acum2 + 5;
 				}
-			}while($bool == "true");
+			} while($counter <= 1);
 		}
 
 		//Se calculan los días ya usados y se obtienen las vacaciones restantes
