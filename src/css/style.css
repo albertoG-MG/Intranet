@@ -2347,6 +2347,11 @@ select {
     margin-right: 0.5rem !important;
   }
 
+  .md\:mx-7 {
+    margin-left: 1.75rem !important;
+    margin-right: 1.75rem !important;
+  }
+
   .md\:ml-1 {
     margin-left: 0.25rem !important;
   }
