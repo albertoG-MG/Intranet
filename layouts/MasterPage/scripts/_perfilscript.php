@@ -220,6 +220,21 @@
 				var data = row.data();
 				window.location.href = "ver_usuario_perfil.php?idUser="+data['usuario_id']+"";
 			});
+
+			$(document).on('click', '.Verexpediente', function () {
+				var table = $('#datatable').DataTable();
+				var rowSelector;
+				var li = $(this).closest('li');
+				if ( li.length ) {
+					rowSelector = table.cell( li ).index().row;
+				}
+				else {
+					rowSelector =  $(this).closest('tr');
+				}
+				var row = table.row(rowSelector);
+				var data = row.data();
+				window.location.href = "ver_expediente_perfil.php?idExpediente="+data['expediente_id']+"";
+			});
 		<?php } ?>
 
 		$("main").removeClass("overflow-y-auto").addClass("overflow-y-scroll");
