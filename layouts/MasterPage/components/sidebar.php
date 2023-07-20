@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <?php if(basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'perfil.php'){?>
+    <?php if(basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'perfil.php' || basename($_SERVER['PHP_SELF']) == 'ver_usuario_perfil.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente_perfil.php'){?>
     <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="dashboard.php">
     <?php }else{ ?>
     <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="dashboard.php">
