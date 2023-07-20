@@ -205,6 +205,21 @@
 		<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
 			$('.dataTables_filter input[type="search"]').
         	attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+
+			$(document).on('click', '.Verusuario', function () {
+				var table = $('#datatable').DataTable();
+				var rowSelector;
+				var li = $(this).closest('li');
+				if ( li.length ) {
+					rowSelector = table.cell( li ).index().row;
+				}
+				else {
+					rowSelector =  $(this).closest('tr');
+				}
+				var row = table.row(rowSelector);
+				var data = row.data();
+				window.location.href = "ver_usuario_perfil.php?idUser="+data['usuario_id']+"";
+			});
 		<?php } ?>
 
 		$("main").removeClass("overflow-y-auto").addClass("overflow-y-scroll");
