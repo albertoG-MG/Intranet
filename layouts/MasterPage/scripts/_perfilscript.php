@@ -197,6 +197,122 @@
 					}
 				]
 			});
+
+			const modalContainer = document.querySelector(
+				"#modal-component-container"
+			);
+
+			const modal = document.querySelector("#modal-container");
+
+			$('.modal-actions').on('click', '#close-modal', function(){
+				closeModal();
+			});
+
+			function openModal(){
+				showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+				showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+			}
+
+			function closeModal(){
+				showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+				showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+				setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+			}
+
+			function showAndHide(element, classesToAdd, classessToRemove){
+				element.classList.remove( ...classessToRemove);
+				element.classList.add( ...classesToAdd);
+			}
+
+			$(document).on('click', '.Vervacaciones', function () {
+				var table = $('#datatable').DataTable();
+				var rowSelector;
+				var li = $(this).closest('li');
+				if ( li.length ) {
+					rowSelector = table.cell( li ).index().row;
+				}
+				else {
+					rowSelector =  $(this).closest('tr');
+				}
+				var row = table.row(rowSelector);
+				var data = row.data();
+				$.ajax({
+					type: "GET",
+					url: "../config/getvacaciones.php",
+					data:{
+						"usuarioid": data["usuario_id"],
+						"expedienteid": data["expediente_id"]
+					},
+					success: function (response) {
+						var array = $.parseJSON(response);
+						if(array[0] == "success"){
+							$(".modal-content").html(
+								'<h3 class="text-lg font-medium text-gray-900 mx-7 mt-5">'+data["nombre"]+'</h3>'+
+								'<div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Vacaciones disponibles:'+
+										'</div>'+
+										'<span>'+array[1]+'</span>'+
+									'</div>'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Vacaciones restantes:'+
+										'</div>'+
+										'<span>'+array[2]+'</span>'+
+									'</div>'+
+								'</div>'+
+								'<div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Fecha de estatus'+
+										'</div>'+
+										'<span>'+array[3]+'</span>'+
+									'</div>'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Fecha de vencimiento:'+
+										'</div>'+
+										'<span>'+array[4]+'</span>'+
+									'</div>'+
+								'</div>'+
+								'<div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Número de solicitudes:'+
+										'</div>'+
+										'<span>'+array[5]+'</span>'+
+									'</div>'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Solicitudes aprobadas:'+
+										'</div>'+
+										'<span>'+array[6]+'</span>'+
+									'</div>'+
+								'</div>'+
+								'<div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Solicitudes rechazadas:'+
+										'</div>'+
+										'<span>'+array[7]+'</span>'+
+									'</div>'+
+									'<div class="flex-1 flex flex-col mt-5">'+
+										'<div class="text-[#64748b] font-semibold">'+
+											'Solicitudes canceladas:'+
+										'</div>'+
+										'<span>'+array[8]+'</span>'+
+									'</div>'+
+								'</div>');
+						}else if(array[0] == "error"){
+							$(".modal-content").html(
+								'<h3 class="text-lg font-medium text-gray-900 mx-7 mt-5">'+data["nombre"]+'</h3>'+
+								'<label class="mx-7">'+array[1]+'</label>');
+						}
+						openModal();	
+					}
+				});
+			});
 		});
 	<?php } ?>
 
