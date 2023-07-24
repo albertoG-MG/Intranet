@@ -144,7 +144,7 @@
                             <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
                                 <th>Creada por</th>
                                 <th>Modificada por</th>
-                                <th class="py-3 text-left desktop">Imágen destacada</th>
+                                <th class="py-3 text-center desktop">Imágen destacada</th>
                                 <th>Nombre del archivo</th>
                                 <th class="py-3 text-center all">Título</th>
                                 <th class="py-3 text-center desktop">Descripción</th>
