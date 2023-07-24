@@ -8,6 +8,7 @@ include_once __DIR__ . "/../classes/incidencias.php";
 include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
 include_once __DIR__ . "/../classes/vacaciones.php";
+include_once __DIR__ . "/../classes/noticias.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
