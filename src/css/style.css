@@ -2564,6 +2564,10 @@ select {
     grid-column: span 8 / span 8 !important;
   }
 
+  .lg\:m-auto {
+    margin: auto !important;
+  }
+
   .lg\:hidden {
     display: none !important;
   }
