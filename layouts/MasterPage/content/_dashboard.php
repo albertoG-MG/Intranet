@@ -142,11 +142,14 @@
                     <table class="w-full" id="noticias_table" style="display:none; word-break: break-word;">
                         <thead>
                             <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
-                                <th class="py-3 text-left desktop">ID</th>
+                                <th>Creada por</th>
+                                <th>Modificada por</th>
                                 <th class="py-3 text-left desktop">Imágen destacada</th>
-                                <th class="py-3 text-left all">Título</th>
+                                <th>Nombre del archivo</th>
+                                <th class="py-3 text-center all">Título</th>
                                 <th class="py-3 text-center desktop">Descripción</th>
                                 <th class="py-3 text-center desktop">Fecha</th>
+                                <th>Fecha de modificacion</th>
                                 <th class="py-3 text-center min-tablet">Acción</th>
                             </tr>
                         </thead>
