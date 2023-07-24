@@ -48,4 +48,485 @@
             "group-hover:text-slate-500", "group-focus:text-slate-500");
         })
     });
+
+    <?php 
+    if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+        if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+    ?>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        $("#noticias_table").DataTable({
+            responsive: true,
+            "lengthChange": false,
+            "ordering": false,
+            "sPaginationType": "listboxWithButtons",
+            language: {
+                search: ""
+            },
+            dom: '<"top"fB>rt<"bottom"ip><"clear">',
+            buttons: [
+                {
+                    text: "Crear noticia",
+                    attr: {
+                        'id': 'Noticia',
+                        'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                    },
+                    className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                    action: function(e, dt, node, config) {
+                        $('.modal-wrapper-flex').html(
+                            '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
+                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                                        '<path fill="currentColor" d="M20 5L20 19L4 19L4 5H20M20 3H4C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3M18 15H6V17H18V15M10 7H6V13H10V7M12 9H18V7H12V9M18 11H12V13H18V11Z" /></svg>'+
+                                '</div>'+
+                                '<h3 class="text-lg font-medium text-gray-900"> Crear una noticia</h3>'+
+                            '</div>'+
+                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                    '<label class="text-[#64748b] font-semibold mb-2">'+
+                                        'Título de la noticia'+
+                                    '</label>'+
+                                    '<div class="group flex">'+
+                                        '<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">'+
+                                            '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                                                '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
+                                            '</svg>'+
+                                        '</div>'+
+                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_noticia" name="titulo_noticia" placeholder="Título de la noticia">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                    '<label class="text-[#64748b] font-semibold mb-2">Descripción de la noticia</label>'+
+                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_noticia" name="descripcion_noticia" placeholder="Descripción de la noticia"></textarea>'+
+                                    '<div id="error_descripcion_noticia"></div>'+
+                                '</div>'+
+                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                    '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la noticia</label>'+
+                                    '<div class="flex items-center justify-center w-full">'+
+                                        '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
+                                            '<div id="img_information" class="flex flex-col items-center justify-center pt-7">'+
+                                                '<div id="svg">'+
+                                                    '<svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'+
+                                                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>'+
+                                                    '</svg>'+
+                                                '</div>'+
+                                                '<img id="preview" class="hidden">'+
+                                                '<p id="archivo" style="word-break:break-word;" class="lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider">Selecciona una fotografía</p>'+
+                                            '</div>'+
+                                            '<input type="file" id="foto" name="foto" class="hidden">'+
+                                        '</label>'+
+                                    '</div>'+
+                                    '<div id="error" class="m-auto"></div>'+
+                                '</div>'+
+                                '<div id="div_foto" class="hidden">'+
+                                    '<div id="div_actions_foto" class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">'+
+                                        '<button type="button" id="delete_foto" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">'+
+                                            '<svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">'+
+                                                '<path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />'+
+                                            '</svg>'+
+                                            'Eliminar'+
+                                        '</button>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>');
+                        $('.modal-actions').html(
+                            '<div id="submit-changes">'+
+                                '<button id="crear-noticia" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
+                            '</div>'+
+                            '<div id="disable-close-submit">'+
+                                '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
+                            '</div>');
+                        openModal();
+                        resetFormValidator("#Guardar");
+                        $('#Guardar').unbind('submit'); 
+                        $.validator.addMethod('field_validation', function (value, element) {
+                            return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+                        }, 'not a valid field.');
+                        $.validator.addMethod('description', function (value, element) {
+                            return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
+                        }, 'not a valid description.');
+                        $.validator.addMethod('filesize', function(value, element, param) {
+                            return this.optional(element) || (element.files[0].size <= param * 1048576)
+                        }, 'File size must be less than {0} MB');
+                        if ($('#Guardar').length > 0) {
+                            $('#Guardar').validate({
+                                ignore: [],
+                                onkeyup: false,
+                                errorPlacement: function(error, element) {
+                                    if((element.attr('name') === 'foto')){
+                                        error.appendTo("div#error");  
+                                    }else if(element.attr('name') === 'descripcion_noticia'){
+                                        error.appendTo("div#error_descripcion_noticia"); 
+                                    }else{
+                                        error.insertAfter(element.parent('.group.flex'));
+                                    }
+                                },
+                                highlight: function(element) {
+                                    var elem = $(element);
+                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                                },
+                                unhighlight: function(element) {
+                                    var elem = $(element);	
+                                    $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                },
+                                rules: {
+                                    titulo_noticia: {
+                                        required: true,
+                                        field_validation: true
+                                    },
+                                    descripcion_noticia: {
+                                        required: true,
+                                        description: true
+                                    },
+                                    foto: {
+                                        extension: "jpg|jpeg|png",
+                                        filesize: 10
+                                    }
+                                },
+                                messages: {
+                                    titulo_noticia: {
+                                        required: 'Este campo es requerido',
+                                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                                    },
+                                    descripcion_noticia: {
+                                        required: 'Este campo es requerido',
+                                        description: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                                    },
+                                    foto: {
+                                        extension: 'Solo se permite jpg, jpeg y pngs',
+                                        filesize: 'Las imágenes deben pesar ser menos de 10 MB'
+                                    }
+                                },
+                                submitHandler: function(form) {
+                                    $('#submit-changes').html(
+                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                            '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                            '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                            '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                            '</svg>'+
+                                            'Cargando...'+
+                                        '</button>');
+                                        $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                        check_user_logged().then((response) => {
+                                            if(response == "true"){
+                                                window.addEventListener('beforeunload', unloadHandler);
+                                                /*EMPIEZA EL AJAX*/
+                                                var fd = new FormData();
+                                                var titulo_noticia = $("#titulo_noticia").val();
+                                                var descripcion_noticia = $("#descripcion_noticia").val();
+                                                var foto = $('#foto')[0].files[0];
+                                                var method = "store";
+                                                var app = "noticias";
+                                                fd.append('titulo_noticia', titulo_noticia);
+                                                fd.append('descripcion_noticia', descripcion_noticia);
+                                                fd.append('foto', foto);
+                                                fd.append('method', method);
+                                                fd.append('app', app);
+                                                $.ajax({
+                                                    url: '../ajax/class_search.php',
+                                                    type: 'POST',
+                                                    data: fd,
+                                                    processData: false,
+                                                    contentType: false,
+                                                    success: function(data) {
+                                                        setTimeout(function(){
+                                                            var array = $.parseJSON(data);
+                                                            if (array[0] == "success") {
+                                                                Swal.fire({
+                                                                    title: "Noticia Creada",
+                                                                    text: array[1],
+                                                                    icon: "success"
+                                                                }).then(function() {
+                                                                    window.removeEventListener('beforeunload', unloadHandler);
+                                                                    $('#submit-changes').html('<button disabled id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                    $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                                    closeModal();
+                                                                });
+                                                            } else if(array[0] == "error") {
+                                                                Swal.fire({
+                                                                    title: "Error",
+                                                                    text: array[1],
+                                                                    icon: "error"
+                                                                }).then(function() {
+                                                                    window.removeEventListener('beforeunload', unloadHandler);
+                                                                    $('#submit-changes').html('<button id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                    $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                                });
+                                                            }
+                                                        },3000);
+                                                    },
+                                                    error: function(data) {
+                                                        $("#ajax-error").text('Fail to send request');
+                                                    }
+                                                });
+                                            }else{
+                                                Swal.fire({
+                                                    title: "Ocurrió un error",
+                                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                                    icon: "error"
+                                                }).then(function() {
+                                                    window.removeEventListener('beforeunload', unloadHandler);
+                                                    $('#submit-changes').html('<button disabled id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                    $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                    window.location.href = "login.php";
+                                                });	
+                                            }
+
+                                        }).catch((error) => {
+                                            console.log(error);
+                                        })  
+                                    return false;
+                                }
+                            });
+                        }
+                    }
+                }
+            ],
+            "initComplete": () => {
+                $("#noticias_table").show();
+            },
+        });
+
+        const modalContainer = document.querySelector(
+            "#modal-component-container"
+        );
+
+        const modal = document.querySelector("#modal-container");
+
+        $('.modal-actions').on('click', '#close-modal', function(){
+            closeModal();
+        });
+
+        function openModal(){
+            showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+            showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+        }
+
+        function closeModal(){
+            showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+            showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+            setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+        }
+
+        function showAndHide(element, classesToAdd, classessToRemove){
+            element.classList.remove( ...classessToRemove);
+            element.classList.add( ...classesToAdd);
+        }
+
+        function resetFormValidator(formId) {
+            $(formId).removeData('validator');
+            $(formId).removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(formId);
+        }
+    });
+
+    $(document).ready(function () {
+        $('.dataTables_filter input[type="search"]').
+        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+
+        $(document).on('keypress', 'form#Guardar input[type="text"]', function(e) {
+            return e.which !== 13;
+        });
+
+        var originalState = $("#img_information").clone();
+        var file_foto;
+
+
+        $(document).on('click', '#delete_foto', function() {
+            $("#img_information").replaceWith(originalState.clone());
+            $("#foto").val("");
+            $("#div_actions_foto").addClass("hidden");
+        });
+
+        $(document).on('click', '#foto', function() {
+			foto = $("#foto").clone();
+		});
+
+        $(document).on('change', '#foto', function () {
+            if (window.FileReader && window.Blob) {
+                var files = $('input#foto').get(0).files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    console.log('Archivo cargado: ' + file.name);
+                    console.log('Blob mime: ' + file.type);
+                    console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+                    console.log('Tamaño en bytes: ' + file.size);
+
+                    var fileReader = new FileReader();
+                    fileReader.onerror = function (e) {
+                        console.error('ERROR', e);
+                    };
+                    fileReader.onloadend = function (e) {
+                        var arr = new Uint8Array(e.target.result);
+                        var header = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            header += arr[i].toString(16);
+                        }
+                        console.log('Encabezado: ' + header);
+
+                        // Check the file signature against known types
+                        var type = 'unknown';
+                        switch (header) {
+                            case '89504e47':
+                                type = 'image/png';
+                                break;
+                            case 'ffd8ffe0':
+                            case 'ffd8ffe1':
+                            case 'ffd8ffe2':
+                                type = 'image/jpeg';
+                                break;
+                        }
+                        if (file.type !== type) {
+                            console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                            $('#preview').addClass('hidden');
+                            $('#svg').removeClass('hidden');
+                            $('#archivo').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                            $("#div_foto").removeClass("hidden");
+                        } else {
+                            console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                            if(file.size > 10485760){
+                                $('#preview').addClass('hidden');
+                                $('#svg').removeClass('hidden');
+                                $('#archivo').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                $("#div_foto").removeClass("hidden");
+                            }else{
+                                $('#preview').removeClass('hidden');
+                                $('#preview').addClass('w-10 h-10');
+                                $('#svg').addClass('hidden');
+                                $('#archivo').text(file.name);
+                                $("#div_foto").removeClass("hidden");
+                                let reader = new FileReader();
+                                reader.onload = function (event) {
+                                    $('#preview').attr('src', event.target.result);
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#foto").replaceWith(foto.clone());
+                }
+            } else {
+                console.error('FileReader ó Blob no es compatible con este navegador.');
+                if($("#foto").val() != ''){
+                    var file = this.files[0].name;
+                    var lastDot = file.lastIndexOf('.');
+                    var extension = file.substring(lastDot + 1);
+                    if(extension == "jpeg" || extension == "jpg" || extension == "png") {
+                        if(this.files[0].size > 10485760){
+                            $('#archivo').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                            $("#div_foto").removeClass("hidden");
+                        }else{
+                            $('#archivo').text(file);
+                            $("#div_foto").removeClass("hidden");
+                        }
+                    }else{
+                        $('#archivo').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                        $("#div_foto").removeClass("hidden");
+                    }
+                }
+            }
+        });
+    });
+
+    function check_user_logged(){
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: "POST",
+				url: "../ajax/check_user_logged.php",
+				data:{
+					pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+				},
+				success: function (response) {
+					resolve(response)
+				},
+				error: function (error) {
+					reject(error)
+				}
+			});
+		})
+	}
+
+	function unloadHandler(e) {
+		// Cancel the event
+		e.preventDefault();
+		// Chrome requires returnValue to be set
+		e.returnValue = '';
+	}
 </script>
+
+<style>
+    
+    .error{
+        color: red;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        float: left;
+        text-align: left;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+
+    @media (max-width: 640px) {
+        .dataTables_filter {
+            width: 100%;
+        }
+    }
+
+    .dataTables_paginate {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        right: 7px;
+    }
+
+    .dt-buttons {
+        float: right !important;
+        text-align: right;
+    }
+
+    #datatable {
+        border-collapse: collapse !important;
+    }
+
+    .search {
+        margin: auto !important;
+        height: 40px !important;
+    }
+
+    tr.odd:hover,
+    tr.even:hover {
+        background: rgb(243 244 246 / var(--tw-bg-opacity)) !important
+    }
+
+    tr.odd {
+        border-bottom-width: 1px;
+        border-color: rgb(229 231 235 / var(--tw-border-opacity));
+        --tw-border-opacity: 1;
+        background: transparent !important;
+    }
+
+    tr.even {
+        border-bottom-width: 1px;
+        border-color: rgb(229 231 235 / var(--tw-border-opacity));
+        --tw-border-opacity: 1;
+        background: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
+    }
+
+    div.dataTables_filter .search {
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB2ZXJzaW9uPSIxLjEiICAgaWQ9InN2ZzQ0ODUiICAgdmlld0JveD0iMCAwIDIxLjk5OTk5OSAyMS45OTk5OTkiICAgaGVpZ2h0PSIyMiIgICB3aWR0aD0iMjIiPiAgPGRlZnMgICAgIGlkPSJkZWZzNDQ4NyIgLz4gIDxtZXRhZGF0YSAgICAgaWQ9Im1ldGFkYXRhNDQ5MCI+ICAgIDxyZGY6UkRGPiAgICAgIDxjYzpXb3JrICAgICAgICAgcmRmOmFib3V0PSIiPiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+ICAgICAgICA8ZGM6dHlwZSAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4gICAgICAgIDxkYzp0aXRsZT48L2RjOnRpdGxlPiAgICAgIDwvY2M6V29yaz4gICAgPC9yZGY6UkRGPiAgPC9tZXRhZGF0YT4gIDxnICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0xMDMwLjM2MjIpIiAgICAgaWQ9ImxheWVyMSI+ICAgIDxnICAgICAgIHN0eWxlPSJvcGFjaXR5OjAuNSIgICAgICAgaWQ9ImcxNyIgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAuNCw4NjYuMjQxMzQpIj4gICAgICA8cGF0aCAgICAgICAgIGlkPSJwYXRoMTkiICAgICAgICAgZD0ibSAtNTAuNSwxNzkuMSBjIC0yLjcsMCAtNC45LC0yLjIgLTQuOSwtNC45IDAsLTIuNyAyLjIsLTQuOSA0LjksLTQuOSAyLjcsMCA0LjksMi4yIDQuOSw0LjkgMCwyLjcgLTIuMiw0LjkgLTQuOSw0LjkgeiBtIDAsLTguOCBjIC0yLjIsMCAtMy45LDEuNyAtMy45LDMuOSAwLDIuMiAxLjcsMy45IDMuOSwzLjkgMi4yLDAgMy45LC0xLjcgMy45LC0zLjkgMCwtMi4yIC0xLjcsLTMuOSAtMy45LC0zLjkgeiIgICAgICAgICBjbGFzcz0ic3Q0IiAvPiAgICAgIDxyZWN0ICAgICAgICAgaWQ9InJlY3QyMSIgICAgICAgICBoZWlnaHQ9IjUiICAgICAgICAgd2lkdGg9IjAuODk5OTk5OTgiICAgICAgICAgY2xhc3M9InN0NCIgICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjY5NjQsLTAuNzE3NiwwLjcxNzYsMC42OTY0LC0xNDIuMzkzOCwyMS41MDE1KSIgICAgICAgICB5PSIxNzYuNjAwMDEiICAgICAgICAgeD0iLTQ2LjIwMDAwMSIgLz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
+        background-repeat: no-repeat;
+        background-color: #fff;
+        background-position: 3px 7px !important;
+        padding-left: 30px;
+    }
+</style>
+<?php 
+        }
+    } 
+?>

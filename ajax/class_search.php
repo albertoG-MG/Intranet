@@ -2809,5 +2809,61 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "noticias"){
+	if(isset($_POST["titulo_noticia"], $_POST["descripcion_noticia"], $_FILES["foto"], $_POST["method"])){
+		//TÍTULO DE LA NOTICIA
+		if(empty($_POST["titulo_noticia"])){
+			die(json_encode(array("error", "El título de la noticia no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_noticia"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título de la noticia")));
+		}else{
+			$titulo_noticia = $_POST["titulo_noticia"];
+		}
+
+		//DESCRIPCIÓN DE LA NOTICIA
+		if(empty($_POST["descripcion_noticia"])){
+			die(json_encode(array("error", "La descripción de la noticia no puede estar vacío")));
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["descripcion_noticia"])){
+			die(json_encode(array("error", "La descripción de la noticia no puede tener solamente símbolos especiales y debe contener al menos una letra")));
+		}else{
+			$descripcion_noticia = $_POST["descripcion_noticia"];
+		}
+
+		//FOTO
+		if(isset($_FILES['foto']['name'])){
+			$allowed = array('jpeg', 'png', 'jpg');
+			$filename_noticias = $_FILES['foto']['name'];
+			$ext = pathinfo($filename_noticias, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['foto']['size'] > 10485760){
+				die(json_encode(array("error", "Las imágenes deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["foto"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"){
+					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo png, jpg y jpeg")));
+				}
+			}
+			$foto=$_FILES['foto'];
+		}else{
+			$filename_noticias = null;
+			$foto=null;
+		}
+
+		switch($_POST["method"]){
+            case "store":
+				$noticia = new Noticias($_SESSION["id"], $titulo_noticia, $descripcion_noticia, $filename_noticias, $foto);
+				$noticia -> insertNews();
+                die(json_encode(array("success", "Se ha creado la noticia!")));
+                break;
+            break;
+            case "edit":
+                
+			die(json_encode(array("sucess", "Se ha modificado la noticia!")));
+            break;
+        }
+	}
 }
 ?>
