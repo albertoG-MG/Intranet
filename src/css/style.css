@@ -907,6 +907,9 @@ select {
 .h-32 {
   height: 8rem !important;
 }
+.h-\[21\.875rem\] {
+  height: 21.875rem !important;
+}
 .h-14 {
   height: 3.5rem !important;
 }
@@ -2212,6 +2215,10 @@ select {
     height: 2.5rem !important;
   }
 
+  .sm\:h-full {
+    height: 100% !important;
+  }
+
   .sm\:w-10 {
     width: 2.5rem !important;
   }
@@ -2458,6 +2465,10 @@ select {
     --tw-space-x-reverse: 0 !important;
     margin-right: calc(0.5rem * var(--tw-space-x-reverse)) !important;
     margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse))) !important;
+  }
+
+  .md\:overflow-y-hidden {
+    overflow-y: hidden !important;
   }
 
   .md\:break-normal {
