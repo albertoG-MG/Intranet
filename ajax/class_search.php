@@ -2811,7 +2811,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
     }
 }else if(isset($_POST["app"]) && $_POST["app"] == "noticias"){
-	if(isset($_POST["titulo_noticia"], $_POST["descripcion_noticia"], $_FILES["foto"], $_POST["method"])){
+	if(isset($_POST["titulo_noticia"], $_POST["descripcion_noticia"], $_POST["method"])){
 		//TÍTULO DE LA NOTICIA
 		if(empty($_POST["titulo_noticia"])){
 			die(json_encode(array("error", "El título de la noticia no puede estar vacío")));
