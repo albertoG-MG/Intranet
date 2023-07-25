@@ -608,6 +608,7 @@
                                     fd.append('descripcion_noticia', descripcion_noticia);
                                     fd.append('foto', foto);
                                     fd.append('id', id);
+                                    fd.append('delete', delete_switch);
                                     fd.append('method', method);
                                     fd.append('app', app);
                                     $.ajax({
