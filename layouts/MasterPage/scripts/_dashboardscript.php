@@ -117,7 +117,7 @@
                                             '<div id="disable-close-submit">'+
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
                                             '</div>');
-                                        var originalState = $("#img_information").clone();
+                                        originalState = $("#img_information").clone();
                                         openModal();
                                         resetFormValidator("#Guardar");
                                         $('#Guardar').unbind('submit'); 
