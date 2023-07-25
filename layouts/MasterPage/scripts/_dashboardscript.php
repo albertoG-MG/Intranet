@@ -685,6 +685,101 @@
             delete_switch = "true";
         });
 
+        var editar_file_foto;
+
+        $(document).on('click', '#editar_foto', function() {
+			editar_file_foto = $("#editar_foto").clone();
+		});
+
+        $(document).on('change', '#editar_foto', function () {
+			if (window.FileReader && window.Blob) {
+				var files = $('input#editar_foto').get(0).files;
+				if (files.length > 0) {
+					var file = files[0];
+					console.log('Archivo cargado: ' + file.name);
+					console.log('Blob mime: ' + file.type);
+					console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+					console.log('Tamaño en bytes: ' + file.size);
+
+					var fileReader = new FileReader();
+					fileReader.onerror = function (e) {
+						console.error('ERROR', e);
+					};
+					fileReader.onloadend = function (e) {
+						var arr = new Uint8Array(e.target.result);
+						var header = '';
+						for (var i = 0; i < arr.length; i++) {
+							header += arr[i].toString(16);
+						}
+						console.log('Encabezado: ' + header);
+
+						// Check the file signature against known types
+						var type = 'unknown';
+						switch (header) {
+							case '89504e47':
+								type = 'image/png';
+								break;
+							case 'ffd8ffe0':
+							case 'ffd8ffe1':
+							case 'ffd8ffe2':
+								type = 'image/jpeg';
+								break;
+						}
+						if (file.type !== type) {
+							console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+							$('#editar_preview').addClass('hidden');
+							$('#editar_svg').removeClass('hidden');
+							$('#editar_archivo').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+							$("#div_editar_foto").removeClass("hidden");
+						} else {
+							console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+							if(file.size > 10485760){
+								$('#editar_preview').addClass('hidden');
+								$('#editar_svg').removeClass('hidden');
+								$('#editar_archivo').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+								$("#div_editar_foto").removeClass("hidden");
+							}else{
+								$('#editar_preview').removeClass('hidden');
+								$('#editar_preview').addClass('w-10 h-10');
+								$('#editar_svg').addClass('hidden');
+								$('#editar_archivo').text(file.name);
+								$("#div_editar_foto").removeClass("hidden");
+								delete_switch="false";
+								let reader = new FileReader();
+								reader.onload = function (event) {
+									$('#editar_preview').attr('src', event.target.result);
+								}
+								reader.readAsDataURL(file);
+							}
+						}
+					};
+					fileReader.readAsArrayBuffer(file.slice(0, 4));
+				}else{
+                    $("#editar_foto").replaceWith(editar_file_foto.clone());
+                }
+			} else {
+				console.error('FileReader ó Blob no es compatible con este navegador.');
+				if($("#editar_foto").val() != ''){
+					var file = this.files[0].name;
+					var lastDot = file.lastIndexOf('.');
+					var extension = file.substring(lastDot + 1);
+					if(extension == "jpeg" || extension == "jpg" || extension == "png") {
+						if(this.files[0].size > 10485760){
+							$('#editar_archivo').text("El archivo " +file+ " debe pesar menos 10 MB.");
+							$("#div_editar_foto").removeClass("hidden");
+						}else{
+							$('#editar_archivo').text(file);
+							$("#div_editar_foto").removeClass("hidden");
+							delete_switch="false";
+						}
+					}else{
+						$('#editar_archivo').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+						$("#div_editar_foto").removeClass("hidden");
+					}
+				}
+			}
+		});
+
         $(document).on('keypress', 'form#Guardar input[type="text"]', function(e) {
             return e.which !== 13;
         });
