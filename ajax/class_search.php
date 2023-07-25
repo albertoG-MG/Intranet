@@ -2861,9 +2861,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 break;
             break;
             case "edit":
-                
-			die(json_encode(array("sucess", "Se ha modificado la noticia!")));
-            break;
+                $check_news = $object -> _db -> prepare("SELECT * FROM noticias WHERE id=:id");
+				$check_news -> execute(array(":id" => $_POST["id"]));
+				$count_news = $check_news -> rowCount();
+				if($count_news == 0){
+					die(json_encode(array("news_not_found", "No se encontró la noticia!")));
+				}
+				$id = $_POST["id"];
+				$delete = $_POST["delete"];
+				$noticia = new Noticias($_SESSION["id"], $titulo_noticia, $descripcion_noticia, $filename_noticias, $foto);
+				$noticia -> editNews($id, $delete);
+				die(json_encode(array("success", "Se ha modificado la noticia!")));
+            	break;
+			break;
         }
 	}
 }
