@@ -1,4 +1,5 @@
 <script>
+    var originalState;
     const tabElements = [{
             id: 'vision',
             triggerEl: document.querySelector('#vision-tab-profile'),
@@ -116,6 +117,7 @@
                                             '<div id="disable-close-submit">'+
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
                                             '</div>');
+                                        var originalState = $("#img_information").clone();
                                         openModal();
                                         resetFormValidator("#Guardar");
                                         $('#Guardar').unbind('submit'); 
@@ -434,18 +436,17 @@
             return e.which !== 13;
         });
 
-        var originalState = $("#img_information").clone();
         var file_foto;
 
 
         $(document).on('click', '#delete_foto', function() {
             $("#img_information").replaceWith(originalState.clone());
             $("#foto").val("");
-            $("#div_actions_foto").addClass("hidden");
+            $("#div_foto").addClass("hidden");
         });
 
         $(document).on('click', '#foto', function() {
-			foto = $("#foto").clone();
+			file_foto = $("#foto").clone();
 		});
 
         $(document).on('change', '#foto', function () {
@@ -511,7 +512,7 @@
                     };
                     fileReader.readAsArrayBuffer(file.slice(0, 4));
                 }else{
-                    $("#foto").replaceWith(foto.clone());
+                    $("#foto").replaceWith(file_foto.clone());
                 }
             } else {
                 console.error('FileReader ó Blob no es compatible con este navegador.');
