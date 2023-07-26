@@ -433,7 +433,7 @@
 
     $(document).ready(function () {
 
-        $(document).on("click", ".Editar", function () {
+        $(document).on("click", "tr .Editar", function () {
             var table = $('#noticias_table').DataTable();
             var rowSelector;
             var li = $(this).closest('li');
@@ -683,6 +683,66 @@
                     }
                 });
             }
+        });
+
+        $(document).on('click', 'tr .Eliminar', function() {
+            var table = $('#noticias_table').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras recuperar la información!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'éxito',
+                                text: 'La fila ha sido eliminada!'
+                            }).then(function() {
+                                var eliminarid = data["id"];
+                                var fd = new FormData();
+                                fd.append('id', eliminarid);
+                                $.ajax({
+                                    url: "../ajax/eliminar/tabla_noticias/eliminarnoticia.php",
+                                    type: "post",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result) {
+                                        table.ajax.reload();
+                                    }
+                                });
+                            });
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            })
         });
 
         function checkImage(imageSrc, good, bad) {

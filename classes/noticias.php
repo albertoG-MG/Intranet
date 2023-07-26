@@ -120,6 +120,26 @@
             }
         }
 
+        public static function eraseNews($id){
+			$crud = new crud();
+			$object = new connection_database();
+			$select_photo = $object -> _db -> prepare("select filename_noticias, noticias_foto_identificador from noticias where id=:idnoticia");
+            $select_photo -> execute(array(':idnoticia' => $id));
+			$fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
+			if($fetch_select_photo -> filename_noticias != null && $fetch_select_photo -> noticias_foto_identificador != null){
+				$directory = __DIR__ . "/../src/noticias/";
+				$path = __DIR__ . "/../src/noticias/".$fetch_select_photo -> noticias_foto_identificador;
+				if(!file_exists($path)){
+					$crud->delete('noticias', 'id=:idnoticia', ['idnoticia' => $id]);
+				}else{
+					unlink($directory.$fetch_select_photo -> noticias_foto_identificador);
+					$crud->delete('noticias', 'id=:idnoticia', ['idnoticia' => $id]);
+				}
+			}else{
+				$crud->delete('noticias', 'id=:idnoticia', ['idnoticia' => $id]);
+			}
+		}
+
         public static function tempnam_sfx($path, $suffix){
             do {
                 $file = $path."/".mt_rand().".".$suffix;
