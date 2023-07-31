@@ -229,6 +229,7 @@
                                                                                     $('#submit-changes').html('<button disabled id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                     table.ajax.reload();
+                                                                                    totalfilas_noticias();
                                                                                     closeModal();
                                                                                 });
                                                                             } else if(array[0] == "error") {
@@ -431,6 +432,74 @@
         $(formId).removeData('validator');
         $(formId).removeData('unobtrusiveValidation');
         $.validator.unobtrusive.parse(formId);
+    }
+
+    function totalfilas_noticias(){
+        var totalrows = 0;
+        $.ajax({
+            type: "GET",
+            url: "../config/totalrows_noticias.php",
+            success: function (response) {
+                totalrows = response;
+                paginacion_noticias(totalrows);
+            }
+        });
+    }
+
+    function paginacion_noticias(totalrows){
+        $('#demo').pagination({
+            dataSource: '../config/noticias_ajax.php',
+            locator: "items",
+            totalNumberLocator: function(response) {
+                // you can return totalNumber by analyzing response content
+                return totalrows;
+            },
+            pageSize: 5,
+            showNavigator: true,
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
+            showGoInput: true,
+            showGoButton: true,
+            formatGoInput: 'ir a <%= input %> página',
+            ajax: {
+                beforeSend: function() {
+                    $("#dataContainer").html('Cargando datos ...');
+                }
+            },
+            callback: function(data, pagination) {
+                // template method of yourself
+                var html = __noticiasPreview(data);
+                $("#dataContainer").html(html);
+            }
+        });
+    }
+
+    function __noticiasPreview(data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            if(data[i].noticias_foto_identificador != null && data[i].filename_noticias != null){
+                data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                    `<picture><img class="noticias__image w-10 h-10" src="../src/noticias/${data[i].noticias_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
+                    `<ul class="noticias__item">`+
+                    `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
+                    `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
+                    `<li class="noticias__footer flex justify-between">`+
+                    `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
+                    `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
+                    `</li>`+
+                    `</ul></div>`;
+            }else{
+                data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                    `<picture><img class="noticias__image w-10 h-10" src="../src/img/default_news_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
+                    `<ul class="noticias__item">`+
+                    `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
+                    `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
+                    `<li class="noticias__footer flex justify-between">`+
+                    `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
+                    `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
+                    `</li>`+
+                    `</ul></div>`;
+            }
+        }
+        return data.join("");
     }
 
     <?php 
@@ -713,6 +782,7 @@
                                                         $('#submit-changes').html('<button disabled id="editar-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
+                                                        totalfilas_noticias();
                                                         closeModal();
                                                     });
                                                 } else if(array[0] == "error") {
@@ -736,6 +806,7 @@
                                                         $('#submit-changes').html('<button disabled id="editar-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
+                                                        totalfilas_noticias();
                                                         closeModal();
                                                     });
                                                 }
@@ -808,6 +879,7 @@
                                     contentType: false,
                                     success: function(result) {
                                         table.ajax.reload();
+                                        totalfilas_noticias();
                                     }
                                 });
                             });
