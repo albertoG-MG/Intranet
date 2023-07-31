@@ -159,6 +159,13 @@
                     } 
                 }
             ?>
+            <div class="bg-white p-3 shadow-md rounded-2xl mt-5">
+                <div id="demo">
+                    <h2 class="text-2xl text-black font-semibold">Noticias</h2>
+                    <div id="dataContainer" class="mt-5">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="hidden p-4 bg-white rounded-lg" id="buzon" role="tabpanel" aria-labelledby="buzon-tab-profile">
             <p class="text-sm text-gray-500">This is some placeholder content the <strong class="font-medium text-gray-800">Settings tab's associated content</strong>. Clicking

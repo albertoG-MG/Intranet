@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../src/css/pagination.css">
+<script src="../src/js/pagination.min.js"></script>
 <script>
     var originalState;
     var delete_switch;
@@ -431,7 +433,87 @@
         $.validator.unobtrusive.parse(formId);
     }
 
+    <?php 
+            }
+        } 
+    ?>
+
     $(document).ready(function () {
+
+        totalfilas_noticias();
+
+        function totalfilas_noticias(){
+            var totalrows = 0;
+            $.ajax({
+                type: "GET",
+                url: "../config/totalrows_noticias.php",
+                success: function (response) {
+                    totalrows = response;
+                    paginacion_noticias(totalrows);
+                }
+            });
+        }
+
+        function paginacion_noticias(totalrows){
+            $('#demo').pagination({
+                dataSource: '../config/noticias_ajax.php',
+                locator: "items",
+                totalNumberLocator: function(response) {
+                    // you can return totalNumber by analyzing response content
+                    return totalrows;
+                },
+                pageSize: 5,
+                showNavigator: true,
+                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
+                showGoInput: true,
+                showGoButton: true,
+                formatGoInput: 'ir a <%= input %> página',
+                ajax: {
+                    beforeSend: function() {
+                        $("#dataContainer").html('Cargando datos ...');
+                    }
+                },
+                callback: function(data, pagination) {
+                    // template method of yourself
+                    var html = __noticiasPreview(data);
+                    $("#dataContainer").html(html);
+                }
+            });
+        }
+
+        function __noticiasPreview(data) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                if(data[i].noticias_foto_identificador != null && data[i].filename_noticias != null){
+                    data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                        `<picture><img class="noticias__image w-10 h-10" src="../src/noticias/${data[i].noticias_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
+                        `<ul class="noticias__item">`+
+                        `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
+                        `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
+                        `<li class="noticias__footer flex justify-between">`+
+                        `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
+                        `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
+                        `</li>`+
+                        `</ul></div>`;
+                }else{
+                    data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                        `<picture><img class="noticias__image w-10 h-10" src="../src/img/default_news_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
+                        `<ul class="noticias__item">`+
+                        `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
+                        `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
+                        `<li class="noticias__footer flex justify-between">`+
+                        `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
+                        `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
+                        `</li>`+
+                        `</ul></div>`;
+                }
+            }
+            return data.join("");
+        }
+
+        <?php 
+            if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+                if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+        ?>
 
         $(document).on("click", "tr .Editar", function () {
             var table = $('#noticias_table').DataTable();
@@ -957,7 +1039,16 @@
                 }
             }
         });
+        <?php 
+            }
+        } 
+    ?>
     });
+
+    <?php 
+        if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+            if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+    ?>
 
     function check_user_logged(){
 		return new Promise((resolve, reject) => {
@@ -990,12 +1081,16 @@
     ?>
 </script>
 
-<?php 
-    if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
-        if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
-?>
-
 <style>
+
+    .paginationjs{
+        padding: 4px !important;
+    }
+
+    <?php 
+        if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+            if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+    ?>
     
     .error{
         color: red;
@@ -1063,8 +1158,9 @@
         background-position: 3px 7px !important;
         padding-left: 30px;
     }
+
+    <?php 
+            }
+        } 
+    ?>
 </style>
-<?php 
-        }
-    } 
-?>
