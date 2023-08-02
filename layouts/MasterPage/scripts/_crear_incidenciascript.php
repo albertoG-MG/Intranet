@@ -316,6 +316,7 @@
 							console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
 							if(file.size > 10485760){
 								$('#preview_permiso_r').addClass('hidden');
+								$('#pdf_preview_r').addClass('hidden');
 								$('#svg_permiso_r').removeClass('hidden');
 								$('#archivo_permiso_r').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
 								$("#div_actions_archivo_permiso_r").removeClass("hidden");
@@ -422,6 +423,7 @@
 							console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
 							if(file.size > 10485760){
 								$('#preview_permiso_nr').addClass('hidden');
+								$('#pdf_preview_nr').addClass('hidden');
 								$('#svg_permiso_nr').removeClass('hidden');
 								$('#archivo_permiso_nr').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
 								$("#div_actions_archivo_permiso_nr").removeClass("hidden");
@@ -528,6 +530,7 @@
 							console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
 							if(file.size > 10485760){
 								$('#preview_incapacidad').addClass('hidden');
+								$('#pdf_preview_incapacidad').addClass('hidden');
 								$('#svg_incapacidad').removeClass('hidden');
 								$('#archivo_incapacidad').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
 								$("#div_actions_archivo_incapacidad").removeClass("hidden");
