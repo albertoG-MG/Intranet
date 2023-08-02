@@ -717,21 +717,15 @@
 							}
 						},
 						extension: {
+							param: "pdf|jpg|jpeg|png",
 							depends: function(element) {
-								if($('#tipo_permiso').val() == "REGLAMENTARIA"){
-									return "pdf|jpg|jpeg|png";
-								}else{
-									return false;
-								}
+								return $('#tipo_permiso').val() == "REGLAMENTARIA";
 							}
 						},
 						filesize: {
+							param: 10,
 							depends: function(element) {
-								if($('#tipo_permiso').val() == "REGLAMENTARIA"){
-									return 10;
-								}else{
-									return false;
-								}
+								return $('#tipo_permiso').val() == "REGLAMENTARIA";	
 							}
 						}
 					},
@@ -877,33 +871,15 @@
 							}
 						},
 						extension: {
+							param: "pdf|jpg|jpeg|png",
 							depends: function(element) {
-								if($('#tipo_permiso').val() == "NO_REGLAMENTARIA"){
-									if($('input[name="posee_jpermiso_nr"][value="si"]').is(":checked")){
-										return "pdf|jpg|jpeg|png";
-									}else if($('input[name="posee_jpermiso_nr"][value="no"]').is(":checked")){
-										return false;
-									}else{
-										return false;
-									}
-								}else{
-									return false;
-								}
+								return $('#tipo_permiso').val() == "NO_REGLAMENTARIA" && $('input[name="posee_jpermiso_nr"][value="si"]').is(":checked");
 							}
 						},
 						filesize: {
+							param: 10,
 							depends: function(element) {
-								if($('#tipo_permiso').val() == "NO_REGLAMENTARIA"){
-									if($('input[name="posee_jpermiso_nr"][value="si"]').is(":checked")){
-										return 10;
-									}else if($('input[name="posee_jpermiso_nr"][value="no"]').is(":checked")){
-										return false;
-									}else{
-										return false;
-									}
-								}else{
-									return false;
-								}
+								return $('#tipo_permiso').val() == "NO_REGLAMENTARIA" && $('input[name="posee_jpermiso_nr"][value="si"]').is(":checked");
 							}
 						}
 					},
