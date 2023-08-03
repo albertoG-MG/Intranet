@@ -14,11 +14,6 @@
             targetEl: document.querySelector('#noticias')
         },
         {
-            id: 'buzon',
-            triggerEl: document.querySelector('#buzon-tab-profile'),
-            targetEl: document.querySelector('#buzon')
-        },
-        {
             id: 'avisos',
             triggerEl: document.querySelector('#avisos-tab-profile'),
             targetEl: document.querySelector('#avisos')
