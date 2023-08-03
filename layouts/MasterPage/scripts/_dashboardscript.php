@@ -829,6 +829,74 @@
         return data.join("");
     }
 
+    function totalfilas_avisos(){
+        var totalrows = 0;
+        $.ajax({
+            type: "GET",
+            url: "../config/totalrows_avisos.php",
+            success: function (response) {
+                totalrows = response;
+                paginacion_avisos(totalrows);
+            }
+        });
+    }
+
+    function paginacion_avisos(totalrows){
+        $('#avisos_demo').pagination({
+            dataSource: '../config/avisos_ajax.php',
+            locator: "items_avisos",
+            totalNumberLocator: function(response) {
+                // you can return totalNumber by analyzing response content
+                return totalrows;
+            },
+            pageSize: 5,
+            showNavigator: true,
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
+            showGoInput: true,
+            showGoButton: true,
+            formatGoInput: 'ir a <%= input %> página',
+            ajax: {
+                beforeSend: function() {
+                    $("#dataContainer_avisos").html('Cargando datos ...');
+                }
+            },
+            callback: function(data, pagination) {
+                // template method of yourself
+                var html = __avisosPreview(data);
+                $("#dataContainer_avisos").html(html);
+            }
+        });
+    }
+
+    function __avisosPreview(data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
+                data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                    `<picture><img class="avisos__image w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                    `<ul class="avisos__item">`+
+                    `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
+                    `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
+                    `<li class="avisos__footer flex justify-between">`+
+                    `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
+                    `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
+                    `</li>`+
+                    `</ul></div>`;
+            }else{
+                data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                    `<picture><img class="avisos__image w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                    `<ul class="avisos__item">`+
+                    `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
+                    `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
+                    `<li class="avisos__footer flex justify-between">`+
+                    `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
+                    `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
+                    `</li>`+
+                    `</ul></div>`;
+            }
+        }
+        return data.join("");
+    }
+
     <?php 
             }
         } 
@@ -837,6 +905,7 @@
     $(document).ready(function () {
 
         totalfilas_noticias();
+        totalfilas_avisos();
 
         function totalfilas_noticias(){
             var totalrows = 0;
@@ -899,6 +968,74 @@
                         `<li class="noticias__footer flex justify-between">`+
                         `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
                         `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
+                        `</li>`+
+                        `</ul></div>`;
+                }
+            }
+            return data.join("");
+        }
+
+        function totalfilas_avisos(){
+            var totalrows = 0;
+            $.ajax({
+                type: "GET",
+                url: "../config/totalrows_avisos.php",
+                success: function (response) {
+                    totalrows = response;
+                    paginacion_avisos(totalrows);
+                }
+            });
+        }
+
+        function paginacion_avisos(totalrows){
+            $('#avisos_demo').pagination({
+                dataSource: '../config/avisos_ajax.php',
+                locator: "items_avisos",
+                totalNumberLocator: function(response) {
+                    // you can return totalNumber by analyzing response content
+                    return totalrows;
+                },
+                pageSize: 5,
+                showNavigator: true,
+                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
+                showGoInput: true,
+                showGoButton: true,
+                formatGoInput: 'ir a <%= input %> página',
+                ajax: {
+                    beforeSend: function() {
+                        $("#dataContainer_avisos").html('Cargando datos ...');
+                    }
+                },
+                callback: function(data, pagination) {
+                    // template method of yourself
+                    var html = __avisosPreview(data);
+                    $("#dataContainer_avisos").html(html);
+                }
+            });
+        }
+
+        function __avisosPreview(data) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
+                    data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                        `<picture><img class="avisos__image w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                        `<ul class="avisos__item">`+
+                        `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
+                        `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
+                        `<li class="avisos__footer flex justify-between">`+
+                        `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
+                        `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
+                        `</li>`+
+                        `</ul></div>`;
+                }else{
+                    data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
+                        `<picture><img class="avisos__image w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                        `<ul class="avisos__item">`+
+                        `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
+                        `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
+                        `<li class="avisos__footer flex justify-between">`+
+                        `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
+                        `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
                         `</li>`+
                         `</ul></div>`;
                 }
