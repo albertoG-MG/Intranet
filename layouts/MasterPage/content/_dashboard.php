@@ -161,10 +161,39 @@
                 </div>
             </div>
         </div>
-        <div class="hidden p-4 bg-white rounded-lg" id="avisos" role="tabpanel" aria-labelledby="avisos-tab-profile">
-            <p class="text-sm text-gray-500">This is some placeholder content the <strong class="font-medium text-gray-800">Contacts tab's associated content</strong>. Clicking
-                another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                classes to control the content visibility and styling.</p>
+        <div class="hidden bg-transparent rounded-lg" id="avisos" role="tabpanel" aria-labelledby="avisos-tab-profile">
+            <?php 
+                if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+                    if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+            ?>
+                <div class="bg-white p-3 shadow-md rounded-2xl mt-5">
+                    <table class="w-full" id="avisos_table" style="display:none; word-break: break-word;">
+                        <thead>
+                            <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                <th>Creada por</th>
+                                <th>Modificada por</th>
+                                <th class="py-3 text-center desktop">Imágen destacada</th>
+                                <th>Nombre del archivo</th>
+                                <th class="py-3 text-center all">Título</th>
+                                <th class="py-3 text-center desktop">Descripción</th>
+                                <th class="py-3 text-center desktop">Fecha</th>
+                                <th>Fecha de modificacion</th>
+                                <th class="py-3 text-center min-tablet">Acción</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            <?php 
+                    } 
+                }
+            ?>
+            <div class="bg-white p-3 shadow-md rounded-2xl mt-5">
+                <div id="avisos_demo">
+                    <h2 class="text-2xl text-black font-semibold">Avisos de ocasión</h2>
+                    <div id="dataContainer_avisos" class="mt-5">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="hidden p-4 bg-white rounded-lg" id="bolsa" role="tabpanel" aria-labelledby="bolsa-tab-profile">
             <p class="text-sm text-gray-500">This is some placeholder content the <strong class="font-medium text-gray-800">Contacts tab's associated content</strong>. Clicking
