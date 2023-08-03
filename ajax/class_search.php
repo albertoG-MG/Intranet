@@ -9,6 +9,7 @@ include_once __DIR__ . "/../classes/categorias.php";
 include_once __DIR__ . "/../classes/subroles.php";
 include_once __DIR__ . "/../classes/vacaciones.php";
 include_once __DIR__ . "/../classes/noticias.php";
+include_once __DIR__ . "/../classes/avisos.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
@@ -2872,6 +2873,72 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$noticia = new Noticias($_SESSION["id"], $titulo_noticia, $descripcion_noticia, $filename_noticias, $foto);
 				$noticia -> editNews($id, $delete);
 				die(json_encode(array("success", "Se ha modificado la noticia!")));
+            	break;
+			break;
+        }
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "avisos"){
+	if(isset($_POST["titulo_aviso"], $_POST["descripcion_aviso"], $_POST["method"])){
+		//TÍTULO DEL AVISO
+		if(empty($_POST["titulo_aviso"])){
+			die(json_encode(array("error", "El título del aviso no puede estar vacío")));
+		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_aviso"])){
+			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título del aviso")));
+		}else{
+			$titulo_aviso = $_POST["titulo_aviso"];
+		}
+
+		//DESCRIPCIÓN DEL AVISO
+		if(empty($_POST["descripcion_aviso"])){
+			die(json_encode(array("error", "La descripción del aviso no puede estar vacío")));
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["descripcion_aviso"])){
+			die(json_encode(array("error", "La descripción del aviso no puede tener solamente símbolos especiales y debe contener al menos una letra")));
+		}else{
+			$descripcion_aviso = $_POST["descripcion_aviso"];
+		}
+
+		//FOTO DESTACADA DEL AVISO
+		if(isset($_FILES['foto_aviso']['name'])){
+			$allowed = array('jpeg', 'png', 'jpg');
+			$filename_avisos = $_FILES['foto_aviso']['name'];
+			$ext = pathinfo($filename_avisos, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite jpg, jpeg y pngs")));
+			}else if($_FILES['foto_aviso']['size'] > 10485760){
+				die(json_encode(array("error", "Las imágenes deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["foto_aviso"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"){
+					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo png, jpg y jpeg")));
+				}
+			}
+			$foto_aviso=$_FILES['foto_aviso'];
+		}else{
+			$filename_avisos = null;
+			$foto_aviso=null;
+		}
+
+		switch($_POST["method"]){
+            case "store":
+				$aviso = new Avisos($_SESSION["id"], $titulo_aviso, $descripcion_aviso, $filename_avisos, $foto_aviso);
+				$aviso -> insertNotice();
+                die(json_encode(array("success", "Se ha creado el aviso!")));
+                break;
+            break;
+            case "edit":
+                $check_notices = $object -> _db -> prepare("SELECT * FROM avisos WHERE id=:id");
+				$check_notices -> execute(array(":id" => $_POST["id"]));
+				$count_notices = $check_notices -> rowCount();
+				if($count_notices == 0){
+					die(json_encode(array("notice_not_found", "No se encontró el aviso!")));
+				}
+				$id = $_POST["id"];
+				$delete = $_POST["delete"];
+				$aviso = new Avisos($_SESSION["id"], $titulo_aviso, $descripcion_aviso, $filename_avisos, $foto_aviso);
+				$aviso -> editNotice($id, $delete);
+				die(json_encode(array("success", "Se ha modificado el aviso!")));
             	break;
 			break;
         }
