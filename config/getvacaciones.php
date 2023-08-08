@@ -27,7 +27,9 @@
     $d1 = new DateTime($hoy);
     $d2 = new DateTime($fecha_estatus);
     $diff = $d2->diff($d1);
-    if ($diff->y == 1) {
+    if($diff->y == 0) {
+        $vacaciones = 0;
+    }else if($diff->y == 1) {
         $vacaciones=12;
     }else if($diff->y == 2){
         $vacaciones=14;
