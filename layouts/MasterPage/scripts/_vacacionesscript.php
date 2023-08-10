@@ -259,6 +259,19 @@
                                 }
                             },
                         <?php } ?>
+                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso al historial de vacaciones") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+                            {
+                                text: "Ver historial de vacaciones",
+                                attr: {
+                                    'id': 'historial_vacaciones',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
+                                action: function ( e, dt, node, config ) {
+                                    window.location.href = "historial_vacaciones.php";
+                                }
+                            }
+                        <?php } ?>
                     ],
             "ajax":{
                 <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
