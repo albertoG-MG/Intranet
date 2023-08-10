@@ -4178,3 +4178,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 DROP TABLE IF EXISTS `serverside_subrol`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_subrol`  AS SELECT `subroles`.`id` AS `sbid`, `subroles`.`subrol_nombre` AS `sbnombre`, `roles`.`nombre` AS `rolnom` FROM (`subroles` join `roles` on((`roles`.`id` = `subroles`.`roles_id`)))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_historial_vacaciones`
+--
+DROP TABLE IF EXISTS `serverside_historial_vacaciones`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_historial_vacaciones`  AS SELECT `historial_solicitud_vacaciones`.`id` AS `id`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `historial_solicitud_vacaciones`.`periodo_solicitado` AS `periodo`, `historial_solicitud_vacaciones`.`fecha_solicitud` AS `fecha_solicitud`, `historial_solicitud_vacaciones`.`estatus` AS `estatus` FROM (`historial_solicitud_vacaciones` join `usuarios` on((`usuarios`.`id` = `historial_solicitud_vacaciones`.`users_id`))) ;
+
+-- --------------------------------------------------------
