@@ -223,6 +223,40 @@
             }
             
             $fecha_vencimiento = get_next_anniversary($fetch_information->eestatus_fecha);
+
+            $var = $fecha_vencimiento;
+            $fecha_format = str_replace('/', '-', $var);
+            $fecha_format = strtotime("-1 year", strtotime($fecha_format));
+            $fecha_format = date('Y-m-d', $fecha_format);
+
+            $checkDate = $fecha_vencimiento;
+            $checkAnniversary = strtotime($checkDate);
+            if(date('m-d') == date('m-d', $checkAnniversary)) {
+                $prepareStatement = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE users_id=:userid AND estatus!=4 AND fecha_solicitud < :fechasolicitud");
+                $prepareStatement -> execute(array(':userid' => $_SESSION['id'], ':fechasolicitud' => $fecha_format));
+                $countSolicitudes = $prepareStatement -> rowCount();
+                if ($countSolicitudes > 0){
+                    $fetchSolicitudes = $prepareStatement -> fetchAll(PDO::FETCH_ASSOC);
+                    foreach($fetchSolicitudes as $key => $value){
+
+
+                        $insertStatement = $object -> _db -> prepare("INSERT INTO historial_solicitud_vacaciones(users_id, periodo_solicitado, dias_solicitados, fecha_solicitud, estatus) VALUES(:iduser, :periodo, :dias, :fecha, :estatus)");
+                        $insertStatement -> execute(array(':iduser' => $value['users_id'], ':periodo' => $value['periodo_solicitado'], ':dias' => $value['dias_solicitados'], ':fecha' => $value['fecha_solicitud'], ':estatus' => $value['estatus']));
+                        $deleteStatement = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE id=:idsolicitud");
+                        $deleteStatement -> execute(array(':idsolicitud' => $value["id"]));
+                    }
+                }
+                $deleteall_statement = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE users_id=:iduser AND estatus=4 AND fecha_solicitud < :fechasolicitud");
+                $deleteall_statement -> execute(array(":iduser" => $_SESSION["id"], ':fechasolicitud' => $fecha_format));
+                $deletecount_statement = $deleteall_statement -> rowCount();
+                if($deletecount_statement > 0){
+                    $fetchDeleteRequest = $deleteall_statement -> fetchAll(PDO::FETCH_ASSOC);
+                    foreach($fetchDeleteRequest as $llave => $valor){
+                        $deleteRequests = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE id=:solicitudid");
+                        $deleteRequests -> execute(array("solicitudid" => $valor["id"]));
+                    }
+                }
+            }
                 
             $fecha_estatus = $fetch_information -> eestatus_fecha;
             $d1 = new DateTime($hoy);
