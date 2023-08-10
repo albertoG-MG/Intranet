@@ -3296,6 +3296,46 @@ CREATE TABLE `transicion_accion_vacaciones`(
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `noticias`
+--
+
+CREATE TABLE `noticias` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `modificado_por` int DEFAULT NULL,
+  `titulo_noticia` varchar(100) NOT NULL,
+  `descripcion_noticia` longtext NOT NULL,
+  `fecha_creacion_noticia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `filename_noticias` longtext DEFAULT NULL,
+  `noticias_foto_identificador` longtext DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `avisos`
+--
+
+CREATE TABLE `avisos` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `modificado_por` int DEFAULT NULL,
+  `titulo_aviso` varchar(100) NOT NULL,
+  `descripcion_aviso` longtext NOT NULL,
+  `fecha_creacion_aviso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `filename_avisos` longtext DEFAULT NULL,
+  `avisos_foto_identificador` longtext DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura para la vista `reset_password`
 --
 
@@ -3754,6 +3794,23 @@ CREATE TABLE `tabla_historial_papeleria_log`(
 	`nombre_archivo` varchar(100) NOT NULL,
 	`fecha_log` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`accion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `historial_solicitud_vacaciones`
+--
+
+CREATE TABLE `historial_solicitud_vacaciones` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int  NOT NULL,
+  `periodo_solicitado` varchar(100) NOT NULL,
+  `dias_solicitados` int NOT NULL,
+  `fecha_solicitud` varchar(100) NOT NULL,
+  `estatus` int NOT NULL,
+  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  FOREIGN KEY (estatus) REFERENCES estatus_vacaciones(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
