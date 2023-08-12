@@ -3816,6 +3816,23 @@ CREATE TABLE `historial_solicitud_vacaciones` (
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `historial_accion_incidencias`
+--
+
+CREATE TABLE `historial_accion_incidencias`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`incidencias_id` bigint NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`goce_de_sueldo` tinyint DEFAULT NULL,
+	`comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` varchar(200) NOT NULL,
+	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Trigger que inserta en la tabla Transicion_estatus_incidencia
 --
 
@@ -4104,6 +4121,23 @@ FOR EACH ROW
 		INSERT INTO tabla_historial_papeleria_log (logged_usuario, data_usuario, num_empleado, tipo_papeleria, nombre_archivo, accion)
 		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), expedientes.num_empleado, tipo_papeleria.nombre, OLD.viejo_nombre_archivo, "ELIMINAR" FROM expedientes INNER JOIN usuarios INNER JOIN tipo_papeleria WHERE OLD.expediente_id = expedientes.id AND usuarios.id = expedientes.users_id AND OLD.tipo_archivo = tipo_papeleria.id;
 	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el historial de acciones en la tabla historial_accion_incidencias y actualiza la tabla transicion_estatus_incidencia `update_transicion_estatus_incidencia`
+--
+
+DELIMITER $$
+CREATE TRIGGER update_transicion_estatus_incidencia
+AFTER UPDATE ON accion_incidencias FOR EACH ROW
+BEGIN
+	INSERT INTO historial_accion_incidencias(incidencias_id, tipo_de_accion, goce_de_sueldo, comentario, evaluado_por) VALUES (OLD.incidencias_id, OLD.tipo_de_accion, OLD.goce_de_sueldo, OLD.comentario, OLD.evaluado_por);
+
+	UPDATE transicion_estatus_incidencia SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE incidencias_id=NEW.incidencias_id;
+END;
+$$
 DELIMITER ;
 
 -- --------------------------------------------------------
