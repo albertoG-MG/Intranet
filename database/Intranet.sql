@@ -151,10 +151,13 @@ INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
 (30, 'Crear carta compromiso', 6),
 (31, 'Ver todas las incidencias', 6),
 (32, 'Ver todos los documentos administrativos', 6),
-(33, 'Acceso a solicitud incidencias', 7),
-(34, 'Acceso a vacaciones', 8),
-(35, 'Ver todas las vacaciones', 8),
-(36, 'Acceso a solicitud vacaciones', 9);
+(33, 'Editar estatus de las incidencias', 6),
+(34, 'Acceso a solicitud incidencias', 7),
+(35, 'Acceso a vacaciones', 8),
+(36, 'Ver todas las vacaciones', 8),
+(37, 'Acceso al historial de vacaciones', 8),
+(38, 'Editar estatus de las vacaciones', 8),
+(39, 'Acceso a solicitud vacaciones', 9);
 
 -- --------------------------------------------------------
 
