@@ -636,6 +636,215 @@
             });
         }
 
+        <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+            const modalContainer = document.querySelector(
+                "#modal-component-container"
+            );
+
+	        const modal = document.querySelector("#modal-container");
+
+	        $('.modal-actions').on('click', '#close-modal', function(){
+		        closeModal();
+	        });
+
+            function openModal(){
+                showAndHide(modalContainer, ["block", "animate-fadeIn"], ["hidden", "animate-fadeOut"]);
+                showAndHide(modal, ["animate-scaleIn"], ["animate-scaleOut"]);
+            }
+
+            function closeModal(){
+                showAndHide(modalContainer, ["animate-fadeOut"], ["animate-fadeIn"]);
+                showAndHide(modal, ["animate-scaleOut"], ["animate-scaleIn"]);
+                setTimeout(() => {showAndHide(modalContainer, ["hidden"], ["block"]);}, 270);
+            }
+
+            function showAndHide(element, classesToAdd, classessToRemove){
+                element.classList.remove( ...classessToRemove);
+                element.classList.add( ...classesToAdd);
+            }
+
+            function resetFormValidator(formId) {
+                $(formId).removeData('validator');
+                $(formId).removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse(formId);
+            }
+	
+	        $(document).on("click", ".EditAction", function () {
+                var table = $('#datatable').DataTable();
+                var rowSelector;
+                var li = $(this).closest('li');
+                if ( li.length ) {
+                    rowSelector = table.cell( li ).index().row;
+                }
+                else {
+                    rowSelector =  $(this).closest('tr');
+                }
+                var row = table.row(rowSelector);
+                var data = row.data();
+
+
+                $('.modal-wrapper-flex').html(
+                    '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
+                        '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                            '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9.5H18V7.5H13V9.5M13,16.5H18V14.5H13V16.5M19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21M6,11H11V6H6V11M7,7H10V10H7V7M6,18H11V13H6V18M7,14H10V17H7V14Z" /></svg>'+
+                        '</div>'+
+                        '<h3 class="text-lg font-medium text-gray-900"> Modificar el estatus de la solicitud de vacaciones </h3>'+
+                    '</div>'+
+                    '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                        '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                            '<label class="text-[#64748b] font-semibold mb-2">Estatus</label>'+
+                            '<div class="group flex">'+
+                                '<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">'+
+                                    '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                                        '<path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12.5 7V12.2L9.8 17L8.5 16.2L11 11.8V7H12.5Z"></path>'+
+                                    '</svg>'+
+                                '</div>'+
+                                '<select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus_vacaciones" name="estatus_vacaciones">'+
+                                    '<option value="">--Seleccione--</option>'+
+                                    '<option value="1">Aprobada</option>'+
+                                    '<option value="2">Cancelada</option>'+
+                                    '<option value="3">Rechazada</option>'+
+                                '</select>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                            '<label class="text-[#64748b] font-semibold mb-2">Comentarios</label>'+
+                            '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="comentarios_vacaciones" name="comentarios_vacaciones" placeholder="Comentarios"></textarea>'+
+                            '<div id="error_comentarios_vacaciones"></div>'+
+                        '</div>'+
+                        '<div class="mt-5">'+
+                        '</div>'+
+                    '</div>');
+
+                $('.modal-actions').html(
+                    '<div id="submit-changes">'+
+                        '<button id="editar-vacaciones" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar vacaciones</button>'+
+                    '</div>'+
+                    '<div id="disable-close-submit">'+
+                        '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
+                    '</div>');
+            
+                $("#estatus_vacaciones").val(data["estatus"]);
+                resetFormValidator("#vacaciones-guardar");
+                $('#vacaciones-guardar').unbind('submit');
+                openModal();
+
+                $.validator.addMethod('comment', function (value, element) {
+                    return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
+                }, 'not a valid comment.');
+
+                if ($('#vacaciones-guardar').length > 0) {
+                    $('#vacaciones-guardar').validate({
+                        ignore: [],
+                        onkeyup: false,
+                        errorPlacement: function(error, element) {
+                            if((element.attr('name') === 'estatus_vacaciones')){
+                                error.insertAfter(element.parent('.group.flex'));
+                            }else if(element.attr('name') === 'comentarios_vacaciones'){
+                                error.appendTo("div#error_comentarios_vacaciones");    
+                            }
+                        },
+                        highlight: function(element) {
+                            var elem = $(element);
+                            $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                            $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                        },
+                        unhighlight: function(element) {
+                            var elem = $(element);	
+                            $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                            $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        },
+                        rules: {
+                            estatus_vacaciones: {
+                                required: true
+                            },
+                            comentarios_vacaciones: {
+                                required: true,
+                                comment: true
+                            }
+                        },
+                        messages: {
+                            estatus_vacaciones: {
+                                required: 'Este campo es requerido'
+                            },
+                            comentarios_vacaciones: {
+                                required: 'Este campo es requerido',
+                                comment: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                            }
+                        },
+                        submitHandler: function(form) {
+                            $('#submit-changes').html(
+                                '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                    '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                    '</svg>'+
+                                    'Cargando...'+
+                                '</button>');
+                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                            check_user_logged().then((response) => {
+                                if(response == "true"){
+                                    window.addEventListener('beforeunload', unloadHandler);
+                                    /*EMPIEZA EL AJAX*/
+                                    var fd = new FormData();
+                                    var estatus_vacaciones = $("#estatus_vacaciones").val();
+                                    var comentarios_vacaciones = $("#comentarios_vacaciones").val();
+                                    var id = data["solicitud_id"];
+                                    var app = "editStatus_vacaciones";
+                                    fd.append('estatus_vacaciones', estatus_vacaciones);
+                                    fd.append('comentarios_vacaciones', comentarios_vacaciones);
+                                    fd.append('id', id);
+                                    fd.append('app', app);
+                                    $.ajax({
+                                        url: '../ajax/class_search.php',
+                                        type: 'POST',
+                                        data: fd,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function(data) {
+                                            setTimeout(function(){
+                                                var array = $.parseJSON(data);
+                                                if (array[0] == "success") {
+                                                    
+
+
+                                                } else if(array[0] == "error") {
+                                                    
+
+
+                                                } else if (array[0] == "solicitud_not_found") {
+                                                    
+
+                                                }
+                                            },3000);
+                                        },
+                                        error: function(data) {
+                                            $("#ajax-error").text('Fail to send request');
+                                        }
+                                    });
+                                }else{
+                                    Swal.fire({
+                                        title: "Ocurrió un error",
+                                        text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                        icon: "error"
+                                    }).then(function() {
+                                        window.removeEventListener('beforeunload', unloadHandler);
+                                        $('#submit-changes').html('<button disabled id="editar-vacaciones" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar vacaciones</button>');
+                                        $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                        window.location.href = "login.php";
+                                    });	
+                                }
+
+                            }).catch((error) => {
+                                console.log(error);
+                            })  
+                            return false;
+                        }
+                    });
+                }
+            });
+        <?php } ?>
+
         function check_user_logged(){
             return new Promise((resolve, reject) => {
                 $.ajax({
@@ -664,6 +873,11 @@
 </script>
 
 <style>
+
+    .error{
+        color: red;
+    }
+
     :root {
         --main-color: #4a76a8;
     }
