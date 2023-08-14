@@ -1,4 +1,7 @@
 <script>
+  <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?> 
+    var ButtonEdit = 0;
+  <?php } ?>
   document.addEventListener("DOMContentLoaded", function() {
     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?> 
         var editStatus=0;
@@ -228,6 +231,7 @@
                                         success: function(response) {
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
                                                 editStatus=1;
+                                                ButtonEdit=1;
                                             <?php } ?>
                                              var table = $('#datatable').DataTable();
                                              table.clear().draw();
@@ -258,6 +262,7 @@
                                         success: function(response) {
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
                                                 editStatus=1;
+                                                ButtonEdit=2;
                                             <?php } ?>
                                              var table = $('#datatable').DataTable();
                                              table.clear().draw();
@@ -781,7 +786,11 @@
                                                             window.removeEventListener('beforeunload', unloadHandler);
                                                             $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
-                                                            table.ajax.reload(null, false);	
+                                                            if(ButtonEdit == 1){
+		                                                        table.ajax.url('../config/incidencias/incidencias_cerradas.php').load();
+	                                                        }else{
+		                                                        table.ajax.url('../config/incidencias/incidencias_desplieguetodo.php').load();
+	                                                        }
                                                             closeModal();
                                                         });
                                                     } else if(array[0] == "error") {
@@ -804,7 +813,11 @@
                                                             window.removeEventListener('beforeunload', unloadHandler);
                                                             $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
-                                                            table.ajax.reload(null, false);	
+                                                            if(ButtonEdit == 1){
+		                                                        table.ajax.url('../config/incidencias/incidencias_cerradas.php').load();
+	                                                        }else{
+		                                                        table.ajax.url('../config/incidencias/incidencias_desplieguetodo.php').load();
+	                                                        }
                                                             closeModal();
                                                         });
                                                     }
