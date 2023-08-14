@@ -1,5 +1,5 @@
 <script>
-    //Datatabñe
+    //Datatable
     document.addEventListener("DOMContentLoaded", function() {
         $("#datatable").DataTable({
             responsive:true,
@@ -29,6 +29,10 @@
                                         },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
@@ -60,6 +64,10 @@
                                         },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
@@ -92,6 +100,10 @@
                                         },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
@@ -123,6 +135,10 @@
                                         },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw(); 
@@ -154,6 +170,10 @@
                                         },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
@@ -180,6 +200,10 @@
                                         method: 'POST',
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw(); 
@@ -207,6 +231,10 @@
                                         method: 'POST',
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(true);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
@@ -234,6 +262,10 @@
                                         method: 'POST',
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(true);
+                                            <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
@@ -298,7 +330,10 @@
                 {"data": "nombre"},
                 {"data": "periodo_solicitado"},
                 {"data": "fecha_solicitud"},
-                {"data": "estatus"}
+                {"data": "estatus"}<?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ echo ","; } ?>
+                <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                    {"data": null, visible: false, searchable: false}
+                <?php } ?>
             ],
             "columnDefs": [
                 {
@@ -360,7 +395,29 @@
                             );
                         }
                     }
-                }
+                }<?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ echo ","; } ?>
+                <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                    {
+                        target: [5],
+                        render: function (data, type, row) {
+                            if(row["estatus"] == 4){
+                                return "";
+                            }else{
+                                return (
+                                    "<div class='py-3 text-left'>" +
+                                        "<div class='flex item-center justify-center gap-3'>" +
+                                            "<div class='w-4 transform hover:text-purple-500 hover:scale-110 cursor-pointer EditAction'>" +
+                                                "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
+                                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>" +
+                                                "</svg>" +
+                                            "</div>" +
+                                        "</div>" +
+                                    "</div>"
+                                );
+                            }
+                        }
+                    }
+                <?php } ?>
             ],
             "initComplete": () => {
                 var table = $('#datatable').DataTable();

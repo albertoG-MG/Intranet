@@ -179,6 +179,9 @@
                                         <th class="py-3 text-center desktop">Periodo</th>
                                         <th class="py-3 text-center desktop">F. solicitud</th>
                                         <th class="py-3 text-center desktop">Estatus</th>
+                                        <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                            <th class="py-3 text-center min-tablet"></th>
+                                        <?php } ?>
                                     </tr>
                                 </thead>
                             </table>
