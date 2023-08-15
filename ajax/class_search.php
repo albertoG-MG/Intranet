@@ -2993,5 +2993,41 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		Incidencias::editStatus($id, $estatus, $sueldo, $comentarios, $nombre_completo);
         die(json_encode(array("success", "Se ha editado el estatus de la incidencia!")));
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "editStatus_vacaciones"){
+	if(isset($_POST["estatus_vacaciones"], $_POST["comentarios_vacaciones"], $_POST["id"])){
+		//Checar si la solicitud existe
+		$check_request = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE id=:solicitudid");
+		$check_request -> execute(array(':solicitudid' => $_POST["id"]));
+		$count_request = $check_request -> rowCount();
+		if($count_request == 0){
+			die(json_encode(array("solicitud_not_found", "Esta solicitud de vacaciones no existe!")));
+		}else{
+			$id = $_POST["id"];
+		}
+
+		//El estatus solo puede estar entre 1, 2 y 3
+		$estatus_vacaciones_array = array(1, 2, 3);
+		if (in_array($_POST["estatus_vacaciones"], $estatus_vacaciones_array)) {
+			$estatus_vacaciones= $_POST["estatus_vacaciones"];
+		}else{
+			die(json_encode(array("error", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
+		}
+		
+		//Obtener el nombre completo del usuario
+		$nombre_completo = $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
+		
+		if(empty($_POST["comentarios_vacaciones"])){
+			die(json_encode(array("error", "Los comentarios no pueden estar vacíos")));
+		}else{
+			if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["comentarios_vacaciones"])){
+				die(json_encode(array("error", "Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra")));
+			}else{
+				$comentarios_vacaciones = $_POST["comentarios_vacaciones"];
+			}
+		}
+
+		Vacaciones::editStatus($id, $estatus_vacaciones, $comentarios_vacaciones, $nombre_completo);
+        die(json_encode(array("success", "Se ha editado el estatus de la solicitud de vacaciones!")));
+	}
 }
 ?>
