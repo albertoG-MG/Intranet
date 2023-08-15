@@ -38,7 +38,55 @@
             $crud -> update ('accion_vacaciones', ['tipo_de_accion' => $estatus, 'comentario' => $comentarios, 'evaluado_por' => $nombre_completo], "id_solicitud_vacaciones=:solicitudid", [":solicitudid" => $id]);
             $update_state = $object -> _db -> prepare("UPDATE solicitud_vacaciones sv INNER JOIN (SELECT transicion_estatus_vacaciones.id_solicitud_vacaciones, transicion_estatus_vacaciones.estatus_siguiente FROM transicion_estatus_vacaciones WHERE transicion_estatus_vacaciones.id_solicitud_vacaciones=:solicitudid ORDER BY transicion_estatus_vacaciones.id desc LIMIT 1) temp ON sv.id=temp.id_solicitud_vacaciones SET sv.estatus = temp.estatus_siguiente");
             $update_state -> execute(array(':solicitudid' => $id));
-            //Vacaciones::send_editEstatus($id, $estatus, $comentarios);
+            Vacaciones::send_editEstatus($id, $estatus, $comentarios);
+        }
+
+        public static function send_editEstatus($solicitud_id, $estatus, $comentarios){
+            $object = new connection_database();
+            $crud = new crud();
+            $sql = $object->_db->prepare('SELECT solicitud_vacaciones.id as solicitudid, CONCAT(u1.nombre, " ", u1.apellido_pat, " ", u1.apellido_mat) AS solicitante, CONCAT(u2.nombre, " ", u2.apellido_pat, " ", u2.apellido_mat) as jefe, u1.correo AS correo_solicitante, u2.correo AS correo_jefe, accion_vacaciones.evaluado_por AS revaluada_por, solicitud_vacaciones.periodo_solicitado as periodo_solicitado, solicitud_vacaciones.dias_solicitados AS dias_solicitados, solicitud_vacaciones.fecha_solicitud AS fecha_solicitud FROM solicitud_vacaciones INNER JOIN usuarios u1 ON u1.id=solicitud_vacaciones.users_id INNER JOIN notificaciones_vacaciones ON notificaciones_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id INNER JOIN usuarios u2 ON u2.id=notificaciones_vacaciones.id_notificado INNER JOIN accion_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id  WHERE solicitud_vacaciones.id=:solicitudid');
+            $sql -> execute(array(':solicitudid' => $solicitud_id));
+            $row_user_vacaciones = $sql ->fetch(PDO::FETCH_OBJ);
+            if($estatus == 3){
+                $status = "Rechazada";
+            }else if($estatus == 2){
+                $status = "Cancelada";
+            }else if ($estatus == 1){
+                $status = "Aprobada";
+            }
+            $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+            $path = dirname($path);
+            $links = $path. "/layouts/vacaciones.php";
+            $mail=new PHPMailer\PHPMailer\PHPMailer();
+            $mail->IsSMTP();  // telling the class to use SMTP
+            $mail->SMTPDebug = 0;
+            $mail->SMTPSecure = 'tls'; 
+            $mail->Host = 'mail.sinttecom.com'; 
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+            $mail->Port = 587;
+            $mail->SMTPAuth = true; // turn on SMTP authentication
+            $mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
+            $mail->Password = "k8@SY#xR"; // SMTP password
+            $mail->IsHTML(true);
+            $mail->AddAddress($row_user_vacaciones -> correo_solicitante);
+            $mail->AddAddress($row_user_vacaciones -> correo_jefe);
+            $mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
+            $mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
+            $mail->Subject  = "El usuario ". $row_user_vacaciones -> revaluada_por ." ha revaluado la solicitud de vacaciones que pertenece a ". $row_user_vacaciones -> solicitante ." con id ". $row_user_vacaciones -> solicitudid ."";
+            $mail->Body     = "Buen día ".$row_user_vacaciones -> solicitante." y ".$row_user_vacaciones -> jefe.": <br> El usuario ".$row_user_vacaciones -> revaluada_por." ha revaluado la solicitud de vacaciones enviada por ".$row_user_vacaciones -> solicitante." con ID ".$row_user_vacaciones -> solicitudid." expedido en la fecha " .$row_user_vacaciones -> fecha_solicitud. " con el estatus de ".$status." en el periodo ".$row_user_vacaciones -> periodo_solicitado.". <br> Comentarios: ".$comentarios." <br> Haga clic en el link a continuación para ver la solicitud: <br> <a href=".$links.">Ver solicitud de vacaciones</a>";
+            $mail->WordWrap = 50;
+            $mail->CharSet = "UTF-8";
+            if(!$mail->Send()) {
+                echo 'Message was not sent.';
+                echo 'Mailer error: ' . $mail->ErrorInfo;
+            }
         }
 
         public static function sendEmail($solicitud_id, $jefe_array){
