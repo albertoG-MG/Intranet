@@ -3836,6 +3836,22 @@ CREATE TABLE `historial_accion_incidencias`(
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `historial_accion_vacaciones`
+--
+
+CREATE TABLE `historial_accion_vacaciones`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`solicitud_id` int NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` varchar(200) NOT NULL,
+	 FOREIGN KEY (solicitud_id) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Trigger que inserta en la tabla Transicion_estatus_incidencia
 --
 
@@ -4141,6 +4157,22 @@ BEGIN
 	UPDATE transicion_estatus_incidencia SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE incidencias_id=NEW.incidencias_id;
 END;
 $$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que guarda el historial de acciones en la tabla historial_accion_vacaciones y actualiza la tabla transicion_estatus_vacaciones `update_transicion_estatus_vacaciones`
+--
+
+DELIMITER $$
+CREATE TRIGGER update_transicion_estatus_vacaciones
+AFTER UPDATE ON accion_vacaciones FOR EACH ROW
+BEGIN
+	INSERT INTO historial_accion_vacaciones(solicitud_id, tipo_de_accion, comentario, evaluado_por) VALUES (OLD.id_solicitud_vacaciones, OLD.tipo_de_accion, OLD.comentario, OLD.evaluado_por);
+
+	UPDATE transicion_estatus_vacaciones SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+END$$
 DELIMITER ;
 
 -- --------------------------------------------------------
