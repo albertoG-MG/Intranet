@@ -8,7 +8,20 @@
             language: {
                 search: ""
             },
-            dom: '<"top"f>rt<"bottom"ip><"clear">',
+            dom: '<"top"fB>rt<"bottom"ip><"clear">',
+            buttons: [
+                {
+                    text: "Subir al historial",
+                    attr: {
+                        'id': 'Historial',
+                        'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                    },
+                    className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                    action: function(e, dt, node, config) {
+                        window.location.href = "subir_historial.php";
+                    }
+                }
+            ],
             "processing": true,
             "serverSide": true,
             "sAjaxSource": '../config/serverside_historial_vacaciones.php',
