@@ -71,13 +71,13 @@
                                             <option></option>
                                             <optgroup label="Usuarios">
                                                 <?php
-                                                    $usuarios = user::FetchUsuarios();
-                                                    foreach ($usuarios as $row) {
-                                                        if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo"){
-                                                            echo "<option value='" . $row->id . "'>";
-                                                            echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                            echo "</option>";
-                                                        }
+                                                    $usuarios = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN expedientes ON expedientes.users_id=usuarios.id WHERE roles.nombre NOT IN('Superadministrador', 'Administrador', 'Director general', 'Usuario externo')");
+                                                    $usuarios -> execute();
+                                                    $fetchusuarios = $usuarios -> fetchAll(PDO::FETCH_ASSOC);
+                                                    foreach ($fetchusuarios as $row) {
+                                                        echo "<option value='" . $row['userid'] . "'>";
+                                                        echo $row['nombre'];
+                                                        echo "</option>";
                                                     }
                                                 ?>
                                             </optgroup>

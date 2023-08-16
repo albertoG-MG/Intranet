@@ -119,12 +119,14 @@
                             window.addEventListener('beforeunload', unloadHandler);
                             var fd = new FormData();
                             var select2 = $("#user_vacaciones").val();
+                            var select2text = $("#user_vacaciones option:selected").text();
                             var periodo_vacaciones = $("#periodo_vacaciones").val();
                             var fecha_vacaciones = $("#fecha_vacaciones").val();
                             var estatus_vacaciones = $("#estatus_vacaciones").val();
                             var method = "store";
                             var app = "Historial_vacaciones";
                             fd.append('select2', select2);
+                            fd.append('select2text', select2text);
                             fd.append('periodo_vacaciones', periodo_vacaciones);
                             fd.append('fecha_vacaciones', fecha_vacaciones);
                             fd.append('estatus_vacaciones', estatus_vacaciones);
@@ -157,6 +159,16 @@
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
                                                 $('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                            });
+                                        }else if(array[0] == "forbidden"){
+                                            Swal.fire({
+                                                title: "Error",
+                                                text: array[1],
+                                                icon: "error"
+                                            }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                                window.location.href = "dashboard.php";
                                             });
                                         }
                                     },3000);

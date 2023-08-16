@@ -3029,5 +3029,102 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		Vacaciones::editStatus($id, $estatus_vacaciones, $comentarios_vacaciones, $nombre_completo);
         die(json_encode(array("success", "Se ha editado el estatus de la solicitud de vacaciones!")));
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "Historial_vacaciones"){
+	if(isset($_POST["select2"], $_POST["select2text"], $_POST["periodo_vacaciones"], $_POST["fecha_vacaciones"], $_POST["estatus_vacaciones"], $_POST["method"])){
+		
+		//Checar permisos
+		if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a vacaciones") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Acceso al historial de vacaciones") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+		}
+		
+		if($_POST["select2"] != null){
+			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN expedientes ON expedientes.users_id=usuarios.id WHERE roles.nombre NOT IN('Superadministrador', 'Administrador', 'Director general', 'Usuario externo')");
+			$select2_content -> execute();
+			
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+			}else{
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario a la solicitud")));
+		}
+		
+		
+		function validateDate($date, $format = 'Y-m-d H:i:s')
+		{
+			$d = DateTime::createFromFormat($format, $date);
+			return $d && $d->format($format) == $date;
+		}
+		
+		function dateDiffInDays($date1, $date2)
+		{
+			$diff = strtotime($date2) - strtotime($date1);
+			return abs(round($diff / 86400));
+		}
+		
+		if(empty($_POST["periodo_vacaciones"])){
+			die(json_encode(array("error", "El período no puede estar vacío")));
+		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_vacaciones"])){
+			die(json_encode(array("error", "La fecha elegida en el periodo vacacional no tiene el formato adecuado")));
+		}else{
+			$break_date = explode(" - ",$_POST["periodo_vacaciones"]);
+			$check_validdate0 = validateDate($break_date[0], 'Y/m/d');
+			$check_validdate1 = validateDate($break_date[1], 'Y/m/d');
+			if($check_validdate0 = false){
+				die(json_encode(array("error", "La fecha de inicio en el periodo vacacional es inválida")));
+			}else if($check_validdate1 = false){
+				die(json_encode(array("error", "La fecha de fin en el periodo vacacional es inválida")));
+			}
+			
+			$days = dateDiffInDays($break_date[0], $break_date[1]);
+			$days = $days + 1;
+			
+			$fecha_inicio = new DateTime($break_date[0]);
+			$fecha_fin    = new DateTime($break_date[1]);
+			
+			if ($fecha_inicio > $fecha_fin) {
+				die(json_encode(array("error", "La fecha de inicio no puede ser mayor a la fecha de fin")));
+			}
+
+			$periodo_vacaciones = $_POST["periodo_vacaciones"];
+		}
+		
+		if(empty($_POST["fecha_vacaciones"])){
+			die(json_encode(array("error", "Por favor, seleccione una fecha en el que fue expedido la solicitud")));
+		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_vacaciones"])){
+			die(json_encode(array("error", "La fecha seleccionada en la solictud no tiene el formato adecuado")));
+		}else{
+			$check_validdate = validateDate($_POST["fecha_vacaciones"], 'Y/m/d');
+			if($check_validdate = false){
+				die(json_encode(array("error", "La fecha seleccionada en la solicitud es inválida")));
+			}
+			$fecha_vacaciones = $_POST["fecha_vacaciones"];
+		}
+		
+		
+		//El estatus solo puede estar entre 1, 2 y 3
+		$estatus_historial_vacaciones_array = array(1, 2, 3);
+		if (in_array($_POST["estatus_vacaciones"], $estatus_historial_vacaciones_array)) {
+			$estatus_vacaciones= $_POST["estatus_vacaciones"];
+		}else{
+			die(json_encode(array("failed", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
+		}
+		
+		
+		switch($_POST["method"]){
+			case "store":
+				Vacaciones::Subir_historial($select2, $periodo_vacaciones, $days, $fecha_vacaciones, $estatus_vacaciones);
+				die(json_encode(array("success", "Se ha subido la solicitud de vacaciones en el historial!")));
+			break;
+		}
+	}
 }
 ?>
