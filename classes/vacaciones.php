@@ -26,9 +26,7 @@
         public static function Subir_historial($select2, $periodo_vacaciones, $days, $fecha_vacaciones, $estatus_vacaciones){
             $object = new connection_database();
             $crud = new crud();
-            date_default_timezone_set("America/Monterrey");
-            $now = date('Y-m-d H:i:s');
-            $crud -> store('historial_solicitud_vacaciones', ['users_id' => $select2, 'periodo_solicitado' => $periodo_vacaciones, 'dias_solicitados' => $days, 'fecha_solicitud' => $now, 'estatus' => $estatus_vacaciones]);
+            $crud -> store('historial_solicitud_vacaciones', ['users_id' => $select2, 'periodo_solicitado' => $periodo_vacaciones, 'dias_solicitados' => $days, 'fecha_solicitud' => $fecha_vacaciones, 'estatus' => $estatus_vacaciones]);
         }
 
         public static function Almacenar_estatus($solicitud_vacaciones, $estatus, $nombre_completo, $comentario){

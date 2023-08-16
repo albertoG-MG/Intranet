@@ -3099,10 +3099,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		
 		if(empty($_POST["fecha_vacaciones"])){
 			die(json_encode(array("error", "Por favor, seleccione una fecha en el que fue expedido la solicitud")));
-		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["fecha_vacaciones"])){
-			die(json_encode(array("error", "La fecha seleccionada en la solictud no tiene el formato adecuado")));
+		}else if(!preg_match("/^(\d{4})\/(\d{2})\/(\d{2})[\s](\d{2}):(\d{2}):(\d{2})$/", $_POST["fecha_vacaciones"])){
+			die(json_encode(array("error", "La fecha seleccionada en la solicitud no tiene el formato adecuado")));
 		}else{
-			$check_validdate = validateDate($_POST["fecha_vacaciones"], 'Y/m/d');
+			$check_validdate = validateDate($_POST["fecha_vacaciones"], 'Y-m-d H:i:s');
 			if($check_validdate = false){
 				die(json_encode(array("error", "La fecha seleccionada en la solicitud es inválida")));
 			}
