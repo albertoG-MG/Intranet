@@ -46,6 +46,7 @@
                                         <th class="py-3 text-center desktop">Periodo</th>
                                         <th class="py-3 text-center desktop">F. solicitud</th>
                                         <th class="py-3 text-center desktop">Estatus</th>
+                                        <th class="py-3 text-center min-tablet"></th>
                                     </tr>
                                 </thead>
                             </table>
