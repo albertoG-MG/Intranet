@@ -3036,6 +3036,18 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a vacaciones") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Acceso al historial de vacaciones") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
 			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
 		}
+
+		//Checar si la solicitud existe
+		if($_POST["method"] == "edit"){
+			$check_solicitud_historial = $object -> _db->prepare("SELECT * FROM historial_solicitud_vacaciones WHERE id=:editarid");
+    		$check_solicitud_historial->execute(array('editarid' => $_POST["id"]));
+			$count_solicitud_historial = $check_solicitud_historial -> rowCount();
+			if($count_solicitud_historial == 0){
+				die(json_encode(array("solicitud_not_found", "No se encontró la solicitud")));
+			}else{
+				$id_solicitud = $_POST["id"];
+			}
+		}
 		
 		if($_POST["select2"] != null){
 			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN expedientes ON expedientes.users_id=usuarios.id WHERE roles.nombre NOT IN('Superadministrador', 'Administrador', 'Director general', 'Usuario externo')");
@@ -3124,6 +3136,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				Vacaciones::Subir_historial($select2, $periodo_vacaciones, $days, $fecha_vacaciones, $estatus_vacaciones);
 				die(json_encode(array("success", "Se ha subido la solicitud de vacaciones en el historial!")));
 			break;
+			case "edit":
+				Vacaciones::Editar_historial($select2, $periodo_vacaciones, $days, $fecha_vacaciones, $estatus_vacaciones, $id_solicitud);
+				die(json_encode(array("success", "Se ha editado la solicitud de vacaciones en el historial!")));
+            break;
 		}
 	}
 }

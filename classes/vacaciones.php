@@ -29,6 +29,12 @@
             $crud -> store('historial_solicitud_vacaciones', ['users_id' => $select2, 'periodo_solicitado' => $periodo_vacaciones, 'dias_solicitados' => $days, 'fecha_solicitud' => $fecha_vacaciones, 'estatus' => $estatus_vacaciones]);
         }
 
+        public static function Editar_historial($select2, $periodo_vacaciones, $days, $fecha_vacaciones, $estatus_vacaciones, $id_solicitud){
+            $object = new connection_database();
+            $crud = new crud();
+            $crud -> update('historial_solicitud_vacaciones', ['users_id' => $select2, 'periodo_solicitado' => $periodo_vacaciones, 'dias_solicitados' => $days, 'fecha_solicitud' => $fecha_vacaciones, 'estatus' => $estatus_vacaciones], "id=:id", [":id" => $id_solicitud]);
+        }
+
         public static function Almacenar_estatus($solicitud_vacaciones, $estatus, $nombre_completo, $comentario){
             $object = new connection_database();
             $crud = new crud();
