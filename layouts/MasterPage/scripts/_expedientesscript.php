@@ -37,8 +37,9 @@
                 {data: [1]},
                 {data: [2]},
                 {data: [3]},
-                {data: [4], visible: false, searchable: false},
-                {data: [5], searchable: false}
+                {data: [4]},
+                {data: [5], visible: false, searchable: false},
+                {data: [6], searchable: false}
             ],
             "columnDefs": 
             [
@@ -55,7 +56,7 @@
                 {
                     target: [1],
                     render: function (data, type, row) {
-                        if(row[4] === null){
+                        if(row[5] === null){
                             return(
                                 "<div class='flex items-center gap-3'>" +
                                     "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/default-user.png'>"+
@@ -65,7 +66,7 @@
                         }else{
                             return(
                                 "<div class='flex items-center gap-3'>" +
-                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[4]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
+                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[5]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
                                     "<span>" + row[1] + "</span>" +
                                 "</div>"
                             );
@@ -101,7 +102,17 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [4],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[4] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [6],
                     render: function (data, type, row) {
                         return (
                             "<div class='flex item-center justify-start md:justify-center gap-3'>" +
@@ -157,7 +168,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "ver_expediente.php?idExpediente="+data[5]+""; 
+            window.location.href = "ver_expediente.php?idExpediente="+data[6]+""; 
         });
     <?php } ?>
 
@@ -174,7 +185,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "editar_expediente.php?idExpediente="+data[5]+""; 
+            window.location.href = "editar_expediente.php?idExpediente="+data[6]+""; 
         });
     <?php } ?>
 
@@ -209,7 +220,7 @@
                             title: 'éxito',
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
-                            var eliminarid = data[5];
+                            var eliminarid = data[6];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
                             $.ajax({
