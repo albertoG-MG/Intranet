@@ -200,4 +200,26 @@
 	    </html>";
 		die();
     }
+
+    $editarid = $_GET['idSolicitud'];
+
+    if($editarid == null){
+        header('Location: historial_vacaciones.php');
+        die();
+    }
+
+    $editar = $object -> _db->prepare("SELECT * FROM historial_solicitud_vacaciones WHERE id=:editarid");
+    $editar->bindParam("editarid", $editarid,PDO::PARAM_INT);
+    $editar->execute();
+
+    $check_historial=$editar->rowCount();
+
+    if($check_historial == 0){
+       header('Location: historial_vacaciones.php');
+       die();
+    }
+
+    $editar_historial_vacaciones=$editar->fetch(PDO::FETCH_OBJ);
+
+    $break_date = explode(" - ", $editar_historial_vacaciones -> periodo_solicitado);
 ?>
