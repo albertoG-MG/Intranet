@@ -50,9 +50,9 @@
                     </button>
                 </li>
                 <li role="presentation" class="w-full md:w-max">
-                    <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="noticias-tab-profile" data-tabs-target="#noticias" type="button" role="tab" aria-controls="noticias" aria-selected="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24"><path fill="currentColor" d="M20 5L20 19L4 19L4 5H20M20 3H4C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3M18 15H6V17H18V15M10 7H6V13H10V7M12 9H18V7H12V9M18 11H12V13H18V11Z" /></svg>
-                        <span>Noticias</span>
+                    <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="alertas-tab-profile" data-tabs-target="#alertas" type="button" role="tab" aria-controls="alertas" aria-selected="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24"><path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
+                        <span>Alertas</span>
                     </button>
                 </li>
                 <li role="presentation" class="w-full md:w-max">
@@ -127,13 +127,13 @@
 
             </div>
         </div>
-        <div class="hidden bg-transparent rounded-lg" id="noticias" role="tabpanel" aria-labelledby="noticias-tab-profile">
+        <div class="hidden bg-transparent rounded-lg" id="alertas" role="tabpanel" aria-labelledby="alertas-tab-profile">
             <?php 
                 if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
                     if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
             ?>
                 <div class="bg-white p-3 shadow-md rounded-2xl mt-5">
-                    <table class="w-full" id="noticias_table" style="display:none; word-break: break-word;">
+                    <table class="w-full" id="alertas_table" style="display:none; word-break: break-word;">
                         <thead>
                             <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
                                 <th>Creada por</th>
@@ -153,11 +153,9 @@
                     } 
                 }
             ?>
-            <div class="bg-white p-3 shadow-md rounded-2xl mt-5">
-                <div id="demo">
-                    <h2 class="text-2xl text-black font-semibold">Noticias</h2>
-                    <div id="dataContainer" class="mt-5">
-                    </div>
+            <div id="demo" class="mt-5">
+                <h2 class="text-2xl text-black font-semibold">Alertas</h2>
+                <div id="dataContainer" class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8" style="word-break:break-word;">
                 </div>
             </div>
         </div>

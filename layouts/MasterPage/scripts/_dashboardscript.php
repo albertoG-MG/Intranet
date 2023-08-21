@@ -9,9 +9,9 @@
             targetEl: document.querySelector('#vision')
         },
         {
-            id: 'noticias',
-            triggerEl: document.querySelector('#noticias-tab-profile'),
-            targetEl: document.querySelector('#noticias')
+            id: 'alertas',
+            triggerEl: document.querySelector('#alertas-tab-profile'),
+            targetEl: document.querySelector('#alertas')
         },
         {
             id: 'avisos',
@@ -33,9 +33,9 @@
                     if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
             ?>
             if (target.triggerEl.className.includes("menu-active") == false){
-                if(target.id=="noticias"){
-                    if ( ! $.fn.DataTable.isDataTable('#noticias_table') ) {
-                        $("#noticias_table").DataTable({
+                if(target.id=="alertas"){
+                    if ( ! $.fn.DataTable.isDataTable('#alertas_table') ) {
+                        $("#alertas_table").DataTable({
                             responsive: true,
                             "lengthChange": false,
                             "ordering": false,
@@ -46,24 +46,26 @@
                             dom: '<"top"fB>rt<"bottom"ip><"clear">',
                             buttons: [
                                 {
-                                    text: "Crear noticia",
+                                    text: "Crear alerta",
                                     attr: {
-                                        'id': 'Noticia',
+                                        'id': 'Alerta',
                                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                     },
                                     className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
                                     action: function(e, dt, node, config) {
                                         $('.modal-wrapper-flex').html(
                                             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
-                                                        '<path fill="currentColor" d="M20 5L20 19L4 19L4 5H20M20 3H4C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3M18 15H6V17H18V15M10 7H6V13H10V7M12 9H18V7H12V9M18 11H12V13H18V11Z" /></svg>'+
+                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                                                    '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                                                        '<path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />'+
+                                                    '</svg>'+
                                                 '</div>'+
-                                                '<h3 class="text-lg font-medium text-gray-900"> Crear una noticia</h3>'+
+                                                '<h3 class="text-lg font-medium text-gray-900"> Crear una alerta</h3>'+
                                             '</div>'+
                                             '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">'+
-                                                        'Título de la noticia'+
+                                                        'Título de la alerta'+
                                                     '</label>'+
                                                     '<div class="group flex">'+
                                                         '<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">'+
@@ -71,16 +73,16 @@
                                                                 '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                                             '</svg>'+
                                                         '</div>'+
-                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_noticia" name="titulo_noticia" placeholder="Título de la noticia">'+
+                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_alerta" name="titulo_alerta" placeholder="Título de la alerta">'+
                                                     '</div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                                                    '<label class="text-[#64748b] font-semibold mb-2">Descripción de la noticia</label>'+
-                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_noticia" name="descripcion_noticia" placeholder="Descripción de la noticia"></textarea>'+
-                                                    '<div id="error_descripcion_noticia"></div>'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Descripción de la alerta</label>'+
+                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_alerta" name="descripcion_alerta" placeholder="Descripción de la alerta"></textarea>'+
+                                                    '<div id="error_descripcion_alerta"></div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la noticia</label>'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la alerta</label>'+
                                                     '<div class="flex items-center justify-center w-full">'+
                                                         '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
                                                             '<div id="img_information" class="flex flex-col items-center justify-center pt-7">'+
@@ -110,7 +112,7 @@
                                             '</div>');
                                         $('.modal-actions').html(
                                             '<div id="submit-changes">'+
-                                                '<button id="crear-noticia" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
+                                                '<button id="crear-alerta" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
                                             '</div>'+
                                             '<div id="disable-close-submit">'+
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -119,12 +121,9 @@
                                         openModal();
                                         resetFormValidator("#Guardar");
                                         $('#Guardar').unbind('submit'); 
-                                        $.validator.addMethod('field_validation', function (value, element) {
-                                            return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
-                                        }, 'not a valid field.');
-                                        $.validator.addMethod('description', function (value, element) {
+                                        $.validator.addMethod('biggertext', function (value, element) {
                                             return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
-                                        }, 'not a valid description.');
+                                        }, 'not a valid biggertext.');
                                         $.validator.addMethod('filesize', function(value, element, param) {
                                             return this.optional(element) || (element.files[0].size <= param * 1048576)
                                         }, 'File size must be less than {0} MB');
@@ -135,8 +134,8 @@
                                                 errorPlacement: function(error, element) {
                                                     if((element.attr('name') === 'foto')){
                                                         error.appendTo("div#error");  
-                                                    }else if(element.attr('name') === 'descripcion_noticia'){
-                                                        error.appendTo("div#error_descripcion_noticia"); 
+                                                    }else if(element.attr('name') === 'descripcion_alerta'){
+                                                        error.appendTo("div#error_descripcion_alerta"); 
                                                     }else{
                                                         error.insertAfter(element.parent('.group.flex'));
                                                     }
@@ -152,13 +151,13 @@
                                                     $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
                                                 },
                                                 rules: {
-                                                    titulo_noticia: {
+                                                    titulo_alerta: {
                                                         required: true,
-                                                        field_validation: true
+                                                        biggertext: true
                                                     },
-                                                    descripcion_noticia: {
+                                                    descripcion_alerta: {
                                                         required: true,
-                                                        description: true
+                                                        biggertext: true
                                                     },
                                                     foto: {
                                                         extension: "jpg|jpeg|png",
@@ -166,13 +165,13 @@
                                                     }
                                                 },
                                                 messages: {
-                                                    titulo_noticia: {
+                                                    titulo_alerta: {
                                                         required: 'Este campo es requerido',
-                                                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                                                        biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
                                                     },
-                                                    descripcion_noticia: {
+                                                    descripcion_alerta: {
                                                         required: 'Este campo es requerido',
-                                                        description: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                                                        biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
                                                     },
                                                     foto: {
                                                         extension: 'Solo se permite jpg, jpeg y pngs',
@@ -194,13 +193,13 @@
                                                                 window.addEventListener('beforeunload', unloadHandler);
                                                                 /*EMPIEZA EL AJAX*/
                                                                 var fd = new FormData();
-                                                                var titulo_noticia = $("#titulo_noticia").val();
-                                                                var descripcion_noticia = $("#descripcion_noticia").val();
+                                                                var titulo_alerta = $("#titulo_alerta").val();
+                                                                var descripcion_alerta = $("#descripcion_alerta").val();
                                                                 var foto = $('#foto')[0].files[0];
                                                                 var method = "store";
-                                                                var app = "noticias";
-                                                                fd.append('titulo_noticia', titulo_noticia);
-                                                                fd.append('descripcion_noticia', descripcion_noticia);
+                                                                var app = "alertas";
+                                                                fd.append('titulo_alerta', titulo_alerta);
+                                                                fd.append('descripcion_alerta', descripcion_alerta);
                                                                 fd.append('foto', foto);
                                                                 fd.append('method', method);
                                                                 fd.append('app', app);
@@ -215,16 +214,16 @@
                                                                             var array = $.parseJSON(data);
                                                                             if (array[0] == "success") {
                                                                                 Swal.fire({
-                                                                                    title: "Noticia Creada",
+                                                                                    title: "Alerta Creada",
                                                                                     text: array[1],
                                                                                     icon: "success"
                                                                                 }).then(function() {
-                                                                                    var table = $('#noticias_table').DataTable();
+                                                                                    var table = $('#alertas_table').DataTable();
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes').html('<button disabled id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                                    $('#submit-changes').html('<button disabled id="crear-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                     table.ajax.reload();
-                                                                                    totalfilas_noticias();
+                                                                                    totalfilas_alertas();
                                                                                     closeModal();
                                                                                 });
                                                                             } else if(array[0] == "error") {
@@ -234,7 +233,7 @@
                                                                                     icon: "error"
                                                                                 }).then(function() {
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes').html('<button id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                                    $('#submit-changes').html('<button id="crear-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                 });
                                                                             }
@@ -251,7 +250,7 @@
                                                                     icon: "error"
                                                                 }).then(function() {
                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                    $('#submit-changes').html('<button disabled id="crear-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                    $('#submit-changes').html('<button disabled id="crear-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                     window.location.href = "login.php";
                                                                 });	
@@ -268,7 +267,7 @@
                                 }
                             ],
                             "ajax":{
-                                "url": "../config/noticias/ajax_noticias.php",
+                                "url": "../config/alertas/ajax_alertas.php",
                                 "type": "POST",
                                 "dataSrc": "",
                                 "data":{
@@ -280,11 +279,11 @@
                             "columns":[
                                 {"data": "creada_por", visible: false, searchable: false},
                                 {"data": "modificado_por", visible: false, searchable: false},
-                                {"data": "noticias_foto_identificador"},
-                                {"data": "filename_noticias", visible: false, searchable: false},
-                                {"data": "titulo_noticia"},
-                                {"data": "descripcion_noticia"},
-                                {"data": "fecha_creacion_noticia"},
+                                {"data": "alertas_foto_identificador"},
+                                {"data": "filename_alertas", visible: false, searchable: false},
+                                {"data": "titulo_alerta"},
+                                {"data": "descripcion_alerta"},
+                                {"data": "fecha_creacion_alerta"},
                                 {"data": "fecha_modificacion", visible: false, searchable: false},
                                 {"data": "id", searchable: false}
                             ],
@@ -293,16 +292,16 @@
                                 {
                                     target: [2],
                                     render: function (data, type, row) {
-                                        if(row["noticias_foto_identificador"] === null){
+                                        if(row["alertas_foto_identificador"] === null){
                                             return(
                                                 "<div>" +
-                                                    "<img class='block lg:m-auto w-10 h-10 shrink-0' src='../src/img/default_news_image.png'>"+
+                                                    "<img class='block lg:m-auto w-10 h-10 shrink-0' src='../src/img/default_alert_image.png'>"+
                                                 "</div>"
                                             );
                                         }else{
                                             return(
                                                 "<div>" +
-                                                    "<img class='block lg:m-auto w-10 h-10 shrink-0' src='../src/noticias/"+row['noticias_foto_identificador']+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
+                                                    "<img class='block lg:m-auto w-10 h-10 shrink-0' src='../src/alertas/"+row['alertas_foto_identificador']+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
                                                 "</div>"
                                             );
                                         }
@@ -313,7 +312,7 @@
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='text-left lg:text-center'>" +
-                                                "<span>" + row["titulo_noticia"] + "</span>" +
+                                                "<span>" + row["titulo_alerta"] + "</span>" +
                                             "</div>"
                                         );
                                     }
@@ -323,7 +322,7 @@
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='text-left lg:text-center'>" +
-                                                "<span>" + row["descripcion_noticia"] + "</span>" +
+                                                "<span>" + row["descripcion_alerta"] + "</span>" +
                                             "</div>"
                                         );
                                     }
@@ -333,7 +332,7 @@
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='text-left lg:text-center'>" +
-                                                "<span>" + row["fecha_creacion_noticia"] + "</span>" +
+                                                "<span>" + row["fecha_creacion_alerta"] + "</span>" +
                                             "</div>"
                                         );
                                     }
@@ -361,7 +360,7 @@
                             "initComplete": () => {
                                 $('.dataTables_filter input[type="search"]').
                                 attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
-                                $("#noticias_table").show();
+                                $("#alertas_table").show();
                             },
                         });
                     }
@@ -761,27 +760,27 @@
         $.validator.unobtrusive.parse(formId);
     }
 
-    function totalfilas_noticias(){
+    function totalfilas_alertas(){
         var totalrows = 0;
         $.ajax({
             type: "GET",
-            url: "../config/totalrows_noticias.php",
+            url: "../config/totalrows_alertas.php",
             success: function (response) {
                 totalrows = response;
-                paginacion_noticias(totalrows);
+                paginacion_alertas(totalrows);
             }
         });
     }
 
-    function paginacion_noticias(totalrows){
+    function paginacion_alertas(totalrows){
         $('#demo').pagination({
-            dataSource: '../config/noticias_ajax.php',
+            dataSource: '../config/alertas_ajax.php',
             locator: "items",
             totalNumberLocator: function(response) {
                 // you can return totalNumber by analyzing response content
                 return totalrows;
             },
-            pageSize: 5,
+            pageSize: 9,
             showNavigator: true,
             formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
             showGoInput: true,
@@ -794,36 +793,46 @@
             },
             callback: function(data, pagination) {
                 // template method of yourself
-                var html = __noticiasPreview(data);
+                var html = __alertasPreview(data);
                 $("#dataContainer").html(html);
             }
         });
     }
 
-    function __noticiasPreview(data) {
+    
+
+    function __alertasPreview(data) {
         for (var i = 0, len = data.length; i < len; i++) {
-            if(data[i].noticias_foto_identificador != null && data[i].filename_noticias != null){
-                data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                    `<picture><img class="noticias__image w-10 h-10" src="../src/noticias/${data[i].noticias_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
-                    `<ul class="noticias__item">`+
-                    `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
-                    `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
-                    `<li class="noticias__footer flex justify-between">`+
-                    `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
-                    `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
-                    `</li>`+
-                    `</ul></div>`;
+            if(data[i].alertas_foto_identificador != null && data[i].filename_alertas != null){
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
+                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
             }else{
-                data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                    `<picture><img class="noticias__image w-10 h-10" src="../src/img/default_news_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
-                    `<ul class="noticias__item">`+
-                    `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
-                    `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
-                    `<li class="noticias__footer flex justify-between">`+
-                    `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
-                    `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
-                    `</li>`+
-                    `</ul></div>`;
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
+                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
             }
         }
         return data.join("");
@@ -904,30 +913,30 @@
 
     $(document).ready(function () {
 
-        totalfilas_noticias();
+        totalfilas_alertas();
         totalfilas_avisos();
 
-        function totalfilas_noticias(){
+        function totalfilas_alertas(){
             var totalrows = 0;
             $.ajax({
                 type: "GET",
-                url: "../config/totalrows_noticias.php",
+                url: "../config/totalrows_alertas.php",
                 success: function (response) {
                     totalrows = response;
-                    paginacion_noticias(totalrows);
+                    paginacion_alertas(totalrows);
                 }
             });
         }
 
-        function paginacion_noticias(totalrows){
+        function paginacion_alertas(totalrows){
             $('#demo').pagination({
-                dataSource: '../config/noticias_ajax.php',
+                dataSource: '../config/alertas_ajax.php',
                 locator: "items",
                 totalNumberLocator: function(response) {
                     // you can return totalNumber by analyzing response content
                     return totalrows;
                 },
-                pageSize: 5,
+                pageSize: 9,
                 showNavigator: true,
                 formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
                 showGoInput: true,
@@ -940,36 +949,44 @@
                 },
                 callback: function(data, pagination) {
                     // template method of yourself
-                    var html = __noticiasPreview(data);
+                    var html = __alertasPreview(data);
                     $("#dataContainer").html(html);
                 }
             });
         }
 
-        function __noticiasPreview(data) {
+        function __alertasPreview(data) {
             for (var i = 0, len = data.length; i < len; i++) {
-                if(data[i].noticias_foto_identificador != null && data[i].filename_noticias != null){
-                    data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                        `<picture><img class="noticias__image w-10 h-10" src="../src/noticias/${data[i].noticias_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
-                        `<ul class="noticias__item">`+
-                        `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
-                        `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
-                        `<li class="noticias__footer flex justify-between">`+
-                        `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
-                        `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
-                        `</li>`+
-                        `</ul></div>`;
+                if(data[i].alertas_foto_identificador != null && data[i].filename_alertas != null){
+                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                                `<div class="p-5">`+
+                                    `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
+                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
+                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
+                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                        `Ver más`+
+                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                        `</svg>`+
+                                    `</button>`+
+                                `</div>`+
+                            `</div>`;
                 }else{
-                    data[i] = `<div class="noticias__item-wrapper" id="noticias__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                        `<picture><img class="noticias__image w-10 h-10" src="../src/img/default_news_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Noticias image"></picture>`+
-                        `<ul class="noticias__item">`+
-                        `<li><h2 class="noticias__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_noticia}</h2></li>`+
-                        `<li class="noticias__item-description"><p class="noticias__item-description">${data[i].descripcion_noticia}</p></li>`+
-                        `<li class="noticias__footer flex justify-between">`+
-                        `<span class="noticias__date--creation">Fecha de creación: ${data[i].fecha_creacion_noticia}</span>`+
-                        `<span class="noticias__user--creator">Creado por: ${data[i].nombre}</span>`+
-                        `</li>`+
-                        `</ul></div>`;
+                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                                `<div class="p-5">`+
+                                    `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
+                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
+                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
+                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                        `Ver más`+
+                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                        `</svg>`+
+                                    `</button>`+
+                                `</div>`+
+                            `</div>`;
                 }
             }
             return data.join("");
@@ -1049,7 +1066,7 @@
         ?>
 
         $(document).on("click", "tr .Editar", function () {
-            var table = $('#noticias_table').DataTable();
+            var table = $('#alertas_table').DataTable();
             var rowSelector;
             var li = $(this).closest('li');
             if ( li.length ) {
@@ -1063,14 +1080,16 @@
             $('.modal-wrapper-flex').html(
                 '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
                     '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
-                        '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 5L20 19L4 19L4 5H20M20 3H4C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3M18 15H6V17H18V15M10 7H6V13H10V7M12 9H18V7H12V9M18 11H12V13H18V11Z" /></svg>'+
+                        '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                            '<path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />'+
+                        '</svg>'+
                     '</div>'+
-                    '<h3 class="text-lg font-medium text-gray-900"> Editar una noticia</h3>'+
+                    '<h3 class="text-lg font-medium text-gray-900"> Editar una alerta</h3>'+
                 '</div>'+
                 '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">'+
-                            'Título de la noticia'+
+                            'Título de la alerta'+
                         '</label>'+
                         '<div class="group flex">'+
                             '<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">'+
@@ -1078,16 +1097,16 @@
                                     '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                 '</svg>'+
                             '</div>'+
-                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="editar_titulo_noticia" name="editar_titulo_noticia" value="'+data['titulo_noticia']+'" placeholder="Título de la noticia">'+
+                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="editar_titulo_alerta" name="editar_titulo_alerta" value="'+data['titulo_alerta']+'" placeholder="Título de la alerta">'+
                         '</div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                        '<label class="text-[#64748b] font-semibold mb-2">Descripción de la noticia</label>'+
-                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="editar_descripcion_noticia" name="editar_descripcion_noticia" placeholder="Descripción de la noticia">'+data['descripcion_noticia']+'</textarea>'+
-                        '<div id="error_editar_descripcion_noticia"></div>'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Descripción de la alerta</label>'+
+                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="editar_descripcion_alerta" name="editar_descripcion_alerta" placeholder="Descripción de la alerta">'+data['descripcion_alerta']+'</textarea>'+
+                        '<div id="error_editar_descripcion_alerta"></div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la noticia</label>'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la alerta</label>'+
                         '<div class="flex items-center justify-center w-full">'+
                             '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
                                 '<div id="editar_img_information" class="flex flex-col items-center justify-center pt-7">'+
@@ -1117,33 +1136,30 @@
                 '</div>');
                 $('.modal-actions').html(
                     '<div id="submit-changes">'+
-                        '<button id="editar-noticia" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
+                        '<button id="editar-alerta" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
                     '</div>'+
                     '<div id="disable-close-submit">'+
                         '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
                     '</div>');
             originalState = $("#editar_img_information").clone();
             delete_switch = "false";
-            if(data["noticias_foto_identificador"] != null && data["filename_noticias"] != null){
+            if(data["alertas_foto_identificador"] != null && data["filename_alertas"] != null){
                 if (window.FileReader && window.Blob) {
                     console.log('FileReader ó Blob es compatible con este navegador.');
                     $('#editar_svg').addClass("hidden");
-                    checkImage("../src/noticias/"+data['noticias_foto_identificador']+"", function(){ $('#editar_preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/noticias/'+data["noticias_foto_identificador"]+''); $('#editar_archivo').text(data["filename_noticias"]); }, function(){ $('#editar_preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/not_found.jpg'); $('#editar_archivo').text("No se encontró la imagen"); } );
+                    checkImage("../src/alertas/"+data['alertas_foto_identificador']+"", function(){ $('#editar_preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/alertas/'+data["alertas_foto_identificador"]+''); $('#editar_archivo').text(data["filename_alertas"]); }, function(){ $('#editar_preview').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/not_found.jpg'); $('#editar_archivo').text("No se encontró la imagen"); } );
                 }else{
                     console.error('FileReader ó Blob no es compatible con este navegador.');
-                    checkImage("../src/noticias/"+data['noticias_foto_identificador']+"", function(){ $('#editar_archivo').text(data["filename_noticias"]); }, function(){ $('#editar_archivo').text("No se encontró la imagen"); } );
+                    checkImage("../src/alertas/"+data['alertas_foto_identificador']+"", function(){ $('#editar_archivo').text(data["filename_alertas"]); }, function(){ $('#editar_archivo').text("No se encontró la imagen"); } );
                 }	
                 $("#div_editar_foto").removeClass("hidden");
             }
             openModal();
             resetFormValidator("#Guardar");
             $('#Guardar').unbind('submit');
-            $.validator.addMethod('field_validation', function (value, element) {
-                return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
-            }, 'not a valid field.');
-            $.validator.addMethod('description', function (value, element) {
+            $.validator.addMethod('biggertext', function (value, element) {
                 return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
-            }, 'not a valid description.');
+            }, 'not a valid biggertext.');
             $.validator.addMethod('filesize', function(value, element, param) {
                 return this.optional(element) || (element.files[0].size <= param * 1048576)
             }, 'File size must be less than {0} MB');
@@ -1154,8 +1170,8 @@
                     errorPlacement: function(error, element) {
                         if((element.attr('name') === 'editar_foto')){
                             error.appendTo("div#error_editar_foto");  
-                        }else if(element.attr('name') === 'editar_descripcion_noticia'){
-                            error.appendTo("div#error_editar_descripcion_noticia"); 
+                        }else if(element.attr('name') === 'editar_descripcion_alerta'){
+                            error.appendTo("div#error_editar_descripcion_alerta"); 
                         }else{
                             error.insertAfter(element.parent('.group.flex'));
                         }
@@ -1171,13 +1187,13 @@
                         $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
                     },
                     rules: {
-                        editar_titulo_noticia: {
+                        editar_titulo_alerta: {
                             required: true,
-                            field_validation: true
+                            biggertext: true
                         },
-                        editar_descripcion_noticia: {
+                        editar_descripcion_alerta: {
                             required: true,
-                            description: true
+                            biggertext: true
                         },
                         editar_foto: {
                             extension: "jpg|jpeg|png",
@@ -1185,13 +1201,13 @@
                         }
                     },
                     messages: {
-                        editar_titulo_noticia: {
+                        editar_titulo_alerta: {
                             required: 'Este campo es requerido',
-                            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                            biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
                         },
-                        editar_descripcion_noticia: {
+                        editar_descripcion_alerta: {
                             required: 'Este campo es requerido',
-                            description: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                            biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
                         },
                         editar_foto: {
                             extension: 'Solo se permite jpg, jpeg y pngs',
@@ -1213,14 +1229,14 @@
                                     window.addEventListener('beforeunload', unloadHandler);
                                     /*EMPIEZA EL AJAX*/
                                     var fd = new FormData();
-                                    var titulo_noticia = $("#editar_titulo_noticia").val();
-                                    var descripcion_noticia = $("#editar_descripcion_noticia").val();
+                                    var titulo_alerta = $("#editar_titulo_alerta").val();
+                                    var descripcion_alerta = $("#editar_descripcion_alerta").val();
                                     var foto = $('#editar_foto')[0].files[0];
                                     var id = data["id"];
                                     var method = "edit";
-                                    var app = "noticias";
-                                    fd.append('titulo_noticia', titulo_noticia);
-                                    fd.append('descripcion_noticia', descripcion_noticia);
+                                    var app = "alertas";
+                                    fd.append('titulo_alerta', titulo_alerta);
+                                    fd.append('descripcion_alerta', descripcion_alerta);
                                     fd.append('foto', foto);
                                     fd.append('id', id);
                                     fd.append('delete', delete_switch);
@@ -1237,16 +1253,16 @@
                                                 var array = $.parseJSON(data);
                                                 if (array[0] == "success") {
                                                     Swal.fire({
-                                                        title: "Noticia Editada",
+                                                        title: "Alerta Editada",
                                                         text: array[1],
                                                         icon: "success"
                                                     }).then(function() {
-                                                        var table = $('#noticias_table').DataTable();
+                                                        var table = $('#alertas_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html('<button disabled id="editar-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
-                                                        totalfilas_noticias();
+                                                        totalfilas_alertas();
                                                         closeModal();
                                                     });
                                                 } else if(array[0] == "error") {
@@ -1256,21 +1272,21 @@
                                                         icon: "error"
                                                     }).then(function() {
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html('<button id="editar-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-changes').html('<button id="editar-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                     });
-                                                } else if (array[0] == "news_not_found") {
+                                                } else if (array[0] == "alert_not_found") {
                                                     Swal.fire({
-                                                        title: "Noticia inexistente!",
+                                                        title: "Alerta inexistente!",
                                                         text: array[1],
                                                         icon: "error"
                                                     }).then(function() {
-                                                        var table = $('#noticias_table').DataTable();
+                                                        var table = $('#alertas_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html('<button disabled id="editar-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
-                                                        totalfilas_noticias();
+                                                        totalfilas_alertas();
                                                         closeModal();
                                                     });
                                                 }
@@ -1287,7 +1303,7 @@
                                         icon: "error"
                                     }).then(function() {
                                         window.removeEventListener('beforeunload', unloadHandler);
-                                        $('#submit-changes').html('<button disabled id="editar-noticia" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                         window.location.href = "login.php";
                                     });	
@@ -1303,7 +1319,7 @@
         });
 
         $(document).on('click', 'tr .Eliminar', function() {
-            var table = $('#noticias_table').DataTable();
+            var table = $('#alertas_table').DataTable();
             var rowSelector;
             var li = $(this).closest('li');
             if ( li.length ) {
@@ -1336,14 +1352,14 @@
                                 var fd = new FormData();
                                 fd.append('id', eliminarid);
                                 $.ajax({
-                                    url: "../ajax/eliminar/tabla_noticias/eliminarnoticia.php",
+                                    url: "../ajax/eliminar/tabla_alertas/eliminaralerta.php",
                                     type: "post",
                                     data: fd,
                                     processData: false,
                                     contentType: false,
                                     success: function(result) {
                                         table.ajax.reload();
-                                        totalfilas_noticias();
+                                        totalfilas_alertas();
                                     }
                                 });
                             });
@@ -1715,7 +1731,7 @@
                         '<div id="error_editar_descripcion_aviso"></div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la noticia</label>'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la alerta</label>'+
                         '<div class="flex items-center justify-center w-full">'+
                             '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
                                 '<div id="img_editar_information_aviso" class="flex flex-col items-center justify-center pt-7">'+
