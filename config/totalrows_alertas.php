@@ -2,7 +2,7 @@
     require 'conexion.php';
     $object = new connection_database();
 
-    $statement = $object -> _db -> prepare("SELECT COUNT(*) AS totalrows FROM noticias");
+    $statement = $object -> _db -> prepare("SELECT COUNT(*) AS totalrows FROM alertas");
     $statement -> execute();
     $data=$statement->fetch(PDO::FETCH_OBJ);
     print $data->totalrows;
