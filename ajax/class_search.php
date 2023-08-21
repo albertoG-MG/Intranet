@@ -2813,31 +2813,31 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
-}else if(isset($_POST["app"]) && $_POST["app"] == "noticias"){
-	if(isset($_POST["titulo_noticia"], $_POST["descripcion_noticia"], $_POST["method"])){
-		//TÍTULO DE LA NOTICIA
-		if(empty($_POST["titulo_noticia"])){
-			die(json_encode(array("error", "El título de la noticia no puede estar vacío")));
-		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_noticia"])){
-			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título de la noticia")));
+}else if(isset($_POST["app"]) && $_POST["app"] == "alertas"){
+	if(isset($_POST["titulo_alerta"], $_POST["descripcion_alerta"], $_POST["method"])){
+		//TÍTULO DE LA ALERTA
+		if(empty($_POST["titulo_alerta"])){
+			die(json_encode(array("error", "El título de la alerta no puede estar vacío")));
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["titulo_alerta"])){
+			die(json_encode(array("error", "El título de la alerta no puede tener solamente símbolos especiales y debe contener al menos una letra")));
 		}else{
-			$titulo_noticia = $_POST["titulo_noticia"];
+			$titulo_alerta = $_POST["titulo_alerta"];
 		}
 
-		//DESCRIPCIÓN DE LA NOTICIA
-		if(empty($_POST["descripcion_noticia"])){
-			die(json_encode(array("error", "La descripción de la noticia no puede estar vacío")));
-		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["descripcion_noticia"])){
-			die(json_encode(array("error", "La descripción de la noticia no puede tener solamente símbolos especiales y debe contener al menos una letra")));
+		//DESCRIPCIÓN DE LA ALERTA
+		if(empty($_POST["descripcion_alerta"])){
+			die(json_encode(array("error", "La descripción de la alerta no puede estar vacío")));
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["descripcion_alerta"])){
+			die(json_encode(array("error", "La descripción de la alerta no puede tener solamente símbolos especiales y debe contener al menos una letra")));
 		}else{
-			$descripcion_noticia = $_POST["descripcion_noticia"];
+			$descripcion_alerta = $_POST["descripcion_alerta"];
 		}
 
 		//FOTO
 		if(isset($_FILES['foto']['name'])){
 			$allowed = array('jpeg', 'png', 'jpg');
-			$filename_noticias = $_FILES['foto']['name'];
-			$ext = pathinfo($filename_noticias, PATHINFO_EXTENSION);
+			$filename_alertas = $_FILES['foto']['name'];
+			$ext = pathinfo($filename_alertas, PATHINFO_EXTENSION);
 			if (!in_array($ext, $allowed)) {
 				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
 			}else if($_FILES['foto']['size'] > 10485760){
@@ -2852,29 +2852,29 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 			$foto=$_FILES['foto'];
 		}else{
-			$filename_noticias = null;
+			$filename_alertas = null;
 			$foto=null;
 		}
 
 		switch($_POST["method"]){
             case "store":
-				$noticia = new Noticias($_SESSION["id"], $titulo_noticia, $descripcion_noticia, $filename_noticias, $foto);
-				$noticia -> insertNews();
-                die(json_encode(array("success", "Se ha creado la noticia!")));
+				$alerta = new Alertas($_SESSION["id"], $titulo_alerta, $descripcion_alerta, $filename_alertas, $foto);
+				$alerta -> insertAlerts();
+                die(json_encode(array("success", "Se ha creado la alerta!")));
                 break;
             break;
             case "edit":
-                $check_news = $object -> _db -> prepare("SELECT * FROM noticias WHERE id=:id");
-				$check_news -> execute(array(":id" => $_POST["id"]));
-				$count_news = $check_news -> rowCount();
-				if($count_news == 0){
-					die(json_encode(array("news_not_found", "No se encontró la noticia!")));
+                $check_alerts = $object -> _db -> prepare("SELECT * FROM alertas WHERE id=:id");
+				$check_alerts -> execute(array(":id" => $_POST["id"]));
+				$count_alerts = $check_alerts -> rowCount();
+				if($count_alerts == 0){
+					die(json_encode(array("alert_not_found", "No se encontró la alerta!")));
 				}
 				$id = $_POST["id"];
 				$delete = $_POST["delete"];
-				$noticia = new Noticias($_SESSION["id"], $titulo_noticia, $descripcion_noticia, $filename_noticias, $foto);
-				$noticia -> editNews($id, $delete);
-				die(json_encode(array("success", "Se ha modificado la noticia!")));
+				$alerta = new Alertas($_SESSION["id"], $titulo_alerta, $descripcion_alerta, $filename_alertas, $foto);
+				$alerta -> editAlerts($id, $delete);
+				die(json_encode(array("success", "Se ha modificado la alerta!")));
             	break;
 			break;
         }
