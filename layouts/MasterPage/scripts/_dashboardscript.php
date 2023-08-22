@@ -1743,11 +1743,15 @@
                                 $('#svg_archivo_alerta').addClass('hidden');
                                 $('#text_archivo_alerta').text(file.name);
                                 $("#div_archivo_alerta").removeClass("hidden");
-                                let reader = new FileReader();
-                                reader.onload = function (event) {
-                                    $('#preview_archivo_alerta').attr('src', event.target.result);
+                                if (file.type == "image/png" || file.type == "image/jpeg") {
+                                    let reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        $('#preview_archivo_alerta').attr('src', event.target.result);
+                                    }
+                                    reader.readAsDataURL(file);
+                                }else if(file.type == "application/pdf"){
+                                    $('#preview_archivo_alerta').attr('src', "../src/img/pdf.png");
                                 }
-                                reader.readAsDataURL(file);
                             }
                         }
                     };
