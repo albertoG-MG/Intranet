@@ -2856,9 +2856,32 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$foto=null;
 		}
 
+		//ARCHIVO
+		if(isset($_FILES['archivo_alerta']['name'])){
+			$allowed = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_archivo_alerta = $_FILES['archivo_alerta']['name'];
+			$ext = pathinfo($filename_archivo_alerta, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['archivo_alerta']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["archivo_alerta"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png" && $mimetype != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$archivo_alerta=$_FILES['archivo_alerta'];
+		}else{
+			$filename_archivo_alerta = null;
+			$archivo_alerta=null;
+		}
+
 		switch($_POST["method"]){
             case "store":
-				$alerta = new Alertas($_SESSION["id"], $titulo_alerta, $descripcion_alerta, $filename_alertas, $foto);
+				$alerta = new Alertas($_SESSION["id"], $titulo_alerta, $descripcion_alerta, $filename_alertas, $foto, $filename_archivo_alerta, $archivo_alerta);
 				$alerta -> insertAlerts();
                 die(json_encode(array("success", "Se ha creado la alerta!")));
                 break;

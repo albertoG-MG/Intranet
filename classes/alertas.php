@@ -7,20 +7,24 @@
         public $titulo_alerta;
         public $descripcion_alerta;
         public $filename_alertas;
-        public $foto; 
+        public $foto;
+        public $filename_archivo_alerta;
+        public $archivo_alerta;
         
-        public function __construct($user, $alerts_title, $alerts_description, $alerts_filename, $photo){
+        public function __construct($user, $alerts_title, $alerts_description, $alerts_filename, $photo, $alerts_file_filename, $alert_file){
             $this->usuario = $user;
             $this->titulo_alerta = $alerts_title;
             $this->descripcion_alerta = $alerts_description;
             $this->filename_alertas = $alerts_filename;
             $this->foto = $photo;
+            $this->filename_archivo_alerta = $alerts_file_filename;
+            $this->archivo_alerta = $alert_file;
         }
 
         public function findAllAlerts()
         {
             $object = new connection_database();
-            $statement = "SELECT id, users_id, modificado_por, titulo_alerta, descripcion_alerta, fecha_creacion_alerta, fecha_modificacion, filename_alertas, alertas_foto_identificador FROM alertas;";
+            $statement = "SELECT id, users_id, modificado_por, titulo_alerta, descripcion_alerta, fecha_creacion_alerta, fecha_modificacion, filename_alertas, alertas_foto_identificador, filename_archivo_alerta, archivo_alerta FROM alertas;";
             try {
                 $statement = $object->_db->query($statement);
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -33,7 +37,7 @@
         public function findAlerts($id)
         {
             $object = new connection_database();
-            $statement = "SELECT id, users_id, modificado_por, titulo_alerta, descripcion_alerta, fecha_creacion_alerta, fecha_modificacion, filename_alertas, alertas_foto_identificador FROM alertas WHERE id = ?;";
+            $statement = "SELECT id, users_id, modificado_por, titulo_alerta, descripcion_alerta, fecha_creacion_alerta, fecha_modificacion, filename_alertas, alertas_foto_identificador, filename_archivo_alerta, archivo_alerta FROM alertas WHERE id = ?;";
             try {
                 $statement = $object->_db->prepare($statement);
                 $statement->execute(array($id));
@@ -47,17 +51,36 @@
         public function insertAlerts(){
             $object = new connection_database();
             $crud = new crud();
-            if($this->filename_alertas != null && $this->foto !=null){
+            if($this->filename_alertas != null && $this->foto !=null && $this->filename_archivo_alerta == null && $this->archivo_alerta == null){
                 $location = "../src/alertas/";
                 $ext = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
                 $uploadfile = Alertas::tempnam_sfx($location, $ext);
                 if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
                     $crud->store('alertas', ['users_id' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta, 'filename_alertas' => $this->filename_alertas,
-                    'alertas_foto_identificador' => basename($uploadfile)]);
+                    'alertas_foto_identificador' => basename($uploadfile), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta]);
                 }
-            }else{
+            }else if($this->filename_alertas == null && $this->foto ==null && $this->filename_archivo_alerta != null && $this->archivo_alerta != null){
+                $location = "../src/alertas_archivo/";
+                $ext = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile = Alertas::tempnam_sfx($location, $ext);
+                if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile)){
+                    $crud->store('alertas', ['users_id' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta, 'filename_alertas' => $this->filename_alertas,
+                    'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile)]);
+                }
+            }else if($this->filename_alertas != null && $this->foto !=null && $this->filename_archivo_alerta != null && $this->archivo_alerta != null){
+                $location_archivo_alerta = "../src/alertas_archivo/";
+                $ext_alerta = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($location_archivo_alerta, $ext_alerta);
+                $location_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($location_foto, $ext_foto);
+                 if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo) && move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
+                    $crud->store('alertas', ['users_id' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta, 'filename_alertas' => $this->filename_alertas,
+                    'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)]);
+                }
+            }else if($this->filename_alertas == null && $this->foto ==null && $this->filename_archivo_alerta == null && $this->archivo_alerta == null){
                 $crud->store('alertas', ['users_id' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta, 'filename_alertas' => $this->filename_alertas,
-                'alertas_foto_identificador' => $this->foto]);
+                'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta]);
             }
         }
 
