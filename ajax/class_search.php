@@ -2895,8 +2895,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$id = $_POST["id"];
 				$delete = $_POST["delete"];
-				$alerta = new Alertas($_SESSION["id"], $titulo_alerta, $descripcion_alerta, $filename_alertas, $foto);
-				$alerta -> editAlerts($id, $delete);
+				$delete2 = $_POST["delete2"];
+				$alerta = new Alertas($_SESSION["id"], $titulo_alerta, $descripcion_alerta, $filename_alertas, $foto, $filename_archivo_alerta, $archivo_alerta);
+				$alerta -> editAlerts($id, $delete, $delete2);
 				die(json_encode(array("success", "Se ha modificado la alerta!")));
             	break;
 			break;

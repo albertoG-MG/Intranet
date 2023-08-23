@@ -84,62 +84,281 @@
             }
         }
 
-        public function editAlerts($id, $delete){
+        public function editAlerts($id, $delete, $delete2){
             $crud = new crud();
             $object = new connection_database();
-            $selectphoto = $object -> _db -> prepare("select filename_alertas, alertas_foto_identificador from alertas where id=:idalerta");
+            $selectphoto = $object -> _db -> prepare("select filename_alertas, alertas_foto_identificador, filename_alertas_archivo, alertas_archivo_identificador from alertas where id=:idalerta");
             $selectphoto -> execute(array(':idalerta' => $id));
             $fetch_row_photo = $selectphoto -> fetch(PDO::FETCH_OBJ);
             $hoy = date("Y-m-d H:i:s");
-            //Cuando existe la foto y se sube algo
-            if($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto != null && $this->filename_alertas != null){
-                //Aquí se debe de eliminar la foto anterior
-                $path = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
-                $directory = "../src/alertas/";
-                $ext = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
-                $uploadfile = alertas::tempnam_sfx($directory, $ext);
-                if(!file_exists($path)){
-                    if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+            //Cuando existe la foto y se reemplaza pero no existe el archivo en la base de datos y no se subió ningún archivo - != !=	== ==
+            if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                $path_foto = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_row_photo -> alertas_foto_identificador);
+                }
+                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->filename_archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando existe la foto y se reemplaza pero no existe el archivo en la base de datos y se sube un archivo - != !=	== !=
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $path_foto = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_row_photo -> alertas_foto_identificador);
+                }
+                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto) && move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando existe la foto y se reemplaza y existe el archivo en la base de datos y se sube un archivo - != !=	 != !=
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $path_foto = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_row_photo -> alertas_foto_identificador);
+                }
+                if(file_exists($patch_archivo)){
+                    unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                }
+                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto) && move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando existe la foto y se reemplaza y existe el archivo en la base de datos y no se sube nada - != !=   != ==
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                $path_foto = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_row_photo -> alertas_foto_identificador);
+                }
+                if($delete2 == "false"){
+                    if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
                         $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile)], "id=:alertaid", ['alertaid' => $id]);
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $fetch_row_photo -> filename_alertas_archivo, 'alertas_archivo_identificador' => $fetch_row_photo -> alertas_archivo_identificador], "id=:alertaid", ['alertaid' => $id]);
                     }
                 }else{
-                    unlink($directory.$fetch_row_photo -> alertas_foto_identificador);
-                    if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                    $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                    $directory_archivo = "../src/alertas_archivo/";
+                    if(file_exists($patch_archivo)){
+                        unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                    }
+                    if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
                         $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile)], "id=:alertaid", ['alertaid' => $id]);
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
                     }
                 }
-            //Cuando existe la foto y no se sube nada
-            }else if($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto == null && $this->filename_alertas == null){
+                //Cuando no existe la foto, no se sube nada pero no existe el archivo en la base de datos y no se subió ningún archivo - == ==   == == 
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                //Cuando no existe la foto, no se sube nada pero existe el archivo en la base de datos y no se subió ningún archivo - == ==   != ==
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                if($delete2 == "false"){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $fetch_row_photo -> filename_alertas_archivo, 'alertas_archivo_identificador' => $fetch_row_photo -> alertas_archivo_identificador], "id=:alertaid", ['alertaid' => $id]);
+                }else{
+                    $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                    $directory_archivo = "../src/alertas_archivo/";
+                    if(file_exists($patch_archivo)){
+                        unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                    }
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando no existe la foto, no se sube nada pero no existe el archivo en la base de datos y se subió un archivo - == ==   == !=
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando no existe la foto, no se sube nada pero existe el archivo en la base de datos y se subió un archivo - == ==   != !=
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if(file_exists($patch_archivo)){
+                    unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                }
+                if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando existe la foto, no se sube nada pero no existe el archivo en la base de datos y no se subió nada - != ==   == ==
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
                 if($delete == "false"){
                     $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                    'fecha_modificacion' => $hoy, 'filename_alertas' => $fetch_row_photo -> filename_alertas, 'alertas_foto_identificador' => $fetch_row_photo -> alertas_foto_identificador], "id=:alertaid", ['alertaid' => $id]);
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $fetch_row_photo -> filename_alertas, 'alertas_foto_identificador' => $fetch_row_photo -> alertas_foto_identificador, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
                 }else{
                     $directory = "../src/alertas/";
                     $path = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
-                    if(!file_exists($path)){
+                    if(file_exists($path)){
+                        unlink($directory.$fetch_row_photo -> alertas_foto_identificador);  
+                    }
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);  
+                }
+                //Cuando existe la foto, no se sube nada pero existe el archivo en la base de datos y no se subió nada - != ==   != ==
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                if($delete == "false" && $delete2 == "false"){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $fetch_row_photo -> filename_alertas, 'alertas_foto_identificador' => $fetch_row_photo -> alertas_foto_identificador, 'filename_alertas_archivo' => $fetch_row_photo -> filename_alertas_archivo, 'alertas_archivo_identificador' => $fetch_row_photo -> alertas_archivo_identificador], "id=:alertaid", ['alertaid' => $id]);
+                }else if($delete == "false" && $delete2 == "true"){
+                    $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                    $directory_archivo = "../src/alertas_archivo/";
+                    if(file_exists($patch_archivo)){
+                        unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                    }
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $fetch_row_photo -> filename_alertas, 'alertas_foto_identificador' => $fetch_row_photo -> alertas_foto_identificador, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                }else if($delete == "true" && $delete2 == "false"){
+                    $directory_foto = "../src/alertas/";
+                    $path_foto = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                    if(file_exists($path_foto)){
+                        unlink($directory_foto.$fetch_row_photo -> alertas_foto_identificador);  
+                    }
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $fetch_row_photo -> filename_alertas_archivo, 'alertas_archivo_identificador' => $fetch_row_photo -> alertas_archivo_identificador], "id=:alertaid", ['alertaid' => $id]);  
+                }else if($delete == "true" && $delete2 == "true"){
+                    $directory_foto = "../src/alertas/";
+                    $path_foto = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                    if(file_exists($path_foto)){
+                        unlink($directory_foto.$fetch_row_photo -> alertas_foto_identificador);  
+                    }
+                    $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                    $directory_archivo = "../src/alertas_archivo/";
+                    if(file_exists($patch_archivo)){
+                        unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                    }
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando existe la foto, no se sube nada pero no existe el archivo en la base de datos y se subió algo - != ==   == !=
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);          
+                if($delete == "false"){
+                    if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
                         $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto], "id=:alertaid", ['alertaid' => $id]);
-                    }else{
-                        unlink($directory.$fetch_row_photo -> alertas_foto_identificador);
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $fetch_row_photo -> filename_alertas, 'alertas_foto_identificador' => $fetch_row_photo -> alertas_foto_identificador, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                    }
+                }else{
+                    $directory = "../src/alertas/";
+                    $path = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                    if(file_exists($path)){
+                        unlink($directory.$fetch_row_photo -> alertas_foto_identificador);  
+                    }
+                    if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
                         $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto], "id=:alertaid", ['alertaid' => $id]);
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);  
                     }
                 }
-            //Cuando no existe la foto y se sube algo
-            }else if($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto != null && $this->filename_alertas != null){
-                $directory = "../src/alertas/";
-                $ext = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
-                $uploadfile = alertas::tempnam_sfx($directory, $ext);
-                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile)){
+                //Cuando existe la foto, no se sube nada pero existe el archivo en la base de datos y se subió algo - != ==   != !=
+            }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto == null && $this->filename_alertas == null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if(file_exists($patch_archivo)){
+                    unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                }      
+                if($delete == "false"){
+                    if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
+                        $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $fetch_row_photo -> filename_alertas, 'alertas_foto_identificador' => $fetch_row_photo -> alertas_foto_identificador, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                    }
+                }else{
+                    $directory = "../src/alertas/";
+                    $path = "../src/alertas/".$fetch_row_photo -> alertas_foto_identificador;
+                    if(file_exists($path)){
+                        unlink($directory.$fetch_row_photo -> alertas_foto_identificador);  
+                    }
+                    if(move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo)){
+                        $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto, 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);  
+                    }
+                }
+                //Cuando no existe la foto, se sube algo pero no existe el archivo en la base de datos y no se subió nada == !=   == ==
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
                     $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile)], "id=:alertaid", ['alertaid' => $id]);
-                }    
-            //Cuando no existe la foto y no se sube algo      
-            }else if($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto == null && $this->filename_alertas == null){
-                $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => $this->foto], "id=:alertaid", ['alertaid' => $id]);
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this -> filename_archivo_alerta, 'alertas_archivo_identificador' => $this -> archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando no existe la foto, se sube algo pero existe el archivo en la base de datos y no se subió nada == !=   != ==
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta == null && $this->filename_archivo_alerta == null)){
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                if($delete2 == "false"){
+                    if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
+                        $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this -> filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $fetch_row_photo -> filename_alertas_archivo, 'alertas_archivo_identificador' => $fetch_row_photo -> alertas_archivo_identificador], "id=:alertaid", ['alertaid' => $id]);
+                    }
+                }else{
+                    $directory = "../src/alertas_archivo/";
+                    $path = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                    if(file_exists($path)){
+                        unlink($directory.$fetch_row_photo -> alertas_archivo_identificador); 
+                    }
+                    if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
+                        $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                        'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);  
+                    }
+                }
+                //Cuando no existe la foto, se sube algo pero existe el archivo en la base de datos y no se subió nada == !=	== !=
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if((move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)) && (move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo))){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this -> filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                }
+                //Cuando no existe la foto, se sube algo pero existe el archivo en la base de datos y se sube algo == !=	!= !=
+            }else if(($fetch_row_photo -> filename_alertas == null && $fetch_row_photo -> alertas_foto_identificador == null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo != null && $fetch_row_photo -> alertas_archivo_identificador != null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
+                $directory_foto = "../src/alertas/";
+                $ext_foto = pathinfo($this->filename_alertas, PATHINFO_EXTENSION);
+                $uploadfile_foto = Alertas::tempnam_sfx($directory_foto, $ext_foto);
+                $patch_archivo = "../src/alertas_archivo/".$fetch_row_photo -> alertas_archivo_identificador;
+                $directory_archivo = "../src/alertas_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_alerta, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Alertas::tempnam_sfx($directory_archivo, $ext_archivo);
+                if(file_exists($patch_archivo)){
+                    unlink($directory_archivo.$fetch_row_photo -> alertas_archivo_identificador);
+                }
+                if((move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)) && (move_uploaded_file($this->archivo_alerta['tmp_name'],$uploadfile_archivo))){
+                    $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this -> filename_archivo_alerta, 'alertas_archivo_identificador' => basename($uploadfile_archivo)], "id=:alertaid", ['alertaid' => $id]);
+                }
             }
         }
 
