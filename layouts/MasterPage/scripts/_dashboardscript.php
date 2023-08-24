@@ -913,6 +913,7 @@
             success: function (response) {
                 totalrows = response;
                 paginacion_avisos(totalrows);
+                check_avisos(totalrows);
             }
         });
     }
@@ -979,6 +980,14 @@
             }
         }
         return data.join("");
+    }
+
+    function check_avisos(totalrows){
+        if(totalrows == 0){
+            $("#avisos_demo").attr("style", "display:none;");
+        }else{
+            $("#avisos_demo").removeAttr("style");
+        }
     }
 
     <?php 
@@ -1084,6 +1093,7 @@
                 success: function (response) {
                     totalrows = response;
                     paginacion_avisos(totalrows);
+                    check_avisos(totalrows);
                 }
             });
         }
@@ -1150,6 +1160,14 @@
                 }
             }
             return data.join("");
+        }
+
+        function check_avisos(totalrows){
+            if(totalrows == 0){
+                $("#avisos_demo").attr("style", "display:none;");
+            }else{
+                $("#avisos_demo").removeAttr("style");
+            }
         }
 
         <?php 
