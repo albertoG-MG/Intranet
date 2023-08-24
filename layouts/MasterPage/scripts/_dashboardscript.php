@@ -946,28 +946,36 @@
 
     function __avisosPreview(data) {
         for (var i = 0, len = data.length; i < len; i++) {
-            if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
-                data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                    `<picture><img class="avisos__image w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                    `<ul class="avisos__item">`+
-                    `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
-                    `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
-                    `<li class="avisos__footer flex justify-between">`+
-                    `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
-                    `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
-                    `</li>`+
-                    `</ul></div>`;
+			if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
+                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
             }else{
-                data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                    `<picture><img class="avisos__image w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                    `<ul class="avisos__item">`+
-                    `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
-                    `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
-                    `<li class="avisos__footer flex justify-between">`+
-                    `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
-                    `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
-                    `</li>`+
-                    `</ul></div>`;
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
+                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
             }
         }
         return data.join("");
@@ -1110,27 +1118,35 @@
         function __avisosPreview(data) {
             for (var i = 0, len = data.length; i < len; i++) {
                 if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
-                    data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                        `<picture><img class="avisos__image w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                        `<ul class="avisos__item">`+
-                        `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
-                        `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
-                        `<li class="avisos__footer flex justify-between">`+
-                        `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
-                        `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
-                        `</li>`+
-                        `</ul></div>`;
+                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                                `<div class="p-5">`+
+                                    `<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
+                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
+                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
+                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                        `Ver más`+
+                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                        `</svg>`+
+                                    `</button>`+
+                                `</div>`+
+                            `</div>`;
                 }else{
-                    data[i] = `<div class="avisos__item-wrapper" id="avisos__item-wrapper" style="word-break:break-word; border:1px solid black; padding:4px; line-heigth:2;">`+
-                        `<picture><img class="avisos__image w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                        `<ul class="avisos__item">`+
-                        `<li><h2 class="avisos__item-heading" style="font-size:1.5rem; font-weight: 800;">${data[i].titulo_aviso}</h2></li>`+
-                        `<li class="avisos__item-description"><p class="avisos__item-description">${data[i].descripcion_aviso}</p></li>`+
-                        `<li class="avisos__footer flex justify-between">`+
-                        `<span class="avisos__date--creation">Fecha de creación: ${data[i].fecha_creacion_aviso}</span>`+
-                        `<span class="avisos__user--creator">Creado por: ${data[i].nombre}</span>`+
-                        `</li>`+
-                        `</ul></div>`;
+                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                                `<div class="p-5">`+
+                                    `<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
+                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
+                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
+                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                        `Ver más`+
+                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                        `</svg>`+
+                                    `</button>`+
+                                `</div>`+
+                            `</div>`;
                 }
             }
             return data.join("");
