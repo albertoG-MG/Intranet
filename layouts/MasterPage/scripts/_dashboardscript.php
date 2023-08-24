@@ -926,7 +926,7 @@
                 // you can return totalNumber by analyzing response content
                 return totalrows;
             },
-            pageSize: 5,
+            pageSize: 9,
             showNavigator: true,
             formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
             showGoInput: true,
@@ -1106,7 +1106,7 @@
                     // you can return totalNumber by analyzing response content
                     return totalrows;
                 },
-                pageSize: 5,
+                pageSize: 9,
                 showNavigator: true,
                 formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
                 showGoInput: true,
