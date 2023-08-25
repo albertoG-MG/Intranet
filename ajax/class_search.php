@@ -2946,6 +2946,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$foto_aviso=null;
 		}
 
+		//ARCHIVO
 		if(isset($_FILES['archivo_file_aviso']['name'])){
 			$allowed_archivo = array('pdf', 'jpeg', 'png', 'jpg');
 			$filename_archivo_aviso = $_FILES['archivo_file_aviso']['name'];
