@@ -721,9 +721,11 @@
                             },
                             "columns":[
                                 {"data": "creada_por", visible: false, searchable: false},
-                                {"data": "modificado_por", visible: false, searchable: false},
-                                {"data": "avisos_foto_identificador"},
+	                            {"data": "modificado_por", visible: false, searchable: false},
                                 {"data": "filename_avisos", visible: false, searchable: false},
+                                {"data": "avisos_foto_identificador"},
+                                {"data": "filename_archivo_aviso", visible: false, searchable: false},
+                                {"data": "aviso_archivo_identificador"},
                                 {"data": "titulo_aviso"},
                                 {"data": "descripcion_aviso"},
                                 {"data": "fecha_creacion_aviso"},
@@ -733,7 +735,7 @@
                             "columnDefs": 
                             [
                                 {
-                                    target: [2],
+                                    target: [3],
                                     render: function (data, type, row) {
                                         if(row["avisos_foto_identificador"] === null){
                                             return(
@@ -751,7 +753,35 @@
                                     }
                                 },
                                 {
-                                    target: [4],
+                                    target: [5],
+                                    render: function (data, type, row) {
+                                        if(row["aviso_archivo_identificador"] != null){
+                                            var url= "../src/avisos_archivo/"+row['aviso_archivo_identificador']+"";
+                                            var filename = row['filename_archivo_aviso'];
+                                            if(checkFile(url)){
+                                                return (
+                                                    "<div class='text-left lg:text-center'>" +
+                                                        "<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
+                                                    "</div>"
+                                                );
+                                            }else{
+                                                return (
+                                                    "<div class='text-left lg:text-center'>" +
+                                                        "<span>No se encontró el archivo</span>" +
+                                                    "</div>"
+                                                );
+                                            }
+                                        }else{
+                                            return (
+                                                "<div class='text-left lg:text-center'>" +
+                                                    "<span>No se ha subido un archivo</span>" +
+                                                "</div>"
+                                            );
+                                        }
+                                    }
+                                },
+                                {
+                                    target: [6],
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='text-left lg:text-center'>" +
@@ -761,7 +791,7 @@
                                     }
                                 },
                                 {
-                                    target: [5],
+                                    target: [7],
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='text-left lg:text-center'>" +
@@ -771,7 +801,7 @@
                                     }
                                 },
                                 {
-                                    target: [6],
+                                    target: [8],
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='text-left lg:text-center'>" +
@@ -781,7 +811,7 @@
                                     }
                                 },
                                 {
-                                    target: [8],
+                                    target: [10],
                                     render: function (data, type, row) {
                                         return (
                                             "<div class='flex item-center justify-start md:justify-center gap-3'>" +
