@@ -2870,7 +2870,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$mimetype = finfo_file($finfo, $_FILES["archivo_alerta"]["tmp_name"]);
 				finfo_close($finfo);
 				if($mimetype != "image/jpeg" && $mimetype != "image/png" && $mimetype != "application/pdf"){
-					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo pdf, png, jpg y jpeg")));
+					die(json_encode(array("error", "Por favor, asegúrese que el archivo sea originalmente un archivo pdf, png, jpg y jpeg")));
 				}
 			}
 			$archivo_alerta=$_FILES['archivo_alerta'];
@@ -2946,9 +2946,31 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$foto_aviso=null;
 		}
 
+		if(isset($_FILES['archivo_file_aviso']['name'])){
+			$allowed_archivo = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_archivo_aviso = $_FILES['archivo_file_aviso']['name'];
+			$ext_archivo = pathinfo($filename_archivo_aviso, PATHINFO_EXTENSION);
+			if (!in_array($ext_archivo, $allowed_archivo)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['archivo_file_aviso']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo_archivo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype_archivo = finfo_file($finfo_archivo, $_FILES["archivo_file_aviso"]["tmp_name"]);
+				finfo_close($finfo_archivo);
+				if($mimetype_archivo != "image/jpeg" && $mimetype_archivo != "image/png" && $mimetype_archivo != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que el archivo sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$archivo_file_aviso=$_FILES['archivo_file_aviso'];
+		}else{
+			$filename_archivo_aviso = null;
+			$archivo_file_aviso = null;
+		}
+
 		switch($_POST["method"]){
             case "store":
-				$aviso = new Avisos($_SESSION["id"], $titulo_aviso, $descripcion_aviso, $filename_avisos, $foto_aviso);
+				$aviso = new Avisos($_SESSION["id"], $titulo_aviso, $descripcion_aviso, $filename_avisos, $foto_aviso, $filename_archivo_aviso, $archivo_file_aviso);
 				$aviso -> insertNotice();
                 die(json_encode(array("success", "Se ha creado el aviso!")));
                 break;

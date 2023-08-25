@@ -7,20 +7,24 @@
         public $titulo_aviso;
         public $descripcion_aviso;
         public $filename_avisos;
-        public $foto_aviso; 
+        public $foto_aviso;
+        public $filename_archivo_aviso;
+	    public $archivo_file_aviso;
         
-        public function __construct($user, $notice_title, $notice_description, $notice_filename, $notice_photo){
+        public function __construct($user, $notice_title, $notice_description, $notice_filename, $notice_photo, $notice_file_filename, $notice_file_archivo){
             $this->usuario = $user;
             $this->titulo_aviso = $notice_title;
             $this->descripcion_aviso = $notice_description;
             $this->filename_avisos = $notice_filename;
             $this->foto_aviso = $notice_photo;
+            $this->filename_archivo_aviso = $notice_file_filename;
+	        $this->archivo_file_aviso = $notice_file_archivo;
         }
 
         public function findAllNotices()
         {
             $object = new connection_database();
-            $statement = "SELECT id, users_id, modificado_por, titulo_aviso, descripcion_aviso, fecha_creacion_aviso, fecha_modificacion, filename_avisos, avisos_foto_identificador FROM avisos;";
+            $statement = "SELECT id, users_id, modificado_por, titulo_aviso, descripcion_aviso, fecha_creacion_aviso, fecha_modificacion, filename_avisos, avisos_foto_identificador, filename_archivo_aviso, aviso_archivo_identificador FROM avisos;";
             try {
                 $statement = $object->_db->query($statement);
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -33,7 +37,7 @@
         public function findNotice($id)
         {
             $object = new connection_database();
-            $statement = "SELECT id, users_id, modificado_por, titulo_aviso, descripcion_aviso, fecha_creacion_aviso, fecha_modificacion, filename_avisos, avisos_foto_identificador FROM avisos WHERE id = ?;";
+            $statement = "SELECT id, users_id, modificado_por, titulo_aviso, descripcion_aviso, fecha_creacion_aviso, fecha_modificacion, filename_avisos, avisos_foto_identificador, filename_archivo_aviso, aviso_archivo_identificador FROM avisos WHERE id = ?;";
             try {
                 $statement = $object->_db->prepare($statement);
                 $statement->execute(array($id));
@@ -47,17 +51,36 @@
         public function insertNotice(){
             $object = new connection_database();
             $crud = new crud();
-            if($this->filename_avisos != null && $this->foto_aviso !=null){
-                $location = "../src/avisos/";
-                $ext = pathinfo($this->filename_avisos, PATHINFO_EXTENSION);
-                $uploadfile = Avisos::tempnam_sfx($location, $ext);
-                if(move_uploaded_file($this->foto_aviso['tmp_name'],$uploadfile)){
+            if($this->filename_avisos != null && $this->foto_aviso !=null && $this->filename_archivo_aviso == null && $this->archivo_file_aviso == null){
+                $location_foto = "../src/avisos/";
+                $ext_foto = pathinfo($this->filename_avisos, PATHINFO_EXTENSION);
+                $uploadfile_foto = Avisos::tempnam_sfx($location_foto, $ext_foto);
+                if(move_uploaded_file($this->foto_aviso['tmp_name'],$uploadfile_foto)){
                     $crud->store('avisos', ['users_id' => $this->usuario, 'titulo_aviso' => $this->titulo_aviso, 'descripcion_aviso' => $this->descripcion_aviso, 'filename_avisos' => $this->filename_avisos,
-                    'avisos_foto_identificador' => basename($uploadfile)]);
+                    'avisos_foto_identificador' => basename($uploadfile_foto), 'filename_archivo_aviso' => $this->filename_archivo_aviso, 'aviso_archivo_identificador' => $this->archivo_file_aviso]);
                 }
-            }else{
+            }else if($this->filename_avisos == null && $this->foto_aviso ==null && $this->filename_archivo_aviso != null && $this->archivo_file_aviso != null){
+                $location_archivo = "../src/avisos_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_aviso, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Avisos::tempnam_sfx($location_archivo, $ext_archivo);
+                if(move_uploaded_file($this->archivo_file_aviso['tmp_name'],$uploadfile_archivo)){
+                    $crud->store('avisos', ['users_id' => $this->usuario, 'titulo_aviso' => $this->titulo_aviso, 'descripcion_aviso' => $this->descripcion_aviso, 'filename_avisos' => $this->filename_avisos,
+                    'avisos_foto_identificador' => $this->foto_aviso, 'filename_archivo_aviso' => $this->filename_archivo_aviso, 'aviso_archivo_identificador' => basename($uploadfile_archivo)]);
+                }
+            }else if($this->filename_avisos != null && $this->foto_aviso !=null && $this->filename_archivo_aviso != null && $this->archivo_file_aviso != null){
+                $location_archivo = "../src/avisos_archivo/";
+                $ext_archivo = pathinfo($this->filename_archivo_aviso, PATHINFO_EXTENSION);
+                $uploadfile_archivo = Avisos::tempnam_sfx($location_archivo, $ext_archivo);
+                $location_foto = "../src/avisos/";
+                $ext_foto = pathinfo($this->filename_avisos, PATHINFO_EXTENSION);
+                $uploadfile_foto = Avisos::tempnam_sfx($location_foto, $ext_foto);
+                 if(move_uploaded_file($this->archivo_file_aviso['tmp_name'],$uploadfile_archivo) && move_uploaded_file($this->foto_aviso['tmp_name'],$uploadfile_foto)){
+                    $crud->store('avisos', ['users_id' => $this->usuario, 'titulo_aviso' => $this->titulo_aviso, 'descripcion_aviso' => $this->descripcion_aviso, 'filename_avisos' => $this->filename_avisos,
+                    'avisos_foto_identificador' => basename($uploadfile_foto), 'filename_archivo_aviso' => $this->filename_archivo_aviso, 'aviso_archivo_identificador' => basename($uploadfile_archivo)]);
+                }
+            }else if($this->filename_avisos == null && $this->foto_aviso ==null && $this->filename_archivo_aviso == null && $this->archivo_file_aviso == null){
                 $crud->store('avisos', ['users_id' => $this->usuario, 'titulo_aviso' => $this->titulo_aviso, 'descripcion_aviso' => $this->descripcion_aviso, 'filename_avisos' => $this->filename_avisos,
-                'avisos_foto_identificador' => $this->foto_aviso]);
+                'avisos_foto_identificador' => $this->foto_aviso, 'filename_archivo_aviso' => $this->filename_archivo_aviso, 'aviso_archivo_identificador' => $this->archivo_file_aviso]);
             }
         }
 
