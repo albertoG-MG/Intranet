@@ -511,6 +511,34 @@
                                                         '</button>'+
                                                     '</div>'+
                                                 '</div>'+
+                                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para la aviso</label>'+
+                                                    '<div class="flex items-center justify-center w-full">'+
+                                                        '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
+                                                            '<div id="archivo_file_aviso_information" class="flex flex-col items-center justify-center pt-7">'+
+                                                                '<div id="svg_archivo_file_aviso">'+
+                                                                    '<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-400" viewBox="0 0 24 24">'+
+                                                                        '<path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"></path>'+
+                                                                    '</svg>'+
+                                                                '</div>'+
+                                                                '<img id="preview_archivo_file_aviso" class="hidden">'+
+                                                                '<p id="text_archivo_file_aviso" style="word-break:break-word;" class="lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider">Selecciona un archivo</p>'+
+                                                            '</div>'+
+                                                            '<input type="file" id="archivo_file_aviso" name="archivo_file_aviso" class="hidden">'+
+                                                        '</label>'+
+                                                    '</div>'+
+                                                    '<div id="error_archivo_file_aviso" class="m-auto"></div>'+
+                                                '</div>'+
+                                                '<div id="div_archivo_file_aviso" class="hidden">'+
+                                                    '<div id="div_actions_archivo_file_aviso" class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">'+
+                                                        '<button type="button" id="delete_archivo_file_aviso" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">'+
+                                                            '<svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">'+
+                                                                '<path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />'+
+                                                            '</svg>'+
+                                                            'Eliminar'+
+                                                        '</button>'+
+                                                    '</div>'+
+                                                '</div>'+
                                             '</div>');
                                         $('.modal-actions').html(
                                             '<div id="submit-changes-aviso">'+
@@ -520,15 +548,13 @@
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
                                             '</div>');
                                         originalState = $("#img_information_aviso").clone();
+                                        originalState2 = $("#archivo_file_aviso_information").clone();
                                         openModal();
                                         resetFormValidator("#Guardar");
                                         $('#Guardar').unbind('submit'); 
-                                        $.validator.addMethod('field_validation', function (value, element) {
-                                            return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
-                                        }, 'not a valid field.');
-                                        $.validator.addMethod('description', function (value, element) {
-                                            return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
-                                        }, 'not a valid description.');
+                                        $.validator.addMethod('biggertext', function (value, element) {
+		                                    return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
+	                                    }, 'not a valid biggertext.');
                                         $.validator.addMethod('filesize', function(value, element, param) {
                                             return this.optional(element) || (element.files[0].size <= param * 1048576)
                                         }, 'File size must be less than {0} MB');
@@ -538,7 +564,9 @@
                                                 onkeyup: false,
                                                 errorPlacement: function(error, element) {
                                                     if((element.attr('name') === 'foto_aviso')){
-                                                        error.appendTo("div#error_aviso");  
+                                                        error.appendTo("div#error_aviso");
+                                                    }else if((element.attr('name') === 'archivo_file_aviso')){
+		                                                error.appendTo("div#error_archivo_file_aviso");
                                                     }else if(element.attr('name') === 'descripcion_aviso'){
                                                         error.appendTo("div#error_descripcion_aviso"); 
                                                     }else{
@@ -558,29 +586,37 @@
                                                 rules: {
                                                     titulo_aviso: {
                                                         required: true,
-                                                        field_validation: true
+                                                        biggertext: true
                                                     },
                                                     descripcion_aviso: {
                                                         required: true,
-                                                        description: true
+                                                        biggertext: true
                                                     },
                                                     foto_aviso: {
                                                         extension: "jpg|jpeg|png",
+                                                        filesize: 10
+                                                    },
+                                                    archivo_file_aviso: {
+                                                        extension: "pdf|jpg|jpeg|png",
                                                         filesize: 10
                                                     }
                                                 },
                                                 messages: {
                                                     titulo_aviso: {
                                                         required: 'Este campo es requerido',
-                                                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                                                        biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
                                                     },
                                                     descripcion_aviso: {
                                                         required: 'Este campo es requerido',
-                                                        description: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                                                        biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
                                                     },
                                                     foto_aviso: {
                                                         extension: 'Solo se permite jpg, jpeg y pngs',
                                                         filesize: 'Las imágenes deben pesar ser menos de 10 MB'
+                                                    },
+                                                    archivo_file_aviso: {
+                                                        extension: 'Solo se permite pdf, jpg, jpeg y pngs',
+                                                        filesize: 'Los archivos deben pesar ser menos de 10 MB'
                                                     }
                                                 },
                                                 submitHandler: function(form) {
@@ -601,11 +637,13 @@
                                                                 var titulo_aviso = $("#titulo_aviso").val();
                                                                 var descripcion_aviso = $("#descripcion_aviso").val();
                                                                 var foto_aviso = $('#foto_aviso')[0].files[0];
+                                                                var archivo_file_aviso = $('#archivo_file_aviso')[0].files[0];
                                                                 var method = "store";
                                                                 var app = "avisos";
                                                                 fd.append('titulo_aviso', titulo_aviso);
                                                                 fd.append('descripcion_aviso', descripcion_aviso);
                                                                 fd.append('foto_aviso', foto_aviso);
+                                                                fd.append('archivo_file_aviso', archivo_file_aviso);
                                                                 fd.append('method', method);
                                                                 fd.append('app', app);
                                                                 $.ajax({
@@ -2094,6 +2132,112 @@
                     }else{
                         $('#archivo_aviso').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
                         $("#div_foto_aviso").removeClass("hidden");
+                    }
+                }
+            }
+        });
+
+        var archivo_file_aviso;
+
+        $(document).on('click', '#delete_archivo_file_aviso', function() {
+            $("#archivo_file_aviso_information").replaceWith(originalState2.clone());
+            $("#archivo_file_aviso").val("");
+            $("#div_archivo_file_aviso").addClass("hidden");
+        });
+
+        $(document).on('click', '#archivo_file_aviso', function() {
+            archivo_file_aviso = $("#archivo_file_aviso").clone();
+        });
+
+        $(document).on('change', '#archivo_file_aviso', function () {
+            if (window.FileReader && window.Blob) {
+                var files = $('input#archivo_file_aviso').get(0).files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    console.log('Archivo cargado: ' + file.name);
+                    console.log('Blob mime: ' + file.type);
+                    console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+                    console.log('Tamaño en bytes: ' + file.size);
+
+                    var fileReader = new FileReader();
+                    fileReader.onerror = function (e) {
+                        console.error('ERROR', e);
+                    };
+                    fileReader.onloadend = function (e) {
+                        var arr = new Uint8Array(e.target.result);
+                        var header = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            header += arr[i].toString(16);
+                        }
+                        console.log('Encabezado: ' + header);
+
+                        // Check the file signature against known types
+                        var type = 'unknown';
+                        switch (header) {
+                            case '89504e47':
+                                type = 'image/png';
+                                break;
+                            case 'ffd8ffe0':
+                            case 'ffd8ffe1':
+                            case 'ffd8ffe2':
+                                type = 'image/jpeg';
+                                break;
+                            case '25504446':
+                                type = 'application/pdf';
+                                break;
+                        }
+                        if (file.type !== type) {
+                            console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                            $('#preview_archivo_file_aviso').addClass('hidden');
+                            $('#svg_archivo_file_aviso').removeClass('hidden');
+                            $('#text_archivo_file_aviso').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo pdf, jpg, jpeg y png");
+                            $("#div_archivo_file_aviso").removeClass("hidden");
+                        } else {
+                            console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                            if(file.size > 10485760){
+                                $('#preview_archivo_file_aviso').addClass('hidden');
+                                $('#svg_archivo_file_aviso').removeClass('hidden');
+                                $('#text_archivo_file_aviso').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                $("#div_archivo_file_aviso").removeClass("hidden");
+                            }else{
+                                $('#preview_archivo_file_aviso').removeClass('hidden');
+                                $('#preview_archivo_file_aviso').addClass('w-10 h-10');
+                                $('#svg_archivo_file_aviso').addClass('hidden');
+                                $('#text_archivo_file_aviso').text(file.name);
+                                $("#div_archivo_file_aviso").removeClass("hidden");
+                                if (file.type == "image/png" || file.type == "image/jpeg") {
+                                    let reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        $('#preview_archivo_file_aviso').attr('src', event.target.result);
+                                    }
+                                    reader.readAsDataURL(file);
+                                }else if(file.type == "application/pdf"){
+                                    $('#preview_archivo_file_aviso').attr('src', "../src/img/pdf.png");
+                                }
+                            }
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#archivo_file_aviso").replaceWith(archivo_file_aviso.clone());
+                }
+            } else {
+                console.error('FileReader ó Blob no es compatible con este navegador.');
+                if($("#archivo_file_aviso").val() != ''){
+                    var file = this.files[0].name;
+                    var lastDot = file.lastIndexOf('.');
+                    var extension = file.substring(lastDot + 1);
+                    if(extension == "pdf" || extension == "jpeg" || extension == "jpg" || extension == "png") {
+                        if(this.files[0].size > 10485760){
+                            $('#text_archivo_file_aviso').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                            $("#div_archivo_file_aviso").removeClass("hidden");
+                        }else{
+                            $('#text_archivo_file_aviso').text(file);
+                            $("#div_archivo_file_aviso").removeClass("hidden");
+                        }
+                    }else{
+                        $('#text_archivo_file_aviso').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo pdf, jpg, jpeg y png");
+                        $("#div_archivo_file_aviso").removeClass("hidden");
                     }
                 }
             }
