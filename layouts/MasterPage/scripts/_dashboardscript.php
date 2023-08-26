@@ -2312,7 +2312,7 @@
                         '<div id="error_editar_descripcion_aviso"></div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para la alerta</label>'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para el aviso</label>'+
                         '<div class="flex items-center justify-center w-full">'+
                             '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
                                 '<div id="img_editar_information_aviso" class="flex flex-col items-center justify-center pt-7">'+
