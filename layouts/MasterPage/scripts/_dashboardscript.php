@@ -512,7 +512,7 @@
                                                     '</div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para la aviso</label>'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para el aviso</label>'+
                                                     '<div class="flex items-center justify-center w-full">'+
                                                         '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
                                                             '<div id="archivo_file_aviso_information" class="flex flex-col items-center justify-center pt-7">'+
@@ -2340,7 +2340,7 @@
                         '</div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
-                        '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para la aviso</label>'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para el aviso</label>'+
                         '<div class="flex items-center justify-center w-full">'+
                             '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
                                 '<div id="editar_archivo_file_aviso_information" class="flex flex-col items-center justify-center pt-7">'+
@@ -2376,7 +2376,7 @@
                     '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
                 '</div>');
             originalState = $("#img_editar_information_aviso").clone();
-            originalState2 = $("#editar_archivo_alerta_information").clone();
+            originalState2 = $("#editar_archivo_file_aviso_information").clone();
             delete_switch = "false";
             delete_switch2 = "false";
             if(data["avisos_foto_identificador"] != null && data["filename_avisos"] != null){
@@ -2694,7 +2694,7 @@
         });
 
         $(document).on('click', '#delete_editar_archivo_file_aviso', function() {
-            $("#editar_archivo_file_aviso_information").replaceWith(originalState.clone());
+            $("#editar_archivo_file_aviso_information").replaceWith(originalState2.clone());
             $("#editar_archivo_file_aviso").val("");
             $("#div_editar_archivo_file_aviso").addClass("hidden");
             delete_switch2 = "true";
