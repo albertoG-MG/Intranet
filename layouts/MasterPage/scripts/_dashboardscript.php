@@ -1033,7 +1033,7 @@
             }else{
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
@@ -1213,7 +1213,7 @@
                 }else{
                     data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                                 `<div class="p-5">`+
-                                    `<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_avisos_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                    `<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
                                     `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                     `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                     `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
