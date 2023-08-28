@@ -2908,7 +2908,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//TÍTULO DEL AVISO
 		if(empty($_POST["titulo_aviso"])){
 			die(json_encode(array("error", "El título del aviso no puede estar vacío")));
-		}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["titulo_aviso"])){
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["titulo_aviso"])){
 			die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el título del aviso")));
 		}else{
 			$titulo_aviso = $_POST["titulo_aviso"];
