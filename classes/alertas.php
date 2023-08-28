@@ -363,24 +363,41 @@
         }
 
         public static function eraseAlerts($id){
-			$crud = new crud();
-			$object = new connection_database();
-			$select_photo = $object -> _db -> prepare("select filename_alertas, alertas_foto_identificador from alertas where id=:idalerta");
+            $crud = new crud();
+            $object = new connection_database();
+            $select_photo = $object -> _db -> prepare("select filename_alertas, alertas_foto_identificador, filename_alertas_archivo, alertas_archivo_identificador from alertas where id=:idalerta");
             $select_photo -> execute(array(':idalerta' => $id));
-			$fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
-			if($fetch_select_photo -> filename_alertas != null && $fetch_select_photo -> alertas_foto_identificador != null){
-				$directory = __DIR__ . "/../src/alertas/";
-				$path = __DIR__ . "/../src/alertas/".$fetch_select_photo -> alertas_foto_identificador;
-				if(!file_exists($path)){
-					$crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
-				}else{
-					unlink($directory.$fetch_select_photo -> alertas_foto_identificador);
-					$crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
-				}
-			}else{
-				$crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
-			}
-		}
+            $fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
+            if($fetch_select_photo -> filename_alertas != null && $fetch_select_photo -> alertas_foto_identificador != null && $fetch_select_photo -> filename_alertas_archivo == null && $fetch_select_photo -> alertas_archivo_identificador == null){
+                $directory_foto = __DIR__ . "/../src/alertas/";
+                $path_foto = __DIR__ . "/../src/alertas/".$fetch_select_photo -> alertas_foto_identificador;
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_select_photo -> alertas_foto_identificador);
+                }
+                $crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
+            }else if($fetch_select_photo -> filename_alertas == null && $fetch_select_photo -> alertas_foto_identificador == null && $fetch_select_photo -> filename_alertas_archivo != null && $fetch_select_photo -> alertas_archivo_identificador != null){
+                $directory_archivo = __DIR__ . "/../src/alertas_archivo/";
+                $path_archivo = __DIR__ . "/../src/alertas_archivo/".$fetch_select_photo -> alertas_archivo_identificador;
+                if(file_exists($path_archivo)){
+                    unlink($directory_archivo.$fetch_select_photo -> alertas_archivo_identificador);
+                }
+                $crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
+            }else if($fetch_select_photo -> filename_alertas != null && $fetch_select_photo -> alertas_foto_identificador != null && $fetch_select_photo -> filename_alertas_archivo != null && $fetch_select_photo -> alertas_archivo_identificador != null){
+                $directory_foto = __DIR__ . "/../src/alertas/";
+                $path_foto = __DIR__ . "/../src/alertas/".$fetch_select_photo -> alertas_foto_identificador;
+                $directory_archivo = __DIR__ . "/../src/alertas_archivo/";
+                $path_archivo = __DIR__ . "/../src/alertas_archivo/".$fetch_select_photo -> alertas_archivo_identificador;
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_select_photo -> alertas_foto_identificador);
+                }
+                if(file_exists($path_archivo)){
+                    unlink($directory_archivo.$fetch_select_photo -> alertas_archivo_identificador);
+                }
+                $crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
+            }else{
+                $crud->delete('alertas', 'id=:idalerta', ['idalerta' => $id]);
+            }
+        }
 
         public static function tempnam_sfx($path, $suffix){
             do {

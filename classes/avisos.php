@@ -363,24 +363,41 @@
         }
 
         public static function eraseNotice($id){
-			$crud = new crud();
-			$object = new connection_database();
-			$select_photo = $object -> _db -> prepare("select filename_avisos, avisos_foto_identificador from avisos where id=:idavisos");
+            $crud = new crud();
+            $object = new connection_database();
+            $select_photo = $object -> _db -> prepare("select filename_avisos, avisos_foto_identificador, filename_archivo_aviso, aviso_archivo_identificador from avisos where id=:idavisos");
             $select_photo -> execute(array(':idavisos' => $id));
-			$fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
-			if($fetch_select_photo -> filename_avisos != null && $fetch_select_photo -> avisos_foto_identificador != null){
-				$directory = __DIR__ . "/../src/avisos/";
-				$path = __DIR__ . "/../src/avisos/".$fetch_select_photo -> avisos_foto_identificador;
-				if(!file_exists($path)){
-					$crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
-				}else{
-					unlink($directory.$fetch_select_photo -> avisos_foto_identificador);
-					$crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
-				}
-			}else{
-				$crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
-			}
-		}
+            $fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
+            if($fetch_select_photo -> filename_avisos != null && $fetch_select_photo -> avisos_foto_identificador != null && $fetch_select_photo -> filename_archivo_aviso == null && $fetch_select_photo -> aviso_archivo_identificador == null){
+                $directory_foto = __DIR__ . "/../src/avisos/";
+                $path_foto = __DIR__ . "/../src/avisos/".$fetch_select_photo -> avisos_foto_identificador;
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_select_photo -> avisos_foto_identificador);
+                }
+                $crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
+            }else if($fetch_select_photo -> filename_avisos == null && $fetch_select_photo -> avisos_foto_identificador == null && $fetch_select_photo -> filename_archivo_aviso != null && $fetch_select_photo -> aviso_archivo_identificador != null){
+                $directory_archivo = __DIR__ . "/../src/avisos_archivo/";
+                $path_archivo = __DIR__ . "/../src/avisos_archivo/".$fetch_select_photo -> aviso_archivo_identificador;
+                if(file_exists($path_archivo)){
+                    unlink($directory_archivo.$fetch_select_photo -> aviso_archivo_identificador);
+                }
+                $crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
+            }else if($fetch_select_photo -> filename_avisos != null && $fetch_select_photo -> avisos_foto_identificador != null && $fetch_select_photo -> filename_archivo_aviso != null && $fetch_select_photo -> aviso_archivo_identificador != null){
+                $directory_foto = __DIR__ . "/../src/avisos/";
+                $path_foto = __DIR__ . "/../src/avisos/".$fetch_select_photo -> avisos_foto_identificador;
+                $directory_archivo = __DIR__ . "/../src/avisos_archivo/";
+                $path_archivo = __DIR__ . "/../src/avisos_archivo/".$fetch_select_photo -> aviso_archivo_identificador;
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_select_photo -> avisos_foto_identificador);
+                }
+                if(file_exists($path_archivo)){
+                    unlink($directory_archivo.$fetch_select_photo -> aviso_archivo_identificador);
+                }
+                $crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
+            }else{
+                $crud->delete('avisos', 'id=:avisoid', ['avisoid' => $id]);
+            }
+        }
 
         public static function tempnam_sfx($path, $suffix){
             do {
