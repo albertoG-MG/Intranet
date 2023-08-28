@@ -308,7 +308,7 @@
                 $uploadfile_foto = Avisos::tempnam_sfx($directory_foto, $ext_foto);
                 if(move_uploaded_file($this->foto_aviso['tmp_name'],$uploadfile_foto)){
                     $crud->update('avisos', ['modificado_por' => $this->usuario, 'titulo_aviso' => $this->titulo_aviso, 'descripcion_aviso' => $this->descripcion_aviso,
-                    'fecha_modificacion' => $hoy, 'filename_avisos' => $this->filename_avisos, 'avisos_foto_identificador' => basename($uploadfile_foto), 'filename_archivo_aviso' => $this -> filename_archivo_aviso, 'aviso_archivo_identificador' => $this -> archivo_alerta], "id=:avisoid", ['avisoid' => $id]);
+                    'fecha_modificacion' => $hoy, 'filename_avisos' => $this->filename_avisos, 'avisos_foto_identificador' => basename($uploadfile_foto), 'filename_archivo_aviso' => $this -> filename_archivo_aviso, 'aviso_archivo_identificador' => $this -> archivo_file_aviso], "id=:avisoid", ['avisoid' => $id]);
                 }
                 //Cuando no existe la foto, se sube algo pero existe el archivo en la base de datos y no se subió nada == !=   != ==
             }else if(($fetch_row_photo -> filename_avisos == null && $fetch_row_photo -> avisos_foto_identificador == null && $this->foto_aviso != null && $this->filename_avisos != null) && ($fetch_row_photo -> filename_archivo_aviso != null && $fetch_row_photo -> aviso_archivo_identificador != null && $this->archivo_file_aviso == null && $this->filename_archivo_aviso == null)){
