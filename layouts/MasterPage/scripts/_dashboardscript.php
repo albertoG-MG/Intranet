@@ -2507,16 +2507,17 @@
                                     var titulo_aviso = $("#editar_titulo_aviso").val();
                                     var descripcion_aviso = $("#editar_descripcion_aviso").val();
                                     var foto_aviso = $('#editar_foto_aviso')[0].files[0];
-                                    var archivo_alerta = $('#editar_archivo_file_aviso')[0].files[0];
+                                    var archivo_file_aviso = $('#editar_archivo_file_aviso')[0].files[0];
                                     var id = data["id"];
                                     var method = "edit";
                                     var app = "avisos";
                                     fd.append('titulo_aviso', titulo_aviso);
                                     fd.append('descripcion_aviso', descripcion_aviso);
                                     fd.append('foto_aviso', foto_aviso);
-                                    fd.append('archivo_alerta', archivo_alerta);
+                                    fd.append('archivo_file_aviso', archivo_file_aviso);
                                     fd.append('id', id);
                                     fd.append('delete', delete_switch);
+                                    fd.append('delete2', delete_switch2);
                                     fd.append('method', method);
                                     fd.append('app', app);
                                     $.ajax({
