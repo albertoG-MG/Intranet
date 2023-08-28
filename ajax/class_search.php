@@ -2985,8 +2985,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$id = $_POST["id"];
 				$delete = $_POST["delete"];
-				$aviso = new Avisos($_SESSION["id"], $titulo_aviso, $descripcion_aviso, $filename_avisos, $foto_aviso);
-				$aviso -> editNotice($id, $delete);
+				$delete2 = $_POST["delete2"];
+				$aviso = new Avisos($_SESSION["id"], $titulo_aviso, $descripcion_aviso, $filename_avisos, $foto_aviso, $filename_archivo_aviso, $archivo_file_aviso);
+				$aviso -> editNotice($id, $delete, $delete2);
 				die(json_encode(array("success", "Se ha modificado el aviso!")));
             	break;
 			break;
