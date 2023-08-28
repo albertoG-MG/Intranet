@@ -102,7 +102,7 @@
                 }
                 if(move_uploaded_file($this->foto['tmp_name'],$uploadfile_foto)){
                     $crud->update('alertas', ['modificado_por' => $this->usuario, 'titulo_alerta' => $this->titulo_alerta, 'descripcion_alerta' => $this->descripcion_alerta,
-                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->filename_archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
+                    'fecha_modificacion' => $hoy, 'filename_alertas' => $this->filename_alertas, 'alertas_foto_identificador' => basename($uploadfile_foto), 'filename_alertas_archivo' => $this->filename_archivo_alerta, 'alertas_archivo_identificador' => $this->archivo_alerta], "id=:alertaid", ['alertaid' => $id]);
                 }
                 //Cuando existe la foto y se reemplaza pero no existe el archivo en la base de datos y se sube un archivo - != !=	== !=
             }else if(($fetch_row_photo -> filename_alertas != null && $fetch_row_photo -> alertas_foto_identificador != null && $this->foto != null && $this->filename_alertas != null) && ($fetch_row_photo -> filename_alertas_archivo == null && $fetch_row_photo -> alertas_archivo_identificador == null && $this->archivo_alerta != null && $this->filename_archivo_alerta != null)){
