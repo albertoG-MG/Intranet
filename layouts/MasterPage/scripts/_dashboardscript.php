@@ -1022,7 +1022,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -1037,7 +1037,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -1202,7 +1202,7 @@
                                     `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                     `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                     `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
                                         `Ver más`+
                                         `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                             `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -1217,7 +1217,7 @@
                                     `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                     `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                     `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
                                         `Ver más`+
                                         `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                             `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -2911,7 +2911,7 @@
             '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-auto h-[21.875rem]">'+
                 '<div class="grid grid-cols-1 mt-5 p-3">'+
                     '<label class="text-[#64748b] font-semibold mb-2">'+
-                        'Descripción del aviso:'+
+                        'Descripción de la alerta:'+
                     '</label>'+
                     '<span style="word-break: break-word;">'+descripcion_alerta+'<span>'+
                 '</div>'+
@@ -2936,6 +2936,47 @@
                 $("#archivo_div").append("<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/alertas_archivo/"+archivo_identificador+"'>"+nombre_archivo+"</a>");
             }else{
                 $("#archivo_div").append("<span>No se encontró el archivo</span>");
+            }
+        }
+        openModal();
+    }
+
+    function viewmore_notices(titulo_aviso, descripcion_aviso, creado_por, filename_archivo_aviso, aviso_archivo_identificador){
+        $('.modal-wrapper-flex').html(
+            '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
+                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                    '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z"></path></svg>'+
+                '</div>'+
+                '<h3 class="text-lg font-medium text-gray-900"> '+titulo_aviso+'</h3>'+
+            '</div>'+
+            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-auto h-[21.875rem]">'+
+                '<div class="grid grid-cols-1 mt-5 p-3">'+
+                    '<label class="text-[#64748b] font-semibold mb-2">'+
+                        'Descripción del aviso:'+
+                    '</label>'+
+                    '<span style="word-break: break-word;">'+descripcion_aviso+'<span>'+
+                '</div>'+
+                '<div class="grid grid-cols-1 mt-5 p-3">'+
+                    '<label class="text-[#64748b] font-semibold mb-2">'+
+                        'Archivo:'+
+                    '</label>'+
+                    '<div id="archivo_aviso_div"></div>'+
+                '</div>'+
+                '<div class="grid grid-cols-1 mt-5 p-3">'+
+                    '<label class="text-[#64748b] font-semibold mb-2">'+
+                        'Creado por:'+
+                    '</label>'+
+                    '<span style="word-break: break-word;">'+creado_por+'<span>'+
+                '</div>'+
+            '</div>');
+        $('.modal-actions').html('<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>');
+        if(filename_archivo_aviso == null && aviso_archivo_identificador == null){
+            $("#archivo_aviso_div").append("<span>No se ha subido un archivo</span>");
+        }else{
+            if(viewmore_checkfile("../src/avisos_archivo/"+aviso_archivo_identificador+"")){
+                $("#archivo_aviso_div").append("<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/avisos_archivo/"+aviso_archivo_identificador+"'>"+filename_archivo_aviso+"</a>");
+            }else{
+                $("#archivo_aviso_div").append("<span>No se encontró el archivo</span>");
             }
         }
         openModal();
