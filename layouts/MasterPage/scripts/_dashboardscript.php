@@ -2601,6 +2601,7 @@
             $("#img_editar_information_aviso").replaceWith(originalState.clone());
             $("#editar_foto_aviso").val("");
             $("#div_editar_foto_aviso").addClass("hidden");
+            delete_switch="true";
         });
 
         $(document).on('click', '#editar_foto_aviso', function() {
@@ -2660,6 +2661,7 @@
                                 $('#editar_svg_aviso').addClass('hidden');
                                 $('#editar_archivo_aviso').text(file.name);
                                 $("#div_editar_foto_aviso").removeClass("hidden");
+                                delete_switch="false";
                                 let reader = new FileReader();
                                 reader.onload = function (event) {
                                     $('#editar_preview_aviso').attr('src', event.target.result);
@@ -2685,6 +2687,7 @@
                         }else{
                             $('#editar_archivo_aviso').text(file);
                             $("#div_editar_foto_aviso").removeClass("hidden");
+                            delete_switch="false";
                         }
                     }else{
                         $('#editar_archivo_aviso').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
