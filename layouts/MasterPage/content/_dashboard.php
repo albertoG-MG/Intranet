@@ -62,9 +62,9 @@
                     </button>
                 </li>
                 <li role="presentation" class="w-full md:w-max">
-                    <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="bolsa-tab-profile" data-tabs-target="#bolsa" type="button" role="tab" aria-controls="bolsa" aria-selected="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24"><path fill="currentColor" d="M18,19H6V17.6C6,15.6 10,14.5 12,14.5C14,14.5 18,15.6 18,17.6M12,7A3,3 0 0,1 15,10A3,3 0 0,1 12,13A3,3 0 0,1 9,10A3,3 0 0,1 12,7M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>
-                        <span>Bolsa de trabajo</span>
+                    <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="comunicados-tab-profile" data-tabs-target="#comunicados" type="button" role="tab" aria-controls="comunicados" aria-selected="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z" /></svg>
+                        <span>Comunicados</span>
                     </button>
                 </li>
             </ul>
@@ -195,7 +195,7 @@
 		        </div>
 	        </div>
         </div>
-        <div class="hidden p-4 bg-white rounded-lg" id="bolsa" role="tabpanel" aria-labelledby="bolsa-tab-profile">
+        <div class="hidden p-4 bg-white rounded-lg" id="comunicados" role="tabpanel" aria-labelledby="comunicados-tab-profile">
             <p class="text-sm text-gray-500">This is some placeholder content the <strong class="font-medium text-gray-800">Contacts tab's associated content</strong>. Clicking
                 another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
                 classes to control the content visibility and styling.</p>

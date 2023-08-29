@@ -21,9 +21,9 @@
             targetEl: document.querySelector('#avisos')
         },
         {
-            id: 'bolsa',
-            triggerEl: document.querySelector('#bolsa-tab-profile'),
-            targetEl: document.querySelector('#bolsa')
+            id: 'comunicados',
+            triggerEl: document.querySelector('#comunicados-tab-profile'),
+            targetEl: document.querySelector('#comunicados')
         }
     ];
 
