@@ -1331,7 +1331,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
             case "edit":
                 //SITUACIÓN, ESTATUS EMPLEADO Y MOTIVO
-                $situacion_array = array("ALTA", "BAJA");
+                $situacion_array = array("ALTA", "BAJA", "DESTAJO");
                 if (in_array($_POST["situacion"], $situacion_array)) {
                     if($_POST["situacion"] == "ALTA"){
                         $estatus_array = array("NUEVO INGRESO", "REINGRESO");
@@ -1369,7 +1369,18 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                         }else{
                             die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
                         }
-                    }
+                    }else if($_POST["situacion"] == "DESTAJO"){
+						$estatus_array = array("SIN NOMINA");
+						if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+							$situacion = $_POST["situacion"];
+                            $estatus_empleado = $_POST["estatus_empleado"];
+                            $motivo = null;
+						}else if(empty($_POST["estatus_empleado"])){
+                            die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+                        }else{
+                            die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+                        }
+					}
                 }else if(empty($_POST["situacion"])){
                     die(json_encode(array("error", "El campo situación del empleado es requerido")));
                 }else{

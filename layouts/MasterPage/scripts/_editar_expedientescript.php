@@ -1021,6 +1021,9 @@
                 "<option value=\"ABANDONO DE TRABAJO\" <?php if($edit -> eestatus_del_empleado == "ABANDONO DE TRABAJO"){ echo "selected";} ?>>Abandono de trabajo</option>"+
                 "<option value=\"RENUNCIA VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA VOLUNTARIA"){ echo "selected";} ?>>Renuncia voluntaria</option>"+
                 "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected";} ?>>Liquidación</option>");
+        }else if ($('#situacion').val() == "DESTAJO"){
+            $('#estatus_empleado').html(
+                "<option value=\"SIN NOMINA\" <?php if($edit -> eestatus_del_empleado == "SIN NOMINA"){ echo "selected";} ?>>Sin nómina</option>");
         }
 
         //JQUERY VALIDATION ESTATUS
