@@ -837,6 +837,408 @@
                             },
                         });
                     }
+                }else if(target.id=="comunicados"){
+                    if ( ! $.fn.DataTable.isDataTable('#comunicados_table') ) {
+                        $("#comunicados_table").DataTable({
+                            responsive: true,
+                            "lengthChange": false,
+                            "ordering": false,
+                            "sPaginationType": "listboxWithButtons",
+                            language: {
+                                search: ""
+                            },
+                            dom: '<"top"fB>rt<"bottom"ip><"clear">',
+                            buttons: [
+                                {
+                                    text: "Crear comunicado",
+                                    attr: {
+                                        'id': 'Comunicado',
+                                        'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                    },
+                                    className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                    action: function(e, dt, node, config) {
+                                        $('.modal-wrapper-flex').html(
+                                            '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
+                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                                                    '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">'+
+                                                        '<path fill="currentColor" d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"></path>'+
+                                                    '</svg>'+
+                                                '</div>'+
+                                                '<h3 class="text-lg font-medium text-gray-900"> Crear un comunicado</h3>'+
+                                            '</div>'+
+                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">'+
+                                                        'Título del comunicado'+
+                                                    '</label>'+
+                                                    '<div class="group flex">'+
+                                                        '<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">'+
+                                                            '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                                                                '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
+                                                            '</svg>'+
+                                                        '</div>'+
+                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_comunicado" name="titulo_comunicado" placeholder="Título del comunicado">'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Descripción del comunicado</label>'+
+                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_comunicado" name="descripcion_comunicado" placeholder="Descripción del comunicado"></textarea>'+
+                                                    '<div id="error_descripcion_comunicado"></div>'+
+                                                '</div>'+
+                                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para el comunicado</label>'+
+                                                    '<div class="flex items-center justify-center w-full">'+
+                                                        '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
+                                                            '<div id="img_comunicado_information" class="flex flex-col items-center justify-center pt-7">'+
+                                                                '<div id="svg_comunicado_foto">'+
+                                                                    '<svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'+
+                                                                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>'+
+                                                                    '</svg>'+
+                                                                '</div>'+
+                                                                '<img id="preview_comunicado_foto" class="hidden">'+
+                                                                '<p id="text_comunicado_foto" style="word-break:break-word;" class="lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider">Selecciona una fotografía</p>'+
+                                                            '</div>'+
+                                                            '<input type="file" id="comunicado_foto" name="comunicado_foto" class="hidden">'+
+                                                        '</label>'+
+                                                    '</div>'+
+                                                    '<div id="error_comunicado_foto" class="m-auto"></div>'+
+                                                '</div>'+
+                                                '<div id="div_comunicado_foto" class="hidden">'+
+                                                    '<div id="div_actions_comunicado_foto" class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">'+
+                                                        '<button type="button" id="delete_comunciado_foto" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">'+
+                                                            '<svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">'+
+                                                                '<path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />'+
+                                                            '</svg>'+
+                                                            'Eliminar'+
+                                                        '</button>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                                                    '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para el comunicado</label>'+
+                                                    '<div class="flex items-center justify-center w-full">'+
+                                                        '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
+                                                            '<div id="archivo_comunicado_information" class="flex flex-col items-center justify-center pt-7">'+
+                                                                '<div id="svg_archivo_comunicado">'+
+                                                                    '<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-400" viewBox="0 0 24 24">'+
+                                                                        '<path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"></path>'+
+                                                                    '</svg>'+
+                                                                '</div>'+
+                                                                '<img id="preview_archivo_comunicado" class="hidden">'+
+                                                                '<p id="text_archivo_comunicado" style="word-break:break-word;" class="lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider">Selecciona un archivo</p>'+
+                                                            '</div>'+
+                                                            '<input type="file" id="archivo_comunicado" name="archivo_comunicado" class="hidden">'+
+                                                        '</label>'+
+                                                    '</div>'+
+                                                    '<div id="error_archivo_comunicado" class="m-auto"></div>'+
+                                                '</div>'+
+                                                '<div id="div_archivo_comunicado" class="hidden">'+
+                                                    '<div id="div_actions_archivo_comunicado" class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">'+
+                                                        '<button type="button" id="delete_archivo_comunicado" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">'+
+                                                            '<svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">'+
+                                                                '<path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />'+
+                                                            '</svg>'+
+                                                            'Eliminar'+
+                                                        '</button>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>');
+                                        $('.modal-actions').html(
+                                            '<div id="submit-changes">'+
+                                                '<button id="crear-comunicado" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
+                                            '</div>'+
+                                            '<div id="disable-close-submit">'+
+                                                '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
+                                            '</div>');
+                                        originalState = $("#img_comunicado_information").clone();
+                                        originalState2 = $("#archivo_comunicado_information").clone();
+                                        openModal();
+                                        resetFormValidator("#Guardar");
+                                        $('#Guardar').unbind('submit'); 
+                                        $.validator.addMethod('biggertext', function (value, element) {
+                                            return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
+                                        }, 'not a valid biggertext.');
+                                        $.validator.addMethod('filesize', function(value, element, param) {
+                                            return this.optional(element) || (element.files[0].size <= param * 1048576)
+                                        }, 'File size must be less than {0} MB');
+                                        if ($('#Guardar').length > 0) {
+                                            $('#Guardar').validate({
+                                                ignore: [],
+                                                onkeyup: false,
+                                                errorPlacement: function(error, element) {
+                                                    if((element.attr('name') === 'comunicado_foto')){
+                                                        error.appendTo("div#error_comunicado_foto");
+                                                    }else if(element.attr('name') === 'archivo_comunicado'){
+                                                        error.appendTo("div#error_archivo_comunicado"); 
+                                                    }else if(element.attr('name') === 'descripcion_comunicado'){
+                                                        error.appendTo("div#error_descripcion_comunicado"); 
+                                                    }else{
+                                                        error.insertAfter(element.parent('.group.flex'));
+                                                    }
+                                                },
+                                                highlight: function(element) {
+                                                    var elem = $(element);
+                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                                                },
+                                                unhighlight: function(element) {
+                                                    var elem = $(element);	
+                                                    $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                },
+                                                rules: {
+                                                    titulo_comunicado: {
+                                                        required: true,
+                                                        biggertext: true
+                                                    },
+                                                    descripcion_comunicado: {
+                                                        required: true,
+                                                        biggertext: true
+                                                    },
+                                                    comunicado_foto: {
+                                                        extension: "jpg|jpeg|png",
+                                                        filesize: 10
+                                                    },
+                                                    archivo_comunicado: {
+                                                        extension: "pdf|jpg|jpeg|png",
+                                                        filesize: 10
+                                                    }
+                                                },
+                                                messages: {
+                                                    titulo_comunicado: {
+                                                        required: 'Este campo es requerido',
+                                                        biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                                                    },
+                                                    descripcion_comunicado: {
+                                                        required: 'Este campo es requerido',
+                                                        biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                                                    },
+                                                    comunicado_foto: {
+                                                        extension: 'Solo se permite jpg, jpeg y pngs',
+                                                        filesize: 'Las imágenes deben pesar ser menos de 10 MB'
+                                                    },
+                                                    archivo_comunicado: {
+                                                        extension: 'Solo se permite pdf, jpg, jpeg y pngs',
+                                                        filesize: 'Las imágenes deben pesar ser menos de 10 MB'
+                                                    }
+                                                },
+                                                submitHandler: function(form) {
+                                                    $('#submit-changes').html(
+                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                                            '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                                            '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                                            '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                                            '</svg>'+
+                                                            'Cargando...'+
+                                                        '</button>');
+                                                        $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                        check_user_logged().then((response) => {
+                                                            if(response == "true"){
+                                                                window.addEventListener('beforeunload', unloadHandler);
+                                                                /*EMPIEZA EL AJAX*/
+                                                                var fd = new FormData();
+                                                                var titulo_comunicado = $("#titulo_comunicado").val();
+                                                                var descripcion_comunicado = $("#descripcion_comunicado").val();
+                                                                var comunicado_foto = $('#comunicado_foto')[0].files[0];
+                                                                var archivo_comunicado = $('#archivo_comunicado')[0].files[0];
+                                                                var method = "store";
+                                                                var app = "comunicados";
+                                                                fd.append('titulo_comunicado', titulo_comunicado);
+                                                                fd.append('descripcion_comunicado', descripcion_comunicado);
+                                                                fd.append('comunicado_foto', comunicado_foto);
+                                                                fd.append('archivo_comunicado', archivo_comunicado);
+                                                                fd.append('method', method);
+                                                                fd.append('app', app);
+                                                                $.ajax({
+                                                                    url: '../ajax/class_search.php',
+                                                                    type: 'POST',
+                                                                    data: fd,
+                                                                    processData: false,
+                                                                    contentType: false,
+                                                                    success: function(data) {
+                                                                        setTimeout(function(){
+                                                                            var array = $.parseJSON(data);
+                                                                            if (array[0] == "success") {
+                                                                                Swal.fire({
+                                                                                    title: "Comunicado creado",
+                                                                                    text: array[1],
+                                                                                    icon: "success"
+                                                                                }).then(function() {
+                                                                                    var table = $('#comunicados_table').DataTable();
+                                                                                    window.removeEventListener('beforeunload', unloadHandler);
+                                                                                    $('#submit-changes').html('<button disabled id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                                    $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                                                    table.ajax.reload();
+                                                                                    totalfilas_comunicados();
+                                                                                    closeModal();
+                                                                                });
+                                                                            } else if(array[0] == "error") {
+                                                                                Swal.fire({
+                                                                                    title: "Error",
+                                                                                    text: array[1],
+                                                                                    icon: "error"
+                                                                                }).then(function() {
+                                                                                    window.removeEventListener('beforeunload', unloadHandler);
+                                                                                    $('#submit-changes').html('<button id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                                    $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                                                });
+                                                                            }
+                                                                        },3000);
+                                                                    },
+                                                                    error: function(data) {
+                                                                        $("#ajax-error").text('Fail to send request');
+                                                                    }
+                                                                });
+                                                            }else{
+                                                                Swal.fire({
+                                                                    title: "Ocurrió un error",
+                                                                    text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                                                    icon: "error"
+                                                                }).then(function() {
+                                                                    window.removeEventListener('beforeunload', unloadHandler);
+                                                                    $('#submit-changes').html('<button disabled id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                    $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                                    window.location.href = "login.php";
+                                                                });	
+                                                            }
+
+                                                        }).catch((error) => {
+                                                            console.log(error);
+                                                        })  
+                                                    return false;
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            ],
+                            "ajax":{
+                                "url": "../config/comunicados/ajax_comunicados.php",
+                                "type": "POST",
+                                "dataSrc": "",
+                                "data":{
+                                    "rol": <?php echo $_SESSION["rol"]; ?>,
+                                    "sessionid": <?php echo $_SESSION["id"]; ?>
+
+                                }
+                            },
+                            "columns":[
+                                {"data": "creada_por", visible: false, searchable: false},
+                                {"data": "modificado_por", visible: false, searchable: false},
+                                {"data": "filename_comunicados", visible: false, searchable: false},
+                                {"data": "comunicados_foto_identificador"},
+                                {"data": "filename_comunicados_archivo", visible: false, searchable: false},
+                                {"data": "comunicados_archivo_identificador"},
+                                {"data": "titulo_comunicado"},
+                                {"data": "descripcion_comunicado"},
+                                {"data": "fecha_creacion_comunicado"},
+                                {"data": "fecha_modificacion", visible: false, searchable: false},
+                                {"data": "id", searchable: false}
+                            ],
+                            "columnDefs": 
+                            [
+                                {
+                                    target: [3],
+                                    render: function (data, type, row) {
+                                        if(row["comunicados_foto_identificador"] === null){
+                                            return(
+                                                "<div>" +
+                                                    "<img class='block lg:m-auto w-10 h-10 shrink-0' src='../src/img/default_comunicado_image.png'>"+
+                                                "</div>"
+                                            );
+                                        }else{
+                                            return(
+                                                "<div>" +
+                                                    "<img class='block lg:m-auto w-10 h-10 shrink-0' src='../src/comunicados/"+row['comunicados_foto_identificador']+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
+                                                "</div>"
+                                            );
+                                        }
+                                    }
+                                },
+                                {
+                                    target: [5],
+                                    render: function (data, type, row) {
+                                        if(row["comunicados_archivo_identificador"] != null){
+                                            var url= "../src/comunicados_archivo/"+row['comunicados_archivo_identificador']+"";
+                                            var filename = row['filename_comunicados_archivo'];
+                                            if(checkFile(url)){
+                                                return (
+                                                    "<div class='text-left lg:text-center'>" +
+                                                        "<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
+                                                    "</div>"
+                                                );
+                                            }else{
+                                                return (
+                                                    "<div class='text-left lg:text-center'>" +
+                                                        "<span>No se encontró el archivo</span>" +
+                                                    "</div>"
+                                                );
+                                            }
+                                        }else{
+                                            return (
+                                                "<div class='text-left lg:text-center'>" +
+                                                    "<span>No se ha subido un archivo</span>" +
+                                                "</div>"
+                                            );
+                                        }
+                                    }
+                                },
+                                {
+                                    target: [6],
+                                    render: function (data, type, row) {
+                                        return (
+                                            "<div class='text-left lg:text-center'>" +
+                                                "<span>" + row["titulo_comunicado"] + "</span>" +
+                                            "</div>"
+                                        );
+                                    }
+                                },
+                                {
+                                    target: [7],
+                                    render: function (data, type, row) {
+                                        return (
+                                            "<div class='text-left lg:text-center'>" +
+                                                "<span>" + row["descripcion_comunicado"] + "</span>" +
+                                            "</div>"
+                                        );
+                                    }
+                                },
+                                {
+                                    target: [8],
+                                    render: function (data, type, row) {
+                                        return (
+                                            "<div class='text-left lg:text-center'>" +
+                                                "<span>" + row["fecha_creacion_comunicado"] + "</span>" +
+                                            "</div>"
+                                        );
+                                    }
+                                },
+                                {
+                                    target: [10],
+                                    render: function (data, type, row) {
+                                        return (
+                                            "<div class='flex item-center justify-start md:justify-center gap-3'>" +
+                                                "<div class='w-4 transform hover:text-purple-500 hover:scale-110 cursor-pointer Editar_comunicado'>" +
+                                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
+                                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'></path>" +
+                                                    "</svg>" +
+                                                "</div>" +
+                                                "<div class='w-4 transform hover:text-purple-500 hover:scale-110 cursor-pointer Eliminar_comunicado'>" +
+                                                    "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'>" +
+                                                    "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>" +
+                                                    "</svg>" +
+                                                "</div>" +
+                                            "</div>"
+                                        );	
+                                    }
+                                }
+                            ],
+                            "initComplete": () => {
+                                $('.dataTables_filter input[type="search"]').
+                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+                                $("#comunicados_table").show();
+                            },
+                        });
+                    }
                 }
             }
 
@@ -1058,6 +1460,93 @@
         }
     }
 
+    function totalfilas_comunicados(){
+        var totalrows = 0;
+        $.ajax({
+            type: "GET",
+            url: "../config/totalrows_comunicados.php",
+            success: function (response) {
+                totalrows = response;
+                paginacion_comunicados(totalrows);
+                check_comunicados(totalrows);
+            }
+        });
+    }
+
+    function paginacion_comunicados(totalrows){
+        $('#comunicados_demo').pagination({
+            dataSource: '../config/comunicados_ajax.php',
+            locator: "items_comunicados",
+            totalNumberLocator: function(response) {
+                // you can return totalNumber by analyzing response content
+                return totalrows;
+            },
+            pageSize: 9,
+            showNavigator: true,
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_comunicados',
+            showGoInput: true,
+            showGoButton: true,
+            formatGoInput: 'ir a <%= input %> página',
+            ajax: {
+                beforeSend: function() {
+                    $("#dataContainer_comunicados").html('Cargando datos ...');
+                }
+            },
+            callback: function(data, pagination) {
+                // template method of yourself
+                var html = __comunicadosPreview(data);
+                $("#dataContainer_comunicados").html(html);
+            }
+        });
+    }
+
+
+
+    function __comunicadosPreview(data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            if(data[i].comunicados_foto_identificador != null && data[i].filename_comunicados != null){
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
+                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }else{
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
+                                `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }
+        }
+        return data.join("");
+    }
+
+    function check_comunicados(totalrows){
+        if(totalrows == 0){
+            $("#comunicados_demo").attr("style", "display:none;");
+        }else{
+            $("#comunicados_demo").removeAttr("style");
+        }
+    }
+
     <?php 
             }
         } 
@@ -1067,6 +1556,7 @@
 
         totalfilas_alertas();
         totalfilas_avisos();
+        totalfilas_comunicados();
 
         function totalfilas_alertas(){
             var totalrows = 0;
@@ -1235,6 +1725,93 @@
                 $("#avisos_demo").attr("style", "display:none;");
             }else{
                 $("#avisos_demo").removeAttr("style");
+            }
+        }
+
+        function totalfilas_comunicados(){
+            var totalrows = 0;
+            $.ajax({
+                type: "GET",
+                url: "../config/totalrows_comunicados.php",
+                success: function (response) {
+                    totalrows = response;
+                    paginacion_comunicados(totalrows);
+                    check_comunicados(totalrows);
+                }
+            });
+        }
+
+        function paginacion_comunicados(totalrows){
+            $('#comunicados_demo').pagination({
+                dataSource: '../config/comunicados_ajax.php',
+                locator: "items_comunicados",
+                totalNumberLocator: function(response) {
+                    // you can return totalNumber by analyzing response content
+                    return totalrows;
+                },
+                pageSize: 9,
+                showNavigator: true,
+                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_comunicados',
+                showGoInput: true,
+                showGoButton: true,
+                formatGoInput: 'ir a <%= input %> página',
+                ajax: {
+                    beforeSend: function() {
+                        $("#dataContainer_comunicados").html('Cargando datos ...');
+                    }
+                },
+                callback: function(data, pagination) {
+                    // template method of yourself
+                    var html = __comunicadosPreview(data);
+                    $("#dataContainer_comunicados").html(html);
+                }
+            });
+        }
+
+
+
+        function __comunicadosPreview(data) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                if(data[i].comunicados_foto_identificador != null && data[i].filename_comunicados != null){
+                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                                `<div class="p-5">`+
+                                    `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
+                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
+                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
+                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                        `Ver más`+
+                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                        `</svg>`+
+                                    `</button>`+
+                                `</div>`+
+                            `</div>`;
+                }else{
+                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                                `<div class="p-5">`+
+                                    `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
+                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
+                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
+                                    `<button type="button" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                        `Ver más`+
+                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                        `</svg>`+
+                                    `</button>`+
+                                `</div>`+
+                            `</div>`;
+                }
+            }
+            return data.join("");
+        }
+
+        function check_comunicados(totalrows){
+            if(totalrows == 0){
+                $("#comunicados_demo").attr("style", "display:none;");
+            }else{
+                $("#comunicados_demo").removeAttr("style");
             }
         }
 

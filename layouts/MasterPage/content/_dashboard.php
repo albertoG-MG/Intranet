@@ -195,10 +195,39 @@
 		        </div>
 	        </div>
         </div>
-        <div class="hidden p-4 bg-white rounded-lg" id="comunicados" role="tabpanel" aria-labelledby="comunicados-tab-profile">
-            <p class="text-sm text-gray-500">This is some placeholder content the <strong class="font-medium text-gray-800">Contacts tab's associated content</strong>. Clicking
-                another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                classes to control the content visibility and styling.</p>
+        <div class="hidden bg-transparent rounded-lg" id="comunicados" role="tabpanel" aria-labelledby="comunicados-tab-profile">
+            <?php 
+                if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+                    if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+            ?>
+                <div class="bg-white p-3 shadow-md rounded-2xl mt-5">
+                    <table class="w-full" id="comunicados_table" style="display:none; word-break: break-word;">
+                        <thead>
+                            <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                <th>Creada por</th>
+                                <th>Modificada por</th>
+                                <th>Nombre de la foto</th>
+                                <th class="py-3 text-center desktop">Imágen destacada</th>
+                                <th>Nombre del archivo comunicado</th>
+                                <th class="py-3 text-center desktop">Archivo</th>
+                                <th class="py-3 text-center all">Título</th>
+                                <th class="py-3 text-center desktop">Descripción</th>
+                                <th class="py-3 text-center desktop">Fecha</th>
+                                <th>Fecha de modificacion</th>
+                                <th class="py-3 text-center min-tablet">Acción</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            <?php 
+                    } 
+                }
+            ?>
+            <div id="comunicados_demo" class="mt-5">
+		        <h2 class="text-2xl text-black font-semibold">Comunicados</h2>
+		        <div id="dataContainer_comunicados" class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8" style="word-break:break-word;">
+		        </div>
+	        </div>
         </div>
     </div>
 </div>
