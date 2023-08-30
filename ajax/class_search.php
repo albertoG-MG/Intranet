@@ -10,6 +10,7 @@ include_once __DIR__ . "/../classes/subroles.php";
 include_once __DIR__ . "/../classes/vacaciones.php";
 include_once __DIR__ . "/../classes/alertas.php";
 include_once __DIR__ . "/../classes/avisos.php";
+include_once __DIR__ . "/../classes/comunicados.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
@@ -3003,6 +3004,96 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             	break;
 			break;
         }
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "comunicados"){
+	if(isset($_POST["titulo_comunicado"], $_POST["descripcion_comunicado"], $_POST["method"])){
+		//TÍTULO DEL COMUNICADO
+		if(empty($_POST["titulo_comunicado"])){
+			die(json_encode(array("error", "El título del comunicado no puede estar vacío")));
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["titulo_comunicado"])){
+			die(json_encode(array("error", "El título del comunicado no puede tener solamente símbolos especiales y debe contener al menos una letra")));
+		}else{
+			$titulo_comunicado = $_POST["titulo_comunicado"];
+		}
+
+		//DESCRIPCIÓN DEL COMUNICADO
+		if(empty($_POST["descripcion_comunicado"])){
+			die(json_encode(array("error", "La descripción del comunicado no puede estar vacío")));
+		}else if(!preg_match("/^(.|\s)*[a-zA-Z]+(.|\s)*$/u", $_POST["descripcion_comunicado"])){
+			die(json_encode(array("error", "La descripción del comunicado no puede tener solamente símbolos especiales y debe contener al menos una letra")));
+		}else{
+			$descripcion_comunicado = $_POST["descripcion_comunicado"];
+		}
+
+		//FOTO DESTACADA DEL COMUNICADO
+		if(isset($_FILES['comunicado_foto']['name'])){
+			$allowed = array('jpeg', 'png', 'jpg');
+			$filename_comunicados = $_FILES['comunicado_foto']['name'];
+			$ext = pathinfo($filename_comunicados, PATHINFO_EXTENSION);
+			if (!in_array($ext, $allowed)) {
+				die(json_encode(array("error", "Solo se permite jpg, jpeg y pngs")));
+			}else if($_FILES['comunicado_foto']['size'] > 10485760){
+				die(json_encode(array("error", "Las imágenes deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype = finfo_file($finfo, $_FILES["comunicado_foto"]["tmp_name"]);
+				finfo_close($finfo);
+				if($mimetype != "image/jpeg" && $mimetype != "image/png"){
+					die(json_encode(array("error", "Por favor, asegúrese que la imagen sea originalmente un archivo png, jpg y jpeg")));
+				}
+			}
+			$comunicado_foto=$_FILES['comunicado_foto'];
+		}else{
+			$filename_comunicados = null;
+			$comunicado_foto=null;
+		}
+
+		//ARCHIVO
+		if(isset($_FILES['archivo_comunicado']['name'])){
+			$allowed_archivo = array('pdf', 'jpeg', 'png', 'jpg');
+			$filename_archivo_comunicado = $_FILES['archivo_comunicado']['name'];
+			$ext_archivo = pathinfo($filename_archivo_comunicado, PATHINFO_EXTENSION);
+			if (!in_array($ext_archivo, $allowed_archivo)) {
+				die(json_encode(array("error", "Solo se permite pdf, jpg, jpeg y pngs")));
+			}else if($_FILES['archivo_comunicado']['size'] > 10485760){
+				die(json_encode(array("error", "Los archivos deben pesar ser menos de 10 MB")));
+			}else{
+				$finfo_archivo = finfo_open(FILEINFO_MIME_TYPE);
+				$mimetype_archivo = finfo_file($finfo_archivo, $_FILES["archivo_comunicado"]["tmp_name"]);
+				finfo_close($finfo_archivo);
+				if($mimetype_archivo != "image/jpeg" && $mimetype_archivo != "image/png" && $mimetype_archivo != "application/pdf"){
+					die(json_encode(array("error", "Por favor, asegúrese que el archivo sea originalmente un archivo pdf, png, jpg y jpeg")));
+				}
+			}
+			$archivo_comunicado=$_FILES['archivo_comunicado'];
+		}else{
+			$filename_archivo_comunicado = null;
+			$archivo_comunicado = null;
+		}
+
+		switch($_POST["method"]){
+			case "store":
+				$comunicado = new Comunicados($_SESSION["id"], $titulo_comunicado, $descripcion_comunicado, $filename_comunicados, $comunicado_foto, $filename_archivo_comunicado, $archivo_comunicado);
+				$comunicado -> insertCommunicate();
+				die(json_encode(array("success", "Se ha creado el comunicado!")));
+				break;
+			break;
+			case "edit":
+				$check_communicates = $object -> _db -> prepare("SELECT * FROM comunicados WHERE id=:id");
+				$check_communicates -> execute(array(":id" => $_POST["id"]));
+				$count_communicates = $check_communicates -> rowCount();
+				if($count_communicates == 0){
+					die(json_encode(array("communicate_not_found", "No se encontró el comunicado!")));
+				}
+				$id = $_POST["id"];
+				$delete = $_POST["delete"];
+				$delete2 = $_POST["delete2"];
+				$comunicado = new Comunicados($_SESSION["id"], $titulo_comunicado, $descripcion_comunicado, $filename_comunicados, $comunicado_foto, $filename_archivo_comunicado, $archivo_comunicado);
+				$comunicado -> editCommunicate($id, $delete, $delete2);
+				die(json_encode(array("success", "Se ha modificado el comunicado!")));
+				break;
+			break;
+		}
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus"){
 	if(isset($_POST["estatus"], $_POST["sueldo"], $_POST["comentarios"], $_POST["id"])){
