@@ -3444,6 +3444,211 @@
             })
         });
 
+        var foto_comunicado;
+
+        $(document).on('click', '#delete_comunciado_foto', function() {
+            $("#img_comunicado_information").replaceWith(originalState.clone());
+            $("#comunicado_foto").val("");
+            $("#div_comunicado_foto").addClass("hidden");
+        });
+
+        $(document).on('click', '#comunicado_foto', function() {
+            foto_comunicado = $("#comunicado_foto").clone();
+        });
+
+        $(document).on('change', '#comunicado_foto', function () {
+            if (window.FileReader && window.Blob) {
+                var files = $('input#comunicado_foto').get(0).files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    console.log('Archivo cargado: ' + file.name);
+                    console.log('Blob mime: ' + file.type);
+                    console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+                    console.log('Tamaño en bytes: ' + file.size);
+
+                    var fileReader = new FileReader();
+                    fileReader.onerror = function (e) {
+                        console.error('ERROR', e);
+                    };
+                    fileReader.onloadend = function (e) {
+                        var arr = new Uint8Array(e.target.result);
+                        var header = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            header += arr[i].toString(16);
+                        }
+                        console.log('Encabezado: ' + header);
+
+                        // Check the file signature against known types
+                        var type = 'unknown';
+                        switch (header) {
+                            case '89504e47':
+                                type = 'image/png';
+                                break;
+                            case 'ffd8ffe0':
+                            case 'ffd8ffe1':
+                            case 'ffd8ffe2':
+                                type = 'image/jpeg';
+                                break;
+                        }
+                        if (file.type !== type) {
+                            console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                            $('#preview_comunicado_foto').addClass('hidden');
+                            $('#svg_comunicado_foto').removeClass('hidden');
+                            $('#text_comunicado_foto').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                            $("#div_comunicado_foto").removeClass("hidden");
+                        } else {
+                            console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                            if(file.size > 10485760){
+                                $('#preview_comunicado_foto').addClass('hidden');
+                                $('#svg_comunicado_foto').removeClass('hidden');
+                                $('#text_comunicado_foto').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                $("#div_comunicado_foto").removeClass("hidden");
+                            }else{
+                                $('#preview_comunicado_foto').removeClass('hidden');
+                                $('#preview_comunicado_foto').addClass('w-10 h-10');
+                                $('#svg_comunicado_foto').addClass('hidden');
+                                $('#text_comunicado_foto').text(file.name);
+                                $("#div_comunicado_foto").removeClass("hidden");
+                                let reader = new FileReader();
+                                reader.onload = function (event) {
+                                    $('#preview_comunicado_foto').attr('src', event.target.result);
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#comunicado_foto").replaceWith(foto_comunicado.clone());
+                }
+            } else {
+                console.error('FileReader ó Blob no es compatible con este navegador.');
+                if($("#comunicado_foto").val() != ''){
+                    var file = this.files[0].name;
+                    var lastDot = file.lastIndexOf('.');
+                    var extension = file.substring(lastDot + 1);
+                    if(extension == "jpeg" || extension == "jpg" || extension == "png") {
+                        if(this.files[0].size > 10485760){
+                            $('#text_comunicado_foto').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                            $("#div_comunicado_foto").removeClass("hidden");
+                        }else{
+                            $('#text_comunicado_foto').text(file);
+                            $("#div_comunicado_foto").removeClass("hidden");
+                        }
+                    }else{
+                        $('#text_comunicado_foto').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                        $("#div_comunicado_foto").removeClass("hidden");
+                    }
+                }
+            }
+        });
+
+        var archivo_comunicado;
+
+        $(document).on('click', '#delete_archivo_comunicado', function() {
+            $("#archivo_comunicado_information").replaceWith(originalState2.clone());
+            $("#archivo_comunicado").val("");
+            $("#div_archivo_comunicado").addClass("hidden");
+        });
+
+        $(document).on('click', '#archivo_comunicado', function() {
+            archivo_comunicado = $("#archivo_comunicado").clone();
+        });
+
+        $(document).on('change', '#archivo_comunicado', function () {
+            if (window.FileReader && window.Blob) {
+                var files = $('input#archivo_comunicado').get(0).files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    console.log('Archivo cargado: ' + file.name);
+                    console.log('Blob mime: ' + file.type);
+                    console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+                    console.log('Tamaño en bytes: ' + file.size);
+
+                    var fileReader = new FileReader();
+                    fileReader.onerror = function (e) {
+                        console.error('ERROR', e);
+                    };
+                    fileReader.onloadend = function (e) {
+                        var arr = new Uint8Array(e.target.result);
+                        var header = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            header += arr[i].toString(16);
+                        }
+                        console.log('Encabezado: ' + header);
+
+                        // Check the file signature against known types
+                        var type = 'unknown';
+                        switch (header) {
+                            case '89504e47':
+                                type = 'image/png';
+                                break;
+                            case 'ffd8ffe0':
+                            case 'ffd8ffe1':
+                            case 'ffd8ffe2':
+                                type = 'image/jpeg';
+                                break;
+                            case '25504446':
+                                type = 'application/pdf';
+                                break;
+                        }
+                        if (file.type !== type) {
+                            console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                            $('#preview_archivo_comunicado').addClass('hidden');
+                            $('#svg_archivo_comunicado').removeClass('hidden');
+                            $('#text_archivo_comunicado').text("El archivo " +file.name+ " no es un archivo con formato permitido ó la extensión es incorrecta ó el archivo no es originalmente un archivo pdf, jpg, jpeg y png");
+                            $("#div_archivo_comunicado").removeClass("hidden");
+                        } else {
+                            console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                            if(file.size > 10485760){
+                                $('#preview_archivo_comunicado').addClass('hidden');
+                                $('#svg_archivo_comunicado').removeClass('hidden');
+                                $('#text_archivo_comunicado').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                $("#div_archivo_comunicado").removeClass("hidden");
+                            }else{
+                                $('#preview_archivo_comunicado').removeClass('hidden');
+                                $('#preview_archivo_comunicado').addClass('w-10 h-10');
+                                $('#svg_archivo_comunicado').addClass('hidden');
+                                $('#text_archivo_comunicado').text(file.name);
+                                $("#div_archivo_comunicado").removeClass("hidden");
+                                if (file.type == "image/png" || file.type == "image/jpeg") {
+                                    let reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        $('#preview_archivo_comunicado').attr('src', event.target.result);
+                                    }
+                                    reader.readAsDataURL(file);
+                                }else if(file.type == "application/pdf"){
+                                    $('#preview_archivo_comunicado').attr('src', "../src/img/pdf.png");
+                                }
+                            }
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#archivo_comunicado").replaceWith(archivo_comunicado.clone());
+                }
+            } else {
+                console.error('FileReader ó Blob no es compatible con este navegador.');
+                if($("#archivo_comunicado").val() != ''){
+                    var file = this.files[0].name;
+                    var lastDot = file.lastIndexOf('.');
+                    var extension = file.substring(lastDot + 1);
+                    if(extension == "pdf" || extension == "jpeg" || extension == "jpg" || extension == "png") {
+                        if(this.files[0].size > 10485760){
+                            $('#text_archivo_comunicado').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                            $("#div_archivo_comunicado").removeClass("hidden");
+                        }else{
+                            $('#text_archivo_comunicado').text(file);
+                            $("#div_archivo_comunicado").removeClass("hidden");
+                        }
+                    }else{
+                        $('#text_archivo_comunicado').text("El archivo " +file+ " no es un archivo con formato permitido ó la extensión es incorrecta ó el archivo no es originalmente un archivo pdf, jpg, jpeg y png");
+                        $("#div_archivo_comunicado").removeClass("hidden");
+                    }
+                }
+            }
+        });
+
         <?php 
             }
         } 
