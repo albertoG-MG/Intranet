@@ -91,7 +91,7 @@
                         }else if(row[2] == "DESTAJO"){
                             return (
                                 "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>ALTA</span>" +
+                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>DJO</span>" +
                                 "</div>"
                             );
                         }
