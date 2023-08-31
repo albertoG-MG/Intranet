@@ -583,12 +583,12 @@
 	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
 
         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
-            $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, parentEl: "main", locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, timePicker: true, timePicker24Hour: true, timePickerSeconds: true, parentEl: "main", locale: { format: 'YYYY/MM/DD HH:mm:ss' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
             $('#periodo_buscar').on('apply.daterangepicker', function(ev, picker) {
                 var fd = new FormData();
-                var fecha_inicio = picker.startDate.format('YYYY-MM-DD');
-                var fecha_fin = picker.endDate.format('YYYY-MM-DD');
+                var fecha_inicio = picker.startDate.format('YYYY-MM-DD HH:mm:ss');
+                var fecha_fin = picker.endDate.format('YYYY-MM-DD HH:mm:ss');
                 fd.append('fecha_inicio', fecha_inicio);
                 fd.append('fecha_fin', fecha_fin);
                 $.ajax({
