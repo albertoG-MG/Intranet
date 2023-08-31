@@ -3649,6 +3649,539 @@
             }
         });
 
+        $(document).on("click", "tr .Editar_comunicado", function () {
+            var table = $('#comunicados_table').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+            $('.modal-wrapper-flex').html(
+                '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
+                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                        '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"></path></svg>'+
+                    '</div>'+
+                    '<h3 class="text-lg font-medium text-gray-900"> Editar un comunicado</h3>'+
+                '</div>'+
+                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                    '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                        '<label class="text-[#64748b] font-semibold mb-2">'+
+                            'Título del comunicado'+
+                        '</label>'+
+                        '<div class="group flex">'+
+                            '<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">'+
+                                '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
+                                    '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
+                                '</svg>'+
+                            '</div>'+
+                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="editar_titulo_comunicado" name="editar_titulo_comunicado" value="'+data['titulo_comunicado']+'" placeholder="Título del comunicado">'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Descripción del comunicado</label>'+
+                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="editar_descripcion_comunicado" name="editar_descripcion_comunicado" placeholder="Descripción del comunicado">'+data['descripcion_comunicado']+'</textarea>'+
+                        '<div id="error_editar_descripcion_comunicado"></div>'+
+                    '</div>'+
+                    '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Subir imagen para el comunicado</label>'+
+                        '<div class="flex items-center justify-center w-full">'+
+                            '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
+                                '<div id="editar_img_comunicado_information" class="flex flex-col items-center justify-center pt-7">'+
+                                    '<div id="editar_svg_comunicado_foto">'+
+                                        '<svg class="w-10 h-10 text-gray-400 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'+
+                                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>'+
+                                        '</svg>'+
+                                    '</div>'+
+                                    '<img id="editar_preview_comunicado_foto" class="hidden">'+
+                                    '<p id="editar_text_comunicado_foto" style="word-break:break-word;" class="lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider">Selecciona una fotografía</p>'+
+                                '</div>'+
+                                '<input type="file" id="editar_comunicado_foto" name="editar_comunicado_foto" class="hidden">'+
+                            '</label>'+
+                        '</div>'+
+                        '<div id="error_editar_comunicado_foto" class="m-auto"></div>'+
+                    '</div>'+
+                    '<div id="div_editar_comunicado_foto" class="hidden">'+
+                        '<div id="div_actions_editar_comunicado_foto" class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">'+
+                            '<button type="button" id="delete_editar_comunciado_foto" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">'+
+                                '<svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">'+
+                                    '<path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />'+
+                                '</svg>'+
+                                'Eliminar'+
+                            '</button>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="grid grid-cols-1 mt-5 mx-7">'+
+                        '<label class="text-[#64748b] font-semibold mb-2">Subir archivo para el comunicado</label>'+
+                        '<div class="flex items-center justify-center w-full">'+
+                            '<label class="flex flex-col border-4 border-dashed w-full hover:bg-gray-100 hover:border-black group">'+
+                                '<div id="editar_archivo_comunicado_information" class="flex flex-col items-center justify-center pt-7">'+
+                                    '<div id="editar_svg_archivo_comunicado">'+
+                                        '<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-400" viewBox="0 0 24 24">'+
+                                            '<path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"></path>'+
+                                        '</svg>'+
+                                    '</div>'+
+                                    '<img id="editar_preview_archivo_comunicado" class="hidden">'+
+                                    '<p id="editar_text_archivo_comunicado" style="word-break:break-word;" class="lowercase text-center text-sm text-gray-400 group-hover:text-black pt-1 tracking-wider">Selecciona un archivo</p>'+
+                                '</div>'+
+                                '<input type="file" id="editar_archivo_comunicado" name="editar_archivo_comunicado" class="hidden">'+
+                            '</label>'+
+                        '</div>'+
+                        '<div id="error_editar_archivo_comunicado" class="m-auto"></div>'+
+                    '</div>'+
+                    '<div id="div_editar_archivo_comunicado" class="hidden">'+
+                        '<div id="div_actions_editar_archivo_comunicado" class="flex flex-col md:flex-row justify-center mt-5 mx-7 gap-3">'+
+                            '<button type="button" id="delete_editar_archivo_comunicado" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex flex-col md:flex-row items-center gap-3">'+
+                                '<svg style="width:24px;height:24px" class="hidden md:block" viewBox="0 0 24 24">'+
+                                    '<path fill="currentColor" d="M22.54 21.12L20.41 19L22.54 16.88L21.12 15.46L19 17.59L16.88 15.46L15.46 16.88L17.59 19L15.46 21.12L16.88 22.54L19 20.41L21.12 22.54M6 2C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H13.81C13.45 21.38 13.2 20.7 13.08 20H6V4H13V9H18V13.08C18.33 13.03 18.67 13 19 13C19.34 13 19.67 13.03 20 13.08V8L14 2M8 12V14H16V12M8 16V18H13V16Z" />'+
+                                '</svg>'+
+                                'Eliminar'+
+                            '</button>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>');
+            $('.modal-actions').html(
+                '<div id="submit-editar-changes-comunicado">'+
+                    '<button id="editar-comunicado" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
+                '</div>'+
+                '<div id="disable-editar-close-submit-comunicado">'+
+                    '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
+                '</div>');
+            originalState = $("#editar_img_comunicado_information").clone();
+            originalState2 = $("#editar_archivo_comunicado_information").clone();
+            delete_switch = "false";
+            delete_switch2 = "false";
+            if(data["comunicados_foto_identificador"] != null && data["filename_comunicados"] != null){
+                if (window.FileReader && window.Blob) {
+                    console.log('FileReader ó Blob es compatible con este navegador.');
+                    $('#editar_svg_comunicado_foto').addClass("hidden");
+                    checkImage("../src/comunicados/"+data['comunicados_foto_identificador']+"", function(){ $('#editar_preview_comunicado_foto').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/comunicados/'+data["comunicados_foto_identificador"]+''); $('#editar_text_comunicado_foto').text(data["filename_comunicados"]); }, function(){ $('#editar_preview_comunicado_foto').removeClass("hidden").addClass('w-10 h-10').attr('src', '../src/img/not_found.jpg'); $('#editar_text_comunicado_foto').text("No se encontró la imagen"); } );
+                }else{
+                    console.error('FileReader ó Blob no es compatible con este navegador.');
+                    checkImage("../src/comunicados/"+data['comunicados_foto_identificador']+"", function(){ $('#editar_text_comunicado_foto').text(data["filename_comunicados"]); }, function(){ $('#editar_text_comunicado_foto').text("No se encontró la imagen"); } );
+                }	
+                $("#div_editar_comunicado_foto").removeClass("hidden");
+            }
+            if(data["comunicados_archivo_identificador"] != null && data["filename_comunicados_archivo"] != null){
+                var url= "../src/comunicados_archivo/"+data['comunicados_archivo_identificador']+"";
+                var filename = data['filename_comunicados_archivo'];
+                if (window.FileReader && window.Blob) {
+                    console.log('FileReader ó Blob es compatible con este navegador.');
+                    $('#editar_svg_archivo_comunicado').addClass("hidden");
+                    if(checkFile(url)){
+                        var ext = filename.split('.').pop();
+                        if(ext == "jpg" || ext == "jpeg" || ext == "png"){
+                            $('#editar_preview_archivo_comunicado').removeClass("hidden").addClass('w-10 h-10').attr('src', url); 
+                            $('#editar_text_archivo_comunicado').text(filename);
+                        }else if(ext == "pdf"){
+                            $('#editar_preview_archivo_comunicado').removeClass("hidden").addClass('w-10 h-10').attr('src', "../src/img/pdf.png"); 
+                            $('#editar_text_archivo_comunicado').text(filename);
+                        }
+                    }else{
+                        $('#editar_preview_archivo_comunicado').removeClass("hidden").addClass('w-10 h-10').attr('src', "../src/img/not_found.jpg"); 
+                        $('#editar_text_archivo_comunicado').text("No se encontró el archivo");
+                    }
+                }else{
+                    console.error('FileReader ó Blob no es compatible con este navegador.');
+                    if(checkFile(url)){
+                        $('#editar_text_archivo_comunicado').text(data["filename_comunicados_archivo"]);
+                    }else{
+                        $('#editar_text_archivo_comunicado').text("No se encontró el archivo");
+                    }
+                }
+                $("#div_editar_archivo_file_aviso").removeClass("hidden");
+            }
+            openModal();
+            resetFormValidator("#Guardar");
+            $('#Guardar').unbind('submit');
+            $.validator.addMethod('biggertext', function (value, element) {
+                return this.optional(element) || /^(.|\s)*[a-zA-Z]+(.|\s)*$/.test(value);
+            }, 'not a valid biggertext.');
+            $.validator.addMethod('filesize', function(value, element, param) {
+                return this.optional(element) || (element.files[0].size <= param * 1048576)
+            }, 'File size must be less than {0} MB');
+            if ($('#Guardar').length > 0) {
+                $('#Guardar').validate({
+                    ignore: [],
+                    onkeyup: false,
+                    errorPlacement: function(error, element) {
+                        if((element.attr('name') === 'editar_comunicado_foto')){
+                            error.appendTo("div#error_editar_comunicado_foto");
+                        }else if((element.attr('name') === 'editar_archivo_comunicado')){
+                            error.appendTo("div#error_editar_archivo_comunicado");
+                        }else if(element.attr('name') === 'editar_descripcion_comunicado'){
+                            error.appendTo("div#error_editar_descripcion_comunicado"); 
+                        }else{
+                            error.insertAfter(element.parent('.group.flex'));
+                        }
+                    },
+                    highlight: function(element) {
+                        var elem = $(element);
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
+                    },
+                    unhighlight: function(element) {
+                        var elem = $(element);	
+                        $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                    },
+                    rules: {
+                        editar_titulo_comunicado: {
+                            required: true,
+                            biggertext: true
+                        },
+                        editar_descripcion_comunicado: {
+                            required: true,
+                            biggertext: true
+                        },
+                        editar_comunicado_foto: {
+                            extension: "jpg|jpeg|png",
+                            filesize: 10
+                        },
+                        editar_archivo_comunicado: {
+                            extension: "pdf|jpg|jpeg|png",
+                            filesize: 10
+                        }
+                    },
+                    messages: {
+                        editar_titulo_comunicado: {
+                            required: 'Este campo es requerido',
+                            biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                        },
+                        editar_descripcion_comunicado: {
+                            required: 'Este campo es requerido',
+                            biggertext: 'Se permiten carácteres alfabéticos y símbolos especiales, no se permite un texto con solamente símbolos especiales, debe contener almenos una letra'
+                        },
+                        editar_comunicado_foto: {
+                            extension: 'Solo se permite jpg, jpeg y pngs',
+                            filesize: 'Las imágenes deben pesar ser menos de 10 MB'
+                        },
+                        editar_archivo_comunicado: {
+                            extension: 'Solo se permite pdf, jpg, jpeg y pngs',
+                            filesize: 'Los archivos deben pesar ser menos de 10 MB'
+                        }
+                    },
+                    submitHandler: function(form) {
+                        $('#submit-editar-changes-comunicado').html(
+                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                '</svg>'+
+                                'Cargando...'+
+                            '</button>');
+                            $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                            check_user_logged().then((response) => {
+                                if(response == "true"){
+                                    window.addEventListener('beforeunload', unloadHandler);
+                                    /*EMPIEZA EL AJAX*/
+                                    var fd = new FormData();
+                                    var titulo_comunicado = $("#editar_titulo_comunicado").val();
+                                    var descripcion_comunicado = $("#editar_descripcion_comunicado").val();
+                                    var comunicado_foto = $('#editar_comunicado_foto')[0].files[0];
+                                    var archivo_comunicado = $('#editar_archivo_comunicado')[0].files[0];
+                                    var id = data["id"];
+                                    var method = "edit";
+                                    var app = "comunicados";
+                                    fd.append('titulo_comunicado', titulo_comunicado);
+                                    fd.append('descripcion_comunicado', descripcion_comunicado);
+                                    fd.append('comunicado_foto', comunicado_foto);
+                                    fd.append('archivo_comunicado', archivo_comunicado);
+                                    fd.append('id', id);
+                                    fd.append('delete', delete_switch);
+                                    fd.append('delete2', delete_switch2);
+                                    fd.append('method', method);
+                                    fd.append('app', app);
+                                    $.ajax({
+                                        url: '../ajax/class_search.php',
+                                        type: 'POST',
+                                        data: fd,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function(data) {
+                                            setTimeout(function(){
+                                                var array = $.parseJSON(data);
+                                                if (array[0] == "success") {
+                                                    Swal.fire({
+                                                        title: "Comunicado Editado",
+                                                        text: array[1],
+                                                        icon: "success"
+                                                    }).then(function() {
+                                                        var table = $('#comunicados_table').DataTable();
+                                                        window.removeEventListener('beforeunload', unloadHandler);
+                                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                        table.ajax.reload();
+                                                        totalfilas_comunicados();
+                                                        closeModal();
+                                                    });
+                                                } else if(array[0] == "error") {
+                                                    Swal.fire({
+                                                        title: "Error",
+                                                        text: array[1],
+                                                        icon: "error"
+                                                    }).then(function() {
+                                                        window.removeEventListener('beforeunload', unloadHandler);
+                                                        $('#submit-editar-changes-comunicado').html('<button id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#disable-editar-close-submit-comunicado').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                    });
+                                                } else if (array[0] == "communicate_not_found") {
+                                                    Swal.fire({
+                                                        title: "Comunicado inexistente!",
+                                                        text: array[1],
+                                                        icon: "error"
+                                                    }).then(function() {
+                                                        var table = $('#comunicados_table').DataTable();
+                                                        window.removeEventListener('beforeunload', unloadHandler);
+                                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                        table.ajax.reload();
+                                                        totalfilas_comunicados();
+                                                        closeModal();
+                                                    });
+                                                }
+                                            },3000);
+                                        },
+                                        error: function(data) {
+                                            $("#ajax-error").text('Fail to send request');
+                                        }
+                                    });
+                                }else{
+                                    Swal.fire({
+                                        title: "Ocurrió un error",
+                                        text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                                        icon: "error"
+                                    }).then(function() {
+                                        window.removeEventListener('beforeunload', unloadHandler);
+                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                        $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                        window.location.href = "login.php";
+                                    });	
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                            })  
+                        return false;
+                    }
+                });
+            }
+        });
+
+        var editar_file_foto_comunicados;
+
+        $(document).on('click', '#delete_editar_comunciado_foto', function() {
+            $("#editar_img_comunicado_information").replaceWith(originalState.clone());
+            $("#editar_comunicado_foto").val("");
+            $("#div_editar_comunicado_foto").addClass("hidden");
+            delete_switch="true";
+        });
+
+        $(document).on('click', '#editar_comunicado_foto', function() {
+            editar_file_foto_comunicados = $("#editar_comunicado_foto").clone();
+        });
+
+        $(document).on('change', '#editar_comunicado_foto', function () {
+            if (window.FileReader && window.Blob) {
+                var files = $('input#editar_comunicado_foto').get(0).files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    console.log('Archivo cargado: ' + file.name);
+                    console.log('Blob mime: ' + file.type);
+                    console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+                    console.log('Tamaño en bytes: ' + file.size);
+
+                    var fileReader = new FileReader();
+                    fileReader.onerror = function (e) {
+                        console.error('ERROR', e);
+                    };
+                    fileReader.onloadend = function (e) {
+                        var arr = new Uint8Array(e.target.result);
+                        var header = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            header += arr[i].toString(16);
+                        }
+                        console.log('Encabezado: ' + header);
+
+                        // Check the file signature against known types
+                        var type = 'unknown';
+                        switch (header) {
+                            case '89504e47':
+                                type = 'image/png';
+                                break;
+                            case 'ffd8ffe0':
+                            case 'ffd8ffe1':
+                            case 'ffd8ffe2':
+                                type = 'image/jpeg';
+                                break;
+                        }
+                        if (file.type !== type) {
+                            console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                            $('#editar_preview_comunicado_foto').addClass('hidden');
+                            $('#editar_svg_comunicado_foto').removeClass('hidden');
+                            $('#editar_text_comunicado_foto').text("El archivo " +file.name+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                            $("#div_editar_comunicado_foto").removeClass("hidden");
+                        } else {
+                            console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                            if(file.size > 10485760){
+                                $('#editar_preview_comunicado_foto').addClass('hidden');
+                                $('#editar_svg_comunicado_foto').removeClass('hidden');
+                                $('#editar_text_comunicado_foto').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                $("#div_editar_comunicado_foto").removeClass("hidden");
+                            }else{
+                                $('#editar_preview_comunicado_foto').removeClass('hidden');
+                                $('#editar_preview_comunicado_foto').addClass('w-10 h-10');
+                                $('#editar_svg_comunicado_foto').addClass('hidden');
+                                $('#editar_text_comunicado_foto').text(file.name);
+                                $("#div_editar_comunicado_foto").removeClass("hidden");
+                                delete_switch="false";
+                                let reader = new FileReader();
+                                reader.onload = function (event) {
+                                    $('#editar_preview_comunicado_foto').attr('src', event.target.result);
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#editar_comunicado_foto").replaceWith(editar_file_foto_comunicados.clone());
+                }
+            } else {
+                console.error('FileReader ó Blob no es compatible con este navegador.');
+                if($("#editar_comunicado_foto").val() != ''){
+                    var file = this.files[0].name;
+                    var lastDot = file.lastIndexOf('.');
+                    var extension = file.substring(lastDot + 1);
+                    if(extension == "jpeg" || extension == "jpg" || extension == "png") {
+                        if(this.files[0].size > 10485760){
+                            $('#editar_text_comunicado_foto').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                            $("#div_editar_comunicado_foto").removeClass("hidden");
+                        }else{
+                            $('#editar_text_comunicado_foto').text(file);
+                            $("#div_editar_comunicado_foto").removeClass("hidden");
+                            delete_switch="false";
+                        }
+                    }else{
+                        $('#editar_text_comunicado_foto').text("El archivo " +file+ " no es una imagen ó la extensión es incorrecta ó el archivo no es originalmente un archivo jpg, jpeg y png");
+                        $("#div_editar_comunicado_foto").removeClass("hidden");
+                    }
+                }
+            }
+        });
+
+        var edit_file_comunicado;
+
+        $(document).on('click', '#delete_editar_archivo_comunicado', function() {
+            $("#editar_archivo_comunicado_information").replaceWith(originalState2.clone());
+            $("#editar_archivo_comunicado").val("");
+            $("#div_editar_archivo_comunicado").addClass("hidden");
+            delete_switch2 = "true";
+        });
+
+        $(document).on('click', '#editar_archivo_comunicado', function() {
+            edit_file_comunicado = $("#editar_archivo_comunicado").clone();
+        });
+
+        $(document).on('change', '#editar_archivo_comunicado', function () {
+            if (window.FileReader && window.Blob) {
+                var files = $('input#editar_archivo_comunicado').get(0).files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    console.log('Archivo cargado: ' + file.name);
+                    console.log('Blob mime: ' + file.type);
+                    console.log('Tamaño en mb: ' + (file.size / 1024 / 1024).toFixed(2));
+                    console.log('Tamaño en bytes: ' + file.size);
+
+                    var fileReader = new FileReader();
+                    fileReader.onerror = function (e) {
+                        console.error('ERROR', e);
+                    };
+                    fileReader.onloadend = function (e) {
+                        var arr = new Uint8Array(e.target.result);
+                        var header = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            header += arr[i].toString(16);
+                        }
+                        console.log('Encabezado: ' + header);
+
+                        // Check the file signature against known types
+                        var type = 'unknown';
+                        switch (header) {
+                            case '89504e47':
+                                type = 'image/png';
+                                break;
+                            case 'ffd8ffe0':
+                            case 'ffd8ffe1':
+                            case 'ffd8ffe2':
+                                type = 'image/jpeg';
+                                break;
+                            case '25504446':
+                                type = 'application/pdf';
+                                break;
+                        }
+                        if (file.type !== type) {
+                            console.error('Tipo de Mime detectado: ' + type + '. No coincide con la extensión del archivo.');
+                            $('#editar_preview_archivo_comunicado').addClass('hidden');
+                            $('#editar_svg_archivo_comunicado').removeClass('hidden');
+                            $('#editar_text_archivo_comunicado').text("El archivo " +file.name+ " no es un archivo con formato soportado ó la extensión es incorrecta ó el archivo no es originalmente un archivo pdf, jpg, jpeg y png");
+                            $("#div_editar_archivo_comunicado").removeClass("hidden");
+                        } else {
+                            console.log('Tipo de Mime detectado: ' + type + '. coincide con la extensión del archivo.');
+                            if(file.size > 10485760){
+                                $('#editar_preview_archivo_comunicado').addClass('hidden');
+                                $('#editar_svg_archivo_comunicado').removeClass('hidden');
+                                $('#editar_text_archivo_comunicado').text("El archivo " +file.name+ " debe pesar menos de 10 MB.");
+                                $("#div_editar_archivo_comunicado").removeClass("hidden");
+                            }else{
+                                $('#editar_preview_archivo_comunicado').removeClass('hidden');
+                                $('#editar_preview_archivo_comunicado').addClass('w-10 h-10');
+                                $('#editar_svg_archivo_comunicado').addClass('hidden');
+                                $('#editar_text_archivo_comunicado').text(file.name);
+                                $("#div_editar_archivo_comunicado").removeClass("hidden");
+                                delete_switch2="false";
+                                if (file.type == "image/png" || file.type == "image/jpeg") {
+                                    let reader = new FileReader();
+                                    reader.onload = function (event) {
+                                        $('#editar_preview_archivo_comunicado').attr('src', event.target.result);
+                                    }
+                                    reader.readAsDataURL(file);
+                                }else if(file.type == "application/pdf"){
+                                    $('#editar_preview_archivo_comunicado').attr('src', "../src/img/pdf.png");
+                                }
+                            }
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file.slice(0, 4));
+                }else{
+                    $("#editar_archivo_comunicado").replaceWith(edit_file_comunicado.clone());
+                }
+            } else {
+                console.error('FileReader ó Blob no es compatible con este navegador.');
+                if($("#editar_archivo_comunicado").val() != ''){
+                    var file = this.files[0].name;
+                    var lastDot = file.lastIndexOf('.');
+                    var extension = file.substring(lastDot + 1);
+                    if(extension = "pdf" || extension == "jpeg" || extension == "jpg" || extension == "png") {
+                        if(this.files[0].size > 10485760){
+                            $('#editar_text_archivo_comunicado').text("El archivo " +file+ " debe pesar menos 10 MB.");
+                            $("#div_editar_archivo_comunicado").removeClass("hidden");
+                        }else{
+                            $('#editar_text_archivo_comunicado').text(file);
+                            $("#div_editar_archivo_comunicado").removeClass("hidden");
+                            delete_switch2="false";
+                        }
+                    }else{
+                        $('#editar_text_archivo_comunicado').text("El archivo " +file.name+ " no es un archivo con formato soportado ó la extensión es incorrecta ó el archivo no es originalmente un archivo pdf, jpg, jpeg y png");
+                        $("#div_editar_archivo_comunicado").removeClass("hidden");
+                    }
+                }
+            }
+        });
+
         <?php 
             }
         } 
