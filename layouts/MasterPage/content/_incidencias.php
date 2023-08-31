@@ -27,6 +27,19 @@
                             </div>
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
+                            <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
+                                <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">Filtrar incidencias por periodo</label>
+                                    <div class="group flex">
+                                        <div class="w-10 z-10 pr-2.5 text-center pointer-events-none flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
+                                            </svg>
+                                        </div>
+                                        <input class="w-full -ml-10 pl-7 py-2 rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_buscar" name="periodo_buscar" placeholder="Filtrar incidencias por periodo" autocomplete="off" aria-invalid="false">
+                                    </div>
+                                </div>
+                            <?php } ?>
                             <div id="DT-div" style="display:none;">
                                 <table class="w-full" id="datatable">
                                     <thead>
