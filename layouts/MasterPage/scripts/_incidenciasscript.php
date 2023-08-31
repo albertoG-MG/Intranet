@@ -942,6 +942,24 @@
         }
     <?php } ?>
 
+    main{
+		position:relative !important;
+	}
+
+	.daterangepicker td.active, .daterangepicker td.active:hover{
+		--tw-bg-opacity: 1 !important;
+		background-color: rgb(79 70 229 / var(--tw-bg-opacity)) !important;
+		border-color: transparent;
+		color: #fff;
+	}
+
+    .dataTables_wrapper .dataTables_filter{
+        float:left;
+        text-align:left;
+        padding-bottom:5px;
+        padding-top:5px;
+    }
+
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
