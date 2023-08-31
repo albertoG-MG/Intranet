@@ -1629,6 +1629,15 @@ select {
 .pb-5 {
   padding-bottom: 1.25rem !important;
 }
+.pr-2\.5 {
+  padding-right: 0.625rem !important;
+}
+.pr-2 {
+  padding-right: 0.5rem !important;
+}
+.pl-7 {
+  padding-left: 1.75rem !important;
+}
 .text-left {
   text-align: left !important;
 }
