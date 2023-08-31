@@ -335,6 +335,43 @@
             }
         }
 
+        public static function eraseCommunicate($id){
+            $crud = new crud();
+            $object = new connection_database();
+            $selectphoto = $object -> _db -> prepare("select filename_comunicados, comunicados_foto_identificador, filename_comunicados_archivo, comunicados_archivo_identificador from comunicados where id=:idcomunicado");
+            $select_photo -> execute(array(':idcomunicado' => $id));
+            $fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
+            if($fetch_select_photo -> filename_comunicados != null && $fetch_select_photo -> comunicados_foto_identificador != null && $fetch_select_photo -> filename_comunicados_archivo == null && $fetch_select_photo -> comunicados_archivo_identificador == null){
+                $directory_foto = __DIR__ . "/../src/comunicados/";
+                $path_foto = __DIR__ . "/../src/comunicados/".$fetch_select_photo -> comunicados_foto_identificador;
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_select_photo -> comunicados_foto_identificador);
+                }
+                $crud->delete('comunicados', 'id=:comunicadoid', ['comunicadoid' => $id]);
+            }else if($fetch_select_photo -> filename_comunicados == null && $fetch_select_photo -> comunicados_foto_identificador == null && $fetch_select_photo -> filename_comunicados_archivo != null && $fetch_select_photo -> comunicados_archivo_identificador != null){
+                $directory_archivo = __DIR__ . "/../src/comunicados_archivo/";
+                $path_archivo = __DIR__ . "/../src/comunicados_archivo/".$fetch_select_photo -> comunicados_archivo_identificador;
+                if(file_exists($path_archivo)){
+                    unlink($directory_archivo.$fetch_select_photo -> comunicados_archivo_identificador);
+                }
+                $crud->delete('comunicados', 'id=:comunicadoid', ['comunicadoid' => $id]);
+            }else if($fetch_select_photo -> filename_comunicados != null && $fetch_select_photo -> comunicados_foto_identificador != null && $fetch_select_photo -> filename_comunicados_archivo != null && $fetch_select_photo -> comunicados_archivo_identificador != null){
+                $directory_foto = __DIR__ . "/../src/comunicados/";
+                $path_foto = __DIR__ . "/../src/comunicados/".$fetch_select_photo -> comunicados_foto_identificador;
+                $directory_archivo = __DIR__ . "/../src/comunicados_archivo/";
+                $path_archivo = __DIR__ . "/../src/comunicados_archivo/".$fetch_select_photo -> comunicados_archivo_identificador;
+                if(file_exists($path_foto)){
+                    unlink($directory_foto.$fetch_select_photo -> comunicados_foto_identificador);
+                }
+                if(file_exists($path_archivo)){
+                    unlink($directory_archivo.$fetch_select_photo -> comunicados_archivo_identificador);
+                }
+                $crud->delete('comunicados', 'id=:comunicadoid', ['comunicadoid' => $id]);
+            }else{
+                $crud->delete('comunicados', 'id=:comunicadoid', ['comunicadoid' => $id]);
+            }
+        }
+
         public static function tempnam_sfx($path, $suffix){
             do {
                 $file = $path."/".mt_rand().".".$suffix;
