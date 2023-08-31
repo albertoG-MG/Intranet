@@ -3299,19 +3299,21 @@ CREATE TABLE `transicion_accion_vacaciones`(
 -- --------------------------------------------------------
 
 --
--- Estructura para la tabla `noticias`
+-- Estructura para la tabla `alertas`
 --
 
-CREATE TABLE `noticias` (
+CREATE TABLE `alertas` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
   `modificado_por` int DEFAULT NULL,
-  `titulo_noticia` varchar(100) NOT NULL,
-  `descripcion_noticia` longtext NOT NULL,
-  `fecha_creacion_noticia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `titulo_alerta` varchar(100) NOT NULL,
+  `descripcion_alerta` longtext NOT NULL,
+  `fecha_creacion_alerta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_modificacion` datetime DEFAULT NULL,
-  `filename_noticias` longtext DEFAULT NULL,
-  `noticias_foto_identificador` longtext DEFAULT NULL,
+  `filename_alertas` longtext DEFAULT NULL,
+  `alertas_foto_identificador` longtext DEFAULT NULL,
+  `filename_alertas_archivo` longtext DEFAULT NULL,
+  `alertas_archivo_identificador` longtext DEFAULT NULL,
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
    FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -3332,6 +3334,30 @@ CREATE TABLE `avisos` (
   `fecha_modificacion` datetime DEFAULT NULL,
   `filename_avisos` longtext DEFAULT NULL,
   `avisos_foto_identificador` longtext DEFAULT NULL,
+  `filename_archivo_aviso` longtext DEFAULT NULL,
+  `aviso_archivo_identificador` longtext DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `comunicados`
+--
+
+CREATE TABLE `comunicados` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `modificado_por` int DEFAULT NULL,
+  `titulo_comunicado` varchar(100) NOT NULL,
+  `descripcion_comunicado` longtext NOT NULL,
+  `fecha_creacion_comunicado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `filename_comunicados` longtext DEFAULT NULL,
+  `comunicados_foto_identificador` longtext DEFAULT NULL,
+  `filename_comunicados_archivo` longtext DEFAULT NULL,
+  `comunicados_archivo_identificador` longtext DEFAULT NULL,
    FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
    FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
