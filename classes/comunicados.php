@@ -338,7 +338,7 @@
         public static function eraseCommunicate($id){
             $crud = new crud();
             $object = new connection_database();
-            $selectphoto = $object -> _db -> prepare("select filename_comunicados, comunicados_foto_identificador, filename_comunicados_archivo, comunicados_archivo_identificador from comunicados where id=:idcomunicado");
+            $select_photo = $object -> _db -> prepare("select filename_comunicados, comunicados_foto_identificador, filename_comunicados_archivo, comunicados_archivo_identificador from comunicados where id=:idcomunicado");
             $select_photo -> execute(array(':idcomunicado' => $id));
             $fetch_select_photo = $select_photo -> fetch(PDO::FETCH_OBJ);
             if($fetch_select_photo -> filename_comunicados != null && $fetch_select_photo -> comunicados_foto_identificador != null && $fetch_select_photo -> filename_comunicados_archivo == null && $fetch_select_photo -> comunicados_archivo_identificador == null){
