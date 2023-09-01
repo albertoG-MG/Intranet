@@ -192,4 +192,9 @@
         </html>";
         die();
     }
+
+    $select_empleados = $object -> _db ->prepare("SELECT expedientes.id AS expedienteid, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id");
+    $select_empleados -> execute();
+    $deploy_empleados = $select_empleados -> fetchAll(PDO::FETCH_ASSOC);
+
 ?>
