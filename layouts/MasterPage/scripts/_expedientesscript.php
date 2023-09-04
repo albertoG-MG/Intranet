@@ -24,6 +24,19 @@
 						}
 					},
 			    <?php } ?>
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Exportar reporte de empleados") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+					{
+						text: "Reporte de empleados",
+						attr: {
+							'id': 'Reporte',
+							'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+						},
+						className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+						action: function(e, dt, node, config) {
+							window.location.href = "download_excel.php";
+						}
+					},
+			    <?php } ?>
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                         {
                             text: "Crear Expediente",
