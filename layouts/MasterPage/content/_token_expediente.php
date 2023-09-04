@@ -43,35 +43,37 @@
                                  <span class="text-[#64748b]">Recuerde inicializar el expediente al usuario, de lo contrario no aparecerá en el selectbox.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                             </div>
-                            <div class="grid grid-cols-1 mt-5 mx-7">
-                                <label class="text-[#64748b] font-semibold mb-2">
-                                    Asignar token a:
-                                </label>
-                                <div class="group flex" id="selectusuario_token" style="display:none !important; position:relative;">
-                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                        </svg>
+                            <form id="Guardar" method="POST">
+                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">
+                                        Asignar token a:
+                                    </label>
+                                    <div class="group flex" id="selectusuario_token" style="display:none !important; position:relative;">
+                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                            </svg>
+                                        </div>
+                                        <select id="usuario" name="usuario">
+                                            <option></option>
+                                            <optgroup label="Usuarios">
+                                                <?php
+                                                    foreach ($deploy_empleados as $item) {
+                                                    echo "<option value='" . $item["expedienteid"] . "'>";
+                                                    echo $item["nombre"];
+                                                    echo "</option>";
+                                                    }
+                                                ?>
+                                            </optgroup>
+                                        </select>
                                     </div>
-                                    <select id="usuario" name="usuario">
-                                        <option></option>
-                                        <optgroup label="Usuarios">
-                                            <?php
-                                                foreach ($deploy_empleados as $item) {
-                                                echo "<option value='" . $item["expedienteid"] . "'>";
-                                                echo $item["nombre"];
-                                                echo "</option>";
-                                                }
-                                            ?>
-                                        </optgroup>
-                                    </select>
                                 </div>
-                            </div>
-                            <div class="grid grid-cols-1 mt-5 mx-7 text-center">
-                                <div id="submit-button">   
-                                    <button type="submit" id="guardar_token" name="guardar_token" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Asignar</button>
+                                <div class="grid grid-cols-1 mt-5 mx-7 text-center">
+                                    <div id="submit-button">   
+                                        <button type="submit" id="guardar_token" name="guardar_token" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Asignar</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <div class="my-3 h-px bg-slate-200"></div>
                             <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Administrar usuarios con el token asignado</h2>
