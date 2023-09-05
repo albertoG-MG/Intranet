@@ -80,6 +80,22 @@
                                  <span class="text-[#64748b]">Si el usuario aparece en el datatable, significa que puede acceder al link.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                             </div>
+                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
+                                    <thead>
+                                        <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                            <th class="py-3 text-left all">Empleado_id</th>
+                                            <th class="py-3 text-left desktop">Asignado A</th>
+                                            <th>Filename_foto</th>
+                                            <th>Foto_identificador</th>
+                                            <th class="py-3 text-center desktop">Token</th>
+                                            <th class="py-3 text-center desktop">Fecha de expiración</th>
+                                            <th>Token</th>
+                                            <th class="py-3 text-center min-tablet">Acción</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
