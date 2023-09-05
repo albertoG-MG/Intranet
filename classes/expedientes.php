@@ -548,5 +548,21 @@ class expedientes {
             }
         }
     }
+
+    public static function Asignar_token($id){
+        $crud = new crud();
+        $object = new connection_database();
+        $token = bin2hex(random_bytes(16));
+        date_default_timezone_set("America/Monterrey");
+        $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d"), date("Y"));
+        $expDate = date("Y-m-d H:i:s",$expFormat);
+        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+        $path = dirname($path);
+        $links = $path. "/layouts/expediente_modo_edicion.php?token=$token";
+        
+        
+        $crud -> store('token_expediente', ["expedientes_id" => $id, "token" => $token, "link" => $links, "exp_date" => $expDate]);
+    }
 }
 ?>

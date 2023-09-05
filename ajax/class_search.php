@@ -3292,5 +3292,36 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
 		}
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "token_expediente"){
+	if(isset($_POST["select2"], $_POST["select2text"])){	
+		$check_token_user_expediente = $object -> _db -> prepare("SELECT expedientes.* FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE NOT EXISTS(SELECT token FROM token_expediente WHERE token_expediente.expedientes_id=expedientes.id) AND expedientes.id=:expedienteid");
+		$check_token_user_expediente -> execute(array(':expedienteid' => $_POST["select2"]));
+		$count_results = $check_token_user_expediente -> rowCount();
+		if($count_results == 0){
+			die(json_encode(array("tokenFound_userNotFound_userNotLinked", "El expediente ya tiene un token ó el usuario no existe ó el usuario no está vinculado a ningún expediente", $_POST["select2"], $_POST["select2text"])));
+		}
+		
+		if($_POST["select2"] != null){
+			$select2_content = $object -> _db -> prepare("SELECT expedientes.id as id, CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) AS nombre FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE NOT EXISTS(SELECT token FROM token_expediente WHERE token_expediente.expedientes_id=expedientes.id) AND expedientes.id=:expedienteid");
+			$select2_content -> execute(array(':expedienteid' => $_POST["select2"]));
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+			}else{
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+			}
+		}else{
+			die(json_encode(array("error", "Debe escoger un usuario para asignarle el token")));
+		}
+		
+		Expedientes::Asignar_token($_POST["select2"]);
+		die(json_encode(array("success", "Se ha asignado un token al expediente", $_POST["select2"], $_POST["select2text"])));
+	}
 }
 ?>

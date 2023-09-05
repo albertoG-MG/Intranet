@@ -117,7 +117,25 @@
 											}).then(function() {
 												window.removeEventListener('beforeunload', unloadHandler);
 												$('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_token' name='guardar_token' type='submit'>Asignar</button>");
-											});
+                                                $('#usuario').select2('destroy');
+                                                $("#usuario option[value='"+array[2]+"']").remove();
+                                                $("#usuario").val("");
+                                                $('#usuario').select2({
+                                                    theme: ["tailwind"],
+                                                    placeholder: '-- Seleccione --',
+                                                    dropdownParent: $('main'),
+                                                    "language": {
+                                                        "noResults": function(){
+                                                            return "No hay resultados";
+                                                        }
+                                                    }
+                                                });
+                                                $('#usuario').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 h-11 border rounded-md border-[#d1d5db]');
+                                                $('.select2-selection--single').addClass("flex focus:outline-none");
+                                                $('.select2-selection__rendered').addClass("flex-1");
+                                                $('.select2-selection__arrow').append('<i class="mdi mdi-apple-keyboard-control"></i>');
+                                                $('.select2-selection__arrow').addClass('rotate-180 mb-1');
+                                            });
 										}else if (array[0] == "error") {
 											Swal.fire({
 												title: "Error",
@@ -134,8 +152,25 @@
 												icon: "error"
 											}).then(function() {
 												window.removeEventListener('beforeunload', unloadHandler);
-												$('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_token' name='guardar_token' type='submit'>Asignar</button>");
-												window.location.href = "token_expediente.php";
+												$('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_token' name='guardar_token' type='submit'>Asignar</button>");
+                                                $('#usuario').select2('destroy');
+                                                $("#usuario option[value='"+array[2]+"']").remove();
+                                                $("#usuario").val("");
+                                                $('#usuario').select2({
+                                                    theme: ["tailwind"],
+                                                    placeholder: '-- Seleccione --',
+                                                    dropdownParent: $('main'),
+                                                    "language": {
+                                                        "noResults": function(){
+                                                            return "No hay resultados";
+                                                        }
+                                                    }
+                                                });
+                                                $('#usuario').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 h-11 border rounded-md border-[#d1d5db]');
+                                                $('.select2-selection--single').addClass("flex focus:outline-none");
+                                                $('.select2-selection__rendered').addClass("flex-1");
+                                                $('.select2-selection__arrow').append('<i class="mdi mdi-apple-keyboard-control"></i>');
+                                                $('.select2-selection__arrow').addClass('rotate-180 mb-1');
 											});
 										}
 									},3000);
