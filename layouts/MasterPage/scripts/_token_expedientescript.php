@@ -23,6 +23,7 @@
             },
             "columns":[
                 {"data": "empleado_id"},
+                {"data": "expediente_id", visible: false, searchable: false},
                 {"data": "asignado_a"},
                 {"data": "filename_foto", visible: false, searchable: false},
                 {"data": "foto_identificador", visible: false, searchable: false},
@@ -44,7 +45,7 @@
                     }
                 },
                 {
-                    target: [1],
+                    target: [2],
                     render: function (data, type, row) {
                         if(row["foto_identificador"] === null){
                             return(
@@ -64,7 +65,7 @@
                     }
                 },
                 {
-                    target: [4],
+                    target: [5],
                     render: function (data, type, row) {
                         return(
                             "<div class='text-left lg:text-center'>" +
@@ -74,7 +75,7 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [6],
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -84,7 +85,7 @@
                     }
                 },
                 {
-                    target: [7],
+                    target: [8],
                     render: function (data, type, row) {
                         return (
                             "<div class='flex item-center justify-start md:justify-center gap-3'>" +
