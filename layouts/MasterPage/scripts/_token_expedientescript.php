@@ -224,6 +224,7 @@
 												icon: "success"
 											}).then(function() {
 												window.removeEventListener('beforeunload', unloadHandler);
+                                                var table = $('#datatable').DataTable();
 												$('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_token' name='guardar_token' type='submit'>Asignar</button>");
                                                 $('#usuario').select2('destroy');
                                                 $("#usuario option[value='"+array[2]+"']").remove();
@@ -243,6 +244,7 @@
                                                 $('.select2-selection__rendered').addClass("flex-1");
                                                 $('.select2-selection__arrow').append('<i class="mdi mdi-apple-keyboard-control"></i>');
                                                 $('.select2-selection__arrow').addClass('rotate-180 mb-1');
+                                                table.ajax.reload();
                                             });
 										}else if (array[0] == "error") {
 											Swal.fire({
@@ -260,6 +262,7 @@
 												icon: "error"
 											}).then(function() {
 												window.removeEventListener('beforeunload', unloadHandler);
+                                                var table = $('#datatable').DataTable();
 												$('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_token' name='guardar_token' type='submit'>Asignar</button>");
                                                 $('#usuario').select2('destroy');
                                                 $("#usuario option[value='"+array[2]+"']").remove();
@@ -279,6 +282,7 @@
                                                 $('.select2-selection__rendered').addClass("flex-1");
                                                 $('.select2-selection__arrow').append('<i class="mdi mdi-apple-keyboard-control"></i>');
                                                 $('.select2-selection__arrow').addClass('rotate-180 mb-1');
+                                                table.ajax.reload();
 											});
 										}
 									},3000);
@@ -331,6 +335,94 @@
 				});
 			})
 		}
+
+        $(document).on("click", "tr .Copiar", function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+
+            var copyText = data["link"];
+            var el = document.createElement('textarea');
+            el.value = copyText;
+            el.setAttribute('readonly', '');
+            el.style = {
+                display:'none'
+            };
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("Link copiado en el portapapeles del dispositivo: " +copyText);
+        });
+
+        $(document).on("click", "tr .Eliminar", function () {
+            var table = $('#datatable').DataTable();
+            var rowSelector;
+            var li = $(this).closest('li');
+            if ( li.length ) {
+                rowSelector = table.cell( li ).index().row;
+            }
+            else {
+                rowSelector =  $(this).closest('tr');
+            }
+            var row = table.row(rowSelector);
+            var data = row.data();
+
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras recuperar la información!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                check_user_logged().then((response) => {
+                    if(response == "true"){
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'éxito',
+                                text: 'La fila ha sido eliminada!'
+                            }).then(function() {
+                                var eliminar = data["token"];
+                                var fd = new FormData();
+                                fd.append('eliminar_token', eliminar);
+                                $.ajax({
+                                    url: "../ajax/eliminar/tabla_token/eliminartoken.php",
+                                    type: "post",
+                                    data: fd,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result) {
+                                        table.ajax.reload();
+                                    }
+                                });
+                            });
+                        }
+                    }else{
+                        Swal.fire({
+                            title: "Ocurrió un error",
+                            text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+                            icon: "error"
+                        }).then(function() {
+                            window.location.href = "login.php";
+                        });
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            })
+        });
     });
 
     <?php if(basename($_SERVER['PHP_SELF']) == 'token_expediente.php'){?>

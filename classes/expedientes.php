@@ -564,5 +564,12 @@ class expedientes {
         
         $crud -> store('token_expediente', ["expedientes_id" => $id, "token" => $token, "link" => $links, "exp_date" => $expDate]);
     }
+
+    public static function Eliminar_Token($eliminar_token){
+        $crud = new crud();
+        $object = new connection_database();
+        
+        $crud->delete('token_expediente', 'token=:token', [':token' => $eliminar_token]);
+    }
 }
 ?>

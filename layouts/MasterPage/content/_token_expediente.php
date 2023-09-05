@@ -85,7 +85,7 @@
                                     <thead>
                                         <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
                                             <th class="py-3 text-left all">Empleado_id</th>
-                                            <th class="py-3 text-left desktop">Asignado A</th>
+                                            <th class="py-3 text-left desktop">Asignado a</th>
                                             <th>Filename_foto</th>
                                             <th>Foto_identificador</th>
                                             <th class="py-3 text-center desktop">Token</th>
