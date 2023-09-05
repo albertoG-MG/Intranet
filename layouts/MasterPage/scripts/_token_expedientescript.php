@@ -377,6 +377,9 @@
             var row = table.row(rowSelector);
             var data = row.data();
 
+            var expediente_id = data["expediente_id"];
+            var asignado_a = data["asignado_a"];
+
             Swal.fire({
                 title: '¿Estas seguro?',
                 text: "No podras recuperar la información!",
@@ -405,6 +408,27 @@
                                     processData: false,
                                     contentType: false,
                                     success: function(result) {
+                                        $('#usuario').select2('destroy');
+                                        $('#usuario').prepend($('<option>', {
+                                            value: expediente_id,
+                                            text: asignado_a
+                                        }));
+                                        $("#usuario").val("");
+                                        $('#usuario').select2({
+                                            theme: ["tailwind"],
+                                            placeholder: '-- Seleccione --',
+                                            dropdownParent: $('main'),
+                                            "language": {
+                                                "noResults": function(){
+                                                    return "No hay resultados";
+                                                }
+                                            }
+                                        });
+                                        $('#usuario').data('select2').$container.addClass('w-full -ml-10 pl-10 py-2 px-3 h-11 border rounded-md border-[#d1d5db]');
+                                        $('.select2-selection--single').addClass("flex focus:outline-none");
+                                        $('.select2-selection__rendered').addClass("flex-1");
+                                        $('.select2-selection__arrow').append('<i class="mdi mdi-apple-keyboard-control"></i>');
+                                        $('.select2-selection__arrow').addClass('rotate-180 mb-1');
                                         table.ajax.reload();
                                     }
                                 });
