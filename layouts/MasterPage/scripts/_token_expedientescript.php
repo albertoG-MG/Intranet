@@ -409,7 +409,7 @@
                                     contentType: false,
                                     success: function(result) {
                                         $('#usuario').select2('destroy');
-                                        $('#usuario').prepend($('<option>', {
+                                        $( "#usuario > optgroup" ).prepend($('<option>', {
                                             value: expediente_id,
                                             text: asignado_a
                                         }));
