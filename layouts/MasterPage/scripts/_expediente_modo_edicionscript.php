@@ -1,5 +1,8 @@
 <script>
     <?php if($fetch_token_user->exp_date >= $curDate){ ?>
+
+        let delete_switch_array = [];
+
         //Empieza la configuración del menú
         const menuExpedientes = [{
                 id: 'datosG',
