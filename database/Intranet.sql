@@ -2855,7 +2855,8 @@ INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
 (21, 'MODIFICACION SALARIAL'),
 (22, 'COMPROBANTE DE ESTUDIOS'),
 (23, 'CARATULA DE DATOS BANCARIOS'),
-(24, 'ACTA DE MATRIMONIO');
+(24, 'ACTA DE MATRIMONIO'),
+(25, 'REGLAMENTO INTERIOR DEL TRABAJO');
 
 
 -- --------------------------------------------------------
