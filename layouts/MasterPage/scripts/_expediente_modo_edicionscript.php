@@ -1314,6 +1314,237 @@
         }
         //Aquí terminan las referencias bancarias
 
+        //Checa si el user esta loggeado
+        function check_user_logged(){
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "POST",
+                    url: "../ajax/check_user_logged.php",
+                    data:{
+                        pagina: <?php echo "\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"";?>
+                    },
+                    success: function (response) {
+                        resolve(response)
+                    },
+                    error: function (error) {
+                        reject(error)
+                    }
+                });
+            })
+        }
+        
+        //Protege si el usuario cierra, regresa durante un envio de formulario, ect...
+        function unloadHandler(e) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+        }
+
+        //Metodo que envía el formulario
+        function SubmitChanges(){
+            window.addEventListener('beforeunload', unloadHandler);
+            var fd = new FormData();
+        
+            /*Inputs*/
+            var token = <?php echo $token; ?>;
+            var estudios = $("#estudios").val();
+            var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
+            var correo_adicional = $("#correo_adicional").val();
+            var calle = $("#calle").val();
+            var ninterior = $("#ninterior").val();
+            var nexterior = $("#nexterior").val();
+            var colonia = $("#colonia").val();
+            var estado = $("#estado").val();
+            var estadotext = $("#estado option:selected").text();
+            var municipio = $("#municipio").val();
+            var municipiotext = $("#municipio option:selected").text();
+            var codigo = $("#codigo").val();
+            var teldom = $("#teldom").val();
+            var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
+            var telmov = $("#telmov").val();
+            var radio = $("input[name=casa]:checked", "#Guardar").val();
+            var ecivil = $("#ecivil").val();
+            var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+            var monto_mensual = $("#monto_mensual").val();
+            var fechanac = $("#fechanac").val();
+            var fechacon = $("#fechacon").val();
+            var fechaalta = $("#fechaalta").val();
+            var curp = $("#curp").val();
+            var nss = $("#nss").val();
+            var rfc = $("#rfc").val();
+            var tipoidentificacion = $("#identificacion").val();
+            var numeroidentificacion = $("#numeroidentificacion").val();
+            var numeroreferenciaslab = $("#reflab").val();
+            var fechauniforme = $("#fechauniforme").val();
+            var cantidadpolo = $("#cantidadpolo").val();
+            var tallapolo = $("#tallapolo").val();
+            var emergencianom = $("#emergencianom").val();
+            var emergenciaparentesco = $("#emergenciaparentesco").val();
+            var emergenciatel = $("#emergenciatel").val();
+            var emergencianom2 = $("#emergencianom2").val();
+            var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
+            var emergenciatel2 = $("#emergenciatel2").val();
+            var capacitacion = $("#capacitacion").val();
+            var antidoping = $("#antidoping").val();
+            var tipo_sangre = $("#tipo_sangre").val();
+            var vacante = $("#vacante").val();
+            var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+            var nomfam = $("#nomfam").val();
+            var numeroreferenciasban = $("#refban").val();
+            var banco_personal = $("#banco_personal").val();
+            var cuenta_personal = $("#cuenta_personal").val();
+            var clabe_personal = $("#clabe_personal").val();
+            var plastico_personal = $("#plastico_personal").val();
+            var app = "expediente_modo_edicion";
+        
+            /*Referencias laborales*/
+            var nreflab =  $("input[name=reflab]").val();
+            var reflab = [];
+            for(var i=0; i <nreflab; i++){
+                var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
+                var rrelacion = $("input[name=infa_rrelacion" +i+ "]").val();
+                var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
+                reflab[i] = {nombre: rnombre, relacion: rrelacion, telefono: rtelefono};
+            }
+        
+            /*Referencias bancarias*/
+            var nrefbanc =  $("input[name=refban]").val();
+            var refbanc = [];
+            for(var i=0; i <nrefbanc; i++){
+                var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
+                var brrelacion = $("input[name=infb_rrelacion" +i+ "]").val();
+                var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
+                var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
+                var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
+                refbanc[i] = {nombre: brnombre, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+            }
+        
+            /*File uploads*/
+            <?php 
+            while($papeleria_contador4 < $counttipospapeleria){
+                echo ("
+                    var papeleria{$array_papeleria[$papeleria_contador4]['id']} = $('#infp_papeleria{$array_papeleria[$papeleria_contador4]['id']}')[0].files[0];
+                ");
+                $papeleria_contador4++;
+            } 
+            ?>
+        
+            /*FD appends*/
+        
+            /*Inputs*/
+            fd.append('token', token);
+            fd.append('estudios', estudios);
+            fd.append('posee_correo', posee_correo);
+            fd.append('correo_adicional', correo_adicional);
+            fd.append('calle', calle);
+            fd.append('ninterior', ninterior);
+            fd.append('nexterior', nexterior);
+            fd.append('colonia', colonia);
+            fd.append('estado', estado);
+            fd.append('estadotext', estadotext);
+            fd.append('municipio', municipio);
+            fd.append('municipiotext', municipiotext);
+            fd.append('codigo', codigo);
+            fd.append('teldom', teldom);
+            fd.append('posee_telmov', posee_telmov);
+            fd.append('telmov', telmov);
+            fd.append('radio', radio);
+            fd.append('ecivil', ecivil);
+            fd.append('posee_retencion', posee_retencion);
+            fd.append('monto_mensual', monto_mensual);
+            fd.append('fechanac', fechanac);
+            fd.append('fechacon', fechacon);
+            fd.append('fechaalta', fechaalta);
+            fd.append('curp', curp);
+            fd.append('nss', nss);
+            fd.append('rfc', rfc);
+            fd.append('identificacion', tipoidentificacion);
+            fd.append('numeroidentificacion', numeroidentificacion);
+            fd.append('numeroreferenciaslab', numeroreferenciaslab);
+            fd.append('fechauniforme', fechauniforme);
+            fd.append('cantidadpolo', cantidadpolo);
+            fd.append('tallapolo', tallapolo);
+            fd.append('emergencianom', emergencianom);
+            fd.append('emergenciaparentesco', emergenciaparentesco);
+            fd.append('emergenciatel', emergenciatel);
+            fd.append('emergencianom2', emergencianom2);
+            fd.append('emergenciaparentesco2', emergenciaparentesco2);
+            fd.append('emergenciatel2', emergenciatel2);
+            fd.append('capacitacion', capacitacion);
+            fd.append('antidoping', antidoping);
+            fd.append('tipo_sangre', tipo_sangre);
+            fd.append('vacante', vacante);
+            fd.append('radio2', radio2);
+            fd.append('nomfam', nomfam);
+            fd.append('numeroreferenciasban', numeroreferenciasban);
+            fd.append('banco_personal', banco_personal);
+            fd.append('cuenta_personal', cuenta_personal);
+            fd.append('clabe_personal', clabe_personal);
+            fd.append('plastico_personal', plastico_personal);
+            fd.append('app', app);
+            
+        
+            /*Referencias*/
+            fd.append('referencias', JSON.stringify(reflab));
+            fd.append('refbanc', JSON.stringify(refbanc));
+        
+            /*File uploads*/
+            <?php 
+            while($papeleria_contador5 < $counttipospapeleria){
+                echo ("
+                    fd.append('papeleria{$array_papeleria[$papeleria_contador5]['id']}', papeleria{$array_papeleria[$papeleria_contador5]['id']});
+                ");
+                $papeleria_contador5++;
+            } 
+            ?>
+        
+        
+            /*Ajax*/
+            $.ajax({
+                type: "POST",
+                url: "../ajax/class_search.php",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    setTimeout(function(){
+                        var array = $.parseJSON(response);
+                        if (array[0] == "success") {
+                            Swal.fire({
+                                title: "Expediente Llenado",
+                                text: array[1],
+                                icon: "success"
+                            }).then(function() {
+                                window.removeEventListener('beforeunload', unloadHandler);
+                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                window.location.href = "dashboard.php";	
+                            });
+                        }else if (array[0] == "error") {
+                            Swal.fire({
+                                title: "Error",
+                                text: array[1],
+                                icon: "error"
+                            }).then(function() {
+                                window.removeEventListener('beforeunload', unloadHandler);
+                                $('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            });
+                        }else if (array[0] == "token_deleted_user_not_exists_user_not_linked") {
+                            Swal.fire({
+                                title: "Error",
+                                text: array[1],
+                                icon: "error"
+                            }).then(function() {
+                                window.removeEventListener('beforeunload', unloadHandler);
+                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                window.location.href = "dashboard.php";
+                            });
+                        }
+                    },3000);
+                }
+            });
+        }
+
 
     <?php } ?>
 
