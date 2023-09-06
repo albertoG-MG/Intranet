@@ -980,6 +980,8 @@
                                                                             } 
                                                                         ?>
                                                                     </div>
+                                                                    <div id="error-container<?php echo $array_papeleria[$papeleria_contador]['id']; ?>">
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         <?php
