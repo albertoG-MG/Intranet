@@ -195,7 +195,7 @@
                                                             </li>
                                                         </div>
                                                         <div id="correoadicional_help" class="text-[#64748b]">
-                                                            Es necesario ingresar un correo en caso de no tener un correo de la empresa, de lo contrario no podrá guardar los cambios.
+                                                            Solo para contacto, no es obligatorio.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -570,8 +570,8 @@
                                         </div>
                                         <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Datos adicionales del empleado</h2>
-                                                <span class="text-[#64748b]">En esta sección encontrará información extra del empleado.</span>
+                                                <h2 class="text-2xl text-[#64748b] font-semibold">Referencias laborales</h2>
+                                                <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
@@ -704,7 +704,7 @@
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
                                                 <h2 class="text-2xl text-[#64748b] font-semibold">Otros datos del empleado</h2>
-                                                <span class="text-[#64748b]">En esta sección encontrará datos extra del empleado.</span>
+                                                <span class="text-[#64748b]">Datos extra del empleado.</span>
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
@@ -817,8 +817,8 @@
                                         </div>
                                         <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Datos bancarios del empleado</h2>
-                                                <span class="text-[#64748b]">En esta sección encontrará información sobre los datos bancarios del empleado.</span>
+                                                <h2 class="text-2xl text-[#64748b] font-semibold">Beneficiarios bancarios</h2>
+                                                <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente.</span>
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
@@ -836,7 +836,7 @@
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
                                                 <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
-                                                <span class="text-[#64748b]">En esta sección se encuentran las credenciales bancarias personales del empleado.</span>
+                                                <span class="text-[#64748b]">Credenciales bancarias personales del empleado.</span>
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -882,6 +882,9 @@
                                                             </svg>
                                                         </div>
                                                         <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico_personal" name="plastico_personal" value="<?php echo "{$edit -> eplastico_personal}"; ?>" placeholder="Plástico asignado">
+                                                    </div>
+                                                    <div id="plastico_personal_help" class="text-[#64748b]">
+                                                        Es el número de 16 dígitos que viene impreso en el frente de la tarjeta bancaria.
                                                     </div>
                                                 </div>
                                             </div>
