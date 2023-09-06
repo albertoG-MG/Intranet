@@ -261,24 +261,12 @@
                         }
                     },
                     highlight: function(element) {
-                        var elem = $(element);
-                        if (elem.hasClass("select2-hidden-accessible")) {
-                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600"); 
-                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border-2 border-rose-500 border-2"); 
-                        }else{
-                            $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                            $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
-                        }
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
-                        var elem = $(element);
-                        if (elem.hasClass("select2-hidden-accessible")) {
-                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border-2 border-rose-500 border-2");
-                            $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600"); 
-                        }else{
-                            $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                            $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
-                        }
+                        $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
                     },
                     rules: {
                         estudios:{
