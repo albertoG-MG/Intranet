@@ -1,5 +1,6 @@
 <?php
     include_once __DIR__ . "/../../../config/conexion.php";
+    include_once __DIR__ . "/../../../classes/expedientes.php";
     $object = new connection_database();
     
     session_start();
@@ -18,7 +19,7 @@
     $token = $_GET['token'];
     
     /*Verifica si el token está registrado y esté pertenezca al expediente asignado*/
-    $check_token = $object -> _db -> prepare("SELECT * FROM token_expediente INNER JOIN expedientes ON expedientes.id=token_expediente.expedientes_id INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE token_expediente.token=:token AND usuarios.id=:sessionid");
+    $check_token = $object -> _db -> prepare("SELECT expedientes.id as idExpediente, token_expediente.exp_date as exp_date FROM token_expediente INNER JOIN expedientes ON expedientes.id=token_expediente.expedientes_id INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE token_expediente.token=:token AND usuarios.id=:sessionid");
     $check_token -> execute(array(':token' => $token, ':sessionid' => $_SESSION["id"]));
     $count_token = $check_token -> rowCount();
     if($count_token == 0){
@@ -27,12 +28,30 @@
     }
     
     $fetch_token_user = $check_token -> fetch(PDO::FETCH_OBJ);
+    $edit=Expedientes::Fetchtokenexpediente($fetch_token_user -> idExpediente);
+
+    /*Estados*/
+    $estado = $object->_db->prepare("select * from estados");
+    $estado->execute();
+    $contestado=0;
+
     date_default_timezone_set("America/Monterrey");
     $formatDate = mktime(date("H")-1, date("i"), date("s"), date("m") ,date("d"), date("Y"));
     $curDate = date("Y-m-d H:i:s",$formatDate);
     
-    
-    
+    /*REFERENCIAS LABORALES*/
+    $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
+    $referencias_laborales->bindParam("expedienteid", $fetch_token_user -> idExpediente, PDO::PARAM_INT);
+    $referencias_laborales->execute();
+    $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
+    $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
+
+    /*REFERENCIAS BANCARIAS*/
+    $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
+    $referencias_bancarias->bindParam("expedienteid", $fetch_token_user -> idExpediente, PDO::PARAM_INT);
+    $referencias_bancarias->execute();
+    $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
+    $refban_json = json_encode($array_refban, JSON_UNESCAPED_UNICODE);
     
     /* Papelería  */
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria WHERE tipo_papeleria.nombre NOT IN('CONTRATO DEFINITIVO', 'ALTA DE IMSS', 'CONTRATO NOMINA BANCARIA', 'CONTRATO DE PRUEBA', 'CONTRATO INTERNO', 'CONTRATO SUPERVIVENCIA', 'MODIFICACION SALARIAL', 'REGLAMENTO INTERIOR DEL TRABAJO', 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS', 'BAJA ANTE IMSS', 'EVALUACION PSICOMETRICA', 'CARTA DE SEGUNDO TRABAJO', 'ACTA DE MATRIMONIO')");
