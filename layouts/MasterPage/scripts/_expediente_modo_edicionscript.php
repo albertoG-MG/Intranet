@@ -1347,7 +1347,7 @@
             var fd = new FormData();
         
             /*Inputs*/
-            var token = <?php echo $token; ?>;
+            var token = "<?php echo $token; ?>";
             var estudios = $("#estudios").val();
             var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
             var correo_adicional = $("#correo_adicional").val();

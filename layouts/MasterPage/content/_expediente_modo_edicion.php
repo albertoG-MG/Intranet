@@ -962,7 +962,7 @@
                                                                             if(isset($array_papeleria[$papeleria_contador]['nombre_archivo']) && isset($array_papeleria[$papeleria_contador]['identificador'])) {
                                                                                 if($buscar_papeleria=="true"){
                                                                         ?>
-                                                                        <ul id="lista<?php print($array_papeleria[$papeleria_contador]['nombre_archivo']); ?>" class="break-all md:break-normal">
+                                                                        <ul id="lista<?php print($array_papeleria[$papeleria_contador]['nombre_archivo']); ?>" style="word-break: break-word;">
                                                                             <li id="papeleria<?php print($array_papeleria[$papeleria_contador]['id']); ?>" class="flex flex-wrap">
                                                                                 <?php 
                                                                                     $ext = pathinfo($array_papeleria[$papeleria_contador]['nombre_archivo'], PATHINFO_EXTENSION);
@@ -1005,7 +1005,7 @@
                             <?php }else{ ?>
                                 <div class="flex items-center" style="word-break:break-word;">
                                         <div class="w-full flex flex-col items-center justify-center">
-                                        <div class="text-center">
+                                        <div class="text-center py-4">
                                             <h2 class="flex flex-col lg:flex-row lg:gap-5 md:text-9xl text-5xl mb-8 font-extrabold">
                                                 <span>Error </span>
                                                 <span>404</span>
