@@ -270,6 +270,9 @@
                         estudios:{
                             required: true
                         },
+                        posee_correo:{
+                            required: true
+                        },
                         correo_adicional: {
                             required: true,
                             email_verification: true,
@@ -325,6 +328,9 @@
                             required: true
                         },
                         ecivil: {
+                            required: true
+                        },
+                        retencion:{
                             required: true
                         },
                         monto_mensual:{
@@ -394,6 +400,9 @@
                         vacante:{
                             field_validation: true
                         },
+                        empresa:{
+                            required: true
+                        },
                         nomfam:{
                             required: true,
                             names_validation: true
@@ -428,6 +437,9 @@
                     },
                     messages: {
                         estudios:{
+                            required : 'Este campo es requerido'
+                        },
+                        posee_correo:{
                             required : 'Este campo es requerido'
                         },
                         correo_adicional: {
@@ -465,6 +477,9 @@
                             required: "Este campo es requerido"
                         },
                         ecivil: {
+                            required: "Este campo es requerido"
+                        },
+                        retencion:{
                             required: "Este campo es requerido"
                         },
                         monto_mensual:{
@@ -539,6 +554,9 @@
 		                },
                         vacante:{
                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                        },
+                        empresa:{
+                            required: 'Este campo es requerido'
                         },
                         nomfam:{
                             required: 'Este campo es requerido',
