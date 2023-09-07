@@ -30,7 +30,7 @@
                             <?php if($fetch_token_user->exp_date >= $curDate){ ?>
                                 <div class="flex flex-col mt-5 mx-7">
                                     <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para llenar un expediente</h2>
-                                    <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios para poder asignar un expediente a un usuario.</span>
+                                    <span class="text-[#64748b]">Nota: Los campos que poseen asterisco (*) son obligatorios (Toda la papelería es obligatoria).</span>
                                     <div class="my-3 h-px bg-slate-200"></div>
                                 </div>
                                 <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
@@ -76,7 +76,7 @@
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Nivel de estudios</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">Nivel de estudios *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -170,7 +170,7 @@
                                                 </script>
                                                 <div x-show.important="open">
                                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Correo electrónico adicional</label>
+                                                        <label class="text-[#64748b] font-semibold mb-2">Correo electrónico adicional *</label>
                                                         <div class="group flex">
                                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -207,7 +207,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Calle</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Calle *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -229,7 +229,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Número exterior</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Número exterior *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -242,7 +242,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Colonia</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Colonia *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -253,7 +253,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Estado</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Estado *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -274,7 +274,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Municipio</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Municipio *</label>
                                                     <div class="group flex" id="imunicipio">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -288,7 +288,7 @@
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Código postal</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">Código postal *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -299,7 +299,7 @@
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Teléfono de domicilio</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">Teléfono de domicilio *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -311,7 +311,7 @@
                                             </div>
                                             <div x-data="{ open: true }">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Posee teléfono propio?</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">¿Posee teléfono propio?</label>
                                                     <div class="group flex mt-3 items-center">
                                                         <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                                         <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
@@ -345,7 +345,7 @@
                                                 </script>
                                                 <div x-show.important="open">
                                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Teléfono móvil propio</label>
+                                                        <label class="text-[#64748b] font-semibold mb-2">Teléfono móvil propio *</label>
                                                         <div class="group flex">
                                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                                 <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -363,7 +363,7 @@
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Casa propia?</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">¿Casa propia?</label>
                                                 <div class="group flex mt-3 items-center">
                                                     <input id="option-casa-1" type="radio" name="casa" value="si" <?= ($edit->ecasa_propia == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
@@ -376,7 +376,7 @@
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Estado civil</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">Estado civil *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -394,7 +394,7 @@
                                             </div>
                                             <div x-data="{ open: true }">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Posee retención?</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">¿Posee retención?</label>
                                                     <div class="group flex mt-3 items-center">
                                                         <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                                         <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
@@ -428,7 +428,7 @@
                                                 </script>
                                                 <div x-show.important="open">
                                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Monto mensual</label>
+                                                        <label class="text-[#64748b] font-semibold mb-2">Monto mensual *</label>
                                                         <div class="group flex">
                                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -442,7 +442,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Fecha de nacimiento</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Fecha de nacimiento *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -482,7 +482,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Curp</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Curp *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -493,7 +493,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Número de seguro social</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Número de seguro social *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -504,7 +504,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">RFC</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">RFC *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -517,7 +517,7 @@
                                             </div>
                                             <div x-data="{ open: false }">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -554,7 +554,7 @@
                                                 </script>
                                                 <div x-show.important="open">
                                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Número de identificación</label>
+                                                        <label class="text-[#64748b] font-semibold mb-2">Número de identificación *</label>
                                                         <div class="group flex">
                                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -580,7 +580,7 @@
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Número de referencias laborales</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">Número de referencias laborales *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -642,7 +642,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo1</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo1 *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -653,7 +653,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco1</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco1 *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -664,7 +664,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono1</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono1 *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -677,7 +677,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo2</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo2 *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -688,7 +688,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco2</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco2 *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -699,7 +699,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono2</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono2 *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -771,7 +771,7 @@
                                             </div>
                                             <div x-data="{ open: true }">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Tiene familiares dentro de la empresa?</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">¿Tiene familiares dentro de la empresa?</label>
                                                     <div class="group flex mt-3 items-center">
                                                         <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                                         <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
@@ -805,7 +805,7 @@
                                                 </script>
                                                 <div x-show.important="open">
                                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Nombre completo del familiar</label>
+                                                        <label class="text-[#64748b] font-semibold mb-2">Nombre completo del familiar *</label>
                                                         <div class="group flex">
                                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -830,7 +830,7 @@
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -849,7 +849,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Banco</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Banco *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -860,7 +860,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Cuenta</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Cuenta *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -871,7 +871,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Clabe</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Clabe *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -882,7 +882,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1 lg:col-span-3">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
