@@ -449,7 +449,7 @@
                                                                 <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechanac" name="fechanac" value="<?php echo "{$edit->efecha_nacimiento}"; ?>">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fechanac" name="fechanac" placeholder="Fecha de nacimiento" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
@@ -460,7 +460,7 @@
                                                                 <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechacon" name="fechacon" value="<?php echo "{$edit->efecha_inicioc}"; ?>">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fechacon" name="fechacon" placeholder="Inicio de contrato" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
@@ -471,7 +471,7 @@
                                                                 <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechaalta" name="fechaalta" value="<?php echo "{$edit->efecha_alta}"; ?>">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fechaalta" name="fechaalta" placeholder="Fecha de alta" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -600,7 +600,7 @@
                                                         <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                                     </svg>
                                                     </div>
-                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechauniforme" name="fechauniforme" value="<?php echo "{$edit->efecha_enuniforme}"; ?>">
+                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fechauniforme" name="fechauniforme" placeholder="Fecha de entrega de uniforme" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
