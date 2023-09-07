@@ -78,21 +78,43 @@
 
         <?php if($fetch_token_user->exp_date >= $curDate){ ?>
 
-            $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, <?php if($edit->efecha_nacimiento != null){ echo "startDate: " .$edit->efecha_nacimiento. ",";} ?> locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-	        $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, <?php if($edit->efecha_inicioc != null){ echo "startDate: " .$edit->efecha_inicioc. ",";} ?> autoUpdateInput: false, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-	        $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, <?php if($edit->efecha_alta != null){ echo "startDate: " .$edit->efecha_alta. ",";} ?> autoUpdateInput: false, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-	        $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, <?php if($edit->efecha_enuniforme != null){ echo "startDate: " .$edit->efecha_enuniforme. ",";} ?> autoUpdateInput: false, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
-            $('#fechacon').on('apply.daterangepicker', function(ev, picker) {
-                $('#fechacon').val(picker.startDate.format('YYYY/MM/DD'));
+            <?php if($edit->efecha_nacimiento != null){ ?> 
+                $('#fechanac').data('daterangepicker').setStartDate('<?php echo $edit->efecha_nacimiento; ?>');
+            <?php } ?>
+            
+            <?php if($edit->efecha_inicioc != null){ ?> 
+                $('#fechacon').data('daterangepicker').setStartDate('<?php echo $edit->efecha_inicioc; ?>');
+            <?php }else{ ?>
+                $('#fechacon').val('');
+            <?php } ?>
+            
+            <?php if($edit->efecha_alta != null){ ?> 
+                $('#fechaalta').data('daterangepicker').setStartDate('<?php echo $edit->efecha_alta; ?>');
+            <?php }else{ ?>
+                $('#fechaalta').val('');
+            <?php } ?>
+            
+            <?php if($edit->efecha_enuniforme != null){ ?> 
+                $('#fechauniforme').data('daterangepicker').setStartDate('<?php echo $edit->efecha_enuniforme; ?>');
+            <?php }else{ ?>
+                $('#fechauniforme').val('');
+            <?php } ?>
+
+            $('#fechacon').on('cancel.daterangepicker', function(ev, picker) {
+                $('#fechacon').val('');
             });
-                
-            $('#fechaalta').on('apply.daterangepicker', function(ev, picker) {
-                $('#fechaalta').val(picker.startDate.format('YYYY/MM/DD'));
+
+            $('#fechaalta').on('cancel.daterangepicker', function(ev, picker) {
+                $('#fechaalta').val('');
             });
-                
-            $('#fechauniforme').on('apply.daterangepicker', function(ev, picker) {
-                $('#fechauniforme').val(picker.startDate.format('YYYY/MM/DD'));
+
+            $('#fechauniforme').on('cancel.daterangepicker', function(ev, picker) {
+                $('#fechauniforme').val('');
             });
 
             //Empieza la navegación por los expedientes por medio de los botones (Siguiente y anterior).
