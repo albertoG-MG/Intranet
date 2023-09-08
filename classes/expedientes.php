@@ -580,5 +580,99 @@ class expedientes {
         
         $crud->delete('token_expediente', 'token=:token', [':token' => $eliminar_token]);
     }
+
+    public static function Insertar_expediente_token($token, $logged_user, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $posee_familiar, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $refbanc, $arraypapeleria){
+        $crud = new crud();
+        $object = new connection_database();
+        $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
+        $set_logged_user -> execute(array(':loggeduser' => $logged_user));
+		$retrieve_expediente_id = $object -> _db -> prepare("SELECT expedientes.id AS expedienteid FROM token_expediente INNER JOIN expedientes ON expedientes.id=token_expediente.expedientes_id WHERE token_expediente.token=:token");
+		$retrieve_expediente_id -> execute(array(':token' => $token));
+		$fetch_expediente_id = $retrieve_expediente_id -> fetch(PDO::FETCH_ASSOC);
+		$id_expediente = $fetch_expediente_id["expedienteid"];
+        //SE ACTUALIZA LA INFORMACIÓN DEL EXPEDIENTE
+        $crud->update('expedientes', ['estudios' => $estudios, 'posee_correo' => $posee_correo, 'correo_adicional' => $correo_adicional, 'calle' => $calle, 'num_interior' => $ninterior, 'num_exterior' => $nexterior, 'colonia' => $colonia, 'estado_id' => $estado, 'municipio_id' => $municipio, 'codigo' => $codigo, 'tel_dom' => $teldom, 'posee_telmov' => $posee_telmov, 'tel_mov' => $telmov, 'casa_propia' => $casa_propia, 'ecivil' => $ecivil, 'posee_retencion' => $posee_retencion, 'monto_mensual' => $monto_mensual, 'fecha_nacimiento' => $fechanac, 'fecha_inicioc' => $fechacon, 'fecha_alta' => $fechaalta, 'curp' => $curp, 'nss' => $nss, 'rfc' => $rfc, 'tipo_identificacion' => $identificacion, 'num_identificacion' => $numeroidentificacion, 'capacitacion' => $capacitacion, 'fecha_enuniforme' => $fechauniforme, 'cantidad_polo' => $cantidadpolo, 'talla_polo' => $tallapolo, 'emergencia_nombre' => $emergencianom, 'emergencia_parentesco' => $emergenciaparentesco, 'emergencia_telefono' => $emergenciatel, 'emergencia_nombre2' => $emergencianom2, 'emergencia_parentesco2' => $emergenciaparentesco2, 'emergencia_telefono2' => $emergenciatel2, 'resultado_antidoping' => $antidoping, 'tipo_sangre' => $tipo_sangre, 'vacante' => $vacante, 'fam_dentro_empresa' => $posee_familiar, 'fam_nombre' => $nomfam, 'banco_personal' => $banco_personal, 'cuenta_personal' => $cuenta_personal, 'clabe_personal' => $clabe_personal, 'plastico_personal' => $plastico_personal], "id=:idexpediente", ['idexpediente' => $id_expediente]);	
+        //SE ACTUALIZA LAS REFERENCIAS LABORALES
+        $checkreflab = $object -> _db ->prepare("SELECT id FROM ref_laborales WHERE expediente_id=:expedienteid");
+        $checkreflab -> execute(array(':expedienteid' => $id_expediente));
+        $countreflab = $checkreflab -> rowCount();
+        if($countreflab > 0){
+            $array_ids = $checkreflab->fetchAll(PDO::FETCH_ASSOC);
+            if(is_null($referencias)){
+                $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $id_expediente]);
+            }else{
+                $jsonData = stripslashes(html_entity_decode($referencias));
+                $ref = json_decode($jsonData);
+                Expedientes::Editar_referenciaslab($id_expediente, $countreflab, $array_ids, $ref);
+            }
+        }else{
+            if(!(is_null($referencias))){
+                $jsonData = stripslashes(html_entity_decode($referencias));
+                $ref = json_decode($jsonData);
+                Expedientes::Crear_referenciaslab($id_expediente, $ref);
+            }
+        }
+        //SE ACTUALIZA LAS REFERENCIAS BANCARIAS
+        $checkrefbanc = $object -> _db ->prepare("SELECT id FROM ref_bancarias WHERE expediente_id=:expedienteid");
+        $checkrefbanc -> execute(array(':expedienteid' => $id_expediente));
+        $countrefbanc = $checkrefbanc -> rowCount();
+        if($countrefbanc > 0){
+            $array_ids = $checkrefbanc->fetchAll(PDO::FETCH_ASSOC);
+            if(is_null($refbanc)){
+                $crud -> delete('ref_bancarias', 'expediente_id=:idexpediente', ['idexpediente' => $id_expediente]);
+            }else{
+                $jsonData2 = stripslashes(html_entity_decode($refbanc));
+                $ref_banc = json_decode($jsonData2);
+                Expedientes::Editar_referenciasbanc($id_expediente, $countrefbanc, $array_ids, $ref_banc);
+            }
+        }else{
+            if(!(is_null($refbanc))){
+                $jsonData2 = stripslashes(html_entity_decode($refbanc));
+                $ref_banc = json_decode($jsonData2);
+                Expedientes::Crear_referenciasbanc($id_expediente, $ref_banc);
+            }
+        }
+        //PAPELERÍA
+		$checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria WHERE tipo_papeleria.nombre NOT IN('CONTRATO DEFINITIVO', 'ALTA DE IMSS', 'CONTRATO NOMINA BANCARIA', 'CONTRATO DE PRUEBA', 'CONTRATO INTERNO', 'CONTRATO SUPERVIVENCIA', 'MODIFICACION SALARIAL', 'REGLAMENTO INTERIOR DEL TRABAJO', 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS', 'BAJA ANTE IMSS', 'EVALUACION PSICOMETRICA', 'CARTA DE SEGUNDO TRABAJO', 'ACTA DE MATRIMONIO')");
+        $checktipospapeleria -> execute();
+        $counttipospapeleria = $checktipospapeleria -> rowCount();
+		$papeleria_contador = 0;
+		while($fetch_papeleria = $checktipospapeleria -> fetch(PDO::FETCH_ASSOC)){
+			$selectarchivo = $object -> _db -> prepare("SELECT tipo_archivo, nombre_archivo, identificador, fecha_subida FROM papeleria_empleado INNER JOIN expedientes ON expedientes.id=papeleria_empleado.expediente_id INNER JOIN token_expediente ON token_expediente.expedientes_id=expedientes.id WHERE tipo_archivo=:tipo AND token_expediente.token=:token");
+            $selectarchivo -> execute(array(':tipo' => $fetch_papeleria["id"], ':token' => $token));
+            $fetch_row_archivo = $selectarchivo -> fetch(PDO::FETCH_OBJ);
+			//Cuando existe el archivo y se sube algo
+            if(isset($fetch_row_archivo -> nombre_archivo) && isset($fetch_row_archivo -> identificador) && isset($arraypapeleria[$papeleria_contador]) && isset($arraypapeleria[$papeleria_contador]["name"])){
+                $directory = "../src/documents/";
+                $path = "../src/documents/".$fetch_row_archivo -> identificador;
+                $ext = pathinfo($arraypapeleria[$papeleria_contador]["name"], PATHINFO_EXTENSION);
+                $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
+                date_default_timezone_set("America/Monterrey");
+				$date = date('Y-m-d H:i:s');
+                if(move_uploaded_file($arraypapeleria[$papeleria_contador]['tmp_name'],$uploadfile)){
+                    $crud->update('papeleria_empleado', ['nombre_archivo' => $arraypapeleria[$papeleria_contador]["name"],
+                    'identificador' => basename($uploadfile), 'fecha_subida' => $date], "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $fetch_papeleria["id"], 'idexpediente' => $id_expediente]);
+					if(file_exists($path)){
+						$crud->store('historial_papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $fetch_papeleria["id"], 'viejo_nombre_archivo' => $fetch_row_archivo -> nombre_archivo, 'viejo_identificador' => $fetch_row_archivo -> identificador, 'vieja_fecha_subida' => $fetch_row_archivo -> fecha_subida]);
+					}
+                }
+            //cuando no existe el archivo y se sube algo
+            }else if(!isset($fetch_row_archivo -> nombre_archivo) && !isset($fetch_row_archivo -> identificador) && isset($arraypapeleria[$papeleria_contador]) && isset($arraypapeleria[$papeleria_contador]["name"])){
+                $directory = "../src/documents/";
+                $ext = pathinfo($arraypapeleria[$papeleria_contador]["name"], PATHINFO_EXTENSION);
+                $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
+                date_default_timezone_set("America/Monterrey");
+				$date = date('Y-m-d H:i:s');
+                if(move_uploaded_file($arraypapeleria[$papeleria_contador]['tmp_name'],$uploadfile)){
+                    $crud->store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $fetch_papeleria["id"], 'nombre_archivo' => $arraypapeleria[$papeleria_contador]["name"],
+                    'identificador' => basename($uploadfile), 'fecha_subida' => $date]);
+                }
+            }
+			
+			$papeleria_contador++;
+		}
+		//ELIMINAR EL TOKEN
+        $crud -> delete('token_expediente', 'token=:token', ['token' => $token]);
+    }
 }
 ?>

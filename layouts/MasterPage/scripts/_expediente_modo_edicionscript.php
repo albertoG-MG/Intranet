@@ -1480,12 +1480,12 @@
         
             /*File uploads*/
             <?php 
-            while($papeleria_contador4 < $counttipospapeleria){
-                echo ("
-                    var papeleria{$array_papeleria[$papeleria_contador4]['id']} = $('#infp_papeleria{$array_papeleria[$papeleria_contador4]['id']}')[0].files[0];
-                ");
-                $papeleria_contador4++;
-            } 
+                while($papeleria_contador4 < $counttipospapeleria){
+                    echo ("
+                        var papeleria{$papeleria_contador4} = $('#infp_papeleria{$array_papeleria[$papeleria_contador4]['id']}')[0].files[0];
+                    ");
+                    $papeleria_contador4++;
+                } 
             ?>
         
             /*FD appends*/
@@ -1548,13 +1548,13 @@
             fd.append('refbanc', JSON.stringify(refbanc));
         
             /*File uploads*/
-            <?php 
-            while($papeleria_contador5 < $counttipospapeleria){
-                echo ("
-                    fd.append('papeleria{$array_papeleria[$papeleria_contador5]['id']}', papeleria{$array_papeleria[$papeleria_contador5]['id']});
-                ");
-                $papeleria_contador5++;
-            } 
+            <?php
+                while($papeleria_contador5 < $counttipospapeleria){
+                    echo ("
+                        fd.append('papeleria{$papeleria_contador5}', papeleria{$papeleria_contador5});
+                    ");
+                    $papeleria_contador5++;
+                } 
             ?>
         
         
@@ -1588,6 +1588,16 @@
                                 $('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
                             });
                         }else if (array[0] == "token_deleted_user_not_exists_user_not_linked") {
+                            Swal.fire({
+                                title: "Error",
+                                text: array[1],
+                                icon: "error"
+                            }).then(function() {
+                                window.removeEventListener('beforeunload', unloadHandler);
+                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                window.location.href = "dashboard.php";
+                            });
+                        }else if (array[0] == "token_expired") {
                             Swal.fire({
                                 title: "Error",
                                 text: array[1],
