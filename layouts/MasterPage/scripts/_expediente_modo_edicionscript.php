@@ -352,6 +352,12 @@
                             required: true,
                             location_validation:true
                         },
+                        estado: {
+                            required: true
+                        },
+                        municipio: {
+                            required: true
+                        },
                         codigo: {
                             required: true,
                             digits:true
@@ -500,6 +506,12 @@
                         colonia: {
                             required : 'Este campo es requerido',
                             location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                        },
+                        estado: {
+                            required: 'Este campo es requerido'
+                        },
+                        municipio: {
+                            required: 'Este campo es requerido'
                         },
                         codigo: {
                             required : 'Este campo es requerido',
