@@ -3368,6 +3368,21 @@ CREATE TABLE `comunicados` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `token_expediente`
+--
+
+CREATE TABLE `token_expediente` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expedientes_id` int  NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `link` longtext NOT NULL,
+  `exp_date` TIMESTAMP NULL,
+  FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura para la vista `reset_password`
 --
 
