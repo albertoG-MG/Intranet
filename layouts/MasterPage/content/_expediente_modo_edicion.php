@@ -482,7 +482,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Curp *</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">CURP *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -493,7 +493,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Número de seguro social *</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">NSS *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
