@@ -7,7 +7,15 @@
         </button>
     </div>
 
-    <div class="flex items-center">
+    <div class="flex items-center gap-3">
+        <div class="relative">
+            <button onclick="window.location='alertas_notificaciones.php';" class="flex items-center gap-3">
+                <div id="notificacion_count_alert" class="absolute right-2.5 bottom-2.5 bg-red-500 rounded-full" style="display:none;">
+                    <span id="notification_alert" class="text-sm text-white p-1">0</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" /></svg>
+            </button>
+        </div>
         <div x-data="{ dropdownOpen: false }" class="relative">
             <button @click="dropdownOpen = ! dropdownOpen" class="flex items-center gap-3">
                 <div class="relative shrink-0 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
