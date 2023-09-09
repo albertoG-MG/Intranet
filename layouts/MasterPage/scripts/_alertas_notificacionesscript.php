@@ -121,7 +121,7 @@
         for (var i = 0, len = data.length; i < len; i++) {
             data[i]=`<div class="flex justify-between py-6 px-4 bg-white rounded-lg cursor-pointer mt-5" onclick="remove_notification(${data[i].id}, \'${data[i].tipo_alerta}'\)">`+
                         `<div class="flex items-center space-x-4">`+
-                            `<img src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" class="rounded-full h-14 w-14" alt="">`+
+                            `<img src="../src/img/bell.png" class="rounded-full h-14 w-14" alt="">`+
                             `<div class="flex flex-col space-y-1">`+
                                 `<span class="font-bold"> ${data[i].tipo_alerta}</span>`+
                                 `<span class="text-md"> ${data[i].alerta_titulo}</span>`+
@@ -141,7 +141,7 @@
         for (var i = 0, len = data.length; i < len; i++) {
             data[i]=`<div class="flex justify-between py-6 px-4 bg-white rounded-lg mt-5">`+
                         `<div class="flex items-center space-x-4">`+
-                            `<img src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" class="rounded-full h-14 w-14" alt="">`+
+                            `<img src="../src/img/bell.png" class="rounded-full h-14 w-14" alt="">`+
                             `<div class="flex flex-col space-y-1">`+
                                 `<span class="font-bold"> ${data[i].tipo_alerta}</span>`+
                                 `<span class="text-md"> ${data[i].alerta_titulo}</span>`+
