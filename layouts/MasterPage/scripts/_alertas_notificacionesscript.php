@@ -174,7 +174,12 @@
 
     function remove_notification(id, tipo_alerta){
         load_unseen_notification(id);
-        get_link(tipo_alerta);
+        if(tipo_alerta != "Usuarios"){
+            get_link(tipo_alerta);
+        }else{
+            totalfilas_nvistas();
+            totalfilas_vistas();
+        }
     }
 
     function get_link(tipo_alerta){
