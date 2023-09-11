@@ -3384,6 +3384,26 @@ CREATE TABLE `token_expediente` (
 -- --------------------------------------------------------
 
 --
+-- Estructura para la tabla `alerta_notificaciones`
+--
+
+CREATE TABLE `alerta_notificaciones` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `notificado_a` int NOT NULL,
+  `enviado_por` int DEFAULT NULL,
+  `tipo_alerta` varchar(255) NOT NULL,
+  `alerta_titulo` varchar(255) NOT NULL,
+  `alerta_mensaje` varchar(255) NOT NULL,
+  `alerta_estatus` int NOT NULL,
+  `link` longtext DEFAULT NULL,
+  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   FOREIGN KEY (notificado_a) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (enviado_por) REFERENCES usuarios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura para la vista `reset_password`
 --
 
@@ -3898,20 +3918,94 @@ CREATE TABLE `historial_accion_vacaciones`(
 -- --------------------------------------------------------
 
 --
--- Trigger que inserta en la tabla Transicion_estatus_incidencia
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea una incidencia
 --
 
+DELIMITER $$
+CREATE TRIGGER alerta_incidencias
+AFTER INSERT on notificaciones_incidencias
+FOR EACH ROW
+	BEGIN
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT NEW.id_notificado, solicitudes_incidencias.users_id, "Incidencias", "Incidencia recibida", CONCAT('El usuario ', CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), ' te ha enviado una incidencia, haz clic aquí para ver más información.'), "0", "solicitud_incidencia.php" FROM solicitudes_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE solicitudes_incidencias.id=NEW.id_solicitud_incidencias;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea una alerta
+--
 
 DELIMITER $$
+CREATE TRIGGER notificaciones_alerta
+AFTER INSERT on alertas
+FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT usuarios.id, NEW.users_id, "Alertas", "Nueva alerta", CONCAT('El usuario ', @enviado_por, ' ha creado una nueva alerta en la fecha ', NEW.fecha_creacion_alerta, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+	END$$
+DELIMITER ;
 
-CREATE TRIGGER insertar_transicion_estatus_incidencia
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea un aviso
+--
+
+DELIMITER $$
+CREATE TRIGGER notificaciones_avisos
+AFTER INSERT on avisos
+FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT usuarios.id, NEW.users_id, "Avisos", "Nuevo aviso", CONCAT('El usuario ', @enviado_por, ' ha creado una nuevo aviso en la fecha ', NEW.fecha_creacion_aviso, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea un comunicado
+--
+
+DELIMITER $$
+CREATE TRIGGER notificaciones_comunicados
+AFTER INSERT on comunicados
+FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT usuarios.id, NEW.users_id, "Comunicados", "Nuevo comunicado", CONCAT('El usuario ', @enviado_por, ' ha creado un nuevo comunicado en la fecha ', NEW.fecha_creacion_comunicado '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que inserta y actualiza el estatus en las tablas transicion_estatus_incidencia y transicion_accion_incidencias y envía una nueva notificación al usuario sobre la respuesta de la notificación
+--
+
+DELIMITER $$
+CREATE TRIGGER insertar_transicion_estatus_notificacion_incidencia
 AFTER INSERT ON accion_incidencias FOR EACH ROW
 BEGIN
-	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
+
+	INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias", "Solicitud de incidencia evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	
 END;
 $$
-
-
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -3998,15 +4092,19 @@ DELIMITER ;
 -- --------------------------------------------------------								
 
 --
--- Estructura para el trigger que guarda el evento de insertar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_insertar`
+-- Estructura para el trigger que guarda el evento de insertar de la tabla usuarios en la tabla_usuarios_log y envía una nueva notificación al nuevo usuario  `log_notificaciones_usuarios_insertar`
 --
 
 DELIMITER $$
-	CREATE TRIGGER log_usuarios_insertar AFTER INSERT ON usuarios
+	CREATE TRIGGER log_notificaciones_usuarios_insertar AFTER INSERT ON usuarios
 	FOR EACH ROW
 	BEGIN
 		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
 		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(NEW.nombre, ' ', NEW.apellido_pat, ' ', NEW.apellido_mat), 'Insertar');
+		
+		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+		VALUES (NEW.id, "Usuarios", "Intranet", "Todo sinttecom te da la bienvenida a la intranet, es necesario estar siempre al pendiente de las notificaciones que se mandan por aquí.", "0");
+		
 	END$$
 DELIMITER ;
 
@@ -4043,15 +4141,35 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log  `log_expedientes_insert`
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log y envía una nueva notificación al usuario sobre el expediente creado `log_notificaciones_expedientes_insert`
 --
 
 DELIMITER $$
-CREATE TRIGGER log_expedientes_insert AFTER INSERT on expedientes
+CREATE TRIGGER log_notificaciones_expedientes_insert AFTER INSERT on expedientes
 FOR EACH ROW
 	BEGIN
 		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
 		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.num_empleado, "INSERTAR" FROM usuarios WHERE NEW.users_id = usuarios.id;
+		
+		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+		VALUES (NEW.users_id, "Expedientes", "Expediente asignado", "Se le ha asignado un expediente lo cual significa que ya puede enviar incidencias y vacaciones.", "0");	
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que inserta en la tabla alerta_notificaciones cuando se asigna un token a un expediente 
+--
+
+DELIMITER $$
+CREATE TRIGGER alert_token_expediente AFTER INSERT on token_expediente
+FOR EACH ROW
+	BEGIN
+		SET @notificado_a = (SELECT usuarios.id FROM usuarios INNER JOIN expedientes WHERE expedientes.id=NEW.expedientes_id);
+	
+		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		VALUES (@notificado_a, "Token_expediente", "Nuevo token asignado", "Se le ha asignado un token lo cual significa que necesita llenar los datos de su expediente. Haz clic en la notificación para ir al link", "0", CONCAT('expediente_modo_edicion.php?token=', NEW.token));
 	END$$
 DELIMITER ;
 
@@ -4191,16 +4309,22 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura para el trigger que guarda el historial de acciones en la tabla historial_accion_incidencias y actualiza la tabla transicion_estatus_incidencia `update_transicion_estatus_incidencia`
+-- Estructura para el trigger que inserta en la historial_accion_incidencias, actualiza el estatus de la incidencia y envia una notificación al usuario que envío una incidencia
 --
 
 DELIMITER $$
-CREATE TRIGGER update_transicion_estatus_incidencia
+CREATE TRIGGER update_transicion_estatus_notificacion_incidencia
 AFTER UPDATE ON accion_incidencias FOR EACH ROW
 BEGIN
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
+
 	INSERT INTO historial_accion_incidencias(incidencias_id, tipo_de_accion, goce_de_sueldo, comentario, evaluado_por) VALUES (OLD.incidencias_id, OLD.tipo_de_accion, OLD.goce_de_sueldo, OLD.comentario, OLD.evaluado_por);
 
 	UPDATE transicion_estatus_incidencia SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE incidencias_id=NEW.incidencias_id;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias reevaluada", "Solicitud de incidencia reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));	
 END;
 $$
 DELIMITER ;
