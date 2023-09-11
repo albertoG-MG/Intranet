@@ -3111,7 +3111,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus"){
 	if(isset($_POST["estatus"], $_POST["sueldo"], $_POST["comentarios"], $_POST["id"])){
 
-		if((Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "false")){ 
+		//Permisos
+		if((Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") && (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "false")){ 
 			die(json_encode(array("forbidden", "No tienes los permisos necesarios para modificar el estatus de la incidencia")));
 		}
 
