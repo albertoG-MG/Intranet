@@ -204,19 +204,13 @@ class incidencias {
 		}
 	}
 
-	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat, $comentario){
-		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
-		if($check_incidencia > 0 ){
-			$object = new connection_database();
-			$crud = new crud();
-			$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
-			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
-			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
-			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
-			Incidencias::getResponse($incidenciaid, $estatus, $sueldo, $comentario);
-		}else{
-			die(json_encode(array("failed", "La incidencia ya no existe!")));
-		}
+	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $evaluado_por, $comentario){
+		$object = new connection_database();
+		$crud = new crud();
+		$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $evaluado_por]);
+		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
+		$update_state -> execute(array(':incidenciaid' => $incidenciaid));
+		//Incidencias::getResponse($incidenciaid, $estatus, $sueldo, $comentario);
 	}
 
 	public static function editStatus($id, $estatus, $sueldo, $comentarios, $nombre_completo){

@@ -2256,7 +2256,21 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
-		$incidenciaid= $_POST["incidenciaid"];
+		
+		//Checar si el usuario tiene permiso para evaluar incidencias
+		if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud incidencias") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+		}
+
+		//Checar si la incidencia todavia existe
+		$check_incidencia = $object -> _db -> prepare("SELECT * FROM incidencias WHERE id=:incidenciaid");
+		$check_incidencia -> execute(array("incidenciaid" => $_POST["incidenciaid"]));
+		$count_incidencia = $check_incidencia -> rowCount();
+		if($count_incidencia == 0){
+			die(json_encode(array("incidencia_not_found", "La incidencia ya no existe!")));
+		}else{
+			$incidenciaid= $_POST["incidenciaid"];
+		}
 		
 		//El estatus solo puede estar entre 1, 2 y 3
 		$estatus_array = array(1, 2, 3);
@@ -2277,9 +2291,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }else{
 			$sueldo=null;
 		}
-		$select_user = $object -> _db -> prepare("SELECT nombre, apellido_pat, apellido_mat FROM usuarios WHERE id=:iduser");
-		$select_user -> execute(array(':iduser' => $_SESSION["id"]));
-        $fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
+		
+		//Comentario
         if(empty($_POST["comentario"])){
             $comentario = null;
         }else{
@@ -2291,7 +2304,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         }
         switch($_POST["method"]){
             case "store":
-                Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $fetch_user -> nombre, $fetch_user -> apellido_pat, $fetch_user -> apellido_mat, $comentario);
+                Incidencias::Almacenar_estatus($incidenciaid, $estatus, $sueldo, $_SESSION["id"], $comentario);
                 die(json_encode(array("success")));
             break;
         }
