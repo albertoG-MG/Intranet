@@ -3110,6 +3110,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus"){
 	if(isset($_POST["estatus"], $_POST["sueldo"], $_POST["comentarios"], $_POST["id"])){
+
+		if((Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "false")){ 
+			die(json_encode(array("forbidden", "No tienes los permisos necesarios para modificar el estatus de la incidencia")));
+		}
+
 		//Checar si la solicitud existe
 		$check_request = $object -> _db -> prepare("SELECT * FROM incidencias i WHERE i.id=:incidenciaid");
 		$check_request -> execute(array(':incidenciaid' => $_POST["id"]));
@@ -3127,9 +3132,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			die(json_encode(array("error", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
 		}
-		
-		//Obtener el nombre completo del usuario
-		$nombre_completo = $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
 		
 		//Goce de sueldo solamente puede ser 0 y 1
 		if(!(empty($_POST["sueldo"]))){
@@ -3153,7 +3155,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-		Incidencias::editStatus($id, $estatus, $sueldo, $comentarios, $nombre_completo);
+		Incidencias::editStatus($id, $estatus, $sueldo, $comentarios, $_SESSION["id"]);
         die(json_encode(array("success", "Se ha editado el estatus de la incidencia!")));
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus_vacaciones"){

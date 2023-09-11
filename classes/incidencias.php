@@ -4,9 +4,6 @@ include_once __DIR__ . "/crud.php";
 include_once __DIR__ . "/../classes/permissions.php";
 include_once __DIR__ . "/../classes/roles.php";
 include_once __DIR__ . "/../classes/departamentos.php";
-require_once __DIR__ . "/../config/PHPMailer/src/PHPMailer.php";
-require_once __DIR__ . "/../config/PHPMailer/src/Exception.php";
-require_once __DIR__ . "/../config/PHPMailer/src/SMTP.php";
 class incidencias {
 	public $usuario_id;
 	public $usuario_rol;
@@ -27,61 +24,6 @@ class incidencias {
         return $file;
     }
 
-	public static function send_editEstatus($incidencia_id, $estatus, $sueldo, $comentarios){
-		$object = new connection_database();
-		$crud = new crud();
-		$sql = $object->_db->prepare('SELECT solicitudes_incidencias.id as solicitudid, CONCAT(u1.nombre, " ", u1.apellido_pat, " ", u1.apellido_mat) as solicitante, CONCAT(u2.nombre, " ", u2.apellido_pat, " ", u2.apellido_mat) as jefe, u1.correo AS correo_solicitante, u2.correo AS correo_jefe, accion_incidencias.evaluado_por AS revaluada_por, solicitudes_incidencias.fecha_solicitud as fecha_solicitud FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios u1 ON u1.id=solicitudes_incidencias.users_id INNER JOIN notificaciones_incidencias ON notificaciones_incidencias.id_solicitud_incidencias=solicitudes_incidencias.id INNER JOIN usuarios u2 ON u2.id=notificaciones_incidencias.id_notificado INNER JOIN accion_incidencias ON accion_incidencias.incidencias_id=incidencias.id WHERE incidencias.id=:incidenciaid');
-		$sql -> execute(array(':incidenciaid' => $incidencia_id));
-		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
-		if($sueldo == 1){
-			$sueldo_message = "con goce de sueldo";
-		}else if($sueldo == 0){
-			$sueldo_message = "sin goce de sueldo";
-		}else{
-			$sueldo_message = "sin datos";
-		}
-		if($estatus == 3){
-			$status = "Rechazada";
-		}else if($estatus == 2){
-			$status = "Cancelada";
-		}else if ($estatus == 1){
-			$status = "Aprobada";
-		}
-		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
-		$path = dirname($path);
-		$links = $path. "/layouts/incidencias.php";
-		$mail=new PHPMailer\PHPMailer\PHPMailer();
-		$mail->IsSMTP();  // telling the class to use SMTP
-		$mail->SMTPDebug = 0;
-		$mail->SMTPSecure = 'tls'; 
-		$mail->Host = 'mail.sinttecom.com'; 
-		$mail->SMTPOptions = array(
-			'ssl' => array(
-				'verify_peer' => false,
-				'verify_peer_name' => false,
-				'allow_self_signed' => true
-			)
-		);
-		$mail->Port = 587;
-		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
-		$mail->Password = "k8@SY#xR"; // SMTP password
-		$mail->IsHTML(true);
-		$mail->AddAddress($row_user_incidencia -> correo_solicitante);
-		$mail->AddAddress($row_user_incidencia -> correo_jefe);
-		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
-		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-		$mail->Subject  = "El usuario ". $row_user_incidencia -> revaluada_por ." ha revaluado la incidencia de ". $row_user_incidencia -> solicitante ." con id ". $row_user_incidencia -> solicitudid ."";
-		$mail->Body     = "Buen día ".$row_user_incidencia -> solicitante." y ".$row_user_incidencia -> jefe.": <br> El usuario ".$row_user_incidencia -> revaluada_por." ha revaluado la incidencia enviada de ".$row_user_incidencia -> solicitante." con ID ".$row_user_incidencia -> solicitudid." expedido en la fecha " .$row_user_incidencia -> fecha_solicitud. " con el estatus de ".$status." y el goce de sueldo: ".$sueldo_message.". <br> Comentarios: ".$comentarios." <br> Haga clic en el link a continuación para ver la incidencia: <br> <a href=".$links.">Ver incidencia</a>";
-		$mail->WordWrap = 50;
-		$mail->CharSet = "UTF-8";
-		if(!$mail->Send()) {
-			echo 'Message was not sent.';
-			echo 'Mailer error: ' . $mail->ErrorInfo;
-		}
-	}
-
 	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $evaluado_por, $comentario){
 		$object = new connection_database();
 		$crud = new crud();
@@ -90,13 +32,12 @@ class incidencias {
 		$update_state -> execute(array(':incidenciaid' => $incidenciaid));
 	}
 
-	public static function editStatus($id, $estatus, $sueldo, $comentarios, $nombre_completo){
+	public static function editStatus($id, $estatus, $sueldo, $comentarios, $evaluado_por){
 		$object = new connection_database();
 		$crud = new crud();
-		$crud -> update ('accion_incidencias', ['tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentarios, 'evaluado_por' => $nombre_completo], "incidencias_id=:incidenciaid", [":incidenciaid" => $id]);
+		$crud -> update ('accion_incidencias', ['tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentarios, 'evaluado_por' => $evaluado_por], "incidencias_id=:incidenciaid", [":incidenciaid" => $id]);
 		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
 		$update_state -> execute(array(':incidenciaid' => $id));
-		Incidencias::send_editEstatus($id, $estatus, $sueldo, $comentarios);
 	}
 }
 
