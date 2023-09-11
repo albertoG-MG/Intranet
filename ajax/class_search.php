@@ -2578,6 +2578,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "Vacaciones"){
 	if(isset($_POST["periodo_vacaciones"]) && isset($_POST["method"])){
+
+		//Checa si tiene permiso para acceder
+		if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a vacaciones") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+		}
+
 		//Checa si el usuario tiene expediente
 		$check_expediente = $object -> _db -> prepare("SELECT * FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE usuarios.id=:userid");
 		$check_expediente -> execute(array(':userid' => $_SESSION["id"]));

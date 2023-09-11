@@ -646,6 +646,16 @@
                                                 window.removeEventListener('beforeunload', unloadHandler);
                                                 $('#submit-vacaciones').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
                                             });
+                                        }else if(array[0] == "forbidden"){
+                                            Swal.fire({
+                                                title: "Error",
+                                                text: array[1],
+                                                icon: "error"
+                                            }).then(function() {
+                                                window.removeEventListener('beforeunload', unloadHandler);
+                                                $('#submit-vacaciones').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
+                                                window.location.href = "dashboard.php";
+                                            });
                                         }
                                     },3000);
                                 },
