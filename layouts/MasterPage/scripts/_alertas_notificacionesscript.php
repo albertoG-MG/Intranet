@@ -175,18 +175,18 @@
     function remove_notification(id, tipo_alerta){
         load_unseen_notification(id);
         if(tipo_alerta != "Usuarios"){
-            get_link(tipo_alerta);
+            get_link(id);
         }else{
             totalfilas_nvistas();
             totalfilas_vistas();
         }
     }
 
-    function get_link(tipo_alerta){
+    function get_link(id){
         $.ajax({
             url:"../config/get_link.php",
             method:"POST",
-            data:{tipo_alerta:tipo_alerta},
+            data:{id:id},
             dataType:"json",
             success:function(data)
             {
