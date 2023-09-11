@@ -3133,14 +3133,15 @@ INSERT INTO `tipo_accion_incidencias` (`id`, `descripcion_accion`) VALUES
 --
 
 CREATE TABLE `accion_incidencias`(
-	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`incidencias_id` bigint(20) NOT NULL,
-	`tipo_de_accion` int NOT NULL,
-  `goce_de_sueldo` tinyint(1) DEFAULT NULL,
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `incidencias_id` bigint NOT NULL,
+  `tipo_de_accion` int NOT NULL,
+  `goce_de_sueldo` tinyint DEFAULT NULL,
   `comentario` varchar(200) DEFAULT NULL,
-	`evaluado_por` varchar(200) NOT NULL,
-	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
-	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+  `evaluado_por` int DEFAULT NULL,
+  FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+  FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id),
+  FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3872,9 +3873,10 @@ CREATE TABLE `historial_accion_incidencias`(
 	`tipo_de_accion` int NOT NULL,
 	`goce_de_sueldo` tinyint DEFAULT NULL,
 	`comentario` varchar(200) DEFAULT NULL,
-	`evaluado_por` varchar(200) NOT NULL,
-	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
-	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+	`evaluado_por` int DEFAULT NULL,
+	FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+	FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id),
+	FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
