@@ -3282,9 +3282,10 @@ CREATE TABLE `accion_vacaciones`(
 	`id_solicitud_vacaciones` int NOT NULL,
 	`tipo_de_accion` int NOT NULL,
 	`comentario` varchar(200) DEFAULT NULL,
-	`evaluado_por` varchar(200) NOT NULL,
+	`evaluado_por` int DEFAULT NULL,
 	 FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
-	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_vacaciones(id)
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_vacaciones(id),
+	 FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3910,9 +3911,10 @@ CREATE TABLE `historial_accion_vacaciones`(
 	`solicitud_id` int NOT NULL,
 	`tipo_de_accion` int NOT NULL,
 	`comentario` varchar(200) DEFAULT NULL,
-	`evaluado_por` varchar(200) NOT NULL,
+	`evaluado_por` int DEFAULT NULL,
 	 FOREIGN KEY (solicitud_id) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
-	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id),
+	 FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3928,6 +3930,25 @@ FOR EACH ROW
 	BEGIN
 		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 		SELECT NEW.id_notificado, solicitudes_incidencias.users_id, "Incidencias", "Incidencia recibida", CONCAT('El usuario ', CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), ' te ha enviado una incidencia, haz clic aquí para ver más información.'), "0", "solicitud_incidencia.php" FROM solicitudes_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE solicitudes_incidencias.id=NEW.id_solicitud_incidencias;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea una solicitud de vacaciones
+--
+
+DELIMITER $$
+CREATE TRIGGER alerta_vacaciones
+AFTER INSERT on notificaciones_vacaciones
+FOR EACH ROW
+	BEGIN
+		SET @periodo = (SELECT sv.periodo_solicitado FROM notificaciones_vacaciones nv INNER JOIN solicitud_vacaciones sv ON sv.id=nv.id_solicitud_vacaciones WHERE nv.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+		SET @fecha = (SELECT sv.fecha_solicitud FROM notificaciones_vacaciones nv INNER JOIN solicitud_vacaciones sv ON sv.id=nv.id_solicitud_vacaciones WHERE nv.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT NEW.id_notificado, solicitud_vacaciones.users_id, "Vacaciones", "Solicitud de vacaciones recibida", CONCAT('El usuario ', CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), ' te ha enviado una solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información.'), "0", "solicitud_vacaciones.php" FROM solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE solicitud_vacaciones.id=NEW.id_solicitud_vacaciones;
 	END$$
 DELIMITER ;
 
@@ -4033,19 +4054,29 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Trigger que inserta en la tabla transicion_estatus_vacaciones
+-- Estructura para el trigger que inserta y actualiza el estatus en las tablas transicion_estatus_vacaciones y transicion_accion_vacaciones y envía una nueva notificación al usuario sobre la respuesta de la notificación
 --
 
 
 DELIMITER $$
 
-CREATE TRIGGER insertar_transicion_estatus_vacaciones
+CREATE TRIGGER insertar_transicion_estatus_notificaciones_vacaciones
 AFTER INSERT ON accion_vacaciones FOR EACH ROW
 BEGIN
-	 INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_vacaciones INNER JOIN usuarios ON usuarios.id = accion_vacaciones.evaluado_por WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	
+	
+	INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones", "Solicitud de vacaciones evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+	
 END;
 $$
-
 
 DELIMITER ;
 
@@ -4332,17 +4363,27 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura para el trigger que guarda el historial de acciones en la tabla historial_accion_vacaciones y actualiza la tabla transicion_estatus_vacaciones `update_transicion_estatus_vacaciones`
+-- Estructura para el trigger que inserta en la historial_accion_vacaciones, actualiza el estatus de la solicitud de vacaciones y envia una notificación al usuario que envío una solicitud de vacaciones
 --
 
 DELIMITER $$
-CREATE TRIGGER update_transicion_estatus_vacaciones
+CREATE TRIGGER update_transicion_estatus_notificacion_vacaciones
 AFTER UPDATE ON accion_vacaciones FOR EACH ROW
 BEGIN
+	
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_vacaciones INNER JOIN usuarios ON usuarios.id = accion_vacaciones.evaluado_por WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	
 	INSERT INTO historial_accion_vacaciones(solicitud_id, tipo_de_accion, comentario, evaluado_por) VALUES (OLD.id_solicitud_vacaciones, OLD.tipo_de_accion, OLD.comentario, OLD.evaluado_por);
 
 	UPDATE transicion_estatus_vacaciones SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
-END$$
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones reevaluada", "Solicitud de vacaciones reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");	
+END;
+$$
 DELIMITER ;
 
 -- --------------------------------------------------------
