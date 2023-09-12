@@ -275,6 +275,7 @@
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
                                             table.column().cells().invalidate().render();
+                                            table.columns.adjust().responsive.recalc();
                                         
                                         }, error: function(response) {
                                             console.log(response);
