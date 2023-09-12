@@ -894,6 +894,18 @@
                                                         }
                                                         closeModal();
                                                     });
+                                                }else if (array[0] == "forbidden") {
+                                                    Swal.fire({
+                                                        title: "Error",
+                                                        text: array[1],
+                                                        icon: "error"
+                                                    }).then(function() {
+                                                        window.removeEventListener('beforeunload', unloadHandler);
+                                                        $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-vacaciones' type='submit'>Editar vacaciones</button>");
+                                                        $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                        closeModal();
+                                                        window.location.href = "dashboard.php";
+                                                    });
                                                 }
                                             },3000);
                                         },

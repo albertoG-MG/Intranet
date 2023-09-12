@@ -48,13 +48,12 @@
             $update_state -> execute(array(':solicitudid' => $solicitud_vacaciones));
         }
 
-        public static function editStatus($id, $estatus, $comentarios, $nombre_completo){
+        public static function editStatus($id, $estatus, $comentarios, $evaluado_por){
             $object = new connection_database();
             $crud = new crud();
-            $crud -> update ('accion_vacaciones', ['tipo_de_accion' => $estatus, 'comentario' => $comentarios, 'evaluado_por' => $nombre_completo], "id_solicitud_vacaciones=:solicitudid", [":solicitudid" => $id]);
+            $crud -> update ('accion_vacaciones', ['tipo_de_accion' => $estatus, 'comentario' => $comentarios, 'evaluado_por' => $evaluado_por], "id_solicitud_vacaciones=:solicitudid", [":solicitudid" => $id]);
             $update_state = $object -> _db -> prepare("UPDATE solicitud_vacaciones sv INNER JOIN (SELECT transicion_estatus_vacaciones.id_solicitud_vacaciones, transicion_estatus_vacaciones.estatus_siguiente FROM transicion_estatus_vacaciones WHERE transicion_estatus_vacaciones.id_solicitud_vacaciones=:solicitudid ORDER BY transicion_estatus_vacaciones.id desc LIMIT 1) temp ON sv.id=temp.id_solicitud_vacaciones SET sv.estatus = temp.estatus_siguiente");
             $update_state -> execute(array(':solicitudid' => $id));
-            //Vacaciones::send_editEstatus($id, $estatus, $comentarios);
         }
     }
 ?>

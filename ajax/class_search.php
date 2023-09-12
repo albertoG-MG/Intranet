@@ -3171,6 +3171,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus_vacaciones"){
 	if(isset($_POST["estatus_vacaciones"], $_POST["comentarios_vacaciones"], $_POST["id"])){
+
+		//Permisos
+		if((Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") && (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "false")){ 
+			die(json_encode(array("forbidden", "No tienes los permisos necesarios para modificar el estatus de la solicitud de vacaciones")));
+		}
+
 		//Checar si la solicitud existe
 		$check_request = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE id=:solicitudid");
 		$check_request -> execute(array(':solicitudid' => $_POST["id"]));
@@ -3189,9 +3195,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			die(json_encode(array("error", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
 		}
 		
-		//Obtener el nombre completo del usuario
-		$nombre_completo = $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
-		
 		if(empty($_POST["comentarios_vacaciones"])){
 			die(json_encode(array("error", "Los comentarios no pueden estar vacíos")));
 		}else{
@@ -3202,7 +3205,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-		Vacaciones::editStatus($id, $estatus_vacaciones, $comentarios_vacaciones, $nombre_completo);
+		Vacaciones::editStatus($id, $estatus_vacaciones, $comentarios_vacaciones, $_SESSION["id"]);
         die(json_encode(array("success", "Se ha editado el estatus de la solicitud de vacaciones!")));
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "Historial_vacaciones"){
