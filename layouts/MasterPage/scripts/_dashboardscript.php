@@ -361,7 +361,7 @@
                                             if(checkFile(url)){
                                                 return (
                                                     "<div class='text-left lg:text-center'>" +
-                                                        "<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
+                                                        "<a target='_blank' style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
                                                     "</div>"
                                                 );
                                             }else{
@@ -761,7 +761,7 @@
                                             if(checkFile(url)){
                                                 return (
                                                     "<div class='text-left lg:text-center'>" +
-                                                        "<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
+                                                        "<a target='_blank' style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
                                                     "</div>"
                                                 );
                                             }else{
@@ -1163,7 +1163,7 @@
                                             if(checkFile(url)){
                                                 return (
                                                     "<div class='text-left lg:text-center'>" +
-                                                        "<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
+                                                        "<a target='_blank' style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href="+url+">"+filename+"</a>" +
                                                     "</div>"
                                                 );
                                             }else{
@@ -4309,7 +4309,7 @@
             $("#archivo_div").append("<span>No se ha subido un archivo</span>");
         }else{
             if(viewmore_checkfile("../src/alertas_archivo/"+archivo_identificador+"")){
-                $("#archivo_div").append("<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/alertas_archivo/"+archivo_identificador+"'>"+nombre_archivo+"</a>");
+                $("#archivo_div").append("<a target='_blank' style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/alertas_archivo/"+archivo_identificador+"'>"+nombre_archivo+"</a>");
             }else{
                 $("#archivo_div").append("<span>No se encontró el archivo</span>");
             }
@@ -4350,7 +4350,7 @@
             $("#archivo_aviso_div").append("<span>No se ha subido un archivo</span>");
         }else{
             if(viewmore_checkfile("../src/avisos_archivo/"+aviso_archivo_identificador+"")){
-                $("#archivo_aviso_div").append("<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/avisos_archivo/"+aviso_archivo_identificador+"'>"+filename_archivo_aviso+"</a>");
+                $("#archivo_aviso_div").append("<a target='_blank' style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/avisos_archivo/"+aviso_archivo_identificador+"'>"+filename_archivo_aviso+"</a>");
             }else{
                 $("#archivo_aviso_div").append("<span>No se encontró el archivo</span>");
             }
@@ -4391,7 +4391,7 @@
             $("#archivo_comunicados_div").append("<span>No se ha subido un archivo</span>");
         }else{
             if(viewmore_checkfile("../src/comunicados_archivo/"+archivo_identificador+"")){
-                $("#archivo_comunicados_div").append("<a style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/comunicados_archivo/"+archivo_identificador+"'>"+nombre_archivo+"</a>");
+                $("#archivo_comunicados_div").append("<a target='_blank' style='word-break:break-word;' class='text-blue-600 hover:border-b-[1px] hover:border-blue-600' href='../src/comunicados_archivo/"+archivo_identificador+"'>"+nombre_archivo+"</a>");
             }else{
                 $("#archivo_comunicados_div").append("<span>No se encontró el archivo</span>");
             }
