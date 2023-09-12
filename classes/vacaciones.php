@@ -40,13 +40,12 @@
 			$crud -> delete('historial_solicitud_vacaciones', "id=:id", ['id' => $id]);
         }
 
-        public static function Almacenar_estatus($solicitud_vacaciones, $estatus, $nombre_completo, $comentario){
+        public static function Almacenar_estatus($solicitud_vacaciones, $estatus, $evaluado_por, $comentario){
             $object = new connection_database();
             $crud = new crud();
-            $crud -> store ('accion_vacaciones', ['id_solicitud_vacaciones' => $solicitud_vacaciones, 'tipo_de_accion' => $estatus, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
+            $crud -> store ('accion_vacaciones', ['id_solicitud_vacaciones' => $solicitud_vacaciones, 'tipo_de_accion' => $estatus, 'comentario' => $comentario, 'evaluado_por' => $evaluado_por]);
             $update_state = $object -> _db -> prepare("UPDATE solicitud_vacaciones sv INNER JOIN (SELECT transicion_estatus_vacaciones.id_solicitud_vacaciones, transicion_estatus_vacaciones.estatus_siguiente FROM transicion_estatus_vacaciones WHERE transicion_estatus_vacaciones.id_solicitud_vacaciones=:solicitudid ORDER BY transicion_estatus_vacaciones.id desc LIMIT 1) temp ON sv.id=temp.id_solicitud_vacaciones SET sv.estatus = temp.estatus_siguiente");
             $update_state -> execute(array(':solicitudid' => $solicitud_vacaciones));
-            //Vacaciones::getResponse($solicitud_vacaciones, $estatus, $comentario);
         }
 
         public static function editStatus($id, $estatus, $comentarios, $nombre_completo){

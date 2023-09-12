@@ -2806,12 +2806,18 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_vacaciones"){
     if(isset($_POST["solicitud_vacaciones"]) && isset($_POST["estatus"]) && isset($_POST["method"])){
+
+		//checar si tiene los permisos
+		if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud vacaciones") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
+			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+		}
+
 		//Checar si la solicitud existe
 		$check_request = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE id=:solicitudid");
 		$check_request -> execute(array(':solicitudid' => $_POST["solicitud_vacaciones"]));
 		$count_request = $check_request -> rowCount();
 		if($count_request == 0){
-			die(json_encode(array("failed", "Esta solicitud no existe!")));
+			die(json_encode(array("solicitud_not_found", "Esta solicitud no existe!")));
 		}else{
 			$solicitud_vacaciones = $_POST["solicitud_vacaciones"];
 		}
@@ -2824,9 +2830,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			die(json_encode(array("failed", "El estatus solamente puede tener un valor definido, por favor, vuelva  a cargar la página!")));
 		}
 		
-		//Obtener el nombre completo del usuario
-		$nombre_completo = $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
-		
 		//Obtener el comentario de evaluación
         if(empty($_POST["comentario"])){
             $comentario = null;
@@ -2837,10 +2840,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$comentario = $_POST["comentario"];
 			}
         }
+
         switch($_POST["method"]){
             case "store":
-                Vacaciones::Almacenar_estatus($solicitud_vacaciones, $estatus, $nombre_completo, $comentario);
-                die(json_encode(array("success")));
+                Vacaciones::Almacenar_estatus($solicitud_vacaciones, $estatus, $_SESSION["id"], $comentario);
+                die(json_encode(array("success", "Se aprobó la solicitud de vacaciones!")));
             break;
         }
     }
