@@ -41,9 +41,9 @@
     </div>
 </div>
 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Editar departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-<div id="modal-component-container" class="modal-component-container hidden fixed inset-0">
+<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
     <div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="modal-bg-container fixed inset-0 bg-gray-700 bg-opacity-75"></div>
+        <div class="modal-bg-container inset-0"></div>
         <div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>
         <div id="modal-container" class="modal-container inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-lx transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
             <form id="Guardar" method="post">
@@ -53,7 +53,7 @@
                             <div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"><svg class="w-5 h-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z" /></svg></div>
                             <h3 class="text-lg font-medium text-gray-900"> Crear departamento</h3>
                         </div>
-                        <div class="modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left">
+                        <div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">
                             <div class="grid grid-cols-1 mt-5">
                                 <label class="text-[#64748b] font-semibold mb-2">Nombre del departamento</label>
                                 <div class="group flex">
