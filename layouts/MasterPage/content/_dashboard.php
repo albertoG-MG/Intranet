@@ -123,9 +123,102 @@
                 } 
             ?>
 
-            <div class="mt-8">
-
-            </div>
+            <?php if(Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Director general" && Roles::FetchSessionRol($_SESSION["rol"]) != "Usuario externo" && Roles::FetchSessionRol($_SESSION["rol"]) != ""){ ?>
+                <div class="mt-8">
+                    <div class="grid grid-cols-1 2xl:grid-cols-2 gap-4 my-4">
+                        <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold leading-none text-gray-900">Incidencias</h3>
+                                <a href="incidencias.php" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
+                                    Ir a incidencias
+                                </a>
+                            </div>
+                            <?php if($count_incidencias > 0){ ?>
+                                <div class="flow-root">
+                                    <ul role="list" class="divide-y divide-gray-200">
+                                        <?php while ($row_incidencias = $resultado -> fetch(PDO::FETCH_ASSOC)){ ?>
+                                            <li class="py-3 sm:py-4">
+                                                <div class="flex items-center space-x-4">
+                                                    <div class="flex-1 min-w-0">
+                                                        <p class="text-sm font-medium text-gray-900">
+                                                            <?php echo $row_incidencias["tipo_permiso"]; ?>
+                                                        </p>
+                                                        <p class="text-sm text-gray-500">
+                                                        <?php echo $row_incidencias["fecha_solicitud"]; ?>
+                                                        </p>
+                                                    </div>
+                                                    <div class="inline-flex items-center text-base font-semibold text-gray-900">
+                                                    <?php 
+                                                            if($row_incidencias["estatus_id"] == 1){
+                                                                echo "Aprobado";
+                                                            }else if($row_incidencias["estatus_id"] == 2){
+                                                                echo "Cancelado";
+                                                            }else if($row_incidencias["estatus_id"] == 3){
+                                                                echo "Rechazado";
+                                                            } else if($row_incidencias["estatus_id"] == 4){
+                                                                echo "Pendiente";
+                                                            }
+                                                    ?>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                            <?php }else{ ?>
+                                <div class="grid grid-cols-1 text-center">
+                                    <span class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-black">Sin incidencias</span>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl leading-none font-bold text-gray-900">Vacaciones</h3>
+                                <a href="vacaciones.php" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
+                                    Ir a vacaciones
+                                </a>
+                            </div>
+                            <?php if($count_vacaciones > 0){ ?>
+                                <div class="flow-root">
+                                    <ul role="list" class="divide-y divide-gray-200">
+                                        <?php while ($row_vacaciones = $result -> fetch(PDO::FETCH_ASSOC)){ ?>
+                                            <li class="py-3 sm:py-4">
+                                                <div class="flex items-center space-x-4">
+                                                    <div class="flex-1 min-w-0">
+                                                        <p class="text-sm font-medium text-gray-900">
+                                                            <?php echo $row_vacaciones["periodo_solicitado"]; ?>
+                                                        </p>
+                                                        <p class="text-sm text-gray-500">
+                                                        <?php echo $row_vacaciones["fecha_solicitud"]; ?>
+                                                        </p>
+                                                    </div>
+                                                    <div class="inline-flex items-center text-base font-semibold text-gray-900">
+                                                    <?php 
+                                                            if($row_vacaciones["estatus"] == 1){
+                                                                echo "Aprobado";
+                                                            }else if($row_vacaciones["estatus"] == 2){
+                                                                echo "Cancelado";
+                                                            }else if($row_vacaciones["estatus"] == 3){
+                                                                echo "Rechazado";
+                                                            } else if($row_vacaciones["estatus"] == 4){
+                                                                echo "Pendiente";
+                                                            }
+                                                    ?>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                            <?php }else{ ?>
+                                <div class="grid grid-cols-1 text-center">
+                                    <span class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-black">Sin vacaciones</span>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
         <div class="hidden bg-transparent rounded-lg" id="alertas" role="tabpanel" aria-labelledby="alertas-tab-profile">
             <?php 
