@@ -4197,7 +4197,7 @@ DELIMITER $$
 CREATE TRIGGER alert_token_expediente AFTER INSERT on token_expediente
 FOR EACH ROW
 	BEGIN
-		SET @notificado_a = (SELECT usuarios.id FROM usuarios INNER JOIN expedientes WHERE expedientes.id=NEW.expedientes_id);
+		SET @notificado_a = (SELECT usuarios.id FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id WHERE expedientes.id=NEW.expedientes_id);
 	
 		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 		VALUES (@notificado_a, "Token_expediente", "Nuevo token asignado", "Se le ha asignado un token lo cual significa que necesita llenar los datos de su expediente. Haz clic en la notificación para ir al link", "0", CONCAT('expediente_modo_edicion.php?token=', NEW.token));
