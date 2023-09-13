@@ -64,7 +64,7 @@
                                                 '</div>'+
                                                 '<h3 class="text-lg font-medium text-gray-900"> Crear una alerta</h3>'+
                                             '</div>'+
-                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">'+
                                                         'Título de la alerta'+
@@ -464,7 +464,7 @@
                                                 '</div>'+
                                                 '<h3 class="text-lg font-medium text-gray-900"> Crear un aviso</h3>'+
                                             '</div>'+
-                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">'+
                                                         'Título del aviso'+
@@ -866,7 +866,7 @@
                                                 '</div>'+
                                                 '<h3 class="text-lg font-medium text-gray-900"> Crear un comunicado</h3>'+
                                             '</div>'+
-                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                                            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">'+
                                                         'Título del comunicado'+
@@ -1841,7 +1841,7 @@
                     '</div>'+
                     '<h3 class="text-lg font-medium text-gray-900"> Editar una alerta</h3>'+
                 '</div>'+
-                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">'+
                             'Título de la alerta'+
@@ -2869,7 +2869,7 @@
                     '</div>'+
                     '<h3 class="text-lg font-medium text-gray-900"> Editar un aviso</h3>'+
                 '</div>'+
-                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">'+
                             'Título del aviso'+
@@ -3668,7 +3668,7 @@
                     '</div>'+
                     '<h3 class="text-lg font-medium text-gray-900"> Editar un comunicado</h3>'+
                 '</div>'+
-                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">'+
                             'Título del comunicado'+
@@ -4284,7 +4284,7 @@
                 '</div>'+
                 '<h3 class="text-lg font-medium text-gray-900"> '+titulo_alerta+'</h3>'+
             '</div>'+
-            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-auto h-[21.875rem]">'+
+            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                 '<div class="grid grid-cols-1 mt-5 p-3">'+
                     '<label class="text-[#64748b] font-semibold mb-2">'+
                         'Descripción de la alerta:'+
@@ -4325,7 +4325,7 @@
                 '</div>'+
                 '<h3 class="text-lg font-medium text-gray-900"> '+titulo_aviso+'</h3>'+
             '</div>'+
-            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-auto h-[21.875rem]">'+
+            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                 '<div class="grid grid-cols-1 mt-5 p-3">'+
                     '<label class="text-[#64748b] font-semibold mb-2">'+
                         'Descripción del aviso:'+
@@ -4366,7 +4366,7 @@
                 '</div>'+
                 '<h3 class="text-lg font-medium text-gray-900"> '+titulo_comunicado+'</h3>'+
             '</div>'+
-            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-auto h-[21.875rem]">'+
+            '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                 '<div class="grid grid-cols-1 mt-5 p-3">'+
                     '<label class="text-[#64748b] font-semibold mb-2">'+
                         'Descripción del comunicado:'+
