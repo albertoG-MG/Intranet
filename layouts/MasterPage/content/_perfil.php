@@ -1130,9 +1130,9 @@
    </div>
 </div>
 <?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
-	<div id="modal-component-container" class="modal-component-container hidden fixed inset-0">
+	<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
 		<div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-			<div class="modal-bg-container fixed inset-0 bg-gray-700 bg-opacity-75"></div>
+			<div class="modal-bg-container inset-0"></div>
 			<div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>
 			<div id="modal-container" class="modal-container inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-lx transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
 				<div class="modal-wrapper bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -1141,7 +1141,7 @@
 							<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9.5H18V7.5H13V9.5M13,16.5H18V14.5H13V16.5M19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21M6,11H11V6H6V11M7,7H10V10H7V7M6,18H11V13H6V18M7,14H10V17H7V14Z" /></svg></div>
 							<h3 class="text-lg font-medium text-gray-900"> Ver vacaciones</h3>
 						</div>
-						<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left">
+						<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">
 						</div>
 					</div>
 				</div>
