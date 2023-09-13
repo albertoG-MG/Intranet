@@ -11,6 +11,32 @@
             },
             dom: '<"top"fB>rt<"bottom"ip><"clear">',
             buttons: [
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Administrar tokens a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+					{
+						text: "Administrar tokens",
+						attr: {
+							'id': 'Tokens',
+							'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+						},
+						className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+						action: function(e, dt, node, config) {
+							window.location.href = "token_expediente.php";
+						}
+					},
+			    <?php } ?>
+                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Exportar reporte de empleados") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+					{
+						text: "Reporte de empleados",
+						attr: {
+							'id': 'Reporte',
+							'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+						},
+						className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+						action: function(e, dt, node, config) {
+							window.location.href = "download_excel.php";
+						}
+					},
+			    <?php } ?>
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                         {
                             text: "Crear Expediente",
@@ -37,8 +63,9 @@
                 {data: [1]},
                 {data: [2]},
                 {data: [3]},
-                {data: [4], visible: false, searchable: false},
-                {data: [5], searchable: false}
+                {data: [4]},
+                {data: [5], visible: false, searchable: false},
+                {data: [6], searchable: false}
             ],
             "columnDefs": 
             [
@@ -55,7 +82,7 @@
                 {
                     target: [1],
                     render: function (data, type, row) {
-                        if(row[4] === null){
+                        if(row[5] === null){
                             return(
                                 "<div class='flex items-center gap-3'>" +
                                     "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/default-user.png'>"+
@@ -65,7 +92,7 @@
                         }else{
                             return(
                                 "<div class='flex items-center gap-3'>" +
-                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[4]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
+                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[5]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
                                     "<span>" + row[1] + "</span>" +
                                 "</div>"
                             );
@@ -87,6 +114,12 @@
                                     "<span class='bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs'>BAJA</span>" +
                                 "</div>"
                             );
+                        }else if(row[2] == "DESTAJO"){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>DJO</span>" +
+                                "</div>"
+                            );
                         }
                     }
                 },
@@ -101,7 +134,17 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [4],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[4] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [6],
                     render: function (data, type, row) {
                         return (
                             "<div class='flex item-center justify-start md:justify-center gap-3'>" +
@@ -157,7 +200,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "ver_expediente.php?idExpediente="+data[5]+""; 
+            window.location.href = "ver_expediente.php?idExpediente="+data[6]+""; 
         });
     <?php } ?>
 
@@ -174,7 +217,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "editar_expediente.php?idExpediente="+data[5]+""; 
+            window.location.href = "editar_expediente.php?idExpediente="+data[6]+""; 
         });
     <?php } ?>
 
@@ -209,7 +252,7 @@
                             title: 'éxito',
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
-                            var eliminarid = data[5];
+                            var eliminarid = data[6];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
                             $.ajax({

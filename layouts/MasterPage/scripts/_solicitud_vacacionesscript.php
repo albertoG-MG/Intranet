@@ -489,11 +489,11 @@
                                                         Swal.fire({
                                                             icon: 'success',
                                                             title: 'Éxito',
-                                                            text: 'Se aprobó la solicitud de vacaciones!'
+                                                            text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
-                                                            $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);												
                                                         });
@@ -501,13 +501,35 @@
                                                         Swal.fire({
                                                             icon: 'error',
                                                             title: 'Error',
-                                                            text: 'Ha ocurrido un error!'
+                                                            text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
-                                                            $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
-                                                            $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                                        });
+                                                    }else if(array[0] == "forbidden"){
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: array[1],
+                                                        }).then(function() {
+                                                            window.removeEventListener('beforeunload', unloadHandler);
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            closeModal();
+                                                            window.location.href="dashboard.php";
+                                                        });
+                                                    }else if(array[0] == "solicitud_not_found"){
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: array[1],
+                                                        }).then(function() {
+                                                            window.removeEventListener('beforeunload', unloadHandler);
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            closeModal();
                                                             table.ajax.reload(null, false);
                                                         });
                                                     }
@@ -541,7 +563,7 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Éxito',
-                                    text: 'Se aprobó la solicitud de vacaciones!'
+                                    text: array[1],
                                 }).then(function() {
                                     table.ajax.reload(null, false);													
                                 });
@@ -549,9 +571,22 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'Ha ocurrido un error!'
+                                    text: array[1]
+                                });
+                            }else if(array[0] == "forbidden"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: array[1],
                                 }).then(function() {
-                                    $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                    window.location.href = "dashboard.php";
+                                });
+                            }else if(array[0] == "solicitud_not_found"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: array[1],
+                                }).then(function() {
                                     table.ajax.reload(null, false);
                                 });
                             }		      
@@ -721,25 +756,47 @@
                                                         Swal.fire({
                                                             icon: 'success',
                                                             title: 'Éxito',
-                                                            text: 'Se canceló la solicitud de vacaciones!'
+                                                            text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
-                                                            $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
-                                                            table.ajax.reload(null, false);													
+                                                            table.ajax.reload(null, false);												
                                                         });
                                                     }else if(array[0] == "failed"){
                                                         Swal.fire({
                                                             icon: 'error',
                                                             title: 'Error',
-                                                            text: 'Ha ocurrido un error!'
+                                                            text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
-                                                            $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
-                                                            $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                                        });
+                                                    }else if(array[0] == "forbidden"){
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: array[1],
+                                                        }).then(function() {
+                                                            window.removeEventListener('beforeunload', unloadHandler);
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            closeModal();
+                                                            window.location.href="dashboard.php";
+                                                        });
+                                                    }else if(array[0] == "solicitud_not_found"){
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: array[1],
+                                                        }).then(function() {
+                                                            window.removeEventListener('beforeunload', unloadHandler);
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            closeModal();
                                                             table.ajax.reload(null, false);
                                                         });
                                                     }
@@ -773,7 +830,7 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Éxito',
-                                    text: 'Se canceló la solicitud de vacaciones!'
+                                    text: array[1],
                                 }).then(function() {
                                     table.ajax.reload(null, false);													
                                 });
@@ -781,9 +838,22 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'Ha ocurrido un error!'
+                                    text: array[1]
+                                });
+                            }else if(array[0] == "forbidden"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: array[1],
                                 }).then(function() {
-                                    $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                    window.location.href = "dashboard.php";
+                                });
+                            }else if(array[0] == "solicitud_not_found"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: array[1],
+                                }).then(function() {
                                     table.ajax.reload(null, false);
                                 });
                             }    
@@ -953,25 +1023,47 @@
                                                         Swal.fire({
                                                             icon: 'success',
                                                             title: 'Éxito',
-                                                            text: 'Se rechazó la solicitud de vacaciones!'
+                                                            text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
-                                                            $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
-                                                            table.ajax.reload(null, false);													
+                                                            table.ajax.reload(null, false);												
                                                         });
                                                     }else if(array[0] == "failed"){
                                                         Swal.fire({
                                                             icon: 'error',
                                                             title: 'Error',
-                                                            text: 'Ha ocurrido un error!'
+                                                            text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
-                                                            $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
-                                                            $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                                        });
+                                                    }else if(array[0] == "forbidden"){
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: array[1],
+                                                        }).then(function() {
+                                                            window.removeEventListener('beforeunload', unloadHandler);
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            closeModal();
+                                                            window.location.href="dashboard.php";
+                                                        });
+                                                    }else if(array[0] == "solicitud_not_found"){
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: array[1],
+                                                        }).then(function() {
+                                                            window.removeEventListener('beforeunload', unloadHandler);
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
+                                                            closeModal();
                                                             table.ajax.reload(null, false);
                                                         });
                                                     }
@@ -1005,7 +1097,7 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Éxito',
-                                    text: 'Se rechazó la solicitud de vacaciones!'
+                                    text: array[1],
                                 }).then(function() {
                                     table.ajax.reload(null, false);													
                                 });
@@ -1013,12 +1105,25 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'Ha ocurrido un error!'
+                                    text: array[1]
+                                });
+                            }else if(array[0] == "forbidden"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: array[1],
                                 }).then(function() {
-                                    $('#message-error').html("<span class='text-rose-500'>" +array[1]+ "</span>");
+                                    window.location.href = "dashboard.php";
+                                });
+                            }else if(array[0] == "solicitud_not_found"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: array[1],
+                                }).then(function() {
                                     table.ajax.reload(null, false);
                                 });
-                            }   
+                            }  
                         }else if (result.dismiss === Swal.DismissReason.cancel) {
                             Swal.fire(
                                 'Cancelado',

@@ -10,7 +10,8 @@ if(isset($_POST["password"], $_POST["token"], $_POST["password_confirm"])){
 	$count_token_information = $select_user_information -> rowCount();
 	if($count_token_information > 0){
 		date_default_timezone_set("America/Monterrey");
-		$today_date = date("Y-m-d H:i:s");
+		$expFormat = mktime(date("H")-1, date("i"), date("s"), date("m") ,date("d"), date("Y"));
+		$today_date = date("Y-m-d H:i:s",$expFormat);
 		$fetch_token_information = $select_user_information -> fetch(PDO::FETCH_OBJ);
 		if($fetch_token_information -> exp_date >= $today_date){
 			$password = $_POST["password"];
@@ -111,7 +112,8 @@ if($_GET['token'] == null){
     }else{
         $fetch_token_user = $select_token_user -> fetch(PDO::FETCH_OBJ);
         date_default_timezone_set("America/Monterrey");
-        $curDate = date("Y-m-d H:i:s");
+        $formatDate = mktime(date("H")-1, date("i"), date("s"), date("m") ,date("d"), date("Y"));
+		$curDate = date("Y-m-d H:i:s",$formatDate);
     }
 }
 ?>

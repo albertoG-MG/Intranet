@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <?php if(basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'perfil.php'){?>
+    <?php if(basename($_SERVER['PHP_SELF']) == 'dashboard.php' || basename($_SERVER['PHP_SELF']) == 'perfil.php' || basename($_SERVER['PHP_SELF']) == 'ver_usuario_perfil.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente_perfil.php'){?>
     <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="dashboard.php">
     <?php }else{ ?>
     <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="dashboard.php">
@@ -33,18 +33,20 @@
         <span class="mx-3">Dashboard</span>
     </a>
 
-    <div class="px-6 mt-5">
-        <div class="text-indigo-400 text-xs font-semibold tracking-wider uppercase">
-            <span> 
-                Navegación
-            </span>
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a vacaciones") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
+        <div class="px-6 mt-5">
+            <div class="text-indigo-400 text-xs font-semibold tracking-wider uppercase">
+                <span> 
+                    Navegación
+                </span>
+            </div>
+            <div class="bg-opacity-25 text-gray-500" style="font-size: 11px; line-height: 1.5">
+                <span> 
+                    Secciones de la intranet
+                </span>
+            </div>
         </div>
-        <div class="bg-opacity-25 text-gray-500" style="font-size: 11px; line-height: 1.5">
-            <span> 
-                Secciones de la intranet
-            </span>
-        </div>
-    </div>
+    <?php } ?>
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
     <button class="flex w-full items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 group hover:text-gray-100" data-collapse-toggle="catalogos">
@@ -91,7 +93,7 @@
             <?php } ?>    
 
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-            <?php if(basename($_SERVER['PHP_SELF']) == 'expedientes.php' || basename($_SERVER['PHP_SELF']) == 'crear_expediente.php' || basename($_SERVER['PHP_SELF']) == 'editar_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_historial.php'){?>
+            <?php if(basename($_SERVER['PHP_SELF']) == 'expedientes.php' || basename($_SERVER['PHP_SELF']) == 'crear_expediente.php' || basename($_SERVER['PHP_SELF']) == 'editar_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_historial.php' || basename($_SERVER['PHP_SELF']) == 'token_expediente.php'){?>
                 <a href="expedientes.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
             <?php }else{ ?>
                 <a href="expedientes.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
@@ -119,7 +121,7 @@
     <?php } ?>
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a vacaciones") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-	<?php if(basename($_SERVER['PHP_SELF']) == 'vacaciones.php' || basename($_SERVER['PHP_SELF']) == 'solicitud_vacaciones.php'){?>
+	<?php if(basename($_SERVER['PHP_SELF']) == 'vacaciones.php' || basename($_SERVER['PHP_SELF']) == 'solicitud_vacaciones.php' || basename($_SERVER['PHP_SELF']) == 'historial_vacaciones.php' || basename($_SERVER['PHP_SELF']) == 'subir_historial.php' || basename($_SERVER['PHP_SELF']) == 'editar_historial_solicitud.php'){?>
 		<a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="vacaciones.php">
 	<?php }else{ ?>
 		<a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="vacaciones.php">

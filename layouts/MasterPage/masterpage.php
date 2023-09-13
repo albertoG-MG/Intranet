@@ -37,6 +37,35 @@ include_once __DIR__ . ($codigophp);
     <script src="../src/js/bundle.js"></script>
     <script src="../src/js/datatables.min.js"></script>
     <script src="../src/js/select.js"></script>
+    <script>
+        $(document).ready(function () {
+            load_unseen_notification();
+
+            function load_unseen_notification(view = '')
+            {
+                $.ajax({
+                    url:"../ajax/notificaciones_alertas/alertas_notificaciones.php",
+                    method:"POST",
+                    data:{view:view},
+                    dataType:"json",
+                    success:function(data)
+                    {
+                        if(data.unseen_notification > 0)
+                        {
+                            $('#notificacion_count_alert').removeAttr('style');
+                            $('#notification_alert').html(data.unseen_notification);
+                        }else{
+                            $("#notificacion_count_alert").attr("style", "display:none;");
+                        }
+                    }
+                });
+            }
+
+            setInterval(function(){
+                load_unseen_notification();;
+            }, 20000);
+        });
+    </script>
     <?php include_once __DIR__ . ($scripts); ?>
 </body>
 

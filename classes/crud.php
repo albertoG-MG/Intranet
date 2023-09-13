@@ -23,7 +23,7 @@ class crud {
             $statement->execute($parameters);
 
         } catch (Exception $e) {
-            die('Algo salio mal al momento de insertar los datos');
+            die($e->getMessage());
         }
 
         /* Para insertar datos es: instancia -> store('users', [ 'name' => $_POST['name']]);*/
@@ -50,7 +50,7 @@ class crud {
 				$statement->execute($array);
 	
 			} catch (Exception $e) {
-				die('Algo salio mal al momento de editar los datos');
+				die($e->getMessage());
 			}
 		
 	}
@@ -67,7 +67,7 @@ class crud {
 			$statement->execute($pdoparam);
 
 		} catch (Exception $e) {
-			die('Algo salio mal al momento de eliminar los datos');
+			die($e->getMessage());
 		}
 	}
 }

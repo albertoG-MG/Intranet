@@ -98,7 +98,8 @@ INSERT INTO `categorias` (`id`, `nombre`) VALUES
 (5, 'Departamentos'),
 (6, 'Incidencias'),
 (7, 'Solicitud incidencias'),
-(8, 'Vacaciones');
+(8, 'Vacaciones'),
+(9, 'Solicitud vacaciones');
 
 -- --------------------------------------------------------
 
@@ -129,29 +130,36 @@ INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
 (9, 'Ver expediente', 2),
 (10, 'Editar expediente', 2),
 (11, 'Eliminar expediente', 2),
-(12, 'Acceso a roles', 3),
-(13, 'Crear roles', 3),
-(14, 'Editar roles', 3),
-(15, 'Eliminar roles', 3),
-(16, 'Acceso a permisos', 4),
-(17, 'Crear permiso', 4),
-(18, 'Editar permiso', 4),
-(19, 'Eliminar permiso', 4),
-(20, 'Acceso a departamentos', 5),
-(21, 'Crear departamento', 5),
-(22, 'Editar departamento', 5),
-(23, 'Eliminar departamento', 5),
-(24, 'Acceso a incidencias', 6),
-(25, 'Crear incidencia', 6),
-(26, 'Ver incidencia', 6),
-(27, 'Acceso a acta administrativa', 6),
-(28, 'Acceso a carta compromiso', 6),
-(29, 'Crear acta administrativa', 6),
-(30, 'Crear carta compromiso', 6),
-(31, 'Ver todas las incidencias', 6),
-(32, 'Ver todos los documentos administrativos', 6),
-(33, 'Acceso a solicitud incidencias', 7),
-(34, 'Acceso a vacaciones', 8);
+(12, 'Exportar reporte de empleados', 2),
+(13, 'Administrar tokens a expedientes', 2),
+(14, 'Acceso a roles', 3),
+(15, 'Crear roles', 3),
+(16, 'Editar roles', 3),
+(17, 'Eliminar roles', 3),
+(18, 'Acceso a permisos', 4),
+(19, 'Crear permiso', 4),
+(20, 'Editar permiso', 4),
+(21, 'Eliminar permiso', 4),
+(22, 'Acceso a departamentos', 5),
+(23, 'Crear departamento', 5),
+(24, 'Editar departamento', 5),
+(25, 'Eliminar departamento', 5),
+(26, 'Acceso a incidencias', 6),
+(27, 'Crear incidencia', 6),
+(28, 'Ver incidencia', 6),
+(29, 'Acceso a acta administrativa', 6),
+(30, 'Acceso a carta compromiso', 6),
+(31, 'Crear acta administrativa', 6),
+(32, 'Crear carta compromiso', 6),
+(33, 'Ver todas las incidencias', 6),
+(34, 'Ver todos los documentos administrativos', 6),
+(35, 'Editar estatus de las incidencias', 6),
+(36, 'Acceso a solicitud incidencias', 7),
+(37, 'Acceso a vacaciones', 8),
+(38, 'Ver todas las vacaciones', 8),
+(39, 'Acceso al historial de vacaciones', 8),
+(40, 'Editar estatus de las vacaciones', 8),
+(41, 'Acceso a solicitud vacaciones', 9);
 
 -- --------------------------------------------------------
 
@@ -220,7 +228,8 @@ INSERT INTO `departamentos` (`id`, `departamento`) VALUES
 (5, 'Laboratorio'),
 (6, 'Almacen'),
 (7, 'Operaciones'),
-(8, 'TI');
+(8, 'TI'),
+(9, 'Ventas');
 
 -- --------------------------------------------------------
 
@@ -2845,7 +2854,9 @@ INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
 (20, 'BAJA ANTE IMSS'),
 (21, 'MODIFICACION SALARIAL'),
 (22, 'COMPROBANTE DE ESTUDIOS'),
-(23, 'CARATULA DE DATOS BANCARIOS');
+(23, 'CARATULA DE DATOS BANCARIOS'),
+(24, 'ACTA DE MATRIMONIO'),
+(25, 'REGLAMENTO INTERIOR DEL TRABAJO');
 
 
 -- --------------------------------------------------------
@@ -3122,14 +3133,15 @@ INSERT INTO `tipo_accion_incidencias` (`id`, `descripcion_accion`) VALUES
 --
 
 CREATE TABLE `accion_incidencias`(
-	`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`incidencias_id` bigint(20) NOT NULL,
-	`tipo_de_accion` int NOT NULL,
-  `goce_de_sueldo` tinyint(1) DEFAULT NULL,
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `incidencias_id` bigint NOT NULL,
+  `tipo_de_accion` int NOT NULL,
+  `goce_de_sueldo` tinyint DEFAULT NULL,
   `comentario` varchar(200) DEFAULT NULL,
-	`evaluado_por` varchar(200) NOT NULL,
-	 FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
-	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id)
+  `evaluado_por` int DEFAULT NULL,
+  FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+  FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id),
+  FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3270,9 +3282,10 @@ CREATE TABLE `accion_vacaciones`(
 	`id_solicitud_vacaciones` int NOT NULL,
 	`tipo_de_accion` int NOT NULL,
 	`comentario` varchar(200) DEFAULT NULL,
-	`evaluado_por` varchar(200) NOT NULL,
+	`evaluado_por` int DEFAULT NULL,
 	 FOREIGN KEY (id_solicitud_vacaciones) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
-	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_vacaciones(id)
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_vacaciones(id),
+	 FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3286,6 +3299,107 @@ CREATE TABLE `transicion_accion_vacaciones`(
    id_accion int NOT NULL,
    FOREIGN KEY (id_transicion) REFERENCES transicion_estatus_vacaciones(id) ON DELETE CASCADE,
    FOREIGN KEY (id_accion) REFERENCES accion_vacaciones(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `alertas`
+--
+
+CREATE TABLE `alertas` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `modificado_por` int DEFAULT NULL,
+  `titulo_alerta` varchar(100) NOT NULL,
+  `descripcion_alerta` longtext NOT NULL,
+  `fecha_creacion_alerta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `filename_alertas` longtext DEFAULT NULL,
+  `alertas_foto_identificador` longtext DEFAULT NULL,
+  `filename_alertas_archivo` longtext DEFAULT NULL,
+  `alertas_archivo_identificador` longtext DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `avisos`
+--
+
+CREATE TABLE `avisos` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `modificado_por` int DEFAULT NULL,
+  `titulo_aviso` varchar(100) NOT NULL,
+  `descripcion_aviso` longtext NOT NULL,
+  `fecha_creacion_aviso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `filename_avisos` longtext DEFAULT NULL,
+  `avisos_foto_identificador` longtext DEFAULT NULL,
+  `filename_archivo_aviso` longtext DEFAULT NULL,
+  `aviso_archivo_identificador` longtext DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `comunicados`
+--
+
+CREATE TABLE `comunicados` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int NOT NULL,
+  `modificado_por` int DEFAULT NULL,
+  `titulo_comunicado` varchar(100) NOT NULL,
+  `descripcion_comunicado` longtext NOT NULL,
+  `fecha_creacion_comunicado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `filename_comunicados` longtext DEFAULT NULL,
+  `comunicados_foto_identificador` longtext DEFAULT NULL,
+  `filename_comunicados_archivo` longtext DEFAULT NULL,
+  `comunicados_archivo_identificador` longtext DEFAULT NULL,
+   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (modificado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `token_expediente`
+--
+
+CREATE TABLE `token_expediente` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expedientes_id` int  NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `link` longtext NOT NULL,
+  `exp_date` TIMESTAMP NULL,
+  FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `alerta_notificaciones`
+--
+
+CREATE TABLE `alerta_notificaciones` (
+  `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `notificado_a` int NOT NULL,
+  `enviado_por` int DEFAULT NULL,
+  `tipo_alerta` varchar(255) NOT NULL,
+  `alerta_titulo` varchar(255) NOT NULL,
+  `alerta_mensaje` varchar(255) NOT NULL,
+  `alerta_estatus` int NOT NULL,
+  `link` longtext DEFAULT NULL,
+  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   FOREIGN KEY (notificado_a) REFERENCES usuarios(id) ON DELETE CASCADE,
+   FOREIGN KEY (enviado_por) REFERENCES usuarios(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3754,20 +3868,165 @@ CREATE TABLE `tabla_historial_papeleria_log`(
 -- --------------------------------------------------------
 
 --
--- Trigger que inserta en la tabla Transicion_estatus_incidencia
+-- Estructura para la tabla `historial_solicitud_vacaciones`
 --
 
+CREATE TABLE `historial_solicitud_vacaciones` (
+  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `users_id` int  NOT NULL,
+  `periodo_solicitado` varchar(100) NOT NULL,
+  `dias_solicitados` int NOT NULL,
+  `fecha_solicitud` varchar(100) NOT NULL,
+  `estatus` int NOT NULL,
+  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  FOREIGN KEY (estatus) REFERENCES estatus_vacaciones(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `historial_accion_incidencias`
+--
+
+CREATE TABLE `historial_accion_incidencias`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`incidencias_id` bigint NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`goce_de_sueldo` tinyint DEFAULT NULL,
+	`comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` int DEFAULT NULL,
+	FOREIGN KEY (incidencias_id) REFERENCES incidencias(id) ON DELETE CASCADE,
+	FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id),
+	FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la tabla `historial_accion_vacaciones`
+--
+
+CREATE TABLE `historial_accion_vacaciones`(
+	`id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`solicitud_id` int NOT NULL,
+	`tipo_de_accion` int NOT NULL,
+	`comentario` varchar(200) DEFAULT NULL,
+	`evaluado_por` int DEFAULT NULL,
+	 FOREIGN KEY (solicitud_id) REFERENCES solicitud_vacaciones(id) ON DELETE CASCADE,
+	 FOREIGN KEY (tipo_de_accion) REFERENCES tipo_accion_incidencias(id),
+	 FOREIGN KEY (evaluado_por) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea una incidencia
+--
 
 DELIMITER $$
+CREATE TRIGGER alerta_incidencias
+AFTER INSERT on notificaciones_incidencias
+FOR EACH ROW
+	BEGIN
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT NEW.id_notificado, solicitudes_incidencias.users_id, "Incidencias", "Incidencia recibida", CONCAT('El usuario ', CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), ' te ha enviado una incidencia, haz clic aquí para ver más información.'), "0", "solicitud_incidencia.php" FROM solicitudes_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE solicitudes_incidencias.id=NEW.id_solicitud_incidencias;
+	END$$
+DELIMITER ;
 
-CREATE TRIGGER insertar_transicion_estatus_incidencia
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea una solicitud de vacaciones
+--
+
+DELIMITER $$
+CREATE TRIGGER alerta_vacaciones
+AFTER INSERT on notificaciones_vacaciones
+FOR EACH ROW
+	BEGIN
+		SET @periodo = (SELECT sv.periodo_solicitado FROM notificaciones_vacaciones nv INNER JOIN solicitud_vacaciones sv ON sv.id=nv.id_solicitud_vacaciones WHERE nv.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+		SET @fecha = (SELECT sv.fecha_solicitud FROM notificaciones_vacaciones nv INNER JOIN solicitud_vacaciones sv ON sv.id=nv.id_solicitud_vacaciones WHERE nv.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT NEW.id_notificado, solicitud_vacaciones.users_id, "Vacaciones", "Solicitud de vacaciones recibida", CONCAT('El usuario ', CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), ' te ha enviado una solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información.'), "0", "solicitud_vacaciones.php" FROM solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE solicitud_vacaciones.id=NEW.id_solicitud_vacaciones;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea una alerta
+--
+
+DELIMITER $$
+CREATE TRIGGER notificaciones_alerta
+AFTER INSERT on alertas
+FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT usuarios.id, NEW.users_id, "Alertas", "Nueva alerta", CONCAT('El usuario ', @enviado_por, ' ha creado una nueva alerta en la fecha ', NEW.fecha_creacion_alerta, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea un aviso
+--
+
+DELIMITER $$
+CREATE TRIGGER notificaciones_avisos
+AFTER INSERT on avisos
+FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT usuarios.id, NEW.users_id, "Avisos", "Nuevo aviso", CONCAT('El usuario ', @enviado_por, ' ha creado una nuevo aviso en la fecha ', NEW.fecha_creacion_aviso, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger que inserta en la tabla alerta_notificaciones cuando se crea un comunicado
+--
+
+DELIMITER $$
+CREATE TRIGGER notificaciones_comunicados
+AFTER INSERT on comunicados
+FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+	
+		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		SELECT usuarios.id, NEW.users_id, "Comunicados", "Nuevo comunicado", CONCAT('El usuario ', @enviado_por, ' ha creado un nuevo comunicado en la fecha ', NEW.fecha_creacion_comunicado '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que inserta y actualiza el estatus en las tablas transicion_estatus_incidencia y transicion_accion_incidencias y envía una nueva notificación al usuario sobre la respuesta de la notificación
+--
+
+DELIMITER $$
+CREATE TRIGGER insertar_transicion_estatus_notificacion_incidencia
 AFTER INSERT ON accion_incidencias FOR EACH ROW
 BEGIN
-	 INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
+
+	INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias", "Solicitud de incidencia evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	
 END;
 $$
-
-
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -3795,19 +4054,29 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Trigger que inserta en la tabla transicion_estatus_vacaciones
+-- Estructura para el trigger que inserta y actualiza el estatus en las tablas transicion_estatus_vacaciones y transicion_accion_vacaciones y envía una nueva notificación al usuario sobre la respuesta de la notificación
 --
 
 
 DELIMITER $$
 
-CREATE TRIGGER insertar_transicion_estatus_vacaciones
+CREATE TRIGGER insertar_transicion_estatus_notificaciones_vacaciones
 AFTER INSERT ON accion_vacaciones FOR EACH ROW
 BEGIN
-	 INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_vacaciones INNER JOIN usuarios ON usuarios.id = accion_vacaciones.evaluado_por WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	
+	
+	INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones", "Solicitud de vacaciones evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+	
 END;
 $$
-
 
 DELIMITER ;
 
@@ -3854,15 +4123,19 @@ DELIMITER ;
 -- --------------------------------------------------------								
 
 --
--- Estructura para el trigger que guarda el evento de insertar de la tabla usuarios en la tabla_usuarios_log  `log_usuarios_insertar`
+-- Estructura para el trigger que guarda el evento de insertar de la tabla usuarios en la tabla_usuarios_log y envía una nueva notificación al nuevo usuario  `log_notificaciones_usuarios_insertar`
 --
 
 DELIMITER $$
-	CREATE TRIGGER log_usuarios_insertar AFTER INSERT ON usuarios
+	CREATE TRIGGER log_notificaciones_usuarios_insertar AFTER INSERT ON usuarios
 	FOR EACH ROW
 	BEGIN
 		INSERT INTO tabla_usuarios_log (logged_usuario, data_usuario, accion)
 		VALUES (COALESCE(@logged_user, CURRENT_USER()), CONCAT(NEW.nombre, ' ', NEW.apellido_pat, ' ', NEW.apellido_mat), 'Insertar');
+		
+		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+		VALUES (NEW.id, "Usuarios", "Intranet", "Todo sinttecom te da la bienvenida a la intranet, es necesario estar siempre al pendiente de las notificaciones que se mandan por aquí.", "0");
+		
 	END$$
 DELIMITER ;
 
@@ -3899,15 +4172,35 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log  `log_expedientes_insert`
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log y envía una nueva notificación al usuario sobre el expediente creado `log_notificaciones_expedientes_insert`
 --
 
 DELIMITER $$
-CREATE TRIGGER log_expedientes_insert AFTER INSERT on expedientes
+CREATE TRIGGER log_notificaciones_expedientes_insert AFTER INSERT on expedientes
 FOR EACH ROW
 	BEGIN
 		INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, num_empleado, accion)
 		SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.num_empleado, "INSERTAR" FROM usuarios WHERE NEW.users_id = usuarios.id;
+		
+		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+		VALUES (NEW.users_id, "Expedientes", "Expediente asignado", "Se le ha asignado un expediente lo cual significa que ya puede enviar incidencias y vacaciones.", "0");	
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que inserta en la tabla alerta_notificaciones cuando se asigna un token a un expediente 
+--
+
+DELIMITER $$
+CREATE TRIGGER alert_token_expediente AFTER INSERT on token_expediente
+FOR EACH ROW
+	BEGIN
+		SET @notificado_a = (SELECT usuarios.id FROM usuarios INNER JOIN expedientes ON expedientes.users_id=usuarios.id WHERE expedientes.id=NEW.expedientes_id);
+	
+		INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		VALUES (@notificado_a, "Token_expediente", "Nuevo token asignado", "Se le ha asignado un token lo cual significa que necesita llenar los datos de su expediente. Haz clic en la notificación para ir al link", "0", CONCAT('expediente_modo_edicion.php?token=', NEW.token));
 	END$$
 DELIMITER ;
 
@@ -4047,6 +4340,55 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura para el trigger que inserta en la historial_accion_incidencias, actualiza el estatus de la incidencia y envia una notificación al usuario que envío una incidencia
+--
+
+DELIMITER $$
+CREATE TRIGGER update_transicion_estatus_notificacion_incidencia
+AFTER UPDATE ON accion_incidencias FOR EACH ROW
+BEGIN
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
+
+	INSERT INTO historial_accion_incidencias(incidencias_id, tipo_de_accion, goce_de_sueldo, comentario, evaluado_por) VALUES (OLD.incidencias_id, OLD.tipo_de_accion, OLD.goce_de_sueldo, OLD.comentario, OLD.evaluado_por);
+
+	UPDATE transicion_estatus_incidencia SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE incidencias_id=NEW.incidencias_id;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias reevaluada", "Solicitud de incidencia reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));	
+END;
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para el trigger que inserta en la historial_accion_vacaciones, actualiza el estatus de la solicitud de vacaciones y envia una notificación al usuario que envío una solicitud de vacaciones
+--
+
+DELIMITER $$
+CREATE TRIGGER update_transicion_estatus_notificacion_vacaciones
+AFTER UPDATE ON accion_vacaciones FOR EACH ROW
+BEGIN
+	
+	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_vacaciones INNER JOIN usuarios ON usuarios.id = accion_vacaciones.evaluado_por WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	
+	INSERT INTO historial_accion_vacaciones(solicitud_id, tipo_de_accion, comentario, evaluado_por) VALUES (OLD.id_solicitud_vacaciones, OLD.tipo_de_accion, OLD.comentario, OLD.evaluado_por);
+
+	UPDATE transicion_estatus_vacaciones SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones reevaluada", "Solicitud de vacaciones reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");	
+END;
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `serverside_user_superadministrador`
 --
 DROP TABLE IF EXISTS `serverside_user_superadministrador`;
@@ -4087,7 +4429,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_expuser`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT (case when (`expedientes`.`num_empleado` is null) then 'Sin asignar' else `expedientes`.`num_empleado` end) AS `num_empleado`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `estatus_empleado`.`situacion_del_empleado` AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `usuarios`.`foto_identificador` AS `foto`, `expedientes`.`id` AS `expediente_id` FROM (((`expedientes` join `usuarios` on((`usuarios`.`id` = `expedientes`.`users_id`))) join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`)))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT (case when (`expedientes`.`num_empleado` is null) then 'Sin asignar' else `expedientes`.`num_empleado` end) AS `num_empleado`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `estatus_empleado`.`situacion_del_empleado` AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rolnom`, `usuarios`.`foto_identificador` AS `foto`, `expedientes`.`id` AS `expediente_id` FROM ((((`expedientes` join `usuarios` on((`usuarios`.`id` = `expedientes`.`users_id`))) join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) ;
 
 -- --------------------------------------------------------
 
@@ -4116,3 +4458,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 DROP TABLE IF EXISTS `serverside_subrol`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_subrol`  AS SELECT `subroles`.`id` AS `sbid`, `subroles`.`subrol_nombre` AS `sbnombre`, `roles`.`nombre` AS `rolnom` FROM (`subroles` join `roles` on((`roles`.`id` = `subroles`.`roles_id`)))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `serverside_historial_vacaciones`
+--
+DROP TABLE IF EXISTS `serverside_historial_vacaciones`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_historial_vacaciones`  AS SELECT `historial_solicitud_vacaciones`.`id` AS `id`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `historial_solicitud_vacaciones`.`periodo_solicitado` AS `periodo`, `historial_solicitud_vacaciones`.`fecha_solicitud` AS `fecha_solicitud`, `historial_solicitud_vacaciones`.`estatus` AS `estatus` FROM (`historial_solicitud_vacaciones` join `usuarios` on((`usuarios`.`id` = `historial_solicitud_vacaciones`.`users_id`))) ;
+
+-- --------------------------------------------------------

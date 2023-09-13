@@ -61,6 +61,16 @@
                      </button>
                   </li>
                   <?php } ?>
+                  <?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){ ?>
+                  <li role="presentation">
+                     <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100" id="empleados-tab" data-tabs-target="#empleados" type="button" role="tab" aria-controls="empleados" aria-selected="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
+                           <path fill="CurrentColor" d="M13.07 10.41A5 5 0 0 0 13.07 4.59A3.39 3.39 0 0 1 15 4A3.5 3.5 0 0 1 15 11A3.39 3.39 0 0 1 13.07 10.41M5.5 7.5A3.5 3.5 0 1 1 9 11A3.5 3.5 0 0 1 5.5 7.5M7.5 7.5A1.5 1.5 0 1 0 9 6A1.5 1.5 0 0 0 7.5 7.5M16 17V19H2V17S2 13 9 13 16 17 16 17M14 17C13.86 16.22 12.67 15 9 15S4.07 16.31 4 17M15.95 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13Z" />
+                        </svg>
+                        <span>Todos mis empleados</span>
+                     </button>
+                  </li>
+                  <?php } ?>
                </ul>
             </div>
          </div>
@@ -1097,9 +1107,48 @@
                      </div>
                   </div>
                   <?php } ?>
+                  <?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){ ?>
+                  <div class="hidden bg-transparent rounded-lg" id="empleados" role="tabpanel" aria-labelledby="empleados-tab">
+                     <div class="p-3">
+                        <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
+                           <thead>
+                              <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                 <th class="py-3 text-left desktop">Tipo de trabajador</th>
+                                 <th class="py-3 text-left all">Nombre</th>
+                                 <th>Usuario_id</th>
+                                 <th class="py-3 text-center min-tablet">Acción</th>
+                              </tr>
+                           </thead>
+                        </table>
+                     </div>
+                  </div>
+                  <?php } ?>
                </div>
             </div>
          </div>
       </div>
    </div>
 </div>
+<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
+	<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
+		<div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+			<div class="modal-bg-container inset-0"></div>
+			<div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>
+			<div id="modal-container" class="modal-container inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-lx transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+				<div class="modal-wrapper bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+					<div class="modal-wrapper-flex sm:flex sm:flex-col sm:items-start">
+						<div class="flex-col gap-3 items-center flex sm:flex-row">
+							<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9.5H18V7.5H13V9.5M13,16.5H18V14.5H13V16.5M19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21M6,11H11V6H6V11M7,7H10V10H7V7M6,18H11V13H6V18M7,14H10V17H7V14Z" /></svg></div>
+							<h3 class="text-lg font-medium text-gray-900"> Ver vacaciones</h3>
+						</div>
+						<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">
+						</div>
+					</div>
+				</div>
+				<div class="modal-actions bg-gray-50 flex flex-col gap-3 px-4 py-3 sm:px-6 sm:flex-row-reverse">
+					<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php } ?>

@@ -4,9 +4,6 @@ include_once __DIR__ . "/crud.php";
 include_once __DIR__ . "/../classes/permissions.php";
 include_once __DIR__ . "/../classes/roles.php";
 include_once __DIR__ . "/../classes/departamentos.php";
-require_once __DIR__ . "/../config/PHPMailer/src/PHPMailer.php";
-require_once __DIR__ . "/../config/PHPMailer/src/Exception.php";
-require_once __DIR__ . "/../config/PHPMailer/src/SMTP.php";
 class incidencias {
 	public $usuario_id;
 	public $usuario_rol;
@@ -27,150 +24,20 @@ class incidencias {
         return $file;
     }
 
-	public static function sendEmail($incidencia_id, $jefe_array, $tipoincidencia){
+	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $evaluado_por, $comentario){
 		$object = new connection_database();
 		$crud = new crud();
-		$sql = $object->_db->prepare('SELECT solicitudes_incidencias.id as solicitudid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, solicitudes_incidencias.fecha_solicitud as fecha_solicitud FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
-		$sql -> execute(array(':incidenciaid' => $incidencia_id));
-		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
-		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
-		$path = dirname($path);
-		$links = $path. "/layouts/solicitud_incidencia.php";
-		$mail=new PHPMailer\PHPMailer\PHPMailer();
-		$mail->IsSMTP();  // telling the class to use SMTP
-		$mail->SMTPDebug = 0;
-		$mail->SMTPSecure = 'tls'; 
-		$mail->Host = 'mail.sinttecom.com'; 
-		$mail->SMTPOptions = array(
-			'ssl' => array(
-				'verify_peer' => false,
-				'verify_peer_name' => false,
-				'allow_self_signed' => true
-			)
-		);
-		$mail->Port = 587;
-		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
-		$mail->Password = "k8@SY#xR"; // SMTP password
-		$mail->IsHTML(true);
-		$lista_correos = Array();
-		foreach($jefe_array as $correo){
-			$mail->AddAddress($correo);
-			$lista_correos[]=$correo;
-		}
-		$correos= implode(', ', $lista_correos);
-		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
-		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-		$mail->Subject  = "El usuario ". $row_user_incidencia -> nombre ." te ha envíado una solicitud de incidencia (ID: ".$row_user_incidencia -> solicitudid.")";
-		$mail->Body     = "Buen día ".$correos.": <br> El usuario ".$row_user_incidencia -> nombre." ha solicitado una incidencia con ID ".$row_user_incidencia -> solicitudid." del tipo " .$tipoincidencia. " en la fecha " .$row_user_incidencia -> fecha_solicitud. " <br> Haga clic en el link a continuación para ver la incidencia y evaluarla: <br> $links";
-		$mail->WordWrap = 50;
-		$mail->CharSet = "UTF-8";
-		if(!$mail->Send()) {
-			echo 'Message was not sent.';
-			echo 'Mailer error: ' . $mail->ErrorInfo;
-		}
+		$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $evaluado_por]);
+		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
+		$update_state -> execute(array(':incidenciaid' => $incidenciaid));
 	}
 
-	public static function getResponse($incidencia_id, $estatus, $sueldo, $comentario){
+	public static function editStatus($id, $estatus, $sueldo, $comentarios, $evaluado_por){
 		$object = new connection_database();
 		$crud = new crud();
-		$array = [];
-		$sql = $object->_db->prepare('SELECT solicitudes_incidencias.id as solicitudid, solicitudes_incidencias.fecha_solicitud as fecha_solicitud, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) as nombre, usuarios.correo FROM incidencias INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE incidencias.id=:incidenciaid');
-		$sql -> execute(array(':incidenciaid' => $incidencia_id));
-		$row_user_incidencia = $sql ->fetch(PDO::FETCH_OBJ);
-		array_push($array, $row_user_incidencia -> correo);
-		
-		$check_gerente_capital_finanzas = $object -> _db -> prepare("SELECT usuarios.correo FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id INNER JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE roles.nombre='Gerente' AND departamentos.departamento='Capital humano' || roles.nombre='Gerente' AND departamentos.departamento='Finanzas'");
-		$check_gerente_capital_finanzas -> execute();
-		$count_gerente_capital_finanzas = $check_gerente_capital_finanzas -> rowCount();
-		$fetch_gerente_capital_finanzas = $check_gerente_capital_finanzas ->fetchAll(PDO::FETCH_ASSOC);
-		if($count_gerente_capital_finanzas == 2){
-			foreach($fetch_gerente_capital_finanzas as $array_gerentes){
-				foreach($array_gerentes as $correos_array){
-					array_push($array, $correos_array);
-				}
-			}
-		}else if($count_gerente_capital_finanzas == 1){
-			foreach($fetch_gerente_capital_finanzas as $array_gerentes){
-				foreach($array_gerentes as $correos_array){
-					array_push($array, $correos_array);
-				}
-			}
-		}else if($count_gerente_capital_finanzas == 0){
-			array_push($array, "alberto.martinez@sinttecom.com");
-		}
-		if($sueldo == 1){
-			$sueldo_message = "con goce de sueldo";
-		}else if($sueldo == 0){
-			$sueldo_message = "sin goce de sueldo";
-		}
-		if($estatus == 3){
-			$status = "Rechazada";
-		}else if($estatus == 2){
-			$status = "Cancelada";
-		}else if ($estatus == 1){
-			$status = "Aprobada";
-		}
-		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-		$path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
-		$path = dirname($path);
-		$links = $path. "/layouts/incidencias.php";		
-		$mail=new PHPMailer\PHPMailer\PHPMailer();
-		$mail->IsSMTP();  // telling the class to use SMTP
-		$mail->SMTPDebug = 0;
-		$mail->SMTPSecure = 'tls'; 
-		$mail->Host = 'mail.sinttecom.com'; 
-		$mail->SMTPOptions = array(
-			'ssl' => array(
-				'verify_peer' => false,
-				'verify_peer_name' => false,
-				'allow_self_signed' => true
-			)
-		);
-		$mail->Port = 587;
-		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
-		$mail->Password = "k8@SY#xR"; // SMTP password
-		$mail->IsHTML(true);
-		foreach($array as $correo)
-		{
-			$mail->AddAddress($correo);
-		}
-		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
-		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
-		$mail->Subject  = "La solicitud de incidencia del usuario " .$row_user_incidencia -> nombre. " ha sido evaluada (ID: ".$row_user_incidencia -> solicitudid.")";
-		$mail->Body     = "Buen día: <br> La solicitud de incidencia evaluada que envió el usuario ".$row_user_incidencia -> nombre." con ID ".$row_user_incidencia -> solicitudid." expedido en la fecha ".$row_user_incidencia -> fecha_solicitud." tiene el siguiente estatus: ".$status. ' ' .$sueldo_message.". <br> Has clic aquí para ver los detalles: <br> <a href=".$links.">Checar incidencia</a> <br> Comentarios:  ".$comentario."";
-		$mail->WordWrap = 50;
-		$mail->CharSet = "UTF-8";
-		if(!$mail->Send()) {
-			echo 'Message was not sent.';
-			echo 'Mailer error: ' . $mail->ErrorInfo;
-		}
-	}
-
-	public static function Almacenar_estatus($incidenciaid, $estatus, $sueldo, $nombre, $apellido_pat, $apellido_mat, $comentario){
-		$check_incidencia = Incidencias::Checkincidencia($incidenciaid);
-		if($check_incidencia > 0 ){
-			$object = new connection_database();
-			$crud = new crud();
-			$nombre_completo = $nombre. ' ' .$apellido_pat. ' ' .$apellido_mat;
-			$crud -> store ('accion_incidencias', ['incidencias_id' => $incidenciaid, 'tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentario, 'evaluado_por' => $nombre_completo]);
-			$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
-			$update_state -> execute(array(':incidenciaid' => $incidenciaid));
-			Incidencias::getResponse($incidenciaid, $estatus, $sueldo, $comentario);
-		}else{
-			die(json_encode(array("failed", "La incidencia ya no existe!")));
-		}
-	}
-	
-	public static function Checkincidencia($id){
-		$object = new connection_database();
-		$editar = $object -> _db->prepare("SELECT * FROM incidencias WHERE id=:incidenciaid");
-		$editar->bindParam("incidenciaid", $id ,PDO::PARAM_INT);
-		$editar->execute();
-		$check_incidencia=$editar->rowCount();
-		return $check_incidencia;
+		$crud -> update ('accion_incidencias', ['tipo_de_accion' => $estatus, 'goce_de_sueldo' => $sueldo, 'comentario' => $comentarios, 'evaluado_por' => $evaluado_por], "incidencias_id=:incidenciaid", [":incidenciaid" => $id]);
+		$update_state = $object -> _db -> prepare("UPDATE incidencias i INNER JOIN (SELECT transicion_estatus_incidencia.incidencias_id, transicion_estatus_incidencia.estatus_siguiente FROM transicion_estatus_incidencia WHERE transicion_estatus_incidencia.incidencias_id=:incidenciaid ORDER BY transicion_estatus_incidencia.id desc LIMIT 1) temp ON i.id=temp.incidencias_id INNER JOIN solicitudes_incidencias ON i.id_solicitud_incidencias=solicitudes_incidencias.id SET solicitudes_incidencias.estatus = temp.estatus_siguiente");
+		$update_state -> execute(array(':incidenciaid' => $id));
 	}
 }
 
@@ -210,8 +77,6 @@ class permiso extends incidencias implements tipo_permiso {
 		$crud -> store ('permisos_reglamentarios', ['permiso_r' => $permiso_r, 'periodo_ausencia_r' => $fecha_periodo, 'observaciones_permiso_r' => $observaciones_permiso_r, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
 		$permiso_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_reglamentario' => $permiso_id]);
-		$incidencia_id = $object -> _db -> lastInsertId();
-		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso reglamentario descriptivo");
 	}
 
 	//Permiso reglamentario OTRO/HOME OFFICE
@@ -233,8 +98,6 @@ class permiso extends incidencias implements tipo_permiso {
 		$crud -> store ('permisos_reglamentarios', ['permiso_r' => $permiso_r, 'periodo_ausencia_r' => $periodo_pnd, 'motivo_permiso_r' => $motivo_pnd, 'observaciones_permiso_r' => $observaciones_permiso_r, 'nombre_justificante_r' => $filename_justificante_permiso_r, 'identificador_justificante_r' => basename($uploadfile)]);
 		$permiso_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_reglamentario' => $permiso_id]);
-		$incidencia_id = $object -> _db -> lastInsertId();
-		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso reglamentario no descriptivo");
 	}
 
 	//Permiso no reglamentario GENERAL
@@ -261,8 +124,6 @@ class permiso extends incidencias implements tipo_permiso {
 		}
 		$permiso_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);
-		$incidencia_id = $object -> _db -> lastInsertId();
-		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso no reglamentario general");
 	}
 
 	//Permiso no reglamentario AUSENCIA
@@ -288,9 +149,7 @@ class permiso extends incidencias implements tipo_permiso {
 			$crud -> store ('permisos_no_reglamentarios', ['permiso_nr' => $permiso_nr, 'periodo_ausencia_nr' => $periodo_pnr_f, 'motivo_permiso_nr' => $motivo_permiso_nr, 'observaciones_permiso_nr' => $observaciones_permiso_nr, 'posee_jpermiso_nr' => $posee_jpermiso_nr, 'nombre_justificante_nr' => $filename_justificante_permiso_nr, 'identificador_justificante_nr' => $justificante_permiso_nr]);
 		}
 		$permiso_id = $object -> _db -> lastInsertId();
-		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);
-		$incidencia_id = $object -> _db -> lastInsertId();
-		Incidencias::sendEmail($incidencia_id, $jefe_array, "permiso no reglamentario ausencia");	
+		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_permiso_no_reglamentario' => $permiso_id]);	
 	}
 
 	//TERMINA LA CREACION DE PERMISOS
@@ -321,8 +180,6 @@ class incapacidades extends incidencias{
 		$crud -> store ('incapacidades', ['numero_incapacidad' => $numero_incapacidad, 'serie_folio_incapacidad' => $serie_folio_incapacidad, 'tipo_incapacidad' => $tipo_incapacidad, 'ramo_seguro_incapacidad' => $ramo_seguro_incapacidad, 'periodo_incapacidad' => $periodo_incapacidad, 'motivo_incapacidad' => $motivo_incapacidad, 'observaciones_incapacidad' => $observaciones_incapacidad, 'nombre_justificante_incapacidad' => $filename_comprobante_incapacidad, 'archivo_identificador_incapacidad' => basename($uploadfile)]);
 		$incapacidad_id = $object -> _db -> lastInsertId();
 		$crud -> store ('incidencias', ['id_solicitud_incidencias' => $solicitud_id, 'id_incapacidades' => $incapacidad_id]);
-		$incidencia_id = $object -> _db -> lastInsertId();
-		Incidencias::sendEmail($incidencia_id, $jefe_array, "incapacidad");
 	}
 }
 

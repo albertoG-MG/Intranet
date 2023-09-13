@@ -223,12 +223,48 @@
             }
             
             $fecha_vencimiento = get_next_anniversary($fetch_information->eestatus_fecha);
+
+            $var = $fecha_vencimiento;
+            $fecha_format = str_replace('/', '-', $var);
+            $fecha_format = strtotime("-1 year", strtotime($fecha_format));
+            $fecha_format = date('Y-m-d', $fecha_format);
+
+            $checkDate = $fecha_vencimiento;
+            $checkAnniversary = strtotime($checkDate);
+            if(date('m-d') == date('m-d', $checkAnniversary)) {
+                $prepareStatement = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE users_id=:userid AND estatus!=4 AND fecha_solicitud < :fechasolicitud");
+                $prepareStatement -> execute(array(':userid' => $_SESSION['id'], ':fechasolicitud' => $fecha_format));
+                $countSolicitudes = $prepareStatement -> rowCount();
+                if ($countSolicitudes > 0){
+                    $fetchSolicitudes = $prepareStatement -> fetchAll(PDO::FETCH_ASSOC);
+                    foreach($fetchSolicitudes as $key => $value){
+
+
+                        $insertStatement = $object -> _db -> prepare("INSERT INTO historial_solicitud_vacaciones(users_id, periodo_solicitado, dias_solicitados, fecha_solicitud, estatus) VALUES(:iduser, :periodo, :dias, :fecha, :estatus)");
+                        $insertStatement -> execute(array(':iduser' => $value['users_id'], ':periodo' => $value['periodo_solicitado'], ':dias' => $value['dias_solicitados'], ':fecha' => $value['fecha_solicitud'], ':estatus' => $value['estatus']));
+                        $deleteStatement = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE id=:idsolicitud");
+                        $deleteStatement -> execute(array(':idsolicitud' => $value["id"]));
+                    }
+                }
+                $deleteall_statement = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE users_id=:iduser AND estatus=4 AND fecha_solicitud < :fechasolicitud");
+                $deleteall_statement -> execute(array(":iduser" => $_SESSION["id"], ':fechasolicitud' => $fecha_format));
+                $deletecount_statement = $deleteall_statement -> rowCount();
+                if($deletecount_statement > 0){
+                    $fetchDeleteRequest = $deleteall_statement -> fetchAll(PDO::FETCH_ASSOC);
+                    foreach($fetchDeleteRequest as $llave => $valor){
+                        $deleteRequests = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE id=:solicitudid");
+                        $deleteRequests -> execute(array("solicitudid" => $valor["id"]));
+                    }
+                }
+            }
                 
             $fecha_estatus = $fetch_information -> eestatus_fecha;
             $d1 = new DateTime($hoy);
             $d2 = new DateTime($fecha_estatus);
             $diff = $d2->diff($d1);
-            if ($diff->y == 1) {
+            if($diff->y == 0) {
+                $vacaciones = 0;
+            }else if($diff->y == 1) {
                 $vacaciones=12;
             }else if($diff->y == 2){
                 $vacaciones=14;
@@ -240,18 +276,18 @@
                 $vacaciones=20;
             }else{
                 $acum=6;
-                $acum2=10;
-                $vacaciones=22;
-                $bool = "false";
-                do{
-                    if(($acum <= $diff->y) && ($diff->y <= $acum2)){
-                        $bool = "true";
-                    }else{
-                        $vacaciones = $vacaciones+2;
-                        $acum=$acum + 5;
-                        $acum2=$acum2 + 5;
-                    }
-                }while($bool == "true");
+	            $acum2=10;
+	            $vacaciones=20;
+	            $counter=0;
+	            do {
+		            if(($acum > $diff->y) && ($diff->y < $acum2)){
+			            $counter++;
+		            }else{
+			            $vacaciones = $vacaciones + 2;
+			            $acum = $acum + 5;
+			            $acum2 = $acum2 + 5;
+		            }
+	            } while($counter <= 1);
             }
 
             $check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");

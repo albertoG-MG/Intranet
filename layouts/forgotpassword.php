@@ -30,7 +30,7 @@ if(isset($_POST["email"])){
 		$fetch_user = $select_user -> fetch(PDO::FETCH_OBJ);
 		$token = bin2hex(random_bytes(16));
 		date_default_timezone_set("America/Monterrey");
-		$expFormat = mktime(date("H")+1, date("i"), date("s"), date("m") ,date("d"), date("Y"));
+		$expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d"), date("Y"));
 		$expDate = date("Y-m-d H:i:s",$expFormat);
 		$crud -> store('reset_password', ['user_id' => $fetch_user->id, 'reset_link_token' => $token, 'exp_date' => $expDate]);
 		$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -51,8 +51,8 @@ if(isset($_POST["email"])){
 		);
 		$mail->Port = 587;
 		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "botsinttecom@sinttecom.com"; // SMTP username
-		$mail->Password = "sinttecom1994"; // SMTP password
+		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
+		$mail->Password = "k8@SY#xR"; // SMTP password
 		$mail->IsHTML(true);
 		$mail->AddAddress($email);
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');

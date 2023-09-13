@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-animation text-black font-semibold text-lg'></i></div>"+
             "<h3 class='text-lg font-medium text-gray-900'>Crear categoria</h3>"+
             "</div>"+
-            "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
+            "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
                 "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre de la categoria</label>"+
                     "<div class='group flex'>"+
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-animation text-black font-semibold text-lg'></i></div>"+
             "<h3 class='text-lg font-medium text-gray-900'>Editar categoria</h3>"+
             "</div>"+
-            "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:ml-4 sm:text-left'>"+
+            "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
                 "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar la categoria</label>"+
                     "<div class='group flex'>"+

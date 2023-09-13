@@ -89,7 +89,7 @@
                       Periodo:
                     </div>
                     <span>
-                      <?php if($fetch_information->observaciones_permiso_r == null){ echo "Sin datos"; }else{ echo $fetch_information->observaciones_permiso_r; } ?>
+                      <?php if($fetch_information->periodo_ausencia_r == null){ echo "Sin datos"; }else{ echo $fetch_information->periodo_ausencia_r; } ?>
                     </span>
                   </div>
                 </div>

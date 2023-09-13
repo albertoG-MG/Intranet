@@ -544,7 +544,7 @@
                 "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
-                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left'>"+
+                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
                     "<div class='grid grid-cols-1 mt-5'>"+
                         "<label class='text-[#64748b] font-semibold mb-2' style='word-break: break-word;'>Subir acta firmada para "+data['asignada_a']+"</label>"+
                         "<div class='flex flex-col w-full justify-center mt-2'>"+
@@ -697,7 +697,7 @@
                 "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
-                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left'>"+
+                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
                     "<div class='grid grid-cols-1 mt-5'>"+
                         "<label class='text-[#64748b] font-semibold mb-2' style='word-break: break-word;'>Subir carta firmada para "+data['asignada_a']+"</label>"+
                         "<div class='flex flex-col w-full justify-center mt-2'>"+
@@ -849,7 +849,7 @@
                 "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
-                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left'>"+
+                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
                     "<div class='grid grid-cols-1 mt-5'>"+
                         "<label class='text-[#64748b] font-semibold mb-2' style='word-break: break-word;'>Editar acta firmada para "+data['asignada_a']+"</label>"+
                         "<div class='flex flex-col w-full justify-center mt-2'>"+
@@ -1008,7 +1008,7 @@
                 "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
-                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left'>"+
+                "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
                     "<div class='grid grid-cols-1 mt-5'>"+
                         "<label class='text-[#64748b] font-semibold mb-2' style='word-break: break-word;'>Editar carta firmada para "+data['asignada_a']+"</label>"+
                         "<div class='flex flex-col w-full justify-center mt-2'>"+
