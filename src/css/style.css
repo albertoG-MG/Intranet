@@ -741,6 +741,10 @@ select {
   margin-top: 0.25rem !important;
   margin-bottom: 0.25rem !important;
 }
+.my-4 {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
 .my-auto {
   margin-top: auto !important;
   margin-bottom: auto !important;
@@ -756,10 +760,6 @@ select {
 .my-5 {
   margin-top: 1.25rem !important;
   margin-bottom: 1.25rem !important;
-}
-.my-4 {
-  margin-top: 1rem !important;
-  margin-bottom: 1rem !important;
 }
 .mt-5 {
   margin-top: 1.25rem !important;
@@ -833,6 +833,9 @@ select {
 .-mt-2 {
   margin-top: -0.5rem !important;
 }
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
 .mt-6 {
   margin-top: 1.5rem !important;
 }
@@ -847,9 +850,6 @@ select {
 }
 .mb-1 {
   margin-bottom: 0.25rem !important;
-}
-.mb-4 {
-  margin-bottom: 1rem !important;
 }
 .-mr-1 {
   margin-right: -0.25rem !important;
@@ -871,6 +871,9 @@ select {
 }
 .table {
   display: table !important;
+}
+.flow-root {
+  display: flow-root !important;
 }
 .grid {
   display: grid !important;
@@ -930,9 +933,6 @@ select {
 }
 .h-64 {
   height: 16rem !important;
-}
-.h-\[21\.875rem\] {
-  height: 21.875rem !important;
 }
 .min-h-screen {
   min-height: 100vh !important;
@@ -1266,6 +1266,10 @@ select {
   --tw-divide-y-reverse: 0 !important;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse))) !important;
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse)) !important;
+}
+.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1 !important;
+  border-color: rgb(229 231 235 / var(--tw-divide-opacity)) !important;
 }
 .self-start {
   align-self: flex-start !important;
@@ -1710,13 +1714,13 @@ select {
   font-size: 3.75rem !important;
   line-height: 1 !important;
 }
-.text-5xl {
-  font-size: 3rem !important;
-  line-height: 1 !important;
-}
 .text-base {
   font-size: 1rem !important;
   line-height: 1.5rem !important;
+}
+.text-5xl {
+  font-size: 3rem !important;
+  line-height: 1 !important;
 }
 .text-\[\.8125rem\] {
   font-size: .8125rem !important;
@@ -1865,6 +1869,10 @@ select {
   --tw-text-opacity: 1 !important;
   color: rgb(217 119 6 / var(--tw-text-opacity)) !important;
 }
+.text-cyan-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(8 145 178 / var(--tw-text-opacity)) !important;
+}
 .text-slate-700 {
   --tw-text-opacity: 1 !important;
   color: rgb(51 65 85 / var(--tw-text-opacity)) !important;
@@ -1888,10 +1896,6 @@ select {
 .text-yellow-600 {
   --tw-text-opacity: 1 !important;
   color: rgb(202 138 4 / var(--tw-text-opacity)) !important;
-}
-.text-rose-500 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(244 63 94 / var(--tw-text-opacity)) !important;
 }
 .opacity-50 {
   opacity: 0.5 !important;
@@ -2261,10 +2265,6 @@ select {
     margin-left: 0.75rem !important;
   }
 
-  .sm\:ml-4 {
-    margin-left: 1rem !important;
-  }
-
   .sm\:block {
     display: block !important;
   }
@@ -2283,10 +2283,6 @@ select {
 
   .sm\:h-10 {
     height: 2.5rem !important;
-  }
-
-  .sm\:h-full {
-    height: 100% !important;
   }
 
   .sm\:w-10 {
@@ -2363,6 +2359,11 @@ select {
   .sm\:px-6 {
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
+  }
+
+  .sm\:py-4 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
 
   .sm\:px-5 {
@@ -2537,10 +2538,6 @@ select {
     margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse))) !important;
   }
 
-  .md\:overflow-y-hidden {
-    overflow-y: hidden !important;
-  }
-
   .md\:break-normal {
     overflow-wrap: normal !important;
     word-break: normal !important;
@@ -2695,5 +2692,11 @@ select {
   .xl\:gap-x-8 {
     -moz-column-gap: 2rem !important;
          column-gap: 2rem !important;
+  }
+}
+@media (min-width: 1536px) {
+
+  .\32xl\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
