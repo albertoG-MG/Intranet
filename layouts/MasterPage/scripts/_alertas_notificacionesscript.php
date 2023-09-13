@@ -174,7 +174,7 @@
 
     function remove_notification(id, tipo_alerta){
         load_unseen_notification(id);
-        if(tipo_alerta != "Usuarios"){
+        if(tipo_alerta != "Usuarios" && tipo_alerta != "Expedientes"){
             get_link(id);
         }else{
             totalfilas_nvistas();
