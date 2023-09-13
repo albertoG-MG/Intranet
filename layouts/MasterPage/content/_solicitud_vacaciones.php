@@ -57,9 +57,9 @@
         </div>
     </div>
 </div>
-<div id="modal-component-container" class="modal-component-container hidden fixed inset-0">
+<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
     <div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="modal-bg-container fixed inset-0 bg-gray-700 bg-opacity-75"></div>
+        <div class="modal-bg-container inset-0"></div>
         <div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>
         <div id="modal-container" class="modal-container inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-lx transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
             <form id="Guardar" method="post">
@@ -69,7 +69,7 @@
                             <div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"><svg class="w-5 h-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,7A2,2 0 0,0 9,9V15A2,2 0 0,0 11,17H13A2,2 0 0,0 15,15V14H13V15H11V9H13V10H15V9A2,2 0 0,0 13,7H11Z" /></svg></div>
                             <h3 class="text-lg font-medium text-gray-900"> Agregar comentarios </h3>
                         </div>
-                        <div class="modal-content text-center w-full mt-3 sm:mt-0 sm:mt-0 sm:text-left">
+                        <div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">
                             <div class="grid grid-cols-1 mt-5">
                                 <label class="text-[#64748b] font-semibold mb-2">Comentarios</label>
                                 <div class="group flex">
