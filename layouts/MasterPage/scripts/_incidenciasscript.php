@@ -668,7 +668,7 @@
                         '</div>'+
                         '<h3 class="text-lg font-medium text-gray-900"> Modificar el estatus de la incidencia </h3>'+
                     '</div>'+
-                    '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
+                    '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                         '<div class="grid grid-cols-1 mt-5 mx-7">'+
                             '<label class="text-[#64748b] font-semibold mb-2">Estatus</label>'+
                             '<div class="group flex">'+
