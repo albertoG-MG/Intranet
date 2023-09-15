@@ -3963,10 +3963,13 @@ CREATE TRIGGER notificaciones_alerta
 AFTER INSERT on alertas
 FOR EACH ROW
 	BEGIN
-		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
-	
-		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		SELECT usuarios.id, NEW.users_id, "Alertas", "Nueva alerta", CONCAT('El usuario ', @enviado_por, ' ha creado una nueva alerta en la fecha ', NEW.fecha_creacion_alerta, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+		SET @count_usuarios = (SELECT count(*) FROM usuarios);
+		IF (@count_usuarios > 1 ) THEN
+			SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+			
+			INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			SELECT usuarios.id, NEW.users_id, "Alertas", "Nueva alerta", CONCAT('El usuario ', @enviado_por, ' ha creado una nueva alerta en la fecha ', NEW.fecha_creacion_alerta, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND usuarios.id != NEW.users_id;
+		END IF;		
 	END$$
 DELIMITER ;
 
@@ -3981,10 +3984,13 @@ CREATE TRIGGER notificaciones_avisos
 AFTER INSERT on avisos
 FOR EACH ROW
 	BEGIN
-		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
-	
-		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		SELECT usuarios.id, NEW.users_id, "Avisos", "Nuevo aviso", CONCAT('El usuario ', @enviado_por, ' ha creado una nuevo aviso en la fecha ', NEW.fecha_creacion_aviso, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+		SET @count_usuarios = (SELECT count(*) FROM usuarios);
+		IF (@count_usuarios > 1 ) THEN
+			SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+			
+			INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			SELECT usuarios.id, NEW.users_id, "Avisos", "Nuevo aviso", CONCAT('El usuario ', @enviado_por, ' ha creado una nuevo aviso en la fecha ', NEW.fecha_creacion_aviso, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND usuarios.id != NEW.users_id;
+		END IF;	
 	END$$
 DELIMITER ;
 
@@ -3999,10 +4005,13 @@ CREATE TRIGGER notificaciones_comunicados
 AFTER INSERT on comunicados
 FOR EACH ROW
 	BEGIN
-		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
-	
-		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		SELECT usuarios.id, NEW.users_id, "Comunicados", "Nuevo comunicado", CONCAT('El usuario ', @enviado_por, ' ha creado un nuevo comunicado en la fecha ', NEW.fecha_creacion_comunicado, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+		SET @count_usuarios = (SELECT count(*) FROM usuarios);
+		IF (@count_usuarios > 1 ) THEN
+			SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+			
+			INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			SELECT usuarios.id, NEW.users_id, "Comunicados", "Nuevo comunicado", CONCAT('El usuario ', @enviado_por, ' ha creado un nuevo comunicado en la fecha ', NEW.fecha_creacion_comunicado, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND usuarios.id != NEW.users_id;
+		END IF;	
 	END$$
 DELIMITER ;
 
