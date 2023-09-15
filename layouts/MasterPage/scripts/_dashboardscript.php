@@ -3922,7 +3922,7 @@
             if(data[i].alertas_foto_identificador != null && data[i].filename_alertas != null){
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                `<picture><img class="alertas__image mb-2 w-10 h-10 cursor-pointer" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image" onclick="window.open(this.src, '_blank');"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
@@ -3937,7 +3937,7 @@
             }else{
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                `<picture><img class="alertas__image mb-2 w-10 h-10 cursor-pointer" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image" onclick="window.open(this.src, '_blank');"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
@@ -4007,7 +4007,7 @@
 			if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10 cursor-pointer" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image" onclick="window.open(this.src, '_blank');"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
@@ -4022,7 +4022,7 @@
             }else{
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10 cursor-pointer" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image" onclick="window.open(this.src, '_blank');"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
@@ -4094,7 +4094,7 @@
             if(data[i].comunicados_foto_identificador != null && data[i].filename_comunicados != null){
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                `<picture><img class="comunicados__image mb-2 w-10 h-10 cursor-pointer" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image" onclick="window.open(this.src, '_blank');"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
@@ -4109,7 +4109,7 @@
             }else{
                 data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
                             `<div class="p-5">`+
-                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                `<picture><img class="comunicados__image mb-2 w-10 h-10 cursor-pointer" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image" onclick="window.open(this.src, '_blank');"></picture>`+
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
