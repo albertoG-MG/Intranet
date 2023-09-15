@@ -5,6 +5,10 @@
     var originalState2;
     var delete_switch;
     var delete_switch2;
+
+    var alertas_load=false;
+    var avisos_load=false;
+    var comunicados_load=false;
     const tabElements = [{
             id: 'vision',
             triggerEl: document.querySelector('#vision-tab-profile'),
@@ -30,12 +34,12 @@
     tabElements.forEach((tab) => {
         tab.triggerEl.addEventListener('click', () => {
             target = tab;
-            <?php 
-                if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
-                    if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
-            ?>
             if (target.triggerEl.className.includes("menu-active") == false){
                 if(target.id=="alertas"){
+                    <?php 
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+                            if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+                    ?>
                     if ( ! $.fn.DataTable.isDataTable('#alertas_table') ) {
                         $("#alertas_table").DataTable({
                             responsive: true,
@@ -437,7 +441,19 @@
                             },
                         });
                     }
+                    <?php 
+                            }
+                        }
+                    ?>
+                    if(!alertas_load){
+                        totalfilas_alertas();
+                        alertas_load = true;
+                    }
                 }else if(target.id=="avisos"){
+                    <?php 
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+                            if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+                    ?>
                     if ( ! $.fn.DataTable.isDataTable('#avisos_table') ) {
                         $("#avisos_table").DataTable({
                             responsive: true,
@@ -837,7 +853,19 @@
                             },
                         });
                     }
+                    <?php 
+                            }
+                        }
+                    ?>
+                    if(!avisos_load){
+                        totalfilas_avisos();
+                        avisos_load=true;
+                    }
                 }else if(target.id=="comunicados"){
+                    <?php 
+                        if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
+                            if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
+                    ?>
                     if ( ! $.fn.DataTable.isDataTable('#comunicados_table') ) {
                         $("#comunicados_table").DataTable({
                             responsive: true,
@@ -1239,23 +1267,16 @@
                             },
                         });
                     }
+                    <?php 
+                            }
+                        }
+                    ?>
+                    if(!comunicados_load){
+                        totalfilas_comunicados();
+                        comunicados_load = true;
+                    }
                 }
             }
-
-            function checkFile(url) {
-                var response = jQuery.ajax({
-                    url: url,
-                    type: 'HEAD',
-                    async: false
-                }).status;	
-                
-                return (response != "200") ? false : true;
-            }
-
-            <?php 
-                    }
-                } 
-            ?>
 
             tabElements.forEach((t) => {
                 t.targetEl.classList.remove("block")
@@ -1275,550 +1296,12 @@
             "group-hover:text-slate-500", "group-focus:text-slate-500");
         })
     });
-    
 
     <?php 
         if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
             if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
     ?>
-
-    function resetFormValidator(formId) {
-        $(formId).removeData('validator');
-        $(formId).removeData('unobtrusiveValidation');
-        $.validator.unobtrusive.parse(formId);
-    }
-
-    function totalfilas_alertas(){
-        var totalrows = 0;
-        $.ajax({
-            type: "GET",
-            url: "../config/totalrows_alertas.php",
-            success: function (response) {
-                totalrows = response;
-                paginacion_alertas(totalrows);
-                check_alerts(totalrows);
-            }
-        });
-    }
-
-    function paginacion_alertas(totalrows){
-        $('#demo').pagination({
-            dataSource: '../config/alertas_ajax.php',
-            locator: "items",
-            totalNumberLocator: function(response) {
-                // you can return totalNumber by analyzing response content
-                return totalrows;
-            },
-            pageSize: 9,
-            showNavigator: true,
-            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
-            showGoInput: true,
-            showGoButton: true,
-            formatGoInput: 'ir a <%= input %> página',
-            ajax: {
-                beforeSend: function() {
-                    $("#dataContainer").html('Cargando datos ...');
-                }
-            },
-            callback: function(data, pagination) {
-                // template method of yourself
-                var html = __alertasPreview(data);
-                $("#dataContainer").html(html);
-            }
-        });
-    }
-
-    
-
-    function __alertasPreview(data) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            if(data[i].alertas_foto_identificador != null && data[i].filename_alertas != null){
-                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                            `<div class="p-5">`+
-                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
-                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
-                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
-                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
-                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                    `Ver más`+
-                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                    `</svg>`+
-                                `</button>`+
-                            `</div>`+
-                        `</div>`;
-            }else{
-                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                            `<div class="p-5">`+
-                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
-                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
-                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
-                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
-                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                    `Ver más`+
-                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                    `</svg>`+
-                                `</button>`+
-                            `</div>`+
-                        `</div>`;
-            }
-        }
-        return data.join("");
-    }
-
-    function check_alerts(totalrows){
-        if(totalrows == 0){
-            $("#demo").attr("style", "display:none;");
-        }else{
-            $("#demo").removeAttr("style");
-        }
-    }
-
-    function totalfilas_avisos(){
-        var totalrows = 0;
-        $.ajax({
-            type: "GET",
-            url: "../config/totalrows_avisos.php",
-            success: function (response) {
-                totalrows = response;
-                paginacion_avisos(totalrows);
-                check_avisos(totalrows);
-            }
-        });
-    }
-
-    function paginacion_avisos(totalrows){
-        $('#avisos_demo').pagination({
-            dataSource: '../config/avisos_ajax.php',
-            locator: "items_avisos",
-            totalNumberLocator: function(response) {
-                // you can return totalNumber by analyzing response content
-                return totalrows;
-            },
-            pageSize: 9,
-            showNavigator: true,
-            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
-            showGoInput: true,
-            showGoButton: true,
-            formatGoInput: 'ir a <%= input %> página',
-            ajax: {
-                beforeSend: function() {
-                    $("#dataContainer_avisos").html('Cargando datos ...');
-                }
-            },
-            callback: function(data, pagination) {
-                // template method of yourself
-                var html = __avisosPreview(data);
-                $("#dataContainer_avisos").html(html);
-            }
-        });
-    }
-
-    function __avisosPreview(data) {
-        for (var i = 0, len = data.length; i < len; i++) {
-			if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
-                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                            `<div class="p-5">`+
-								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
-                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
-                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                    `Ver más`+
-                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                    `</svg>`+
-                                `</button>`+
-                            `</div>`+
-                        `</div>`;
-            }else{
-                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                            `<div class="p-5">`+
-								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
-                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
-                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                    `Ver más`+
-                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                    `</svg>`+
-                                `</button>`+
-                            `</div>`+
-                        `</div>`;
-            }
-        }
-        return data.join("");
-    }
-
-    function check_avisos(totalrows){
-        if(totalrows == 0){
-            $("#avisos_demo").attr("style", "display:none;");
-        }else{
-            $("#avisos_demo").removeAttr("style");
-        }
-    }
-
-    function totalfilas_comunicados(){
-        var totalrows = 0;
-        $.ajax({
-            type: "GET",
-            url: "../config/totalrows_comunicados.php",
-            success: function (response) {
-                totalrows = response;
-                paginacion_comunicados(totalrows);
-                check_comunicados(totalrows);
-            }
-        });
-    }
-
-    function paginacion_comunicados(totalrows){
-        $('#comunicados_demo').pagination({
-            dataSource: '../config/comunicados_ajax.php',
-            locator: "items_comunicados",
-            totalNumberLocator: function(response) {
-                // you can return totalNumber by analyzing response content
-                return totalrows;
-            },
-            pageSize: 9,
-            showNavigator: true,
-            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_comunicados',
-            showGoInput: true,
-            showGoButton: true,
-            formatGoInput: 'ir a <%= input %> página',
-            ajax: {
-                beforeSend: function() {
-                    $("#dataContainer_comunicados").html('Cargando datos ...');
-                }
-            },
-            callback: function(data, pagination) {
-                // template method of yourself
-                var html = __comunicadosPreview(data);
-                $("#dataContainer_comunicados").html(html);
-            }
-        });
-    }
-
-
-
-    function __comunicadosPreview(data) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            if(data[i].comunicados_foto_identificador != null && data[i].filename_comunicados != null){
-                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                            `<div class="p-5">`+
-                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
-                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
-                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
-                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
-                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                    `Ver más`+
-                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                    `</svg>`+
-                                `</button>`+
-                            `</div>`+
-                        `</div>`;
-            }else{
-                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                            `<div class="p-5">`+
-                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
-                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
-                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
-                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
-                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                    `Ver más`+
-                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                    `</svg>`+
-                                `</button>`+
-                            `</div>`+
-                        `</div>`;
-            }
-        }
-        return data.join("");
-    }
-
-    function check_comunicados(totalrows){
-        if(totalrows == 0){
-            $("#comunicados_demo").attr("style", "display:none;");
-        }else{
-            $("#comunicados_demo").removeAttr("style");
-        }
-    }
-
-    <?php 
-            }
-        } 
-    ?>
-
     $(document).ready(function () {
-
-        totalfilas_alertas();
-        totalfilas_avisos();
-        totalfilas_comunicados();
-
-        function totalfilas_alertas(){
-            var totalrows = 0;
-            $.ajax({
-                type: "GET",
-                url: "../config/totalrows_alertas.php",
-                success: function (response) {
-                    totalrows = response;
-                    paginacion_alertas(totalrows);
-                    check_alerts(totalrows);
-                }
-            });
-        }
-
-        function paginacion_alertas(totalrows){
-            $('#demo').pagination({
-                dataSource: '../config/alertas_ajax.php',
-                locator: "items",
-                totalNumberLocator: function(response) {
-                    // you can return totalNumber by analyzing response content
-                    return totalrows;
-                },
-                pageSize: 9,
-                showNavigator: true,
-                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
-                showGoInput: true,
-                showGoButton: true,
-                formatGoInput: 'ir a <%= input %> página',
-                ajax: {
-                    beforeSend: function() {
-                        $("#dataContainer").html('Cargando datos ...');
-                    }
-                },
-                callback: function(data, pagination) {
-                    // template method of yourself
-                    var html = __alertasPreview(data);
-                    $("#dataContainer").html(html);
-                }
-            });
-        }
-
-        function __alertasPreview(data) {
-            for (var i = 0, len = data.length; i < len; i++) {
-                if(data[i].alertas_foto_identificador != null && data[i].filename_alertas != null){
-                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                                `<div class="p-5">`+
-                                    `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
-                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
-                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
-                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
-                                    `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                        `Ver más`+
-                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                        `</svg>`+
-                                    `</button>`+
-                                `</div>`+
-                            `</div>`;
-                }else{
-                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                                `<div class="p-5">`+
-                                    `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
-                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
-                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
-                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
-                                    `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                        `Ver más`+
-                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                        `</svg>`+
-                                    `</button>`+
-                                `</div>`+
-                            `</div>`;
-                }
-            }
-            return data.join("");
-        }
-
-        function check_alerts(totalrows){
-            if(totalrows == 0){
-                $("#demo").attr("style", "display:none;");
-            }else{
-                $("#demo").removeAttr("style");
-            }
-        }
-
-        function totalfilas_avisos(){
-            var totalrows = 0;
-            $.ajax({
-                type: "GET",
-                url: "../config/totalrows_avisos.php",
-                success: function (response) {
-                    totalrows = response;
-                    paginacion_avisos(totalrows);
-                    check_avisos(totalrows);
-                }
-            });
-        }
-
-        function paginacion_avisos(totalrows){
-            $('#avisos_demo').pagination({
-                dataSource: '../config/avisos_ajax.php',
-                locator: "items_avisos",
-                totalNumberLocator: function(response) {
-                    // you can return totalNumber by analyzing response content
-                    return totalrows;
-                },
-                pageSize: 9,
-                showNavigator: true,
-                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
-                showGoInput: true,
-                showGoButton: true,
-                formatGoInput: 'ir a <%= input %> página',
-                ajax: {
-                    beforeSend: function() {
-                        $("#dataContainer_avisos").html('Cargando datos ...');
-                    }
-                },
-                callback: function(data, pagination) {
-                    // template method of yourself
-                    var html = __avisosPreview(data);
-                    $("#dataContainer_avisos").html(html);
-                }
-            });
-        }
-
-        function __avisosPreview(data) {
-            for (var i = 0, len = data.length; i < len; i++) {
-                if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
-                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                                `<div class="p-5">`+
-                                    `<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
-                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
-                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                    `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                        `Ver más`+
-                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                        `</svg>`+
-                                    `</button>`+
-                                `</div>`+
-                            `</div>`;
-                }else{
-                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                                `<div class="p-5">`+
-                                    `<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
-                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
-                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
-                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                    `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                        `Ver más`+
-                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                        `</svg>`+
-                                    `</button>`+
-                                `</div>`+
-                            `</div>`;
-                }
-            }
-            return data.join("");
-        }
-
-        function check_avisos(totalrows){
-            if(totalrows == 0){
-                $("#avisos_demo").attr("style", "display:none;");
-            }else{
-                $("#avisos_demo").removeAttr("style");
-            }
-        }
-
-        function totalfilas_comunicados(){
-            var totalrows = 0;
-            $.ajax({
-                type: "GET",
-                url: "../config/totalrows_comunicados.php",
-                success: function (response) {
-                    totalrows = response;
-                    paginacion_comunicados(totalrows);
-                    check_comunicados(totalrows);
-                }
-            });
-        }
-
-        function paginacion_comunicados(totalrows){
-            $('#comunicados_demo').pagination({
-                dataSource: '../config/comunicados_ajax.php',
-                locator: "items_comunicados",
-                totalNumberLocator: function(response) {
-                    // you can return totalNumber by analyzing response content
-                    return totalrows;
-                },
-                pageSize: 9,
-                showNavigator: true,
-                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_comunicados',
-                showGoInput: true,
-                showGoButton: true,
-                formatGoInput: 'ir a <%= input %> página',
-                ajax: {
-                    beforeSend: function() {
-                        $("#dataContainer_comunicados").html('Cargando datos ...');
-                    }
-                },
-                callback: function(data, pagination) {
-                    // template method of yourself
-                    var html = __comunicadosPreview(data);
-                    $("#dataContainer_comunicados").html(html);
-                }
-            });
-        }
-
-
-
-        function __comunicadosPreview(data) {
-            for (var i = 0, len = data.length; i < len; i++) {
-                if(data[i].comunicados_foto_identificador != null && data[i].filename_comunicados != null){
-                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                                `<div class="p-5">`+
-                                    `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
-                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
-                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
-                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
-                                    `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                        `Ver más`+
-                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                        `</svg>`+
-                                    `</button>`+
-                                `</div>`+
-                            `</div>`;
-                }else{
-                    data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
-                                `<div class="p-5">`+
-                                    `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
-                                    `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
-                                    `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
-                                    `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
-                                    `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
-                                        `Ver más`+
-                                        `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
-                                            `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
-                                        `</svg>`+
-                                    `</button>`+
-                                `</div>`+
-                            `</div>`;
-                }
-            }
-            return data.join("");
-        }
-
-        function check_comunicados(totalrows){
-            if(totalrows == 0){
-                $("#comunicados_demo").attr("style", "display:none;");
-            }else{
-                $("#comunicados_demo").removeAttr("style");
-            }
-        }
-
-        <?php 
-            if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
-                if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
-        ?>
 
         $(document).on("click", "tr .Editar", function () {
             var table = $('#alertas_table').DataTable();
@@ -2145,16 +1628,6 @@
             }
         });
 
-        function checkFile(url) {
-            var response = jQuery.ajax({
-                url: url,
-                type: 'HEAD',
-                async: false
-            }).status;	
-            
-            return (response != "200") ? false : true;
-        }
-
         $(document).on('click', 'tr .Eliminar', function() {
             var table = $('#alertas_table').DataTable();
             var rowSelector;
@@ -2215,13 +1688,6 @@
                 })
             })
         });
-
-        function checkImage(imageSrc, good, bad) {
-            var img = new Image();
-            img.onload = good; 
-            img.onerror = bad;
-            img.src = imageSrc;
-        }
 
         $(document).on('click', '#editar_delete_foto', function() {
             $("#editar_img_information").replaceWith(originalState.clone());
@@ -3793,7 +3259,7 @@
                         $('#editar_text_archivo_comunicado').text("No se encontró el archivo");
                     }
                 }
-                $("#div_editar_archivo_file_aviso").removeClass("hidden");
+                $("#div_editar_archivo_comunicado").removeClass("hidden");
             }
             openModal();
             resetFormValidator("#Guardar");
@@ -4242,12 +3708,12 @@
                 })
             })
         });
+    });
 
-        <?php 
+    <?php 
             }
         } 
     ?>
-    });
 
     
     const modalContainer = document.querySelector(
@@ -4409,10 +3875,292 @@
         return (response != "200") ? false : true;
     }
 
+    function totalfilas_alertas(){
+        var totalrows = 0;
+        $.ajax({
+            type: "GET",
+            url: "../config/totalrows_alertas.php",
+            success: function (response) {
+                totalrows = response;
+                paginacion_alertas(totalrows);
+                check_alerts(totalrows);
+            }
+        });
+    }
+
+    function paginacion_alertas(totalrows){
+        $('#demo').pagination({
+            dataSource: '../config/alertas_ajax.php',
+            locator: "items",
+            totalNumberLocator: function(response) {
+                // you can return totalNumber by analyzing response content
+                return totalrows;
+            },
+            pageSize: 9,
+            showNavigator: true,
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items',
+            showGoInput: true,
+            showGoButton: true,
+            formatGoInput: 'ir a <%= input %> página',
+            ajax: {
+                beforeSend: function() {
+                    $("#dataContainer").html('Cargando datos ...');
+                }
+            },
+            callback: function(data, pagination) {
+                // template method of yourself
+                var html = __alertasPreview(data);
+                $("#dataContainer").html(html);
+            }
+        });
+    }
+
+    
+
+    function __alertasPreview(data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            if(data[i].alertas_foto_identificador != null && data[i].filename_alertas != null){
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/alertas/${data[i].alertas_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
+                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }else{
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="alertas__image mb-2 w-10 h-10" src="../src/img/default_alert_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Alertas image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
+                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }
+        }
+        return data.join("");
+    }
+
+    function check_alerts(totalrows){
+        if(totalrows == 0){
+            $("#demo").attr("style", "display:none;");
+        }else{
+            $("#demo").removeAttr("style");
+        }
+    }
+
+    function totalfilas_avisos(){
+        var totalrows = 0;
+        $.ajax({
+            type: "GET",
+            url: "../config/totalrows_avisos.php",
+            success: function (response) {
+                totalrows = response;
+                paginacion_avisos(totalrows);
+                check_avisos(totalrows);
+            }
+        });
+    }
+
+    function paginacion_avisos(totalrows){
+        $('#avisos_demo').pagination({
+            dataSource: '../config/avisos_ajax.php',
+            locator: "items_avisos",
+            totalNumberLocator: function(response) {
+                // you can return totalNumber by analyzing response content
+                return totalrows;
+            },
+            pageSize: 9,
+            showNavigator: true,
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_avisos',
+            showGoInput: true,
+            showGoButton: true,
+            formatGoInput: 'ir a <%= input %> página',
+            ajax: {
+                beforeSend: function() {
+                    $("#dataContainer_avisos").html('Cargando datos ...');
+                }
+            },
+            callback: function(data, pagination) {
+                // template method of yourself
+                var html = __avisosPreview(data);
+                $("#dataContainer_avisos").html(html);
+            }
+        });
+    }
+
+    function __avisosPreview(data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+			if(data[i].avisos_foto_identificador != null && data[i].filename_avisos != null){
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/avisos/${data[i].avisos_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
+                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }else{
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+								`<picture><img class="avisos__image mb-2 w-10 h-10" src="../src/img/default_notices_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Avisos image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
+                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }
+        }
+        return data.join("");
+    }
+
+    function check_avisos(totalrows){
+        if(totalrows == 0){
+            $("#avisos_demo").attr("style", "display:none;");
+        }else{
+            $("#avisos_demo").removeAttr("style");
+        }
+    }
+
+    function totalfilas_comunicados(){
+        var totalrows = 0;
+        $.ajax({
+            type: "GET",
+            url: "../config/totalrows_comunicados.php",
+            success: function (response) {
+                totalrows = response;
+                paginacion_comunicados(totalrows);
+                check_comunicados(totalrows);
+            }
+        });
+    }
+
+    function paginacion_comunicados(totalrows){
+        $('#comunicados_demo').pagination({
+            dataSource: '../config/comunicados_ajax.php',
+            locator: "items_comunicados",
+            totalNumberLocator: function(response) {
+                // you can return totalNumber by analyzing response content
+                return totalrows;
+            },
+            pageSize: 9,
+            showNavigator: true,
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> de <%= totalNumber %> items_comunicados',
+            showGoInput: true,
+            showGoButton: true,
+            formatGoInput: 'ir a <%= input %> página',
+            ajax: {
+                beforeSend: function() {
+                    $("#dataContainer_comunicados").html('Cargando datos ...');
+                }
+            },
+            callback: function(data, pagination) {
+                // template method of yourself
+                var html = __comunicadosPreview(data);
+                $("#dataContainer_comunicados").html(html);
+            }
+        });
+    }
+
+
+
+    function __comunicadosPreview(data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            if(data[i].comunicados_foto_identificador != null && data[i].filename_comunicados != null){
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/comunicados/${data[i].comunicados_foto_identificador}" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
+                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }else{
+                data[i]=`<div class="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md">`+
+                            `<div class="p-5">`+
+                                `<picture><img class="comunicados__image mb-2 w-10 h-10" src="../src/img/default_comunicado_image.png" onerror="this.onerror=null;this.src='../src/img/not_found.jpg'" alt="Comunicados image"></picture>`+
+                                `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
+                                `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
+                                `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
+                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                    `Ver más`+
+                                    `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
+                                        `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
+                                    `</svg>`+
+                                `</button>`+
+                            `</div>`+
+                        `</div>`;
+            }
+        }
+        return data.join("");
+    }
+
+    function check_comunicados(totalrows){
+        if(totalrows == 0){
+            $("#comunicados_demo").attr("style", "display:none;");
+        }else{
+            $("#comunicados_demo").removeAttr("style");
+        }
+    }
+
     <?php 
         if(Roles::FetchSessionRol($_SESSION["rol"]) != "" && (Roles::FetchUserDepartamento($_SESSION["id"]) != "" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador")){
             if (Roles::FetchUserDepartamento($_SESSION["id"]) == "Capital humano" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { 
     ?>
+
+    function resetFormValidator(formId) {
+        $(formId).removeData('validator');
+        $(formId).removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse(formId);
+    }
+
+    function checkFile(url) {
+        var response = jQuery.ajax({
+            url: url,
+            type: 'HEAD',
+            async: false
+        }).status;	
+        
+        return (response != "200") ? false : true;
+    }
+
+    function checkImage(imageSrc, good, bad) {
+        var img = new Image();
+        img.onload = good; 
+        img.onerror = bad;
+        img.src = imageSrc;
+    }
 
     function check_user_logged(){
 		return new Promise((resolve, reject) => {
