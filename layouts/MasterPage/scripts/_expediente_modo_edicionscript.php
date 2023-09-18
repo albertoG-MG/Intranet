@@ -825,16 +825,27 @@
                                 $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').removeClass('z-100 md:p-2 my-auto');
                             });
 
-                            $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').rules('add', {
-                                required: true,
-                                extension: 'pdf|jpg|jpeg|png',
-                                filesize: 10,
-                                messages: {
-                                    required: 'Este campo es requerido',
-                                    extension: 'Solo se permite pdf, jpg, jpeg y pngs',
-                                    filesize: 'Los archivos deben pesar ser menos de 10 MB'
-                                }
-                            });
+                            if($('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').attr('id') != 'infp_papeleria10' && $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').attr('id') != 'infp_papeleria23'){
+                                $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').rules('add', {
+                                    required: true,
+                                    extension: 'pdf|jpg|jpeg|png',
+                                    filesize: 10,
+                                    messages: {
+                                        required: 'Este campo es requerido',
+                                        extension: 'Solo se permite pdf, jpg, jpeg y pngs',
+                                        filesize: 'Los archivos deben pesar ser menos de 10 MB'
+                                    }
+                                });
+                            }else{
+                                $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').rules('add', {
+                                    extension: 'pdf|jpg|jpeg|png',
+                                    filesize: 10,
+                                    messages: {
+                                        extension: 'Solo se permite pdf, jpg, jpeg y pngs',
+                                        filesize: 'Los archivos deben pesar ser menos de 10 MB'
+                                    }
+                                });
+                            }
 
                         ");
                     $papeleria_contador2++;
