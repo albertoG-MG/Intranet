@@ -3392,9 +3392,9 @@ CREATE TABLE `alerta_notificaciones` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `notificado_a` int NOT NULL,
   `enviado_por` int DEFAULT NULL,
-  `tipo_alerta` varchar(255) NOT NULL,
-  `alerta_titulo` varchar(255) NOT NULL,
-  `alerta_mensaje` varchar(255) NOT NULL,
+  `tipo_alerta` longtext NOT NULL,
+  `alerta_titulo` longtext NOT NULL,
+  `alerta_mensaje` longtext NOT NULL,
   `alerta_estatus` int NOT NULL,
   `link` longtext DEFAULT NULL,
   `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -3963,10 +3963,13 @@ CREATE TRIGGER notificaciones_alerta
 AFTER INSERT on alertas
 FOR EACH ROW
 	BEGIN
-		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
-	
-		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		SELECT usuarios.id, NEW.users_id, "Alertas", "Nueva alerta", CONCAT('El usuario ', @enviado_por, ' ha creado una nueva alerta en la fecha ', NEW.fecha_creacion_alerta, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+		SET @count_usuarios = (SELECT count(*) FROM usuarios);
+		IF (@count_usuarios > 1 ) THEN
+			SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+			
+			INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			SELECT usuarios.id, NEW.users_id, "Alertas", "Nueva alerta", CONCAT('El usuario ', @enviado_por, ' ha creado una nueva alerta en la fecha ', NEW.fecha_creacion_alerta, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND usuarios.id != NEW.users_id;
+		END IF;		
 	END$$
 DELIMITER ;
 
@@ -3981,10 +3984,13 @@ CREATE TRIGGER notificaciones_avisos
 AFTER INSERT on avisos
 FOR EACH ROW
 	BEGIN
-		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
-	
-		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		SELECT usuarios.id, NEW.users_id, "Avisos", "Nuevo aviso", CONCAT('El usuario ', @enviado_por, ' ha creado una nuevo aviso en la fecha ', NEW.fecha_creacion_aviso, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+		SET @count_usuarios = (SELECT count(*) FROM usuarios);
+		IF (@count_usuarios > 1 ) THEN
+			SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+			
+			INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			SELECT usuarios.id, NEW.users_id, "Avisos", "Nuevo aviso", CONCAT('El usuario ', @enviado_por, ' ha creado una nuevo aviso en la fecha ', NEW.fecha_creacion_aviso, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND usuarios.id != NEW.users_id;
+		END IF;	
 	END$$
 DELIMITER ;
 
@@ -3999,10 +4005,13 @@ CREATE TRIGGER notificaciones_comunicados
 AFTER INSERT on comunicados
 FOR EACH ROW
 	BEGIN
-		SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
-	
-		INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		SELECT usuarios.id, NEW.users_id, "Comunicados", "Nuevo comunicado", CONCAT('El usuario ', @enviado_por, ' ha creado un nuevo comunicado en la fecha ', NEW.fecha_creacion_comunicado '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo');
+		SET @count_usuarios = (SELECT count(*) FROM usuarios);
+		IF (@count_usuarios > 1 ) THEN
+			SET @enviado_por = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=NEW.users_id);
+			
+			INSERT INTO alerta_notificaciones(notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			SELECT usuarios.id, NEW.users_id, "Comunicados", "Nuevo comunicado", CONCAT('El usuario ', @enviado_por, ' ha creado un nuevo comunicado en la fecha ', NEW.fecha_creacion_comunicado, '. Haz clic aquí para ver más información.'), "0", "dashboard.php" FROM usuarios LEFT JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Usuario externo') AND usuarios.id != NEW.users_id;
+		END IF;	
 	END$$
 DELIMITER ;
 
@@ -4019,12 +4028,19 @@ BEGIN
 
 	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
 	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
-
+	SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
+	SET @count_usuario = (SELECT count(*) FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+	SET @ch = (SELECT id FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+	
 	INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
 	
 	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias", "Solicitud de incidencia evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
 	
+	IF (@count_usuario > 0 ) THEN
+		INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		VALUES (@ch, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	END IF;	
 END;
 $$
 DELIMITER ;
@@ -4059,7 +4075,6 @@ DELIMITER ;
 
 
 DELIMITER $$
-
 CREATE TRIGGER insertar_transicion_estatus_notificaciones_vacaciones
 AFTER INSERT ON accion_vacaciones FOR EACH ROW
 BEGIN
@@ -4068,16 +4083,21 @@ BEGIN
 	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
 	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
 	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
-	
+	SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
+	SET @count_usuario = (SELECT count(*) FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+	SET @ch = (SELECT id FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
 	
 	INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
 	
 	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones", "Solicitud de vacaciones evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
 	
+	IF (@count_usuario > 0 ) THEN
+		INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		VALUES (@ch, NEW.evaluado_por, "Solicitud vacaciones", "Se ha evaluado una solicitud de vacaciones", CONCAT('El usuario ', @enviado_por, ' ha evaluado una solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+	END IF;	
 END;
 $$
-
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -4349,13 +4369,17 @@ AFTER UPDATE ON accion_incidencias FOR EACH ROW
 BEGIN
 	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
 	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
-
+	SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
+	
 	INSERT INTO historial_accion_incidencias(incidencias_id, tipo_de_accion, goce_de_sueldo, comentario, evaluado_por) VALUES (OLD.incidencias_id, OLD.tipo_de_accion, OLD.goce_de_sueldo, OLD.comentario, OLD.evaluado_por);
 
 	UPDATE transicion_estatus_incidencia SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE incidencias_id=NEW.incidencias_id;
 	
 	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias reevaluada", "Solicitud de incidencia reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));	
+	
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (OLD.evaluado_por, NEW.evaluado_por, "Solicitud incidencias reevaluada", "Solicitud de incidencia reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado la incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
 END;
 $$
 DELIMITER ;
@@ -4375,6 +4399,7 @@ BEGIN
 	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
 	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
 	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+	SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
 	
 	INSERT INTO historial_accion_vacaciones(solicitud_id, tipo_de_accion, comentario, evaluado_por) VALUES (OLD.id_solicitud_vacaciones, OLD.tipo_de_accion, OLD.comentario, OLD.evaluado_por);
 
@@ -4382,6 +4407,9 @@ BEGIN
 	
 	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones reevaluada", "Solicitud de vacaciones reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");	
+
+	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	VALUES (OLD.evaluado_por, NEW.evaluado_por, "Solicitud vacaciones reevaluada", "Solicitud de vacaciones reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado la solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
 END;
 $$
 DELIMITER ;
@@ -4429,7 +4457,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_expuser`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT (case when (`expedientes`.`num_empleado` is null) then 'Sin asignar' else `expedientes`.`num_empleado` end) AS `num_empleado`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `estatus_empleado`.`situacion_del_empleado` AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rolnom`, `usuarios`.`foto_identificador` AS `foto`, `expedientes`.`id` AS `expediente_id` FROM ((((`expedientes` join `usuarios` on((`usuarios`.`id` = `expedientes`.`users_id`))) join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_expuser`  AS SELECT (case when (`expedientes`.`num_empleado` is null) then 'Sin asignar' else `expedientes`.`num_empleado` end) AS `num_empleado`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `estatus_empleado`.`situacion_del_empleado` AS `estatus`, (case when (`departamentos`.`departamento` is null) then 'Sin departamento' else `departamentos`.`departamento` end) AS `departamento`, `roles`.`nombre` AS `rolnom`, (case when (`usuarios`.`subrol_id` is null) then 'Sin subrol' else `subroles`.`subrol_nombre` end) AS `subnombre`, `usuarios`.`foto_identificador` AS `foto`, `expedientes`.`id` AS `expediente_id` FROM (((((`expedientes` join `usuarios` on((`usuarios`.`id` = `expedientes`.`users_id`))) join `roles` on((`roles`.`id` = `usuarios`.`roles_id`))) join `estatus_empleado` on((`estatus_empleado`.`expedientes_id` = `expedientes`.`id`))) left join `departamentos` on((`departamentos`.`id` = `usuarios`.`departamento_id`))) left join `subroles` on((`subroles`.`id` = `usuarios`.`subrol_id`))) ;
 
 -- --------------------------------------------------------
 

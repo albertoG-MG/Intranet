@@ -33,6 +33,7 @@
                                         <th class="py-3 text-center desktop">Estatus</th>
                                         <th class="py-3 text-center desktop">Departamento</th>
                                         <th class="py-3 text-center desktop">Rol</th>
+                                        <th class="py-3 text-center desktop">Subrol</th>
                                         <th>Foto_identificador</th>
                                         <th class="py-3 text-center min-tablet">Acción</th>
                                     </tr>
