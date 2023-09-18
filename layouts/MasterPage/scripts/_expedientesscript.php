@@ -64,8 +64,9 @@
                 {data: [2]},
                 {data: [3]},
                 {data: [4]},
-                {data: [5], visible: false, searchable: false},
-                {data: [6], searchable: false}
+                {data: [5]},
+                {data: [6], visible: false, searchable: false},
+                {data: [7], searchable: false}
             ],
             "columnDefs": 
             [
@@ -82,7 +83,7 @@
                 {
                     target: [1],
                     render: function (data, type, row) {
-                        if(row[5] === null){
+                        if(row[6] === null){
                             return(
                                 "<div class='flex items-center gap-3'>" +
                                     "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/default-user.png'>"+
@@ -92,7 +93,7 @@
                         }else{
                             return(
                                 "<div class='flex items-center gap-3'>" +
-                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[5]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
+                                    "<img class='w-6 h-6 rounded-full shrink-0' src='../src/img/imgs_uploaded/"+row[6]+"' onerror='this.onerror=null; this.src=\"../src/img/not_found.jpg\"'>"+
                                     "<span>" + row[1] + "</span>" +
                                 "</div>"
                             );
@@ -105,19 +106,19 @@
                         if(row[2] == "ALTA"){
                             return (
                                 "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs'>ALTA</span>" +
+                                    "<span>ALTA</span>" +
                                 "</div>"
                             );
                         }else if(row[2] == "BAJA"){
                             return (
                                 "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs'>BAJA</span>" +
+                                    "<span>BAJA</span>" +
                                 "</div>"
                             );
                         }else if(row[2] == "DESTAJO"){
                             return (
                                 "<div class='text-left lg:text-center'>" +
-                                    "<span class='bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'>DJO</span>" +
+                                    "<span>DESTAJO</span>" +
                                 "</div>"
                             );
                         }
@@ -144,7 +145,17 @@
                     }
                 },
                 {
-                    target: [6],
+                    target: [5],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[5] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [7],
                     render: function (data, type, row) {
                         return (
                             "<div class='flex item-center justify-start md:justify-center gap-3'>" +
@@ -200,7 +211,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "ver_expediente.php?idExpediente="+data[6]+""; 
+            window.location.href = "ver_expediente.php?idExpediente="+data[7]+""; 
         });
     <?php } ?>
 
@@ -217,7 +228,7 @@
             }
             var row = table.row(rowSelector);
             var data = row.data();
-            window.location.href = "editar_expediente.php?idExpediente="+data[6]+""; 
+            window.location.href = "editar_expediente.php?idExpediente="+data[7]+""; 
         });
     <?php } ?>
 
@@ -252,7 +263,7 @@
                             title: 'éxito',
                             text: 'La fila ha sido eliminada!'
                         }).then(function() {
-                            var eliminarid = data[6];
+                            var eliminarid = data[7];
                             var fd = new FormData();
                             fd.append('id', eliminarid);
                             $.ajax({
