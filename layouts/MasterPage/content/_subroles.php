@@ -45,11 +45,11 @@
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <table class="w-full" id="datatable" style="display:none;">
-                                <thead>
-                                    <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left all">Subrol</th>
-										<th class="py-3 text-left all">Asignado a</th>
-                                        <th class="py-3 text-left min-tablet"></th>
+                            <thead>
+                                    <tr class="text-white uppercase text-sm leading-normal"style="font-size: 13px !important; background-color: #000000bd !important;">
+                                        <th class="py-3 border-white dt-tituloL text-left all">Subrol</th>
+										<th class="py-3 border-white text-left all">Asignado a</th>
+                                        <th class="py-3 border-white dt-tituloR text-left min-tablet"></th>
                                     </tr>
                                 </thead>
                             </table>

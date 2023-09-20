@@ -12,205 +12,130 @@
             language: {
                         search: ""
             },
-            dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
+            dom: '<"grid grid-cols-1">Brt<f"bottom"ip><"clear">',
             buttons: [
-                        // <?php if($count_jerarquia > 0){ ?>
-                        //     {
-                        //         text: "Mis solicitudes de vacaciones pendientes",
-                        //         attr: {
-                        //             'id': 'mis_vacaciones_pendientes',
-                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                        //         },
-                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-                        //         action: function ( e, dt, node, config ) {
-                        //             $.ajax({
-                        //                 url: "../config/vacaciones/mis_vacaciones_pendientes.php",
-                        //                 method: 'POST',
-                        //                 data:{
-                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
-                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
-                        //                 },
-                        //                 success: function(response) {
-                        //                     var table = $('#datatable').DataTable();
-                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                        //                         var action = table.column(5);
-                        //                         action.visible(false);
-                        //                     <?php } ?>
-                        //                     table.clear().draw();
-                        //                     const obj = JSON.parse(response);
-                        //                     table.rows.add(obj).draw();
-                        //                     table.column().cells().invalidate().render();
-                        //                     table.columns.adjust().responsive.recalc();
-                                        
-                        //                 }, error: function(response) {
-                        //                     console.log(response);
-                        //                 }
-                        //             })
-                        //         }
-                        //     },
-                        // <?php } ?>
-                        // <?php if($count_jerarquia > 0){ ?>
-                        //     {
-                        //         text: "Mis solicitudes de vacaciones aprobadas",
-                        //         attr: {
-                        //             'id': 'mis_vacaciones_aprobadas',
-                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                        //         },
-                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-                        //         action: function ( e, dt, node, config ) {
-                        //             $.ajax({
-                        //                 url: "../config/vacaciones/mis_vacaciones_aprobadas.php",
-                        //                 method: 'POST',
-                        //                 data:{
-                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
-                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
-                        //                 },
-                        //                 success: function(response) {
-                        //                     var table = $('#datatable').DataTable();
-                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                        //                         var action = table.column(5);
-                        //                         action.visible(false);
-                        //                     <?php } ?>
-                        //                     table.clear().draw();
-                        //                     const obj = JSON.parse(response);
-                        //                     table.rows.add(obj).draw();
-                        //                     table.column().cells().invalidate().render();
-                        //                     table.columns.adjust().responsive.recalc();
-                                        
-                        //                 }, error: function(response) {
-                        //                     console.log(response);
-                        //                 }
-                        //             })
-                        //         }
-                        //     },
-                        // <?php } ?>
-                        // <?php if($count_jerarquia > 0){ ?>
-                        //     {
-                        //         text: "Mis solicitudes de vacaciones rechazadas",
-                        //         attr: {
-                        //             'id': 'mis_vacaciones_rechazadas',
-                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                        //         },
-                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-                        //         action: function ( e, dt, node, config ) {
-                        //             $.ajax({
-                        //                 url: "../config/vacaciones/mis_vacaciones_rechazadas.php",
-                        //                 method: 'POST',
-                        //                 data:{
-                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
-                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
-
-                        //                 },
-                        //                 success: function(response) {
-                        //                     var table = $('#datatable').DataTable();
-                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                        //                         var action = table.column(5);
-                        //                         action.visible(false);
-                        //                     <?php } ?>
-                        //                     table.clear().draw();
-                        //                     const obj = JSON.parse(response);
-                        //                     table.rows.add(obj).draw();
-                        //                     table.column().cells().invalidate().render();
-                        //                     table.columns.adjust().responsive.recalc();
-                                        
-                        //                 }, error: function(response) {
-                        //                     console.log(response);
-                        //                 }
-                        //             })
-                        //         }
-                        //     },
-                        // <?php } ?>
-                        // <?php if($count_jerarquia > 0){ ?>
-                        //     {
-                        //         text: "Mis solicitudes de vacaciones canceladas",
-                        //         attr: {
-                        //             'id': 'mis_vacaciones_canceladas',
-                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                        //         },
-                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-                        //         action: function ( e, dt, node, config ) {
-                        //             $.ajax({
-                        //                 url: "../config/vacaciones/mis_vacaciones_canceladas.php",
-                        //                 method: 'POST',
-                        //                 data:{
-                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
-                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
-                        //                 },
-                        //                 success: function(response) {
-                        //                     var table = $('#datatable').DataTable();
-                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                        //                         var action = table.column(5);
-                        //                         action.visible(false);
-                        //                     <?php } ?>
-                        //                     table.clear().draw();
-                        //                     const obj = JSON.parse(response);
-                        //                     table.rows.add(obj).draw(); 
-                        //                     table.column().cells().invalidate().render();
-                        //                     table.columns.adjust().responsive.recalc();
-                                        
-                        //                 }, error: function(response) {
-                        //                     console.log(response);
-                        //                 }
-                        //             })
-                        //         }
-                        //     },
-                        // <?php } ?>
-                        // <?php if($count_jerarquia > 0){ ?>
-                        //     {
-                        //         text: "Desplegar todas mis solicitudes",
-                        //         attr: {
-                        //             'id': 'mis_vacaciones',
-                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                        //         },
-                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-                        //         action: function ( e, dt, node, config ) {
-                        //             $.ajax({
-                        //                 url: "../config/vacaciones/mis_vacaciones.php",
-                        //                 method: 'POST',
-                        //                 data:{
-                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
-                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
-                        //                 },
-                        //                 success: function(response) {
-                        //                     var table = $('#datatable').DataTable();
-                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                        //                         var action = table.column(5);
-                        //                         action.visible(false);
-                        //                     <?php } ?>
-                        //                     table.clear().draw();
-                        //                     const obj = JSON.parse(response);
-                        //                     table.rows.add(obj).draw();
-                        //                     table.column().cells().invalidate().render();
-                        //                     table.columns.adjust().responsive.recalc();				
-                        //                 }, error: function(response) {
-                        //                     console.log(response);
-                        //                 }
-                        //             })
-                        //         }
-                        //     },
-                        // <?php } ?>
-
-                        {
-                    text: "Filtrar por:",
-                            attr: {
-                                'id': 'vacaciones_filtro',
-                                'style': 'padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important; !important;'
-                            },
-                            className: 'disabled bg-white text-2x3 text-[#64748b] font-semibold h-10 px-7 ',
-                           
-                        },
-                        <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>	
+                        <?php if($count_jerarquia > 0){ ?>
                             {
                                 text: "Pendientes",
                                 attr: {
-                                    'id': 'vacaciones_abiertas',
+                                    'id': 'mis_vacaciones_pendientes',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'toggle ov-btn-slide-top h-11 px-8 ',
+                                className: 'button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 toggle',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
-                                        url: "../config/vacaciones/vacaciones_abiertas.php",
+                                        url: "../config/vacaciones/mis_vacaciones_pendientes.php",
                                         method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+                                        },
+                                        success: function(response) {
+                                            var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
+                                            table.clear().draw();
+                                            const obj = JSON.parse(response);
+                                            table.rows.add(obj).draw();
+                                            table.column().cells().invalidate().render();
+                                            table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php } ?>
+                        <?php if($count_jerarquia > 0){ ?>
+                            {
+                                text: "Aprobadas",
+                                attr: {
+                                    'id': 'mis_vacaciones_aprobadas',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none toggle',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/vacaciones/mis_vacaciones_aprobadas.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+                                        },
+                                        success: function(response) {
+                                            var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
+                                            table.clear().draw();
+                                            const obj = JSON.parse(response);
+                                            table.rows.add(obj).draw();
+                                            table.column().cells().invalidate().render();
+                                            table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php } ?>
+                        <?php if($count_jerarquia > 0){ ?>
+                            {
+                                text: "Rechazadas",
+                                attr: {
+                                    'id': 'mis_vacaciones_rechazadas',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none toggle',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/vacaciones/mis_vacaciones_rechazadas.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+
+                                        },
+                                        success: function(response) {
+                                            var table = $('#datatable').DataTable();
+                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
+                                                var action = table.column(5);
+                                                action.visible(false);
+                                            <?php } ?>
+                                            table.clear().draw();
+                                            const obj = JSON.parse(response);
+                                            table.rows.add(obj).draw();
+                                            table.column().cells().invalidate().render();
+                                            table.columns.adjust().responsive.recalc();
+                                        
+                                        }, error: function(response) {
+                                            console.log(response);
+                                        }
+                                    })
+                                }
+                            },
+                        <?php } ?>
+                        <?php if($count_jerarquia > 0){ ?>
+                            {
+                                text: "Canceladas",
+                                attr: {
+                                    'id': 'mis_vacaciones_canceladas',
+                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                },
+                                className: 'button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none toggle',
+                                action: function ( e, dt, node, config ) {
+                                    $.ajax({
+                                        url: "../config/vacaciones/mis_vacaciones_canceladas.php",
+                                        method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+                                        },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
@@ -230,31 +155,33 @@
                                 }
                             },
                         <?php } ?>
-                        <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
+                        <?php if($count_jerarquia > 0){ ?>
                             {
-                                text: "Evaluadas",
+                                text: "Todas mis solicitudes",
                                 attr: {
-                                    'id': 'vacaciones_cerradas',
+                                    'id': 'mis_vacaciones',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'toggle ov-btn-slide-top h-11 px-8 ',
+                                className: 'button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none toggle',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
-                                        url: "../config/vacaciones/vacaciones_cerradas.php",
+                                        url: "../config/vacaciones/mis_vacaciones.php",
                                         method: 'POST',
+                                        data:{
+                                            "rol": <?php echo $_SESSION["rol"]; ?>,
+                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+                                        },
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
                                                 var action = table.column(5);
-                                                action.visible(true);
-                                                ButtonEdit = 1;
+                                                action.visible(false);
                                             <?php } ?>
                                             table.clear().draw();
                                             const obj = JSON.parse(response);
                                             table.rows.add(obj).draw();
                                             table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();
-                                        
+                                            table.columns.adjust().responsive.recalc();				
                                         }, error: function(response) {
                                             console.log(response);
                                         }
@@ -262,53 +189,11 @@
                                 }
                             },
                         <?php } ?>
-                        <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
-                            {
-                                text: "Todas las solicitudes",
-                                attr: {
-                                    'id': 'vacaciones_desplieguetodo',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'toggle ov-btn-slide-top h-11 px-8 ',
-                                action: function ( e, dt, node, config ) {
-                                    $.ajax({
-                                        url: "../config/vacaciones/vacaciones_desplieguetodo.php",
-                                        method: 'POST',
-                                        success: function(response) {
-                                            var table = $('#datatable').DataTable();
-                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                                                var action = table.column(5);
-                                                action.visible(true);
-                                                ButtonEdit = 2;
-                                            <?php } ?>
-                                            table.clear().draw();
-                                            const obj = JSON.parse(response);
-                                            table.rows.add(obj).draw();
-                                            table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();
-                                        
-                                        }, error: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
-                                }
-                            },
-                        <?php } ?>
-
-
+                    
                     ],
             "ajax":{
-                <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
-                    "url": "../config/vacaciones/vacaciones_abiertas.php",
-                <?php }else if($count_jerarquia > 0 && Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "false"){ ?>
-                    "url": "../config/vacaciones/mis_vacaciones_pendientes.php",
-                <?php }else if($count_jerarquia == 0 || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
-                    <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Director general"){ ?>
-                        "url": "../config/vacaciones/vacaciones_abiertas.php",
-                    <?php }else{ ?>
-                        "url": "../config/vacaciones/mis_vacaciones_pendientes.php",
-                    <?php } ?>
-                <?php } ?>
+                 "url": "../config/vacaciones/mis_vacaciones_pendientes.php",
+                   
                 "type": "POST",
                 "dataSrc": "",
                 "data":{
@@ -327,7 +212,7 @@
                     {"data": null, visible: false, searchable: false}
                 <?php } ?>
             ],
-            "columnDefs": [
+            "columnDefs": [ 
                 {
                     target: [1],
                     className:"border-white dt-tituloL",
@@ -424,30 +309,55 @@
                 var children_count = botones_incidencia.length;
                 var boton = document.getElementById('botones');
                 for(var i=0; i < children_count; i++){
-                    if(botones_incidencia[i].id == "vacaciones_abiertas" || botones_incidencia[i].id == "vacaciones_cerradas" || botones_incidencia[i].id == "vacaciones_desplieguetodo"  || botones_incidencia[i].id == "vacaciones_filtro"){
-                        if($("#administrador").length){
-                            grid_administrativo.append(botones_incidencia[i]);
+                    if(botones_incidencia[i].id == "mis_vacaciones_pendientes" || botones_incidencia[i].id == "mis_vacaciones_aprobadas" || botones_incidencia[i].id == "mis_vacaciones_rechazadas" || botones_incidencia[i].id == "mis_vacaciones_canceladas" || botones_incidencia[i].id == "mis_vacaciones"){
+                        if($("#personal").length){
+                            grid_personal.append(botones_incidencia[i]);
                         }else{
-                            var container_administrativo = document.createElement("div");
-                            container_administrativo.setAttribute("id", "administrador");
-                            container_administrativo.setAttribute("style", "text-align:start;");
-                            container_administrativo.classList.add('mt-5','mb-5');
-                            boton.append(container_administrativo);
-                            var title_administrativo = document.createElement("h2");
-                            title_administrativo.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
-                            // title_administrativo.textContent = "Mostrar solicitudes de todos los empleados";
-                            container_administrativo.append(title_administrativo);
-                            var span_administrativo = document.createElement("span");
-                            span_administrativo.classList.add('text-[#64748b]');
-                            span_administrativo.textContent = "Sección que muestra todas las solicitudes de los empleados.";
-                            container_administrativo.append(span_administrativo);
-                            var separator = document.createElement("div");
-                            separator.classList.add('my-3', 'h-px', 'bg-slate-200');
-                            container_administrativo.append(separator);
-                            var grid_administrativo = document.createElement("div");
-                            grid_administrativo.classList.add('grid', 'grid-cols-1', 'md:grid-cols-4', 'md:gap-4');
-                            container_administrativo.append(grid_administrativo);
-                            grid_administrativo.append(botones_incidencia[i]);
+                            var container_personal = document.createElement("div");
+                            container_personal.setAttribute("id", "personal");
+                            container_personal.setAttribute("style", "text-align:start;");
+                            container_personal.classList.add('mt-5');
+                            boton.append(container_personal);
+                            var title_personal = document.createElement("h2");
+                            title_personal.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
+                           // title_personal.textContent = "Mostrar mis solicitudes";
+                            container_personal.append(title_personal);
+                            var span_personal = document.createElement("span");
+                            span_personal.classList.add('text-[#64748b]');
+                            span_personal.textContent = "Sección que muestra las solicitudes del empleado.";
+                            container_personal.append(span_personal);
+                            var separator_personal = document.createElement("div");
+                            separator_personal.classList.add('my-3', 'h-px', 'bg-slate-200');
+                            container_personal.append(separator_personal);
+                            var grid_personal = document.createElement("div");
+                            grid_personal.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
+                            container_personal.append(grid_personal);
+                            grid_personal.append(botones_incidencia[i]);
+                        }
+                    }else{
+                        if($("#otro").length){
+                            grid_otros.append(botones_incidencia[i]);
+                        }else{
+                            var container_otros = document.createElement("div");
+                            container_otros.setAttribute("id", "otro");
+                            container_otros.setAttribute("style", "text-align:start;");
+                            container_otros.classList.add('mt-5');
+                            boton.append(container_otros);
+                            var title_otros = document.createElement("h2");
+                            title_otros.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
+                            title_otros.textContent = "Acción";
+                            container_otros.append(title_otros);
+                            var span_otros = document.createElement("span");
+                            span_otros.classList.add('text-[#64748b]');
+                            span_otros.textContent = "Sección que permite distintos tipos de acciones según el tipo de usuario.";
+                            container_otros.append(span_otros);
+                            var separator_otros = document.createElement("div");
+                            separator_otros.classList.add('my-3', 'h-px', 'bg-slate-200');
+                            container_otros.append(separator_otros);
+                            var grid_otros = document.createElement("div");
+                            grid_otros.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
+                            container_otros.append(grid_otros);
+                            grid_otros.append(botones_incidencia[i]);
                         }
                     }
                 }
@@ -465,80 +375,88 @@
     //CSS del botón search
     $('.dataTables_filter input[type="search"]').
 	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
-    
+        
     //css de botones filtro
-     var vacaciones_cerradas = document.getElementById("vacaciones_cerradas");
-     var vacaciones_abiertas = document.getElementById("vacaciones_abiertas");
-     var vacaciones_desplieguetodo = document.getElementById("vacaciones_desplieguetodo");
+     var mis_vacaciones_pendientes = document.getElementById("mis_vacaciones_pendientes");
+     var mis_vacaciones_aprobadas = document.getElementById("mis_vacaciones_aprobadas");
+     var mis_vacaciones_rechazadas = document.getElementById("mis_vacaciones_rechazadas");
+     var mis_vacaciones_canceladas = document.getElementById("mis_vacaciones_canceladas");
+     var mis_vacaciones = document.getElementById("mis_vacaciones");
 
-    document.getElementById('vacaciones_cerradas').addEventListener("click", function(){
+    document.getElementById('mis_vacaciones_rechazadas').addEventListener("click", function(){
 
-        if(vacaciones_abiertas.classList.contains("active") || vacaciones_desplieguetodo.classList.contains("active")){
-            vacaciones_abiertas.classList.remove("active");
-            vacaciones_desplieguetodo.classList.remove("active");
+        if(mis_vacaciones_pendientes.classList.contains("active") || mis_vacaciones_aprobadas.classList.contains("active") || mis_vacaciones_canceladas.classList.contains("active") || mis_vacaciones.classList.contains("active") ){
+            mis_vacaciones_pendientes.classList.remove("active");
+            mis_vacaciones_aprobadas.classList.remove("active");
+            mis_vacaciones_canceladas.classList.remove("active");
+            mis_vacaciones.classList.remove("active");
         }
         
-        if(!vacaciones_cerradas.classList.contains("active")){
-            vacaciones_cerradas.classList.toggle("active");
+        if(!mis_vacaciones_rechazadas.classList.contains("active")){
+            mis_vacaciones_rechazadas.classList.toggle("active");
         }
     });
 
-    document.getElementById('vacaciones_abiertas').addEventListener("click", function(){
+    document.getElementById('mis_vacaciones_aprobadas').addEventListener("click", function(){
 
-        if(vacaciones_cerradas.classList.contains("active") || vacaciones_desplieguetodo.classList.contains("active")){
-            vacaciones_cerradas.classList.remove("active");
-            vacaciones_desplieguetodo.classList.remove("active");
+        if(mis_vacaciones_pendientes.classList.contains("active") || mis_vacaciones_rechazadas.classList.contains("active") || mis_vacaciones_canceladas.classList.contains("active") || mis_vacaciones.classList.contains("active") ){
+            mis_vacaciones_pendientes.classList.remove("active");
+            mis_vacaciones_rechazadas.classList.remove("active");
+            mis_vacaciones_canceladas.classList.remove("active");
+            mis_vacaciones.classList.remove("active");
         }
 
-        if(!vacaciones_abiertas.classList.contains("active")){
-            vacaciones_abiertas.classList.toggle("active");
+        if(!mis_vacaciones_aprobadas.classList.contains("active")){
+            mis_vacaciones_aprobadas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('mis_vacaciones_pendientes').addEventListener("click", function(){
+
+        if(mis_vacaciones_pendientes.classList.contains("active") || mis_vacaciones_aprobadas.classList.contains("active") || mis_vacaciones_canceladas.classList.contains("active") || mis_vacaciones.classList.contains("active") ){
+            mis_vacaciones_pendientes.classList.remove("active");
+            mis_vacaciones_aprobadas.classList.remove("active");
+            mis_vacaciones_canceladas.classList.remove("active");
+            mis_vacaciones.classList.remove("active");
+        }
+
+        if(!mis_vacaciones_pendientes.classList.contains("active")){
+            mis_vacaciones_pendientes.classList.toggle("active");
         }
     });
 
-    document.getElementById('vacaciones_desplieguetodo').addEventListener("click", function(){
+    document.getElementById('mis_vacaciones_canceladas').addEventListener("click", function(){
 
-        if(vacaciones_cerradas.classList.contains("active") || vacaciones_abiertas.classList.contains("active")){
-            vacaciones_cerradas.classList.remove("active");
-            vacaciones_abiertas.classList.remove("active");
+        if(mis_vacaciones_pendientes.classList.contains("active") || mis_vacaciones_rechazadas.classList.contains("active") || mis_vacaciones_aprobadas.classList.contains("active") || mis_vacaciones.classList.contains("active")){
+            mis_vacaciones_pendientes.classList.remove("active");
+            mis_vacaciones_rechazadas.classList.remove("active");
+            mis_vacaciones_aprobadas.classList.remove("active");
+            mis_vacaciones.classList.remove("active");
         }
 
-        if(!vacaciones_desplieguetodo.classList.contains("active")){
-            vacaciones_desplieguetodo.classList.toggle("active");
+        if(!mis_vacaciones_canceladas.classList.contains("active")){
+            mis_vacaciones_canceladas.classList.toggle("active");
         }
-    });
-        
-    //Inicialización de la librería de las fechas
-    $('input[name="periodo_vacaciones"]').daterangepicker({ showDropdowns: true, parentEl: "main", locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-
-    <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
-        $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, timePicker: true, timePicker24Hour: true, timePickerSeconds: true, parentEl: "main", locale: { format: 'YYYY/MM/DD HH:mm:ss' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-
-        $('#periodo_buscar').on('apply.daterangepicker', function(ev, picker) {
-            var fd = new FormData();
-            var fecha_inicio = picker.startDate.format('YYYY-MM-DD HH:mm:ss');
-            var fecha_fin = picker.endDate.format('YYYY-MM-DD HH:mm:ss');
-            fd.append('fecha_inicio', fecha_inicio);
-            fd.append('fecha_fin', fecha_fin);
-            $.ajax({
-                url: '../ajax/filtros/buscar_vacaciones_periodo/buscarperiodo.php',
-                type: 'POST',
-                data: fd,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    var table = $('#datatable').DataTable();
-                    table.clear().draw();
-                    const obj = JSON.parse(data);
-                    table.rows.add(obj).draw();
-                    table.column().cells().invalidate().render();
-                    table.columns.adjust().responsive.recalc();
-                },
-                error: function(data) {
-                    $("#ajax-error").text('Fail to send request');
-                }
-            });        
         });
-    <?php } ?>
+
+        document.getElementById('mis_vacaciones').addEventListener("click", function(){
+
+        if(mis_vacaciones_pendientes.classList.contains("active") || mis_vacaciones_aprobadas.classList.contains("active")|| mis_vacaciones_rechazadas.classList.contains("active") || mis_vacaciones_canceladas.classList.contains("active")){
+            mis_vacaciones_pendientes.classList.remove("active");
+            mis_vacaciones_aprobadas.classList.remove("active");
+            mis_vacaciones_rechazadas.classList.remove("active");
+            mis_vacaciones_canceladas.classList.remove("active");
+        }
+
+        if(!mis_vacaciones.classList.contains("active")){
+            mis_vacaciones.classList.toggle("active");
+        }
+        });
+
+
+
+    //Inicialización de la librería de las fechas
+    $('input[name="periodo_vacaciones"]').daterangepicker({ showDropdowns: true, parentEl: "main", locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 ", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
     if ($('#Guardar').length > 0) {
             $('#Guardar').validate({
@@ -579,7 +497,7 @@
                 },
                 submitHandler: function(form) {
                     $('#submit-vacaciones').html(
-                        '<button disabled id="guardar_general" name="guardar_general" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700" type="submit">'+
+                        '<button disabled id="guardar_general" name="guardar_general" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 " type="submit">'+
                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -615,7 +533,7 @@
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-vacaciones').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
+                                                $('#submit-vacaciones').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 ' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
                                                 var table = $('#datatable').DataTable();
                                                 table.ajax.reload();
                                                 $("#dias_restantes").html(array[2]+ " día(s)");
@@ -627,17 +545,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-vacaciones').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
-                                            });
-                                        }else if(array[0] == "forbidden"){
-                                            Swal.fire({
-                                                title: "Error",
-                                                text: array[1],
-                                                icon: "error"
-                                            }).then(function() {
-                                                window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-vacaciones').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
-                                                window.location.href = "dashboard.php";
+                                                $('#submit-vacaciones').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 ' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
                                             });
                                         }
                                     },3000);
@@ -652,7 +560,7 @@
                                 text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
                                 icon: "error"
                             }).then(function() {
-                                $('#submit-vacaciones').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
+                                $('#submit-vacaciones').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 ' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
                                 window.location.href = "login.php";
                             });
                         }
@@ -718,7 +626,7 @@
                         '</div>'+
                         '<h3 class="text-lg font-medium text-gray-900"> Modificar el estatus de la solicitud de vacaciones </h3>'+
                     '</div>'+
-                    '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
+                    '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left overflow-y-scroll h-[21.875rem] sm:h-full md:overflow-y-hidden">'+
                         '<div class="grid grid-cols-1 mt-5 mx-7">'+
                             '<label class="text-[#64748b] font-semibold mb-2">Estatus</label>'+
                             '<div class="group flex">'+
@@ -746,7 +654,7 @@
 
                 $('.modal-actions').html(
                     '<div id="submit-changes">'+
-                        '<button id="editar-vacaciones" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar vacaciones</button>'+
+                        '<button id="editar-vacaciones" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50  sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
                     '</div>'+
                     '<div id="disable-close-submit">'+
                         '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -802,7 +710,7 @@
                         },
                         submitHandler: function(form) {
                             $('#submit-changes').html(
-                                '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                     '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                     '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                     '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -840,7 +748,7 @@
                                                     }).then(function() {
                                                         var table = $('#datatable').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-vacaciones' type='submit'>Editar vacaciones</button>");
+                                                        $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-vacaciones' type='submit'>Editar vacaciones</button>");
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         if(ButtonEdit == 1){
                                                             table.ajax.url('../config/vacaciones/vacaciones_cerradas.php').load();
@@ -876,18 +784,6 @@
                                                         }
                                                         closeModal();
                                                     });
-                                                }else if (array[0] == "forbidden") {
-                                                    Swal.fire({
-                                                        title: "Error",
-                                                        text: array[1],
-                                                        icon: "error"
-                                                    }).then(function() {
-                                                        window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-vacaciones' type='submit'>Editar vacaciones</button>");
-                                                        $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
-                                                        closeModal();
-                                                        window.location.href = "dashboard.php";
-                                                    });
                                                 }
                                             },3000);
                                         },
@@ -902,7 +798,7 @@
                                         icon: "error"
                                     }).then(function() {
                                         window.removeEventListener('beforeunload', unloadHandler);
-                                        $('#submit-changes').html('<button disabled id="editar-vacaciones" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar vacaciones</button>');
+                                        $('#submit-changes').html('<button disabled id="editar-vacaciones" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50  sm:mt-0 sm:ml-3 sm:w-auto">Editar </button>');
                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                         window.location.href = "login.php";
                                     });	
@@ -943,6 +839,7 @@
             e.returnValue = '';
         }
     });
+    
 </script>
 
 <style>
@@ -1039,20 +936,7 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-   
-    		.btn-celeste{
-		background-color: #00a3ff  !important;
-		border: none !important;
-		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
-		font-weight: 500 !important;
-		border-bottom: #fff 9px;
-	}
-	
-		.btn-celeste:hover{
-		background-color: #008eff !important;
-	}
 
-    /* botones filtro */
     .ov-btn-slide-top {
         border: 0px !important;
         font-size: 15.88px !important; 
@@ -1092,13 +976,22 @@
         -webkit-transition: all 0.25s;
         transition: all 0.25s;
     }
-    .ov-btn-slide-top:target { 
-     background-color: black !important; 
-     color: yellow; 
-    } 
-/* clase para mantener el color en botones filtro */
+
     .active{
     background-color: black !important;
     color: white !important;
     }
-    </style>
+
+   .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+
+</style>

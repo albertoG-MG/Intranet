@@ -52,16 +52,16 @@
                             dom: '<"top"fB>rt<"bottom"ip><"clear">',
                             buttons: [
                                 {
-                                    text: "Crear alerta",
+                                    text: "+ Crear alerta",
                                     attr: {
                                         'id': 'Alerta',
                                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                     },
-                                    className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                    className: 'button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
                                     action: function(e, dt, node, config) {
                                         $('.modal-wrapper-flex').html(
                                             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                                                     '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
                                                         '<path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />'+
                                                     '</svg>'+
@@ -79,12 +79,12 @@
                                                                 '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                                             '</svg>'+
                                                         '</div>'+
-                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_alerta" name="titulo_alerta" placeholder="Título de la alerta">'+
+                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="titulo_alerta" name="titulo_alerta" placeholder="Título de la alerta">'+
                                                     '</div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">Descripción de la alerta</label>'+
-                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_alerta" name="descripcion_alerta" placeholder="Descripción de la alerta"></textarea>'+
+                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="descripcion_alerta" name="descripcion_alerta" placeholder="Descripción de la alerta"></textarea>'+
                                                     '<div id="error_descripcion_alerta"></div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
@@ -146,7 +146,7 @@
                                             '</div>');
                                         $('.modal-actions').html(
                                             '<div id="submit-changes">'+
-                                                '<button id="crear-alerta" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
+                                                '<button id="crear-alerta" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
                                             '</div>'+
                                             '<div id="disable-close-submit">'+
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -179,13 +179,13 @@
                                                 },
                                                 highlight: function(element) {
                                                     var elem = $(element);
-                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                                     $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                                                 },
                                                 unhighlight: function(element) {
                                                     var elem = $(element);	
                                                     $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                                 },
                                                 rules: {
                                                     titulo_alerta: {
@@ -225,7 +225,7 @@
                                                 },
                                                 submitHandler: function(form) {
                                                     $('#submit-changes').html(
-                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -267,7 +267,7 @@
                                                                                 }).then(function() {
                                                                                     var table = $('#alertas_table').DataTable();
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes').html('<button disabled id="crear-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                                    $('#submit-changes').html('<button disabled id="crear-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                     table.ajax.reload();
                                                                                     totalfilas_alertas();
@@ -280,7 +280,7 @@
                                                                                     icon: "error"
                                                                                 }).then(function() {
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes').html('<button id="crear-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                                    $('#submit-changes').html('<button id="crear-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                 });
                                                                             }
@@ -297,7 +297,7 @@
                                                                     icon: "error"
                                                                 }).then(function() {
                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                    $('#submit-changes').html('<button disabled id="crear-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                    $('#submit-changes').html('<button disabled id="crear-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                     window.location.href = "login.php";
                                                                 });	
@@ -436,7 +436,7 @@
                             ],
                             "initComplete": () => {
                                 $('.dataTables_filter input[type="search"]').
-                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
                                 $("#alertas_table").show();
                             },
                         });
@@ -466,16 +466,16 @@
                             dom: '<"top"fB>rt<"bottom"ip><"clear">',
                             buttons: [
                                 {
-                                    text: "Crear aviso",
+                                    text: "+ Crear aviso",
                                     attr: {
                                         'id': 'Aviso',
                                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                     },
-                                    className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                    className: 'button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
                                     action: function(e, dt, node, config) {
                                         $('.modal-wrapper-flex').html(
                                             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                                                     '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z" /></svg>'+
                                                 '</div>'+
                                                 '<h3 class="text-lg font-medium text-gray-900"> Crear un aviso</h3>'+
@@ -491,12 +491,12 @@
                                                                 '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                                             '</svg>'+
                                                         '</div>'+
-                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_aviso" name="titulo_aviso" placeholder="Título del aviso">'+
+                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="titulo_aviso" name="titulo_aviso" placeholder="Título del aviso">'+
                                                     '</div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">Descripción del aviso</label>'+
-                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_aviso" name="descripcion_aviso" placeholder="Descripción del aviso"></textarea>'+
+                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="descripcion_aviso" name="descripcion_aviso" placeholder="Descripción del aviso"></textarea>'+
                                                     '<div id="error_descripcion_aviso"></div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
@@ -558,7 +558,7 @@
                                             '</div>');
                                         $('.modal-actions').html(
                                             '<div id="submit-changes-aviso">'+
-                                                '<button id="crear-aviso" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
+                                                '<button id="crear-aviso" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
                                             '</div>'+
                                             '<div id="disable-close-submit-aviso">'+
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -591,13 +591,13 @@
                                                 },
                                                 highlight: function(element) {
                                                     var elem = $(element);
-                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                                     $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                                                 },
                                                 unhighlight: function(element) {
                                                     var elem = $(element);	
                                                     $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                                 },
                                                 rules: {
                                                     titulo_aviso: {
@@ -637,7 +637,7 @@
                                                 },
                                                 submitHandler: function(form) {
                                                     $('#submit-changes-aviso').html(
-                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -679,7 +679,7 @@
                                                                                 }).then(function() {
                                                                                     var table = $('#avisos_table').DataTable();
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes-aviso').html('<button disabled id="crear-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                                    $('#submit-changes-aviso').html('<button disabled id="crear-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                                     $('#disable-close-submit-aviso').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                     table.ajax.reload();
                                                                                     totalfilas_avisos();
@@ -692,7 +692,7 @@
                                                                                     icon: "error"
                                                                                 }).then(function() {
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes-aviso').html('<button id="crear-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                                    $('#submit-changes-aviso').html('<button id="crear-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                                     $('#disable-close-submit-aviso').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                 });
                                                                             }
@@ -709,7 +709,7 @@
                                                                     icon: "error"
                                                                 }).then(function() {
                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                    $('#submit-changes-aviso').html('<button disabled id="crear-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
+                                                                    $('#submit-changes-aviso').html('<button disabled id="crear-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Crear</button>');
                                                                     $('#disable-close-submit-aviso').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                     window.location.href = "login.php";
                                                                 });	
@@ -848,7 +848,7 @@
                             ],
                             "initComplete": () => {
                                 $('.dataTables_filter input[type="search"]').
-                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
                                 $("#avisos_table").show();
                             },
                         });
@@ -878,16 +878,16 @@
                             dom: '<"top"fB>rt<"bottom"ip><"clear">',
                             buttons: [
                                 {
-                                    text: "Crear comunicado",
+                                    text: "+ Crear comunicado",
                                     attr: {
                                         'id': 'Comunicado',
                                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                     },
-                                    className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                    className: 'button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
                                     action: function(e, dt, node, config) {
                                         $('.modal-wrapper-flex').html(
                                             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                                                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                                                     '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">'+
                                                         '<path fill="currentColor" d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"></path>'+
                                                     '</svg>'+
@@ -905,12 +905,12 @@
                                                                 '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                                             '</svg>'+
                                                         '</div>'+
-                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="titulo_comunicado" name="titulo_comunicado" placeholder="Título del comunicado">'+
+                                                        '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="titulo_comunicado" name="titulo_comunicado" placeholder="Título del comunicado">'+
                                                     '</div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
                                                     '<label class="text-[#64748b] font-semibold mb-2">Descripción del comunicado</label>'+
-                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="descripcion_comunicado" name="descripcion_comunicado" placeholder="Descripción del comunicado"></textarea>'+
+                                                    '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="descripcion_comunicado" name="descripcion_comunicado" placeholder="Descripción del comunicado"></textarea>'+
                                                     '<div id="error_descripcion_comunicado"></div>'+
                                                 '</div>'+
                                                 '<div class="grid grid-cols-1 mt-5 mx-7">'+
@@ -972,7 +972,7 @@
                                             '</div>');
                                         $('.modal-actions').html(
                                             '<div id="submit-changes">'+
-                                                '<button id="crear-comunicado" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
+                                                '<button id="crear-comunicado" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>'+
                                             '</div>'+
                                             '<div id="disable-close-submit">'+
                                                 '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -1005,13 +1005,13 @@
                                                 },
                                                 highlight: function(element) {
                                                     var elem = $(element);
-                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                                     $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                                                 },
                                                 unhighlight: function(element) {
                                                     var elem = $(element);	
                                                     $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                                 },
                                                 rules: {
                                                     titulo_comunicado: {
@@ -1051,7 +1051,7 @@
                                                 },
                                                 submitHandler: function(form) {
                                                     $('#submit-changes').html(
-                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -1093,7 +1093,7 @@
                                                                                 }).then(function() {
                                                                                     var table = $('#comunicados_table').DataTable();
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes').html('<button disabled id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                                    $('#submit-changes').html('<button disabled id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                     table.ajax.reload();
                                                                                     totalfilas_comunicados();
@@ -1106,7 +1106,7 @@
                                                                                     icon: "error"
                                                                                 }).then(function() {
                                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                                    $('#submit-changes').html('<button id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                                    $('#submit-changes').html('<button id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
                                                                                     $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                                 });
                                                                             }
@@ -1123,7 +1123,7 @@
                                                                     icon: "error"
                                                                 }).then(function() {
                                                                     window.removeEventListener('beforeunload', unloadHandler);
-                                                                    $('#submit-changes').html('<button disabled id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
+                                                                    $('#submit-changes').html('<button disabled id="crear-comunicado" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Crear</button>');
                                                                     $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                                     window.location.href = "login.php";
                                                                 });	
@@ -1262,7 +1262,7 @@
                             ],
                             "initComplete": () => {
                                 $('.dataTables_filter input[type="search"]').
-                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+                                attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
                                 $("#comunicados_table").show();
                             },
                         });
@@ -1281,7 +1281,7 @@
             tabElements.forEach((t) => {
                 t.targetEl.classList.remove("block")
                 t.targetEl.classList.add("hidden");
-                t.triggerEl.classList.remove("bg-[#4f46e5]", "text-white", "menu-active");
+                t.triggerEl.classList.remove("bg-[#27ceeb]", "text-white", "menu-active");
                 t.triggerEl.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
                 "focus:bg-slate-100", "focus:text-slate-800");
                 t.triggerEl.firstElementChild.classList.add("text-slate-400", "transition-colors", 
@@ -1289,7 +1289,7 @@
             })
             target.targetEl.classList.remove("hidden");
             target.targetEl.classList.add("block");
-            target.triggerEl.classList.add("bg-[#4f46e5]", "text-white", "menu-active");
+            target.triggerEl.classList.add("bg-[#27ceeb]", "text-white", "menu-active");
             target.triggerEl.classList.remove("hover:bg-slate-100", "hover:text-slate-800", 
             "focus:bg-slate-100", "focus:text-slate-800");
             target.triggerEl.firstElementChild.classList.remove("text-slate-400", "transition-colors", 
@@ -1317,7 +1317,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                         '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+
                             '<path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />'+
                         '</svg>'+
@@ -1335,12 +1335,12 @@
                                     '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                 '</svg>'+
                             '</div>'+
-                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="editar_titulo_alerta" name="editar_titulo_alerta" value="'+data['titulo_alerta']+'" placeholder="Título de la alerta">'+
+                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="editar_titulo_alerta" name="editar_titulo_alerta" value="'+data['titulo_alerta']+'" placeholder="Título de la alerta">'+
                         '</div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">Descripción de la alerta</label>'+
-                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="editar_descripcion_alerta" name="editar_descripcion_alerta" placeholder="Descripción de la alerta">'+data['descripcion_alerta']+'</textarea>'+
+                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="editar_descripcion_alerta" name="editar_descripcion_alerta" placeholder="Descripción de la alerta">'+data['descripcion_alerta']+'</textarea>'+
                         '<div id="error_editar_descripcion_alerta"></div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
@@ -1402,7 +1402,7 @@
                 '</div>');
                 $('.modal-actions').html(
                     '<div id="submit-changes">'+
-                        '<button id="editar-alerta" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
+                        '<button id="editar-alerta" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
                     '</div>'+
                     '<div id="disable-close-submit">'+
                         '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -1477,13 +1477,13 @@
                     },
                     highlight: function(element) {
                         var elem = $(element);
-                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
                         var elem = $(element);	
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                     },
                     rules: {
                         editar_titulo_alerta: {
@@ -1523,7 +1523,7 @@
                     },
                     submitHandler: function(form) {
                         $('#submit-changes').html(
-                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                 '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                 '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                 '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -1569,7 +1569,7 @@
                                                     }).then(function() {
                                                         var table = $('#alertas_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
+                                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
                                                         totalfilas_alertas();
@@ -1582,7 +1582,7 @@
                                                         icon: "error"
                                                     }).then(function() {
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html('<button id="editar-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
+                                                        $('#submit-changes').html('<button id="editar-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
                                                         $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                     });
                                                 } else if (array[0] == "alert_not_found") {
@@ -1593,7 +1593,7 @@
                                                     }).then(function() {
                                                         var table = $('#alertas_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
+                                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
                                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
                                                         totalfilas_alertas();
@@ -1613,7 +1613,7 @@
                                         icon: "error"
                                     }).then(function() {
                                         window.removeEventListener('beforeunload', unloadHandler);
-                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
+                                        $('#submit-changes').html('<button disabled id="editar-alerta" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>');
                                         $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                         window.location.href = "login.php";
                                     });	
@@ -2330,7 +2330,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                         '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z" /></svg>'+
                     '</div>'+
                     '<h3 class="text-lg font-medium text-gray-900"> Editar un aviso</h3>'+
@@ -2346,12 +2346,12 @@
                                     '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                 '</svg>'+
                             '</div>'+
-                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="editar_titulo_aviso" name="editar_titulo_aviso" value="'+data['titulo_aviso']+'" placeholder="Título del aviso">'+
+                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="editar_titulo_aviso" name="editar_titulo_aviso" value="'+data['titulo_aviso']+'" placeholder="Título del aviso">'+
                         '</div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">Descripción del aviso</label>'+
-                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="editar_descripcion_aviso" name="editar_descripcion_aviso" placeholder="Descripción del aviso">'+data['descripcion_aviso']+'</textarea>'+
+                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="editar_descripcion_aviso" name="editar_descripcion_aviso" placeholder="Descripción del aviso">'+data['descripcion_aviso']+'</textarea>'+
                         '<div id="error_editar_descripcion_aviso"></div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
@@ -2413,7 +2413,7 @@
                 '</div>');
             $('.modal-actions').html(
                 '<div id="submit-editar-changes-aviso">'+
-                    '<button id="editar-aviso" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
+                    '<button id="editar-aviso" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
                 '</div>'+
                 '<div id="disable-editar-close-submit-aviso">'+
                     '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -2488,13 +2488,13 @@
                     },
                     highlight: function(element) {
                         var elem = $(element);
-                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
                         var elem = $(element);	
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                     },
                     rules: {
                         editar_titulo_aviso: {
@@ -2534,7 +2534,7 @@
                     },
                     submitHandler: function(form) {
                         $('#submit-editar-changes-aviso').html(
-                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                 '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                 '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                 '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -2580,7 +2580,7 @@
                                                     }).then(function() {
                                                         var table = $('#avisos_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-editar-changes-aviso').html('<button disabled id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-editar-changes-aviso').html('<button disabled id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-editar-close-submit-aviso').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
                                                         totalfilas_avisos();
@@ -2593,7 +2593,7 @@
                                                         icon: "error"
                                                     }).then(function() {
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-editar-changes-aviso').html('<button id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-editar-changes-aviso').html('<button id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                     });
                                                 } else if (array[0] == "notice_not_found") {
@@ -2604,7 +2604,7 @@
                                                     }).then(function() {
                                                         var table = $('#avisos_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-editar-changes-aviso').html('<button disabled id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-editar-changes-aviso').html('<button disabled id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-editar-close-submit-aviso').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
                                                         totalfilas_avisos();
@@ -2624,7 +2624,7 @@
                                         icon: "error"
                                     }).then(function() {
                                         window.removeEventListener('beforeunload', unloadHandler);
-                                        $('#submit-editar-changes-aviso').html('<button disabled id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                        $('#submit-editar-changes-aviso').html('<button disabled id="editar-aviso" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                         $('#disable-editar-close-submit-aviso').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                         window.location.href = "login.php";
                                     });	
@@ -3129,7 +3129,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                    '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                         '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"></path></svg>'+
                     '</div>'+
                     '<h3 class="text-lg font-medium text-gray-900"> Editar un comunicado</h3>'+
@@ -3145,12 +3145,12 @@
                                     '<path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />'+
                                 '</svg>'+
                             '</div>'+
-                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="editar_titulo_comunicado" name="editar_titulo_comunicado" value="'+data['titulo_comunicado']+'" placeholder="Título del comunicado">'+
+                            '<input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="editar_titulo_comunicado" name="editar_titulo_comunicado" value="'+data['titulo_comunicado']+'" placeholder="Título del comunicado">'+
                         '</div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
                         '<label class="text-[#64748b] font-semibold mb-2">Descripción del comunicado</label>'+
-                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="editar_descripcion_comunicado" name="editar_descripcion_comunicado" placeholder="Descripción del comunicado">'+data['descripcion_comunicado']+'</textarea>'+
+                        '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="editar_descripcion_comunicado" name="editar_descripcion_comunicado" placeholder="Descripción del comunicado">'+data['descripcion_comunicado']+'</textarea>'+
                         '<div id="error_editar_descripcion_comunicado"></div>'+
                     '</div>'+
                     '<div class="grid grid-cols-1 mt-5 mx-7">'+
@@ -3212,7 +3212,7 @@
                 '</div>');
             $('.modal-actions').html(
                 '<div id="submit-editar-changes-comunicado">'+
-                    '<button id="editar-comunicado" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
+                    '<button id="editar-comunicado" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar</button>'+
                 '</div>'+
                 '<div id="disable-editar-close-submit-comunicado">'+
                     '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -3287,13 +3287,13 @@
                     },
                     highlight: function(element) {
                         var elem = $(element);
-                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
                         var elem = $(element);	
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                     },
                     rules: {
                         editar_titulo_comunicado: {
@@ -3333,7 +3333,7 @@
                     },
                     submitHandler: function(form) {
                         $('#submit-editar-changes-comunicado').html(
-                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                            '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                 '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                 '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                 '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -3379,7 +3379,7 @@
                                                     }).then(function() {
                                                         var table = $('#comunicados_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
                                                         totalfilas_comunicados();
@@ -3392,7 +3392,7 @@
                                                         icon: "error"
                                                     }).then(function() {
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-editar-changes-comunicado').html('<button id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-editar-changes-comunicado').html('<button id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-editar-close-submit-comunicado').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                     });
                                                 } else if (array[0] == "communicate_not_found") {
@@ -3403,7 +3403,7 @@
                                                     }).then(function() {
                                                         var table = $('#comunicados_table').DataTable();
                                                         window.removeEventListener('beforeunload', unloadHandler);
-                                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                                         $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         table.ajax.reload();
                                                         totalfilas_comunicados();
@@ -3423,7 +3423,7 @@
                                         icon: "error"
                                     }).then(function() {
                                         window.removeEventListener('beforeunload', unloadHandler);
-                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
+                                        $('#submit-editar-changes-comunicado').html('<button disabled id="editar-comunicado" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-celeste-700 font-medium text-white bg-celeste-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Editar</button>');
                                         $('#disable-editar-close-submit-comunicado').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                         window.location.href = "login.php";
                                     });	
@@ -3745,7 +3745,7 @@
     function viewmore_alerts(titulo_alerta, descripcion_alerta, creado_por, nombre_archivo, archivo_identificador){
         $('.modal-wrapper-flex').html(
             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                     '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg>'+
                 '</div>'+
                 '<h3 class="text-lg font-medium text-gray-900"> '+titulo_alerta+'</h3>'+
@@ -3786,7 +3786,7 @@
     function viewmore_notices(titulo_aviso, descripcion_aviso, creado_por, filename_archivo_aviso, aviso_archivo_identificador){
         $('.modal-wrapper-flex').html(
             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                     '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z"></path></svg>'+
                 '</div>'+
                 '<h3 class="text-lg font-medium text-gray-900"> '+titulo_aviso+'</h3>'+
@@ -3827,7 +3827,7 @@
     function viewmore_communicates(titulo_comunicado, descripcion_comunicado, creado_por, nombre_archivo, archivo_identificador){
         $('.modal-wrapper-flex').html(
             '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                     '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg>'+
                 '</div>'+
                 '<h3 class="text-lg font-medium text-gray-900"> '+titulo_comunicado+'</h3>'+
@@ -3926,7 +3926,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
-                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white btn-celeste rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -3941,7 +3941,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_alerta}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Alerta</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_alerta}</div>`+
-                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_alerts('${data[i].titulo_alerta}', '${data[i].descripcion_alerta}', '${data[i].nombre}', '${data[i].filename_alertas_archivo}', '${data[i].alertas_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white btn-celeste rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -4011,7 +4011,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white btn-celeste rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -4026,7 +4026,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_aviso}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Aviso</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_aviso}</div>`+
-                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_notices('${data[i].titulo_aviso}', '${data[i].descripcion_aviso}', '${data[i].nombre}', '${data[i].filename_archivo_aviso}', '${data[i].aviso_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white btn-celeste rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -4098,7 +4098,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
-                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white btn-celeste rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -4113,7 +4113,7 @@
                                 `<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${data[i].titulo_comunicado}</h5>`+
                                 `<div class="text-xs font-bold uppercase text-teal-700 mt-1 mb-2">Comunicado</div>`+
                                 `<div class="mb-3 font-normal text-gray-700">Fecha de creación: ${data[i].fecha_creacion_comunicado}</div>`+
-                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-600 rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">`+
+                                `<button type="button" onclick="viewmore_communicates('${data[i].titulo_comunicado}', '${data[i].descripcion_comunicado}', '${data[i].nombre}', '${data[i].filename_comunicados_archivo}', '${data[i].comunicados_archivo_identificador}')" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white btn-celeste rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">`+
                                     `Ver más`+
                                     `<svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">`+
                                         `<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>`+
@@ -4208,71 +4208,82 @@
         color: red;
     }
 
-    .dataTables_wrapper .dataTables_filter {
-        float: left;
-        text-align: left;
-        padding-bottom: 5px;
-        padding-top: 5px;
+    .dataTables_wrapper .dataTables_filter{
+        float:left;
+        text-align:left;
+        padding-bottom:13px;
+        padding-top:5px;
     }
 
-    @media (max-width: 640px) {
-        .dataTables_filter {
-            width: 100%;
+    @media (max-width: 640px){
+        .dataTables_filter{
+            width:100%;
         }
     }
 
-    .dataTables_paginate {
-        font-size: 12px;
-        display: flex;
-        align-items: center;
+    .dataTables_paginate{
+        font-size:12px;
+        display:flex;
+        align-items:center;
         justify-content: center;
-        position: relative;
+        position:relative;
         right: 7px;
     }
 
-    .dt-buttons {
-        float: right !important;
+    .dt-buttons{
+        float:right !important;
         text-align: right;
     }
 
-    #datatable {
+    #datatable{
         border-collapse: collapse !important;
+        font-size: 12px;
     }
 
-    .search {
-        margin: auto !important;
+    .search{
+        margin:auto !important;
         height: 40px !important;
     }
 
-    tr.odd:hover,
-    tr.even:hover {
+    tr.odd:hover, tr.even:hover{
         background: rgb(243 244 246 / var(--tw-bg-opacity)) !important
     }
-
-    tr.odd {
+    tr.odd{
         border-bottom-width: 1px;
         border-color: rgb(229 231 235 / var(--tw-border-opacity));
         --tw-border-opacity: 1;
         background: transparent !important;
     }
 
-    tr.even {
+    tr.even{
         border-bottom-width: 1px;
         border-color: rgb(229 231 235 / var(--tw-border-opacity));
         --tw-border-opacity: 1;
         background: rgb(249 250 251 / var(--tw-bg-opacity)) !important;
     }
 
-    div.dataTables_filter .search {
-        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB2ZXJzaW9uPSIxLjEiICAgaWQ9InN2ZzQ0ODUiICAgdmlld0JveD0iMCAwIDIxLjk5OTk5OSAyMS45OTk5OTkiICAgaGVpZ2h0PSIyMiIgICB3aWR0aD0iMjIiPiAgPGRlZnMgICAgIGlkPSJkZWZzNDQ4NyIgLz4gIDxtZXRhZGF0YSAgICAgaWQ9Im1ldGFkYXRhNDQ5MCI+ICAgIDxyZGY6UkRGPiAgICAgIDxjYzpXb3JrICAgICAgICAgcmRmOmFib3V0PSIiPiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+ICAgICAgICA8ZGM6dHlwZSAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4gICAgICAgIDxkYzp0aXRsZT48L2RjOnRpdGxlPiAgICAgIDwvY2M6V29yaz4gICAgPC9yZGY6UkRGPiAgPC9tZXRhZGF0YT4gIDxnICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0xMDMwLjM2MjIpIiAgICAgaWQ9ImxheWVyMSI+ICAgIDxnICAgICAgIHN0eWxlPSJvcGFjaXR5OjAuNSIgICAgICAgaWQ9ImcxNyIgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAuNCw4NjYuMjQxMzQpIj4gICAgICA8cGF0aCAgICAgICAgIGlkPSJwYXRoMTkiICAgICAgICAgZD0ibSAtNTAuNSwxNzkuMSBjIC0yLjcsMCAtNC45LC0yLjIgLTQuOSwtNC45IDAsLTIuNyAyLjIsLTQuOSA0LjksLTQuOSAyLjcsMCA0LjksMi4yIDQuOSw0LjkgMCwyLjcgLTIuMiw0LjkgLTQuOSw0LjkgeiBtIDAsLTguOCBjIC0yLjIsMCAtMy45LDEuNyAtMy45LDMuOSAwLDIuMiAxLjcsMy45IDMuOSwzLjkgMi4yLDAgMy45LC0xLjcgMy45LC0zLjkgMCwtMi4yIC0xLjcsLTMuOSAtMy45LC0zLjkgeiIgICAgICAgICBjbGFzcz0ic3Q0IiAvPiAgICAgIDxyZWN0ICAgICAgICAgaWQ9InJlY3QyMSIgICAgICAgICBoZWlnaHQ9IjUiICAgICAgICAgd2lkdGg9IjAuODk5OTk5OTgiICAgICAgICAgY2xhc3M9InN0NCIgICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjY5NjQsLTAuNzE3NiwwLjcxNzYsMC42OTY0LC0xNDIuMzkzOCwyMS41MDE1KSIgICAgICAgICB5PSIxNzYuNjAwMDEiICAgICAgICAgeD0iLTQ2LjIwMDAwMSIgLz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
-        background-repeat: no-repeat;
-        background-color: #fff;
-        background-position: 3px 7px !important;
-        padding-left: 30px;
-    }
-
+    div.dataTables_filter .search{
+			background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB2ZXJzaW9uPSIxLjEiICAgaWQ9InN2ZzQ0ODUiICAgdmlld0JveD0iMCAwIDIxLjk5OTk5OSAyMS45OTk5OTkiICAgaGVpZ2h0PSIyMiIgICB3aWR0aD0iMjIiPiAgPGRlZnMgICAgIGlkPSJkZWZzNDQ4NyIgLz4gIDxtZXRhZGF0YSAgICAgaWQ9Im1ldGFkYXRhNDQ5MCI+ICAgIDxyZGY6UkRGPiAgICAgIDxjYzpXb3JrICAgICAgICAgcmRmOmFib3V0PSIiPiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+ICAgICAgICA8ZGM6dHlwZSAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4gICAgICAgIDxkYzp0aXRsZT48L2RjOnRpdGxlPiAgICAgIDwvY2M6V29yaz4gICAgPC9yZGY6UkRGPiAgPC9tZXRhZGF0YT4gIDxnICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0xMDMwLjM2MjIpIiAgICAgaWQ9ImxheWVyMSI+ICAgIDxnICAgICAgIHN0eWxlPSJvcGFjaXR5OjAuNSIgICAgICAgaWQ9ImcxNyIgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAuNCw4NjYuMjQxMzQpIj4gICAgICA8cGF0aCAgICAgICAgIGlkPSJwYXRoMTkiICAgICAgICAgZD0ibSAtNTAuNSwxNzkuMSBjIC0yLjcsMCAtNC45LC0yLjIgLTQuOSwtNC45IDAsLTIuNyAyLjIsLTQuOSA0LjksLTQuOSAyLjcsMCA0LjksMi4yIDQuOSw0LjkgMCwyLjcgLTIuMiw0LjkgLTQuOSw0LjkgeiBtIDAsLTguOCBjIC0yLjIsMCAtMy45LDEuNyAtMy45LDMuOSAwLDIuMiAxLjcsMy45IDMuOSwzLjkgMi4yLDAgMy45LC0xLjcgMy45LC0zLjkgMCwtMi4yIC0xLjcsLTMuOSAtMy45LC0zLjkgeiIgICAgICAgICBjbGFzcz0ic3Q0IiAvPiAgICAgIDxyZWN0ICAgICAgICAgaWQ9InJlY3QyMSIgICAgICAgICBoZWlnaHQ9IjUiICAgICAgICAgd2lkdGg9IjAuODk5OTk5OTgiICAgICAgICAgY2xhc3M9InN0NCIgICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjY5NjQsLTAuNzE3NiwwLjcxNzYsMC42OTY0LC0xNDIuMzkzOCwyMS41MDE1KSIgICAgICAgICB5PSIxNzYuNjAwMDEiICAgICAgICAgeD0iLTQ2LjIwMDAwMSIgLz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
+			background-repeat: no-repeat;
+			background-color: #fff;
+			background-position: 3px 7px !important;
+			padding-left: 30px;
+	}
     <?php 
             }
         } 
     ?>
-</style>
+    
+
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>

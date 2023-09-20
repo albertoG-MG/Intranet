@@ -12,12 +12,12 @@
         buttons: [
             <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear departamento") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
 				{
-					text: "Crear Departamento",
+					text: "+ Crear Departamento",
 					attr: {
 						'id': 'Departamento',
                         'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
 					},
-					className: 'button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700'
+					className: 'button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700'
 				}
             <?php } ?>
 				],
@@ -88,7 +88,7 @@
             $('.dt-buttons').on('click', '.dt-button', function(){
                 $('.modal-wrapper-flex').html(
                     "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg></div>"+
+                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg></div>"+
                     "<h3 class='text-lg font-medium text-gray-900'>Crear departamento</h3>"+
                     "</div>"+
                     "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -98,13 +98,13 @@
                                 "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'>"+
                                     "<svg class='w-5 h-5 text-gray-500' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg>"+
                                 "</div>"+
-                                "<input class='w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600' type='text' id='creardepartamento' name='creardepartamento' placeholder='Crear departamento'>"+
+                                "<input class='w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600' type='text' id='creardepartamento' name='creardepartamento' placeholder='Crear departamento'>"+
                             "</div>"+
                         "</div>"+
                     "</div>"
                 );
                 $('.modal-actions').html(
-                    "<button id='crear-departamento' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Crear departamento</button>"+
+                    "<button id='crear-departamento' class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto'>Crear</button>"+
                     "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"
                 );
                 openModal();
@@ -190,7 +190,7 @@
                 var data = row.data();
                 $('.modal-wrapper-flex').html(
                     "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg></div>"+
+                    "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg></div>"+
                     "<h3 class='text-lg font-medium text-gray-900'>Editar departamento</h3>"+
                     "</div>"+
                     "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -200,13 +200,13 @@
                                 "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'>"+
                                     "<svg class='w-5 h-5 text-gray-500' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M19,20H17V11H7V20H5V9L12,5L19,9V20M8,12H16V14H8V12M8,15H16V17H8V15M16,18V20H8V18H16Z' /></svg>"+
                                 "</div>"+
-                                "<input class='w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600' type='text' id='editdepartamento' name='editdepartamento' placeholder='Editar departamento' value='"+data[1]+"'>"+
+                                "<input class='w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600' type='text' id='editdepartamento' name='editdepartamento' placeholder='Editar departamento' value='"+data[1]+"'>"+
                             "</div>"+
                         "</div>"+
                     "</div>"
                 );
                 $('.modal-actions').html(
-                    "<button id='editar-departamento' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar departamento</button>"+
+                    "<button id='editar-departamento' class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar</button>"+
                     "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"
                 );
                 openModal();
@@ -304,7 +304,7 @@
     });
     $(document).ready(function() {
         $('.dataTables_filter input[type="search"]').
-	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
         <?php
         if(basename($_SERVER['PHP_SELF']) == 'departamentos.php'){?>
             var dropdown = document.getElementById('catalogos');
@@ -400,7 +400,7 @@
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
-        padding-bottom:5px;
+        padding-bottom:13px;
         padding-top:5px;
     }
 
@@ -426,6 +426,7 @@
 
     #datatable{
         border-collapse: collapse !important;
+        font-size: 12px;
     }
 
     .search{
@@ -457,4 +458,15 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-</style>
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>

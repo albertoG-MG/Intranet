@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     'id': 'subroles',
                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                 },
-                className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white',
+                className: 'btn-celeste hover:bg-celeste-700 focus:bg-celeste-700 text-white rounded-lg shadow-xl font-medium text-white',
 				action: function ( e, dt, node, config ) {
 					window.location.href = "crear_subrol.php";
 				}
@@ -183,10 +183,10 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <style>
-    .dataTables_wrapper .dataTables_filter{
+     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
-        padding-bottom:5px;
+        padding-bottom:13px;
         padding-top:5px;
     }
 
@@ -212,10 +212,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     #datatable{
         border-collapse: collapse !important;
+        font-size: 12px;
     }
 
     .search{
         margin:auto !important;
+        height: 40px !important;
     }
 
     tr.odd:hover, tr.even:hover{
@@ -242,4 +244,16 @@ document.addEventListener("DOMContentLoaded", function() {
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-</style>
+
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>

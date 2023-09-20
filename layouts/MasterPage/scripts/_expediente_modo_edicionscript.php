@@ -31,7 +31,7 @@
                 menuExpedientes.forEach((trigger) => {
                     trigger.targetMenu.classList.remove("block")
                     trigger.targetMenu.classList.add("hidden");
-                    trigger.triggerMenu.classList.remove("bg-[#4f46e5]", "text-white", "menu-active");
+                    trigger.triggerMenu.classList.remove("bg-[#27ceeb]", "text-white", "menu-active");
                     trigger.triggerMenu.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
                     "focus:bg-slate-100", "focus:text-slate-800");
                     trigger.triggerMenu.firstElementChild.classList.add("text-slate-400", "transition-colors", 
@@ -39,7 +39,7 @@
                 })
                 objective.targetMenu.classList.remove("hidden");
                 objective.targetMenu.classList.add("block");
-                objective.triggerMenu.classList.add("bg-[#4f46e5]", "text-white", "menu-active");
+                objective.triggerMenu.classList.add("bg-[#27ceeb]", "text-white", "menu-active");
                 objective.triggerMenu.classList.remove("hover:bg-slate-100", "hover:text-slate-800", 
                 "focus:bg-slate-100", "focus:text-slate-800");
                 objective.triggerMenu.firstElementChild.classList.remove("text-slate-400", "transition-colors", 
@@ -78,10 +78,10 @@
 
         <?php if($fetch_token_user->exp_date >= $curDate){ ?>
 
-            $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-            $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-            $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-            $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
             <?php if($edit->efecha_nacimiento != null){ ?> 
                 $('#fechanac').data('daterangepicker').setStartDate('<?php echo $edit->efecha_nacimiento; ?>');
@@ -126,7 +126,7 @@
                 let currentTab = document.querySelector(".menu-active");
                 let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
                 for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
                     tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                     tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
                     tabContents.children[i].classList.remove('hidden');
@@ -136,7 +136,7 @@
                     }
                     tabContents.children[i].classList.add("hidden");
                 }
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
                 currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                 currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
             });
@@ -146,7 +146,7 @@
                 let currentTab = document.querySelector(".menu-active");
                 let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
                 for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
                     tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                     tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
                     tabContents.children[i].classList.remove('hidden');
@@ -156,7 +156,7 @@
                     }
                     tabContents.children[i].classList.add("hidden");
                 }
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
                 currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                 currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
             });
@@ -166,7 +166,7 @@
                 let currentTab = document.querySelector(".menu-active");
                 let tabName = currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.getAttribute("data-tabs-target");
                 for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
                     tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                     tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
                     tabContents.children[i].classList.remove('hidden');
@@ -176,7 +176,7 @@
                     }
                     tabContents.children[i].classList.add("hidden");
                 }
-                currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+                currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
                 currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                 currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
             });
@@ -186,7 +186,7 @@
                 let currentTab = document.querySelector(".menu-active");
                 let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
                 for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
                     tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                     tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
                     tabContents.children[i].classList.remove('hidden');
@@ -196,7 +196,7 @@
                     }
                     tabContents.children[i].classList.add("hidden");
                 }
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
                 currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                 currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
             });
@@ -207,7 +207,7 @@
                 let currentTab = document.querySelector(".menu-active");
                 let tabName = currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.getAttribute("data-tabs-target");
                 for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
                     tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                     tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
                     tabContents.children[i].classList.remove('hidden');
@@ -217,7 +217,7 @@
                     }
                     tabContents.children[i].classList.add("hidden");
                 }
-                currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+                currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
                 currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
                 currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
             });
@@ -292,19 +292,19 @@
                             var taberror = jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id');
                             if(taberror != "documentos"){
                                 $('#menu button[data-tabs-target="#' + jQuery(validator.errorList[0].element).closest(".tab-pane").removeClass("hidden") + '"]');
-                                $('#menu > li > button[data-tabs-target="#'+taberror+'"]').addClass("menu-active bg-[#4f46e5] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
-                                $('#menu > li > button:last').removeClass("bg-[#4f46e5] text-white menu-active").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+                                $('#menu > li > button[data-tabs-target="#'+taberror+'"]').addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+                                $('#menu > li > button:last').removeClass("bg-[#27ceeb] text-white menu-active").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
                                 $("#menu-contents > div:last").addClass("hidden");
                             }
                         }
                     },
                     highlight: function(element) {
-                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                     },
                     unhighlight: function(element) {
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                        $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                     },
                     rules: {
                         estudios:{
@@ -644,7 +644,7 @@
                     },
                     submitHandler: function(form) {
                         $('#submit-button').html(
-                            '<button disabled type="submit" id="finish" name="finish" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">'+
+                            '<button disabled type="submit" id="finish" name="finish" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">'+
                                 '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                 '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                 '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -961,7 +961,7 @@
                     inputtext.type = "text";
                     inputtext.name = "infa_rnombre" + childrenCount;
                     inputtext.value = refarr[value]["nombre"];
-                    inputtext.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    inputtext.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     inputtext.setAttribute("data-rule-required", "true");
                     inputtext.setAttribute("data-msg-required", "Este campo es requerido");
                     inputtext.setAttribute("data-rule-names_validation", "true");
@@ -980,7 +980,7 @@
                     inputtext2.type = "text";
                     inputtext2.name = "infa_rrelacion" + childrenCount;
                     inputtext2.value = refarr[value]["relacion"];
-                    inputtext2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    inputtext2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     inputtext2.setAttribute("data-rule-required", "true");
                     inputtext2.setAttribute("data-msg-required", "Este campo es requerido");
                     inputtext2.setAttribute("data-rule-field_validation", "true");
@@ -999,7 +999,7 @@
                     inputtext3.type = "text";
                     inputtext3.name = "infa_rtelefono" + childrenCount;
                     inputtext3.value = refarr[value]["telefono"];
-                    inputtext3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    inputtext3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     inputtext3.setAttribute("data-rule-required", "true");
                     inputtext3.setAttribute("data-msg-required", "Este campo es requerido");
                     inputtext3.setAttribute("data-rule-digits", "true");
@@ -1058,7 +1058,7 @@
                     refbaninput.type = "text";
                     refbaninput.name = "infb_rnombre" + childrenCount2;
                     refbaninput.value = refbanarr[value2]["nombre"];
-                    refbaninput.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    refbaninput.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     refbaninput.setAttribute("data-rule-required", "true"); 
                     refbaninput.setAttribute("data-msg-required", "Este campo es requerido");
                     refbaninput.setAttribute("data-rule-names_validation", "true"); 
@@ -1077,7 +1077,7 @@
                     refbaninput2.type = "text";
                     refbaninput2.name = "infb_rrelacion" + childrenCount2;
                     refbaninput2.value = refbanarr[value2]["relacion"];
-                    refbaninput2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    refbaninput2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     refbaninput2.setAttribute("data-rule-required", "true");
                     refbaninput2.setAttribute("data-msg-required", "Este campo es requerido");
                     refbaninput2.setAttribute("data-rule-field_validation", "true");
@@ -1096,7 +1096,7 @@
                     refbaninput3.type = "text";
                     refbaninput3.name = "infb_rrfc" + childrenCount2;
                     refbaninput3.value = refbanarr[value2]["rfc"];
-                    refbaninput3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    refbaninput3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     refbaninput3.setAttribute("data-rule-required", "true");
                     refbaninput3.setAttribute("data-msg-required", "Este campo es requerido");
                     refbaninput3.setAttribute("data-rule-alphanumeric", "true");
@@ -1115,7 +1115,7 @@
                     refbaninput4.type = "text";
                     refbaninput4.name = "infb_rcurp" + childrenCount2;
                     refbaninput4.value = refbanarr[value2]["curp"];
-                    refbaninput4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    refbaninput4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     refbaninput4.setAttribute("data-rule-required", "true");
                     refbaninput4.setAttribute("data-msg-required", "Este campo es requerido");
                     refbaninput4.setAttribute("data-rule-alphanumeric", "true");
@@ -1134,7 +1134,7 @@
                     refbaninput5.type = "text";
                     refbaninput5.name = "infb_rporcentaje" + childrenCount2;
                     refbaninput5.value = refbanarr[value2]["prcnt_derecho"];
-                    refbaninput5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                    refbaninput5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                     refbaninput5.setAttribute("data-rule-required", "true");
                     refbaninput5.setAttribute("data-msg-required", "Este campo es requerido");
                     refbaninput5.setAttribute("data-rule-digits", "true");
@@ -1203,7 +1203,7 @@
                         var input = document.createElement("input");
                         input.type = "text";
                         input.name = "infa_rnombre" + childrenCount;
-                        input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input.setAttribute("data-rule-required", "true");
                         input.setAttribute("data-msg-required", "Este campo es requerido");
                         input.setAttribute("data-rule-names_validation", "true");
@@ -1221,7 +1221,7 @@
                         var input2 = document.createElement("input");
                         input2.type = "text";
                         input2.name = "infa_rrelacion" + childrenCount;
-                        input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input2.setAttribute("data-rule-required", "true");
                         input2.setAttribute("data-msg-required", "Este campo es requerido");
                         input2.setAttribute("data-rule-field_validation", "true");
@@ -1239,7 +1239,7 @@
                         var input3 = document.createElement("input");
                         input3.type = "text";
                         input3.name = "infa_rtelefono" + childrenCount;
-                        input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input3.setAttribute("data-rule-required", "true");
                         input3.setAttribute("data-msg-required", "Este campo es requerido");
                         input3.setAttribute("data-rule-digits", "true");
@@ -1308,7 +1308,7 @@
                         var input = document.createElement("input");
                         input.type = "text";
                         input.name = "infb_rnombre" + childrenCount;
-                        input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input.setAttribute("data-rule-required", "true"); 
                         input.setAttribute("data-msg-required", "Este campo es requerido");
                         input.setAttribute("data-rule-names_validation", "true"); 
@@ -1326,7 +1326,7 @@
                         var input2 = document.createElement("input");
                         input2.type = "text";
                         input2.name = "infb_rrelacion" + childrenCount;
-                        input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input2.setAttribute("data-rule-required", "true");
                         input2.setAttribute("data-msg-required", "Este campo es requerido");
                         input2.setAttribute("data-rule-field_validation", "true");
@@ -1344,7 +1344,7 @@
                         var input3 = document.createElement("input");
                         input3.type = "text";
                         input3.name = "infb_rrfc" + childrenCount;
-                        input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input3.setAttribute("data-rule-required", "true");
                         input3.setAttribute("data-msg-required", "Este campo es requerido");
                         input3.setAttribute("data-rule-alphanumeric", "true");
@@ -1362,7 +1362,7 @@
                         var input4 = document.createElement("input");
                         input4.type = "text";
                         input4.name = "infb_rcurp" + childrenCount;
-                        input4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input4.setAttribute("data-rule-required", "true");
                         input4.setAttribute("data-msg-required", "Este campo es requerido");
                         input4.setAttribute("data-rule-alphanumeric", "true");
@@ -1380,7 +1380,7 @@
                         var input5 = document.createElement("input");
                         input5.type = "text";
                         input5.name = "infb_rporcentaje" + childrenCount;
-                        input5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-indigo-600');
+                        input5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
                         input5.setAttribute("data-rule-required", "true");
                         input5.setAttribute("data-msg-required", "Este campo es requerido");
                         input5.setAttribute("data-rule-digits", "true");
@@ -1598,7 +1598,7 @@
                                 icon: "success"
                             }).then(function() {
                                 window.removeEventListener('beforeunload', unloadHandler);
-                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                $('#submit-button').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                                 window.location.href = "dashboard.php";	
                             });
                         }else if (array[0] == "error") {
@@ -1608,7 +1608,7 @@
                                 icon: "error"
                             }).then(function() {
                                 window.removeEventListener('beforeunload', unloadHandler);
-                                $('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                             });
                         }else if (array[0] == "token_deleted_user_not_exists_user_not_linked") {
                             Swal.fire({
@@ -1617,7 +1617,7 @@
                                 icon: "error"
                             }).then(function() {
                                 window.removeEventListener('beforeunload', unloadHandler);
-                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                $('#submit-button').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                                 window.location.href = "dashboard.php";
                             });
                         }else if (array[0] == "token_expired") {
@@ -1627,7 +1627,7 @@
                                 icon: "error"
                             }).then(function() {
                                 window.removeEventListener('beforeunload', unloadHandler);
-                                $('#submit-button').html("<button disabled class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                $('#submit-button').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                                 window.location.href = "dashboard.php";
                             });
                         }
@@ -1655,4 +1655,16 @@
 		border-color: transparent;
 		color: #fff;
 	}	
-</style>
+  
+    .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>

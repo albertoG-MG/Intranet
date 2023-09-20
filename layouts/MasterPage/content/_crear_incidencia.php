@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-  <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+  <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
     Crear incidencias
   </h2>
   <div class="mt-4">
@@ -9,7 +17,7 @@
           <div class="w-full">
             <div class="bg-gray-50 shadow-md rounded-t">
               <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
                   </svg>
@@ -20,7 +28,7 @@
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                   </svg>
                 </span>
-                <a href="incidencias.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                <a href="incidencias.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                   <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M13,9.5H18V7.5H13V9.5M13,16.5H18V14.5H13V16.5M19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21M6,11H11V6H6V11M7,7H10V10H7V7M6,18H11V13H6V18M7,14H10V17H7V14Z"></path>
                   </svg>
@@ -47,7 +55,7 @@
               </div>
               <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
                 <li role="presentation" class="w-full md:w-max">
-                  <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#4f46e5] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="permiso-tab" data-tabs-target="#permiso" type="button" role="tab" aria-controls="permiso" aria-selected="false">
+                  <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#27ceeb] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="permiso-tab" data-tabs-target="#permiso" type="button" role="tab" aria-controls="permiso" aria-selected="false">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
                       <path fill="currentColor" d="M14 2H6C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8L14 2M18 20H6V4H13V9H18V20M13 13C13 14.1 12.1 15 11 15S9 14.1 9 13 9.9 11 11 11 13 11.9 13 13M15 18V19H7V18C7 16.67 9.67 16 11 16S15 16.67 15 18Z" />
                     </svg>
@@ -95,7 +103,7 @@
                               <path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12.5 7V12.2L9.8 17L8.5 16.2L11 11.8V7H12.5Z" />
                             </svg>
                           </div>
-                          <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="if($el.value == 'REGLAMENTARIA'){ reglamentaria = true; no_reglamentaria = false; }else if($el.value == 'NO_REGLAMENTARIA'){ reglamentaria = false; no_reglamentaria = true; }else{ reglamentaria = false; no_reglamentaria = false; }" id="tipo_permiso" name="tipo_permiso">
+                          <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'REGLAMENTARIA'){ reglamentaria = true; no_reglamentaria = false; }else if($el.value == 'NO_REGLAMENTARIA'){ reglamentaria = false; no_reglamentaria = true; }else{ reglamentaria = false; no_reglamentaria = false; }" id="tipo_permiso" name="tipo_permiso">
                             <option value="">--Seleccione--</option>
                             <option value="REGLAMENTARIA">Reglamentaria</option>
                             <option value="NO_REGLAMENTARIA">No reglamentaria</option>
@@ -112,7 +120,7 @@
                                   <path fill="currentColor" d="M11,7H15V9H11V11H13A2,2 0 0,1 15,13V15A2,2 0 0,1 13,17H9V15H13V13H11A2,2 0 0,1 9,11V9A2,2 0 0,1 11,7M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" />
                                 </svg>
                               </div>
-                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="if($el.value == 'OTRO' || $el.value == 'HOME_OFFICE'){ permiso_descriptivo = false, permiso_no_descriptivo = true }else if($el.value == 'FALLECIMIENTO' || $el.value == 'MATRIMONIO' || $el.value == 'ESCOLARIDAD' || $el.value == 'NACIMIENTO_ADOPCION_ABORTO'){ calcularfecha_al_inicializar($el.value); permiso_descriptivo = true, permiso_no_descriptivo = false }else{ permiso_descriptivo = false, permiso_no_descriptivo = false }" id="permiso_r" name="permiso_r">
+                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO' || $el.value == 'HOME_OFFICE'){ permiso_descriptivo = false, permiso_no_descriptivo = true }else if($el.value == 'FALLECIMIENTO' || $el.value == 'MATRIMONIO' || $el.value == 'ESCOLARIDAD' || $el.value == 'NACIMIENTO_ADOPCION_ABORTO'){ calcularfecha_al_inicializar($el.value); permiso_descriptivo = true, permiso_no_descriptivo = false }else{ permiso_descriptivo = false, permiso_no_descriptivo = false }" id="permiso_r" name="permiso_r">
                                 <option value="">--Seleccione--</option>
                                 <option value="FALLECIMIENTO">Fallecimiento</option>
                                 <option value="MATRIMONIO">Matrimonio</option>
@@ -157,7 +165,7 @@
                                     <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                   </svg>
                                 </div>
-                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fechainicio_pd" name="fechainicio_pd" placeholder="Fecha de inicio del permiso" autocomplete="off">
+                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechainicio_pd" name="fechainicio_pd" placeholder="Fecha de inicio del permiso" autocomplete="off">
                               </div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
@@ -168,7 +176,7 @@
                                     <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                   </svg>
                                 </div>
-                                <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-indigo-600" type="text" id="fechafin_pd" name="fechafin_pd" placeholder="Fecha fin del permiso" autocomplete="off" disabled>
+                                <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="fechafin_pd" name="fechafin_pd" placeholder="Fecha fin del permiso" autocomplete="off" disabled>
                               </div>
                             </div>
                           </div>
@@ -181,19 +189,19 @@
                                     <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                   </svg>
                                 </div>
-                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_pnd" name="periodo_pnd" placeholder="Periodo de ausencia" autocomplete="off">
+                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_pnd" name="periodo_pnd" placeholder="Periodo de ausencia" autocomplete="off">
                               </div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                               <label class="text-[#64748b] font-semibold mb-2">Motivo del permiso</label>
-                              <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_pnd" name="motivo_pnd" placeholder="Motivo del permiso"></textarea>
+                              <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="motivo_pnd" name="motivo_pnd" placeholder="Motivo del permiso"></textarea>
                               <div id="error_motivo_pnd"></div>
                             </div>
                           </div>
                         </div>
                         <div class="grid grid-cols-1 mt-5 mx-7">
                           <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
-                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones_permiso_r" name="observaciones_permiso_r" placeholder="Observaciones y/o Comentarios"></textarea>
+                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="observaciones_permiso_r" name="observaciones_permiso_r" placeholder="Observaciones y/o Comentarios"></textarea>
                           <div id="error_observaciones_permiso_r"></div>
                         </div>
                         <div class="grid grid-cols-1 mt-5 mx-7" id="img_permiso_r">
@@ -236,7 +244,7 @@
                                   <path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12.5 7V12.2L9.8 17L8.5 16.2L11 11.8V7H12.5Z" />
                                 </svg>
                               </div>
-                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="if($el.value == 'AUSENCIA'){  fecha_hora = false, fecha = true }else if($el.value == 'RETARDO' || $el.value == 'SALIDA'){ fecha_hora = true, fecha = false }else{ fecha_hora = false, fecha = false }" id="permiso_nr" name="permiso_nr">
+                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'AUSENCIA'){  fecha_hora = false, fecha = true }else if($el.value == 'RETARDO' || $el.value == 'SALIDA'){ fecha_hora = true, fecha = false }else{ fecha_hora = false, fecha = false }" id="permiso_nr" name="permiso_nr">
                                 <option value="">--Seleccione--</option>
                                 <option value="RETARDO">Retardo</option>
                                 <option value="SALIDA">Salida</option>
@@ -253,7 +261,7 @@
                                     <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                   </svg>
                                 </div>
-                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_pnr_fh" name="periodo_pnr_fh" placeholder="Periodo de ausencia" autocomplete="off">
+                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_pnr_fh" name="periodo_pnr_fh" placeholder="Periodo de ausencia" autocomplete="off">
                               </div>
                             </div>
                           </div>
@@ -266,30 +274,30 @@
                                     <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                   </svg>
                                 </div>
-                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_pnr_f" name="periodo_pnr_f" placeholder="Periodo de ausencia" autocomplete="off">
+                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_pnr_f" name="periodo_pnr_f" placeholder="Periodo de ausencia" autocomplete="off">
                               </div>
                             </div>
                           </div>
                         </div>
                         <div class="grid grid-cols-1 mt-5 mx-7">
                           <label class="text-[#64748b] font-semibold mb-2">Motivo del permiso</label>
-                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_permiso_nr" name="motivo_permiso_nr" placeholder="Motivo del permiso"></textarea>
+                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="motivo_permiso_nr" name="motivo_permiso_nr" placeholder="Motivo del permiso"></textarea>
                           <div id="error_motivo_permiso_nr"></div>
                         </div>
                         <div class="grid grid-cols-1 mt-5 mx-7">
                           <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
-                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones_permiso_nr" name="observaciones_permiso_nr" placeholder="Observaciones y/o Comentarios"></textarea>
+                          <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="observaciones_permiso_nr" name="observaciones_permiso_nr" placeholder="Observaciones y/o Comentarios"></textarea>
                           <div id="error_observaciones_permiso_nr"></div>
                         </div>
                         <div x-data="{ open: true }">
                           <div class="grid grid-cols-1 mt-5 mx-7">
                             <label class="text-[#64748b] font-semibold mb-2">¿Justificante?</label>
                             <div class="group flex mt-3 items-center">
-                              <input id="option-justificante-permiso-nr-1" type="radio" name="posee_jpermiso_nr" value="si" x-on:change="archivo_permisos; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-justificante-permiso-nr-1" aria-describedby="option-justificante-permiso-nr-1" checked="">
+                              <input id="option-justificante-permiso-nr-1" type="radio" name="posee_jpermiso_nr" value="si" x-on:change="archivo_permisos; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-justificante-permiso-nr-1" aria-describedby="option-justificante-permiso-nr-1" checked="">
                               <label for="option-justificante-permiso-nr-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                 Sí
                               </label>
-                              <input id="option-justificante-permiso-nr-2" type="radio" name="posee_jpermiso_nr" value="no" x-on:change="archivo_permisos; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-justificante-permiso-nr-2" aria-describedby="option-justificante-permiso-nr-2">
+                              <input id="option-justificante-permiso-nr-2" type="radio" name="posee_jpermiso_nr" value="no" x-on:change="archivo_permisos; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-justificante-permiso-nr-2" aria-describedby="option-justificante-permiso-nr-2">
                               <label for="option-justificante-permiso-nr-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                 No
                               </label>
@@ -347,7 +355,7 @@
                     <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                       <button type="button" id="reset-permiso" name="reset-permiso" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
                       <div id="submit-permiso">
-                        <button type="submit" id="Guardar-permiso" name="Guardar-permiso" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
+                        <button type="submit" id="Guardar-permiso" name="Guardar-permiso" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Guardar</button>
                       </div>
                     </div>
                   </form>
@@ -363,7 +371,7 @@
                           <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                         </svg>
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numero_incapacidad" name="numero_incapacidad" placeholder="Número de la incapacidad">
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numero_incapacidad" name="numero_incapacidad" placeholder="Número de la incapacidad">
                       </div>
                       </div>
                       <div class="grid grid-cols-1">
@@ -374,7 +382,7 @@
                           <path fill="currentColor" d="M3,22L4.5,20.5L6,22L7.5,20.5L9,22L10.5,20.5L12,22L13.5,20.5L15,22L16.5,20.5L18,22L19.5,20.5L21,22V2L19.5,3.5L18,2L16.5,3.5L15,2L13.5,3.5L12,2L10.5,3.5L9,2L7.5,3.5L6,2L4.5,3.5L3,2M18,9H6V7H18M18,13H6V11H18M18,17H6V15H18V17Z" />
                         </svg>
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie_folio_incapacidad" name="serie_folio_incapacidad" placeholder="Serie y folio de la incapacidad">
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie_folio_incapacidad" name="serie_folio_incapacidad" placeholder="Serie y folio de la incapacidad">
                       </div>
                       </div>
                     </div>
@@ -386,7 +394,7 @@
                         <path fill="currentColor" d="M5,9.5L7.5,14H2.5L5,9.5M3,4H7V8H3V4M5,20A2,2 0 0,0 7,18A2,2 0 0,0 5,16A2,2 0 0,0 3,18A2,2 0 0,0 5,20M9,5V7H21V5H9M9,19H21V17H9V19M9,13H21V11H9V13Z" />
                         </svg>
                       </div>
-                      <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_incapacidad" name="tipo_incapacidad">
+                      <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tipo_incapacidad" name="tipo_incapacidad">
                         <option value="">--Seleccione--</option>
                         <option value="INICIAL">Inicial</option>
                         <option value="SUBSECUENTE">Subsecuente</option>
@@ -404,7 +412,7 @@
                         <path fill="currentColor" d="M3,3V5A2,2 0 0,1 5,7V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V7A2,2 0 0,1 21,5V3H3M7,9H10V10H7V9M7,11H10V12H7V11M10,16H7V15H10V16M12,14H7V13H12V14M12,8H7V7H12V8Z" />
                         </svg>
                       </div>
-                      <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="ramo_seguro_incapacidad" name="ramo_seguro_incapacidad">
+                      <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="ramo_seguro_incapacidad" name="ramo_seguro_incapacidad">
                         <option value="">--Seleccione--</option>
                         <option value="RIESGO DE TRABAJO">Riesgo de trabajo</option>
                         <option value="ENFERMEDAD GENERAL">Enfermedad general</option>
@@ -420,17 +428,17 @@
                             <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                           </svg>
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_incapacidad" name="periodo_incapacidad" placeholder="Periodo de la incapacidad" autocomplete="off">
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_incapacidad" name="periodo_incapacidad" placeholder="Periodo de la incapacidad" autocomplete="off">
                       </div>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                       <label class="text-[#64748b] font-semibold mb-2">Motivo de la incapacidad</label>
-                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_incapacidad" name="motivo_incapacidad" placeholder="Motivo de la incapacidad"></textarea>
+                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="motivo_incapacidad" name="motivo_incapacidad" placeholder="Motivo de la incapacidad"></textarea>
                       <div id="error_motivo_incapacidad"></div>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                       <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
-                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones_incapacidad" name="observaciones_incapacidad" placeholder="Observaciones y/o Comentarios"></textarea>
+                      <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="observaciones_incapacidad" name="observaciones_incapacidad" placeholder="Observaciones y/o Comentarios"></textarea>
                       <div id="error_observaciones_incapacidad"></div>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7" id="img_incapacidad">
@@ -466,7 +474,7 @@
                     <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                       <button type="button" id="reset-incapacidad" name="reset-incapacidad" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
                       <div id="submit-incapacidad">
-                        <button type="submit" id="Guardar-incapacidad" name="Guardar-incapacidad" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
+                        <button type="submit" id="Guardar-incapacidad" name="Guardar-incapacidad" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Guardar</button>
                       </div>
                     </div>
                   </form>
@@ -482,7 +490,7 @@
                               <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                             </svg>
                           </div>
-                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fecha_acta" name="fecha_acta" placeholder="Fecha en la que se realiza" autocomplete="off">
+                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fecha_acta" name="fecha_acta" placeholder="Fecha en la que se realiza" autocomplete="off">
                         </div>
                       </div>
                       <div class="grid grid-cols-1 mt-5 mx-7">
@@ -511,19 +519,19 @@
                       </div>
                       <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="text-[#64748b] font-semibold mb-2">Motivo por el que se realiza el acta</label>
-                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="motivo_acta" name="motivo_acta" placeholder="Motivo por el que se realiza el acta"></textarea>
+                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="motivo_acta" name="motivo_acta" placeholder="Motivo por el que se realiza el acta"></textarea>
                         <div id="error_motivo_acta"></div>
                       </div>
                       <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="text-[#64748b] font-semibold mb-2">Observaciones y/o Comentarios</label>
-                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="obcomen_acta" name="obcomen_acta" placeholder="Observaciones y/o Comentarios"></textarea>
+                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="obcomen_acta" name="obcomen_acta" placeholder="Observaciones y/o Comentarios"></textarea>
                         <div id="error_obcomen_acta"></div>
                       </div>
                       <div class="mt-12 h-px bg-slate-200"></div>
                       <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                         <button type="button" id="reset-acta" name="reset-acta" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
                         <div id="submit-acta">
-                          <button type="submit" id="Guardar-acta" name="Guardar-acta" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
+                          <button type="submit" id="Guardar-acta" name="Guardar-acta" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Guardar</button>
                         </div>
                       </div>
                     </form>
@@ -540,7 +548,7 @@
                           <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                           </svg>
                         </div>
-                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="fecha_carta" name="fecha_carta" placeholder="Asigne una fecha a la carta compromiso" autocomplete="off">
+                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fecha_carta" name="fecha_carta" placeholder="Asigne una fecha a la carta compromiso" autocomplete="off">
                         </div>
                       </div>
                       <div class="grid grid-cols-1 mt-5 mx-7">
@@ -569,14 +577,14 @@
                       </div>
                       <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="text-[#64748b] font-semibold mb-2">Responsabilidades a cumplir</label>
-                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="responsabilidad_carta" name="responsabilidad_carta" placeholder="Responsabilidades a cumplir"></textarea>
+                        <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="responsabilidad_carta" name="responsabilidad_carta" placeholder="Responsabilidades a cumplir"></textarea>
                         <div id="error_responsabilidad_carta"></div>
                       </div>
                       <div class="mt-12 h-px bg-slate-200"></div>
                       <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                         <button type="button" id="reset-carta" name="reset-carta" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Resetear</button>
                         <div id="submit-carta">
-                        <button type="submit" id="Guardar-carta" name="Guardar-carta" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
+                        <button type="submit" id="Guardar-carta" name="Guardar-carta" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Guardar</button>
                         </div>
                       </div>
                     </form>
@@ -589,4 +597,17 @@
       </div>
     </div>
   </div>
+  <style>
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>
 </div>
