@@ -486,7 +486,7 @@
 </script>
 <style>
 	.error{
-        color: red;
+        color: #FF1E2D;
     }
 
 	.select2-container--tailwind .select2-results > .select2-results__options{

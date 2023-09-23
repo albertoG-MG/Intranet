@@ -737,7 +737,7 @@
                                                 $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').html('');
                                                 $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').removeClass('grid grid-cols-1');
                                                 $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').val('');
-                                                $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                                                $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                                                 $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').addClass('hidden');
                                                 $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').removeClass('z-100 md:p-2 my-auto');
                                             } else {
@@ -746,7 +746,7 @@
                                                     $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').html('');
                                                     $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').removeClass('grid grid-cols-1');
                                                     $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').val('');
-                                                    $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                                    $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                                     $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').addClass('hidden');
                                                     $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').removeClass('z-100 md:p-2 my-auto');
                                                 }else{
@@ -787,7 +787,7 @@
                                                     $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').html('');
                                                     $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').removeClass('grid grid-cols-1');
                                                     $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').val('');
-                                                    $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                                    $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                                     $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').addClass('hidden');
                                                     $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').removeClass('z-100 md:p-2 my-auto');
                                                 }
@@ -799,7 +799,7 @@
                                                     $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').html('');
                                                     $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').removeClass('grid grid-cols-1');
                                                     $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').val('');
-                                                    $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                                    $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                                     $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').addClass('hidden');
                                                     $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').removeClass('z-100 md:p-2 my-auto');
                                                 }
@@ -807,7 +807,7 @@
                                                 $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').html('');
                                                 $('#content-container{$array_papeleria[$papeleria_contador2]['id']}').removeClass('grid grid-cols-1');
                                                 $('#infp_papeleria{$array_papeleria[$papeleria_contador2]['id']}').val('');
-                                                $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                                                $('#upload-text{$array_papeleria[$papeleria_contador2]['id']}').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                                                 $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').addClass('hidden');
                                                 $('#upload-delete{$array_papeleria[$papeleria_contador2]['id']}').removeClass('z-100 md:p-2 my-auto');
                                             }
@@ -1642,7 +1642,7 @@
 </script>
 <style>
     .error{
-        color: red;
+        color: #FF1E2D;
     }
 
     main{

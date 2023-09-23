@@ -866,10 +866,10 @@
                                           if(is_file($path)){  
                                              echo "<p><a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/{$documents["identificador"]}'>{$documents["nombre_archivo"]}</a></p>"; 
                                           }else{ 
-                                             echo "<p style='color: rgb(244 63 94);'>El sistema no puede encontrar el archivo especificado.</p>"; 
+                                             echo "<p style='color: rgb(250 30 45);'>El sistema no puede encontrar el archivo especificado.</p>"; 
                                           } 
                                        }else{
-                                          if($count_historial > 0){ echo "<p style='color: rgb(244 63 94);'>No existe un archivo vinculado.</p>"; }else{ echo "<p>No hay registros del archivo.</p>"; }
+                                          if($count_historial > 0){ echo "<p style='color: rgb(250 30 45);'>No existe un archivo vinculado.</p>"; }else{ echo "<p>No hay registros del archivo.</p>"; }
                                        }
                                        if($count_historial > 0){
                                     ?>  
@@ -912,4 +912,22 @@
 		background-color: #008eff !important;
 	}
     </style>
+    <style>
+  #journal-scroll::-webkit-scrollbar {
+            width: 6px;
+            cursor: pointer;
+            /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/
+
+        }
+        #journal-scroll::-webkit-scrollbar-track {
+            background-color: rgba(229, 231, 235, var(--bg-opacity));
+            cursor: pointer;
+            /*background: red;*/
+        }
+        #journal-scroll::-webkit-scrollbar-thumb {
+            cursor: pointer;
+            background-color: #27ceeb;
+            /*outline: 1px solid slategrey;*/
+        }
+</style>
 </div>

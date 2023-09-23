@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre del permiso</label>"+
                     "<div class='group flex'>"+
                         "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-celeste-600 mt-1 focus:outline-none focus:ring-2 focus:ring-celeste-800 focus:border-transparent' type='text' id='crearpermiso' name='crearpermiso' placeholder='Input 1'>"+
+                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-celeste-600 mt-1 focus:outline-none focus:ring-2 focus:ring-celeste-800 focus:border-transparent' type='text' id='crearpermiso' name='crearpermiso' placeholder='Nombre del permiso'>"+
                     "</div>"+
                 "</div>"+
                 "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar el permiso</label>"+
                     "<div class='group flex'>"+
                         "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-account-lock text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-celeste-600 mt-1 focus:outline-none focus:ring-2 focus:ring-celeste-800 focus:border-transparent' type='text' id='editpermiso' name='editpermiso' placeholder='Input 1' value='"+data[1]+"'>"+
+                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-celeste-600 mt-1 focus:outline-none focus:ring-2 focus:ring-celeste-800 focus:border-transparent' type='text' id='editpermiso' name='editpermiso' placeholder='Nombre del permiso' value='"+data[1]+"'>"+
                     "</div>"+
                 "</div>"+
                 "<div class='grid grid-cols-1 mt-5 mx-6 px-3'>"+
@@ -413,10 +413,10 @@ $('#datatable').on( 'click', 'tr .Eliminar', function () {
     text: "No podras recuperar la información!",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Sí!',
-    cancelButtonText: 'cancelar'
+    confirmButtonColor: '#00a3ff  ',
+    cancelButtonColor: '#FF1E2D',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
     }).then((result) => {
         check_user_logged().then((response) => {
 		    if(response == "true"){
@@ -482,7 +482,7 @@ function check_user_logged(){
 <style>
 
     .error{
-        color: rgb(244 63 94);
+        color: rgb(250 30 45);
     }
     
     .dataTables_wrapper .dataTables_filter{

@@ -949,7 +949,7 @@
                                                                                         $buscar_papeleria="false";
                                                                             ?>
                                                                             <span id="upload-text<?php print($array_papeleria[$papeleria_contador]['id']); ?>">
-                                                                                <p style="color: rgb(244 63 94);">No se encontró el archivo, por favor, suba otro archivo ó seleccione la x para reemplazarlo por un archivo anterior a este</p>
+                                                                                <p style="color: rgb(250 30 45);">No se encontró el archivo, por favor, suba otro archivo ó seleccione la x para reemplazarlo por un archivo anterior a este</p>
                                                                             </span>
                                                                             <button type="button" id="upload-delete<?php print($array_papeleria[$papeleria_contador]['id']); ?>" class="z-100 md:p-2 my-auto">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512">

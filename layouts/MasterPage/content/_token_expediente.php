@@ -48,7 +48,7 @@
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Asignar token a a empleado</h2>
-                                 <span class="text-[#64748b]">Recuerde inicializar el expediente al usuario, de lo contrario no aparecerá en el selectbox.</span>
+                                 <span class="text-[#64748b]">Recuerde inicializar el expediente al usuario, de lo contrario no aparecerá para seleccionar.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                             </div>
                             <form id="Guardar" method="POST">
@@ -84,15 +84,15 @@
                             </form>
                             <div class="my-3 h-px bg-slate-200"></div>
                             <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Administrar usuarios con el token asignado</h2>
-                                 <span class="text-[#64748b]">Si el usuario aparece en el datatable, significa que puede acceder al link.</span>
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Usuarios con token asignado</h2>
+                                 <span class="text-[#64748b]">Si el usuario aparece en la tabla, significa que puede acceder al link.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                     <thead>
-                                        <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
-                                            <th class="py-3 text-left all">Empleado_id</th>
+                                    <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
+                                            <th class="py-3 text-left all dt-tituloL border-white">Número de empleado</th>
                                             <th>Expediente_id</th>
                                             <th class="py-3 text-left desktop">Asignado a</th>
                                             <th>Filename_foto</th>
@@ -100,7 +100,7 @@
                                             <th class="py-3 text-center desktop">Token</th>
                                             <th class="py-3 text-center desktop">Fecha de expiración</th>
                                             <th>Token</th>
-                                            <th class="py-3 text-center min-tablet">Acción</th>
+                                            <th class="py-3 text-center min-tablet dt-tituloR border-white">Acción</th>
                                         </tr>
                                     </thead>
                                 </table>

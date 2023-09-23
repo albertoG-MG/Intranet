@@ -326,7 +326,7 @@
 								    $('#content-container{$i}').html('');
 								    $('#content-container{$i}').removeClass('grid grid-cols-1');
 								    $('#infp_papeleria{$i}').val('');
-								    $('#upload-text{$i}').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+								    $('#upload-text{$i}').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
 								    $('#upload-delete{$i}').addClass('hidden');
 								    $('#upload-delete{$i}').removeClass('z-100 md:p-2 my-auto');
 							    } else {
@@ -335,7 +335,7 @@
 									    $('#content-container{$i}').html('');
 									    $('#content-container{$i}').removeClass('grid grid-cols-1');
 									    $('#infp_papeleria{$i}').val('');
-									    $('#upload-text{$i}').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+									    $('#upload-text{$i}').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
 									    $('#upload-delete{$i}').addClass('hidden');
 									    $('#upload-delete{$i}').removeClass('z-100 md:p-2 my-auto');
 								    }else{
@@ -376,7 +376,7 @@
 								        $('#content-container{$i}').html('');
 								        $('#content-container{$i}').removeClass('grid grid-cols-1');
 								        $('#infp_papeleria{$i}').val('');
-								        $('#upload-text{$i}').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+								        $('#upload-text{$i}').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
 								        $('#upload-delete{$i}').addClass('hidden');
 								        $('#upload-delete{$i}').removeClass('z-100 md:p-2 my-auto');
 							        }
@@ -388,7 +388,7 @@
 								        $('#content-container{$i}').html('');
 								        $('#content-container{$i}').removeClass('grid grid-cols-1');
 								        $('#infp_papeleria{$i}').val('');
-								        $('#upload-text{$i}').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+								        $('#upload-text{$i}').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
 								        $('#upload-delete{$i}').addClass('hidden');
 								        $('#upload-delete{$i}').removeClass('z-100 md:p-2 my-auto');
 							        }
@@ -396,7 +396,7 @@
 							        $('#content-container{$i}').html('');
 							        $('#content-container{$i}').removeClass('grid grid-cols-1');
 							        $('#infp_papeleria{$i}').val('');
-							        $('#upload-text{$i}').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+							        $('#upload-text{$i}').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
 							        $('#upload-delete{$i}').addClass('hidden');
 							        $('#upload-delete{$i}').removeClass('z-100 md:p-2 my-auto');
 						        }
@@ -1489,7 +1489,7 @@
 <style>
 
     .error{
-        color: red;
+        color: #FF1E2D;
     }
 
     .select2-container--tailwind .select2-results > .select2-results__options{

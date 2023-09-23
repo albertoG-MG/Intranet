@@ -26,7 +26,7 @@
                     if(data != null){
                         return "<a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/"+row.identificador+"'>"+row.nombre_archivo+"</a>";
                     }else{
-                        return "<p style='color: rgb(244 63 94);'>No se encontró el archivo</p>";
+                        return "<p style='color: rgb(250 30 45);'>No se encontró el archivo</p>";
                     }
                 }},
                 {"data": "identificador"},
@@ -75,10 +75,10 @@
             text: "Este documento se vinculará al expediente!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí!',
-            cancelButtonText: 'cancelar',
+            confirmButtonColor: '#00a3ff  ',
+            cancelButtonColor: '#FF1E2D',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
             showLoaderOnConfirm: true,
             preConfirm : () => {
                 return new Promise((resolve, reject) => {
@@ -171,10 +171,10 @@
             text: "No podras recuperar la información!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí!',
-            cancelButtonText: 'cancelar'
+            confirmButtonColor: '#00a3ff  ',
+            cancelButtonColor: '#FF1E2D',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             check_user_logged().then((response) => {
 		        if(response == "true"){

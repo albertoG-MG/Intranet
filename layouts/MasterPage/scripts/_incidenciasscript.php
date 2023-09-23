@@ -187,6 +187,16 @@
                         //     },
                         // <?php } ?>
 
+                        <?php if($count_jerarquia > 0) ?>
+                            {
+                                text: "Filtrar por:",
+                                attr: {
+                                    'id': 'incidencias_filtro',
+                                    'style': 'width: -webkit-fill-available; padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important;'
+                                },
+                                className: 'disabled bg-white text-2x3 text-[#64748b] font-semibold',
+                                }
+                        <?php ?>,
                         
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>	
                             {
@@ -279,6 +289,7 @@
                                 }
                             },
                         <?php } ?>
+                        
                         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             {
                                 text: "+ Crear Incidencia",
@@ -904,7 +915,7 @@
 
     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
         .error{
-            color: red;
+            color: #FF1E2D;
         }
     <?php } ?>
 

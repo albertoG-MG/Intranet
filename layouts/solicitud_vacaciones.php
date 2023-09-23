@@ -1,5 +1,5 @@
 <?php
-    $title = 'Ver solicitudes de vacaciones';
+    $title = 'Solicitudes de vacaciones';
     $sidebar = '/components/sidebar.php';
     $navbar = '/components/navbar.php';
     $content = '/content/_solicitud_vacaciones.php';

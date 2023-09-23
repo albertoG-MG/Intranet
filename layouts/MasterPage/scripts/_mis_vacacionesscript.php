@@ -845,7 +845,7 @@
 <style>
 
     .error{
-        color: red;
+        color: #FF1E2D;
     }
 
     :root {

@@ -61,7 +61,7 @@
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <div class="flex flex-col mt-5 mx-7">
                                 <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para editar solicitudes de vacaciones manualmente</h2>
-                                <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios para poder editar la solicitud de vacaciones.</span>
+                                <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
                                 <div class="my-3 h-px bg-slate-200"></div>
                             </div>
                             <form id="Guardar">

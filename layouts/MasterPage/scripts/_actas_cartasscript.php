@@ -9,7 +9,16 @@
                         search: ""
             },
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
-            buttons: [
+             buttons: [
+                 {
+                    text: "Filtrar por:",
+                            attr: {
+                                'id': 'vacaciones_filtro',
+                                'style': 'padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important; !important;'
+                            },
+                            className: 'disabled bg-white text-2x3 text-[#64748b] font-semibold',
+                           
+                },
                 <?php if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" && $count_jerarquia > 0){ ?>
                     {
                         text: "Actas administrativas en mi expediente",
@@ -366,7 +375,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_20%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_20%]', 'm-[2px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -556,10 +565,10 @@
                 text: "No podras recuperar la información!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí!',
-                cancelButtonText: 'cancelar'
+                confirmButtonColor: '#00a3ff  ',
+                cancelButtonColor: '#FF1E2D',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 check_user_logged().then((response) => {
                     if(response == "true"){
@@ -1286,7 +1295,7 @@
                             $('#content-container-acta').html('');
                             $('#content-container-acta').removeClass('grid grid-cols-1');
                             $('#subir_acta').val('');
-                            $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-acta').addClass('hidden');
                             $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1295,7 +1304,7 @@
                                 $('#content-container-acta').html('');
                                 $('#content-container-acta').removeClass('grid grid-cols-1');
                                 $('#subir_acta').val('');
-                                $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-acta').addClass('hidden');
                                 $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1336,7 +1345,7 @@
                                 $('#content-container-acta').html('');
                                 $('#content-container-acta').removeClass('grid grid-cols-1');
                                 $('#subir_acta').val('');
-                                $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-acta').addClass('hidden');
                                 $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1348,7 +1357,7 @@
                                 $('#content-container-acta').html('');
                                 $('#content-container-acta').removeClass('grid grid-cols-1');
                                 $('#subir_acta').val('');
-                                $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-acta').addClass('hidden');
                                 $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1356,7 +1365,7 @@
                             $('#content-container-acta').html('');
                             $('#content-container-acta').removeClass('grid grid-cols-1');
                             $('#subir_acta').val('');
-                            $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-acta').addClass('hidden');
                             $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1431,7 +1440,7 @@
                             $('#content-container-carta').html('');
                             $('#content-container-carta').removeClass('grid grid-cols-1');
                             $('#subir_carta').val('');
-                            $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-carta').addClass('hidden');
                             $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1440,7 +1449,7 @@
                                 $('#content-container-carta').html('');
                                 $('#content-container-carta').removeClass('grid grid-cols-1');
                                 $('#subir_carta').val('');
-                                $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-carta').addClass('hidden');
                                 $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1481,7 +1490,7 @@
                                 $('#content-container-carta').html('');
                                 $('#content-container-carta').removeClass('grid grid-cols-1');
                                 $('#subir_carta').val('');
-                                $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-carta').addClass('hidden');
                                 $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1493,7 +1502,7 @@
                                 $('#content-container-carta').html('');
                                 $('#content-container-carta').removeClass('grid grid-cols-1');
                                 $('#subir_carta').val('');
-                                $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-carta').addClass('hidden');
                                 $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1501,7 +1510,7 @@
                             $('#content-container-carta').html('');
                             $('#content-container-carta').removeClass('grid grid-cols-1');
                             $('#subir_carta').val('');
-                            $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-carta').addClass('hidden');
                             $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1576,7 +1585,7 @@
                             $('#edit-content-container-acta').html('');
                             $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                             $('#edit_acta').val('');
-                            $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-acta').addClass('hidden');
                             $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1585,7 +1594,7 @@
                                 $('#edit-content-container-acta').html('');
                                 $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                                 $('#edit_acta').val('');
-                                $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-acta').addClass('hidden');
                                 $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1626,7 +1635,7 @@
                                 $('#edit-content-container-acta').html('');
                                 $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                                 $('#edit_acta').val('');
-                                $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-acta').addClass('hidden');
                                 $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1638,7 +1647,7 @@
                                 $('#edit-content-container-acta').html('');
                                 $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                                 $('#edit_acta').val('');
-                                $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-acta').addClass('hidden');
                                 $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1646,7 +1655,7 @@
                             $('#edit-content-container-acta').html('');
                             $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                             $('#edit_acta').val('');
-                            $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-acta').addClass('hidden');
                             $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1721,7 +1730,7 @@
                             $('#edit-content-container-carta').html('');
                             $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                             $('#edit_carta').val('');
-                            $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-carta').addClass('hidden');
                             $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1730,7 +1739,7 @@
                                 $('#edit-content-container-carta').html('');
                                 $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                                 $('#edit_carta').val('');
-                                $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-carta').addClass('hidden');
                                 $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1771,7 +1780,7 @@
                                 $('#edit-content-container-carta').html('');
                                 $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                                 $('#edit_carta').val('');
-                                $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-carta').addClass('hidden');
                                 $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1783,7 +1792,7 @@
                                 $('#edit-content-container-carta').html('');
                                 $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                                 $('#edit_carta').val('');
-                                $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-carta').addClass('hidden');
                                 $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1791,7 +1800,7 @@
                             $('#edit-content-container-carta').html('');
                             $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                             $('#edit_carta').val('');
-                            $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-carta').addClass('hidden');
                             $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1890,7 +1899,7 @@
 </script>
 <style>
 
-    .error{
+.error{
         color:red;
     }
 
@@ -1923,7 +1932,7 @@
 
     #datatable{
         border-collapse: collapse !important;
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .search{
@@ -1955,21 +1964,9 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-    
-    		.btn-celeste{
-		background-color: #00a3ff  !important;
-		border: none !important;
-		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
-		font-weight: 500 !important;
-		border-bottom: #fff 9px;
-	}
-	
-		.btn-celeste:hover{
-		background-color: #008eff !important;
-	}
 
-     /* CSS Botones filtro */
-     .ov-btn-slide-top {
+    /* CSS Botones filtro */
+    .ov-btn-slide-top {
         border: 0px !important;
         font-size: 15.88px !important; 
         background-color: #c7c7c714 !important;
@@ -2017,6 +2014,18 @@
     background-color: black !important;
     color: white !important;
     }
+
+    .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
 
 
 </style>

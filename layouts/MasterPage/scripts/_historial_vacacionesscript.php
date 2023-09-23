@@ -165,10 +165,10 @@
                 text: "No podras recuperar la información!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí!',
-                cancelButtonText: 'cancelar'
+                confirmButtonColor: '#00a3ff  ',
+                cancelButtonColor: '#FF1E2D',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 check_user_logged().then((response) => {
                     if(response == "true"){

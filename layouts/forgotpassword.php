@@ -222,7 +222,7 @@ if(isset($_POST["email"])){
     </script>
 	<style>
 		.error{
-            color: rgb(244 63 94);
+            color: rgb(250 30 45);
         }
 
 		.btn-celeste{

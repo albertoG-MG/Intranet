@@ -50,7 +50,7 @@
                   <div class="bg-white p-3 shadow-md rounded-b">
                      <div class="flex flex-col mt-5 mx-7">
                         <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para editar un expediente a un usuario</h2>
-                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios para poder editar un expediente a un usuario.</span>
+                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
                         <div class="my-3 h-px bg-slate-200"></div>
                      </div>
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
@@ -1503,7 +1503,7 @@
                                                          if(!file_exists($path)){
                                                             $buscar_papeleria="false";
                                                    ?> 
-                                                            <span id="upload-text<?php print($array_papeleria[$papeleria_contador]['id']); ?>"><p style="color: rgb(244 63 94);">No se encontró el archivo, por favor, suba otro archivo ó seleccione la x para reemplazarlo por un archivo anterior a este</p></span>
+                                                            <span id="upload-text<?php print($array_papeleria[$papeleria_contador]['id']); ?>"><p style="color: rgb(250 30 45);">No se encontró el archivo, por favor, suba otro archivo ó seleccione la x para reemplazarlo por un archivo anterior a este</p></span>
                                                             <button type="button" id="upload-delete<?php print($array_papeleria[$papeleria_contador]['id']); ?>" class="z-100 md:p-2 my-auto">
                                                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512">
                                                                   <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>

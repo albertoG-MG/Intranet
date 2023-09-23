@@ -1,5 +1,5 @@
 <?php
-$title = 'Ver solicitudes de incidencia';
+$title = 'Solicitudes de incidencia';
 $sidebar = '/components/sidebar.php';
 $navbar = '/components/navbar.php';
 $content = '/content/_solicitud_incidencia.php';

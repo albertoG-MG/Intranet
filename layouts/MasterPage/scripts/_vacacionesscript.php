@@ -439,13 +439,13 @@
                             container_administrativo.append(title_administrativo);
                             var span_administrativo = document.createElement("span");
                             span_administrativo.classList.add('text-[#64748b]');
-                            span_administrativo.textContent = "Sección que muestra todas las solicitudes de los empleados.";
+                           // span_administrativo.textContent = "Sección que muestra todas las solicitudes de los empleados.";
                             container_administrativo.append(span_administrativo);
                             var separator = document.createElement("div");
                             separator.classList.add('my-3', 'h-px', 'bg-slate-200');
                             container_administrativo.append(separator);
                             var grid_administrativo = document.createElement("div");
-                            grid_administrativo.classList.add('grid', 'grid-cols-1', 'md:grid-cols-4', 'md:gap-4');
+                            grid_administrativo.classList.add('div', 'grid-cols-1', 'md:grid-cols-4', 'md:gap-4','m-[2px]');
                             container_administrativo.append(grid_administrativo);
                             grid_administrativo.append(botones_incidencia[i]);
                         }
@@ -948,7 +948,7 @@
 <style>
 
     .error{
-        color: red;
+        color: #FF1E2D;
     }
 
     :root {
@@ -1059,7 +1059,7 @@
         background-color: #c7c7c714 !important;
         color: #000003 !important;
         box-shadow: 1px 2px 0px 0px !important;
-        padding: 11.5px 1px !important;
+        /* padding: 11.5px 1px !important; */
         border-radius: 107px !important;
         position: relative;
         z-index: 1;

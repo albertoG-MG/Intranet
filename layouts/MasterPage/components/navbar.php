@@ -1,6 +1,6 @@
-<header class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-indigo-777" style="height: 11%; border-bottom-color: #c8760cc2;">
+<header class="flex justify-between items-center py-4 px-6 bg-white border-indigo-777" style="height: 11%; border-bottom-color: #c8760cc2;">
     <div class="flex items-center">
-        <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
+        <button @click="sidebarOpen = true" class="text-white focus:outline-none lg:hidden">
             <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
@@ -62,16 +62,13 @@
     background-color: rgb(16 22 35 / 96%);
     }
 
-        .border-indigo-777{
-    --tw-border-opacity: 1 !important;
-    background: linear-gradient(186deg, #cf5700 -8%,#F7941E 51%, #cf5700 109%);
-    border-top-color: ;
-    border-right-color: ;
-    border-bottom-color: ;
-    border-left-color: ;
+    .border-indigo-777{
+        --tw-border-opacity: 1 !important;
+        background: linear-gradient(170deg , #ff7800 -12%, #ffad2a 84%);
+        height: 65px !important;
         }
 
-        .btn-celeste{
+    .btn-celeste{
 		background-color: #00a3ff  !important;
 		border: none !important;
 		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
@@ -79,7 +76,7 @@
 		border-bottom: #fff 9px;
 	}
 	
-		.btn-celeste:hover{
+	.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
     </style>

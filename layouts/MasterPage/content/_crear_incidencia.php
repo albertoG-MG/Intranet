@@ -50,7 +50,7 @@
             <div class="bg-white p-3 shadow-md rounded-b">
               <div class="flex flex-col mt-5 mx-7">
                 <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para crear una incidencia</h2>
-                <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios para poder crear una incidencia.</span>
+                <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios..</span>
                 <div class="my-3 h-px bg-slate-200"></div>
               </div>
               <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>

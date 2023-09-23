@@ -142,10 +142,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 text: "No podras recuperar la información!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#00a3ff ',
+                confirmButtonColor: '#00a3ff  ',
                 cancelButtonColor: '#FF1E2D',
-                confirmButtonText: 'Sí!',
-                cancelButtonText: 'cancelar'
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 check_user_logged().then((response) => {
 		            if(response == "true"){
