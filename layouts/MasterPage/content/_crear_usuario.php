@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-   <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+   <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
       Crear usuarios
    </h2>
    <div class="mt-4">
@@ -9,7 +17,7 @@
                <div class="w-full">
                   <div class="bg-gray-50 shadow-md rounded-t">
                      <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                        <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                        <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
                            </svg>
@@ -20,7 +28,7 @@
                               <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                            </svg>
                         </span>
-                        <a href="users.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                        <a href="users.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                            </svg>
@@ -42,7 +50,7 @@
                   <div class="bg-white p-3 shadow-md rounded-b">
                      <div class="flex flex-col mt-5 mx-7">
                         <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para registrar un usuario</h2>
-                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios para poder registrar un usuario.</span>
+                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
                         <div class="my-3 h-px bg-slate-200"></div>
                      </div>
                      <form id="Guardar" method="post">
@@ -56,7 +64,7 @@
                                     <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                  </svg>
                               </div>
-                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" aria-describedby="usuario_help" id="usuario" name="usuario" placeholder="i.e. Juan.Garcia">
+                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="usuario_help" id="usuario" name="usuario" placeholder="i.e. Juan.Garcia">
                            </div>
                            <div id="loader-usuario" class="hidden mt-5">
                               <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,8 +97,8 @@
                                           <path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 -mr-10 px-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-bind:type="isshow ? 'text' : 'password'" type="password" aria-describedby="password_help" id="password" name="password" placeholder="Contraseña">
-                                    <button type="button" @click="isshow=!isshow" class="z-30 text-gray-600 h-max focus:outline-none focus:ring-2 focus:focus:ring-indigo-600">
+                                    <input class="w-full -ml-10 -mr-10 px-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-bind:type="isshow ? 'text' : 'password'" type="password" aria-describedby="password_help" id="password" name="password" placeholder="Contraseña">
+                                    <button type="button" @click="isshow=!isshow" class="z-30 text-gray-600 h-max focus:outline-none focus:ring-2 focus:focus:ring-celeste-600">
                                        <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -131,8 +139,8 @@
                                           <path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 -mr-10 px-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-bind:type="isshow ? 'text' : 'password'" type="password" id="cpassword" name="cpassword" placeholder="Confirmar contraseña">
-                                    <button type="button" @click="isshow=!isshow" class="z-30 text-gray-600 h-max focus:outline-none focus:ring-2 focus:focus:ring-indigo-600">
+                                    <input class="w-full -ml-10 -mr-10 px-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-bind:type="isshow ? 'text' : 'password'" type="password" id="cpassword" name="cpassword" placeholder="Confirmar contraseña">
+                                    <button type="button" @click="isshow=!isshow" class="z-30 text-gray-600 h-max focus:outline-none focus:ring-2 focus:focus:ring-celeste-600">
                                        <svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -174,7 +182,7 @@
                                     <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
                                  </svg>
                               </div>
-                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nombre" name="nombre" placeholder="i.e. José Juan" aria-describedby="nombre_help">
+                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nombre" name="nombre" placeholder="i.e. José Juan" aria-describedby="nombre_help">
                            </div>
                            <div id="nombre_help" class="text-[#64748b]">
                               Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
@@ -190,7 +198,7 @@
                                     <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
                                  </svg>
                               </div>
-                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="apellido_pat" name="apellido_pat" placeholder="i.e. Caballero-Plasencia" aria-describedby="apellido_pat_help">
+                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apellido_pat" name="apellido_pat" placeholder="i.e. Caballero-Plasencia" aria-describedby="apellido_pat_help">
                            </div>
                            <div id="apellido_pat_help" class="text-[#64748b]">
                               Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
@@ -206,7 +214,7 @@
                                     <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
                                  </svg>
                               </div>
-                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="apellido_mat" name="apellido_mat" placeholder="i.e. Plasencia'Ramírez" aria-describedby="apellido_mat_help">
+                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apellido_mat" name="apellido_mat" placeholder="i.e. Plasencia'Ramírez" aria-describedby="apellido_mat_help">
                            </div>
                            <div id="apellido_mat_help" class="text-[#64748b]">
                               Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
@@ -222,7 +230,7 @@
                                     <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                  </svg>
                               </div>
-                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="correo" name="correo" placeholder="i.e. example@example.com">
+                              <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="correo" name="correo" placeholder="i.e. example@example.com">
                            </div>
                            <div id="myloader" class="hidden mt-5">
                               <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +256,7 @@
                                     <path fill="currentColor" d="M6 8C6 5.79 7.79 4 10 4S14 5.79 14 8 12.21 12 10 12 6 10.21 6 8M12 18.2C12 17.24 12.5 16.34 13.2 15.74V15.5C13.2 15.11 13.27 14.74 13.38 14.38C12.35 14.14 11.21 14 10 14C5.58 14 2 15.79 2 18V20H12V18.2M22 18.3V21.8C22 22.4 21.4 23 20.7 23H15.2C14.6 23 14 22.4 14 21.7V18.2C14 17.6 14.6 17 15.2 17V15.5C15.2 14.1 16.6 13 18 13C19.4 13 20.8 14.1 20.8 15.5V17C21.4 17 22 17.6 22 18.3M19.5 15.5C19.5 14.7 18.8 14.2 18 14.2C17.2 14.2 16.5 14.7 16.5 15.5V17H19.5V15.5Z" />
                                  </svg>
                               </div>
-                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="rol" name="rol">
+                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="rol" name="rol">
                                  <option value="">Sin rol</option>
                                  <?php
                                     $roles = roles::FetchRol();
@@ -271,7 +279,7 @@
                                     <path fill="currentColor" d="M6 8C6 5.79 7.79 4 10 4S14 5.79 14 8 12.21 12 10 12 6 10.21 6 8M12 18.2C12 17.24 12.5 16.34 13.2 15.74V15.5C13.2 15.11 13.27 14.74 13.38 14.38C12.35 14.14 11.21 14 10 14C5.58 14 2 15.79 2 18V20H12V18.2M22 18.3V21.8C22 22.4 21.4 23 20.7 23H15.2C14.6 23 14 22.4 14 21.7V18.2C14 17.6 14.6 17 15.2 17V15.5C15.2 14.1 16.6 13 18 13C19.4 13 20.8 14.1 20.8 15.5V17C21.4 17 22 17.6 22 18.3M19.5 15.5C19.5 14.7 18.8 14.2 18 14.2C17.2 14.2 16.5 14.7 16.5 15.5V17H19.5V15.5Z" />
                                  </svg>
                               </div>
-                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="subrol" name="subrol">
+                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="subrol" name="subrol">
                                  <option value="">Sin subrol</option>
                               </select>
                            </div>
@@ -284,7 +292,7 @@
                                     <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" />
                                  </svg>
                               </div>
-                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="departamento" name="departamento">
+                              <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="departamento" name="departamento">
                                  <option value="">Sin departamento</option>
                                  <?php
                                     $departamentos = departamentos::FetchDepartamento();
@@ -329,7 +337,7 @@
                            Resetear
                            </button>
                            <div id="submit-button">
-                              <button class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" id='grabar' name='grabar' type="submit">
+                              <button class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700" id='grabar' name='grabar' type="submit">
                               Guardar
                               </button>
                            </div>
@@ -341,4 +349,17 @@
          </div>
       </div>
    </div>
+   <style>
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>
 </div>

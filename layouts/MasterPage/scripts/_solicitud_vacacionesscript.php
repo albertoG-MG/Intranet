@@ -11,13 +11,22 @@
             },
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
+                {
+                    text: "Filtrar por:",
+                            attr: {
+                                'id': 'label_filtrar',
+                                'style': 'padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important; !important;'
+                            },
+                            className: ' disabled bg-white text-2x3 text-[#64748b] font-semibold',
+                           
+                },
 						{
                             text: "Solicitudes pendientes",
                             attr: {
                                 'id': 'sol_pendientes',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                            className: 'toggle button ov-btn-slide-top rounded-md  h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_pendientes.php",
@@ -48,12 +57,12 @@
                         },
 						
 						{
-                            text: "Solicitudes Aprobadas",
+                            text: "Aprobadas",
                             attr: {
                                 'id': 'sol_aprobadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                            className: 'toggle button ov-btn-slide-top rounded-md  h-11 px-8 py-2 focus:ring-2 focus:outline-none ',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_aprobadas.php",
@@ -84,12 +93,12 @@
                         },
 
                         {
-                            text: "Solicitudes Rechazadas",
+                            text: "Rechazadas",
                             attr: {
                                 'id': 'sol_rechazadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                            className: 'toggle button ov-btn-slide-top rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_rechazadas.php",
@@ -120,12 +129,12 @@
                         },
 
                         {
-                            text: "Solicitudes Canceladas",
+                            text: "Canceladas",
                             attr: {
                                 'id': 'sol_canceladas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                            className: 'toggle button ov-btn-slide-top rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_canceladas.php",
@@ -161,7 +170,7 @@
                                 'id': 'ver_todo',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                            className: 'toggle button ov-btn-slide-top rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/ver_vacaciones.php",
@@ -213,6 +222,7 @@
             [
                 {
                     target: [1],
+                    className:"border-white dt-tituloL",
                     render: function (data, type, row) {
                         return(
                             "<div class='text-left'>" +
@@ -223,6 +233,7 @@
                 },
                 {
                     target: [2],
+                    className:"border-white",
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -233,6 +244,7 @@
                 },
                 {
                     target: [3],
+                    className:"border-white",
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -243,9 +255,10 @@
                 },
                 {
                     target: [4],
+                    className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         if(evaluation_buttons == 0){
-                            return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="Aprobar self-start focus:outline-none text-white bg-green-700 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" /></svg></button><button type="button" class="Rechazar self-start focus:outline-none text-white bg-red-700 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" /></svg></button><button type="button" class="Cancelar self-start text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" stroke-width="2" stroke="white" d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z" /></svg></button></div>';
+                            return '<div class="flex flex-col justify-center md:flex-row gap-4"><button type="button" class="Aprobar self-start focus:outline-none text-white bg-green-500 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" /></svg></button><button type="button" class="Rechazar self-start focus:outline-none text-white bg-red-500 hover:bg-red-800 hover:scale-110 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" /></svg></button><button type="button" class="Cancelar self-start text-white bg-gray-800 hover:bg-gray-900 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" stroke-width="2" stroke="white" d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z" /></svg></button></div>';
                         }else{
                             return null;
                         }
@@ -253,6 +266,7 @@
                 },
                 {
                     target: [5],
+                    className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         if(row["id_estatus"] == 4){
                             return (
@@ -294,7 +308,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_18%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_20%]', 'm-[5px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -339,8 +353,90 @@
 	
 	$(document).ready(function() {
 		$('.dataTables_filter input[type="search"]').
-        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'solicitud_vacaciones.php'){?>
+            var dropdown = document.getElementById('vacaciones');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
 
+       
+    //css de botones filtro
+     var sol_aprobadas = document.getElementById("sol_aprobadas");
+     var sol_pendientes = document.getElementById("sol_pendientes");
+     var sol_rechazadas = document.getElementById("sol_rechazadas");
+     var sol_canceladas = document.getElementById("sol_canceladas");
+     var ver_todo = document.getElementById("ver_todo");
+
+    document.getElementById('ver_todo').addEventListener("click", function(){
+
+        if(sol_aprobadas.classList.contains("active") || sol_pendientes.classList.contains("active") ||sol_rechazadas.classList.contains("active") || sol_canceladas.classList.contains("active")){
+            sol_aprobadas.classList.remove("active");
+            sol_pendientes.classList.remove("active");
+            sol_rechazadas.classList.remove("active");
+            sol_canceladas.classList.remove("active");
+        }
+        
+        if(!ver_todo.classList.contains("active")){
+            ver_todo.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('sol_canceladas').addEventListener("click", function(){
+
+        if(sol_aprobadas.classList.contains("active") || sol_pendientes.classList.contains("active") ||sol_rechazadas.classList.contains("active") || ver_todo.classList.contains("active")){
+            sol_aprobadas.classList.remove("active");
+            sol_pendientes.classList.remove("active");
+            sol_rechazadas.classList.remove("active");
+            ver_todo.classList.remove("active");
+        }
+
+        if(!sol_canceladas.classList.contains("active")){
+            sol_canceladas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('sol_rechazadas').addEventListener("click", function(){
+        if(sol_aprobadas.classList.contains("active") || sol_pendientes.classList.contains("active") ||sol_canceladas.classList.contains("active") || ver_todo.classList.contains("active")){
+            sol_aprobadas.classList.remove("active");
+            sol_pendientes.classList.remove("active");
+            sol_canceladas.classList.remove("active");
+            ver_todo.classList.remove("active");
+        }
+
+        if(!sol_rechazadas.classList.contains("active")){
+            sol_rechazadas.classList.toggle("active");
+        }
+        });
+
+        document.getElementById('sol_pendientes').addEventListener("click", function(){
+        if(sol_aprobadas.classList.contains("active") || sol_rechazadas.classList.contains("active") ||sol_canceladas.classList.contains("active") || ver_todo.classList.contains("active")){
+            sol_aprobadas.classList.remove("active");
+            sol_rechazadas.classList.remove("active");
+            sol_canceladas.classList.remove("active");
+            ver_todo.classList.remove("active");
+        }
+
+        if(!sol_pendientes.classList.contains("active")){
+            sol_pendientes.classList.toggle("active");
+        }
+        });
+
+        document.getElementById('sol_aprobadas').addEventListener("click", function(){
+        if(sol_pendientes.classList.contains("active") || sol_rechazadas.classList.contains("active") ||sol_canceladas.classList.contains("active") || ver_todo.classList.contains("active")){
+            sol_pendientes.classList.remove("active");
+            sol_rechazadas.classList.remove("active");
+            sol_canceladas.classList.remove("active");
+            ver_todo.classList.remove("active");
+        }
+
+        if(!sol_aprobadas.classList.contains("active")){
+            sol_aprobadas.classList.toggle("active");
+        }
+        });
+    //
+       
+       
         $('#datatable').on('click', 'tr .Aprobar', function () {
             var estatus=1;
             var table = $('#datatable').DataTable();
@@ -431,12 +527,12 @@
                                     error.insertAfter(element.parent('.group.flex'));
                                 },
                                 highlight: function(element) {
-                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                     $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                                 },
                                 unhighlight: function(element) {
                                     $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                 },
                                 rules: {
                                     comentario: {
@@ -455,7 +551,7 @@
                                     $('#Guardar').unbind('submit');
                                     $('#message-error').html("");
                                     $('#submit-changes').html(
-                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -492,7 +588,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);												
@@ -504,7 +600,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                         });
@@ -515,7 +611,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             window.location.href="dashboard.php";
@@ -527,7 +623,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);
@@ -545,7 +641,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
+                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 btn-celeste font-medium text-white hover:btn-celeste focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
                                                 $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 window.location.href = "login.php";
                                             });	
@@ -698,12 +794,12 @@
                                     error.insertAfter(element.parent('.group.flex'));
                                 },
                                 highlight: function(element) {
-                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                     $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                                 },
                                 unhighlight: function(element) {
                                     $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                 },
                                 rules: {
                                     comentario: {
@@ -722,7 +818,7 @@
                                     $('#Guardar').unbind('submit');
                                     $('#message-error').html("");
                                     $('#submit-changes').html(
-                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -759,7 +855,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);												
@@ -771,7 +867,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                         });
@@ -782,7 +878,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             window.location.href="dashboard.php";
@@ -794,7 +890,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);
@@ -812,7 +908,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
+                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 btn-celeste font-medium text-white hover:btn-celeste focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
                                                 $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 window.location.href = "login.php";
                                             });	
@@ -965,12 +1061,12 @@
                                     error.insertAfter(element.parent('.group.flex'));
                                 },
                                 highlight: function(element) {
-                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                     $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                                 },
                                 unhighlight: function(element) {
                                     $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                    $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                 },
                                 rules: {
                                     comentario: {
@@ -989,7 +1085,7 @@
                                     $('#Guardar').unbind('submit');
                                     $('#message-error').html("");
                                     $('#submit-changes').html(
-                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                        '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                             '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                             '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                             '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -1026,7 +1122,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);												
@@ -1038,7 +1134,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                         });
@@ -1049,7 +1145,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             window.location.href="dashboard.php";
@@ -1061,7 +1157,7 @@
                                                             text: array[1],
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
+                                                            $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Agregar comentario</button>');
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             table.ajax.reload(null, false);
@@ -1079,7 +1175,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
+                                                $('#submit-changes').html('<button disabled id="agregar-comentario" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 btn-celeste font-medium text-white hover:btn-celeste focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Agregar comentario</button>');
                                                 $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 window.location.href = "login.php";
                                             });	
@@ -1173,12 +1269,12 @@
 
     .error{
         color:red;
-    }
+    } 
 
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
-        padding-bottom:5px;
+        padding-bottom:13px;
         padding-top:5px;
     }
 
@@ -1204,6 +1300,7 @@
 
     #datatable{
         border-collapse: collapse !important;
+        font-size: 12px;
     }
 
     .search{
@@ -1235,4 +1332,61 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-</style>
+ 
+    .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+	.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+
+        /* botones filtro */
+        .ov-btn-slide-top {
+        border: 0px !important;
+        font-size: 15.88px !important; 
+        background-color: #c7c7c714 !important;
+        color: #000003 !important;
+        box-shadow: 1px 2px 0px 0px !important;
+        padding: 16px 20px ;
+        border-radius: 107px !important;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        display: inline-block;
+
+    }
+    .ov-btn-slide-top:hover {
+        color: #fff !important; /* color de fuente hover */
+    }
+    .ov-btn-slide-top::after {
+        content: "";
+        background:#1f1c1ce3; /* color de fondo hover */
+        position: absolute;
+        z-index: -1;
+        padding: 16px 20px;
+        display: block;
+        left: 0;
+        right: 0;
+        top: -100%;
+        bottom: 100%;
+        -webkit-transition: all 0.25s;
+        transition: all 0.10s;
+    }
+    .ov-btn-slide-top:hover::after {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        -webkit-transition: all 0.25s;
+        transition: all 0.10s;
+    }
+    .active{
+    background-color: black !important;
+    color: white !important;
+    }
+    </style>

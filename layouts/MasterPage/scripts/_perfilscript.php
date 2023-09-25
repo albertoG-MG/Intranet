@@ -37,7 +37,7 @@
 			tabElements.forEach((t) => {
 				t.targetEl.classList.remove("block")
 				t.targetEl.classList.add("hidden");
-				t.triggerEl.classList.remove("bg-[#4f46e5]", "text-white", "active");
+				t.triggerEl.classList.remove("bg-[#27ceeb]", "text-white", "active");
 				t.triggerEl.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
 				"focus:bg-slate-100", "focus:text-slate-800");
 				t.triggerEl.firstElementChild.classList.add("text-slate-400", "transition-colors", 
@@ -46,7 +46,7 @@
 			titulo.textContent = target.value;
 			target.targetEl.classList.remove("hidden");
 			target.targetEl.classList.add("block");
-			target.triggerEl.classList.add("bg-[#4f46e5]", "text-white", "active");
+			target.triggerEl.classList.add("bg-[#27ceeb]", "text-white", "active");
 			target.triggerEl.classList.remove("hover:bg-slate-100", "hover:text-slate-800", 
 			"focus:bg-slate-100", "focus:text-slate-800");
 			target.triggerEl.firstElementChild.classList.remove("text-slate-400", "transition-colors", 
@@ -95,7 +95,7 @@
 			menuExpedientes.forEach((trigger) => {
 				trigger.targetMenu.classList.remove("block")
 				trigger.targetMenu.classList.add("hidden");
-				trigger.triggerMenu.classList.remove("bg-[#4f46e5]", "text-white", "menu-active");
+				trigger.triggerMenu.classList.remove("bg-[#27ceeb]", "text-white", "menu-active");
 				trigger.triggerMenu.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
 				"focus:bg-slate-100", "focus:text-slate-800");
 				trigger.triggerMenu.firstElementChild.classList.add("text-slate-400", "transition-colors", 
@@ -103,7 +103,7 @@
 			})
 			objective.targetMenu.classList.remove("hidden");
 			objective.targetMenu.classList.add("block");
-			objective.triggerMenu.classList.add("bg-[#4f46e5]", "text-white", "menu-active");
+			objective.triggerMenu.classList.add("bg-[#27ceeb]", "text-white", "menu-active");
 			objective.triggerMenu.classList.remove("hover:bg-slate-100", "hover:text-slate-800", 
 			"focus:bg-slate-100", "focus:text-slate-800");
 			objective.triggerMenu.firstElementChild.classList.remove("text-slate-400", "transition-colors", 
@@ -320,7 +320,7 @@
 
 		<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
 			$('.dataTables_filter input[type="search"]').
-        	attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+        	attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
 
 			$(document).on('click', '.Verusuario', function () {
 				var table = $('#datatable').DataTable();
@@ -447,7 +447,7 @@
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
 			for (let i = 0; i < tabContents.children.length; i++) {
-				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
 				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 				tabContents.children[i].classList.remove('hidden');
@@ -457,7 +457,7 @@
                 }
 				tabContents.children[i].classList.add("hidden");
 			}
-			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 		});
@@ -467,7 +467,7 @@
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
 			for (let i = 0; i < tabContents.children.length; i++) {
-				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
 				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 				tabContents.children[i].classList.remove('hidden');
@@ -477,7 +477,7 @@
 				}
 				tabContents.children[i].classList.add("hidden");
 			}
-			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 		});
@@ -487,7 +487,7 @@
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.getAttribute("data-tabs-target");
 			for (let i = 0; i < tabContents.children.length; i++) {
-				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
 				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 				tabContents.children[i].classList.remove('hidden');
@@ -497,7 +497,7 @@
 				}
 				tabContents.children[i].classList.add("hidden");
 			}
-			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
 		});
@@ -507,7 +507,7 @@
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
 			for (let i = 0; i < tabContents.children.length; i++) {
-				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
 				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 				tabContents.children[i].classList.remove('hidden');
@@ -517,7 +517,7 @@
 				}
 				tabContents.children[i].classList.add("hidden");
 			}
-			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 		});
@@ -528,7 +528,7 @@
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.getAttribute("data-tabs-target");
 			for (let i = 0; i < tabContents.children.length; i++) {
-				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
 				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 				tabContents.children[i].classList.remove('hidden');
@@ -538,7 +538,7 @@
 				}
 				tabContents.children[i].classList.add("hidden");
 			}
-			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
 		});
@@ -548,7 +548,7 @@
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.getAttribute("data-tabs-target");
 			for (let i = 0; i < tabContents.children.length; i++) {
-				tabTogglers[i].classList.remove('bg-[#4f46e5]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
 				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 				tabContents.children[i].classList.remove('hidden');
@@ -558,7 +558,7 @@
 				}
 				tabContents.children[i].classList.add("hidden");
 			}
-			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.add('bg-[#4f46e5]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
 		});
@@ -838,13 +838,13 @@
 				},
 				highlight: function(element) {
 					var elem = $(element);
-					$(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+					$(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
 					$(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
 				},
 				unhighlight: function(element) {
 					var elem = $(element);	
 					$(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-					$(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+					$(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
 				},
 				rules: {
 					nombre: {
@@ -912,7 +912,7 @@
 				},
 				submitHandler: function(form) {
 					$('#submit-button').html(
-					'<button disabled id="guardar_general" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" type="submit">'+
+					'<button disabled id="guardar_general" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700" type="submit">'+
 						'<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
 						'<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
 						'<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -953,7 +953,7 @@
 												icon: "success"
 											}).then(function() {
 												window.removeEventListener('beforeunload', unloadHandler);
-												$('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' type='submit'>Guardar</button>");
+												$('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_general' type='submit'>Guardar</button>");
 												$("#foto_perfil").val("");
 												var getSrc = $('#preview').attr('src');
 												$("#photo-perfil").removeAttr('src');
@@ -974,7 +974,7 @@
 												icon: "error"
 											}).then(function() {
 												window.removeEventListener('beforeunload', unloadHandler);
-												$('#submit-button').html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_general' type='submit'>Guardar</button>");
+												$('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_general' type='submit'>Guardar</button>");
 											});
 										}	
 									},3000);
@@ -989,7 +989,7 @@
 								text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
 								icon: "error"
 							}).then(function() {
-								$('#submit-button').html("<button disabled id='guardar_general' class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' type='submit'>Guardar</button>");
+								$('#submit-button').html("<button disabled id='guardar_general' class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' type='submit'>Guardar</button>");
 								window.location.href = "login.php";
 							});
 						}
@@ -1026,13 +1026,13 @@
 				},
 				highlight: function(element) {
 					var elem = $(element);
-					$(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+					$(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
 					$(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
 				},
 				unhighlight: function(element) {
 					var elem = $(element);	
 					$(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-					$(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+					$(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
 				},
 				rules: {
 					new_password: {
@@ -1086,7 +1086,7 @@
 				},
 				submitHandler: function(form) {
 					$('#button-submit').html(
-					'<button disabled id="guardar_password" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" type="submit">'+
+					'<button disabled id="guardar_password" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700" type="submit">'+
 						'<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
 						'<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
 						'<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -1122,7 +1122,7 @@
 												icon: "success"
 											}).then(function() {
 												window.removeEventListener("beforeunload", unloadHandler);
-												$("#button-submit").html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_password' type='submit'>Guardar</button>");
+												$("#button-submit").html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_password' type='submit'>Guardar</button>");
 												$("#formPassword")[0].reset();
 												$("#loader-password").addClass("hidden");
 												$("#correct-password").addClass("hidden");
@@ -1134,7 +1134,7 @@
 												icon: "error"
 											}).then(function() {
 												window.removeEventListener("beforeunload", unloadHandler);
-												$("#button-submit").html("<button class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' id='guardar_password' type='submit'>Guardar</button>");
+												$("#button-submit").html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='guardar_password' type='submit'>Guardar</button>");
 											});
 										}		
 									},3000);
@@ -1149,7 +1149,7 @@
 								text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
 								icon: "error"
 							}).then(function() {
-								$('#button-submit').html("<button disabled id='guardar_password' class='button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700' type='submit'>Guardar</button>");
+								$('#button-submit').html("<button disabled id='guardar_password' class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' type='submit'>Guardar</button>");
 								window.location.href = "login.php";
 							});
 						}
@@ -1297,7 +1297,7 @@
 </script>
 <style>
 	.error{
-		color: rgb(244 63 94);
+		color: rgb(250 30 45);
 	}
 
 	<?php if($count_doesnt_have_employees == 0 && Roles::FetchSessionRol($_SESSION["rol"]) != ""){  ?>
@@ -1305,7 +1305,7 @@
 			float: left;
 			text-align: left;
 			padding-bottom: 5px;
-			padding-top: 5px;
+			padding-top: 13px;
 		}
 
 		@media (max-width: 640px) {
@@ -1373,4 +1373,16 @@
 			word-wrap:break-word;
 		}
 	<?php } ?>
-</style>
+
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>

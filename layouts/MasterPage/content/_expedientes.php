@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-    <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+    <h2 class="Titulos text-3xl font-semibold  sm:text-5xl lg:text-6xl">
 	    Expedientes
     </h2>
     <div class="mt-4">
@@ -9,7 +17,7 @@
                     <div class="w-full">
                         <div class="bg-gray-50 shadow-md rounded-t">
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
                                     Home
                                 </a>
@@ -27,15 +35,15 @@
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                 <thead>
-                                    <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left min-tablet">Empleado ID</th>
-                                        <th class="py-3 text-left all">Asignado a</th>
-                                        <th class="py-3 text-center desktop">Estatus</th>
-                                        <th class="py-3 text-center desktop">Departamento</th>
-                                        <th class="py-3 text-center desktop">Rol</th>
-                                        <th class="py-3 text-center desktop">Subrol</th>
+                                <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                    
+                                        <th class="py-3 text-left min-tablet dt-tituloL border-white">Empleado ID</th>
+                                        <th class="py-3 text-left all border-white">Asignado a</th>
+                                        <th class="py-3 text-center desktop border-white">Estatus</th>
+                                        <th class="py-3 text-center desktop border-white">Departamento</th>
+                                        <th class="py-3 text-center desktop border-white">Rol</th>
+                                        <th class="py-3 text-center desktop border-white">Subrol</th>
                                         <th>Foto_identificador</th>
-                                        <th class="py-3 text-center min-tablet">Acción</th>
+                                        <th class="py-3 text-center min-tablet dt-tituloR border-white">Acción</th>
                                     </tr>
                                 </thead>
                             </table>

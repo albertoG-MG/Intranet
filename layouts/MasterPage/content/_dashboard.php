@@ -1,29 +1,38 @@
 <div class="container mx-auto px-6 py-8">
-    <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+
+    </style>
+    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
         Dashboard
     </h2>
 
     <div class="mt-4">
-        <div class="bg-white overflow-hidden shadow-xl rounded-lg" style="background-image: url(../src/img/profile.jpg); background-size: cover; background-position:center; background-repeat:no-repeat;">
+    <div class="bg-white overflow-hidden shadow-xl rounded-lg" style="background-image: url(../src/img/profile.jpg); background-size: cover; background-position:center; background-repeat:no-repeat;">
             <div class="flex flex-col">
                 <div class="rounded-3xl p-4 m-4">
                     <div class="flex-none text-center items-center sm:flex">
-                        <div class="relative shrink-0 h-32 w-32 mx-auto md:m-0 sm:mb-0 mb-3">
+                    <div class="relative shrink-0 h-32 w-32 mx-auto md:m-0 sm:mb-0 mb-3">
                             <?php
                                 if($profile -> nombre_foto != null && $profile -> foto != null){
                                     $path = __DIR__ . "/../../../src/img/imgs_uploaded/".$profile -> foto;
                                     if(!file_exists($path)){
                             ?>
-                                        <img class="w-32 h-32 object-cover rounded-2xl" src="../src/img/not_found.jpg">
+                                        <img class="w-32 h-32 object-cover" style= "border-radius: 35rem !important;" src="../src/img/logo_alertas.png">
                             <?php
                                     }else{
                             ?>
-                                        <img class="w-32 h-32 object-cover rounded-2xl" src="../src/img/imgs_uploaded/<?php echo $profile -> foto ?>">
+                                        <img class="w-32 h-32 object-cover" style= "border-radius: 35rem !important;" src="../src/img/imgs_uploaded/<?php echo $profile -> foto ?>">
                             <?php          
                                     }
                                 }else{
                             ?>
-                                    <img class=" w-32 h-32 object-cover rounded-2xl" src="../src/img/default-user.png">
+                                    <img class=" w-32 h-32 object-cover" style= "border-radius: 35rem !important;" src="../src/img/default-user.png">
                             <?php
                                 }
                             ?>
@@ -44,7 +53,7 @@
             </div>
             <ul class="flex flex-col sm:flex-row sm:flex-wrap sm:justify-evenly bg-white text-black text-center p-4" id="tabProfile" role="tablist">
                 <li role="presentation" class="w-full md:w-max">
-                    <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#4f46e5] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="vision-tab-profile" data-tabs-target="#vision" type="button" role="tab" aria-controls="vision" aria-selected="false">
+                    <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#27ceeb] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="vision-tab-profile" data-tabs-target="#vision" type="button" role="tab" aria-controls="vision" aria-selected="false">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"><path fill="currentColor" d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z" /></svg>
                         <span>Visión general</span>
                     </button>
@@ -58,7 +67,7 @@
                 <li role="presentation" class="w-full md:w-max">
                     <button class="w-full group flex items-center space-x-2 rounded-lg px-4 py-2.5 tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800" id="avisos-tab-profile" data-tabs-target="#avisos" type="button" role="tab" aria-controls="avisos" aria-selected="false">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04,2.5L9.53,5H14.53L12.04,2.5M4,7V20H20V7H4M12,0L17,5V5H20A2,2 0 0,1 22,7V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V7A2,2 0 0,1 4,5H7V5L12,0M7,18V14H12V18H7M14,17V10H18V17H14M6,12V9H11V12H6Z" /></svg>
-                        <span>A. informativos</span>
+                        <span>Avisos informativos</span>
                     </button>
                 </li>
                 <li role="presentation" class="w-full md:w-max">
@@ -167,7 +176,7 @@
                                 </div>
                             <?php }else{ ?>
                                 <div class="grid grid-cols-1 text-center">
-                                    <span class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-black">Sin incidencias</span>
+                                    <span class="Titulos text-3xl font-semibold uppercase text-black">Sin incidencias</span>
                                 </div>
                             <?php } ?>
                         </div>
@@ -212,7 +221,7 @@
                                 </div>
                             <?php }else{ ?>
                                 <div class="grid grid-cols-1 text-center">
-                                    <span class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-black">Sin vacaciones</span>
+                                    <span class="Titulos text-3xl font-semibold uppercase text-black">Sin vacaciones</span>
                                 </div>
                             <?php } ?>
                         </div>
@@ -324,11 +333,11 @@
         </div>
     </div>
 </div>
-<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
+<div id="modal-component-container" class="contenedor modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
     <div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="modal-bg-container inset-0"></div>
         <div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>
-        <div id="modal-container" class="modal-container inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-lx transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+        <div id="modal-container" class=" modal-container inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-lx transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
             <form id="Guardar" method="post">
                 <div class="modal-wrapper bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="modal-wrapper-flex sm:flex sm:flex-col sm:items-start">

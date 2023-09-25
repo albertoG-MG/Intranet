@@ -1,4 +1,12 @@
 <script>
+	$(document).ready(function () {
+    <?php
+    if(basename($_SERVER['PHP_SELF']) == 'ver_incidencia.php'){?>
+        var dropdown = document.getElementById('incidencia');
+        dropdown.classList.remove("hidden");
+    <?php } ?>
+});
+
     <?php if($fetch_tipo -> tipo_permiso  == "PERMISO REGLAMENTARIO D" || $fetch_tipo -> tipo_permiso  == "PERMISO REGLAMENTARIO ND"){ ?>
 		<?php if($fetch_information->nombre_justificante_r != null && $fetch_information->identificador_justificante_r != null){ ?>
 			<?php if($fetch_tipo -> tipo_permiso  == "PERMISO REGLAMENTARIO D"){ ?>

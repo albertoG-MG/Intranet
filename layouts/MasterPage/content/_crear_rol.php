@@ -1,12 +1,12 @@
-<div class="container mx-auto px-6 py-8">
+<div class="container mx-auto px-6 py-8"  style="inset -4px 2px 20px 0px #c1c1c1 !important;">
   <div class="flex items-center justify-center">
     <div class="grid w-11/12 md:w-9/12">
-      <h3 class="text-gray-700 text-3xl font-medium">Crear roles</h3>
+      <h3 class="Titulos text-gray-700 text-3xl font-medium">Crear roles</h3>
     </div>
   </div>
   <div class="mt-4">
     <div class="flex flex-col mt-8">
-      <div class="flex bg-gray-200 items-center justify-center mb-32">
+      <div class="flex bg-gray-250 items-center justify-center mb-32">
         <div class="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12">
           <div class="bg-gray-50 rounded-t">
             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
@@ -67,7 +67,7 @@
               <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Escriba el nombre del rol</label>
               <div class="group flex">
                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="rol" name="rol" placeholder="Input 1">
+                <input class="w-full -ml-10 pl-10 py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" type="text" id="rol" name="rol" placeholder="Nombre rol">
               </div>
             </div>
 
@@ -105,12 +105,32 @@
             </div>
 
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-              <a href="roles.php" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2' id='regresar' name='regresar'>Regresar</a>
-              <button class='w-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white px-4 py-2' id='grabar' name='grabar'>Guardar</button>
+              <a href="roles.php" class='w-auto bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='regresar' name='regresar'>Regresar</a>
+              <button class='w-auto btn-celeste  text-white shadow-xl font-medium rounded-md h-11 px-8 py-2' id='grabar' name='grabar'>Guardar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+  <style> 
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 3.75rem !important;
+}
+
+  .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+	.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>
 </div>

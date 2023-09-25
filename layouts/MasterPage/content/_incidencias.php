@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-    <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
         Incidencias
     </h2>
     <div class="mt-4">
@@ -9,7 +17,7 @@
                     <div class="w-full">
                         <div class="bg-gray-50 shadow-md rounded-t">
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
                                     Home
                                 </a>
@@ -36,19 +44,19 @@
                                                 <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                             </svg>
                                         </div>
-                                        <input class="w-full -ml-10 pl-7 py-2 rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_buscar" name="periodo_buscar" placeholder="Filtrar incidencias por periodo" autocomplete="off" aria-invalid="false">
+                                        <input class="w-full -ml-10 pl-7 py-2 rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_buscar" name="periodo_buscar" placeholder="Filtrar incidencias por periodo" autocomplete="off" aria-invalid="false">
                                     </div>
                                 </div>
                             <?php } ?>
                             <div id="DT-div" style="display:none;">
                                 <table class="w-full" id="datatable">
                                     <thead>
-                                        <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
-                                            <th>Solicitud_id</th>
+                                    <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
+                                        <th>Solicitud_id</th>
                                             <th class="py-3 text-left all">Nombre</th>
                                             <th class="py-3 text-center desktop">Tipo</th>
                                             <th class="py-3 text-center desktop">Periodo</th>
-                                            <th class="py-3 text-center desktop">F. solicitud</th>
+                                            <th class="py-3 text-center desktop">Fecha solicitud</th>
                                             <th class="py-3 text-center desktop">Goce de sueldo?</th>
                                             <th class="py-3 text-center desktop">Estatus</th>
                                             <th class="py-3 text-center min-tablet"></th>
@@ -64,7 +72,7 @@
     </div>
 </div>
 <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
-	<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
+	<div id="modal-component-container" class="contenedor modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75">
 		<div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 			<div class="modal-bg-container inset-0"></div>
 			<div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>

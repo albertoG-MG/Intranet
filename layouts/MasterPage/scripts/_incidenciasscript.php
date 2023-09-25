@@ -16,184 +16,196 @@
             },
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
             buttons: [
-                        <?php if($count_jerarquia > 0){ ?>
-                            {
-                                text: "Mis incidencias pendientes",
-                                attr: {
-                                    'id': 'mis_incidencias_pendientes',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
-                                action: function ( e, dt, node, config ) {
-                                    $.ajax({
-                                        url: "../config/incidencias/mi_incidencia_pendiente.php",
-                                        method: 'POST',
-                                        data:{
-                                            "rol": <?php echo $_SESSION["rol"]; ?>,
-                                            "sessionid": <?php echo $_SESSION["id"]; ?>
-                                        },
-                                        success: function(response) {
-                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
-                                                editStatus=0;
-                                            <?php } ?>
-                                            var table = $('#datatable').DataTable();
-                                            table.clear().draw();
-                                            const obj = JSON.parse(response);
-                                            table.rows.add(obj).draw();
-                                            table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();
+                        // <?php if($count_jerarquia > 0){ ?>
+                        //     {
+                        //         text: "Mis incidencias pendientes",
+                        //         attr: {
+                        //             'id': 'mis_incidencias_pendientes',
+                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                        //         },
+                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
+                        //         action: function ( e, dt, node, config ) {
+                        //             $.ajax({
+                        //                 url: "../config/incidencias/mi_incidencia_pendiente.php",
+                        //                 method: 'POST',
+                        //                 data:{
+                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
+                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
+                        //                 },
+                        //                 success: function(response) {
+                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
+                        //                         editStatus=0;
+                        //                     <?php } ?>
+                        //                     var table = $('#datatable').DataTable();
+                        //                     table.clear().draw();
+                        //                     const obj = JSON.parse(response);
+                        //                     table.rows.add(obj).draw();
+                        //                     table.column().cells().invalidate().render();
+                        //                     table.columns.adjust().responsive.recalc();
                                         
-                                        }, error: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
-                                }
-                            },
-                        <?php } ?>
-                        <?php if($count_jerarquia > 0){ ?>
-                            {
-                                text: "Mis incidencias aprobadas",
-                                attr: {
-                                    'id': 'mis_incidencias_aprobadas',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
-                                action: function ( e, dt, node, config ) {
-                                    $.ajax({
-                                        url: "../config/incidencias/mi_incidencia_aprobada.php",
-                                        method: 'POST',
-                                        data:{
-                                            "rol": <?php echo $_SESSION["rol"]; ?>,
-                                            "sessionid": <?php echo $_SESSION["id"]; ?>
-                                        },
-                                        success: function(response) {
-                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
-                                                editStatus=0;
-                                            <?php } ?>
-                                            var table = $('#datatable').DataTable();
-                                            table.clear().draw();
-                                            const obj = JSON.parse(response);
-                                            table.rows.add(obj).draw();
-                                            table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();
+                        //                 }, error: function(response) {
+                        //                     console.log(response);
+                        //                 }
+                        //             })
+                        //         }
+                        //     },
+                        // <?php } ?>
+                        // <?php if($count_jerarquia > 0){ ?>
+                        //     {
+                        //         text: "Mis incidencias aprobadas",
+                        //         attr: {
+                        //             'id': 'mis_incidencias_aprobadas',
+                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                        //         },
+                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
+                        //         action: function ( e, dt, node, config ) {
+                        //             $.ajax({
+                        //                 url: "../config/incidencias/mi_incidencia_aprobada.php",
+                        //                 method: 'POST',
+                        //                 data:{
+                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
+                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
+                        //                 },
+                        //                 success: function(response) {
+                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
+                        //                         editStatus=0;
+                        //                     <?php } ?>
+                        //                     var table = $('#datatable').DataTable();
+                        //                     table.clear().draw();
+                        //                     const obj = JSON.parse(response);
+                        //                     table.rows.add(obj).draw();
+                        //                     table.column().cells().invalidate().render();
+                        //                     table.columns.adjust().responsive.recalc();
                                         
-                                        }, error: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
-                                }
-                            },
-                        <?php } ?>
-                        <?php if($count_jerarquia > 0){ ?>
-                            {
-                                text: "Mis incidencias rechazadas",
-                                attr: {
-                                    'id': 'mis_incidencias_rechazadas',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
-                                action: function ( e, dt, node, config ) {
-                                    $.ajax({
-                                        url: "../config/incidencias/mi_incidencia_rechazada.php",
-                                        method: 'POST',
-                                        data:{
-                                            "rol": <?php echo $_SESSION["rol"]; ?>,
-                                            "sessionid": <?php echo $_SESSION["id"]; ?>
+                        //                 }, error: function(response) {
+                        //                     console.log(response);
+                        //                 }
+                        //             })
+                        //         }
+                        //     },
+                        // <?php } ?>
+                        // <?php if($count_jerarquia > 0){ ?>
+                        //     {
+                        //         text: "Mis incidencias rechazadas",
+                        //         attr: {
+                        //             'id': 'mis_incidencias_rechazadas',
+                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                        //         },
+                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
+                        //         action: function ( e, dt, node, config ) {
+                        //             $.ajax({
+                        //                 url: "../config/incidencias/mi_incidencia_rechazada.php",
+                        //                 method: 'POST',
+                        //                 data:{
+                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
+                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
 
-                                        },
-                                        success: function(response) {
-                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
-                                                editStatus=0;
-                                            <?php } ?>
-                                            var table = $('#datatable').DataTable();
-                                            table.clear().draw();
-                                            const obj = JSON.parse(response);
-                                            table.rows.add(obj).draw();
-                                            table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();
+                        //                 },
+                        //                 success: function(response) {
+                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
+                        //                         editStatus=0;
+                        //                     <?php } ?>
+                        //                     var table = $('#datatable').DataTable();
+                        //                     table.clear().draw();
+                        //                     const obj = JSON.parse(response);
+                        //                     table.rows.add(obj).draw();
+                        //                     table.column().cells().invalidate().render();
+                        //                     table.columns.adjust().responsive.recalc();
                                         
-                                        }, error: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
-                                }
-                            },
-                        <?php } ?>
-                        <?php if($count_jerarquia > 0){ ?>
-                            {
-                                text: "Mis incidencias canceladas",
-                                attr: {
-                                    'id': 'mis_incidencias_canceladas',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
-                                action: function ( e, dt, node, config ) {
-                                    $.ajax({
-                                        url: "../config/incidencias/mi_incidencia_cancelada.php",
-                                        method: 'POST',
-                                        data:{
-                                            "rol": <?php echo $_SESSION["rol"]; ?>,
-                                            "sessionid": <?php echo $_SESSION["id"]; ?>
-                                        },
-                                        success: function(response) {
-                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
-                                                editStatus=0;
-                                            <?php } ?>
-                                            var table = $('#datatable').DataTable();
-                                            table.clear().draw();
-                                            const obj = JSON.parse(response);
-                                            table.rows.add(obj).draw(); 
-                                            table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();
+                        //                 }, error: function(response) {
+                        //                     console.log(response);
+                        //                 }
+                        //             })
+                        //         }
+                        //     },
+                        // <?php } ?>
+                        // <?php if($count_jerarquia > 0){ ?>
+                        //     {
+                        //         text: "Mis incidencias canceladas",
+                        //         attr: {
+                        //             'id': 'mis_incidencias_canceladas',
+                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                        //         },
+                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
+                        //         action: function ( e, dt, node, config ) {
+                        //             $.ajax({
+                        //                 url: "../config/incidencias/mi_incidencia_cancelada.php",
+                        //                 method: 'POST',
+                        //                 data:{
+                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
+                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
+                        //                 },
+                        //                 success: function(response) {
+                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
+                        //                         editStatus=0;
+                        //                     <?php } ?>
+                        //                     var table = $('#datatable').DataTable();
+                        //                     table.clear().draw();
+                        //                     const obj = JSON.parse(response);
+                        //                     table.rows.add(obj).draw(); 
+                        //                     table.column().cells().invalidate().render();
+                        //                     table.columns.adjust().responsive.recalc();
                                         
-                                        }, error: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
-                                }
-                            },
-                        <?php } ?>
-                        <?php if($count_jerarquia > 0){ ?>
+                        //                 }, error: function(response) {
+                        //                     console.log(response);
+                        //                 }
+                        //             })
+                        //         }
+                        //     },
+                        // <?php } ?>
+                        // <?php if($count_jerarquia > 0){ ?>
+                        //     {
+                        //         text: "Ver todas mis solicitudes",
+                        //         attr: {
+                        //             'id': 'mis_incidencias',
+                        //             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                        //         },
+                        //         className: 'button w-full btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
+                        //         action: function ( e, dt, node, config ) {
+                        //             $.ajax({
+                        //                 url: "../config/ajax_incidencias.php",
+                        //                 method: 'POST',
+                        //                 data:{
+                        //                     "rol": <?php echo $_SESSION["rol"]; ?>,
+                        //                     "sessionid": <?php echo $_SESSION["id"]; ?>
+                        //                 },
+                        //                 success: function(response) {
+                        //                     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
+                        //                         editStatus=0;
+                        //                     <?php } ?>
+                        //                     var table = $('#datatable').DataTable();
+                        //                     table.clear().draw();
+                        //                     const obj = JSON.parse(response);
+                        //                     table.rows.add(obj).draw();
+                        //                     table.column().cells().invalidate().render();
+                        //                     table.columns.adjust().responsive.recalc();				
+                        //                 }, error: function(response) {
+                        //                     console.log(response);
+                        //                 }
+                        //             })
+                        //         }
+                        //     },
+                        // <?php } ?>
+
+                        <?php if($count_jerarquia > 0) ?>
                             {
-                                text: "Ver todas mis solicitudes",
+                                text: "Filtrar por:",
                                 attr: {
-                                    'id': 'mis_incidencias',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                    'id': 'incidencias_filtro',
+                                    'style': 'width: -webkit-fill-available; padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important;'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
-                                action: function ( e, dt, node, config ) {
-                                    $.ajax({
-                                        url: "../config/ajax_incidencias.php",
-                                        method: 'POST',
-                                        data:{
-                                            "rol": <?php echo $_SESSION["rol"]; ?>,
-                                            "sessionid": <?php echo $_SESSION["id"]; ?>
-                                        },
-                                        success: function(response) {
-                                            <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
-                                                editStatus=0;
-                                            <?php } ?>
-                                            var table = $('#datatable').DataTable();
-                                            table.clear().draw();
-                                            const obj = JSON.parse(response);
-                                            table.rows.add(obj).draw();
-                                            table.column().cells().invalidate().render();
-                                            table.columns.adjust().responsive.recalc();				
-                                        }, error: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
+                                className: 'disabled bg-white text-2x3 text-[#64748b] font-semibold',
                                 }
-                            },
-                        <?php } ?>
+                        <?php ?>,
+                        
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>	
                             {
-                                text: "Incidencias pendientes",
+                                text: "Pendientes",
                                 attr: {
                                     'id': 'incidencias_abiertas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-8 py-2 focus:ring-2 focus:outline-none ',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencias_abiertas.php",
@@ -218,12 +230,12 @@
                         <?php } ?>
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
                             {
-                                text: "Incidencias evaluadas",
+                                text: "Evaluadas",
                                 attr: {
                                     'id': 'incidencias_cerradas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-8 py-2 focus:ring-2 focus:outline-none ',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencias_cerradas.php",
@@ -249,12 +261,12 @@
                         <?php } ?>
                         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
                             {
-                                text: "Desplegar todas las incidencias",
+                                text: "Ver todo",
                                 attr: {
                                     'id': 'incidencias_desplieguetodo',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-8 py-2 focus:ring-2 focus:outline-none',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencias_desplieguetodo.php",
@@ -277,45 +289,20 @@
                                 }
                             },
                         <?php } ?>
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){  ?>
-                            {
-                                text: "Administrar documentos administrativos",
-                                attr: {
-                                    'id': 'documentos_administrativos',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
-                                action: function(e, dt, node, config) {
-                                    window.location.href = "actas_cartas.php";
-                                }
-                            },
-                        <?php } ?>
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a solicitud incidencias") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-                            {
-                                text: "Ver solicitudes de incidencia",
-                                attr: {
-                                    'id': 'incidencias_solicitudes',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
-                                action: function ( e, dt, node, config ) {
-                                    window.location.href = "solicitud_incidencia.php";
-                                }
-                            },
-                        <?php } ?>
+                        
                         <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                             {
-                                text: "Crear Incidencia",
-                                attr: {
+                                text: "+ Crear Incidencia",
+                                attr: { 
                                     'id': 'Incidencia',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
+                                    'style': 'right: 0; background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'button w-full bg-[#FF9119] text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
+                                className: 'button btn-celeste md:flex text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
                                 action: function(e, dt, node, config) {
                                     window.location.href = "crear_incidencia.php";
                                 }
                             }
-                        <?php } ?>
+                        <?php } ?> ,
                     ],
             "ajax":{
                 <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
@@ -351,6 +338,7 @@
             [
                 {
                     target: [1],
+                    className:"border-white dt-tituloL",
                     render: function (data, type, row) {
                         return(
                             "<div class='text-left'>" +
@@ -361,6 +349,7 @@
                 },
                 {
                     target: [2],
+                    className:"border-white ",
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -371,6 +360,7 @@
                 },
                 {
                     target: [3],
+                    className:"border-white",
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -381,6 +371,7 @@
                 },
                 {
                     target: [4],
+                    className:"border-white ",
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -391,6 +382,7 @@
                 },
                 {
                     target: [5],
+                    className:"border-white",
                     render: function (data, type, row) {
                         if(row["sueldo"] == 0){
                             return "<div class='text-left lg:text-center'><span>No</span></div>";
@@ -403,6 +395,7 @@
                 },
                 {
                     target: [6],
+                    className:"border-white",
                     render: function (data, type, row) {
                         if(row["estatus_id"] == 1){
                             return "<div class='text-left lg:text-center'><span>Aprobada</span></div>";
@@ -417,6 +410,7 @@
                 },
                 {
                     target: [7],
+                    className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
                             if(editStatus == 0){
@@ -486,90 +480,19 @@
             "initComplete": () => {
                 var table = $('#datatable').DataTable();
                 $('.dt-buttons').attr('id', "botones");
-                $("#botones").addClass("w-full");
-                var botones_incidencia = document.querySelectorAll('#botones > button');
-                var children_count = botones_incidencia.length;
                 var boton = document.getElementById('botones');
-                for(var i=0; i < children_count; i++){
-                    if(botones_incidencia[i].id == "mis_incidencias_pendientes" || botones_incidencia[i].id == "mis_incidencias_aprobadas" || botones_incidencia[i].id == "mis_incidencias_rechazadas" || botones_incidencia[i].id == "mis_incidencias_canceladas" || botones_incidencia[i].id == "mis_incidencias"){
-                        if($("#personal").length){
-                            grid_personal.append(botones_incidencia[i]);
-                        }else{
-                            var container_personal = document.createElement("div");
-                            container_personal.setAttribute("id", "personal");
-                            container_personal.setAttribute("style", "text-align:start;");
-                            container_personal.classList.add('mt-5');
-                            boton.append(container_personal);
-                            var title_personal = document.createElement("h2");
-                            title_personal.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
-                            title_personal.textContent = "Desplegar mis incidencias";
-                            container_personal.append(title_personal);
-                            var span_personal = document.createElement("span");
-                            span_personal.classList.add('text-[#64748b]');
-                            span_personal.textContent = "Sección que despliega todas las incidencias del empleado.";
-                            container_personal.append(span_personal);
-                            var separator_personal = document.createElement("div");
-                            separator_personal.classList.add('my-3', 'h-px', 'bg-slate-200');
-                            container_personal.append(separator_personal);
-                            var grid_personal = document.createElement("div");
-                            grid_personal.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
-                            container_personal.append(grid_personal);
-                            grid_personal.append(botones_incidencia[i]);
-                        }
-                    }else if(botones_incidencia[i].id == "incidencias_abiertas" || botones_incidencia[i].id == "incidencias_cerradas" || botones_incidencia[i].id == "incidencias_desplieguetodo"){
-                        if($("#administrador").length){
-                            grid_administrativo.append(botones_incidencia[i]);
-                        }else{
-                            var container_administrativo = document.createElement("div");
-                            container_administrativo.setAttribute("id", "administrador");
-                            container_administrativo.setAttribute("style", "text-align:start;");
-                            container_administrativo.classList.add('mt-5');
-                            boton.append(container_administrativo);
-                            var title_administrativo = document.createElement("h2");
-                            title_administrativo.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
-                            title_administrativo.textContent = "Desplegar incidencias de todos los empleados";
-                            container_administrativo.append(title_administrativo);
-                            var span_administrativo = document.createElement("span");
-                            span_administrativo.classList.add('text-[#64748b]');
-                            span_administrativo.textContent = "Sección que despliega todas las incidencias de todos los empleados.";
-                            container_administrativo.append(span_administrativo);
-                            var separator = document.createElement("div");
-                            separator.classList.add('my-3', 'h-px', 'bg-slate-200');
-                            container_administrativo.append(separator);
-                            var grid_administrativo = document.createElement("div");
-                            grid_administrativo.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
-                            container_administrativo.append(grid_administrativo);
-                            grid_administrativo.append(botones_incidencia[i]);
-                        }
-                    }else{
-                        if($("#otro").length){
-                            grid_otros.append(botones_incidencia[i]);
-                        }else{
-                            var container_otros = document.createElement("div");
-                            container_otros.setAttribute("id", "otro");
-                            container_otros.setAttribute("style", "text-align:start;");
-                            container_otros.classList.add('mt-5');
-                            boton.append(container_otros);
-                            var title_otros = document.createElement("h2");
-                            title_otros.classList.add('text-2xl', 'text-[#64748b]', 'font-semibold');
-                            title_otros.textContent = "Acción";
-                            container_otros.append(title_otros);
-                            var span_otros = document.createElement("span");
-                            span_otros.classList.add('text-[#64748b]');
-                            span_otros.textContent = "Sección que permite distintos tipos de acciones según el tipo de usuario.";
-                            container_otros.append(span_otros);
-                            var separator_otros = document.createElement("div");
-                            separator_otros.classList.add('my-3', 'h-px', 'bg-slate-200');
-                            container_otros.append(separator_otros);
-                            var grid_otros = document.createElement("div");
-                            grid_otros.classList.add('grid', 'grid-cols-1', 'md:grid-cols-3', 'md:gap-3');
-                            container_otros.append(grid_otros);
-                            grid_otros.append(botones_incidencia[i]);
-                        }
-                    }
+                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
+                var children = boton.childElementCount;
+                let array = [];
+                for(let i=0; i<children; i++){
+                    array[i]=boton.children[i];
                 }
-               // console.log(divsname[0].children[0].id);
-            
+                for(let j=0; j<children; j++){
+                    var container = document.createElement("div");
+                    container.classList.add('flex-[1_0_20%]', 'm-[5px]');
+                    boton.append(container);
+                    container.append(array[j]);
+                }
                 $('#DT-div').show();
                 table.columns.adjust().responsive.recalc();
             }
@@ -580,10 +503,56 @@
 
 	$(document).ready(function () {
 		$('.dataTables_filter input[type="search"]').
-	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'incidencias.php'){?>
+            var dropdown = document.getElementById('incidencia');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
 
+            //css de botones filtro
+     var incidencias_cerradas = document.getElementById("incidencias_cerradas");
+     var incidencias_abiertas = document.getElementById("incidencias_abiertas");
+     var incidencias_desplieguetodo = document.getElementById("incidencias_desplieguetodo");
+
+    document.getElementById('incidencias_cerradas').addEventListener("click", function(){
+
+        if(incidencias_abiertas.classList.contains("active") || incidencias_desplieguetodo.classList.contains("active")){
+            incidencias_abiertas.classList.remove("active");
+            incidencias_desplieguetodo.classList.remove("active");
+        }
+        
+        if(!incidencias_cerradas.classList.contains("active")){
+            incidencias_cerradas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('incidencias_abiertas').addEventListener("click", function(){
+
+        if(incidencias_cerradas.classList.contains("active") || incidencias_desplieguetodo.classList.contains("active")){
+            incidencias_cerradas.classList.remove("active");
+            incidencias_desplieguetodo.classList.remove("active");
+        }
+
+        if(!incidencias_abiertas.classList.contains("active")){
+            incidencias_abiertas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('incidencias_desplieguetodo').addEventListener("click", function(){
+
+        if(incidencias_cerradas.classList.contains("active") || incidencias_abiertas.classList.contains("active")){
+            incidencias_cerradas.classList.remove("active");
+            incidencias_abiertas.classList.remove("active");
+        }
+
+        if(!incidencias_desplieguetodo.classList.contains("active")){
+            incidencias_desplieguetodo.classList.toggle("active");
+        }
+        });
+        
         <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true"){ ?>
-            $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, timePicker: true, timePicker24Hour: true, timePickerSeconds: true, parentEl: "main", locale: { format: 'YYYY/MM/DD HH:mm:ss' }, applyButtonClasses: "button bg-indigo-600 px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, timePicker: true, timePicker24Hour: true, timePickerSeconds: true, parentEl: "main", locale: { format: 'YYYY/MM/DD HH:mm:ss' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
             $('#periodo_buscar').on('apply.daterangepicker', function(ev, picker) {
                 var fd = new FormData();
@@ -663,7 +632,7 @@
 
                 $('.modal-wrapper-flex').html(
                     '<div class="flex-col gap-3 items-center flex sm:flex-row">'+
-                        '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">'+
+                        '<div class="modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10">'+
                             '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9.5H18V7.5H13V9.5M13,16.5H18V14.5H13V16.5M19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21M6,11H11V6H6V11M7,7H10V10H7V7M6,18H11V13H6V18M7,14H10V17H7V14Z"></path></svg>'+
                         '</div>'+
                         '<h3 class="text-lg font-medium text-gray-900"> Modificar el estatus de la incidencia </h3>'+
@@ -677,7 +646,7 @@
                                         '<path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12.5 7V12.2L9.8 17L8.5 16.2L11 11.8V7H12.5Z"></path>'+
                                     '</svg>'+
                                 '</div>'+
-                                '<select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estatus" name="estatus">'+
+                                '<select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estatus" name="estatus">'+
                                     '<option value="">--Seleccione--</option>'+
                                     '<option value="1">Aprobada</option>'+
                                     '<option value="2">Cancelada</option>'+
@@ -687,12 +656,12 @@
                         '</div>'+
                         '<div class="grid grid-cols-1 mt-5 mx-7">'+
                             '<div class="flex gap-3 items-center">'+
-                                '<input type="checkbox" id="sueldo" name="sueldo" class="border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" value="1" data-valuetwo="0">¿Goce de sueldo?'+
+                                '<input type="checkbox" id="sueldo" name="sueldo" class="border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" value="1" data-valuetwo="0">¿Goce de sueldo?'+
                             '</div>'+
                         '</div>'+
                         '<div class="grid grid-cols-1 mt-5 mx-7">'+
                             '<label class="text-[#64748b] font-semibold mb-2">Comentarios</label>'+
-                            '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="comentarios" name="comentarios" placeholder="Comentarios"></textarea>'+
+                            '<textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="comentarios" name="comentarios" placeholder="Comentarios"></textarea>'+
                             '<div id="error_comentarios"></div>'+
                         '</div>'+
                         '<div class="mt-5">'+
@@ -700,7 +669,7 @@
                     '</div>');
                 $('.modal-actions').html(
                     '<div id="submit-changes">'+
-                        '<button id="editar-incidencia" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar incidencia</button>'+
+                        '<button id="editar-incidencia" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar incidencia</button>'+
                     '</div>'+
                     '<div id="disable-close-submit">'+
                         '<button id="close-modal" type="button" class="button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto">Cerrar</button>'+
@@ -737,13 +706,13 @@
                         },
                         highlight: function(element) {
                             var elem = $(element);
-                            $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                            $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                             $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
                         },
                         unhighlight: function(element) {
                             var elem = $(element);	
                             $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
-                            $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                            $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                         },
                         rules: {
                             estatus: {
@@ -765,7 +734,7 @@
                         },
                         submitHandler: function(form) {
                             $('#submit-changes').html(
-                                '<button disabled type="button" class="button w-full inline-flex items-center justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
+                                '<button disabled type="button" class="button w-full inline-flex items-center justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">'+
                                     '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                     '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                     '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -814,7 +783,7 @@
                                                         }).then(function() {
                                                             var table = $('#datatable').DataTable();
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
+                                                            $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             if(ButtonEdit == 1){
 		                                                        table.ajax.url('../config/incidencias/incidencias_cerradas.php').load();
@@ -830,7 +799,7 @@
                                                             icon: "error"
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html("<button class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
+                                                            $('#submit-changes').html("<button class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
                                                             $('#disable-close-submit').html("<button id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                         });
                                                     } else if (array[0] == "incidencia_not_found") {
@@ -841,7 +810,7 @@
                                                         }).then(function() {
                                                             var table = $('#datatable').DataTable();
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
+                                                            $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             if(ButtonEdit == 1){
 		                                                        table.ajax.url('../config/incidencias/incidencias_cerradas.php').load();
@@ -857,7 +826,7 @@
                                                             icon: "error"
                                                         }).then(function() {
                                                             window.removeEventListener('beforeunload', unloadHandler);
-                                                            $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
+                                                            $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='editar-incidencia' type='submit'>Editar incidencia</button>");
                                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                             closeModal();
                                                             window.location.href = "dashboard.php";
@@ -876,7 +845,7 @@
                                             icon: "error"
                                         }).then(function() {
                                             window.removeEventListener('beforeunload', unloadHandler);
-                                            $('#submit-changes').html('<button disabled id="editar-incidencia" type="submit" class="button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar incidencia</button>');
+                                            $('#submit-changes').html('<button disabled id="editar-incidencia" type="submit" class="button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto">Editar incidencia</button>');
                                             $('#disable-close-submit').html("<button disabled id='close-modal' type='button' class='button cursor-pointer w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                             window.location.href = "login.php";
                                         });	
@@ -950,7 +919,7 @@
 
     <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las incidencias") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las incidencias") == "true")){ ?>
         .error{
-            color: red;
+            color: #FF1E2D;
         }
     <?php } ?>
 
@@ -968,14 +937,7 @@
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
-        padding-bottom:5px;
-        padding-top:5px;
-    }
-
-    .dataTables_wrapper .dataTables_filter{
-        float:left;
-        text-align:left;
-        padding-bottom:5px;
+        padding-bottom:13px;
         padding-top:5px;
     }
 
@@ -1001,6 +963,7 @@
 
     #datatable{
         border-collapse: collapse !important;
+        font-size: 12px;
     }
 
     .search{
@@ -1032,4 +995,72 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-</style>
+
+    .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+
+    .ov-btn-slide-top {
+        border: 0px !important;
+        font-size: 15.88px !important; 
+        background-color: #c7c7c714 !important;
+        color: #000003 !important;
+        box-shadow: 1px 2px 0px 0px !important;
+        
+        border-radius: 107px !important;
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+        display: inline-block;
+
+    }
+    .ov-btn-slide-top:hover {
+        color: #fff !important; /* color de fuente hover */
+    }
+    .ov-btn-slide-top::after {
+        content: "";
+        background:#1f1c1ce3;; /* color de fondo hover */
+        position: absolute;
+        z-index: -1;
+        padding: 16px 20px;
+        display: block;
+        left: 0;
+        right: 0;
+        top: -100%;
+        bottom: 100%;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+    .ov-btn-slide-top:hover::after {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+
+    .active{
+    background-color: black !important;
+    color: white !important;
+    }
+
+    .text-20{
+        font-size: 20px !important;
+    }
+
+    .btn-white{
+        background: white !important;
+        color: white !important;
+        background-color: white !important;
+        border: none !important;
+    }
+    </style>

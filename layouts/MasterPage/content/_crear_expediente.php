@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-   <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+   <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
       Crear expedientes
    </h2>
    <div class="mt-4">
@@ -9,7 +17,7 @@
                <div class="w-full">
                   <div class="bg-gray-50 shadow-md rounded-t">
                      <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                        <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                        <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
                            </svg>
@@ -20,7 +28,7 @@
                               <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                            </svg>
                         </span>
-                        <a href="expedientes.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                        <a href="expedientes.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
                            </svg>
@@ -42,12 +50,12 @@
                   <div class="bg-white p-3 shadow-md rounded-b">
                      <div class="flex flex-col mt-5 mx-7">
                         <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para asignar un expediente a un usuario</h2>
-                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios para poder asignar un expediente a un usuario.</span>
+                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
                         <div class="my-3 h-px bg-slate-200"></div>
                      </div>
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
                         <li role="presentation" class="w-full md:w-max">
-                           <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#4f46e5] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="datosG-tab" data-tabs-target="#datosG" type="button" role="tab" aria-controls="datosG" aria-selected="false">
+                           <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#27ceeb] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="datosG-tab" data-tabs-target="#datosG" type="button" role="tab" aria-controls="datosG" aria-selected="false">
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
                                  <path fill="currentColor" d="M14 2H6C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8L14 2M18 20H6V4H13V9H18V20M13 13C13 14.1 12.1 15 11 15S9 14.1 9 13 9.9 11 11 11 13 11.9 13 13M15 18V19H7V18C7 16.67 9.67 16 11 16S15 16.67 15 18Z" />
                               </svg>
@@ -134,7 +142,7 @@
                                           <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" aria-describedby="numempleado_help" id="numempleado" name="numempleado" placeholder="i.e. L-35">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="numempleado_help" id="numempleado" name="numempleado" placeholder="i.e. L-35">
                                  </div>
                                  <div id="loader-numempleado" class="hidden mt-5">
                                     <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +171,7 @@
                                           <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-indigo-600" type="text" id="departamento" name="departamento" placeholder="Departamento" readonly>
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="departamento" name="departamento" placeholder="Departamento" readonly>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -174,7 +182,7 @@
                                           <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="puesto" name="puesto" placeholder="Puesto">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="puesto" name="puesto" placeholder="Puesto">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -185,7 +193,7 @@
                                           <path fill="currentColor" d="M16 8C16 10.21 14.21 12 12 12C9.79 12 8 10.21 8 8L8.11 7.06L5 5.5L12 2L19 5.5V10.5H18V6L15.89 7.06L16 8M12 14C16.42 14 20 15.79 20 18V20H4V18C4 15.79 7.58 14 12 14Z" />
                                        </svg>
                                     </div>
-                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estudios" name="estudios">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estudios" name="estudios">
                                        <option value="">-- Seleccione --</option>
                                        <option value="PRIMARIA">Primaria</option>
                                        <option value="SECUNDARIA">Secundaria</option>
@@ -206,18 +214,18 @@
                                           <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-indigo-600" type="text" id="correo_usuario" name="correo_usuario" placeholder="Correo" readonly>
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="correo_usuario" name="correo_usuario" placeholder="Correo" readonly>
                                  </div>
                               </div>
                               <div x-data="{ open: true }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Desea agregar un correo electrónico adicional?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="rcorreoadicional; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" checked="">
+                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="rcorreoadicional; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" checked="">
                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="rcorreoadicional; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2">
+                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="rcorreoadicional; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2">
                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -232,7 +240,7 @@
                                        $("#correo_adicional").val("");
                                        $("#correo_adicional").rules("remove");
                                        $("#correo_adicional").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#correo_adicional").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#correo_adicional").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                        $("#correo_adicional-error").css("display", "none");
                                        $('#loader-correo').addClass('hidden');
                                        $('#correct-correo').addClass('hidden');
@@ -274,7 +282,7 @@
                                                 <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" aria-describedby="correoadicional_help" id="correo_adicional" name="correo_adicional" placeholder="i.e. example@example.com">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="correoadicional_help" id="correo_adicional" name="correo_adicional" placeholder="i.e. example@example.com">
                                        </div>
                                        <div id="loader-correo" class="hidden mt-5">
                                           <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -311,7 +319,7 @@
                                              <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="calle" name="calle" placeholder="Calle">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="calle" name="calle" placeholder="Calle">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -322,7 +330,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="ninterior" name="ninterior" placeholder="Número Interior">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="ninterior" name="ninterior" placeholder="Número Interior">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -333,7 +341,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nexterior" name="nexterior" placeholder="Número exterior">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nexterior" name="nexterior" placeholder="Número exterior">
                                     </div>
                                  </div>
                               </div>
@@ -346,7 +354,7 @@
                                              <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="colonia" name="colonia" placeholder="Colonia">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="colonia" name="colonia" placeholder="Colonia">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -357,7 +365,7 @@
                                              <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="estado" name="estado">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estado" name="estado">
                                           <option value="">--Seleccione--</option>
                                           <?php
                                              while ($r = $estado->fetch(PDO::FETCH_OBJ)) {
@@ -378,7 +386,7 @@
                                              <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="municipio" name="municipio">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="municipio" name="municipio">
                                           <option value="">--Seleccione un estado--</option>
                                        </select>
                                     </div>
@@ -392,7 +400,7 @@
                                           <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="codigo" name="codigo" placeholder="Código postal">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="codigo" name="codigo" placeholder="Código postal">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -403,18 +411,18 @@
                                           <path fill="currentColor" d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="teldom" name="teldom" placeholder="Télefono de domicilio">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="teldom" name="teldom" placeholder="Télefono de domicilio">
                                  </div>
                               </div>
                               <div x-data="{ open: true }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="rtelmov; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="rtelmov; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -426,7 +434,7 @@
                                        $("#telmov").val("");
                                        $("#telmov").rules("remove");
                                        $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                        $("#telmov-error").css("display", "none");
                                        }else if(e.target.value == "si"){
                                        $("#telmov").rules("add", {
@@ -449,7 +457,7 @@
                                                 <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="telmov" name="telmov"  placeholder="Télefono móvil propio">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="telmov" name="telmov"  placeholder="Télefono móvil propio">
                                        </div>
                                     </div>
                                  </div>
@@ -463,11 +471,11 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="telempresa; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="telempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                        <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="telempresa; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="telempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
                                        <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -481,7 +489,7 @@
                                        $(""+array[i]+"").val("");
                                        $(""+array[i]+"").rules("remove");
                                        $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                        $(""+array[i]+"-error").css("display", "none");
                                        }
                                        }else if(e.target.value == "si"){
@@ -554,7 +562,7 @@
                                                    <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marcacion" name="marcacion" placeholder="i.e. 767">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marcacion" name="marcacion" placeholder="i.e. 767">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -565,7 +573,7 @@
                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie" name="serie" placeholder="i.e. DB168091200530">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie" name="serie" placeholder="i.e. DB168091200530">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -576,7 +584,7 @@
                                                    <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="sim" name="sim" placeholder="i.e 89014103211118510720">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="sim" name="sim" placeholder="i.e 89014103211118510720">
                                           </div>
                                        </div>
                                     </div>
@@ -589,7 +597,7 @@
                                                    <path fill="currentColor" d="M4.93,4.93C3.12,6.74 2,9.24 2,12C2,14.76 3.12,17.26 4.93,19.07L6.34,17.66C4.89,16.22 4,14.22 4,12C4,9.79 4.89,7.78 6.34,6.34L4.93,4.93M19.07,4.93L17.66,6.34C19.11,7.78 20,9.79 20,12C20,14.22 19.11,16.22 17.66,17.66L19.07,19.07C20.88,17.26 22,14.76 22,12C22,9.24 20.88,6.74 19.07,4.93M7.76,7.76C6.67,8.85 6,10.35 6,12C6,13.65 6.67,15.15 7.76,16.24L9.17,14.83C8.45,14.11 8,13.11 8,12C8,10.89 8.45,9.89 9.17,9.17L7.76,7.76M16.24,7.76L14.83,9.17C15.55,9.89 16,10.89 16,12C16,13.11 15.55,14.11 14.83,14.83L16.24,16.24C17.33,15.15 18,13.65 18,12C18,10.35 17.33,8.85 16.24,7.76M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numred" name="numred" placeholder="i.e. 310260">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numred" name="numred" placeholder="i.e. 310260">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -600,7 +608,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="modelotel" name="modelotel" placeholder="i.e. TP802A">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="modelotel" name="modelotel" placeholder="i.e. TP802A">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -611,7 +619,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marcatel" name="marcatel" placeholder="i.e. Samsung Galaxy">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marcatel" name="marcatel" placeholder="i.e. Samsung Galaxy">
                                           </div>
                                        </div>
                                     </div>
@@ -623,7 +631,7 @@
                                                 <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="imei" name="imei" placeholder="i.e. 861536030196001">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="imei" name="imei" placeholder="i.e. 861536030196001">
                                        </div>
                                     </div>
                                  </div>
@@ -632,11 +640,11 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Laptop asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="laptopempresa; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" checked="">
+                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="laptopempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" checked="">
                                        <label for="option-laptop-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="laptopempresa; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2">
+                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="laptopempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2">
                                        <label for="option-laptop-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -650,7 +658,7 @@
                                           $(""+array[i]+"").val("");
                                           $(""+array[i]+"").rules("remove");
                                           $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                           $(""+array[i]+"-error").css("display", "none");
                                        }
                                        }else if(e.target.value == "si"){
@@ -691,7 +699,7 @@
                                                    <path fill="currentColor" d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="marca_laptop" name="marca_laptop" placeholder="i.e. Lenovo">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marca_laptop" name="marca_laptop" placeholder="i.e. Lenovo">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -702,7 +710,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="modelo_laptop" name="modelo_laptop" placeholder="i.e. Lenovo Ideapad 330-15ARR">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="modelo_laptop" name="modelo_laptop" placeholder="i.e. Lenovo Ideapad 330-15ARR">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -713,7 +721,7 @@
                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="serie_laptop" name="serie_laptop" placeholder="i.e. S100NWDJ">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie_laptop" name="serie_laptop" placeholder="i.e. S100NWDJ">
                                           </div>
                                        </div>
                                     </div>
@@ -727,11 +735,11 @@
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">Casa propia?</label>
                                  <div class="group flex mt-3 items-center">
-                                    <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                    <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                     Sí
                                     </label>
-                                    <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                    <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
                                     <label for="option-casa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                     No
                                     </label>
@@ -745,7 +753,7 @@
                                           <path fill="currentColor" d="M12,10L8,4.4L9.6,2H14.4L16,4.4L12,10M15.5,6.8L14.3,8.5C16.5,9.4 18,11.5 18,14A6,6 0 0,1 12,20A6,6 0 0,1 6,14C6,11.5 7.5,9.4 9.7,8.5L8.5,6.8C5.8,8.1 4,10.8 4,14A8,8 0 0,0 12,22A8,8 0 0,0 20,14C20,10.8 18.2,8.1 15.5,6.8Z" />
                                        </svg>
                                     </div>
-                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="ecivil" name="ecivil">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="ecivil" name="ecivil">
                                        <option value="">--Seleccione--</option>
                                        <option value="SOLTERO">Soltero</option>
                                        <option value="CASADO">Casado</option>
@@ -758,11 +766,11 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Posee retención?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="rretencion; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="rretencion; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -774,7 +782,7 @@
                                        $("#monto_mensual").val('');
                                        $("#monto_mensual").rules("remove");
                                        $("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#monto_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                       $("#monto_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                        $("#monto_mensual-error").css("display", "none");
                                        }else if(e.target.value == "si"){
                                        $("#monto_mensual").rules("add", {
@@ -797,7 +805,7 @@
                                                 <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="monto_mensual" name="monto_mensual" placeholder="Monto mensual">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="monto_mensual" name="monto_mensual" placeholder="Monto mensual">
                                        </div>
                                     </div>
                                  </div>
@@ -811,7 +819,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechanac" name="fechanac">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechanac" name="fechanac">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -822,7 +830,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechacon" name="fechacon">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechacon" name="fechacon">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -833,7 +841,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechaalta" name="fechaalta">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechaalta" name="fechaalta">
                                     </div>
                                  </div>
                               </div>
@@ -846,7 +854,7 @@
                                              <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="salario_contrato" name="salario_contrato" placeholder="Salario al inicio del periodo de prueba">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="salario_contrato" name="salario_contrato" placeholder="Salario al inicio del periodo de prueba">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -857,13 +865,13 @@
                                              <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="salario_fechaalta" name="salario_fechaalta" placeholder="Salario después del periodo de prueba">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="salario_fechaalta" name="salario_fechaalta" placeholder="Salario después del periodo de prueba">
                                     </div>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">Observaciones</label>
-                                 <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="observaciones" name="observaciones" placeholder="Observaciones"></textarea>
+                                 <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="observaciones" name="observaciones" placeholder="Observaciones"></textarea>
                                  <div id="error_observaciones"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -875,7 +883,7 @@
                                              <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="curp" name="curp" placeholder="Curp">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="curp" name="curp" placeholder="Curp">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -886,7 +894,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nss" name="nss" placeholder="NSS">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nss" name="nss" placeholder="NSS">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -897,7 +905,7 @@
                                              <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="rfc" name="rfc" placeholder="RFC">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="rfc" name="rfc" placeholder="RFC">
                                     </div>
                                  </div>
                               </div>
@@ -910,7 +918,7 @@
                                              <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
                                           <option value="">--Seleccione--</option>
                                           <option value="INE">INE</option>
                                           <option value="PASAPORTE">PASAPORTE</option>
@@ -924,7 +932,7 @@
                                           $("#numeroidentificacion").val("");
                                           $("#numeroidentificacion").rules("remove");
                                           $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+                                          $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                                           $("#numeroidentificacion-error").css("display", "none");
                                        }else {
                                           $("#numeroidentificacion").rules("add", {
@@ -947,7 +955,7 @@
                                                 <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
                                        </div>
                                     </div>
                                  </div>
@@ -955,7 +963,7 @@
                               <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="grid grid-cols-1 mx-7 mt-5">
                                  <div class="text-center md:text-right">	
-                                    <button type="button" id="siguiente" name="siguiente" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Siguiente</button>
+                                    <button type="button" id="siguiente" name="siguiente" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>
                                  </div>
                               </div>
                            </div>
@@ -973,7 +981,7 @@
                                           <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de referencias laborales">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de referencias laborales">
                                  </div>
                               </div>
                               <div id="referencias">
@@ -991,7 +999,7 @@
                                           <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="date" id="fechauniforme" name="fechauniforme">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechauniforme" name="fechauniforme">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -1003,7 +1011,7 @@
                                              <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="cantidadpolo" name="cantidadpolo" placeholder="Cantidad">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cantidadpolo" name="cantidadpolo" placeholder="Cantidad">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1015,7 +1023,7 @@
                                              <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="tallapolo" name="tallapolo" placeholder="Talla">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="tallapolo" name="tallapolo" placeholder="Talla">
                                     </div>
                                  </div>
                               </div>
@@ -1033,7 +1041,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="emergencianom" name="emergencianom" placeholder="Nombre Completo1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencianom" name="emergencianom" placeholder="Nombre Completo1">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1044,7 +1052,7 @@
                                              <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="emergenciaparentesco" name="emergenciaparentesco" placeholder="Parentesco1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciaparentesco" name="emergenciaparentesco" placeholder="Parentesco1">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1055,7 +1063,7 @@
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="emergenciatel" name="emergenciatel" placeholder="Teléfono1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel" name="emergenciatel" placeholder="Teléfono1">
                                     </div>
                                  </div>
                               </div>
@@ -1068,7 +1076,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="emergencianom2" name="emergencianom2" placeholder="Nombre Completo2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencianom2" name="emergencianom2" placeholder="Nombre Completo2">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1079,7 +1087,7 @@
                                              <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="emergenciaparentesco2" name="emergenciaparentesco2" placeholder="Parentesco2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciaparentesco2" name="emergenciaparentesco2" placeholder="Parentesco2">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1090,7 +1098,7 @@
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="emergenciatel2" name="emergenciatel2" placeholder="Teléfono2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel2" name="emergenciatel2" placeholder="Teléfono2">
                                     </div>
                                  </div>
                               </div>
@@ -1107,7 +1115,7 @@
                                           <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="capacitacion" name="capacitacion" placeholder="Capacitación">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="capacitacion" name="capacitacion" placeholder="Capacitación">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1118,7 +1126,7 @@
                                           <path fill="currentColor" d="M18,14H14V18H10V14H6V10H10V6H14V10H18M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="antidoping" name="antidoping" placeholder="Resultado antidoping">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="antidoping" name="antidoping" placeholder="Resultado antidoping">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1129,7 +1137,7 @@
                                           <path fill="currentColor" d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20Z" />
                                        </svg>
                                     </div>
-                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" id="tipo_sangre" name="tipo_sangre">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tipo_sangre" name="tipo_sangre">
                                        <option value="">--Seleccione--</option>
                                        <option value="A_POSITIVO">A+</option>
                                        <option value="A_NEGATIVO">A-</option>
@@ -1150,18 +1158,18 @@
                                           <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="vacante" name="vacante" placeholder="¿Cómo se entero de la vacante?">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="vacante" name="vacante" placeholder="¿Cómo se entero de la vacante?">
                                  </div>
                               </div>
                               <div x-data="{ open: true }">
 			                     <div class="grid grid-cols-1 mt-5 mx-7">
 				                    <label class="text-[#64748b] font-semibold mb-2">Tiene familiares dentro de la empresa?</label>
 				                    <div class="group flex mt-3 items-center">
-				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
 				                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
 				                       Sí
 				                       </label>
-				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="rfamiliarempresa; open = false" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-600" aria-labelledby="option-2" aria-describedby="option-2">
+				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="rfamiliarempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
 				                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
 				                       No
 				                       </label>
@@ -1173,7 +1181,7 @@
 					                      $("#nomfam").val('');
 						                     $("#nomfam").rules("remove");
 						                     $("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-						                     $("#nomfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-indigo-600");
+						                     $("#nomfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
 						                     $("#nomfam-error").css("display", "none");
 				                       }else if(e.target.value == "si"){
 					                      $("#nomfam").rules("add", {
@@ -1196,7 +1204,7 @@
 							                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
 						                     </svg>
 					                      </div>
-					                      <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre completo del familiar">
+					                      <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre completo del familiar">
 				                       </div>
 				                    </div>
 			                     </div>
@@ -1204,7 +1212,7 @@
                            <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior" name="anterior" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
-                                 <button type="button" id="siguiente2" name="siguiente2" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Siguiente</button>
+                                 <button type="button" id="siguiente2" name="siguiente2" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>
                               </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
@@ -1221,7 +1229,7 @@
                                           <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de beneficiarios bancarios">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de beneficiarios bancarios">
                                  </div>
                               </div>
                               <div id="ref">
@@ -1240,7 +1248,7 @@
                                              <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="banco_personal" name="banco_personal" placeholder="Banco">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="banco_personal" name="banco_personal" placeholder="Banco">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1251,7 +1259,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="cuenta_personal" name="cuenta_personal" placeholder="Cuenta">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cuenta_personal" name="cuenta_personal" placeholder="Cuenta">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1262,7 +1270,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="clabe_personal" name="clabe_personal" placeholder="Clabe">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="clabe_personal" name="clabe_personal" placeholder="Clabe">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1 lg:col-span-3">
@@ -1273,7 +1281,7 @@
                                              <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"></path>
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico_personal" name="plastico_personal" placeholder="Plástico asignado">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="plastico_personal" name="plastico_personal" placeholder="Plástico asignado">
                                     </div>
                                  </div>
                               </div>
@@ -1291,7 +1299,7 @@
                                              <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="banco_nomina" name="banco_nomina" placeholder="Banco">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="banco_nomina" name="banco_nomina" placeholder="Banco">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1302,7 +1310,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="cuenta_nomina" name="cuenta_nomina" placeholder="Cuenta">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cuenta_nomina" name="cuenta_nomina" placeholder="Cuenta">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1313,7 +1321,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="clabe_nomina" name="clabe_nomina" placeholder="Clabe">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="clabe_nomina" name="clabe_nomina" placeholder="Clabe">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1 lg:col-span-3">
@@ -1324,14 +1332,14 @@
                                              <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="plastico" name="plastico" placeholder="Plástico asignado">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="plastico" name="plastico" placeholder="Plástico asignado">
                                     </div>
                                  </div>
                               </div>
                               <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
-                                 <button type="button" id="siguiente3" name="siguiente3" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Siguiente</button>
+                                 <button type="button" id="siguiente3" name="siguiente3" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>
                               </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
@@ -1380,7 +1388,7 @@
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior3" name="anterior3" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
                                  <div id="submit-button">   
-                                    <button type="submit" id="finish" name="finish" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Guardar</button>
+                                    <button type="submit" id="finish" name="finish" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Guardar</button>
                                  </div>
                               </div>
                            </div>
@@ -1392,4 +1400,17 @@
          </div>
       </div>
    </div>
+   <style> 
+   		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+   </style>
 </div>

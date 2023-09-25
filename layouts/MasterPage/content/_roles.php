@@ -31,11 +31,11 @@
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <table class="w-full" id="datatable" style="display:none;">
-                                <thead>
-                                    <tr class="bg-black text-white uppercase text-sm leading-normal">
-                                        <th class="py-3 text-left all">Rol</th>
+                            <thead>
+                                    <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">
+                                        <th class="py-3 border-white dt-tituloL text-left all">Rol</th>
                                         <th class="py-3 text-left min-tablet">Jerarquia</th>
-                                        <th class="py-3 text-center min-tablet"></th>
+                                        <th class="py-3 border-white dt-tituloR text-center min-tablet"></th>
                                     </tr>
                                 </thead>
                             </table>

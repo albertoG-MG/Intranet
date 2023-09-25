@@ -1,6 +1,14 @@
 <div>
     <div class="container mx-auto my-5 p-5">
-        <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+        <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
             Vacaciones
         </h2>
         <div class="mt-4">
@@ -150,12 +158,12 @@
                                             <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                         </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_vacaciones" name="periodo_vacaciones" placeholder="Periodo de las vacaciones a tomar" autocomplete="off" aria-invalid="false">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_vacaciones" name="periodo_vacaciones" placeholder="Periodo de las vacaciones a tomar" autocomplete="off" aria-invalid="false">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 text-center">
                                 <div id="submit-vacaciones">
-                                    <button class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700" id="guardar_general" name="guardar_general" type="submit">
+                                    <button class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700" id="guardar_general" name="guardar_general" type="submit">
                                         Solicitar vacaciones
                                     </button>
                                 </div>
@@ -179,18 +187,18 @@
                                             <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"></path>
                                         </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-7 py-2 rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600" type="text" id="periodo_buscar" name="periodo_buscar" placeholder="Filtrar vacaciones por periodo" autocomplete="off" aria-invalid="false">
+                                    <input class="w-full -ml-10 pl-7 py-2 rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600" type="text" id="periodo_buscar" name="periodo_buscar" placeholder="Filtrar vacaciones por periodo" autocomplete="off" aria-invalid="false">
                                 </div>
                             </div>
                         <?php } ?>
                         <div id="DT-div" style="display:none;">
                             <table class="w-full" id="datatable">
                                 <thead>
-                                    <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
                                         <th>Solicitud_id</th>
                                         <th class="py-3 text-left all">Nombre</th>
                                         <th class="py-3 text-center desktop">Periodo</th>
-                                        <th class="py-3 text-center desktop">F. solicitud</th>
+                                        <th class="py-3 text-center desktop">Fecha solicitud</th>
                                         <th class="py-3 text-center desktop">Estatus</th>
                                         <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
                                             <th class="py-3 text-center min-tablet"></th>
@@ -206,7 +214,7 @@
     </div>
 </div>
 <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-	<div id="modal-component-container" class="modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75" style="z-index:100;">
+	<div id="modal-component-container" class="contenedor modal-component-container hidden fixed overflow-y-auto inset-0 bg-gray-700 bg-opacity-75" style="z-index:100;">
 		<div class="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 			<div class="modal-bg-container inset-0"></div>
 			<div class="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen">&nbsp;</div>
@@ -223,5 +231,18 @@
 				</form>
 			</div>
 		</div>
+        <style>
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>
 	</div>
 <?php } ?>

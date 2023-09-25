@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-    <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
 	    Token expediente
     </h2>
     <div class="mt-4">
@@ -9,7 +17,7 @@
                     <div class="w-full">
                         <div class="bg-gray-50 shadow-md rounded-t">
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
                                     Home
                                 </a>
@@ -18,7 +26,7 @@
                                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <a href="expedientes.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                                <a href="expedientes.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
                                     </svg>
@@ -40,7 +48,7 @@
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Asignar token a a empleado</h2>
-                                 <span class="text-[#64748b]">Recuerde inicializar el expediente al usuario, de lo contrario no aparecerá en el selectbox.</span>
+                                 <span class="text-[#64748b]">Recuerde inicializar el expediente al usuario, de lo contrario no aparecerá para seleccionar.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                             </div>
                             <form id="Guardar" method="POST">
@@ -70,21 +78,21 @@
                                 </div>
                                 <div class="grid grid-cols-1 mt-5 mx-7 text-center">
                                     <div id="submit-button">   
-                                        <button type="submit" id="guardar_token" name="guardar_token" class="button bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700">Asignar</button>
+                                        <button type="submit" id="guardar_token" name="guardar_token" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Asignar</button>
                                     </div>
                                 </div>
                             </form>
                             <div class="my-3 h-px bg-slate-200"></div>
                             <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Administrar usuarios con el token asignado</h2>
-                                 <span class="text-[#64748b]">Si el usuario aparece en el datatable, significa que puede acceder al link.</span>
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Usuarios con token asignado</h2>
+                                 <span class="text-[#64748b]">Si el usuario aparece en la tabla, significa que puede acceder al link.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                     <thead>
-                                        <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
-                                            <th class="py-3 text-left all">Empleado_id</th>
+                                    <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
+                                            <th class="py-3 text-left all dt-tituloL border-white">Número de empleado</th>
                                             <th>Expediente_id</th>
                                             <th class="py-3 text-left desktop">Asignado a</th>
                                             <th>Filename_foto</th>
@@ -92,7 +100,7 @@
                                             <th class="py-3 text-center desktop">Token</th>
                                             <th class="py-3 text-center desktop">Fecha de expiración</th>
                                             <th>Token</th>
-                                            <th class="py-3 text-center min-tablet">Acción</th>
+                                            <th class="py-3 text-center min-tablet dt-tituloR border-white">Acción</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -103,4 +111,17 @@
             </div>
         </div>
     </div>
+    <style>
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>
 </div>

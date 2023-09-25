@@ -4063,7 +4063,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					$arraypapeleria[$i] = $_FILES['papeleria'.$i.''];
 				}
 			}else{
-				die(json_encode(array("error", "Es obligatorio subir un archivo en " .$fetchtipopapeleria[$i]["nombre"])));
+				if($i != 8 && $i !=11){
+					die(json_encode(array("error", "Es obligatorio subir un archivo en " .$fetchtipopapeleria[$i]["nombre"])));
+				}else{
+					$arraypapeleria[$i] = null;
+				}
 			}
 		}
         

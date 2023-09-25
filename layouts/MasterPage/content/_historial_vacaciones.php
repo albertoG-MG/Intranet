@@ -1,5 +1,13 @@
 <div class="container mx-auto px-6 py-8">
-    <h2 class="font-['Raleway,sans-serif'] text-3xl font-semibold uppercase text-[#5540af] sm:text-5xl lg:text-6xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+.Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+}
+    </style>
+    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
         Historial de vacaciones
     </h2>
     <div class="mt-4">
@@ -9,7 +17,7 @@
                     <div class="w-full">
                         <div class="bg-gray-50 shadow-md rounded-t">
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+                                <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
                                     Home
                                 </a>
@@ -18,7 +26,7 @@
                                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                     </svg>
                                 </span>
-								<a href="vacaciones.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#4f46e5] hover:text-[#4f46e5]">
+								<a href="vacaciones.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 										<path fill="currentColor" d="M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
 									</svg>
@@ -40,11 +48,11 @@
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                 <thead>
-                                    <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
+                                <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
                                         <th>Solicitud_id</th>
                                         <th class="py-3 text-left all">Nombre</th>
                                         <th class="py-3 text-center desktop">Periodo</th>
-                                        <th class="py-3 text-center desktop">F. solicitud</th>
+                                        <th class="py-3 text-center desktop">Fecha solicitud</th>
                                         <th class="py-3 text-center desktop">Estatus</th>
                                         <th class="py-3 text-center min-tablet"></th>
                                     </tr>

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     'id': 'categorias',
                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                 },
-                className: 'bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg shadow-xl font-medium text-white'
+                className: 'btn-celeste hover:bg-celeste-700 focus:bg-celeste-700 text-white rounded-lg shadow-xl font-medium text-white'
             },
 				],
 		"processing": true,
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	 $('.dt-buttons').on('click', '#categorias', function(){
 		$('.modal-wrapper-flex').html(
             "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-animation text-black font-semibold text-lg'></i></div>"+
+            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-animation text-black font-semibold text-lg'></i></div>"+
             "<h3 class='text-lg font-medium text-gray-900'>Crear categoria</h3>"+
             "</div>"+
             "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -84,12 +84,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Nombre de la categoria</label>"+
                     "<div class='group flex'>"+
                         "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-animation text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='crearcategoria' name='crearcategoria' placeholder='Input 1'>"+
+                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-celeste-600 mt-1 focus:outline-none focus:ring-2 focus:ring-celeste-800 focus:border-transparent' type='text' id='crearcategoria' name='crearcategoria' placeholder='Nombre categoria'>"+
                     "</div>"+
                 "</div>"+
             "</div>");
         $('.modal-actions').html(
-            "<button id='crear-categoria' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
+            "<button id='crear-categoria' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 btn-celeste font-medium text-white hover:btn-celeste focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Crear</button>"+
             "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
         );
 		openModal();
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			var data = row.data();
 			$('.modal-wrapper-flex').html(
             "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-animation text-black font-semibold text-lg'></i></div>"+
+            "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><i class='mdi mdi-animation text-black font-semibold text-lg'></i></div>"+
             "<h3 class='text-lg font-medium text-gray-900'>Editar categoria</h3>"+
             "</div>"+
             "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -189,12 +189,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     "<label class='uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'>Editar la categoria</label>"+
                     "<div class='group flex'>"+
                         "<div class='w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center'><i class='mdi mdi-animation text-gray-400 text-lg'></i></div>"+
-                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-indigo-600 mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-transparent' type='text' id='editcategoria' name='editcategoria' placeholder='Input 1' value='"+data[1]+"'>"+
+                        "<input class='w-full -ml-10 pl-10 py-2 px-3 rounded-lg border-2 border-celeste-600 mt-1 focus:outline-none focus:ring-2 focus:ring-celeste-800 focus:border-transparent' type='text' id='editcategoria' name='editcategoria' placeholder='Nombre de la categoria' value='"+data[1]+"'>"+
                     "</div>"+
                 "</div>"+
             "</div>");
         $('.modal-actions').html(
-            "<button id='editar-categoria' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-indigo-700 font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
+            "<button id='editar-categoria' class='w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 btn-celeste font-medium text-white hover:btn-celeste focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-celeste-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Editar</button>"+
             "<button id='close-modal' type='button' class='w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 mt-3 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'>Cerrar</button>"
         );
         openModal();
@@ -323,10 +323,10 @@ $('#datatable').on( 'click', 'tr .Eliminar', function () {
     text: "No podras recuperar la información!",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Sí!',
-    cancelButtonText: 'cancelar'
+    confirmButtonColor: '#00a3ff  ',
+    cancelButtonColor: '#FF1E2D',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
     }).then((result) => {
         check_user_logged().then((response) => {
 		    if(response == "true"){
@@ -391,14 +391,14 @@ function check_user_logged(){
 <style>
 
     .error{
-        color: rgb(244 63 94);
+        color: rgb(250 30 45);
     }
 
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
         padding-bottom:5px;
-        padding-top:5px;
+        padding-top:13px;
     }
 
     @media (max-width: 640px){
@@ -453,4 +453,16 @@ function check_user_logged(){
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
-</style>
+   
+    		.btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+    </style>

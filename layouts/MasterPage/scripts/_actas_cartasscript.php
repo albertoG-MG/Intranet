@@ -9,15 +9,24 @@
                         search: ""
             },
             dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
-            buttons: [
+             buttons: [
+                 {
+                    text: "Filtrar por:",
+                            attr: {
+                                'id': 'vacaciones_filtro',
+                                'style': 'padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important; !important;'
+                            },
+                            className: 'disabled bg-white text-2x3 text-[#64748b] font-semibold',
+                           
+                },
                 <?php if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" && $count_jerarquia > 0){ ?>
                     {
-                        text: "Actas administrativas vinculadas a mi expediente",
+                        text: "Actas administrativas en mi expediente",
                         attr: {
                             'id': 'actas_administrativas_vinculadas',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                         },
-                        className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                        className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-7 py-2 focus:ring-2 focus:outline-none',
                         action: function ( e, dt, node, config ) {
                             $.ajax({
                                 url: "../config/documentos_administrativos/actas_vinculadas.php",
@@ -51,12 +60,12 @@
                 <?php } ?>
                 <?php if(Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true" && $count_jerarquia > 0){ ?>
                     {
-                        text: "Cartas compromiso vinculadas a mi expediente",
+                        text: "Cartas compromiso en mi expediente",
                         attr: {
                             'id': 'cartas_compromiso_vinculadas',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                         },
-                        className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                        className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-7 py-2 focus:ring-2 focus:outline-none',
                         action: function ( e, dt, node, config ) {
                             $.ajax({
                                 url: "../config/documentos_administrativos/cartas_vinculadas.php",
@@ -90,12 +99,12 @@
                <?php } ?>
                <?php if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
                 {
-                        text: "Administrar actas administrativas",
+                    text: "Actas administrativas",
                         attr: {
                             'id': 'administrar_actas_administrativas',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                         },
-                        className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                        className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-7 py-2 focus:ring-2 focus:outline-none ',
                         action: function ( e, dt, node, config ) {
                             $.ajax({
                                 url: "../config/documentos_administrativos/ajax_actas.php",
@@ -127,12 +136,12 @@
                         }
                     },
                     {
-                        text: "Administrar cartas compromiso",
+                        text: "Cartas compromiso",
                         attr: {
                             'id': 'administrar_cartas_compromiso',
                             'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                         },
-                        className: 'button w-full bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700',
+                        className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
                         action: function ( e, dt, node, config ) {
                             $.ajax({
                                 url: "../config/documentos_administrativos/ajax_cartas.php",
@@ -366,7 +375,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_18%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_20%]', 'm-[2px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -411,8 +420,93 @@
 	
 	$(document).ready(function() {
 		$('.dataTables_filter input[type="search"]').
-        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600');
+        attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'actas_cartas.php'){?>
+            var dropdown = document.getElementById('incidencia');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
+    //css de botones filtro
+     var actas_administrativas_vinculadas = document.getElementById("actas_administrativas_vinculadas");
+     var cartas_compromiso_vinculadas = document.getElementById("cartas_compromiso_vinculadas");
+     var administrar_actas_administrativas = document.getElementById("administrar_actas_administrativas");
+     var administrar_cartas_compromiso = document.getElementById("administrar_cartas_compromiso");
 
+     document.getElementById('administrar_cartas_compromiso').addEventListener("click", function(){
+
+            if(administrar_actas_administrativas.classList.contains("active")){
+                administrar_actas_administrativas.classList.remove("active");
+            }
+
+            if(!administrar_cartas_compromiso.classList.contains("active")){
+                administrar_cartas_compromiso.classList.toggle("active");
+            }
+            });
+
+            document.getElementById('administrar_actas_administrativas').addEventListener("click", function(){
+
+            if(administrar_cartas_compromiso.classList.contains("active")){
+                administrar_cartas_compromiso.classList.remove("active");
+            }
+
+            if(!administrar_actas_administrativas.classList.contains("active")){
+                administrar_actas_administrativas.classList.toggle("active");
+            }
+            });
+
+
+    document.getElementById('administrar_cartas_compromiso').addEventListener("click", function(){
+
+        if(administrar_actas_administrativas.classList.contains("active") || cartas_compromiso_vinculadas.classList.contains("active") || actas_administrativas_vinculadas.classList.contains("active")){
+            administrar_actas_administrativas.classList.remove("active");
+            cartas_compromiso_vinculadas.classList.remove("active");
+            actas_administrativas_vinculadas.classList.remove("active");
+        }
+        
+        if(!administrar_cartas_compromiso.classList.contains("active")){
+            administrar_cartas_compromiso.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('administrar_actas_administrativas').addEventListener("click", function(){
+
+        if(administrar_cartas_compromiso.classList.contains("active") || cartas_compromiso_vinculadas.classList.contains("active")|| actas_administrativas_vinculadas.classList.contains("active")){
+            administrar_cartas_compromiso.classList.remove("active");
+            cartas_compromiso_vinculadas.classList.remove("active");
+            actas_administrativas_vinculadas.classList.remove("active");
+        }
+
+        if(!administrar_actas_administrativas.classList.contains("active")){
+            administrar_actas_administrativas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('cartas_compromiso_vinculadas').addEventListener("click", function(){
+
+        if(administrar_cartas_compromiso.classList.contains("active") || administrar_actas_administrativas.classList.contains("active")|| actas_administrativas_vinculadas.classList.contains("active")){
+            administrar_cartas_compromiso.classList.remove("active");
+            administrar_actas_administrativas.classList.remove("active");
+            actas_administrativas_vinculadas.classList.remove("active");
+        }
+
+        if(!cartas_compromiso_vinculadas.classList.contains("active")){
+            cartas_compromiso_vinculadas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('actas_administrativas_vinculadas').addEventListener("click", function(){
+
+    if(administrar_cartas_compromiso.classList.contains("active") || administrar_actas_administrativas.classList.contains("active")|| cartas_compromiso_vinculadas.classList.contains("active")){
+        administrar_cartas_compromiso.classList.remove("active");
+        administrar_actas_administrativas.classList.remove("active");
+        cartas_compromiso_vinculadas.classList.remove("active");
+    }
+
+    if(!actas_administrativas_vinculadas.classList.contains("active")){
+        actas_administrativas_vinculadas.classList.toggle("active");
+    }
+    });
+       
         $('#datatable').on('click', 'tr .Editar', function () {
             var table = $('#datatable').DataTable();
             var rowSelector;
@@ -475,10 +569,10 @@
                 text: "No podras recuperar la información!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí!',
-                cancelButtonText: 'cancelar'
+                confirmButtonColor: '#00a3ff  ',
+                cancelButtonColor: '#FF1E2D',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 check_user_logged().then((response) => {
                     if(response == "true"){
@@ -541,7 +635,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
+                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
                 "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -568,7 +662,7 @@
             );
             $('.modal-actions').html(
                 "<div id='submit-changes'>"+
-                    "<button id='guardar-acta' name='guardar-acta' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Guardar acta</button>"+
+                    "<button id='guardar-acta' name='guardar-acta' class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto'>Guardar acta</button>"+
                 "</div>"+
                 "<div id='disable-close-submit'>"+
                     "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"+
@@ -601,7 +695,7 @@
                 },
                 submitHandler: function(form) {
                     $('#submit-changes').html(
-                    '<button disabled id="guardar-acta" name="guardar-acta" class="button items-center w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
+                    '<button disabled id="guardar-acta" name="guardar-acta" class="button items-center w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                         '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                         '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -640,7 +734,7 @@
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-acta' name='guardar-acta' type='submit'>Guardar acta</button>");
+                                                $('#submit-changes').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-acta' name='guardar-acta' type='submit'>Guardar acta</button>");
                                                 closeModal();
                                                 table.ajax.reload(null, false);
                                             });
@@ -651,7 +745,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes').html("<button class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-acta' name='guardar-acta' type='submit'>Guardar acta</button>");
+                                                $('#submit-changes').html("<button class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-acta' name='guardar-acta' type='submit'>Guardar acta</button>");
                                                 $('#disable-close-submit').html("<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 $('#upload-delete-acta').removeAttr('disabled');
                                             });
@@ -694,7 +788,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
+                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
                 "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -721,7 +815,7 @@
             );
             $('.modal-actions').html(
                 "<div id='submit-changes-carta'>"+
-                    "<button id='guardar-carta' name='guardar-carta' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Guardar carta</button>"+
+                    "<button id='guardar-carta' name='guardar-carta' class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto'>Guardar carta</button>"+
                 "</div>"+
                 "<div id='disable-close-submit-carta'>"+
                     "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"+
@@ -754,7 +848,7 @@
                 },
                 submitHandler: function(form) {
                     $('#submit-changes-carta').html(
-                    '<button disabled id="guardar-carta" name="guardar-carta" class="button items-center w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
+                    '<button disabled id="guardar-carta" name="guardar-carta" class="button items-center w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                         '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                         '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -793,7 +887,7 @@
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes-carta').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-carta' name='guardar-carta' type='submit'>Guardar carta</button>");
+                                                $('#submit-changes-carta').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-carta' name='guardar-carta' type='submit'>Guardar carta</button>");
                                                 closeModal();
                                                 table.ajax.reload(null, false);
                                             });
@@ -804,7 +898,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes-carta').html("<button class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-carta' name='guardar-carta' type='submit'>Guardar carta</button>");
+                                                $('#submit-changes-carta').html("<button class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='guardar-carta' name='guardar-carta' type='submit'>Guardar carta</button>");
                                                 $('#disable-close-submit-carta').html("<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 $('#upload-delete-carta').removeAttr('disabled');
                                             });
@@ -846,7 +940,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
+                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
                 "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -877,7 +971,7 @@
             );
             $('.modal-actions').html(
                 "<div id='submit-changes-edit-acta'>"+
-                    "<button id='edit-changes-acta' name='edit-changes-acta' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar acta</button>"+
+                    "<button id='edit-changes-acta' name='edit-changes-acta' class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar acta</button>"+
                 "</div>"+
                 "<div id='disable-close-submit-edit-acta'>"+
                     "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"+
@@ -911,7 +1005,7 @@
                 },
                 submitHandler: function(form) {
                     $('#submit-changes-edit-acta').html(
-                    '<button disabled id="edit-changes-acta" name="edit-changes-acta" class="button items-center w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
+                    '<button disabled id="edit-changes-acta" name="edit-changes-acta" class="button items-center w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                         '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                         '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -950,7 +1044,7 @@
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes-edit-acta').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-acta' name='edit-changes-acta' type='submit'>Editar acta</button>");
+                                                $('#submit-changes-edit-acta').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-acta' name='edit-changes-acta' type='submit'>Editar acta</button>");
                                                 closeModal();
                                                 table.ajax.reload(null, false);
                                             });
@@ -961,7 +1055,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes-edit-acta').html("<button class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-acta' name='edit-changes-acta' type='submit'>Editar acta</button>");
+                                                $('#submit-changes-edit-acta').html("<button class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-acta' name='edit-changes-acta' type='submit'>Editar acta</button>");
                                                 $('#disable-close-submit-edit-acta').html("<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 $('#edit-delete-acta').removeAttr('disabled');
                                             });
@@ -1005,7 +1099,7 @@
             var data = row.data();
             $('.modal-wrapper-flex').html(
                 "<div class='flex-col gap-3 items-center flex sm:flex-row'>"+
-                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
+                "<div class='modal-icon mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-celeste-100 sm:mx-0 sm:h-10 sm:w-10'><svg class='w-5 h-5 text-black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M6 2C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H10V20.1L20 10.1V8L14 2H6M13 3.5L18.5 9H13V3.5M20.1 13C20 13 19.8 13.1 19.7 13.2L18.7 14.2L20.8 16.3L21.8 15.3C22 15.1 22 14.7 21.8 14.5L20.5 13.2C20.4 13.1 20.3 13 20.1 13M18.1 14.8L12 20.9V23H14.1L20.2 16.9L18.1 14.8Z' /></svg></div>"+
                 "<h3 class='text-lg font-medium text-gray-900'>Documentos administrativos</h3>"+
                 "</div>"+
                 "<div class='modal-content text-center w-full mt-3 sm:mt-0 sm:text-left'>"+
@@ -1036,7 +1130,7 @@
             );
             $('.modal-actions').html(
                 "<div id='submit-changes-edit-carta'>"+
-                    "<button id='edit-changes-carta' name='edit-changes-carta' class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar acta</button>"+
+                    "<button id='edit-changes-carta' name='edit-changes-carta' class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto'>Editar acta</button>"+
                 "</div>"+
                 "<div id='disable-close-submit-edit-carta'>"+
                     "<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>"+
@@ -1070,7 +1164,7 @@
                 },
                 submitHandler: function(form) {
                     $('#submit-changes-edit-carta').html(
-                    '<button disabled id="edit-changes-carta" name="edit-changes-carta" class="button items-center w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
+                    '<button disabled id="edit-changes-carta" name="edit-changes-carta" class="button items-center w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto" type="submit">'+
                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                         '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                         '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
@@ -1109,7 +1203,7 @@
                                                 icon: "success"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes-edit-carta').html("<button disabled class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-carta' name='edit-changes-carta' type='submit'>Editar carta</button>");
+                                                $('#submit-changes-edit-carta').html("<button disabled class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-carta' name='edit-changes-carta' type='submit'>Editar carta</button>");
                                                 closeModal();
                                                 table.ajax.reload(null, false);
                                             });
@@ -1120,7 +1214,7 @@
                                                 icon: "error"
                                             }).then(function() {
                                                 window.removeEventListener('beforeunload', unloadHandler);
-                                                $('#submit-changes-edit-carta').html("<button class='button w-full inline-flex justify-center bg-indigo-600 text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#4F46E5]/50 hover:bg-indigo-500 active:bg-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-carta' name='edit-changes-carta' type='submit'>Editar carta</button>");
+                                                $('#submit-changes-edit-carta').html("<button class='button w-full inline-flex justify-center btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700 sm:mt-0 sm:ml-3 sm:w-auto' id='edit-changes-carta' name='edit-changes-carta' type='submit'>Editar carta</button>");
                                                 $('#disable-close-submit-edit-carta').html("<button id='close-modal' type='button' class='button w-full inline-flex justify-center bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100 sm:mt-0 sm:ml-3 sm:w-auto'>Cerrar</button>");
                                                 $('#edit-delete-carta').removeAttr('disabled');
                                             });
@@ -1205,7 +1299,7 @@
                             $('#content-container-acta').html('');
                             $('#content-container-acta').removeClass('grid grid-cols-1');
                             $('#subir_acta').val('');
-                            $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-acta').addClass('hidden');
                             $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1214,7 +1308,7 @@
                                 $('#content-container-acta').html('');
                                 $('#content-container-acta').removeClass('grid grid-cols-1');
                                 $('#subir_acta').val('');
-                                $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-acta').addClass('hidden');
                                 $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1255,7 +1349,7 @@
                                 $('#content-container-acta').html('');
                                 $('#content-container-acta').removeClass('grid grid-cols-1');
                                 $('#subir_acta').val('');
-                                $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-acta').addClass('hidden');
                                 $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1267,7 +1361,7 @@
                                 $('#content-container-acta').html('');
                                 $('#content-container-acta').removeClass('grid grid-cols-1');
                                 $('#subir_acta').val('');
-                                $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-acta').addClass('hidden');
                                 $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1275,7 +1369,7 @@
                             $('#content-container-acta').html('');
                             $('#content-container-acta').removeClass('grid grid-cols-1');
                             $('#subir_acta').val('');
-                            $('#upload-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-acta').addClass('hidden');
                             $('#upload-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1350,7 +1444,7 @@
                             $('#content-container-carta').html('');
                             $('#content-container-carta').removeClass('grid grid-cols-1');
                             $('#subir_carta').val('');
-                            $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-carta').addClass('hidden');
                             $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1359,7 +1453,7 @@
                                 $('#content-container-carta').html('');
                                 $('#content-container-carta').removeClass('grid grid-cols-1');
                                 $('#subir_carta').val('');
-                                $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-carta').addClass('hidden');
                                 $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1400,7 +1494,7 @@
                                 $('#content-container-carta').html('');
                                 $('#content-container-carta').removeClass('grid grid-cols-1');
                                 $('#subir_carta').val('');
-                                $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-carta').addClass('hidden');
                                 $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1412,7 +1506,7 @@
                                 $('#content-container-carta').html('');
                                 $('#content-container-carta').removeClass('grid grid-cols-1');
                                 $('#subir_carta').val('');
-                                $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#upload-delete-carta').addClass('hidden');
                                 $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1420,7 +1514,7 @@
                             $('#content-container-carta').html('');
                             $('#content-container-carta').removeClass('grid grid-cols-1');
                             $('#subir_carta').val('');
-                            $('#upload-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#upload-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#upload-delete-carta').addClass('hidden');
                             $('#upload-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1495,7 +1589,7 @@
                             $('#edit-content-container-acta').html('');
                             $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                             $('#edit_acta').val('');
-                            $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-acta').addClass('hidden');
                             $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1504,7 +1598,7 @@
                                 $('#edit-content-container-acta').html('');
                                 $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                                 $('#edit_acta').val('');
-                                $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-acta').addClass('hidden');
                                 $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1545,7 +1639,7 @@
                                 $('#edit-content-container-acta').html('');
                                 $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                                 $('#edit_acta').val('');
-                                $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-acta').addClass('hidden');
                                 $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1557,7 +1651,7 @@
                                 $('#edit-content-container-acta').html('');
                                 $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                                 $('#edit_acta').val('');
-                                $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-acta').addClass('hidden');
                                 $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1565,7 +1659,7 @@
                             $('#edit-content-container-acta').html('');
                             $('#edit-content-container-acta').removeClass('grid grid-cols-1');
                             $('#edit_acta').val('');
-                            $('#edit-text-acta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-acta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-acta').addClass('hidden');
                             $('#edit-delete-acta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1640,7 +1734,7 @@
                             $('#edit-content-container-carta').html('');
                             $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                             $('#edit_carta').val('');
-                            $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-carta').addClass('hidden');
                             $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         } else {
@@ -1649,7 +1743,7 @@
                                 $('#edit-content-container-carta').html('');
                                 $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                                 $('#edit_carta').val('');
-                                $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-carta').addClass('hidden');
                                 $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }else{
@@ -1690,7 +1784,7 @@
                                 $('#edit-content-container-carta').html('');
                                 $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                                 $('#edit_carta').val('');
-                                $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-carta').addClass('hidden');
                                 $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1702,7 +1796,7 @@
                                 $('#edit-content-container-carta').html('');
                                 $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                                 $('#edit_carta').val('');
-                                $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
+                                $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>El archivo pesa más de 10 mb, intente de nuevo</p>');
                                 $('#edit-delete-carta').addClass('hidden');
                                 $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                             }
@@ -1710,7 +1804,7 @@
                             $('#edit-content-container-carta').html('');
                             $('#edit-content-container-carta').removeClass('grid grid-cols-1');
                             $('#edit_carta').val('');
-                            $('#edit-text-carta').html('<p style=\' color: rgb(244 63 94); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
+                            $('#edit-text-carta').html('<p style=\' color: rgb(250 30 45); \'>Subió un archivo inválido ó el archivo no es originalmente un archivo pdf, jpg y png, intente de nuevo</p>');
                             $('#edit-delete-carta').addClass('hidden');
                             $('#edit-delete-carta').removeClass('z-100 md:p-2 my-auto');
                         }
@@ -1809,14 +1903,14 @@
 </script>
 <style>
 
-    .error{
+.error{
         color:red;
     }
 
     .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
-        padding-bottom:5px;
+        padding-bottom:13px;
         padding-top:5px;
     }
 
@@ -1842,6 +1936,7 @@
 
     #datatable{
         border-collapse: collapse !important;
+        font-size: 13px;
     }
 
     .search{
@@ -1873,4 +1968,68 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
+
+    /* CSS Botones filtro */
+    .ov-btn-slide-top {
+        border: 0px !important;
+        font-size: 15.88px !important; 
+        background-color: #c7c7c714 !important;
+        color: #000003 !important;
+        box-shadow: 1px 2px 0px 0px !important;
+        padding: 16px 20px ;
+        border-radius: 107px !important;
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+        display: inline-block;
+
+    }
+    .ov-btn-slide-top:hover {
+        color: #fff !important; /* color de fuente hover */
+    }
+    .ov-btn-slide-top::after {
+        content: "";
+        background:#1f1c1ce3; /* color de fondo hover */
+        position: absolute;
+        z-index: -1;
+        padding: 16px 20px;
+        display: block;
+        left: 0;
+        right: 0;
+        top: -100%;
+        bottom: 100%;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+    .ov-btn-slide-top:hover::after {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+    .ov-btn-slide-top:visited { 
+     background-color: black; 
+     color: white; 
+    } 
+    
+    .active{
+    background-color: black !important;
+    color: white !important;
+    }
+
+    .btn-celeste{
+		background-color: #00a3ff  !important;
+		border: none !important;
+		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+		font-weight: 500 !important;
+		border-bottom: #fff 9px;
+	}
+	
+		.btn-celeste:hover{
+		background-color: #008eff !important;
+	}
+
+
 </style>
