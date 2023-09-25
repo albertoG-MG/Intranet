@@ -131,7 +131,7 @@
 
         <?php
 		    if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
-			    var dropdown = document.getElementById('catalogos');
+			    var dropdown = document.getElementById('expediente');
 			    dropdown.classList.remove("hidden");
 	    <?php } ?>
 

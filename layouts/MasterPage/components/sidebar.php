@@ -46,7 +46,7 @@
                 </span>
             </div>
         </div>
-    <?php } ?>
+    <?php } ?> 
 
     <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a usuarios") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a roles") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a departamentos") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
         <button class="flex w-full items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 group hover:text-gray-100" data-collapse-toggle="catalogos">
@@ -108,20 +108,53 @@
 
 
   <!-- Modulo Expedientes  -->
-<?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-            <?php if(basename($_SERVER['PHP_SELF']) == 'expedientes.php' || basename($_SERVER['PHP_SELF']) == 'crear_expediente.php' || basename($_SERVER['PHP_SELF']) == 'editar_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_historial.php'){?>
-            <a class="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100" href="expedientes.php">
-        <?php }else{ ?>
-            <a class="flex items-center mt-4 mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 group hover:text-gray-100" href="expedientes.php">
-        <?php } ?>
-        <svg class="h-6 w-6 group-hover:text-white text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" tyle="color: white; font-size: 112%;" stroke="currentColor">
+    <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+         <button class="flex w-full items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 group hover:text-gray-100" data-collapse-toggle="expediente">
+         <svg class="h-6 w-6 group-hover:text-white text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" tyle="color: white; font-size: 112%;" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
             </path>
         </svg>
+        <span class="flex-1 ml-3 text-left whitespace-nowrap" style="color: white; font-size: 112%;" sidebar-toggle-item>Expediente</span>
+        <svg sidebar-toggle-item class="w-6 h-6" style="color: white;" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+    </button>
 
-        <span class="mx-3  py-2 space-y-2"  style="color: white; font-size: 112%;" >Expedientes</span>
-    </a>
-    <?php } ?> 
+    <ul id="expediente" class="hidden py-2 space-y-2">
+        <li>
+        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            <?php if(basename($_SERVER['PHP_SELF']) == 'expedientes.php' ||  basename($_SERVER['PHP_SELF']) == 'editar_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_expediente.php' || basename($_SERVER['PHP_SELF']) == 'ver_historial.php'){?>
+             <a class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100" href="expedientes.php">
+	          <?php }else{ ?>
+	    	  <a class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="expedientes.php">
+	          <?php } ?>
+			  <p class="ml-4" style="color: white;">Consulta</p>
+		      </a>
+              <?php } ?>
+
+         
+              <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            <?php if(basename($_SERVER['PHP_SELF']) == 'crear_expediente.php'){?>
+                <a href="crear_expediente.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+                <?php }else{ ?>
+                    <a href="crear_expediente.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <?php } ?>
+                    <p class="ml-4" style="color: white;">Crear expediente</p>
+                </a>
+            <?php } ?>
+
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Token expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            <?php if(basename($_SERVER['PHP_SELF']) == 'token_expediente.php'){?>
+                <a href="token_expediente.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+                <?php }else{ ?>
+                    <a href="token_expediente.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <?php } ?>
+                    <p class="ml-4" style="color: white;">Tokens</p>
+                </a>
+            <?php } ?>
+        </li>
+    </ul>
+    <?php } ?>
     <!-- Fin modulo expedientes  -->
 
     <!-- Modulo Incidencias con Submodulos -->
