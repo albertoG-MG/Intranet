@@ -197,6 +197,13 @@
 
 	$(document).ready(function() {
 
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'crear_incidencia.php'){?>
+            var dropdown = document.getElementById('incidencia');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
+
+
 		var img_permiso_r = $("#img_permiso_r").clone();
 		var img_permisos_nr = $("#img_permisos_nr").clone();
 		var img_incapacidad = $("#img_incapacidad").clone();
@@ -1748,7 +1755,7 @@
 	}
     
     .select2-results__option--highlighted{
-        background: rgb(129 140 248) !important;
+        background: rgb(0 152 255) !important;
         color:white;
     }
 

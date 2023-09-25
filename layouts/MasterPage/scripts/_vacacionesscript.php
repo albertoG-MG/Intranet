@@ -465,7 +465,13 @@
     //CSS del botón search
     $('.dataTables_filter input[type="search"]').
 	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
-    
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'vacaciones.php'){?>
+            var dropdown = document.getElementById('vacaciones');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
+
+
     //css de botones filtro
      var vacaciones_cerradas = document.getElementById("vacaciones_cerradas");
      var vacaciones_abiertas = document.getElementById("vacaciones_abiertas");

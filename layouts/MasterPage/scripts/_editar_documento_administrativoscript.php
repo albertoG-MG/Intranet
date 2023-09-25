@@ -505,7 +505,7 @@
 	}
     
     .select2-results__option--highlighted{
-        background: rgb(129 140 248) !important;
+        background: rgb(0 152 255) !important;
         color:white;
     }
 

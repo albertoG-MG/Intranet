@@ -421,7 +421,11 @@
 	$(document).ready(function() {
 		$('.dataTables_filter input[type="search"]').
         attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
-
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'actas_cartas.php'){?>
+            var dropdown = document.getElementById('incidencia');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
     //css de botones filtro
      var actas_administrativas_vinculadas = document.getElementById("actas_administrativas_vinculadas");
      var cartas_compromiso_vinculadas = document.getElementById("cartas_compromiso_vinculadas");

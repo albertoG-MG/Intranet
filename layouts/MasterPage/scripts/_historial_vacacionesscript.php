@@ -132,6 +132,11 @@
     $(document).ready(function() {
         $('.dataTables_filter input[type="search"]').
         attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'historial_vacaciones.php'){?>
+            var dropdown = document.getElementById('vacaciones');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
 
         $(document).on("click", "tr .Editar", function () {
             var table = $('#datatable').DataTable();

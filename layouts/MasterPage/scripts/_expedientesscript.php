@@ -317,7 +317,7 @@
 
     <?php
     if(basename($_SERVER['PHP_SELF']) == 'expedientes.php'){?>
-        var dropdown = document.getElementById('catalogos');
+        var dropdown = document.getElementById('expediente');
         dropdown.classList.remove("hidden");
     <?php } ?>
     });

@@ -1,4 +1,12 @@
 <script>
+    $(document).ready(function () {
+    <?php
+    if(basename($_SERVER['PHP_SELF']) == 'ver_documento_vinculado.php'){?>
+        var dropdown = document.getElementById('incidencia');
+        dropdown.classList.remove("hidden");
+    <?php } ?>
+});
+
     <?php  if($fetch_information->filename != null && $fetch_information->file != null){ ?>
         <?php if($fetch_information -> tipo == "ACTA ADMINISTRATIVA"){ ?>
             checkFile("../src/acta_administrativa/<?php echo $fetch_information->file; ?>", "<?php echo $fetch_information->filename; ?>", "<?php echo $fetch_information->file; ?>", "<?php echo $fetch_information->tipo; ?>");

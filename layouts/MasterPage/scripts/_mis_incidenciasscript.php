@@ -414,7 +414,11 @@
 
 		$('.dataTables_filter input[type="search"]').
 	    attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
-
+        <?php
+        if(basename($_SERVER['PHP_SELF']) == 'Mis_incidencias.php'){?>
+            var dropdown = document.getElementById('incidencia');
+            dropdown.classList.remove("hidden"); 
+        <?php } ?>
 
             //css de botones filtro
      var mis_incidencias_pendientes = document.getElementById("mis_incidencias_pendientes");
