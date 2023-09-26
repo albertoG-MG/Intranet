@@ -479,45 +479,45 @@
 
     document.getElementById('vacaciones_cerradas').addEventListener("click", function(){
 
-        if(vacaciones_abiertas.classList.contains("active") || vacaciones_desplieguetodo.classList.contains("active")){
-            vacaciones_abiertas.classList.remove("active");
-            vacaciones_desplieguetodo.classList.remove("active");
+        if(vacaciones_abiertas.classList.contains("activeS") || vacaciones_desplieguetodo.classList.contains("activeS")){
+            vacaciones_abiertas.classList.remove("activeS");
+            vacaciones_desplieguetodo.classList.remove("activeS");
         }
         
-        if(!vacaciones_cerradas.classList.contains("active")){
-            vacaciones_cerradas.classList.toggle("active");
+        if(!vacaciones_cerradas.classList.contains("activeS")){
+            vacaciones_cerradas.classList.toggle("activeS");
         }
     });
 
     document.getElementById('vacaciones_abiertas').addEventListener("click", function(){
 
-        if(vacaciones_cerradas.classList.contains("active") || vacaciones_desplieguetodo.classList.contains("active")){
-            vacaciones_cerradas.classList.remove("active");
-            vacaciones_desplieguetodo.classList.remove("active");
+        if(vacaciones_cerradas.classList.contains("activeS") || vacaciones_desplieguetodo.classList.contains("activeS")){
+            vacaciones_cerradas.classList.remove("activeS");
+            vacaciones_desplieguetodo.classList.remove("activeS");
         }
 
-        if(!vacaciones_abiertas.classList.contains("active")){
-            vacaciones_abiertas.classList.toggle("active");
+        if(!vacaciones_abiertas.classList.contains("activeS")){
+            vacaciones_abiertas.classList.toggle("activeS");
         }
     });
 
     document.getElementById('vacaciones_desplieguetodo').addEventListener("click", function(){
 
-        if(vacaciones_cerradas.classList.contains("active") || vacaciones_abiertas.classList.contains("active")){
-            vacaciones_cerradas.classList.remove("active");
-            vacaciones_abiertas.classList.remove("active");
+        if(vacaciones_cerradas.classList.contains("activeS") || vacaciones_abiertas.classList.contains("activeS")){
+            vacaciones_cerradas.classList.remove("activeS");
+            vacaciones_abiertas.classList.remove("activeS");
         }
 
-        if(!vacaciones_desplieguetodo.classList.contains("active")){
-            vacaciones_desplieguetodo.classList.toggle("active");
+        if(!vacaciones_desplieguetodo.classList.contains("activeS")){
+            vacaciones_desplieguetodo.classList.toggle("activeS");
         }
     });
         
     //Inicialización de la librería de las fechas
-    $('input[name="periodo_vacaciones"]').daterangepicker({ showDropdowns: true, parentEl: "main", locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+    $('input[name="periodo_vacaciones"]').daterangepicker({ showDropdowns: true, parentEl: "main", "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
     <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador" || Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true"){ ?>
-        $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, timePicker: true, timePicker24Hour: true, timePickerSeconds: true, parentEl: "main", locale: { format: 'YYYY/MM/DD HH:mm:ss' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, timePicker: true, timePicker24Hour: true, timePickerSeconds: true, parentEl: "main", "locale": { "format": "YYYY/MM/DD HH:mm:ss", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
         $('#periodo_buscar').on('apply.daterangepicker', function(ev, picker) {
             var fd = new FormData();
@@ -979,7 +979,7 @@
 
 	.daterangepicker td.active, .daterangepicker td.active:hover{
 		--tw-bg-opacity: 1 !important;
-		background-color: rgb(79 70 229 / var(--tw-bg-opacity)) !important;
+		background-color: rgb(79 70 229) / var(--tw-bg-opacity)) !important;
 		border-color: transparent;
 		color: #fff;
 	}
@@ -1103,7 +1103,7 @@
      color: yellow; 
     } 
 /* clase para mantener el color en botones filtro */
-    .active{
+    .activeS{
     background-color: black !important;
     color: white !important;
     }
