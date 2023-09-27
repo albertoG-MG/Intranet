@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         check_user_logged().then((response) => {
 		                    if(response == "true"){
                                 var fd = new FormData();
-                                var permisos = $("input[name=crearpermiso]").val();
+                                var permisos = strtoupper($("input[name=crearpermiso]").val());
                                 var categorias = $("#category").val();
                                 var app = "permisos";
                                 var method = "store";

@@ -67,9 +67,9 @@
                                 <span class="ml-auto">
                                     <?php if($countexpediente > 0){ ?>
                                         <?php if($fetch_information -> esituacion_del_empleado == "ALTA"){ ?>
-                                            <span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Alta</span>
+                                            <span class="bg-verde py-1 px-2 rounded text-white text-sm">Alta</span>
                                         <?php }else{ ?>
-                                            <span class="bg-red-200 py-1 px-2 rounded text-white text-sm">Baja</span>
+                                            <span class="bg-rojo-200 py-1 px-2 rounded text-white text-sm">Baja</span>
                                         <?php } ?>
                                     <?php }else{ ?>
                                         <span class="bg-black py-1 px-2 rounded text-white text-sm">N/A</span>

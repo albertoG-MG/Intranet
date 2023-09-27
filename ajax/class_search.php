@@ -309,7 +309,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         switch($_POST["method"]){
             case "store":
                 $permiso = new Permissions($permisos, $categorias);
-                $permiso ->CrearPermisos();
+                $permiso = (strtoupper($permiso) ->CrearPermisos());
                 exit("success");
             break;
             case "edit":

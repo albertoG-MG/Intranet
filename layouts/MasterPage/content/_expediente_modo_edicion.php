@@ -7,8 +7,8 @@
     font-size: 2.75rem !important;
 }
     </style>
-    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
-        Expediente modo edición
+    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl"> 
+        Mi expediente
     </h2>
     <div class="mt-4">
         <div class="flex flex-col mt-8">
@@ -38,7 +38,7 @@
                             <?php if($fetch_token_user->exp_date >= $curDate){ ?>
                                 <div class="flex flex-col mt-5 mx-7">
                                     <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para llenar un expediente</h2>
-                                    <span class="text-[#64748b]">Nota: Los campos que poseen asterisco (*) son obligatorios (Toda la papelería es obligatoria).</span>
+                                    <span class="text-[#64748b]">Nota: Los campos que poseen asterisco (*) son obligatorios.</span>
                                     <div class="my-3 h-px bg-slate-200"></div>
                                 </div>
                                 <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
@@ -598,7 +598,7 @@
                                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="<?php if(count($array_reflaborales) != 0){ echo count($array_reflaborales);} ?>" placeholder="Número de referencias laborales">
                                                 </div>
                                             </div>
-                                            <div id="referencias">
+                                        <div id="referencias">
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
                                                 <h2 class="text-2xl text-[#64748b] font-semibold">Uniformes</h2>
@@ -723,7 +723,7 @@
                                                 <span class="text-[#64748b]">Datos extra del empleado.</span>
                                                 <div class="my-3 h-px bg-slate-200"></div>
                                             </div>
-                                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                            <!-- <div class="grid grid-cols-1 mt-5 mx-7">
                                                 <label class="text-[#64748b] font-semibold mb-2">Capacitación</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -733,8 +733,8 @@
                                                     </div>
                                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="capacitacion" name="capacitacion" value="<?php echo "{$edit->ecapacitacion}"; ?>" placeholder="Capacitación">
                                                 </div>
-                                            </div>
-                                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                            </div> -->
+                                            <!-- <div class="grid grid-cols-1 mt-5 mx-7">
                                                 <label class="text-[#64748b] font-semibold mb-2">Resultado antidoping</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -744,7 +744,7 @@
                                                     </div>
                                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="antidoping" name="antidoping" value="<?php echo "{$edit->eresultado_antidoping}"; ?>" placeholder="Resultado antidoping">
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="grid grid-cols-1 mt-5 mx-7">
                                                 <label class="text-[#64748b] font-semibold mb-2">Tipo de sangre</label>
                                                 <div class="group flex">
@@ -770,12 +770,19 @@
                                                 <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
+                                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M12,10L8,4.4L9.6,2H14.4L16,4.4L12,10M15.5,6.8L14.3,8.5C16.5,9.4 18,11.5 18,14A6,6 0 0,1 12,20A6,6 0 0,1 6,14C6,11.5 7.5,9.4 9.7,8.5L8.5,6.8C5.8,8.1 4,10.8 4,14A8,8 0 0,0 12,22A8,8 0 0,0 20,14C20,10.8 18.2,8.1 15.5,6.8Z" />
                                                         </svg>
                                                     </div>
-                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="vacante" name="vacante" value="<?php echo "{$edit->evacante}"; ?>" placeholder="¿Cómo se entero de la vacante?">
+                                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="vacante" name="vacante">
+                                                        <option value="">--Selecciona--</option>
+                                                        <option value="AVISOS DE OCASION" <?php if ($edit->evacante == "AVISOS DE OCASION") echo 'selected="selected"'; ?>>Avisos de ocasión</option>
+                                                        <option value="PLATAFORMA LABORAL" <?php if ($edit->evacante == "PLATAFORMA LABORAL") echo 'selected="selected"'; ?>>Plataforma laboral</option>
+                                                        <option value="RECOMENDACION" <?php if ($edit->evacante == "RECOMENDACION") echo 'selected="selected"'; ?>>Recomendacion</option>
+                                                        <option value="REDES SOCIALES" <?php if ($edit->evacante == "REDES SOCIALES") echo 'selected="selected"'; ?>>Redes sociales</option>
+                                                    </select>
                                                 </div>
+   
                                             </div>
                                             <div x-data="{ open: true }">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">

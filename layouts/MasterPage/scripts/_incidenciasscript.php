@@ -289,20 +289,7 @@
                                 }
                             },
                         <?php } ?>
-                        
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-                            {
-                                text: "+ Crear Incidencia",
-                                attr: { 
-                                    'id': 'Incidencia',
-                                    'style': 'right: 0; background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button btn-celeste md:flex text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
-                                action: function(e, dt, node, config) {
-                                    window.location.href = "crear_incidencia.php";
-                                }
-                            }
-                        <?php } ?> ,
+
                     ],
             "ajax":{
                 <?php if(Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
@@ -489,7 +476,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_20%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_25%]', 'm-[5px]');
                     boton.append(container);
                     container.append(array[j]);
                 }

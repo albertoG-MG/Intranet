@@ -1,7 +1,7 @@
 <script>
     <?php if($fetch_token_user->exp_date >= $curDate){ ?>
 
-        //Empieza la configuración del menú
+        //Empieza la configuración del menú 
         const menuExpedientes = [{
                 id: 'datosG',
                 triggerMenu: document.querySelector('#datosG-tab'),
@@ -598,12 +598,12 @@
                             required : 'Este campo es requerido',
                             digits: 'Solo se permiten números'
                         },
-                        capacitacion:{
-			                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-		                },
-                        antidoping:{
-			                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-		                },
+                        // capacitacion:{
+			            //     field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		                // },
+                        // antidoping:{
+			            //     field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+		                // },
                         vacante:{
                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
                         },

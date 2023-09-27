@@ -10,7 +10,7 @@
         die();
     }
 
-    /*Si no hay token en el link, regresa*/
+    /*Si no hay token en el link, regresa*/ 
     if($_GET['token'] == null){
         header('Location: dashboard.php');
         die();
