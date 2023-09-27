@@ -367,7 +367,7 @@
                 var table = $('#datatable').DataTable();
                 $('.dt-buttons').attr('id', "botones");
                 var boton = document.getElementById('botones');
-                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
+                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap");
                 var children = boton.childElementCount;
                 let array = [];
                 for(let i=0; i<children; i++){
@@ -375,7 +375,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_25%]', 'm-[2px]');
+                    container.classList.add('flex-[1_0_20%]', 'm-[2px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -1930,8 +1930,8 @@
     }
 
     .dt-buttons{
-        float:right !important;
-        text-align: right;
+        float:left !important;
+        text-align: left;
     }
 
     #datatable{

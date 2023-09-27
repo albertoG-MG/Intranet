@@ -316,7 +316,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_25%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_10%]', 'gap-3');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -1267,10 +1267,10 @@
         position:relative;
         right: 7px;
     }
-
+ 
     .dt-buttons{
-        float:right !important;
-        text-align: right;
+        float:left !important;
+        text-align: left;
     }
 
     #datatable{
