@@ -1,3 +1,217 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+
+  /* Priss.css */
+  /* Estilo de encabezados */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
+
+  .Titulos{
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    font-size: 2.75rem !important;
+  }
+  /* Botones dashboard */ 
+  
+  .btn-ligthblue{
+    background-color: #27ceeb;
+    box-shadow: 3px 4px 4px #c1c1c1;
+    font-weight: bolder;
+    font-family: 'Raleway';
+  }
+  
+  /* Botones celestes */
+  .btn-celeste{
+    background-color: #00a3ff  !important;
+    border: none !important;
+    box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+    font-weight: 500 !important;
+    border-bottom: #fff 9px;
+  }
+  
+  .btn-celeste:hover{
+    background-color: #008eff !important;
+  }
+  
+  .pb-17{
+    padding-bottom: 17px !important;
+  }
+  
+  .dt-tituloL{
+    border-radius: 15px 0px 0px 15px;
+    -webkit-border-radius: 15px 0px 0px 15px;
+  }
+  
+  .dt-tituloR{
+    border-radius: 1px 15px 15px 0px;
+    -webkit-border-radius: 0px 15px 15px 0px;
+  }
+  
+  tr{
+    padding-top: 90px;
+    background-color: #ffffff !important; 
+  }
+  
+  tbody{
+    background-color: #fefefef3 !important;
+  }
+  
+  .border-white{
+    border-bottom: 0px solid rgba(0, 0, 0, 0) !important;
+  }
+  
+  .contenedor{
+    overflow-x: hidden;
+    overflow-y:auto;
+  }
+  
+  .contenedor::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+  
+  .contenedor::-webkit-scrollbar:vertical {
+    width:12px;
+  }
+  
+  .contenedor::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  .contenedor::-webkit-scrollbar:horizontal {
+    height: 10px;
+  }
+  
+  .contenedor::-webkit-scrollbar-thumb {
+    background: #c1c1c182;
+    /* background: linear-gradient(262deg, #ffa8079c 44%, #ff970e99 65%, #ffa807ba 40%); */
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+  }
+
+  .contenedor::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(256deg , #00B7E6 63%, #fff 106%,#005FB1 3%);
+      /* background: linear-gradient(262deg, #ffa8079c 44%, #ff970e99 65%, #ffa807ba 40%); */
+      border-radius: 20px;
+      border: 2px solid #f1f2f3;
+  }
+
+  .fondo{
+    --u: 1.2vmax; /* change hexagon size */
+    --c1: #F9B15C;
+    --c2: #F8A33E;
+    --c3: #fb9912;
+    --c4: #f7941e;
+    --gp: 50% / calc(var(--u) * 10) calc(var(--u) * 12);
+    --glt: repeating-conic-gradient(
+      from 210deg at 16.66% 25%,
+      var(--c2) 0% 33.3%,
+      #fff0 0% 100%
+    )
+    var(--gp);
+    --glb: repeating-conic-gradient(
+      from 210deg at 16.66% 75%,
+      var(--c4) 0% 33.3%,
+      #fff0 0% 100%
+    )
+    var(--gp);
+    height: 100vh;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--c1) 0% 1.5%,
+      transparent 1.5% 23.5%,
+      var(--c2) 23.5% 26.5%,
+      transparent 26.5% 48.5%,
+      var(--c3) 48.5% 51.5%,
+      transparent 51.5% 73.5%,
+      var(--c4) 73.5% 76.5%,
+      transparent 76.5% 98.5%,
+      var(--c1) 98.5% 100%
+    )
+    var(--gp),
+    var(--glt), var(--glb), var(--glt), var(--glb), var(--glt), var(--glb),
+    var(--glt), var(--glb),
+    repeating-conic-gradient(
+      from 150deg at 50% 75%,
+      var(--c1) 0% 33.3%,
+      #fff0 0% 100%
+    )
+    var(--gp),
+    repeating-conic-gradient(
+      from 90deg at 66.66% 50%,
+      var(--c4) 0% 33.3%,
+      #fff0 0% 100%
+    )
+    var(--gp),
+    repeating-conic-gradient(
+      from -90deg at 50% 25%,
+      var(--c1) 0% 33.3%,
+      var(--c2) 0% 66.4%,
+      var(--c3) 0% 100%
+    )
+    var(--gp);
+  }
+    
+  fondo:before {
+    content: "";
+    background: linear-gradient(-45deg, #ca7a1e 0%, transparent 50%, 	#FEFBF8 100%);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+  }
+    
+  .gradient-bg-animation{
+    height:200px; /*La altura dependerá de lo que requieras*/
+    background: rgb(189, 189, 189); /*Usamos un background por defecto*/
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,143,38,1) 0%, rgba(150,126,197,1) 48%, rgba(0,255,222,1) 100%);
+    background-size: 300% 100%; /*Asignamos un ancho para el background del 300% y altura 100%*/
+    animation: gradient 15s ease infinite; /*'gradient' es el nombre de la animación que crearemos, tarda en completarse 15s y vuelve a empezar infinitamente*/
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%; 
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .focus\:ring-\[\#27ceeb\]\/50:focus {
+    --tw-ring-color: #27ceeb !important;
+  }
+
+  .focus\:ring-celeste-600:focus {
+    --tw-ring-opacity: 1 !important;
+    --tw-ring-color: rgb(46 222 253 / var(--tw-ring-opacity)) !important;
+  }
+
+  .hover\:btn-celeste:hover {
+    --tw-bg-opacity: 1 !important;
+    background-color: #139df9 !important;
+  }
+  .bg-celeste-700 {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(67 56 202 / var(--tw-bg-opacity)) !important;
+  }
+  .bg-celeste-500 {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(26 141 230 / var(--tw-bg-opacity)) !important;
+  }
+  .bg-celeste-500 {
+    --tw-bg-opacity: 1 !important;
+    background-color:  #00a3ff !important;
+  }
+
+  .bg-rojo{
+    background-color: #FF1E2D !important;
+  }
+
+  .bg-verde{
+    background-color: #00ff00 !important;
+  }
+}
