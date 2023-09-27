@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . "/../config/conexion.php";
 include_once __DIR__ . "/../classes/crud.php";
+require_once('environment.php');
 require_once __DIR__ . "/../config/PHPMailer/src/PHPMailer.php";
 require_once __DIR__ . "/../config/PHPMailer/src/Exception.php";
 require_once __DIR__ . "/../config/PHPMailer/src/SMTP.php";
@@ -51,14 +52,14 @@ if(isset($_POST["email"])){
 		);
 		$mail->Port = 587;
 		$mail->SMTPAuth = true; // turn on SMTP authentication
-		$mail->Username = "ntf_sinttecom_noreply@sinttecom.com"; // SMTP username
-		$mail->Password = "k8@SY#xR"; // SMTP password
+		$mail->Username = $_ENV["CORREO"]; // SMTP username
+		$mail->Password = $_ENV["PASSWORD"]; // SMTP password
 		$mail->IsHTML(true);
 		$mail->AddAddress($email);
 		$mail->SetFrom($mail -> Username, 'Sinttecom Intranet');
 		$mail->AddReplyTo($mail -> Username, 'Sinttecom Intranet');
 		$mail->Subject  = "Solicitud de recuperación de contraseña";
-		$mail->Body     = "Buen día ".$fetch_user->username.": <br> Toca aquí para cambiar la contraseña: <br> $links";
+		$mail->Body     = "Buen día ".$fetch_user->username.": <br> Toca aquí para cambiar la contraseña: <br> <a href='$links'>$links</a>";
 		$mail->WordWrap = 50;
 		$mail->CharSet = "UTF-8";
 		if(!$mail->Send()) {

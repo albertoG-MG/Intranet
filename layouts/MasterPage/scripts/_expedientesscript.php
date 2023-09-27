@@ -11,19 +11,7 @@
             },
             dom: '<"top"fB>rt<"bottom"ip><"clear">',
             buttons: [
-                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Administrar tokens a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-					{
-						text: "Administrar tokens",
-						attr: {
-							'id': 'Tokens',
-							'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-						},
-						className: 'button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-						action: function(e, dt, node, config) {
-							window.location.href = "token_expediente.php";
-						}
-					},
-			    <?php } ?>
+
                 <?php if (Permissions::CheckPermissions($_SESSION["id"], "Exportar reporte de empleados") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
 					{
 						text: "Reporte de empleados",
@@ -37,19 +25,7 @@
 						}
 					},
 			    <?php } ?>
-                <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-                        {
-                            text: "+ Crear Expediente",
-                            attr: {
-                                'id': 'Expediente',
-                                'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                            },
-                            className: 'button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700',
-                            action: function(e, dt, node, config) {
-                                window.location.href = "crear_expediente.php";
-                            }
-                        }
-                <?php } ?>
+
                     ],
             "processing": true,
             "serverSide": true,

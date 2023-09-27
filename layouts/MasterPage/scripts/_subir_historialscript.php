@@ -39,10 +39,10 @@
 
 
         //Inicialización de la librería de las fechas
-        $('input[name="periodo_vacaciones"]').daterangepicker({ showDropdowns: true, parentEl: "main", locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        $('input[name="periodo_vacaciones"]').daterangepicker({ showDropdowns: true, parentEl: "main", "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
     
         //Fecha de expedición
-        $('#fecha_vacaciones').daterangepicker({ "singleDatePicker": true, "timePicker": true, "timePicker24Hour": true, "timePickerSeconds": true, "parentEl": "main", locale: { format: 'YYYY/MM/DD HH:mm:ss' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        $('#fecha_vacaciones').daterangepicker({ "singleDatePicker":  true, "drops": "up", "timePicker": true, "timePicker24Hour": true, "timePickerSeconds": true, "parentEl": "main","locale": { "format": 'YYYY/MM/DD HH:mm:ss', "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
         //Guardar formulario
         if ($('#Guardar').length > 0) {
@@ -278,7 +278,7 @@
 
 	.daterangepicker td.active, .daterangepicker td.active:hover{
 		--tw-bg-opacity: 1 !important;
-		background-color: rgb(79 70 229 / var(--tw-bg-opacity)) !important;
+		background-color: rgb(79 70 229) / var(--tw-bg-opacity)) !important;
 		border-color: transparent;
 		color: #fff;
 	}

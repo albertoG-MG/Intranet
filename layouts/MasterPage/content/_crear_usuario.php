@@ -157,7 +157,7 @@
                         <div class="grid grid-cols-1 mx-7 mt-5" id="slider-container" x-data="{value: 'Off', offValue: 'Off', onValue:'On'}">
                            <label class="text-[#64748b] font-semibold mb-2">Contraseña temporal</label>
                            <div class="flex flex-col md:flex-row md:items-center cursor-pointer cm-toggle-wrapper" id="slider-event" x-on:click="value =  (value == onValue ? offValue : onValue);">
-                              <div class="rounded-full w-8 h-4 p-0.5 bg-red-500" :class="{'bg-red-500': value == offValue,'bg-green-500': value == onValue}">
+                              <div class="rounded-full w-8 h-4 p-0.5 bg-rojo" :class="{'bg-rojo': value == offValue,'bg-verde': value == onValue}">
                                  <div class="rounded-full w-3 h-3 bg-white transform mx-auto duration-300 ease-in-out -translate-x-2" :class="{'-translate-x-2': value == offValue,'translate-x-2': value == onValue}"></div>
                               </div>
                               <input type="checkbox" aria-describedby="temppassword_help" id="checkbox-slider" name="checkbox-slider" class="hidden" x-bind:checked="value == offValue ? false : true">

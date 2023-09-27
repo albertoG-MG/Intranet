@@ -34,7 +34,7 @@
                 {"data": "identificador", searchable: false, render: function ( data, type, row ) {
                     return (
                         "<div class='text-left lg:text-center'>" +
-                            "<button" +(row.predeterminado == "vinculado" ? " disabled class='Vincular border border-gray-200 bg-gray-200 text-gray-900 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-300 focus:ring-2 focus:outline-none focus:ring-gray-100'>Vinculado</button> " : " class='Vincular focus:outline-none text-white bg-green-500 hover:bg-green-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5' style='width:102px !important;'>Vincular</button> ")+ "" +
+                            "<button" +(row.predeterminado == "vinculado" ? " disabled class='Vincular border border-gray-200 bg-gray-200 text-gray-900 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-300 focus:ring-2 focus:outline-none focus:ring-gray-100'>Vinculado</button> " : " class='Vincular focus:outline-none text-white bg-verde hover:bg-verde-800 hover:scale-110 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5' style='width:102px !important;'>Vincular</button> ")+ "" +
                         "</div>"
                     );
                 }},
@@ -63,7 +63,7 @@
 		$('.dataTables_filter input[type="search"]').attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
 		<?php
         if (basename($_SERVER['PHP_SELF']) == 'ver_historial.php') { ?>
-            var dropdown = document.getElementById('catalogos');
+            var dropdown = document.getElementById('expediente');
             dropdown.classList.remove("hidden");
 		<?php } ?>
 	});

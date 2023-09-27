@@ -124,7 +124,7 @@ function check_login_attempts($user, $object) {
         <div class=" text-gray-500 shadow-xl w-full overflow-hidden" style="z-index:5; border-radius: 9px !important; max-width:1000px">
             <div class="md:flex w-full">
             <div class="hidden md:block w-1/2 py-10 px-10" style="background: linear-gradient(57deg , #ffff 1%, #00b7e614 103%, #005FB1 22%);">
-            <img class="h-2 w-2" src="../src/img/telefono-login.png" alt="Sinttecom">
+            <img src="../src/img/telefono-login.png" alt="Sinttecom">
                    
                 </div>
                 <div class="bg-white w-full md:w-1/2 py-10 px-5 md:px-10">
@@ -354,7 +354,7 @@ function check_login_attempts($user, $object) {
         width: 100%; 
         height: 300px;  /* El height controla el alto del degradado */
         position: absolute;
-        height:739px; /*La altura dependerá del degradado*/
+        height:100%; /*La altura dependerá del degradado*/
         background-size: 300% 100%; 
         animation: gradient 17s ease infinite; /*'gradient' es el nombre de la animación, tarda en completarse 17s y vuelve a empezar infinitamente*/
         background-image: linear-gradient(102deg, #005fb1e6, #ffffff7d);

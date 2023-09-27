@@ -14,6 +14,7 @@ include_once __DIR__ . ($codigophp);
     <link rel="shortcut icon" href="layouts/favicon.ico" type="image/x-icon">
     <link rel="icon" href="layouts/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/EstilosP.css">
     <link rel="stylesheet" href="../src/css/bundle.css">
     <link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../src/css/datatables.min.css">
