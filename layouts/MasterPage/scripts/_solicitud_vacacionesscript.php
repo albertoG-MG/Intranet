@@ -17,7 +17,7 @@
                                 'id': 'label_filtrar',
                                 'style': 'padding-bottom:17px; font-size:large; background: none !important; border: 0px !important; color:rgb(0 0 0) !important; !important;'
                             },
-                            className: ' disabled bg-white text-2x3 text-[#64748b] font-semibold',
+                            className: ' disabled bg-white button text-2x3 h-11 px-8 py-2 text-[#64748b] font-semibold',
                            
                 },
 						{
@@ -26,7 +26,7 @@
                                 'id': 'sol_pendientes',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'toggle button ov-btn-slide-top rounded-md  h-11 px-8 py-2 focus:ring-2 focus:outline-none',
+                            className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_pendientes.php",
@@ -62,7 +62,7 @@
                                 'id': 'sol_aprobadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'toggle button ov-btn-slide-top rounded-md  h-11 px-8 py-2 focus:ring-2 focus:outline-none ',
+                            className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_aprobadas.php",
@@ -98,7 +98,7 @@
                                 'id': 'sol_rechazadas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'toggle button ov-btn-slide-top rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
+                            className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_rechazadas.php",
@@ -134,7 +134,7 @@
                                 'id': 'sol_canceladas',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'toggle button ov-btn-slide-top rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
+                            className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/solicitud_vacaciones_canceladas.php",
@@ -170,7 +170,7 @@
                                 'id': 'ver_todo',
                                 'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                             },
-                            className: 'toggle button ov-btn-slide-top rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
+                            className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
 							action: function ( e, dt, node, config ) {
 								$.ajax({
 									url: "../config/solicitud_vacaciones/ver_vacaciones.php",
@@ -300,7 +300,7 @@
                 var table = $('#datatable').DataTable();
                 $('.dt-buttons').attr('id', "botones");
                 var boton = document.getElementById('botones');
-                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
+                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap","w-full");
                 var children = boton.childElementCount;
                 let array = [];
                 for(let i=0; i<children; i++){
@@ -308,7 +308,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_25%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_10%]', 'gap-3');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -1294,13 +1294,13 @@
     }
 
     .dt-buttons{
-        float:right !important;
-        text-align: right;
+        float:left !important;
+        text-align: left;
     }
 
     #datatable{
         border-collapse: collapse !important;
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .search{
@@ -1332,8 +1332,9 @@
 			background-position: 3px 7px !important;
 			padding-left: 30px;
 	}
+
  
-    .btn-celeste{
+    		.btn-celeste{
 		background-color: #00a3ff  !important;
 		border: none !important;
 		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
@@ -1341,12 +1342,11 @@
 		border-bottom: #fff 9px;
 	}
 	
-	.btn-celeste:hover{
+		.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
 
-        /* botones filtro */
-        .ov-btn-slide-top {
+    .ov-btn-slide-top {
         border: 0px !important;
         font-size: 15.88px !important; 
         background-color: #c7c7c714 !important;
@@ -1375,7 +1375,7 @@
         top: -100%;
         bottom: 100%;
         -webkit-transition: all 0.25s;
-        transition: all 0.10s;
+        transition: all 0.25s;
     }
     .ov-btn-slide-top:hover::after {
         left: 0;
@@ -1383,8 +1383,9 @@
         top: 0;
         bottom: 0;
         -webkit-transition: all 0.25s;
-        transition: all 0.10s;
+        transition: all 0.25s;
     }
+
     .active{
     background-color: black !important;
     color: white !important;

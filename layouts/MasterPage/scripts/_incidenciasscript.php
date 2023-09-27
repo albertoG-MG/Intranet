@@ -205,7 +205,7 @@
                                     'id': 'incidencias_abiertas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-8 py-2 focus:ring-2 focus:outline-none ',
+                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none ',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencias_abiertas.php",
@@ -235,7 +235,7 @@
                                     'id': 'incidencias_cerradas',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-8 py-2 focus:ring-2 focus:outline-none ',
+                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none ',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencias_cerradas.php",
@@ -266,7 +266,7 @@
                                     'id': 'incidencias_desplieguetodo',
                                     'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
                                 },
-                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-10 px-8 py-2 focus:ring-2 focus:outline-none',
+                                className: 'toggle button w-full ov-btn-slide-top text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none',
                                 action: function ( e, dt, node, config ) {
                                     $.ajax({
                                         url: "../config/incidencias/incidencias_desplieguetodo.php",
@@ -468,7 +468,7 @@
                 var table = $('#datatable').DataTable();
                 $('.dt-buttons').attr('id', "botones");
                 var boton = document.getElementById('botones');
-                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
+                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap");
                 var children = boton.childElementCount;
                 let array = [];
                 for(let i=0; i<children; i++){
@@ -476,7 +476,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_25%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_10%]','m-[2px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -944,8 +944,8 @@
     }
 
     .dt-buttons{
-        float:right !important;
-        text-align: right;
+        float: left !important;
+        text-align: left;
     }
 
     #datatable{

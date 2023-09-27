@@ -209,20 +209,6 @@
                         {
                             className: "disabled btn-white" 
                         },
-
-                        <?php if (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-                            {
-                                text: "+ Crear Incidencia",
-                                attr: { 
-                                    'id': 'Incidencia',
-                                    'style': 'background:rgb(79 70 229 / var(--tw-border-opacity));'
-                                },
-                                className: 'button btn-celeste  text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#FF9119]/50 hover:bg-[#FF9119]/60 active:bg-[#FF9119]/70',
-                                action: function(e, dt, node, config) {
-                                    window.location.href = "crear_incidencia.php";
-                                }
-                            }
-                        <?php } ?> ,
                                         
                     ],
             "ajax":{       
@@ -391,7 +377,7 @@
                 var table = $('#datatable').DataTable();
                 $('.dt-buttons').attr('id', "botones");
                 var boton = document.getElementById('botones');
-                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap", "w-full");
+                boton.classList.add("flex", "flex-col", "md:flex-row", "md:flex-wrap");
                 var children = boton.childElementCount;
                 let array = [];
                 for(let i=0; i<children; i++){
@@ -399,7 +385,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_20%]', 'm-[5px]');
+                    container.classList.add('flex-[1_0_10%]','m-[2px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -618,8 +604,8 @@
     }
 
     .dt-buttons{
-        float:right !important;
-        text-align: right;
+        float: left !important;
+        text-align: left;
     }
 
     #datatable{

@@ -723,8 +723,8 @@
                             '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,9.5H18V7.5H13V9.5M13,16.5H18V14.5H13V16.5M19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21M6,11H11V6H6V11M7,7H10V10H7V7M6,18H11V13H6V18M7,14H10V17H7V14Z" /></svg>'+
                         '</div>'+
                         '<h3 class="text-lg font-medium text-gray-900"> Modificar el estatus de la solicitud de vacaciones </h3>'+
-                    '</div>'+
-                    '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
+                     '</div>'+
+                     '<div class="modal-content text-center w-full mt-3 sm:mt-0 sm:text-left">'+
                         '<div class="grid grid-cols-1 mt-5 mx-7">'+
                             '<label class="text-[#64748b] font-semibold mb-2">Estatus</label>'+
                             '<div class="group flex">'+

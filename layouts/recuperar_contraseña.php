@@ -129,8 +129,8 @@ if($_GET['token'] == null){
 	</head>
 
 
-	<body class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background: url('../src/img/wallpaper.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-		<div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
+	<body class="container-image min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background: url('../src/img/fondo-hexagonos.png') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+        <div class="bg-gray-250 text-gray-250 rounded-3xl shadow-xl w-full overflow-hidden" style="z-index:5; max-width:1000px">
 			<div class="w-full py-10 px-5 md:px-10">
                 <?php if($fetch_token_user->exp_date >= $curDate){ ?>
 				<h1 class="font-bold text-3xl text-gray-900">Formulario de recuperación de contraseña</h1>
@@ -345,6 +345,44 @@ if($_GET['token'] == null){
                     .btn-celeste:hover{
                     background-color: #008eff !important;
                 }
+
+                .bg-gray-250{
+    background-color: rgb(250,250,250)
+}
+
+    /* Degradado y animación */
+    .container-image {
+        width: 100%;
+        position: relative;
+        }
+
+    .container-image img {
+        width: 100%;
+        }
+
+    .container-image::after {
+        content: "";
+        width: 100%; 
+        height: 300px;  /* El height controla el alto del degradado */
+        position: absolute;
+        height:100%; /*La altura dependerá del degradado*/
+        background-size: 300% 100%; 
+        animation: gradient 17s ease infinite; /*'gradient' es el nombre de la animación, tarda en completarse 17s y vuelve a empezar infinitamente*/
+        background-image: linear-gradient(102deg, #005fb1e6, #ffffff7d);
+    }
+
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%; 
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
                 </style>
                 <?php }else{  ?>
                     <div class="text-center">

@@ -83,11 +83,11 @@ if(isset($_POST["email"])){
 	</head>
 
 
-	<body class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background: url('../src/img/wallpaper.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-		<div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
+	<body class="container-image min-w-screen min-h-screen bg-gray-250 flex items-center justify-center px-5 py-5" style="background: url('../src/img/fondo-hexagonos.png') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+        <div class="bg-gray-250  rounded-3xl shadow-xl w-full overflow-hidden" style="z-index:5; max-width:1000px">
 			<div class="w-full py-10 px-5 md:px-10">
 				<a href="login.php" class="hover:text-blue-600 hover:border-b-[1px] hover:border-blue-600 cursor-pointer"><i class="mdi mdi-arrow-left text-lg"></i>Regresar al login</a>
-				<h1 class="font-bold text-3xl text-gray-900">¿Olvidaste tu contraseña?</h1>
+				<h1 class="mt-6 font-bold text-3xl text-gray-250">¿Olvidaste tu contraseña?</h1>
 				<p class="text-slate-500">Llena el siguiente formulario para cambiar tu contraseña</p>
 				<form id="Enviar" class="my-10">
 					<div class="flex flex-col mt-5">
@@ -97,7 +97,7 @@ if(isset($_POST["email"])){
 								<input class="w-full -ml-10 pl-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="text" id="email" name="email" placeholder="Correo">
 							</div>
 					    <div id="submit-button">
-							<button class="w-full py-3 font-medium text-white btn-celeste hover:bg-celeste-500 rounded-lg border-celeste-500 hover:shadow inline-flex space-x-2 items-center justify-center mt-5">
+							<button class="w-full py-3 font-medium text-white btn-celeste hover:bg-celeste-500 rounded-lg border-celeste-500 hover:shadow inline-flex space-x-2 items-center justify-center mt-2">
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 									<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"></path>
 								</svg>
@@ -237,5 +237,43 @@ if(isset($_POST["email"])){
 		.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
+
+	.bg-gray-250{
+    background-color: rgb(250,250,250)
+}
+
+    /* Degradado y animación */
+    .container-image {
+        width: 100%;
+        position: relative;
+        }
+
+    .container-image img {
+        width: 100%;
+        }
+
+    .container-image::after {
+        content: "";
+        width: 100%; 
+        height: 300px;  /* El height controla el alto del degradado */
+        position: absolute;
+        height:100%; /*La altura dependerá del degradado*/
+        background-size: 300% 100%; 
+        animation: gradient 17s ease infinite; /*'gradient' es el nombre de la animación, tarda en completarse 17s y vuelve a empezar infinitamente*/
+        background-image: linear-gradient(102deg, #005fb1e6, #ffffff7d);
+    }
+
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%; 
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
 	</style>
 </html>
