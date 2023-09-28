@@ -1,12 +1,4 @@
 <div class="container mx-auto px-6 py-8">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
-.Titulos{
-    font-family: 'Poppins', sans-serif;
-    color: #000000;
-    font-size: 2.75rem !important;
-}
-    </style>
    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
       Crear expedientes
    </h2>
@@ -217,15 +209,15 @@
                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="correo_usuario" name="correo_usuario" placeholder="Correo" readonly>
                                  </div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Desea agregar un correo electrónico adicional?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="rcorreoadicional; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" checked="">
+                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="rcorreoadicional; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1">
                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="rcorreoadicional; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2">
+                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="rcorreoadicional; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2" checked="">
                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -234,42 +226,9 @@
                                  <script>
                                     function rcorreoadicional(e) {
                                        if(e.target.value == "no"){
-                                       if (!($("#correo_adicional").val().length == 0)){
-                                          $("#correo_adicional").removeData("previousValue");
-                                       }
-                                       $("#correo_adicional").val("");
-                                       $("#correo_adicional").rules("remove");
-                                       $("#correo_adicional").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#correo_adicional").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                       $("#correo_adicional-error").css("display", "none");
-                                       $('#loader-correo').addClass('hidden');
-                                       $('#correct-correo').addClass('hidden');
+                                          if (!($("#correo_adicional").val().length == 0)){ $("#correo_adicional").removeData("previousValue");} $("#correo_adicional").val(""); $("#correo_adicional").rules("remove"); $("#correo_adicional").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#correo_adicional").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#correo_adicional-error").css("display", "none"); $('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden');
                                        }else if(e.target.value == "si"){
-                                       $("#correo_adicional").rules("add", {
-                                          required: true,
-                                          email_verification: true,
-                                          remote: {
-                                             url: "../ajax/validacion/expedientes/checkemail.php",
-                                             type: "GET",
-                                             beforeSend: function () {
-                                                $('#loader-correo').removeClass('hidden');
-                                                $('#correct-correo').addClass('hidden');
-                                             },
-                                             complete: function(data){
-                                                if(data.responseText == "true") {
-                                                $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                                                $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
-                                                }else{
-                                                $('#loader-correo').addClass('hidden');
-                                                $('#correct-correo').addClass('hidden');
-                                                }
-                                             }
-                                          },
-                                          messages: {
-                                             required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },
-                                             email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
-                                          }
-                                       });	
+                                          $("#correo_adicional").rules("add", { required: true, email_verification: true, remote: { url: "../ajax/validacion/expedientes/checkemail.php", type: "GET", beforeSend: function () { $('#loader-correo').removeClass('hidden'); $('#correct-correo').addClass('hidden'); }, complete: function(data){ if(data.responseText == "true") { $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  }); $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  }); }else{ $('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); }} }, messages: { required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; }, email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }}});
                                        }
                                     }
                                  </script>
@@ -367,14 +326,7 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estado" name="estado">
                                           <option value="">--Seleccione--</option>
-                                          <?php
-                                             while ($r = $estado->fetch(PDO::FETCH_OBJ)) {
-                                                $contestado++;
-                                             ?>
-                                          <option value="<?php echo $contestado; ?>"><?php echo $r->nombre; ?></option>
-                                          <?php
-                                             }
-                                             ?>
+                                          <?php while ($r = $estado->fetch(PDO::FETCH_OBJ)) { $contestado++; ?> <option value="<?php echo $contestado; ?>"><?php echo $r->nombre; ?></option> <?php } ?>
                                        </select>
                                     </div>
                                  </div>
@@ -414,15 +366,15 @@
                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="teldom" name="teldom" placeholder="Télefono de domicilio">
                                  </div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">Posee teléfono propio?</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">¿Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="rtelmov; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="rtelmov; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -431,20 +383,9 @@
                                  <script>
                                     function rtelmov(e) {
                                        if(e.target.value == "no"){
-                                       $("#telmov").val("");
-                                       $("#telmov").rules("remove");
-                                       $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                       $("#telmov-error").css("display", "none");
+                                          $("#telmov").val(""); $("#telmov").rules("remove"); $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#telmov-error").css("display", "none");
                                        }else if(e.target.value == "si"){
-                                       $("#telmov").rules("add", {
-                                          required: true,
-                                          digits: true,
-                                          messages: {
-                                             required: 'Este campo es requerido',
-                                             digits: 'Solo se permiten números'
-                                          }
-                                       });	
+                                          $("#telmov").rules("add", { required: true, digits: true, messages: { required: 'Este campo es requerido', digits: 'Solo se permiten números'}});	
                                        }
                                     }
                                  </script>
@@ -467,15 +408,15 @@
                                  <span class="text-[#64748b]">Información sobre los dispositivos proporcionados por la empresa.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono asignado por la empresa?</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">¿Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="telempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="telempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                        <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="telempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="telempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                        <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -484,71 +425,16 @@
                                  <script>
                                     function telempresa(e) {
                                        if(e.target.value == "no"){
-                                       const array = ["#marcacion", "#serie", "#sim", "#numred", "#modelotel", "#marcatel", "#imei"];
-                                       for(var i=0; i < array.length; i++){
-                                       $(""+array[i]+"").val("");
-                                       $(""+array[i]+"").rules("remove");
-                                       $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                       $(""+array[i]+"-error").css("display", "none");
-                                       }
+                                          const array = ["#marcacion", "#serie", "#sim", "#numred", "#modelotel", "#marcatel", "#imei"];
+                                          for(var i=0; i < array.length; i++){ $(""+array[i]+"").val(""); $(""+array[i]+"").rules("remove"); $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $(""+array[i]+"-error").css("display", "none");}
                                        }else if(e.target.value == "si"){
-                                       $("#marcacion").rules("add", {
-                                          required: true,
-                                          digits:true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             digits: "Solo se permiten números"
-                                          }
-                                       });
-                                       $("#serie").rules("add", {
-                                          required: true,
-                                          alphanumeric: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             alphanumeric: 'Solo se permiten carácteres alfanúmericos'
-                                          }
-                                       });
-                                       $("#sim").rules("add", {
-                                          required: true,
-                                          digits: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             digits: "Solo se permiten números"
-                                          }
-                                       });
-                                       $("#numred").rules("add", {
-                                          required: true,
-                                          digits:true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             digits: "Solo se permiten números"
-                                          }
-                                       });
-                                       $("#modelotel").rules("add", {
-                                          required: true,
-                                          model_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             model_validation: 'Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios'
-                                          }
-                                       });
-                                       $("#marcatel").rules("add", {
-                                          required: true,
-                                          field_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                                          }
-                                       });
-                                       $("#imei").rules("add", {
-                                          required: true,
-                                          digits: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             digits: "Solo se permiten números"
-                                          }
-                                       });
+                                          $("#marcacion").rules("add", { required: true, digits:true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
+                                          $("#serie").rules("add", { required: true, alphanumeric: true, messages: { required: "Este campo es requerido", alphanumeric: 'Solo se permiten carácteres alfanúmericos' }});
+                                          $("#sim").rules("add", { required: true, digits: true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
+                                          $("#numred").rules("add", { required: true, digits:true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
+                                          $("#modelotel").rules("add", { required: true, model_validation: true, messages: { required: "Este campo es requerido", model_validation: 'Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios' }});
+                                          $("#marcatel").rules("add", { required: true, field_validation: true, messages: { required: "Este campo es requerido", field_validation: 'Solo se permiten carácteres alfabéticos y espacios' }});
+                                          $("#imei").rules("add", { required: true, digits: true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
                                        }
                                     }
                                  </script>
@@ -636,15 +522,15 @@
                                     </div>
                                  </div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">Laptop asignado por la empresa?</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">¿Laptop asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="laptopempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" checked="">
+                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="laptopempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1">
                                        <label for="option-laptop-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="laptopempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2">
+                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="laptopempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2" checked="">
                                        <label for="option-laptop-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -653,39 +539,12 @@
                                  <script>
                                     function laptopempresa(e){
                                        if(e.target.value == "no"){
-                                       const array = ["#marca_laptop", "#modelo_laptop", "#serie_laptop"];
-                                       for(var i=0; i < array.length; i++){
-                                          $(""+array[i]+"").val("");
-                                          $(""+array[i]+"").rules("remove");
-                                          $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                          $(""+array[i]+"-error").css("display", "none");
-                                       }
+                                          const array = ["#marca_laptop", "#modelo_laptop", "#serie_laptop"];
+                                          for(var i=0; i < array.length; i++){ $(""+array[i]+"").val(""); $(""+array[i]+"").rules("remove"); $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $(""+array[i]+"-error").css("display", "none");}
                                        }else if(e.target.value == "si"){
-                                       $("#marca_laptop").rules("add", {
-                                          required: true,
-                                          field_validation: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                                          }
-                                       });
-                                       $("#modelo_laptop").rules("add", {
-                                          required: true,
-                                          model_validation: true,
-                                          messages: {
-                                             required: "Por favor, ingrese el modelo de la laptop",
-                                             model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
-                                          }
-                                       });
-                                       $("#serie_laptop").rules("add", {
-                                          required: true,
-                                          alphanumeric: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             alphanumeric: 'Solo se permiten carácteres alfanúmericos'
-                                          }
-                                       });
+                                          $("#marca_laptop").rules("add", { required: true, field_validation: true, messages: { required: "Este campo es requerido", field_validation: 'Solo se permiten carácteres alfabéticos y espacios' }});
+                                          $("#modelo_laptop").rules("add", { required: true, model_validation: true, messages: { required: "Por favor, ingrese el modelo de la laptop", model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios" }});
+                                          $("#serie_laptop").rules("add", { required: true, alphanumeric: true, messages: { required: "Este campo es requerido", alphanumeric: 'Solo se permiten carácteres alfanúmericos' }});
                                        }
                                     }
                                  </script>
@@ -735,11 +594,11 @@
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">Casa propia?</label>
                                  <div class="group flex mt-3 items-center">
-                                    <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                    <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                     Sí
                                     </label>
-                                    <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                    <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                     <label for="option-casa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                     No
                                     </label>
@@ -762,15 +621,15 @@
                                     </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">Posee retención?</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">¿Posee retención crédito infonavit?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="rretencion; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
+                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="rretencion; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -779,20 +638,9 @@
                                  <script>
                                     function rretencion(e){
                                        if(e.target.value == "no"){
-                                       $("#monto_mensual").val('');
-                                       $("#monto_mensual").rules("remove");
-                                       $("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                       $("#monto_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                       $("#monto_mensual-error").css("display", "none");
+                                          $("#monto_mensual").val(''); $("#monto_mensual").rules("remove"); $("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#monto_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#monto_mensual-error").css("display", "none");
                                        }else if(e.target.value == "si"){
-                                       $("#monto_mensual").rules("add", {
-                                          required: true,
-                                          number: true,
-                                          messages: {
-                                             required: "Este campo es requerido",
-                                             number: "Solo se permiten números y decimales"
-                                          }
-                                       }); 
+                                          $("#monto_mensual").rules("add", { required: true, number: true, messages: { required: "Este campo es requerido", number: "Solo se permiten números y decimales" }}); 
                                        }
                                     }
                                  </script>
@@ -909,7 +757,7 @@
                                     </div>
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
+                              <div x-data="{ open: false, ine: false, pasaporte: false, cedula: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación</label>
                                     <div class="group flex">
@@ -918,7 +766,7 @@
                                              <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true; ine = true; pasaporte = false; cedula = false;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true; ine = false; pasaporte = true; cedula = false;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true; ine = false; pasaporte = false; cedula = true;}else{tidentificacion($el.value); open = false; ine = false; pasaporte = false; cedula = false;}" id="identificacion" name="identificacion">
                                           <option value="">--Seleccione--</option>
                                           <option value="INE">INE</option>
                                           <option value="PASAPORTE">PASAPORTE</option>
@@ -929,23 +777,34 @@
                                  <script>
                                     function tidentificacion(value){
                                        if(value == ""){
-                                          $("#numeroidentificacion").val("");
-                                          $("#numeroidentificacion").rules("remove");
-                                          $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                          $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                          $("#numeroidentificacion-error").css("display", "none");
+                                          $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
                                        }else {
-                                          $("#numeroidentificacion").rules("add", {
-                                             required: true,
-                                             alphanumeric: true,
-                                             messages: {
-                                                required: "Este campo es requerido",
-                                                alphanumeric: "Solo se permiten carácteres alfanúmericos"
-                                             }
-                                          }); 
+                                          $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
+                                          if(value == "INE"){
+                                             $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 13, maxlength: 13, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 13 dígitos', maxlength: 'No puede ser mayor a 13 dígitos' } }); 
+                                          }else if(value == "PASAPORTE"){
+                                             $("#numeroidentificacion").rules("add", { required: true, alphanumeric: true, minlength: 9, maxlength: 9, messages: { required: "Este campo es requerido", alphanumeric: "Solo se permiten carácteres alfanúmericos", minlength: 'No puede ser menor a 9 dígitos', maxlength: 'No puede ser mayor a 9 dígitos' }});
+                                          }else if(value == "CEDULA"){
+                                             $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 8, maxlength: 8, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 8 dígitos', maxlength: 'No puede ser mayor a 8 dígitos' } }); 
+                                          }
                                        }
                                     }
                                  </script>
+                                 <div x-show.important="ine">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <img class="w-full" src="../src/img/INE.png">
+                                    </div>
+                                 </div>
+                                 <div x-show.important="pasaporte">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <img class="w-full" src="../src/img/PASAPORTE.png">
+                                    </div>
+                                 </div>
+                                 <div x-show.important="cedula">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <img class="w-full" src="../src/img/CEDULA.png">
+                                    </div>
+                                 </div>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Número de identificación</label>
@@ -969,8 +828,8 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Datos adicionales del empleado</h2>
-                                 <span class="text-[#64748b]">En esta sección encontrará información extra del empleado.</span>
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Referencias laborales</h2>
+                                 <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -981,7 +840,12 @@
                                           <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de referencias laborales">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" onchange="AgregarReferencias()" id="reflab" name="reflab">
+                                       <option value="0">No tengo referencias</option>
+                                       <option value="1">Una referencia</option>
+                                       <option value="2">Dos referencias</option>
+                                       <option value="3">Tres referencias</option>
+                                    </select>
                                  </div>
                               </div>
                               <div id="referencias">
@@ -1019,40 +883,73 @@
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <title>tshirt-v</title>
                                              <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="tallapolo" name="tallapolo" placeholder="Talla">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tallapolo" name="tallapolo">
+                                          <option value="">--Seleccione--</option>
+                                          <option value="XSS">XSS</option>
+                                          <option value="XS">XS</option>
+                                          <option value="S">S</option>
+                                          <option value="M">M</option>
+                                          <option value="L">L</option>
+                                          <option value="XL">XL</option>
+                                          <option value="XXL">XXL</option>
+                                          <option value="XXXL">XXXL</option>
+                                       </select>
                                     </div>
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
-                                 <span class="text-[#64748b]">Estos son los contactos de emergencia del empleado.</span>
+                                 <span class="text-[#64748b]">Primer contacto de emergencia.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Nombre1</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencianom" name="emergencianom" placeholder="Nombre Completo1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="Nombre1">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno1</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="Apellido paterno1">
+                                    </div>
+                                 </div>
+                                 <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno1</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="Apellido materno1">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                 <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">Relación1</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciaparentesco" name="emergenciaparentesco" placeholder="Parentesco1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_relacion" name="emergencia_relacion" placeholder="Relación1">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1063,31 +960,60 @@
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel" name="emergenciatel" placeholder="Teléfono1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" placeholder="Teléfono1">
                                     </div>
                                  </div>
                               </div>
+                              <div class="flex flex-col mt-5 mx-7">
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
+                                 <span class="text-[#64748b]">Segundo contacto de emergencia.</span>
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                              </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Nombre2</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencianom2" name="emergencianom2" placeholder="Nombre Completo2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="Nombre2">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno2</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="Apellido paterno2">
+                                    </div>
+                                 </div>
+                                 <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno2</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="Apellido materno2">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                 <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">Relación2</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciaparentesco2" name="emergenciaparentesco2" placeholder="Parentesco2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_relacion2" name="emergencia_relacion2" placeholder="Relación2">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1098,24 +1024,28 @@
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel2" name="emergenciatel2" placeholder="Teléfono2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" placeholder="Teléfono2">
                                     </div>
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Otros datos del empleado</h2>
-                                 <span class="text-[#64748b]">En esta sección encontrará datos extra del empleado.</span>
+                                 <span class="text-[#64748b]">Datos extra del empleado.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">Capacitación</label>
+                                 <label class="text-[#64748b] font-semibold mb-2">¿Recibió capacitación para el puesto por la empresa?</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                           <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="capacitacion" name="capacitacion" placeholder="Capacitación">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="capacitacion" name="capacitacion">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="SI">Sí</option>
+                                       <option value="NO">No</option>
+                                    </select>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1126,7 +1056,12 @@
                                           <path fill="currentColor" d="M18,14H14V18H10V14H6V10H10V6H14V10H18M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="antidoping" name="antidoping" placeholder="Resultado antidoping">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="antidoping" name="antidoping">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="POSITIVO">Positivo</option>
+                                       <option value="NEGATIVO">Negativo</option>
+                                       <option value="NO APLICA">No aplica</option>
+                                    </select>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1158,18 +1093,24 @@
                                           <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="vacante" name="vacante" placeholder="¿Cómo se entero de la vacante?">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="vacante" name="vacante">
+                                       <option value="">--Seleccione--</option>
+                                       <option value="PLATAFORMA LABORAL">Plataforma laboral</option>
+                                       <option value="RECOMENDACION">Recomendación</option>
+                                       <option value="REDES SOCIALES">Redes sociales</option>
+                                       <option value="AVISOS DE OCASION">Avisos de ocasión</option>
+                                    </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: true }">
+                              <div x-data="{ open: false }">
 			                     <div class="grid grid-cols-1 mt-5 mx-7">
-				                    <label class="text-[#64748b] font-semibold mb-2">Tiene familiares dentro de la empresa?</label>
+				                    <label class="text-[#64748b] font-semibold mb-2">¿Tiene familiares dentro de la empresa?</label>
 				                    <div class="group flex mt-3 items-center">
-				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
+				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
 				                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
 				                       Sí
 				                       </label>
-				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="rfamiliarempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2">
+				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="rfamiliarempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
 				                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
 				                       No
 				                       </label>
@@ -1178,35 +1119,52 @@
 			                     <script>
 				                    function rfamiliarempresa(e){
 				                       if(e.target.value == "no"){
-					                      $("#nomfam").val('');
-						                     $("#nomfam").rules("remove");
-						                     $("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-						                     $("#nomfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-						                     $("#nomfam-error").css("display", "none");
+					                      $("#nomfam").val(''); $("#nomfam").rules("remove"); $("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#nomfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#nomfam-error").css("display", "none");
+                                     $("#apfam").val(''); $("#apfam").rules("remove"); $("#apfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#apfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#apfam-error").css("display", "none");
+                                     $("#amfam").val(''); $("#amfam").rules("remove"); $("#amfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#amfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#amfam-error").css("display", "none");
 				                       }else if(e.target.value == "si"){
-					                      $("#nomfam").rules("add", {
-						                     required: true,
-						                     names_validation: true,
-						                     messages: {
-							                    required: "Este campo es requerido",
-							                    names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios"
-						                     }
-					                      }); 
+					                      $("#nomfam").rules("add", {required: true, names_validation: true, messages: { required: "Este campo es requerido", names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios" }});
+                                     $("#apfam").rules("add", {required: true, names_validation: true, messages: { required: "Este campo es requerido", names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios" }});
+                                     $("#amfam").rules("add", {required: true, names_validation: true, messages: { required: "Este campo es requerido", names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios" }});
 				                       }
 				                    }
 			                     </script>
 			                     <div x-show.important="open">
-				                    <div class="grid grid-cols-1 mt-5 mx-7">
-				                       <label class="text-[#64748b] font-semibold mb-2">Nombre completo del familiar</label>
-				                       <div class="group flex">
-					                      <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-						                     <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-							                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-						                     </svg>
-					                      </div>
-					                      <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre completo del familiar">
-				                       </div>
-				                    </div>
+				                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                    <div class="grid grid-cols-1">
+				                           <label class="text-[#64748b] font-semibold mb-2">Nombre</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                             </svg>
+                                          </div>
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre">
+                                       </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+				                           <label class="text-[#64748b] font-semibold mb-2">Apellido paterno</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                             </svg>
+                                          </div>
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" placeholder="Apellido paterno">
+                                       </div>
+                                    </div>
+                                    <div class="grid grid-cols-1">
+				                           <label class="text-[#64748b] font-semibold mb-2">Apellido materno</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                             </svg>
+                                          </div>
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" placeholder="Apellido materno">
+                                       </div>
+                                    </div>
+				                     </div>
 			                     </div>
 		                     </div>
                            <div class="mt-12 h-px bg-slate-200"></div>
@@ -1217,8 +1175,8 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Datos bancarios del empleado</h2>
-                                 <span class="text-[#64748b]">En esta sección encontrará información sobre los datos bancarios del empleado.</span>
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Beneficiarios bancarios</h2>
+                                 <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1229,7 +1187,11 @@
                                           <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="" placeholder="Número de beneficiarios bancarios">
+                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" onchange="AgregarBanco()" id="refban" name="refban">
+                                       <option value="0">No tengo referencias</option>
+                                       <option value="1">Una referencia</option>
+                                       <option value="2">Dos referencias</option>
+                                    </select>
                                  </div>
                               </div>
                               <div id="ref">
@@ -1400,17 +1362,4 @@
          </div>
       </div>
    </div>
-   <style> 
-   		.btn-celeste{
-		background-color: #00a3ff  !important;
-		border: none !important;
-		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
-		font-weight: 500 !important;
-		border-bottom: #fff 9px;
-	}
-	
-		.btn-celeste:hover{
-		background-color: #008eff !important;
-	}
-   </style>
 </div>
