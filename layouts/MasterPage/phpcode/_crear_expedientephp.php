@@ -207,8 +207,8 @@
     $contestado=0;
 
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
+    $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);
     $checktipospapeleria -> execute();
     $counttipospapeleria = $checktipospapeleria -> rowCount();
-
-    $logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
+    $papeleria = $checktipospapeleria->fetchAll();
 ?>

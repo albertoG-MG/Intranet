@@ -75,7 +75,7 @@
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
                                  <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
                               </svg>
-                              <span>Papelería recibida</span>
+                              <span>Papelería</span>
                            </button>
                         </li>
                      </ul>
@@ -385,7 +385,7 @@
                                        if(e.target.value == "no"){
                                           $("#telmov").val(""); $("#telmov").rules("remove"); $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#telmov-error").css("display", "none");
                                        }else if(e.target.value == "si"){
-                                          $("#telmov").rules("add", { required: true, digits: true, messages: { required: 'Este campo es requerido', digits: 'Solo se permiten números'}});	
+                                          $("#telmov").rules("add", { required: true, digits: true, minlength: 10, maxlength:10, messages: { required: 'Este campo es requerido', digits: 'Solo se permiten números', minlength: 'Solo puedes ingresar como mínimo 10 números', maxlength:'Solo puedes ingresar como máximo 10 números'}});	
                                        }
                                     }
                                  </script>
@@ -592,7 +592,7 @@
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">Casa propia?</label>
+                                 <label class="text-[#64748b] font-semibold mb-2">¿Casa propia?</label>
                                  <div class="group flex mt-3 items-center">
                                     <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
@@ -667,7 +667,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechanac" name="fechanac">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechanac" name="fechanac" autocomplete="off">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -678,7 +678,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechacon" name="fechacon">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechacon" name="fechacon" autocomplete="off">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -689,7 +689,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechaalta" name="fechaalta">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechaalta" name="fechaalta" autocomplete="off">
                                     </div>
                                  </div>
                               </div>
@@ -863,7 +863,7 @@
                                           <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fechauniforme" name="fechauniforme">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechauniforme" name="fechauniforme" autocomplete="off">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -907,60 +907,74 @@
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Nombre1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">1.- Nombre (s)</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="Nombre1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="1.- Nombre (s)">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">1.- Apellido paterno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="Apellido paterno1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="1.- Apellido paterno">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">1.- Apellido materno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="Apellido materno1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="1.- Apellido materno">
                                     </div>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Relación1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">1.- Relación</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_relacion" name="emergencia_relacion" placeholder="Relación1">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion" name="emergencia_relacion">
+                                          <option value="">--Selecciona--</option>
+                                          <option value="PADRE">Padre</option>
+                                          <option value="MADRE">Madre</option>
+                                          <option value="HERMANO">Hermano</option>
+                                          <option value="HERMANA">Hermana</option>
+                                          <option value="CONYUGE">Cónyuge</option>
+                                          <option value="PAREJA">Pareja</option>
+                                          <option value="AMIGO">Amigo</option>
+                                          <option value="AMIGA">Amiga</option>
+                                          <option value="VECINO">Vecino</option>
+                                          <option value="COMPAÑERO_DE_TRABAJO">Compañero de trabajo</option>
+                                          <option value="COMPAÑERA_DE_TRABAJO">Compañera de trabajo</option>
+                                          <option value="OTRO">Otro</option>
+                                       </select>
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono1</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">1.- Teléfono</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" placeholder="Teléfono1">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" placeholder="1.- Teléfono">
                                     </div>
                                  </div>
                               </div>
@@ -971,60 +985,74 @@
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Nombre2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">2.- Nombre (s)</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="Nombre2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="2.- Nombre (s)">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">2.- Apellido paterno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="Apellido paterno2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="2.- Apellido paterno">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">2.- Apellido materno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="Apellido materno2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="2.- Apellido materno">
                                     </div>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Relación2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">2.- Relación</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_relacion2" name="emergencia_relacion2" placeholder="Relación2">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion2" name="emergencia_relacion2">
+                                          <option value="">--Selecciona--</option>
+                                          <option value="PADRE">Padre</option>
+                                          <option value="MADRE">Madre</option>
+                                          <option value="HERMANO">Hermano</option>
+                                          <option value="HERMANA">Hermana</option>
+                                          <option value="CONYUGE">Cónyuge</option>
+                                          <option value="PAREJA">Pareja</option>
+                                          <option value="AMIGO">Amigo</option>
+                                          <option value="AMIGA">Amiga</option>
+                                          <option value="VECINO">Vecino</option>
+                                          <option value="COMPAÑERO_DE_TRABAJO">Compañero de trabajo</option>
+                                          <option value="COMPAÑERA_DE_TRABAJO">Compañera de trabajo</option>
+                                          <option value="OTRO">Otro</option>
+                                       </select>
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono2</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">2.- Teléfono</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" placeholder="Teléfono2">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" placeholder="2.- Teléfono">
                                     </div>
                                  </div>
                               </div>
@@ -1132,7 +1160,7 @@
 			                     <div x-show.important="open">
 				                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                     <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">Nombre</label>
+				                           <label class="text-[#64748b] font-semibold mb-2">Nombre(s)</label>
                                        <div class="group flex">
                                           <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                              <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1314,21 +1342,21 @@
                                        </tr>
                                     </thead>
                                     <tbody class="block md:table-row-group">
-                                       <?php while($fetchtipopapeleria = $checktipospapeleria -> fetch(PDO::FETCH_OBJ)){ ?>
+                                       <?php foreach ($papeleria as $fetchtipopapeleria) { ?>
                                        <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                           <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                              <span class="inline-block md:hidden font-bold">Nombre</span>
-                                             <p><?php echo ucfirst(strtolower($fetchtipopapeleria->nombre)); ?></p>
+                                             <p><?php echo ucfirst(strtolower($fetchtipopapeleria["nombre"])); ?></p>
                                           </td>
                                           <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                              <span class="inline-block md:hidden font-bold">Acción</span>
                                              <div class="flex flex-col w-full justify-center">
-                                                <div id="upload-button<?php echo $fetchtipopapeleria->id ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
+                                                <div id="upload-button<?php echo $fetchtipopapeleria["id"] ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
                                                    Subir archivo
                                                 </div>
                                                 <div class="flex-1 md:flex items-center justify-between">
-                                                   <span id="upload-text<?php echo $fetchtipopapeleria->id ?>">No hay ningún archivo seleccionado</span>
-                                                   <button type="button" id="upload-delete<?php echo $fetchtipopapeleria->id ?>" class="hidden">
+                                                   <span id="upload-text<?php echo $fetchtipopapeleria["id"] ?>">No hay ningún archivo seleccionado</span>
+                                                   <button type="button" id="upload-delete<?php echo $fetchtipopapeleria["id"] ?>" class="hidden">
                                                       <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-red-700 w-3 h-3" viewBox="0 0 320 512">
                                                          <path
                                                             d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
@@ -1336,8 +1364,8 @@
                                                    </button>
                                                 </div>
                                              </div>
-                                             <input type="file" name="infp_papeleria<?php echo $fetchtipopapeleria->id ?>" id="infp_papeleria<?php echo $fetchtipopapeleria->id ?>"  class="hidden" />
-                                             <div id="content-container<?php echo $fetchtipopapeleria->id ?>"></div>
+                                             <input type="file" name="infp_papeleria<?php echo $fetchtipopapeleria["id"] ?>" id="infp_papeleria<?php echo $fetchtipopapeleria["id"] ?>"  class="hidden" />
+                                             <div id="content-container<?php echo $fetchtipopapeleria["id"] ?>"></div>
                                           </td>
                                        </tr>
                                        <?php

@@ -135,6 +135,11 @@
 			    dropdown.classList.remove("hidden");
 	    <?php } ?>
 
+        $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+
 		//Empieza la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 		let tabsContainer = document.querySelector("#menu");
 		let tabTogglers = tabsContainer.querySelectorAll("button");
@@ -440,13 +445,28 @@
             return this.optional(element) || /^([a-zA-Z0-9\u00C0-\u00FF])+([?:\s|\-|\_][a-zA-Z0-9\u00C0-\u00FF]+)*$/i.test(value);
         }, "invalid model");
 
-        $.validator.addMethod("maxDate", function(value, element) {
-            var curDate = new Date();
-            var inputDate = new Date(value);
-            if (value == "" || inputDate < curDate)
+        jQuery.validator.addMethod("mayor18", function(value, element) {              
+            var from = value.split("/");
+
+            var day = from[2];
+            var month = from[1];
+            var year = from[0];
+            var age = 18;
+
+            var mydate = new Date();
+            mydate.setFullYear(year, month-1, day);
+
+            var currdate = new Date();
+            var setDate = new Date();
+
+            setDate.setFullYear(mydate.getFullYear() + age, month-1, day);
+
+            if ((currdate - setDate) > 0){
                 return true;
-            return false;
-        }, "Invalid Date!");
+            }else{
+                return false;
+            }
+        }, "Sorry, you must be 18 years of age to apply");
 
         $.validator.addMethod('names_validation', function (value, element) {
 			return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
@@ -454,6 +474,13 @@
 
         $.validator.addMethod("refvalplus3", function(value, element) {
             if ($("#reflab").val() > 3) {
+                return false;
+            } 
+            return true;
+        }, "Please enter a valid value in selectbox");
+
+        $.validator.addMethod("refbanplus3", function(value, element) {
+            if ($("#refban").val() > 3) {
                 return false;
             } 
             return true;
@@ -514,7 +541,7 @@
                 },
                 rules: {
                     user: {
-                        required:true
+                        required: true
                     },
                     numempleado: {
                         required: true,
@@ -538,30 +565,32 @@
                         }
                     },
                     puesto: {
-                        required:true,
+                        required: true,
                         minlength: 4,
-                        field_validation:true
+                        field_validation: true
                     },
                     posee_correo:{
                         required: true
                     },
                     calle: {
-                        location_validation:true
+                        location_validation: true
                     },
                     ninterior: {
-                        digits:true
+                        digits: true
                     },
                     nexterior: {
-                        digits:true
+                        digits: true
                     },
                     colonia: {
-                        location_validation:true
+                        location_validation: true
                     },
                     codigo: {
-                        digits:true
+                        digits: true
                     },
                     teldom: {
-                        digits:true
+                        digits: true,
+                        minlength: 10,
+                        maxlength: 10
                     },
                     tel_movil:{
                         required: true
@@ -579,7 +608,7 @@
                         required: true
                     },
                     fechanac:{
-                        maxDate: true
+                        mayor18: true
                     },
                     salario_contrato:{
                         number:true
@@ -591,13 +620,19 @@
                         field_validation:true
                     },
                     curp:{
-                        alphanumeric: true
+                        alphanumeric: true,
+                        minlength: 18,
+                        maxlength: 18
                     },
                     nss:{
-                        digits: true
+                        digits: true,
+                        minlength: 11,
+                        maxlength: 11
                     },
                     rfc:{
-                        alphanumeric: true
+                        alphanumeric: true,
+                        minlength: 12,
+                        maxlength: 13
                     },
                     reflab:{
                         refvalplus3: true
@@ -623,26 +658,24 @@
 		            emergencia_apmat2:{
 			            names_validation: true
 		            },
-		            emergencia_relacion:{
-			            field_validation: true
-		            },
-		            emergencia_relacion2:{
-			            field_validation: true
-		            },
 		            emergencia_tel:{
-			            digits: true
+			            digits: true,
+                        minlength: 10,
+                        maxlength: 10
 		            },
 		            emergencia_tel2:{
-			            digits: true
+			            digits: true,
+                        minlength: 10,
+                        maxlength: 10
 		            },
                     empresa:{
                         required: true
                     },
                     refban:{
-                        digits:true
+                        refbanplus3: true
                     },
                     banco_personal:{
-				        field_validation:true
+				        field_validation: true
 			        },
 			        cuenta_personal:{
 				        digits:true,
@@ -711,14 +744,12 @@
                         digits: 'Solo se permiten números'
                     },
                     teldom: {
-                        digits: 'Solo se permiten números'
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
                     },
                     tel_movil:{
                         required: 'Este campo es requerido'
-                    },
-                    telmov: {
-                        required: 'Este campo es requerido',
-                        digits: 'Solo se permiten números'
                     },
                     tel_movil_empresa:{
                         required: 'Este campo es requerido'
@@ -733,7 +764,7 @@
                         required: 'Este campo es requerido'
                     },
                     fechanac:{
-                        maxDate: 'No se permiten las fechas posteriores al día de hoy'
+                        mayor18: 'Debes tener por lo menos 18 años para aplicar'
                     },
                     salario_contrato:{
                         number: 'Solo se permiten números y decimales'
@@ -745,13 +776,19 @@
                         field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
                     },
                     curp: {
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'Solo puedes ingresar como mínimo 18 números',
+                        maxlength: 'Solo puedes ingresar como máximo 18 números'
                     },
                     nss:{
-                        digits: 'Solo se permiten números'
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 11 números',
+                        maxlength: 'Solo puedes ingresar como máximo 11 números'
                     },
                     rfc:{
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'Solo puedes ingresar como mínimo 12 números',
+                        maxlength: 'Solo puedes ingresar como máximo 13 números'
                     },
                     reflab:{
                         refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
@@ -777,23 +814,21 @@
 		            emergencia_apmat2:{
 			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
 		            },
-		            emergencia_relacion:{
-			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-		            },
-		            emergencia_relacion2:{
-			            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-		            },
 		            emergencia_tel:{
-			            digits: 'Solo se permiten números'
+			            digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
 		            },
 		            emergencia_tel2:{
-			            digits: 'Solo se permiten números'
+			            digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
 		            },
                     empresa:{
                         required: 'Este campo es requerido'
                     },
                     refban:{
-                        digits: 'Solo se permiten números'
+                        refbanplus3: 'Solo se permiten hasta 3 referencias bancarias'
                     },
                     banco_personal:{
 				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
@@ -872,6 +907,7 @@
 
 	//Aquí empiezan las referencias laborales
 	function AgregarReferencias(){
+        var values = ["SUPERVISOR(A)", "COLEGA", "SUBORDINADO(A)", "MENTOR(A)", "CLIENTE", "PROFESOR(A)", "DEPARTAMENTO DE PERSONAL", "PROVEEDOR(A)", "MIEMBRO DE UN COMITE", "OTRO"];
         var number = document.getElementById("reflab").value;
         number = number.replace(/[^0-9]/g, function replacing() {
             document.getElementById("reflab").value = 0;
@@ -920,7 +956,7 @@
                     divrow.appendChild(divtelefono);
                     var labelnombre = document.createElement("label");
                     labelnombre.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textnombre = document.createTextNode("Nombre" + (count));
+                    var textnombre = document.createTextNode(count+".- Nombre (s)");
                     labelnombre.appendChild(textnombre);
                     div.appendChild(labelnombre);
                     var grupo = document.createElement("div");
@@ -938,11 +974,11 @@
                     input.setAttribute("data-msg-required", "Este campo es requerido");
                     input.setAttribute("data-rule-names_validation", "true");
                     input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    input.setAttribute("placeholder", "Nombre" +(count)); 
+                    input.setAttribute("placeholder", count+ ".- Nombre (s)"); 
                     grupo.appendChild(input);
                     var labelapellidopat = document.createElement("label");
                     labelapellidopat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidopat = document.createTextNode("Apellido paterno" + (count));
+                    var textapellidopat = document.createTextNode(count+ ".- Apellido paterno");
                     labelapellidopat.appendChild(textapellidopat);
                     div2.appendChild(labelapellidopat);
                     var grupo2 = document.createElement("div");
@@ -960,11 +996,11 @@
                     input2.setAttribute("data-msg-required", "Este campo es requerido");
                     input.setAttribute("data-rule-names_validation", "true");
                     input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    input2.setAttribute("placeholder", "Apellido paterno" +(count));
+                    input2.setAttribute("placeholder", count+ ".- Apellido paterno");
                     grupo2.appendChild(input2);
                     var labelapellidomat = document.createElement("label");
                     labelapellidomat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidomat = document.createTextNode("Apellido materno" + (count));
+                    var textapellidomat = document.createTextNode(count+ ".- Apellido materno");
                     labelapellidomat.appendChild(textapellidomat);
                     div3.appendChild(labelapellidomat);
                     var grupo3 = document.createElement("div");
@@ -982,11 +1018,11 @@
                     input3.setAttribute("data-msg-required", "Este campo es requerido");
                     input.setAttribute("data-rule-names_validation", "true");
                     input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    input3.setAttribute("placeholder", "Apellido materno" +(count));
+                    input3.setAttribute("placeholder", count+ ".- Apellido materno");
                     grupo3.appendChild(input3);
                     var labelrelacion = document.createElement("label");
                     labelrelacion.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textrelacion = document.createTextNode("Relación" + (count));
+                    var textrelacion = document.createTextNode(count+ ".- Relación");
                     labelrelacion.appendChild(textrelacion);
                     divrelacion.appendChild(labelrelacion);
                     var gruporelacion = document.createElement("div");
@@ -996,16 +1032,27 @@
                     divrelchildren.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
                     divrelchildren.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
                     gruporelacion.appendChild(divrelchildren);
-                    var inputrelacion = document.createElement("input");
-                    inputrelacion.name = "infa_rrelacion" + childrenCount;
-                    inputrelacion.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'outline-none', 'focus:ring-2', 'focus:ring-celeste-600');
-                    inputrelacion.setAttribute("data-rule-required", "true");
-                    inputrelacion.setAttribute("data-msg-required", "Este campo es requerido");
-                    inputrelacion.setAttribute("data-rule-field_validation", "true");
-                    inputrelacion.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-                    inputrelacion.setAttribute("placeholder", "Relación" +(count));
-                    gruporelacion.appendChild(inputrelacion);
-                    divtelefono.appendChild(document.createTextNode("Teléfono" + (count)));
+                    var selectrelacion = document.createElement("select");
+                    var defaultvalue = document.createElement("option");
+                    defaultvalue.value = "";
+                    defaultvalue.text = "--Selecciona--";
+                    selectrelacion.appendChild(defaultvalue);
+                    for (const val of values) {
+                        var option = document.createElement("option");
+                        option.value = val;
+                        option.text = val.charAt(0).toUpperCase() + val.slice(1);
+                        selectrelacion.appendChild(option);
+                    }
+                    selectrelacion.name = "infa_rrelacion" + childrenCount;
+                    selectrelacion.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+                    selectrelacion.setAttribute("data-rule-required", "true");
+                    selectrelacion.setAttribute("data-msg-required", "Este campo es requerido");
+                    gruporelacion.appendChild(selectrelacion);
+                    var labeltelefono = document.createElement("label");
+                    labeltelefono.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
+                    var texttelefono = document.createTextNode(count+ ".- Teléfono");
+                    labeltelefono.appendChild(texttelefono);
+                    divtelefono.appendChild(labeltelefono);
                     var grupotelefono = document.createElement("div");
                     grupotelefono.classList.add('group', 'flex');
                     divtelefono.appendChild(grupotelefono);
@@ -1020,7 +1067,11 @@
                     inputtelefono.setAttribute("data-msg-required", "Este campo es requerido");
                     inputtelefono.setAttribute("data-rule-digits", "true");
                     inputtelefono.setAttribute("data-msg-digits", "Solo se permiten números");
-                    inputtelefono.setAttribute("placeholder", "Teléfono" +(count));
+                    inputtelefono.setAttribute("data-rule-minlength", 10);
+                    inputtelefono.setAttribute("data-msg-minlength", "Solo puedes ingresar como mínimo 10 números");
+                    inputtelefono.setAttribute("data-rule-maxlength", 10);
+                    inputtelefono.setAttribute("data-msg-maxlength", "Solo puedes ingresar como máximo 10 números");
+                    inputtelefono.setAttribute("placeholder", count+ ".- Teléfono");
                     grupotelefono.appendChild(inputtelefono);
                     count++;
                     childrenCount++;
@@ -1032,6 +1083,7 @@
 
      //Aquí empiezan las referencias bancarias
      function AgregarBanco(){
+        var values = ["PADRE", "MADRE", "CONYUGE", "HIJO", "HIJA", "OTRO"];
         var number = document.getElementById("refban").value;
         number = number.replace(/[^0-9]/g, function replacing() {
             document.getElementById("refban").value = 0;
@@ -1086,7 +1138,7 @@
                     divcontainer.appendChild(div9);
                     var labelnombre = document.createElement("label");
                     labelnombre.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textnombre = document.createTextNode("Nombre" + (count));
+                    var textnombre = document.createTextNode(count+ ".- Nombre (s)");
                     labelnombre.appendChild(textnombre);
                     div.appendChild(labelnombre);
                     var grupo = document.createElement("div");
@@ -1104,11 +1156,11 @@
                     input.setAttribute("data-msg-required", "Este campo es requerido");
                     input.setAttribute("data-rule-names_validation", "true"); 
                     input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    input.setAttribute("placeholder", "Nombre" +(count)); 
+                    input.setAttribute("placeholder", count+ ".- Nombre (s)"); 
                     grupo.appendChild(input);
                     var labelapellidopat = document.createElement("label");
                     labelapellidopat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidopat = document.createTextNode("Apellido paterno" + (count));
+                    var textapellidopat = document.createTextNode(count+ ".- Apellido paterno");
                     labelapellidopat.appendChild(textapellidopat);
                     div_apellidopat.appendChild(labelapellidopat);
                     var grupo_apellidopat = document.createElement("div");
@@ -1126,11 +1178,11 @@
                     input_apellidopat.setAttribute("data-msg-required", "Este campo es requerido");
                     input_apellidopat.setAttribute("data-rule-names_validation", "true"); 
                     input_apellidopat.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    input_apellidopat.setAttribute("placeholder", "Apellido paterno" +(count)); 
+                    input_apellidopat.setAttribute("placeholder", count+ ".- Apellido paterno"); 
                     grupo_apellidopat.appendChild(input_apellidopat);
                     var labelapellidomat = document.createElement("label");
                     labelapellidomat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidomat = document.createTextNode("Apellido materno" + (count));
+                    var textapellidomat = document.createTextNode(count+ ".- Apellido materno");
                     labelapellidomat.appendChild(textapellidomat);
                     div_apellidomat.appendChild(labelapellidomat);
                     var grupo_apellidomat = document.createElement("div");
@@ -1148,11 +1200,11 @@
                     input_apellidomat.setAttribute("data-msg-required", "Este campo es requerido");
                     input_apellidomat.setAttribute("data-rule-names_validation", "true"); 
                     input_apellidomat.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    input_apellidomat.setAttribute("placeholder", "Apellido materno" +(count)); 
+                    input_apellidomat.setAttribute("placeholder", count+ ".- Apellido materno"); 
                     grupo_apellidomat.appendChild(input_apellidomat);
                     var labelrelacion = document.createElement("label");
                     labelrelacion.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textrelacion = document.createTextNode("Relación" + (count));
+                    var textrelacion = document.createTextNode(count+ ".- Relación");
                     labelrelacion.appendChild(textrelacion);
                     div2.appendChild(labelrelacion);
                     var grupo2 = document.createElement("div");
@@ -1162,19 +1214,25 @@
                     div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
                     div5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
                     grupo2.appendChild(div5);
-                    var input2 = document.createElement("input");
-                    input2.type = "text";
-                    input2.name = "infb_rrelacion" + childrenCount;
-                    input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input2.setAttribute("data-rule-required", "true");
-                    input2.setAttribute("data-msg-required", "Este campo es requerido");
-                    input2.setAttribute("data-rule-field_validation", "true");
-			        input2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-                    input2.setAttribute("placeholder", "Relación" +(count)); 
-                    grupo2.appendChild(input2);
+                    var selectrelacion = document.createElement("select");
+                    var defaultvalue = document.createElement("option");
+                    defaultvalue.value = "";
+                    defaultvalue.text = "--Selecciona--";
+                    selectrelacion.appendChild(defaultvalue);
+                    for (const val of values) {
+                        var option = document.createElement("option");
+                        option.value = val;
+                        option.text = val.charAt(0).toUpperCase() + val.slice(1);
+                        selectrelacion.appendChild(option);
+                    }
+                    selectrelacion.name = "infb_rrelacion" + childrenCount;
+                    selectrelacion.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+                    selectrelacion.setAttribute("data-rule-required", "true");
+                    selectrelacion.setAttribute("data-msg-required", "Este campo es requerido");
+                    grupo2.appendChild(selectrelacion);
                     var labelrfc = document.createElement("label");
                     labelrfc.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textrfc = document.createTextNode("RFC" + (count));
+                    var textrfc = document.createTextNode(count+ ".- RFC");
                     labelrfc.appendChild(textrfc);
                     div3.appendChild(labelrfc);
                     var grupo3 = document.createElement("div");
@@ -1196,11 +1254,11 @@
                     input3.setAttribute("data-msg-minlength", "Debes ingresar como mínimo 12 caracteres en el RFC");
                     input3.setAttribute("data-rule-maxlength", 13);
                     input3.setAttribute("data-msg-maxlength", "Debes ingresar como máximo 13 caracteres en el RFC");
-                    input3.setAttribute("placeholder", "RFC" +(count)); 
+                    input3.setAttribute("placeholder", count+ ".- RFC"); 
                     grupo3.appendChild(input3);
                     var labelcurp = document.createElement("label");
                     labelcurp.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textcurp = document.createTextNode("CURP" + (count));
+                    var textcurp = document.createTextNode(count+ ".- CURP");
                     labelcurp.appendChild(textcurp);
                     div7.appendChild(labelcurp);
                     var grupo4 = document.createElement("div");
@@ -1222,11 +1280,11 @@
                     input4.setAttribute("data-msg-minlength", "El curp solo se compone de 18 caracteres");
                     input4.setAttribute("data-rule-maxlength", 18);
                     input4.setAttribute("data-msg-maxlength", "El curp solo se compone de 18 caracteres");
-                    input4.setAttribute("placeholder", "CURP" +(count));  
+                    input4.setAttribute("placeholder", count+ ".- CURP");  
                     grupo4.appendChild(input4);
                     var labelporcentaje = document.createElement("label");
                     labelporcentaje.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textporcentaje = document.createTextNode("Porcentaje de derecho" + (count));
+                    var textporcentaje = document.createTextNode(count+ ".- Porcentaje de derecho");
                     labelporcentaje.appendChild(textporcentaje);
                     div9.appendChild(labelporcentaje);
                     var grupo5 = document.createElement("div");
@@ -1241,7 +1299,7 @@
                     input5.name = "infb_rporcentaje" + childrenCount;
                     input5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-gray-200', 'bg-gray-200', 'text-gray-900', 'focus:ring-2', 'focus:ring-celeste-600');
                     input5.setAttribute("disabled", "true");
-                    input5.setAttribute("placeholder", "Porcentaje de derecho" +(count)); 
+                    input5.setAttribute("placeholder", count+ ".- Porcentaje de derecho"); 
                     grupo5.appendChild(input5);
                     count++;
                     childrenCount++;     
@@ -1364,7 +1422,6 @@
         var cuenta_nomina = $("#cuenta_nomina").val();
         var clabe_nomina = $("#clabe_nomina").val();
         var plastico = $("#plastico").val();
-        var logged_user = "<?php echo $logged_user; ?>";
         var method = "store";
         var app = "expediente";
     
@@ -1373,9 +1430,11 @@
         var reflab = [];
         for(var i=0; i <nreflab; i++){
             var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" +i+ "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" +i+ "]").val();
             var rrelacion = $("input[name=infa_rrelacion" +i+ "]").val();
             var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
-            reflab[i] = {nombre: rnombre, relacion: rrelacion, telefono: rtelefono};
+            reflab[i] = {nombre: rnombre, apellidopat: rapellidopat, apellidomat: rapellidomat, relacion: rrelacion, telefono: rtelefono};
         }
     
         /*Referencias bancarias*/
@@ -1383,20 +1442,22 @@
         var refbanc = [];
         for(var i=0; i <nrefbanc; i++){
             var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" +i+ "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" +i+ "]").val();
             var brrelacion = $("input[name=infb_rrelacion" +i+ "]").val();
             var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
             var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
             var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
-            refbanc[i] = {nombre: brnombre, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+            refbanc[i] = {nombre: brnombre, apellidopat: brapellidopat, apellidomat: brapellidomat, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
         }
     
         /*File uploads*/
         <?php 
-        for($i = 1; $i <= $counttipospapeleria; $i++){
-            echo ("
-                var papeleria{$i} = $('#infp_papeleria{$i}')[0].files[0];
-            ");
-        } 
+            foreach($papeleria as $fetchpapeleria){
+                echo ("
+                    var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];
+                ");
+            } 
         ?>
     
         /*FD appends*/
@@ -1473,7 +1534,6 @@
         fd.append('cuenta_nomina', cuenta_nomina);
         fd.append('clabe_nomina', clabe_nomina);
         fd.append('plastico', plastico);
-        fd.append('logged_user', logged_user);
         fd.append('method', method);
         fd.append('app', app);
         
@@ -1484,11 +1544,11 @@
     
         /*File uploads*/
         <?php 
-        for($i = 1; $i <= $counttipospapeleria; $i++){
-            echo ("
-                fd.append('papeleria{$i}', papeleria{$i});
-            ");
-        } 
+            foreach($papeleria as $fetchpapeleria){
+                echo ("
+                fd.append('papeleria{$fetchpapeleria['id']}', 'papeleria{$fetchpapeleria['id']}');
+                ");
+            } 
         ?>
     
     
@@ -1565,6 +1625,10 @@
         color: #FF1E2D;
     }
 
+    main{
+		position:relative !important;
+	}
+
     .select2-container--tailwind .select2-results > .select2-results__options{
         overflow-y: auto;
         max-height: 110px;
@@ -1618,4 +1682,10 @@
         box-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
         --tw-ring-color: rgb(79 70 229);
     }
+
+    .daterangepicker td.active, .daterangepicker td.active:hover{
+		background-color:  #00a3ff !important;
+		border-color: transparent;
+		color: #fff;
+	}
 </style>
