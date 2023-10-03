@@ -952,7 +952,15 @@
 	                $('#error-container').html("");
 	                check_user_logged().then((response) => {
 		                if(response == "true"){
-			                SubmitChanges();
+			                if (pestañaActiva === "#datosG"){
+                                
+                            } else if (pestañaActiva === "#datosA"){
+
+                            } else if (pestañaActiva === "#datosB"){
+
+                            } else if (pestañaActiva === "#documentos"){
+                                SubmitChanges();
+                            }
 		                }else{
 			                Swal.fire({
 				                title: "Ocurrió un error",
@@ -1018,9 +1026,34 @@
 
                 // Agregar los mensajes de validación de datosA fusionados
                 formulario.validate().settings.messages = mergedDatosAMessages;
+            } else if (pestañaActiva === "#datosB") {
+                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "datosB"
+
+                //Esta función eliminar todas las reglas del formulario
+                formulario.find(":input").each(function() {
+                    $(this).rules("remove");
+                });
+
+                // Agregar las reglas de validación de datosB fusionados
+                formulario.validate().settings.rules = mergedDatosBRules;
+
+                // Agregar los mensajes de validación de datosB fusionados
+                formulario.validate().settings.messages = mergedDatosBMessages;
+            } else if (pestañaActiva === "#documentos") {
+                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "documentos"
+
+                //Esta función eliminar todas las reglas del formulario
+                formulario.find(":input").each(function() {
+                    $(this).rules("remove");
+                });
+
+                // Agregar las reglas de validación de documentos fusionados
+                formulario.validate().settings.rules = mergedAllRules;
+
+                // Agregar los mensajes de validación de documentos fusionados
+                formulario.validate().settings.messages = mergedAllMessages;
             }
         });
-
 	});
 
 	//Aquí empiezan las referencias laborales
@@ -1377,8 +1410,8 @@
     } 
     //Aquí terminan las referencias bancarias
 
-     //Checa si el user esta loggeado
-	 function check_user_logged(){
+    //Checa si el user esta loggeado
+	function check_user_logged(){
 		return new Promise((resolve, reject) => {
 			$.ajax({
 				type: "POST",
@@ -1403,6 +1436,326 @@
 		// Chrome requires returnValue to be set
 		e.returnValue = '';
 	}
+
+    //Metodo alamcena en la tabla temporal de expedientes que envía los datosG
+    function DatosG(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+
+        /*Inputs*/
+        var select2 = $("#user").val();
+        var select2text = $("#user option:selected").text();
+        var numempleado = $("#numempleado").val();
+        var puesto = $("#puesto").val();
+        var estudios = $("#estudios").val();
+        var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
+        var correo_adicional = $("#correo_adicional").val();
+        var calle = $("#calle").val();
+        var ninterior = $("#ninterior").val();
+        var nexterior = $("#nexterior").val();
+        var colonia = $("#colonia").val();
+        var estado = $("#estado").val();
+        var estadotext = $("#estado option:selected").text();
+        var municipio = $("#municipio").val();
+        var municipiotext = $("#municipio option:selected").text();
+        var codigo = $("#codigo").val();
+        var teldom = $("#teldom").val();
+        var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
+        var telmov = $("#telmov").val();
+        var posee_telempresa = $("input[name=tel_movil_empresa]:checked", "#Guardar").val();
+        var marcacion = $("#marcacion").val();
+        var serie = $("#serie").val();
+        var sim = $("#sim").val();
+        var numred = $("#numred").val();
+        var modelotel = $("#modelotel").val();
+        var marcatel = $("#marcatel").val();
+        var imei = $("#imei").val();
+        var posee_laptop = $("input[name=laptop_empresa]:checked", "#Guardar").val();
+        var marca_laptop = $("#marca_laptop").val();
+        var modelo_laptop = $("#modelo_laptop").val();
+        var serie_laptop = $("#serie_laptop").val();
+        var radio = $("input[name=casa]:checked", "#Guardar").val();
+        var ecivil = $("#ecivil").val();
+        var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+        var monto_mensual = $("#monto_mensual").val();
+        var fechanac = $("#fechanac").val();
+        var fechacon = $("#fechacon").val();
+        var fechaalta = $("#fechaalta").val();
+        var salario_contrato = $("#salario_contrato").val();
+        var salario_fechaalta = $("#salario_fechaalta").val();
+        var observaciones = $("#observaciones").val();
+        var curp = $("#curp").val();
+        var nss = $("#nss").val();
+        var rfc = $("#rfc").val();
+        var tipoidentificacion = $("#identificacion").val();
+        var numeroidentificacion = $("#numeroidentificacion").val();
+        var pestaña = "DatosG";
+        var app="Expediente_temporal";
+
+        fd.append('select2', select2);
+        fd.append('select2text', select2text);
+        fd.append('numempleado', numempleado);
+        fd.append('puesto', puesto);
+        fd.append('estudios', estudios);
+        fd.append('posee_correo', posee_correo);
+        fd.append('correo_adicional', correo_adicional);
+        fd.append('calle', calle);
+        fd.append('ninterior', ninterior);
+        fd.append('nexterior', nexterior);
+        fd.append('colonia', colonia);
+        fd.append('estado', estado);
+        fd.append('estadotext', estadotext);
+        fd.append('municipio', municipio);
+        fd.append('municipiotext', municipiotext);
+        fd.append('codigo', codigo);
+        fd.append('teldom', teldom);
+        fd.append('posee_telmov', posee_telmov);
+        fd.append('telmov', telmov);
+        fd.append('posee_telempresa', posee_telempresa);
+        fd.append('marcacion', marcacion);
+        fd.append('serie', serie);
+        fd.append('sim', sim);
+        fd.append('numred', numred);
+        fd.append('modelotel', modelotel);
+        fd.append('marcatel', marcatel);
+        fd.append('imei', imei);
+        fd.append('posee_laptop', posee_laptop);
+        fd.append('marca_laptop', marca_laptop);
+        fd.append('modelo_laptop', modelo_laptop);
+        fd.append('serie_laptop', serie_laptop);
+        fd.append('radio', radio);
+        fd.append('ecivil', ecivil);
+        fd.append('posee_retencion', posee_retencion);
+        fd.append('monto_mensual', monto_mensual);
+        fd.append('fechanac', fechanac);
+        fd.append('fechacon', fechacon);
+        fd.append('fechaalta', fechaalta);
+        fd.append('salario_contrato', salario_contrato);
+        fd.append('salario_fechaalta', salario_fechaalta);
+        fd.append('observaciones', observaciones);
+        fd.append('curp', curp);
+        fd.append('nss', nss);
+        fd.append('rfc', rfc);
+        fd.append('identificacion', tipoidentificacion);
+        fd.append('numeroidentificacion', numeroidentificacion);
+        fd.append('pestaña', pestaña);
+        fd.append('app', app);
+
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Almacenado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }
+				},3000);
+            }
+        });
+    }
+
+    //Metodo alamcena en la tabla temporal de expedientes que envía los datosA
+    function DatosA(){
+
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+
+        var select2 = $("#user").val();
+        var select2text = $("#user option:selected").text();
+        var numeroreferenciaslab = $("#reflab").val();
+        var fechauniforme = $("#fechauniforme").val();
+        var cantidadpolo = $("#cantidadpolo").val();
+        var tallapolo = $("#tallapolo").val();
+        var emergencianom = $("#emergencianom").val();
+        var emergenciaparentesco = $("#emergenciaparentesco").val();
+        var emergenciatel = $("#emergenciatel").val();
+        var emergencianom2 = $("#emergencianom2").val();
+        var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
+        var emergenciatel2 = $("#emergenciatel2").val();
+		var capacitacion = $("#capacitacion").val();
+        var antidoping = $("#antidoping").val();
+        var tipo_sangre = $("#tipo_sangre").val();
+        var vacante = $("#vacante").val();
+        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+        var nomfam = $("#nomfam").val();
+        var apellidopatfam = $("#apfam").val();
+        var apellidomatfam = $("#amfam").val();
+        /*Referencias laborales*/
+        var nreflab =  $("input[name=reflab]").val();
+        var reflab = [];
+        for(var i=0; i <nreflab; i++){
+            var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" +i+ "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" +i+ "]").val();
+            var rrelacion = $("input[name=infa_rrelacion" +i+ "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
+            reflab[i] = {nombre: rnombre, apellidopat: rapellidopat, apellidomat: rapellidomat, relacion: rrelacion, telefono: rtelefono};
+        }
+        var pestaña = "DatosA";
+        var app="Expediente_temporal";
+
+
+        fd.append('select2', select2);
+        fd.append('select2text', select2text);
+        fd.append('numeroreferenciaslab', numeroreferenciaslab);
+        fd.append('fechauniforme', fechauniforme);
+        fd.append('cantidadpolo', cantidadpolo);
+        fd.append('tallapolo', tallapolo);
+        fd.append('emergencianom', emergencianom);
+        fd.append('emergenciaparentesco', emergenciaparentesco);
+        fd.append('emergenciatel', emergenciatel);
+        fd.append('emergencianom2', emergencianom2);
+        fd.append('emergenciaparentesco2', emergenciaparentesco2);
+        fd.append('emergenciatel2', emergenciatel2);
+		fd.append('capacitacion', capacitacion);
+        fd.append('antidoping', antidoping);
+        fd.append('tipo_sangre', tipo_sangre);
+        fd.append('vacante', vacante);
+        fd.append('radio2', radio2);
+        fd.append('nomfam', nomfam);
+        fd.append('apellidopatfam', apellidopatfam);
+        fd.append('apellidomatfam', apellidomatfam);
+        fd.append('nreflab', nreflab);
+        fd.append('referencias', JSON.stringify(reflab));
+        fd.append('pestaña', pestaña);
+        fd.append('app', app);
+
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Creado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }
+				},3000);
+            }
+        });
+    }
+
+    //Metodo alamcena en la tabla temporal de expedientes que envía los datosB
+    function DatosB(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+
+        var select2 = $("#user").val();
+        var select2text = $("#user option:selected").text();
+        var numeroreferenciasban = $("#refban").val();
+        var banco_personal = $("#banco_personal").val();
+        var cuenta_personal = $("#cuenta_personal").val();
+        var clabe_personal = $("#clabe_personal").val();
+        var plastico_personal = $("#plastico_personal").val();
+        var banco_nomina = $("#banco_nomina").val();
+        var cuenta_nomina = $("#cuenta_nomina").val();
+        var clabe_nomina = $("#clabe_nomina").val();
+        var plastico = $("#plastico").val();
+        /*Referencias bancarias*/
+        var nrefbanc =  $("input[name=refban]").val();
+        var refbanc = [];
+        for(var i=0; i <nrefbanc; i++){
+            var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" +i+ "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" +i+ "]").val();
+            var brrelacion = $("input[name=infb_rrelacion" +i+ "]").val();
+            var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
+            var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
+            refbanc[i] = {nombre: brnombre, apellidopat: brapellidopat, apellidomat: brapellidomat, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+        }
+        var pestaña = "DatosB";
+        var app="Expediente_temporal";
+
+
+        fd.append('select2', select2);
+        fd.append('select2text', select2text);
+        fd.append('numeroreferenciasban', numeroreferenciasban);
+        fd.append('banco_personal', banco_personal);
+        fd.append('cuenta_personal', cuenta_personal);
+        fd.append('clabe_personal', clabe_personal);
+        fd.append('plastico_personal', plastico_personal);
+        fd.append('banco_nomina', banco_nomina);
+        fd.append('cuenta_nomina', cuenta_nomina);
+        fd.append('clabe_nomina', clabe_nomina);
+        fd.append('plastico', plastico);
+        fd.append('nrefbanc', nrefbanc);
+        fd.append('refbanc', JSON.stringify(refbanc));
+        fd.append('pestaña', pestaña);
+        fd.append('app', app);
+
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Creado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }
+				},3000);
+            }
+        });
+
+
+    }
 
     //Metodo que envía el formulario
     function SubmitChanges(){
@@ -1472,6 +1825,8 @@
         var vacante = $("#vacante").val();
         var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
         var nomfam = $("#nomfam").val();
+        var apellidopatfam = $("#apfam").val();
+        var apellidomatfam = $("#amfam").val();
         var numeroreferenciasban = $("#refban").val();
         var banco_personal = $("#banco_personal").val();
         var cuenta_personal = $("#cuenta_personal").val();
