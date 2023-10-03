@@ -907,13 +907,25 @@
                         $("#arrayerrors").append(this.$arrayerror);
                     });
                     if(validator.errorList.length){
-                        //Agregar los tabpane
-                        var taberror = jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id');
-                        if(taberror != "documentos"){
-                            $('#menu button[data-tabs-target="#' + jQuery(validator.errorList[0].element).closest(".tab-pane").removeClass("hidden") + '"]');
-                            $('#menu > li > button[data-tabs-target="#'+taberror+'"]').addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
-                            $('#menu > li > button:last').removeClass("bg-[#27ceeb] text-white menu-active").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
-                            $("#menu-contents > div:last").addClass("hidden");
+                        // Obtén el primer error del validador
+                        var primerError = validator.errorList[0];
+
+                        // Verifica si hay un error
+                        if (primerError) {
+                            // Obtiene la pestaña a la que pertenece el elemento con error
+                            var tabConError = jQuery(primerError.element).closest(".tab-pane").attr("id");
+
+                            // Activa la pestaña con error y aplica estilos
+                            $('#menu button[data-tabs-target="#' + tabConError + '"]').addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+
+                            //Activa los contenidos de la pestaña de el primer error
+                            $('#menu button[data-tabs-target="#' + jQuery(primerError.element).closest(".tab-pane").removeClass("hidden") + '"]');
+
+                            // Desactiva las otras pestañas
+                            $('#menu button[data-tabs-target]').not('[data-tabs-target="#' + tabConError + '"]').removeClass("menu-active bg-[#27ceeb] text-white").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+
+                            // Oculta los contenidos de las otras pestañas
+                            $("#menu-contents > div[id]").not('#' + tabConError).addClass("hidden");
                         }
                     }
                 },
