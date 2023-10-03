@@ -906,42 +906,42 @@
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">1.- Nombre (s)</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Nombre (s)</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="1.- Nombre (s)">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="Nombre (s) de primera referencia">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">1.- Apellido paterno</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="1.- Apellido paterno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="Apellido paterno de primera referencia">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">1.- Apellido materno</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="1.- Apellido materno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="Apellido materno de primera referencia">
                                     </div>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">1.- Relación</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Relación</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -966,14 +966,14 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">1.- Teléfono</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" placeholder="1.- Teléfono">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" placeholder="Teléfono de primera referencia">
                                     </div>
                                  </div>
                               </div>
@@ -984,42 +984,42 @@
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">2.- Nombre (s)</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Nombre (s)</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="2.- Nombre (s)">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="Nombre (s) de segunda referencia">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">2.- Apellido paterno</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="2.- Apellido paterno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="Apellido paterno de segunda referencia">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">2.- Apellido materno</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="2.- Apellido materno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="Apellido materno de segunda referencia">
                                     </div>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">2.- Relación</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Relación</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1044,14 +1044,14 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">2.- Teléfono</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" placeholder="2.- Teléfono">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" placeholder="Teléfono de segunda referencia">
                                     </div>
                                  </div>
                               </div>
