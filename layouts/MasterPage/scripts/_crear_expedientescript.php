@@ -2,8 +2,17 @@
 <script src="../src/js/select2.min.js"></script>
 <script>
 
+    //Variable global que nos permite acceder al menú desde cualquier función.
+    let menuExpedientes = [];
+    //Variable global que establece "datosG" como la pestaña activa inicialmente
+    let pestañaActiva = {
+        id: 'datosG',
+        triggerMenu: $('#datosG-tab'),
+        targetMenu: $('#datosG')
+    };
+
 	//Empieza la configuración del menú
-   const menuExpedientes = [{
+    menuExpedientes = [{
 			id: 'datosG',
 			triggerMenu: document.querySelector('#datosG-tab'),
 			targetMenu: document.querySelector('#datosG')
@@ -28,6 +37,11 @@
 	menuExpedientes.forEach((menu) => {
 		menu.triggerMenu.addEventListener('click', () => {
 			objective = menu;
+            // Verifica si la pestaña a la que se hace clic es diferente de la pestaña activa actual
+            if (menu.id !== pestañaActiva.id) {
+                // Actualiza la pestaña activa al hacer clic en un botón de menú
+                pestañaActiva = menu;
+            }
 
 			menuExpedientes.forEach((trigger) => {
 				trigger.targetMenu.classList.remove("block")
@@ -268,6 +282,7 @@
 		//Termina la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 
         //Empieza la configuración de los fileupload
+        //Crea dinámicamente el código si se agrega una nueva papelería en la base de datos.
         <?php for($i = 1; $i <= $counttipospapeleria; $i++){
 
         echo ("var papeleria_clone{$i};");
@@ -424,27 +439,34 @@
 
         //Termina la configuración de los fileupload
 
-        //EMPIEZA EL JQUERY VALIDATION
+        //EMPIEZA EL JQUERY VALIDATION - Estas funciones personalizadas para ciertas validaciones en jquery validation
+
+        //Valida si el email está escrito correctamente - eg: flavio@flavio.com.
         $.validator.addMethod('email_verification', function (value, element) {
             return this.optional(element) || /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
         }, 'not a valid email.');
 		
+        //Valida si el número de empleado empieza con F y L, seguido de un guión y al final cualquier número.
 		$.validator.addMethod('num_empleado', function (value, element) {
             return this.optional(element) || /^([FL]){1}-([0-9])+$/.test(value);
         }, 'invalid employee number.');
 		
+        //Un validador que acepta minúsculas y mayúsculas además permite un espacio entre palabras.
 		$.validator.addMethod('field_validation', function (value, element) {
             return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
         }, 'not a valid field.');
 
+        //Lo mismo que lo anterior solo que acepta números y algunos carácteres especiales.
         $.validator.addMethod('location_validation', function (value) {
             return /^(?:([a-zA-Z0-9\u00C0-\u00FF][?:\.|,]?)+([?:\s|-][a-zA-Z0-9\u00C0-\u00FF]+[?:\.|,]?)*)?$/.test(value);
         }, 'not a valid field.');
 
+        //Lo mismo que lo anterior solo que acepta números y algunos carácteres especiales.
         jQuery.validator.addMethod("model_validation", function(value, element) {
             return this.optional(element) || /^([a-zA-Z0-9\u00C0-\u00FF])+([?:\s|\-|\_][a-zA-Z0-9\u00C0-\u00FF]+)*$/i.test(value);
         }, "invalid model");
 
+        //Función que valida si se es mayor que 18.
         jQuery.validator.addMethod("mayor18", function(value, element) {              
             var from = value.split("/");
 
@@ -468,10 +490,12 @@
             }
         }, "Sorry, you must be 18 years of age to apply");
 
+        //Función que valida nombres escritos en los campos.
         $.validator.addMethod('names_validation', function (value, element) {
 			return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
 		}, 'not a valid name.');
 
+        //Verifica si el usuario no modificó el dropdown a través de la consola.
         $.validator.addMethod("refvalplus3", function(value, element) {
             if ($("#reflab").val() > 3) {
                 return false;
@@ -479,12 +503,386 @@
             return true;
         }, "Please enter a valid value in selectbox");
 
+        //Lo mismo que lo anterior pero para referencias bancarias.
         $.validator.addMethod("refbanplus3", function(value, element) {
             if ($("#refban").val() > 3) {
                 return false;
             } 
             return true;
         }, "Please enter a valid value in selectbox");
+
+        //Se debe asignar un usuario al expediente obligatoriamente debido a las relaciones de la  base de datos.
+        //Debido a que se quiere implementar un guardado en progreso, encapsulamos las reglas y los mensajes en diferentes objectos.
+        var Select2Rules = {
+            user: {
+                required: true
+            }
+        };
+
+        //Mensaje del select2
+        var Select2Messages = {
+            user:{
+                required: 'Este campo es requerido'
+            }
+        };
+
+        //Reglas de validación en un objeto separado.
+        var DatosGeneralesRules = {
+            numempleado: {
+                required: true,
+                num_empleado: true,
+                remote: {
+                    url: "../ajax/expedientes/check_num_empleado.php",
+                    type: "GET",
+                    beforeSend: function () {
+                        $('#loader-numempleado').removeClass('hidden');
+                        $('#correct-numempleado').addClass('hidden');
+                    },
+                    complete: function(data){
+                        if(data.responseText == "true") {
+                            $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                            $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                        }else{
+                            $('#loader-numempleado').addClass('hidden');
+                            $('#correct-numempleado').addClass('hidden');
+                        }
+                    }
+                }
+            },
+            puesto: {
+                required: true,
+                minlength: 4,
+                field_validation: true
+            },
+            posee_correo:{
+                required: true
+            },
+            calle: {
+                location_validation: true
+            },
+            ninterior: {
+                digits: true
+            },
+            nexterior: {
+                digits: true
+            },
+            colonia: {
+                location_validation: true
+            },
+            codigo: {
+                digits: true
+            },
+            teldom: {
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            tel_movil:{
+                required: true
+            },
+            tel_movil_empresa:{
+                required: true
+            },
+            laptop_empresa:{
+                required: true
+            },
+            casa:{
+                required: true
+            },
+            retencion:{
+                required: true
+            },
+            fechanac:{
+                mayor18: true
+            },
+            salario_contrato:{
+                number:true
+            },
+            salario_fechaalta:{
+                number: true
+            },
+            observaciones:{
+                field_validation:true
+            },
+            curp:{
+                alphanumeric: true,
+                minlength: 18,
+                maxlength: 18
+            },
+            nss:{
+                digits: true,
+                minlength: 11,
+                maxlength: 11
+            },
+            rfc:{
+                alphanumeric: true,
+                minlength: 12,
+                maxlength: 13
+            }
+        };
+
+        //Mensajes de los datos generales
+        var DatosGeneralesMessages = {
+            numempleado: {
+                required:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Este campo es requerido"; },
+                num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
+                remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
+            },
+            puesto: {
+                required:'Este campo es requerido',
+                minlength: 'El puesto debe de contener 4 caracteres como mínimo',
+                field_validation:'Solo se permiten carácteres alfabéticos y espacios'
+            },
+            posee_correo:{
+                required: 'Este campo es requerido'
+            },
+            calle: {
+                location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+            },
+            ninterior: {
+                digits: 'Solo se permiten números'
+            },
+            nexterior: {
+                digits: 'Solo se permiten números'
+            },
+            colonia: {
+                location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+            },
+            codigo: {
+                digits: 'Solo se permiten números'
+            },
+            teldom: {
+                digits: 'Solo se permiten números',
+                minlength: 'Solo puedes ingresar como mínimo 10 números',
+                maxlength: 'Solo puedes ingresar como máximo 10 números'
+            },
+            tel_movil:{
+                required: 'Este campo es requerido'
+            },
+            tel_movil_empresa:{
+                required: 'Este campo es requerido'
+            },
+            laptop_empresa:{
+                required: 'Este campo es requerido'
+            },
+            casa:{
+                required: 'Este campo es requerido'
+            },
+            retencion:{
+                required: 'Este campo es requerido'
+            },
+            fechanac:{
+                mayor18: 'Debes tener por lo menos 18 años para aplicar'
+            },
+            salario_contrato:{
+                number: 'Solo se permiten números y decimales'
+            },
+            salario_fechaalta:{
+                number: 'Solo se permiten números y decimales'
+            },
+            observaciones:{
+                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+            },
+            curp: {
+                alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                minlength: 'Solo puedes ingresar como mínimo 18 números',
+                maxlength: 'Solo puedes ingresar como máximo 18 números'
+            },
+            nss:{
+                digits: 'Solo se permiten números',
+                minlength: 'Solo puedes ingresar como mínimo 11 números',
+                maxlength: 'Solo puedes ingresar como máximo 11 números'
+            },
+            rfc:{
+                alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                minlength: 'Solo puedes ingresar como mínimo 12 números',
+                maxlength: 'Solo puedes ingresar como máximo 13 números'
+            }
+        };
+
+        var DatosAdicionalesRules = {
+            reflab:{
+                refvalplus3: true
+            },
+            cantidadpolo:{
+                digits: true
+            },
+            emergencia_nom:{
+                names_validation: true
+            },
+            emergencia_nom2:{
+                names_validation: true
+            },
+            emergencia_appat:{
+                names_validation: true
+            },
+            emergencia_appat2:{
+                names_validation: true
+            },
+            emergencia_apmat:{
+                names_validation: true
+            },
+            emergencia_apmat2:{
+                names_validation: true
+            },
+            emergencia_tel:{
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            emergencia_tel2:{
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            empresa:{
+                required: true
+            }
+        };
+
+        var DatosAdicionalesMessages = {
+            reflab:{
+                refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
+            },
+            cantidadpolo:{
+                digits: 'Solo se permiten números'
+            },
+            emergencia_nom:{
+                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+            },
+            emergencia_nom2:{
+                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+            },
+            emergencia_appat:{
+                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+            },
+            emergencia_appat2:{
+                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+            },
+            emergencia_apmat:{
+                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+            },
+            emergencia_apmat2:{
+                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+            },
+            emergencia_tel:{
+                digits: 'Solo se permiten números',
+                minlength: 'Solo puedes ingresar como mínimo 10 números',
+                maxlength: 'Solo puedes ingresar como máximo 10 números'
+            },
+            emergencia_tel2:{
+                digits: 'Solo se permiten números',
+                minlength: 'Solo puedes ingresar como mínimo 10 números',
+                maxlength: 'Solo puedes ingresar como máximo 10 números'
+            },
+            empresa:{
+                required: 'Este campo es requerido'
+            }
+        };
+
+        var DatosBancariosRules = {
+            refban:{
+                refbanplus3: true
+            },
+            banco_personal:{
+                field_validation: true
+            },
+            cuenta_personal:{
+                digits:true,
+                minlength: 10,
+                maxlength: 10
+            },
+            clabe_personal:{
+                digits:true,
+                minlength: 18,
+                maxlength: 18
+            },
+            plastico_personal:{
+                digits: true,
+                minlength: 16,
+                maxlength: 16
+            },
+            banco_nomina:{
+                field_validation:true
+            },
+            cuenta_nomina:{
+                digits:true,
+                minlength: 10,
+                maxlength: 10
+            },
+            clabe_nomina:{
+                digits:true,
+                minlength: 18,
+                maxlength: 18
+            },
+            plastico:{
+                digits:true,
+                minlength: 16,
+                maxlength: 16
+            }
+        };
+
+        var DatosBancariosMessages = {
+            refban:{
+                refbanplus3: 'Solo se permiten hasta 3 referencias bancarias'
+            },
+            banco_personal:{
+                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+            },
+            cuenta_personal:{
+                digits: 'Solo se permiten números',
+                minlength: 'No puede ser menor a 10 dígitos',
+                maxlength: 'No puede ser mayor a 10 dígitos'
+            },
+            clabe_personal:{
+                digits: 'Solo se permiten números',
+                minlength: 'No puede ser menor a 18 dígitos',
+                maxlength: 'No puede ser mayor a 18 dígitos'
+            },
+            plastico_personal:{
+                digits: 'Solo se permiten números',
+                minlength: 'No puede ser menor a 16 dígitos',
+                maxlength: 'No puede ser mayor a 16 dígitos'
+            },
+            banco_nomina:{
+                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+            },
+            cuenta_nomina:{
+                digits: 'Solo se permiten números',
+                minlength: 'No puede ser menor a 10 dígitos',
+                maxlength: 'No puede ser mayor a 10 dígitos'
+            },
+            clabe_nomina:{
+                digits: 'Solo se permiten números',
+                minlength: 'No puede ser menor a 18 dígitos',
+                maxlength: 'No puede ser mayor a 18 dígitos'
+            },
+            plastico:{
+                digits: 'Solo se permiten números',
+                minlength: 'No puede ser menor a 16 dígitos',
+                maxlength: 'No puede ser mayor a 16 dígitos'
+            }
+        };
+
+
+
+        // Fusionar los objetos de reglas de validación
+        var mergedDatosGRules = Object.assign({}, Select2Rules, DatosGeneralesRules);
+
+        var mergedDatosARules = Object.assign({}, Select2Rules, DatosAdicionalesRules);
+
+        var mergedDatosBRules = Object.assign({}, Select2Rules, DatosBancariosRules);
+
+        var mergedAllRules = Object.assign({}, Select2Rules, DatosGeneralesRules, DatosAdicionalesRules, DatosBancariosRules);
+
+        // Fusionar los objetos de mensajes de validación
+        var mergedDatosGMessages = Object.assign({}, Select2Messages, DatosGeneralesMessages);
+
+        var mergedDatosAMessages = Object.assign({}, Select2Messages, DatosAdicionalesMessages);
+
+        var mergedDatosBMessages = Object.assign({}, Select2Messages, DatosBancariosMessages);
+
+        var mergedAllMessages = Object.assign({}, Select2Messages, DatosGeneralesMessages, DatosAdicionalesMessages, DatosBancariosMessages);
 
         if($('#Guardar').length > 0 ){
             $('#Guardar').validate({
@@ -539,334 +937,9 @@
                         $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                     }
                 },
-                rules: {
-                    user: {
-                        required: true
-                    },
-                    numempleado: {
-                        required: true,
-                        num_empleado: true,
-                        remote: {
-                            url: "../ajax/expedientes/check_num_empleado.php",
-                            type: "GET",
-                            beforeSend: function () {
-                                $('#loader-numempleado').removeClass('hidden');
-                                $('#correct-numempleado').addClass('hidden');
-                            },
-                            complete: function(data){
-                                if(data.responseText == "true") {
-                                    $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                                    $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
-                                }else{
-                                    $('#loader-numempleado').addClass('hidden');
-                                    $('#correct-numempleado').addClass('hidden');
-                                }
-                            }
-                        }
-                    },
-                    puesto: {
-                        required: true,
-                        minlength: 4,
-                        field_validation: true
-                    },
-                    posee_correo:{
-                        required: true
-                    },
-                    calle: {
-                        location_validation: true
-                    },
-                    ninterior: {
-                        digits: true
-                    },
-                    nexterior: {
-                        digits: true
-                    },
-                    colonia: {
-                        location_validation: true
-                    },
-                    codigo: {
-                        digits: true
-                    },
-                    teldom: {
-                        digits: true,
-                        minlength: 10,
-                        maxlength: 10
-                    },
-                    tel_movil:{
-                        required: true
-                    },
-                    tel_movil_empresa:{
-                        required: true
-                    },
-                    laptop_empresa:{
-                        required: true
-                    },
-                    casa:{
-                        required: true
-                    },
-                    retencion:{
-                        required: true
-                    },
-                    fechanac:{
-                        mayor18: true
-                    },
-                    salario_contrato:{
-                        number:true
-                    },
-                    salario_fechaalta:{
-                        number: true
-                    },
-                    observaciones:{
-                        field_validation:true
-                    },
-                    curp:{
-                        alphanumeric: true,
-                        minlength: 18,
-                        maxlength: 18
-                    },
-                    nss:{
-                        digits: true,
-                        minlength: 11,
-                        maxlength: 11
-                    },
-                    rfc:{
-                        alphanumeric: true,
-                        minlength: 12,
-                        maxlength: 13
-                    },
-                    reflab:{
-                        refvalplus3: true
-                    },
-                    cantidadpolo:{
-			            digits: true
-		            },
-		            emergencia_nom:{
-			            names_validation: true
-		            },
-		            emergencia_nom2:{
-			            names_validation: true
-		            },
-                    emergencia_appat:{
-			            names_validation: true
-		            },
-		            emergencia_appat2:{
-			            names_validation: true
-		            },
-                    emergencia_apmat:{
-			            names_validation: true
-		            },
-		            emergencia_apmat2:{
-			            names_validation: true
-		            },
-		            emergencia_tel:{
-			            digits: true,
-                        minlength: 10,
-                        maxlength: 10
-		            },
-		            emergencia_tel2:{
-			            digits: true,
-                        minlength: 10,
-                        maxlength: 10
-		            },
-                    empresa:{
-                        required: true
-                    },
-                    refban:{
-                        refbanplus3: true
-                    },
-                    banco_personal:{
-				        field_validation: true
-			        },
-			        cuenta_personal:{
-				        digits:true,
-                        minlength: 10,
-                        maxlength: 10
-			        },
-			        clabe_personal:{
-				        digits:true,
-                        minlength: 18,
-                        maxlength: 18
-			        },
-                    plastico_personal:{
-                        digits: true,
-                        minlength: 16,
-	                    maxlength: 16
-                    },
-			        banco_nomina:{
-				        field_validation:true
-			        },
-			        cuenta_nomina:{
-				        digits:true,
-                        minlength: 10,
-                        maxlength: 10
-			        },
-			        clabe_nomina:{
-				        digits:true,
-                        minlength: 18,
-                        maxlength: 18
-			        },
-			        plastico:{
-				        digits:true,
-                        minlength: 16,
-	                    maxlength: 16
-			        }
-                },
-                messages: {
-                    user:{
-                        required: 'Este campo es requerido'
-                    },
-                    numempleado: {
-                        required:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Este campo es requerido"; },
-                        num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
-                        remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
-                    },
-                    puesto: {
-                        required:'Este campo es requerido',
-                        minlength: 'El puesto debe de contener 4 caracteres como mínimo',
-                        field_validation:'Solo se permiten carácteres alfabéticos y espacios'
-                    },
-                    posee_correo:{
-                        required: 'Este campo es requerido'
-                    },
-                    calle: {
-                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-                    },
-                    ninterior: {
-                        digits: 'Solo se permiten números'
-                    },
-                    nexterior: {
-                        digits: 'Solo se permiten números'
-                    },
-                    colonia: {
-                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-                    },
-                    codigo: {
-                        digits: 'Solo se permiten números'
-                    },
-                    teldom: {
-                        digits: 'Solo se permiten números',
-                        minlength: 'Solo puedes ingresar como mínimo 10 números',
-                        maxlength: 'Solo puedes ingresar como máximo 10 números'
-                    },
-                    tel_movil:{
-                        required: 'Este campo es requerido'
-                    },
-                    tel_movil_empresa:{
-                        required: 'Este campo es requerido'
-                    },
-                    laptop_empresa:{
-                        required: 'Este campo es requerido'
-                    },
-                    casa:{
-                        required: 'Este campo es requerido'
-                    },
-                    retencion:{
-                        required: 'Este campo es requerido'
-                    },
-                    fechanac:{
-                        mayor18: 'Debes tener por lo menos 18 años para aplicar'
-                    },
-                    salario_contrato:{
-                        number: 'Solo se permiten números y decimales'
-                    },
-                    salario_fechaalta:{
-                        number: 'Solo se permiten números y decimales'
-                    },
-                    observaciones:{
-                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                    },
-                    curp: {
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'Solo puedes ingresar como mínimo 18 números',
-                        maxlength: 'Solo puedes ingresar como máximo 18 números'
-                    },
-                    nss:{
-                        digits: 'Solo se permiten números',
-                        minlength: 'Solo puedes ingresar como mínimo 11 números',
-                        maxlength: 'Solo puedes ingresar como máximo 11 números'
-                    },
-                    rfc:{
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'Solo puedes ingresar como mínimo 12 números',
-                        maxlength: 'Solo puedes ingresar como máximo 13 números'
-                    },
-                    reflab:{
-                        refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
-                    },
-                    cantidadpolo:{
-			            digits: 'Solo se permiten números'
-		            },
-                    emergencia_nom:{
-			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            },
-		            emergencia_nom2:{
-			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            },
-                    emergencia_appat:{
-			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            },
-		            emergencia_appat2:{
-			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            },
-                    emergencia_apmat:{
-			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            },
-		            emergencia_apmat2:{
-			            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-		            },
-		            emergencia_tel:{
-			            digits: 'Solo se permiten números',
-                        minlength: 'Solo puedes ingresar como mínimo 10 números',
-                        maxlength: 'Solo puedes ingresar como máximo 10 números'
-		            },
-		            emergencia_tel2:{
-			            digits: 'Solo se permiten números',
-                        minlength: 'Solo puedes ingresar como mínimo 10 números',
-                        maxlength: 'Solo puedes ingresar como máximo 10 números'
-		            },
-                    empresa:{
-                        required: 'Este campo es requerido'
-                    },
-                    refban:{
-                        refbanplus3: 'Solo se permiten hasta 3 referencias bancarias'
-                    },
-                    banco_personal:{
-				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-			        },
-			        cuenta_personal:{
-				        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 10 dígitos',
-	                    maxlength: 'No puede ser mayor a 10 dígitos'
-			        },
-			        clabe_personal:{
-				        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 18 dígitos',
-	                    maxlength: 'No puede ser mayor a 18 dígitos'
-			        },
-                    plastico_personal:{
-                        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 16 dígitos',
-	                    maxlength: 'No puede ser mayor a 16 dígitos'
-                    },
-			        banco_nomina:{
-				        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-			        },
-			        cuenta_nomina:{
-				        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 10 dígitos',
-	                    maxlength: 'No puede ser mayor a 10 dígitos'
-			        },
-			        clabe_nomina:{
-				        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 18 dígitos',
-	                    maxlength: 'No puede ser mayor a 18 dígitos'
-			        },
-			        plastico:{
-				        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 16 dígitos',
-	                    maxlength: 'No puede ser mayor a 16 dígitos'
-			        }
-                },
+                //Inicializamos en la primera pestaña que es Datos generales
+                rules: mergedDatosGRules,
+                messages: mergedDatosGMessages,
                 submitHandler: function(form) {
                     $('#submit-button').html(
 		                '<button disabled type="submit" id="finish" name="finish" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">'+
@@ -903,419 +976,405 @@
             $(this).valid()
         });
 
+         // Manejador de eventos para los botones de las pestañas
+        $("#datosG-tab, #datosA-tab, #datosB-tab, #documentos-tab").on("click", function() {
+
+            // Obtén el ID de la pestaña a la que se está cambiando
+            var nuevaPestaña = $(this).attr("data-tabs-target");
+            pestañaActiva = nuevaPestaña;
+
+                
+            // Actualiza la variable de la pestaña activa
+            pestañaActiva = nuevaPestaña;
+
+            // Obtén una referencia al formulario por su ID o como prefieras
+            var formulario = $("#Guardar");
+
+            // Ejemplo: Activar o desactivar reglas de validación según la pestaña
+            if (pestañaActiva === "#datosG") {
+                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "datosG"
+
+                //Esta función eliminar todas las reglas del formulario
+                formulario.find(":input").each(function() {
+                    $(this).rules("remove");
+                });
+
+                // Agregar las reglas de validación de datosG fusionados
+                formulario.validate().settings.rules = mergedDatosGRules;
+
+                // Agregar los mensajes de validación de datosG fusionados
+                formulario.validate().settings.messages = mergedDatosGMessages;
+
+            } else if (pestañaActiva === "#datosA") {
+                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "datosA"
+
+                //Esta función eliminar todas las reglas del formulario
+                formulario.find(":input").each(function() {
+                    $(this).rules("remove");
+                });
+
+                // Agregar las reglas de validación de datosA fusionados
+                formulario.validate().settings.rules = mergedDatosARules;
+
+                // Agregar los mensajes de validación de datosA fusionados
+                formulario.validate().settings.messages = mergedDatosAMessages;
+            }
+        });
+
 	});
 
 	//Aquí empiezan las referencias laborales
-	function AgregarReferencias(){
-        var values = ["SUPERVISOR(A)", "COLEGA", "SUBORDINADO(A)", "MENTOR(A)", "CLIENTE", "PROFESOR(A)", "DEPARTAMENTO DE PERSONAL", "PROVEEDOR(A)", "MIEMBRO DE UN COMITE", "OTRO"];
-        var number = document.getElementById("reflab").value;
-        number = number.replace(/[^0-9]/g, function replacing() {
-            document.getElementById("reflab").value = 0;
+    function AgregarReferencias() {
+        var valoresRelacion = ["SUPERVISOR(A)", "COLEGA", "SUBORDINADO(A)", "MENTOR(A)", "CLIENTE", "PROFESOR(A)", "DEPARTAMENTO DE PERSONAL", "PROVEEDOR(A)", "MIEMBRO DE UN COMITÉ", "OTRO"];
+        var numeroReferencias = $("#reflab").val().replace(/[^0-9]/g, function () {
+            $("#reflab").val(0);
             return "0";
         });
-        var container = document.getElementById("referencias");
-        var childrenCount = container.childElementCount;
-        var count = childrenCount + 1;
-        var result = 0;
-        if (number == 0) {
-            childrenCount = 0;
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        }else if(number > 3){
-            childrenCount = 0;
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        } else {
-            if (number < childrenCount) {
-                result = childrenCount - number;
-                for (j = 0; j < result; j++) {
-                    container.removeChild(container.lastChild);
-                }
-            } else if (number > childrenCount) {
-                result = number - childrenCount;
-                for (i=0;i<result;i++){
-                    var divrow = document.createElement("div");
-                    divrow.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-                    container.appendChild(divrow);
-                    var div = document.createElement("div");
-                    div.classList.add('grid', 'grid-cols-1');
-                    divrow.appendChild(div);
-                    var div2 = document.createElement("div");
-                    div2.classList.add('grid', 'grid-cols-1');
-                    divrow.appendChild(div2);
-                    var div3 = document.createElement("div");
-                    div3.classList.add('grid', 'grid-cols-1');
-                    divrow.appendChild(div3);
-                    var divrelacion = document.createElement("div");
-                    divrelacion.classList.add('grid', 'grid-cols-1');
-                    divrow.appendChild(divrelacion);
-                    var divtelefono = document.createElement("div");
-                    divtelefono.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
-                    divrow.appendChild(divtelefono);
-                    var labelnombre = document.createElement("label");
-                    labelnombre.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textnombre = document.createTextNode(count+".- Nombre (s)");
-                    labelnombre.appendChild(textnombre);
-                    div.appendChild(labelnombre);
-                    var grupo = document.createElement("div");
-                    grupo.classList.add('group', 'flex');
-                    div.appendChild(grupo);
-                    var div4 = document.createElement("div");
-                    div4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div4.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    grupo.appendChild(div4);
-                    var input = document.createElement("input");
-                    input.type = "text";
-                    input.name = "infa_rnombre" + childrenCount;
-                    input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'outline-none', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input.setAttribute("data-rule-required", "true");
-                    input.setAttribute("data-msg-required", "Este campo es requerido");
-                    input.setAttribute("data-rule-names_validation", "true");
-                    input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    input.setAttribute("placeholder", count+ ".- Nombre (s)"); 
-                    grupo.appendChild(input);
-                    var labelapellidopat = document.createElement("label");
-                    labelapellidopat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidopat = document.createTextNode(count+ ".- Apellido paterno");
-                    labelapellidopat.appendChild(textapellidopat);
-                    div2.appendChild(labelapellidopat);
-                    var grupo2 = document.createElement("div");
-                    grupo2.classList.add('group', 'flex');
-                    div2.appendChild(grupo2);
-                    var div5 = document.createElement("div");
-                    div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    grupo2.appendChild(div5);
-                    var input2 = document.createElement("input");
-                    input2.type = "text";
-                    input2.name = "infa_rapellidopat" + childrenCount;
-                    input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'outline-none', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input2.setAttribute("data-rule-required", "true");
-                    input2.setAttribute("data-msg-required", "Este campo es requerido");
-                    input.setAttribute("data-rule-names_validation", "true");
-                    input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    input2.setAttribute("placeholder", count+ ".- Apellido paterno");
-                    grupo2.appendChild(input2);
-                    var labelapellidomat = document.createElement("label");
-                    labelapellidomat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidomat = document.createTextNode(count+ ".- Apellido materno");
-                    labelapellidomat.appendChild(textapellidomat);
-                    div3.appendChild(labelapellidomat);
-                    var grupo3 = document.createElement("div");
-                    grupo3.classList.add('group', 'flex');
-                    div3.appendChild(grupo3);
-                    var div6 = document.createElement("div");
-                    div6.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div6.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    grupo3.appendChild(div6);
-                    var input3 = document.createElement("input");
-                    input3.type = "text";
-                    input3.name = "infa_rapellidomat" + childrenCount;
-                    input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'outline-none', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input3.setAttribute("data-rule-required", "true");
-                    input3.setAttribute("data-msg-required", "Este campo es requerido");
-                    input.setAttribute("data-rule-names_validation", "true");
-                    input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    input3.setAttribute("placeholder", count+ ".- Apellido materno");
-                    grupo3.appendChild(input3);
-                    var labelrelacion = document.createElement("label");
-                    labelrelacion.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textrelacion = document.createTextNode(count+ ".- Relación");
-                    labelrelacion.appendChild(textrelacion);
-                    divrelacion.appendChild(labelrelacion);
-                    var gruporelacion = document.createElement("div");
-                    gruporelacion.classList.add('group', 'flex');
-                    divrelacion.appendChild(gruporelacion);
-                    var divrelchildren = document.createElement("div");
-                    divrelchildren.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    divrelchildren.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-                    gruporelacion.appendChild(divrelchildren);
-                    var selectrelacion = document.createElement("select");
-                    var defaultvalue = document.createElement("option");
-                    defaultvalue.value = "";
-                    defaultvalue.text = "--Selecciona--";
-                    selectrelacion.appendChild(defaultvalue);
-                    for (const val of values) {
-                        var option = document.createElement("option");
-                        option.value = val;
-                        option.text = val.charAt(0).toUpperCase() + val.slice(1);
-                        selectrelacion.appendChild(option);
-                    }
-                    selectrelacion.name = "infa_rrelacion" + childrenCount;
-                    selectrelacion.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    selectrelacion.setAttribute("data-rule-required", "true");
-                    selectrelacion.setAttribute("data-msg-required", "Este campo es requerido");
-                    gruporelacion.appendChild(selectrelacion);
-                    var labeltelefono = document.createElement("label");
-                    labeltelefono.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var texttelefono = document.createTextNode(count+ ".- Teléfono");
-                    labeltelefono.appendChild(texttelefono);
-                    divtelefono.appendChild(labeltelefono);
-                    var grupotelefono = document.createElement("div");
-                    grupotelefono.classList.add('group', 'flex');
-                    divtelefono.appendChild(grupotelefono);
-                    var divtelchildren = document.createElement("div");
-                    divtelchildren.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    divtelchildren.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" /></svg>';
-                    grupotelefono.appendChild(divtelchildren);
-                    var inputtelefono = document.createElement("input");
-                    inputtelefono.name = "infa_rtelefono" + childrenCount;
-                    inputtelefono.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'outline-none', 'focus:ring-2', 'focus:ring-celeste-600');
-                    inputtelefono.setAttribute("data-rule-required", "true");
-                    inputtelefono.setAttribute("data-msg-required", "Este campo es requerido");
-                    inputtelefono.setAttribute("data-rule-digits", "true");
-                    inputtelefono.setAttribute("data-msg-digits", "Solo se permiten números");
-                    inputtelefono.setAttribute("data-rule-minlength", 10);
-                    inputtelefono.setAttribute("data-msg-minlength", "Solo puedes ingresar como mínimo 10 números");
-                    inputtelefono.setAttribute("data-rule-maxlength", 10);
-                    inputtelefono.setAttribute("data-msg-maxlength", "Solo puedes ingresar como máximo 10 números");
-                    inputtelefono.setAttribute("placeholder", count+ ".- Teléfono");
-                    grupotelefono.appendChild(inputtelefono);
-                    count++;
-                    childrenCount++;
-                }
-            }
-        }
-     }
-	 //Terminan las referencias laborales
 
-     //Aquí empiezan las referencias bancarias
-     function AgregarBanco(){
-        var values = ["PADRE", "MADRE", "CONYUGE", "HIJO", "HIJA", "OTRO"];
-        var number = document.getElementById("refban").value;
-        number = number.replace(/[^0-9]/g, function replacing() {
-            document.getElementById("refban").value = 0;
-            return "0";
-        });
-        var container = document.getElementById("ref");
-        var childrenCount = container.childElementCount;
-        var count = childrenCount + 1;
-        var result = 0;
-        if (number == 0) {
-            childrenCount = 0;
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        }else if(number > 2){
-            childrenCount = 0;
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        }else {
-            if (number < childrenCount) {
-                result = childrenCount - number;
-                for (j = 0; j < result; j++) {
-                    container.removeChild(container.lastChild);
+        var contenedorReferencias = $("#referencias");
+        var cantidadElementos = contenedorReferencias.children().length;
+        var contador = cantidadElementos + 1;
+
+        if (numeroReferencias == 0 || numeroReferencias > 3) {
+            contenedorReferencias.empty();
+        } else {
+            if (numeroReferencias < cantidadElementos) {
+                for (var j = 0; j < cantidadElementos - numeroReferencias; j++) {
+                    contenedorReferencias.children().last().remove();
                 }
-            } else if (number > childrenCount) {
-                result = number - childrenCount;
-                for (i=0;i<result;i++){
-                    var divcontainer = document.createElement("div");
-                    divcontainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-                    container.appendChild(divcontainer);
-                    var div = document.createElement("div");
-                    div.classList.add('grid', 'grid-cols-1');
-                    divcontainer.appendChild(div);
-                    var div_apellidopat = document.createElement("div");
-                    div_apellidopat.classList.add('grid', 'grid-cols-1');
-                    divcontainer.appendChild(div_apellidopat);
-                    var div_apellidomat = document.createElement("div");
-                    div_apellidomat.classList.add('grid', 'grid-cols-1');
-                    divcontainer.appendChild(div_apellidomat);
-                    var div2 = document.createElement("div");
-                    div2.classList.add('grid', 'grid-cols-1');
-                    divcontainer.appendChild(div2);
-                    var div3 = document.createElement("div");
-                    div3.classList.add('grid', 'grid-cols-1');
-                    divcontainer.appendChild(div3);
-                    var div7 = document.createElement("div");
-                    div7.classList.add('grid', 'grid-cols-1');
-                    divcontainer.appendChild(div7);
-                    var div9 = document.createElement("div");
-                    div9.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
-                    divcontainer.appendChild(div9);
-                    var labelnombre = document.createElement("label");
-                    labelnombre.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textnombre = document.createTextNode(count+ ".- Nombre (s)");
-                    labelnombre.appendChild(textnombre);
-                    div.appendChild(labelnombre);
-                    var grupo = document.createElement("div");
-                    grupo.classList.add('group', 'flex');
-                    div.appendChild(grupo);
-                    var div4 = document.createElement("div");
-                    div4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div4.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    grupo.appendChild(div4);
-                    var input = document.createElement("input");
-                    input.type = "text";
-                    input.name = "infb_rnombre" + childrenCount;
-                    input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input.setAttribute("data-rule-required", "true"); 
-                    input.setAttribute("data-msg-required", "Este campo es requerido");
-                    input.setAttribute("data-rule-names_validation", "true"); 
-                    input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    input.setAttribute("placeholder", count+ ".- Nombre (s)"); 
-                    grupo.appendChild(input);
-                    var labelapellidopat = document.createElement("label");
-                    labelapellidopat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidopat = document.createTextNode(count+ ".- Apellido paterno");
-                    labelapellidopat.appendChild(textapellidopat);
-                    div_apellidopat.appendChild(labelapellidopat);
-                    var grupo_apellidopat = document.createElement("div");
-                    grupo_apellidopat.classList.add('group', 'flex');
-                    div_apellidopat.appendChild(grupo_apellidopat);
-                    var div_icono_apellidopat = document.createElement("div");
-                    div_icono_apellidopat.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div_icono_apellidopat.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    grupo_apellidopat.appendChild(div_icono_apellidopat);
-                    var input_apellidopat = document.createElement("input");
-                    input_apellidopat.type = "text";
-                    input_apellidopat.name = "infb_rapellidopat" + childrenCount;
-                    input_apellidopat.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input_apellidopat.setAttribute("data-rule-required", "true"); 
-                    input_apellidopat.setAttribute("data-msg-required", "Este campo es requerido");
-                    input_apellidopat.setAttribute("data-rule-names_validation", "true"); 
-                    input_apellidopat.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    input_apellidopat.setAttribute("placeholder", count+ ".- Apellido paterno"); 
-                    grupo_apellidopat.appendChild(input_apellidopat);
-                    var labelapellidomat = document.createElement("label");
-                    labelapellidomat.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textapellidomat = document.createTextNode(count+ ".- Apellido materno");
-                    labelapellidomat.appendChild(textapellidomat);
-                    div_apellidomat.appendChild(labelapellidomat);
-                    var grupo_apellidomat = document.createElement("div");
-                    grupo_apellidomat.classList.add('group', 'flex');
-                    div_apellidomat.appendChild(grupo_apellidomat);
-                    var div_icono_apellidomat = document.createElement("div");
-                    div_icono_apellidomat.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div_icono_apellidomat.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    grupo_apellidomat.appendChild(div_icono_apellidomat);
-                    var input_apellidomat = document.createElement("input");
-                    input_apellidomat.type = "text";
-                    input_apellidomat.name = "infb_rapellidomat" + childrenCount;
-                    input_apellidomat.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input_apellidomat.setAttribute("data-rule-required", "true"); 
-                    input_apellidomat.setAttribute("data-msg-required", "Este campo es requerido");
-                    input_apellidomat.setAttribute("data-rule-names_validation", "true"); 
-                    input_apellidomat.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    input_apellidomat.setAttribute("placeholder", count+ ".- Apellido materno"); 
-                    grupo_apellidomat.appendChild(input_apellidomat);
-                    var labelrelacion = document.createElement("label");
-                    labelrelacion.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textrelacion = document.createTextNode(count+ ".- Relación");
-                    labelrelacion.appendChild(textrelacion);
-                    div2.appendChild(labelrelacion);
-                    var grupo2 = document.createElement("div");
-                    grupo2.classList.add('group', 'flex');
-                    div2.appendChild(grupo2);
-                    var div5 = document.createElement("div");
-                    div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-                    grupo2.appendChild(div5);
-                    var selectrelacion = document.createElement("select");
-                    var defaultvalue = document.createElement("option");
-                    defaultvalue.value = "";
-                    defaultvalue.text = "--Selecciona--";
-                    selectrelacion.appendChild(defaultvalue);
-                    for (const val of values) {
-                        var option = document.createElement("option");
-                        option.value = val;
-                        option.text = val.charAt(0).toUpperCase() + val.slice(1);
-                        selectrelacion.appendChild(option);
+            } else if (numeroReferencias > cantidadElementos) {
+                for (var i = 0; i < numeroReferencias - cantidadElementos; i++) {
+                    var divFila = $("<div>").addClass('grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start');
+                    contenedorReferencias.append(divFila);
+
+                    var divColumna = $("<div>").addClass('md:col-span-1');
+                    divFila.append(divColumna);
+
+                    var tituloReferencia = $("<div>").addClass('text-[#64748b] font-semibold mb-2').text(obtenerTituloReferencia(contador));
+                    divColumna.append(tituloReferencia);
+
+                    var divGridNombre = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaNombre = $("<label>").addClass('text-[#64748b] font-semibold').text("Nombre (s)");
+                    divGridNombre.append(etiquetaNombre);
+                    var divGroupNombre = $("<div>").addClass('group flex');
+                    divGridNombre.append(divGroupNombre);
+                    var divIconNombre = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupNombre.append(divIconNombre);
+                    var svgNombre = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconNombre.append(svgNombre);
+                    var inputNombre = $("<input>").attr({
+                        type: "text",
+                        name: "infa_rnombre" + cantidadElementos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-names_validation": "true",
+                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
+                        placeholder: "Nombre (s) de " + obtenerTituloReferencia(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupNombre.append(inputNombre);
+
+                    var divGridApellidoPat = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaApellidoPat = $("<label>").addClass('text-[#64748b] font-semibold').text("Apellido paterno");
+                    divGridApellidoPat.append(etiquetaApellidoPat);
+                    var divGroupApellidoPat = $("<div>").addClass('group flex');
+                    divGridApellidoPat.append(divGroupApellidoPat);
+                    var divIconApellidoPat = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupApellidoPat.append(divIconApellidoPat);
+                    var svgApellidopat = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconApellidoPat.append(svgApellidopat);
+                    var inputApellidoPat = $("<input>").attr({
+                        type: "text",
+                        name: "infa_rapellidopat" + cantidadElementos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-names_validation": "true",
+                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
+                        placeholder: "Apellido paterno de " + obtenerTituloReferencia(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupApellidoPat.append(inputApellidoPat);
+
+                    var divGridApellidoMat = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaApellidoMat = $("<label>").addClass('text-[#64748b] font-semibold').text("Apellido Materno");
+                    divGridApellidoMat.append(etiquetaApellidoMat);
+                    var divGroupApellidoMat = $("<div>").addClass('group flex');
+                    divGridApellidoMat.append(divGroupApellidoMat);
+                    var divIconApellidoMat = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupApellidoMat.append(divIconApellidoMat);
+                    var svgApellidoMat = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconApellidoMat.append(svgApellidoMat);
+                    var inputApellidoMat = $("<input>").attr({
+                        type: "text",
+                        name: "infa_rapellidomat" + cantidadElementos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-names_validation": "true",
+                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
+                        placeholder: "Apellido materno de " + obtenerTituloReferencia(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupApellidoMat.append(inputApellidoMat);
+
+                    var divGridRelacion = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaRelacion = $("<label>").addClass('text-[#64748b] font-semibold').text("Relación");
+                    divGridRelacion.append(etiquetaRelacion);
+                    var divGroupRelacion = $("<div>").addClass('group flex');
+                    divGridRelacion.append(divGroupRelacion);
+                    var divIconRelacion = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupRelacion.append(divIconRelacion);
+                    var svgRelacion = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path></svg>';
+                    divIconRelacion.append(svgRelacion);
+                    var selectRelacion = $("<select>").attr({
+                        name: "infa_rrelacion" + cantidadElementos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido"
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    var opcionDefault = $("<option>").val("").text("--Selecciona--");
+                    selectRelacion.append(opcionDefault);
+                    $.each(valoresRelacion, function (index, value) {
+                        var opcion = $("<option>").val(value).text(value.charAt(0).toUpperCase() + value.slice(1));
+                        selectRelacion.append(opcion);
+                    });
+                    divGroupRelacion.append(selectRelacion);
+
+                    var divGridTelefono = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaTelefono = $("<label>").addClass('text-[#64748b] font-semibold').text("Teléfono");
+                    divGridTelefono.append(etiquetaTelefono);
+                    var divGroupTelefono = $("<div>").addClass('group flex');
+                    divGridTelefono.append(divGroupTelefono);
+                    var divIconTelefono = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupTelefono.append(divIconTelefono);
+                    var svgTelefono = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconTelefono.append(svgTelefono);
+                    var inputTelefono = $("<input>").attr({
+                        type: "text",
+                        name: "infa_rtelefono" + cantidadElementos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-digits": "true",
+                        "data-msg-digits": "Solo se permiten números",
+                        "data-rule-minlength": 10,
+                        "data-msg-minlength": "Solo puedes ingresar como mínimo 10 números",
+                        "data-rule-maxlength": 10,
+                        "data-msg-maxlength": "Solo puedes ingresar como máximo 10 números",
+                        placeholder: "Teléfono de " + obtenerTituloReferencia(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupTelefono.append(inputTelefono);
+
+                    if (numeroReferencias > 1) {
+                        divFila.addClass('border-t border-[#d1d5db] pt-5 mt-5');
                     }
-                    selectrelacion.name = "infb_rrelacion" + childrenCount;
-                    selectrelacion.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    selectrelacion.setAttribute("data-rule-required", "true");
-                    selectrelacion.setAttribute("data-msg-required", "Este campo es requerido");
-                    grupo2.appendChild(selectrelacion);
-                    var labelrfc = document.createElement("label");
-                    labelrfc.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textrfc = document.createTextNode(count+ ".- RFC");
-                    labelrfc.appendChild(textrfc);
-                    div3.appendChild(labelrfc);
-                    var grupo3 = document.createElement("div");
-                    grupo3.classList.add('group', 'flex');
-                    div3.appendChild(grupo3);
-                    var div6 = document.createElement("div");
-                    div6.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div6.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-document-edit-outline</title><path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" /></svg>';
-                    grupo3.appendChild(div6);
-                    var input3 = document.createElement("input");
-                    input3.type = "text";
-                    input3.name = "infb_rrfc" + childrenCount;
-                    input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input3.setAttribute("data-rule-required", "true");
-                    input3.setAttribute("data-msg-required", "Este campo es requerido");
-                    input3.setAttribute("data-rule-alphanumeric", "true");
-                    input3.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-                    input3.setAttribute("data-rule-minlength", 12);
-                    input3.setAttribute("data-msg-minlength", "Debes ingresar como mínimo 12 caracteres en el RFC");
-                    input3.setAttribute("data-rule-maxlength", 13);
-                    input3.setAttribute("data-msg-maxlength", "Debes ingresar como máximo 13 caracteres en el RFC");
-                    input3.setAttribute("placeholder", count+ ".- RFC"); 
-                    grupo3.appendChild(input3);
-                    var labelcurp = document.createElement("label");
-                    labelcurp.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textcurp = document.createTextNode(count+ ".- CURP");
-                    labelcurp.appendChild(textcurp);
-                    div7.appendChild(labelcurp);
-                    var grupo4 = document.createElement("div");
-                    grupo4.classList.add('group', 'flex');
-                    div7.appendChild(grupo4);
-                    var div8 = document.createElement("div");
-                    div8.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div8.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>badge-account</title><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" /></svg>';
-                    grupo4.appendChild(div8);
-                    var input4 = document.createElement("input");
-                    input4.type = "text";
-                    input4.name = "infb_rcurp" + childrenCount;
-                    input4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input4.setAttribute("data-rule-required", "true");
-                    input4.setAttribute("data-msg-required", "Este campo es requerido");
-                    input4.setAttribute("data-rule-alphanumeric", "true");
-                    input4.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-                    input4.setAttribute("data-rule-minlength", 18);
-                    input4.setAttribute("data-msg-minlength", "El curp solo se compone de 18 caracteres");
-                    input4.setAttribute("data-rule-maxlength", 18);
-                    input4.setAttribute("data-msg-maxlength", "El curp solo se compone de 18 caracteres");
-                    input4.setAttribute("placeholder", count+ ".- CURP");  
-                    grupo4.appendChild(input4);
-                    var labelporcentaje = document.createElement("label");
-                    labelporcentaje.classList.add('text-[#64748b]', 'font-semibold', 'mb-2');
-                    var textporcentaje = document.createTextNode(count+ ".- Porcentaje de derecho");
-                    labelporcentaje.appendChild(textporcentaje);
-                    div9.appendChild(labelporcentaje);
-                    var grupo5 = document.createElement("div");
-                    grupo5.classList.add('group', 'flex');
-                    div9.appendChild(grupo5);  
-                    var div10 = document.createElement("div");
-                    div10.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    div10.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>percent-box</title><path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z" /></svg>';
-                    grupo5.appendChild(div10);
-                    var input5 = document.createElement("input");
-                    input5.type = "text";
-                    input5.name = "infb_rporcentaje" + childrenCount;
-                    input5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-gray-200', 'bg-gray-200', 'text-gray-900', 'focus:ring-2', 'focus:ring-celeste-600');
-                    input5.setAttribute("disabled", "true");
-                    input5.setAttribute("placeholder", count+ ".- Porcentaje de derecho"); 
-                    grupo5.appendChild(input5);
-                    count++;
-                    childrenCount++;     
+
+                    divColumna.append(divGridNombre, divGridApellidoPat, divGridApellidoMat, divGridRelacion, divGridTelefono);
+                    contador++;
+                    cantidadElementos++;
                 }
-            }
-        }
-        if(number == 1){
-            for(let a = 0;  a < number; a++){
-                $("input[name='infb_rporcentaje"+a+"']").val(100);
-            }
-        }else{
-            for(let b = 0;  b < number; b++){
-                $("input[name='infb_rporcentaje"+b+"']").val(50);
             }
         }
     }
+
+    function obtenerTituloReferencia(numero) {
+        var titulos = ["primera", "segunda", "tercera"];
+        return titulos[numero - 1] + " referencia";
+    }
+	//Terminan las referencias laborales
+
+    //Aquí empiezan las referencias bancarias
+    function AgregarBanco() {
+        var relaciones = ["PADRE", "MADRE", "CONYUGE", "HIJO", "HIJA", "OTRO"];
+        var numeroReferenciasBancarias = $("#refban").val().replace(/[^0-9]/g, function () {
+            $("#refban").val(0);
+            return "0";
+        });
+        var contenedor = $("#ref");
+        var cantidadHijos = contenedor.children().length;
+        var contador = cantidadHijos + 1;
+
+        if (numeroReferenciasBancarias === 0 || numeroReferenciasBancarias > 2) {
+            contenedor.empty();
+        } else {
+            if (numeroReferenciasBancarias < cantidadHijos) {
+                for (var j = 0; j < cantidadHijos - numeroReferenciasBancarias; j++) {
+                    contenedor.children().last().remove();
+                }
+            } else if (numeroReferenciasBancarias > cantidadHijos) {
+                for (var i = 0; i < numeroReferenciasBancarias - cantidadHijos; i++) {
+                    var divFilaBancaria = $("<div>").addClass('grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start');
+                    contenedor.append(divFilaBancaria);
+
+                    var divColumnaBancaria = $("<div>").addClass('md:col-span-1');
+                    divFilaBancaria.append(divColumnaBancaria);
+
+                    var tituloReferenciaBancario = $("<div>").addClass('text-[#64748b] font-semibold mb-2').text(obtenerTituloReferenciaBancaria(contador));
+                    divColumnaBancaria.append(tituloReferenciaBancario);
+
+                    var divGridNombreReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaNombreReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Nombre (s)");
+                    divGridNombreReferenciaBancaria.append(etiquetaNombreReferenciaBancaria);
+                    var divGroupNombreReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridNombreReferenciaBancaria.append(divGroupNombreReferenciaBancaria);
+                    var divIconNombreReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupNombreReferenciaBancaria.append(divIconNombreReferenciaBancaria);
+                    var svgNombreReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconNombreReferenciaBancaria.append(svgNombreReferenciaBancaria);
+                    var inputNombreReferenciaBancaria = $("<input>").attr({
+                        type: "text",
+                        name: "infb_rnombre" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-names_validation": "true",
+                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
+                        placeholder: "Nombre (s) de " + obtenerTituloReferenciaBancaria(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupNombreReferenciaBancaria.append(inputNombreReferenciaBancaria);
+
+                    var divGridApellidoPatReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaApellidoPatReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Apellido paterno");
+                    divGridApellidoPatReferenciaBancaria.append(etiquetaApellidoPatReferenciaBancaria);
+                    var divGroupApellidoPatReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridApellidoPatReferenciaBancaria.append(divGroupApellidoPatReferenciaBancaria);
+                    var divIconApellidoPatReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupApellidoPatReferenciaBancaria.append(divIconApellidoPatReferenciaBancaria);
+                    var svgApellidoPatReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconApellidoPatReferenciaBancaria.append(svgApellidoPatReferenciaBancaria);
+                    var inputApellidoPatReferenciaBancaria = $("<input>").attr({
+                        type: "text",
+                        name: "infb_rapellidopat" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-names_validation": "true",
+                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
+                        placeholder: "Apellido paterno de " + obtenerTituloReferenciaBancaria(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupApellidoPatReferenciaBancaria.append(inputApellidoPatReferenciaBancaria);
+
+                    var divGridApellidoMatReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaApellidoMatReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Apellido materno");
+                    divGridApellidoMatReferenciaBancaria.append(etiquetaApellidoMatReferenciaBancaria);
+                    var divGroupApellidoMatReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridApellidoMatReferenciaBancaria.append(divGroupApellidoMatReferenciaBancaria);
+                    var divIconApellidoMatReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupApellidoMatReferenciaBancaria.append(divIconApellidoMatReferenciaBancaria);
+                    var svgApellidoMatReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconApellidoMatReferenciaBancaria.append(svgApellidoMatReferenciaBancaria);
+                    var inputApellidoMatReferenciaBancaria = $("<input>").attr({
+                        type: "text",
+                        name: "infb_rapellidomat" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-names_validation": "true",
+                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
+                        placeholder: "Apellido materno de " + obtenerTituloReferenciaBancaria(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupApellidoMatReferenciaBancaria.append(inputApellidoMatReferenciaBancaria);
+
+                    var divGridRelacionReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaRelacionReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Relación");
+                    divGridRelacionReferenciaBancaria.append(etiquetaRelacionReferenciaBancaria);
+                    var divGroupRelacionReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridRelacionReferenciaBancaria.append(divGroupRelacionReferenciaBancaria);
+                    var divIconRelacionReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupRelacionReferenciaBancaria.append(divIconRelacionReferenciaBancaria);
+                    var svgRelacionReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+                    divIconRelacionReferenciaBancaria.append(svgRelacionReferenciaBancaria);
+                    var selectRelacionReferenciaBancaria = $("<select>").attr({
+                        name: "infb_rrelacion" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido"
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    var opcionDefaultReferenciaBancaria = $("<option>").val("").text("--Selecciona--");
+                    selectRelacionReferenciaBancaria.append(opcionDefaultReferenciaBancaria);
+                    $.each(relaciones, function (index, value) {
+                        var opcionReferenciaBancaria = $("<option>").val(value).text(value.charAt(0).toUpperCase() + value.slice(1));
+                        selectRelacionReferenciaBancaria.append(opcionReferenciaBancaria);
+                    });
+                    divGroupRelacionReferenciaBancaria.append(selectRelacionReferenciaBancaria);
+
+                    var divGridRFCReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaRFCReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Relación");
+                    divGridRFCReferenciaBancaria.append(etiquetaRFCReferenciaBancaria);
+                    var divGroupRFCReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridRFCReferenciaBancaria.append(divGroupRFCReferenciaBancaria);
+                    var divIconRFCReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupRFCReferenciaBancaria.append(divIconRFCReferenciaBancaria);
+                    var svgRFCReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-document-edit-outline</title><path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path></svg>';
+                    divIconRFCReferenciaBancaria.append(svgRFCReferenciaBancaria);
+                    var inputRFCReferenciaBancaria = $("<input>").attr({
+                        type: "text",
+                        name: "infb_rrfc" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-alphanumeric": "true",
+                        "data-msg-alphanumeric": "Solo se permiten caracteres alfanuméricos",
+                        "data-rule-minlength": 12,
+                        "data-msg-minlength": "Debes ingresar como mínimo 12 caracteres en el RFC",
+                        "data-rule-maxlength": 13,
+                        "data-msg-maxlength": "Debes ingresar como máximo 13 caracteres en el RFC",
+                        placeholder: "RFC de " + obtenerTituloReferenciaBancaria(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupRFCReferenciaBancaria.append(inputRFCReferenciaBancaria);
+
+                    var divGridCURPReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaCURPReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Relación");
+                    divGridCURPReferenciaBancaria.append(etiquetaCURPReferenciaBancaria);
+                    var divGroupCURPReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridCURPReferenciaBancaria.append(divGroupCURPReferenciaBancaria);
+                    var divIconCURPReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupCURPReferenciaBancaria.append(divIconCURPReferenciaBancaria);
+                    var svgCURPReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>badge-account</title><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path></svg>';
+                    divIconCURPReferenciaBancaria.append(svgCURPReferenciaBancaria);
+                    var inputCURPReferenciaBancaria = $("<input>").attr({
+                        type: "text",
+                        name: "infb_rcurp" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        "data-rule-alphanumeric": "true",
+                        "data-msg-alphanumeric": "Solo se permiten caracteres alfanuméricos",
+                        "data-rule-minlength": 18,
+                        "data-msg-minlength": "El curp solo se compone de 18 caracteres",
+                        "data-rule-maxlength": 18,
+                        "data-msg-maxlength": "El curp solo se compone de 18 caracteres",
+                        placeholder: "CURP de " + obtenerTituloReferenciaBancaria(contador)
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
+                    divGroupCURPReferenciaBancaria.append(inputCURPReferenciaBancaria);
+
+                    var divGridPDerechoReferenciaBancaria = $("<div>").addClass('grid grid-cols-1');
+                    var etiquetaPDerechoReferenciaBancaria = $("<label>").addClass('text-[#64748b] font-semibold').text("Relación");
+                    divGridPDerechoReferenciaBancaria.append(etiquetaPDerechoReferenciaBancaria);
+                    var divGroupPDerechoReferenciaBancaria = $("<div>").addClass('group flex');
+                    divGridPDerechoReferenciaBancaria.append(divGroupPDerechoReferenciaBancaria);
+                    var divIconPDerechoReferenciaBancaria = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
+                    divGroupPDerechoReferenciaBancaria.append(divIconPDerechoReferenciaBancaria);
+                    var svgPDerechoReferenciaBancaria = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>percent-box</title><path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path></svg>';
+                    divIconPDerechoReferenciaBancaria.append(svgPDerechoReferenciaBancaria);
+                    var inputPDerechoReferenciaBancaria = $("<input>").attr({
+                        type: "text",
+                        name: "infb_rporcentaje" + cantidadHijos,
+                        "data-rule-required": "true",
+                        "data-msg-required": "Este campo es requerido",
+                        placeholder: "Porcentaje de derecho de " + obtenerTituloReferenciaBancaria(contador),
+                        readonly: true
+                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600');
+                    
+                    divGroupPDerechoReferenciaBancaria.append(inputPDerechoReferenciaBancaria);
+
+                    if (numeroReferenciasBancarias > 1) {
+                        divFilaBancaria.addClass('border-t border-[#d1d5db] pt-5 mt-5');
+                    }
+
+                    divColumnaBancaria.append(divGridNombreReferenciaBancaria, divGridApellidoPatReferenciaBancaria, divGridApellidoMatReferenciaBancaria, divGridRelacionReferenciaBancaria, divGridRFCReferenciaBancaria, divGridCURPReferenciaBancaria, divGridPDerechoReferenciaBancaria);
+                    contador++;
+                    cantidadHijos++;
+                }
+            }
+        }
+        for (let c = 0; c < numeroReferenciasBancarias; c++) {
+            $("input[name='infb_rporcentaje" + c + "']").val(numeroReferenciasBancarias == 1 ? 100 : 50);
+        }
+    }
+
+    function obtenerTituloReferenciaBancaria(numero) {
+        var titulos = ["primera", "segunda"];
+        return titulos[numero - 1] + " referencia";
+    } 
     //Aquí terminan las referencias bancarias
 
      //Checa si el user esta loggeado
