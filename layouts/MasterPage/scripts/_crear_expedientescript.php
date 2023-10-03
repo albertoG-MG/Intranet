@@ -953,11 +953,11 @@
 	                check_user_logged().then((response) => {
 		                if(response == "true"){
 			                if (pestañaActiva === "#datosG"){
-                                
+                                DatosG();
                             } else if (pestañaActiva === "#datosA"){
-
+                                DatosA();
                             } else if (pestañaActiva === "#datosB"){
-
+                                DatosB();
                             } else if (pestañaActiva === "#documentos"){
                                 SubmitChanges();
                             }
