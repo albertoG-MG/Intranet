@@ -1223,23 +1223,22 @@
     //Aquí empiezan las referencias bancarias
     function AgregarBanco() {
         var relaciones = ["PADRE", "MADRE", "CONYUGE", "HIJO", "HIJA", "OTRO"];
-        var numeroReferenciasBancarias = $("#refban").val().replace(/[^0-9]/g, function () {
-            $("#refban").val(0);
-            return "0";
-        });
+        var numeroReferenciasBancarias = parseInt($("#refban").val(), 10) || 0;
+
         var contenedor = $("#ref");
         var cantidadHijos = contenedor.children().length;
         var contador = cantidadHijos + 1;
 
+        // Calcula la diferencia entre numeroReferencias y la cantidad actual de elementos
+        var diferenciaReferenciasBancarias = numeroReferenciasBancarias - cantidadHijos;
+
         if (numeroReferenciasBancarias === 0 || numeroReferenciasBancarias > 2) {
             contenedor.empty();
         } else {
-            if (numeroReferenciasBancarias < cantidadHijos) {
-                for (var j = 0; j < cantidadHijos - numeroReferenciasBancarias; j++) {
-                    contenedor.children().last().remove();
-                }
-            } else if (numeroReferenciasBancarias > cantidadHijos) {
-                for (var i = 0; i < numeroReferenciasBancarias - cantidadHijos; i++) {
+            if (diferenciaReferenciasBancarias < 0) {
+                contenedor.children().slice(diferenciaReferenciasBancarias).remove();
+            } else if (diferenciaReferenciasBancarias > 0) {
+                for (var i = 0; i < diferenciaReferenciasBancarias; i++) {
                     var divFilaBancaria = $("<div>").addClass('grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start');
                     contenedor.append(divFilaBancaria);
 
