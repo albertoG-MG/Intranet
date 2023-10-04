@@ -1254,6 +1254,93 @@
                     $(this).rules("remove");
                 });
 
+                //Se agregan las reglas de validación para el guardar de documentos que es el botón final de guardar
+                if ($("#reflab").val() != 0) {
+                    $('input[name^="infa_rnombre"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infa_rapellidopat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infa_rapellidomat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('select[name^="infa_rrelacion"]').each(function() {
+                        $(this).attr("data-rule-required", "true");
+                    });
+
+                    $('input[name^="infa_rtelefono"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-digits": "true",
+                            "data-rule-minlength": "10",
+                            "data-rule-maxlength": "10"
+                        });
+                    });
+                }
+
+                //Se agregan las reglas de validación para el guardar de documentos que es el botón final de guardar
+                if ($("#refban").val() != 0) {
+                    $('input[name^="infb_rnombre"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infb_rapellidopat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infb_rapellidomat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('select[name^="infb_rrelacion"]').each(function() {
+                        $(this).attr("data-rule-required", "true");
+                    });
+
+                    $('input[name^="infb_rrfc"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-alphanumeric": "true",
+                            "data-rule-minlength": "12",
+                            "data-rule-maxlength": "13"
+                        });
+                    });
+
+                    $('input[name^="infb_rcurp"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-alphanumeric": "true",
+                            "data-rule-minlength": "18",
+                            "data-rule-maxlength": "18"
+                        });
+                    });
+
+                    $('input[name^="infb_rporcentaje"]').each(function() {
+                        $(this).attr("data-rule-required", "true");
+                    });
+                }
+
                 // Agregar las reglas de validación de documentos fusionados
                 formulario.validate().settings.rules = mergedAllRules;
 
