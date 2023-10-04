@@ -1019,6 +1019,60 @@
                     $(this).rules("remove");
                 });
 
+                //Quita las validaciones de referencias laborales en caso de que el usuario se vaya de la pestaña datos adicionales
+                if($("#reflab").val() != 0){
+                    $('input[name^="infa_rnombre"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infa_rapellidopat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infa_rapellidomat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('select[name^="infa_rrelacion"]').each(function() {
+                        $(this).removeAttr("data-rule-required");
+                    });
+
+                    $('input[name^="infa_rtelefono"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-digits data-rule-minlength data-rule-maxlength");
+                    });
+                }
+
+                //Quita las validaciones de referencias bancarias en caso de que la pestaña sea diferente  a la pestaña de datos bancarios
+                if($("#refban").val() != 0){
+                    $('input[name^="infb_rnombre"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infb_rapellidopat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infb_rapellidomat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('select[name^="infb_rrelacion"]').each(function() {
+                        $(this).removeAttr("data-rule-required");
+                    });
+
+                    $('input[name^="infb_rrfc"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength");
+                    });
+
+                    $('input[name^="infb_rcurp"]').each(function() {
+                        $(this).removeAttr('data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength');
+                    });
+
+                    $('input[name^="infb_rporcentaje"]').each(function() {
+                        $(this).removeAttr('data-rule-required');
+                    });
+                }
+
                 // Agregar las reglas de validación de datosG fusionados
                 formulario.validate().settings.rules = mergedDatosGRules;
 
@@ -1033,6 +1087,74 @@
                     $(this).rules("remove");
                 });
 
+                //Agregar de nuevo las reglas de validación si el usuario se encuentra en datos adicionales
+                if ($("#reflab").val() != 0) {
+                    $('input[name^="infa_rnombre"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infa_rapellidopat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infa_rapellidomat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('select[name^="infa_rrelacion"]').each(function() {
+                        $(this).attr("data-rule-required", "true");
+                    });
+
+                    $('input[name^="infa_rtelefono"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-digits": "true",
+                            "data-rule-minlength": "10",
+                            "data-rule-maxlength": "10"
+                        });
+                    });
+                }
+
+                //Quita las validaciones de referencias bancarias en caso de que la pestaña sea diferente  a la pestaña de datos bancarios
+                if($("#refban").val() != 0){
+                    $('input[name^="infb_rnombre"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infb_rapellidopat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infb_rapellidomat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('select[name^="infb_rrelacion"]').each(function() {
+                        $(this).removeAttr("data-rule-required");
+                    });
+
+                    $('input[name^="infb_rrfc"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength");
+                    });
+
+                    $('input[name^="infb_rcurp"]').each(function() {
+                        $(this).removeAttr('data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength');
+                    });
+
+                    $('input[name^="infb_rporcentaje"]').each(function() {
+                        $(this).removeAttr('data-rule-required');
+                    });
+                }
+
                 // Agregar las reglas de validación de datosA fusionados
                 formulario.validate().settings.rules = mergedDatosARules;
 
@@ -1045,6 +1167,79 @@
                 formulario.find(":input").each(function() {
                     $(this).rules("remove");
                 });
+
+                //Quita las validaciones de referencias laborales en caso de que el usuario se vaya de la pestaña datos adicionales
+                if($("#reflab").val() != 0){
+                    $('input[name^="infa_rnombre"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infa_rapellidopat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('input[name^="infa_rapellidomat"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-names_validation");
+                    });
+
+                    $('select[name^="infa_rrelacion"]').each(function() {
+                        $(this).removeAttr("data-rule-required");
+                    });
+
+                    $('input[name^="infa_rtelefono"]').each(function() {
+                        $(this).removeAttr("data-rule-required data-rule-digits data-rule-minlength data-rule-maxlength");
+                    });
+                }
+
+                //Vuelve a agregar las reglas de validación para las referencias bancarias
+                if ($("#refban").val() != 0) {
+                    $('input[name^="infb_rnombre"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infb_rapellidopat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('input[name^="infb_rapellidomat"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-names_validation": "true"
+                        });
+                    });
+
+                    $('select[name^="infb_rrelacion"]').each(function() {
+                        $(this).attr("data-rule-required", "true");
+                    });
+
+                    $('input[name^="infb_rrfc"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-alphanumeric": "true",
+                            "data-rule-minlength": "12",
+                            "data-rule-maxlength": "13"
+                        });
+                    });
+
+                    $('input[name^="infb_rcurp"]').each(function() {
+                        $(this).attr({
+                            "data-rule-required": "true",
+                            "data-rule-alphanumeric": "true",
+                            "data-rule-minlength": "18",
+                            "data-rule-maxlength": "18"
+                        });
+                    });
+
+                    $('input[name^="infb_rporcentaje"]').each(function() {
+                        $(this).attr("data-rule-required", "true");
+                    });
+                }
 
                 // Agregar las reglas de validación de datosB fusionados
                 formulario.validate().settings.rules = mergedDatosBRules;
