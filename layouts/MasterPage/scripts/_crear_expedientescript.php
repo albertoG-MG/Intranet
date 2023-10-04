@@ -1071,24 +1071,22 @@
 	//Aquí empiezan las referencias laborales
     function AgregarReferencias() {
         var valoresRelacion = ["SUPERVISOR(A)", "COLEGA", "SUBORDINADO(A)", "MENTOR(A)", "CLIENTE", "PROFESOR(A)", "DEPARTAMENTO DE PERSONAL", "PROVEEDOR(A)", "MIEMBRO DE UN COMITÉ", "OTRO"];
-        var numeroReferencias = $("#reflab").val().replace(/[^0-9]/g, function () {
-            $("#reflab").val(0);
-            return "0";
-        });
+        var numeroReferencias = parseInt($("#reflab").val(), 10) || 0;
 
         var contenedorReferencias = $("#referencias");
         var cantidadElementos = contenedorReferencias.children().length;
         var contador = cantidadElementos + 1;
 
+        // Calcula la diferencia entre numeroReferencias y la cantidad actual de elementos
+        var diferencia = numeroReferencias - cantidadElementos;
+
         if (numeroReferencias == 0 || numeroReferencias > 3) {
             contenedorReferencias.empty();
         } else {
-            if (numeroReferencias < cantidadElementos) {
-                for (var j = 0; j < cantidadElementos - numeroReferencias; j++) {
-                    contenedorReferencias.children().last().remove();
-                }
-            } else if (numeroReferencias > cantidadElementos) {
-                for (var i = 0; i < numeroReferencias - cantidadElementos; i++) {
+            if (diferencia < 0) {
+                contenedorReferencias.children().slice(diferencia).remove();
+            } else if (diferencia > 0) {
+                for (var i = 0; i < diferencia; i++) {
                     var divFila = $("<div>").addClass('grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start');
                     contenedorReferencias.append(divFila);
 
