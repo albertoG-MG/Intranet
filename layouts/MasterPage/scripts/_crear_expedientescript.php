@@ -511,379 +511,6 @@
             return true;
         }, "Please enter a valid value in selectbox");
 
-        //Se debe asignar un usuario al expediente obligatoriamente debido a las relaciones de la  base de datos.
-        //Debido a que se quiere implementar un guardado en progreso, encapsulamos las reglas y los mensajes en diferentes objectos.
-        var Select2Rules = {
-            user: {
-                required: true
-            }
-        };
-
-        //Mensaje del select2
-        var Select2Messages = {
-            user:{
-                required: 'Este campo es requerido'
-            }
-        };
-
-        //Reglas de validación en un objeto separado.
-        var DatosGeneralesRules = {
-            numempleado: {
-                required: true,
-                num_empleado: true,
-                remote: {
-                    url: "../ajax/expedientes/check_num_empleado.php",
-                    type: "GET",
-                    beforeSend: function () {
-                        $('#loader-numempleado').removeClass('hidden');
-                        $('#correct-numempleado').addClass('hidden');
-                    },
-                    complete: function(data){
-                        if(data.responseText == "true") {
-                            $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                            $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
-                        }else{
-                            $('#loader-numempleado').addClass('hidden');
-                            $('#correct-numempleado').addClass('hidden');
-                        }
-                    }
-                }
-            },
-            puesto: {
-                required: true,
-                minlength: 4,
-                field_validation: true
-            },
-            posee_correo:{
-                required: true
-            },
-            calle: {
-                location_validation: true
-            },
-            ninterior: {
-                digits: true
-            },
-            nexterior: {
-                digits: true
-            },
-            colonia: {
-                location_validation: true
-            },
-            codigo: {
-                digits: true
-            },
-            teldom: {
-                digits: true,
-                minlength: 10,
-                maxlength: 10
-            },
-            tel_movil:{
-                required: true
-            },
-            tel_movil_empresa:{
-                required: true
-            },
-            laptop_empresa:{
-                required: true
-            },
-            casa:{
-                required: true
-            },
-            retencion:{
-                required: true
-            },
-            fechanac:{
-                mayor18: true
-            },
-            salario_contrato:{
-                number:true
-            },
-            salario_fechaalta:{
-                number: true
-            },
-            observaciones:{
-                field_validation:true
-            },
-            curp:{
-                alphanumeric: true,
-                minlength: 18,
-                maxlength: 18
-            },
-            nss:{
-                digits: true,
-                minlength: 11,
-                maxlength: 11
-            },
-            rfc:{
-                alphanumeric: true,
-                minlength: 12,
-                maxlength: 13
-            }
-        };
-
-        //Mensajes de los datos generales
-        var DatosGeneralesMessages = {
-            numempleado: {
-                required:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Este campo es requerido"; },
-                num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
-                remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
-            },
-            puesto: {
-                required:'Este campo es requerido',
-                minlength: 'El puesto debe de contener 4 caracteres como mínimo',
-                field_validation:'Solo se permiten carácteres alfabéticos y espacios'
-            },
-            posee_correo:{
-                required: 'Este campo es requerido'
-            },
-            calle: {
-                location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-            },
-            ninterior: {
-                digits: 'Solo se permiten números'
-            },
-            nexterior: {
-                digits: 'Solo se permiten números'
-            },
-            colonia: {
-                location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-            },
-            codigo: {
-                digits: 'Solo se permiten números'
-            },
-            teldom: {
-                digits: 'Solo se permiten números',
-                minlength: 'Solo puedes ingresar como mínimo 10 números',
-                maxlength: 'Solo puedes ingresar como máximo 10 números'
-            },
-            tel_movil:{
-                required: 'Este campo es requerido'
-            },
-            tel_movil_empresa:{
-                required: 'Este campo es requerido'
-            },
-            laptop_empresa:{
-                required: 'Este campo es requerido'
-            },
-            casa:{
-                required: 'Este campo es requerido'
-            },
-            retencion:{
-                required: 'Este campo es requerido'
-            },
-            fechanac:{
-                mayor18: 'Debes tener por lo menos 18 años para aplicar'
-            },
-            salario_contrato:{
-                number: 'Solo se permiten números y decimales'
-            },
-            salario_fechaalta:{
-                number: 'Solo se permiten números y decimales'
-            },
-            observaciones:{
-                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-            },
-            curp: {
-                alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                minlength: 'Solo puedes ingresar como mínimo 18 números',
-                maxlength: 'Solo puedes ingresar como máximo 18 números'
-            },
-            nss:{
-                digits: 'Solo se permiten números',
-                minlength: 'Solo puedes ingresar como mínimo 11 números',
-                maxlength: 'Solo puedes ingresar como máximo 11 números'
-            },
-            rfc:{
-                alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                minlength: 'Solo puedes ingresar como mínimo 12 números',
-                maxlength: 'Solo puedes ingresar como máximo 13 números'
-            }
-        };
-
-        var DatosAdicionalesRules = {
-            reflab:{
-                refvalplus3: true
-            },
-            cantidadpolo:{
-                digits: true
-            },
-            emergencia_nom:{
-                names_validation: true
-            },
-            emergencia_nom2:{
-                names_validation: true
-            },
-            emergencia_appat:{
-                names_validation: true
-            },
-            emergencia_appat2:{
-                names_validation: true
-            },
-            emergencia_apmat:{
-                names_validation: true
-            },
-            emergencia_apmat2:{
-                names_validation: true
-            },
-            emergencia_tel:{
-                digits: true,
-                minlength: 10,
-                maxlength: 10
-            },
-            emergencia_tel2:{
-                digits: true,
-                minlength: 10,
-                maxlength: 10
-            },
-            empresa:{
-                required: true
-            }
-        };
-
-        var DatosAdicionalesMessages = {
-            reflab:{
-                refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
-            },
-            cantidadpolo:{
-                digits: 'Solo se permiten números'
-            },
-            emergencia_nom:{
-                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-            },
-            emergencia_nom2:{
-                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-            },
-            emergencia_appat:{
-                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-            },
-            emergencia_appat2:{
-                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-            },
-            emergencia_apmat:{
-                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-            },
-            emergencia_apmat2:{
-                names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-            },
-            emergencia_tel:{
-                digits: 'Solo se permiten números',
-                minlength: 'Solo puedes ingresar como mínimo 10 números',
-                maxlength: 'Solo puedes ingresar como máximo 10 números'
-            },
-            emergencia_tel2:{
-                digits: 'Solo se permiten números',
-                minlength: 'Solo puedes ingresar como mínimo 10 números',
-                maxlength: 'Solo puedes ingresar como máximo 10 números'
-            },
-            empresa:{
-                required: 'Este campo es requerido'
-            }
-        };
-
-        var DatosBancariosRules = {
-            refban:{
-                refbanplus3: true
-            },
-            banco_personal:{
-                field_validation: true
-            },
-            cuenta_personal:{
-                digits:true,
-                minlength: 10,
-                maxlength: 10
-            },
-            clabe_personal:{
-                digits:true,
-                minlength: 18,
-                maxlength: 18
-            },
-            plastico_personal:{
-                digits: true,
-                minlength: 16,
-                maxlength: 16
-            },
-            banco_nomina:{
-                field_validation:true
-            },
-            cuenta_nomina:{
-                digits:true,
-                minlength: 10,
-                maxlength: 10
-            },
-            clabe_nomina:{
-                digits:true,
-                minlength: 18,
-                maxlength: 18
-            },
-            plastico:{
-                digits:true,
-                minlength: 16,
-                maxlength: 16
-            }
-        };
-
-        var DatosBancariosMessages = {
-            refban:{
-                refbanplus3: 'Solo se permiten hasta 3 referencias bancarias'
-            },
-            banco_personal:{
-                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-            },
-            cuenta_personal:{
-                digits: 'Solo se permiten números',
-                minlength: 'No puede ser menor a 10 dígitos',
-                maxlength: 'No puede ser mayor a 10 dígitos'
-            },
-            clabe_personal:{
-                digits: 'Solo se permiten números',
-                minlength: 'No puede ser menor a 18 dígitos',
-                maxlength: 'No puede ser mayor a 18 dígitos'
-            },
-            plastico_personal:{
-                digits: 'Solo se permiten números',
-                minlength: 'No puede ser menor a 16 dígitos',
-                maxlength: 'No puede ser mayor a 16 dígitos'
-            },
-            banco_nomina:{
-                field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-            },
-            cuenta_nomina:{
-                digits: 'Solo se permiten números',
-                minlength: 'No puede ser menor a 10 dígitos',
-                maxlength: 'No puede ser mayor a 10 dígitos'
-            },
-            clabe_nomina:{
-                digits: 'Solo se permiten números',
-                minlength: 'No puede ser menor a 18 dígitos',
-                maxlength: 'No puede ser mayor a 18 dígitos'
-            },
-            plastico:{
-                digits: 'Solo se permiten números',
-                minlength: 'No puede ser menor a 16 dígitos',
-                maxlength: 'No puede ser mayor a 16 dígitos'
-            }
-        };
-
-
-
-        // Fusionar los objetos de reglas de validación
-        var mergedDatosGRules = Object.assign({}, Select2Rules, DatosGeneralesRules);
-
-        var mergedDatosARules = Object.assign({}, Select2Rules, DatosAdicionalesRules);
-
-        var mergedDatosBRules = Object.assign({}, Select2Rules, DatosBancariosRules);
-
-        var mergedAllRules = Object.assign({}, Select2Rules, DatosGeneralesRules, DatosAdicionalesRules, DatosBancariosRules);
-
-        // Fusionar los objetos de mensajes de validación
-        var mergedDatosGMessages = Object.assign({}, Select2Messages, DatosGeneralesMessages);
-
-        var mergedDatosAMessages = Object.assign({}, Select2Messages, DatosAdicionalesMessages);
-
-        var mergedDatosBMessages = Object.assign({}, Select2Messages, DatosBancariosMessages);
-
-        var mergedAllMessages = Object.assign({}, Select2Messages, DatosGeneralesMessages, DatosAdicionalesMessages, DatosBancariosMessages);
-
         if($('#Guardar').length > 0 ){
             $('#Guardar').validate({
                 ignore: [],
@@ -906,7 +533,7 @@
                         this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
                         $("#arrayerrors").append(this.$arrayerror);
                     });
-                    if(validator.errorList.length){
+                    if (validator.errorList.length) {
                         // Obtén el primer error del validador
                         var primerError = validator.errorList[0];
 
@@ -915,11 +542,18 @@
                             // Obtiene la pestaña a la que pertenece el elemento con error
                             var tabConError = jQuery(primerError.element).closest(".tab-pane").attr("id");
 
-                            // Activa la pestaña con error y aplica estilos
-                            $('#menu button[data-tabs-target="#' + tabConError + '"]').addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+                            // Actualiza la pestaña activa al hacer clic en un botón de menú
+                            pestañaActiva = {
+                                id: tabConError,
+                                triggerMenu: $('#menu button[data-tabs-target="#' + tabConError + '"]'),
+                                targetMenu: $('#' + tabConError)
+                            };
 
-                            //Activa los contenidos de la pestaña de el primer error
-                            $('#menu button[data-tabs-target="#' + jQuery(primerError.element).closest(".tab-pane").removeClass("hidden") + '"]');
+                            // Activa la pestaña con error y aplica estilos
+                            pestañaActiva.triggerMenu.addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+
+                            // Activa los contenidos de la pestaña con el primer error
+                            pestañaActiva.targetMenu.removeClass("hidden");
 
                             // Desactiva las otras pestañas
                             $('#menu button[data-tabs-target]').not('[data-tabs-target="#' + tabConError + '"]').removeClass("menu-active bg-[#27ceeb] text-white").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
@@ -950,8 +584,585 @@
                     }
                 },
                 //Inicializamos en la primera pestaña que es Datos generales
-                rules: mergedDatosGRules,
-                messages: mergedDatosGMessages,
+                rules: {
+                    user: {
+                        required: true
+                    },
+                    numempleado: {
+                        num_empleado: {
+                            depends: function(element) {
+                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_num_empleado.php" : false,
+                            type: "GET",
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-numempleado').removeClass('hidden');
+                                    $('#correct-numempleado').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    } else {
+                                        $('#loader-numempleado').addClass('hidden');
+                                        $('#correct-numempleado').addClass('hidden');
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    puesto: {
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        field_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    posee_correo:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    calle: {
+                        location_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    ninterior: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    nexterior: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    colonia: {
+                        location_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    codigo: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    teldom: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        }
+                    },
+                    tel_movil:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    tel_movil_empresa:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    laptop_empresa:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    casa:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    retencion:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    fechanac:{
+                        mayor18: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    salario_contrato:{
+                        number:{
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    salario_fechaalta:{
+                        number: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    observaciones:{
+                        field_validation:{
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    curp:{
+                        alphanumeric: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        }
+                    },
+                    nss:{
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 11
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 11
+                        }
+                    },
+                    rfc:{
+                        alphanumeric: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 12
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 13
+                        }
+                    },
+                    numReferencias:{
+                        refvalplus3: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    infa_rnombre1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidopat1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidomat1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rrelacion1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rtelefono1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        }
+                    },
+                    infa_rnombre2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidopat2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidomat2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rrelacion2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rtelefono2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        }
+                    },
+                    infa_rnombre3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidopat3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidomat3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rrelacion3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rtelefono3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        }
+                    }
+                },
+                messages: {
+                    user: {
+                        required: 'Este campo es requerido'
+                    },
+                    numempleado: {
+                        num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
+                        remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
+                    },
+                    puesto: {
+                        minlength: 'El puesto debe de contener 4 caracteres como mínimo',
+                        field_validation:'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    posee_correo: {
+                        required: 'Este campo es requerido'
+                    },
+                    calle: {
+                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                    },
+                    ninterior: {
+                        digits: 'Solo se permiten números'
+                    },
+                    nexterior: {
+                        digits: 'Solo se permiten números'
+                    },
+                    colonia: {
+                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                    },
+                    codigo: {
+                        digits: 'Solo se permiten números'
+                    },
+                    teldom: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    tel_movil: {
+                        required: 'Este campo es requerido'
+                    },
+                    tel_movil_empresa: {
+                        required: 'Este campo es requerido'
+                    },
+                    laptop_empresa: {
+                        required: 'Este campo es requerido'
+                    },
+                    casa: {
+                        required: 'Este campo es requerido'
+                    },
+                    retencion: {
+                        required: 'Este campo es requerido'
+                    },
+                    fechanac: {
+                        mayor18: 'Debes tener por lo menos 18 años para aplicar'
+                    },
+                    salario_contrato: {
+                        number: 'Solo se permiten números y decimales'
+                    },
+                    salario_fechaalta: {
+                        number: 'Solo se permiten números y decimales'
+                    },
+                    observaciones: {
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    curp: {
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'Solo puedes ingresar como mínimo 18 números',
+                        maxlength: 'Solo puedes ingresar como máximo 18 números'
+                    },
+                    nss: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 11 números',
+                        maxlength: 'Solo puedes ingresar como máximo 11 números'
+                    },
+                    rfc: {
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'Solo puedes ingresar como mínimo 12 números',
+                        maxlength: 'Solo puedes ingresar como máximo 13 números'
+                    },
+                    numReferencias: {
+                        refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
+                    },
+                    infa_rnombre1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidopat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidomat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rrelacion1: {
+                        required: 'Este campo es requerido'
+                    },
+                    infa_rtelefono1: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    infa_rnombre2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidopat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidomat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rrelacion2: {
+                        required: 'Este campo es requerido'
+                    },
+                    infa_rtelefono2: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    infa_rnombre3: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidopat3: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidomat3: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rrelacion3: {
+                        required: 'Este campo es requerido'
+                    },
+                    infa_rtelefono3: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    }
+                },
                 submitHandler: function(form) {
                     $('#submit-button').html(
 		                '<button disabled type="submit" id="finish" name="finish" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">'+
@@ -964,13 +1175,13 @@
 	                $('#error-container').html("");
 	                check_user_logged().then((response) => {
 		                if(response == "true"){
-			                if (pestañaActiva === "#datosG"){
+			                if (pestañaActiva.id === "datosG"){
                                 DatosG();
-                            } else if (pestañaActiva === "#datosA"){
+                            } else if (pestañaActiva.id === "datosA"){
                                 DatosA();
-                            } else if (pestañaActiva === "#datosB"){
+                            } else if (pestañaActiva.id === "datosB"){
                                 DatosB();
-                            } else if (pestañaActiva === "#documentos"){
+                            } else if (pestañaActiva.id === "documentos"){
                                 SubmitChanges();
                             }
 		                }else{
@@ -996,511 +1207,40 @@
             $(this).valid()
         });
 
-         // Manejador de eventos para los botones de las pestañas
-        $("#datosG-tab, #datosA-tab, #datosB-tab, #documentos-tab").on("click", function() {
-
-            // Obtén el ID de la pestaña a la que se está cambiando
-            var nuevaPestaña = $(this).attr("data-tabs-target");
-            pestañaActiva = nuevaPestaña;
-
-                
-            // Actualiza la variable de la pestaña activa
-            pestañaActiva = nuevaPestaña;
-
-            // Obtén una referencia al formulario por su ID o como prefieras
-            var formulario = $("#Guardar");
-
-            // Ejemplo: Activar o desactivar reglas de validación según la pestaña
-            if (pestañaActiva === "#datosG") {
-                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "datosG"
-
-                //Esta función eliminar todas las reglas del formulario
-                formulario.find(":input").each(function() {
-                    $(this).rules("remove");
-                });
-
-                //Quita las validaciones de referencias laborales en caso de que el usuario se vaya de la pestaña datos adicionales
-                if($("#reflab").val() != 0){
-                    $('input[name^="infa_rnombre"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infa_rapellidopat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infa_rapellidomat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('select[name^="infa_rrelacion"]').each(function() {
-                        $(this).removeAttr("data-rule-required");
-                    });
-
-                    $('input[name^="infa_rtelefono"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-digits data-rule-minlength data-rule-maxlength");
-                    });
-                }
-
-                //Quita las validaciones de referencias bancarias en caso de que la pestaña sea diferente  a la pestaña de datos bancarios
-                if($("#refban").val() != 0){
-                    $('input[name^="infb_rnombre"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infb_rapellidopat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infb_rapellidomat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('select[name^="infb_rrelacion"]').each(function() {
-                        $(this).removeAttr("data-rule-required");
-                    });
-
-                    $('input[name^="infb_rrfc"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength");
-                    });
-
-                    $('input[name^="infb_rcurp"]').each(function() {
-                        $(this).removeAttr('data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength');
-                    });
-
-                    $('input[name^="infb_rporcentaje"]').each(function() {
-                        $(this).removeAttr('data-rule-required');
-                    });
-                }
-
-                // Agregar las reglas de validación de datosG fusionados
-                formulario.validate().settings.rules = mergedDatosGRules;
-
-                // Agregar los mensajes de validación de datosG fusionados
-                formulario.validate().settings.messages = mergedDatosGMessages;
-
-            } else if (pestañaActiva === "#datosA") {
-                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "datosA"
-
-                //Esta función eliminar todas las reglas del formulario
-                formulario.find(":input").each(function() {
-                    $(this).rules("remove");
-                });
-
-                //Agregar de nuevo las reglas de validación si el usuario se encuentra en datos adicionales
-                if ($("#reflab").val() != 0) {
-                    $('input[name^="infa_rnombre"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infa_rapellidopat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infa_rapellidomat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('select[name^="infa_rrelacion"]').each(function() {
-                        $(this).attr("data-rule-required", "true");
-                    });
-
-                    $('input[name^="infa_rtelefono"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-digits": "true",
-                            "data-rule-minlength": "10",
-                            "data-rule-maxlength": "10"
-                        });
-                    });
-                }
-
-                //Quita las validaciones de referencias bancarias en caso de que la pestaña sea diferente  a la pestaña de datos bancarios
-                if($("#refban").val() != 0){
-                    $('input[name^="infb_rnombre"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infb_rapellidopat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infb_rapellidomat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('select[name^="infb_rrelacion"]').each(function() {
-                        $(this).removeAttr("data-rule-required");
-                    });
-
-                    $('input[name^="infb_rrfc"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength");
-                    });
-
-                    $('input[name^="infb_rcurp"]').each(function() {
-                        $(this).removeAttr('data-rule-required data-rule-alphanumeric data-rule-minlength data-rule-maxlength');
-                    });
-
-                    $('input[name^="infb_rporcentaje"]').each(function() {
-                        $(this).removeAttr('data-rule-required');
-                    });
-                }
-
-                // Agregar las reglas de validación de datosA fusionados
-                formulario.validate().settings.rules = mergedDatosARules;
-
-                // Agregar los mensajes de validación de datosA fusionados
-                formulario.validate().settings.messages = mergedDatosAMessages;
-            } else if (pestañaActiva === "#datosB") {
-                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "datosB"
-
-                //Esta función eliminar todas las reglas del formulario
-                formulario.find(":input").each(function() {
-                    $(this).rules("remove");
-                });
-
-                //Quita las validaciones de referencias laborales en caso de que el usuario se vaya de la pestaña datos adicionales
-                if($("#reflab").val() != 0){
-                    $('input[name^="infa_rnombre"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infa_rapellidopat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('input[name^="infa_rapellidomat"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-names_validation");
-                    });
-
-                    $('select[name^="infa_rrelacion"]').each(function() {
-                        $(this).removeAttr("data-rule-required");
-                    });
-
-                    $('input[name^="infa_rtelefono"]').each(function() {
-                        $(this).removeAttr("data-rule-required data-rule-digits data-rule-minlength data-rule-maxlength");
-                    });
-                }
-
-                //Vuelve a agregar las reglas de validación para las referencias bancarias
-                if ($("#refban").val() != 0) {
-                    $('input[name^="infb_rnombre"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infb_rapellidopat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infb_rapellidomat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('select[name^="infb_rrelacion"]').each(function() {
-                        $(this).attr("data-rule-required", "true");
-                    });
-
-                    $('input[name^="infb_rrfc"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-alphanumeric": "true",
-                            "data-rule-minlength": "12",
-                            "data-rule-maxlength": "13"
-                        });
-                    });
-
-                    $('input[name^="infb_rcurp"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-alphanumeric": "true",
-                            "data-rule-minlength": "18",
-                            "data-rule-maxlength": "18"
-                        });
-                    });
-
-                    $('input[name^="infb_rporcentaje"]').each(function() {
-                        $(this).attr("data-rule-required", "true");
-                    });
-                }
-
-                // Agregar las reglas de validación de datosB fusionados
-                formulario.validate().settings.rules = mergedDatosBRules;
-
-                // Agregar los mensajes de validación de datosB fusionados
-                formulario.validate().settings.messages = mergedDatosBMessages;
-            } else if (pestañaActiva === "#documentos") {
-                // Aquí puedes activar o desactivar las reglas de validación específicas para la pestaña "documentos"
-
-                //Esta función eliminar todas las reglas del formulario
-                formulario.find(":input").each(function() {
-                    $(this).rules("remove");
-                });
-
-                //Se agregan las reglas de validación para el guardar de documentos que es el botón final de guardar
-                if ($("#reflab").val() != 0) {
-                    $('input[name^="infa_rnombre"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infa_rapellidopat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infa_rapellidomat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('select[name^="infa_rrelacion"]').each(function() {
-                        $(this).attr("data-rule-required", "true");
-                    });
-
-                    $('input[name^="infa_rtelefono"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-digits": "true",
-                            "data-rule-minlength": "10",
-                            "data-rule-maxlength": "10"
-                        });
-                    });
-                }
-
-                //Se agregan las reglas de validación para el guardar de documentos que es el botón final de guardar
-                if ($("#refban").val() != 0) {
-                    $('input[name^="infb_rnombre"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infb_rapellidopat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('input[name^="infb_rapellidomat"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-names_validation": "true"
-                        });
-                    });
-
-                    $('select[name^="infb_rrelacion"]').each(function() {
-                        $(this).attr("data-rule-required", "true");
-                    });
-
-                    $('input[name^="infb_rrfc"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-alphanumeric": "true",
-                            "data-rule-minlength": "12",
-                            "data-rule-maxlength": "13"
-                        });
-                    });
-
-                    $('input[name^="infb_rcurp"]').each(function() {
-                        $(this).attr({
-                            "data-rule-required": "true",
-                            "data-rule-alphanumeric": "true",
-                            "data-rule-minlength": "18",
-                            "data-rule-maxlength": "18"
-                        });
-                    });
-
-                    $('input[name^="infb_rporcentaje"]').each(function() {
-                        $(this).attr("data-rule-required", "true");
-                    });
-                }
-
-                // Agregar las reglas de validación de documentos fusionados
-                formulario.validate().settings.rules = mergedAllRules;
-
-                // Agregar los mensajes de validación de documentos fusionados
-                formulario.validate().settings.messages = mergedAllMessages;
+        $(document).on('click', '#guardarDG', function(e) {
+            e.preventDefault(); // Evitar el envío del formulario por defecto
+            
+            var formularioEsValido = $('#Guardar').valid();
+
+            if (formularioEsValido) {
+                // Si la validación es exitosa, puedes enviar el formulario manualmente
+                $('#Guardar').submit();
             }
         });
-	});
 
-	//Aquí empiezan las referencias laborales
-    function AgregarReferencias() {
-        var valoresRelacion = ["SUPERVISOR(A)", "COLEGA", "SUBORDINADO(A)", "MENTOR(A)", "CLIENTE", "PROFESOR(A)", "DEPARTAMENTO DE PERSONAL", "PROVEEDOR(A)", "MIEMBRO DE UN COMITÉ", "OTRO"];
-        var numeroReferencias = parseInt($("#reflab").val(), 10) || 0;
+        $(document).on('click', '#guardarDA', function(e) {
+            e.preventDefault(); // Evitar el envío del formulario por defecto
+            
+            var formularioEsValido = $('#Guardar').valid();
 
-        var contenedorReferencias = $("#referencias");
-        var cantidadElementos = contenedorReferencias.children().length;
-        var contador = cantidadElementos + 1;
-
-        // Calcula la diferencia entre numeroReferencias y la cantidad actual de elementos
-        var diferencia = numeroReferencias - cantidadElementos;
-
-        if (numeroReferencias == 0 || numeroReferencias > 3) {
-            contenedorReferencias.empty();
-        } else {
-            if (diferencia < 0) {
-                contenedorReferencias.children().slice(diferencia).remove();
-            } else if (diferencia > 0) {
-                for (var i = 0; i < diferencia; i++) {
-                    var divFila = $("<div>").addClass('grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start');
-                    contenedorReferencias.append(divFila);
-
-                    var divColumna = $("<div>").addClass('md:col-span-1');
-                    divFila.append(divColumna);
-
-                    var tituloReferencia = $("<div>").addClass('text-[#64748b] font-semibold mb-2').text(obtenerTituloReferencia(contador));
-                    divColumna.append(tituloReferencia);
-
-                    var divGridNombre = $("<div>").addClass('grid grid-cols-1');
-                    var etiquetaNombre = $("<label>").addClass('text-[#64748b] font-semibold').text("Nombre (s)");
-                    divGridNombre.append(etiquetaNombre);
-                    var divGroupNombre = $("<div>").addClass('group flex');
-                    divGridNombre.append(divGroupNombre);
-                    var divIconNombre = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
-                    divGroupNombre.append(divIconNombre);
-                    var svgNombre = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    divIconNombre.append(svgNombre);
-                    var inputNombre = $("<input>").attr({
-                        type: "text",
-                        name: "infa_rnombre" + cantidadElementos,
-                        "data-rule-required": "true",
-                        "data-msg-required": "Este campo es requerido",
-                        "data-rule-names_validation": "true",
-                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
-                        placeholder: "Nombre (s) de " + obtenerTituloReferencia(contador)
-                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
-                    divGroupNombre.append(inputNombre);
-
-                    var divGridApellidoPat = $("<div>").addClass('grid grid-cols-1');
-                    var etiquetaApellidoPat = $("<label>").addClass('text-[#64748b] font-semibold').text("Apellido paterno");
-                    divGridApellidoPat.append(etiquetaApellidoPat);
-                    var divGroupApellidoPat = $("<div>").addClass('group flex');
-                    divGridApellidoPat.append(divGroupApellidoPat);
-                    var divIconApellidoPat = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
-                    divGroupApellidoPat.append(divIconApellidoPat);
-                    var svgApellidopat = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    divIconApellidoPat.append(svgApellidopat);
-                    var inputApellidoPat = $("<input>").attr({
-                        type: "text",
-                        name: "infa_rapellidopat" + cantidadElementos,
-                        "data-rule-required": "true",
-                        "data-msg-required": "Este campo es requerido",
-                        "data-rule-names_validation": "true",
-                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
-                        placeholder: "Apellido paterno de " + obtenerTituloReferencia(contador)
-                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
-                    divGroupApellidoPat.append(inputApellidoPat);
-
-                    var divGridApellidoMat = $("<div>").addClass('grid grid-cols-1');
-                    var etiquetaApellidoMat = $("<label>").addClass('text-[#64748b] font-semibold').text("Apellido Materno");
-                    divGridApellidoMat.append(etiquetaApellidoMat);
-                    var divGroupApellidoMat = $("<div>").addClass('group flex');
-                    divGridApellidoMat.append(divGroupApellidoMat);
-                    var divIconApellidoMat = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
-                    divGroupApellidoMat.append(divIconApellidoMat);
-                    var svgApellidoMat = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    divIconApellidoMat.append(svgApellidoMat);
-                    var inputApellidoMat = $("<input>").attr({
-                        type: "text",
-                        name: "infa_rapellidomat" + cantidadElementos,
-                        "data-rule-required": "true",
-                        "data-msg-required": "Este campo es requerido",
-                        "data-rule-names_validation": "true",
-                        "data-msg-names_validation": "Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios",
-                        placeholder: "Apellido materno de " + obtenerTituloReferencia(contador)
-                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
-                    divGroupApellidoMat.append(inputApellidoMat);
-
-                    var divGridRelacion = $("<div>").addClass('grid grid-cols-1');
-                    var etiquetaRelacion = $("<label>").addClass('text-[#64748b] font-semibold').text("Relación");
-                    divGridRelacion.append(etiquetaRelacion);
-                    var divGroupRelacion = $("<div>").addClass('group flex');
-                    divGridRelacion.append(divGroupRelacion);
-                    var divIconRelacion = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
-                    divGroupRelacion.append(divIconRelacion);
-                    var svgRelacion = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path></svg>';
-                    divIconRelacion.append(svgRelacion);
-                    var selectRelacion = $("<select>").attr({
-                        name: "infa_rrelacion" + cantidadElementos,
-                        "data-rule-required": "true",
-                        "data-msg-required": "Este campo es requerido"
-                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
-                    var opcionDefault = $("<option>").val("").text("--Selecciona--");
-                    selectRelacion.append(opcionDefault);
-                    $.each(valoresRelacion, function (index, value) {
-                        var opcion = $("<option>").val(value).text(value.charAt(0).toUpperCase() + value.slice(1));
-                        selectRelacion.append(opcion);
-                    });
-                    divGroupRelacion.append(selectRelacion);
-
-                    var divGridTelefono = $("<div>").addClass('grid grid-cols-1');
-                    var etiquetaTelefono = $("<label>").addClass('text-[#64748b] font-semibold').text("Teléfono");
-                    divGridTelefono.append(etiquetaTelefono);
-                    var divGroupTelefono = $("<div>").addClass('group flex');
-                    divGridTelefono.append(divGroupTelefono);
-                    var divIconTelefono = $("<div>").addClass('w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center');
-                    divGroupTelefono.append(divIconTelefono);
-                    var svgTelefono = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    divIconTelefono.append(svgTelefono);
-                    var inputTelefono = $("<input>").attr({
-                        type: "text",
-                        name: "infa_rtelefono" + cantidadElementos,
-                        "data-rule-required": "true",
-                        "data-msg-required": "Este campo es requerido",
-                        "data-rule-digits": "true",
-                        "data-msg-digits": "Solo se permiten números",
-                        "data-rule-minlength": 10,
-                        "data-msg-minlength": "Solo puedes ingresar como mínimo 10 números",
-                        "data-rule-maxlength": 10,
-                        "data-msg-maxlength": "Solo puedes ingresar como máximo 10 números",
-                        placeholder: "Teléfono de " + obtenerTituloReferencia(contador)
-                    }).addClass('w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600');
-                    divGroupTelefono.append(inputTelefono);
-
-                    if (numeroReferencias > 1) {
-                        divFila.addClass('border-t border-[#d1d5db] pt-5 mt-5');
-                    }
-
-                    divColumna.append(divGridNombre, divGridApellidoPat, divGridApellidoMat, divGridRelacion, divGridTelefono);
-                    contador++;
-                    cantidadElementos++;
-                }
+            if (formularioEsValido) {
+                // Si la validación es exitosa, puedes enviar el formulario manualmente
+                $('#Guardar').submit();
             }
-        }
-    }
+        });
 
-    function obtenerTituloReferencia(numero) {
-        var titulos = ["primera", "segunda", "tercera"];
-        return titulos[numero - 1] + " referencia";
-    }
-	//Terminan las referencias laborales
+        $('#finish').on('click', function(e) {
+            e.preventDefault(); // Evitar el envío del formulario por defecto
+            
+            var formularioEsValido = $('#Guardar').valid();
+
+            if (formularioEsValido) {
+                // Si la validación es exitosa, puedes enviar el formulario manualmente
+                $('#Guardar').submit();
+            }
+        });
+    });
+
 
     //Aquí empiezan las referencias bancarias
     function AgregarBanco() {
