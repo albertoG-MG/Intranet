@@ -149,7 +149,11 @@
 			    dropdown.classList.remove("hidden");
 	    <?php } ?>
 
-        $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+        var dt = new Date();
+        dt.setDate(dt.getDate() - 1);
+        dt.setFullYear(new Date().getFullYear()-18);
+
+        $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "startDate": dt, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
         $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
         $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
         $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
@@ -636,6 +640,39 @@
                             }
                         }
                     },
+                    correo_adicional: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='posee_correo']:checked").val() === "si"  && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        email_verification: {
+                            depends: function(element) {
+                                return  $("input[name='posee_correo']:checked").val() === "si"  && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/validacion/expedientes/checkemail.php" : false,
+                            type: "GET",
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-correo').removeClass('hidden');
+                                    $('#correct-correo').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  }); 
+                                    } else {
+                                        $('#loader-correo').addClass('hidden');
+                                        $('#correct-correo').addClass('hidden'); 
+                                    }
+                                }
+                            }
+                        }
+                    },
                     calle: {
                         location_validation: {
                             depends: function(element) {
@@ -697,6 +734,30 @@
                             }
                         }
                     },
+                    telmov: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
                     tel_movil_empresa:{
                         required: {
                             depends: function(element) {
@@ -704,10 +765,130 @@
                             }
                         }
                     },
-                    laptop_empresa:{
+                    marcacion: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    serie: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    sim: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    numred: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    modelotel: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        model_validation: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    marcatel: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        field_validation: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    imei: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    laptop_empresa: {
                         required: {
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    marca_laptop: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        field_validation: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    modelo_laptop: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        model_validation: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    serie_laptop: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
                         }
                     },
@@ -724,6 +905,18 @@
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
                         }
+                    },
+                    monto_mensual: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='retencion']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        number: {
+                            depends: function(element) {
+                                return  $("input[name='retencion']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
                     },
                     fechanac:{
                         mayor18: {
@@ -1034,6 +1227,10 @@
                     posee_correo: {
                         required: 'Este campo es requerido'
                     },
+                    correo_adicional: {
+                        required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },
+                        email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
+                    },
                     calle: {
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
                     },
@@ -1057,17 +1254,67 @@
                     tel_movil: {
                         required: 'Este campo es requerido'
                     },
+                    telmov: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength:'Solo puedes ingresar como máximo 10 números'
+                    },
                     tel_movil_empresa: {
                         required: 'Este campo es requerido'
                     },
+                    marcacion: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    serie: {
+                        required: "Este campo es requerido",
+                        alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                    },
+                    sim: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    numred: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    modelotel: {
+                        required: "Este campo es requerido",
+                        model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
+                    },
+                    marcatel: {
+                        required: "Este campo es requerido",
+                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                    },
+                    imei: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
                     laptop_empresa: {
                         required: 'Este campo es requerido'
+                    },
+                    marca_laptop: {
+                        required: "Este campo es requerido",
+                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                    },
+                    modelo_laptop: {
+                        required: "Por favor, ingrese el modelo de la laptop",
+                        model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
+                    },
+                    serie_laptop: {
+                        required: "Este campo es requerido",
+                        alphanumeric: "Solo se permiten carácteres alfanúmericos"
                     },
                     casa: {
                         required: 'Este campo es requerido'
                     },
                     retencion: {
                         required: 'Este campo es requerido'
+                    },
+                    monto_mensual: {
+                        required: "Este campo es requerido",
+                        number: "Solo se permiten números y decimales"
                     },
                     fechanac: {
                         mayor18: 'Debes tener por lo menos 18 años para aplicar'

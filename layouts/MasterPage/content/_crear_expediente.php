@@ -213,25 +213,16 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Desea agregar un correo electrónico adicional?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="rcorreoadicional; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1">
+                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1">
                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="rcorreoadicional; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2" checked="">
+                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2" checked="">
                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
-                                 <script>
-                                    function rcorreoadicional(e) {
-                                       if(e.target.value == "no"){
-                                          if (!($("#correo_adicional").val().length == 0)){ $("#correo_adicional").removeData("previousValue");} $("#correo_adicional").val(""); $("#correo_adicional").rules("remove"); $("#correo_adicional").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#correo_adicional").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#correo_adicional-error").css("display", "none"); $('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden');
-                                       }else if(e.target.value == "si"){
-                                          $("#correo_adicional").rules("add", { required: true, email_verification: true, remote: { url: "../ajax/validacion/expedientes/checkemail.php", type: "GET", beforeSend: function () { $('#loader-correo').removeClass('hidden'); $('#correct-correo').addClass('hidden'); }, complete: function(data){ if(data.responseText == "true") { $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  }); $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  }); }else{ $('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); }} }, messages: { required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; }, email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }}});
-                                       }
-                                    }
-                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Correo electrónico adicional</label>
@@ -370,25 +361,16 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="rtelmov; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="rtelmov; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
-                                 <script>
-                                    function rtelmov(e) {
-                                       if(e.target.value == "no"){
-                                          $("#telmov").val(""); $("#telmov").rules("remove"); $("#telmov").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#telmov").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#telmov-error").css("display", "none");
-                                       }else if(e.target.value == "si"){
-                                          $("#telmov").rules("add", { required: true, digits: true, minlength: 10, maxlength:10, messages: { required: 'Este campo es requerido', digits: 'Solo se permiten números', minlength: 'Solo puedes ingresar como mínimo 10 números', maxlength:'Solo puedes ingresar como máximo 10 números'}});	
-                                       }
-                                    }
-                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Teléfono móvil propio</label>
@@ -412,32 +394,16 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="telempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                        <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="telempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                        <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
-                                 <script>
-                                    function telempresa(e) {
-                                       if(e.target.value == "no"){
-                                          const array = ["#marcacion", "#serie", "#sim", "#numred", "#modelotel", "#marcatel", "#imei"];
-                                          for(var i=0; i < array.length; i++){ $(""+array[i]+"").val(""); $(""+array[i]+"").rules("remove"); $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $(""+array[i]+"-error").css("display", "none");}
-                                       }else if(e.target.value == "si"){
-                                          $("#marcacion").rules("add", { required: true, digits:true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
-                                          $("#serie").rules("add", { required: true, alphanumeric: true, messages: { required: "Este campo es requerido", alphanumeric: 'Solo se permiten carácteres alfanúmericos' }});
-                                          $("#sim").rules("add", { required: true, digits: true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
-                                          $("#numred").rules("add", { required: true, digits:true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
-                                          $("#modelotel").rules("add", { required: true, model_validation: true, messages: { required: "Este campo es requerido", model_validation: 'Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios' }});
-                                          $("#marcatel").rules("add", { required: true, field_validation: true, messages: { required: "Este campo es requerido", field_validation: 'Solo se permiten carácteres alfabéticos y espacios' }});
-                                          $("#imei").rules("add", { required: true, digits: true, messages: { required: "Este campo es requerido", digits: "Solo se permiten números" }});
-                                       }
-                                    }
-                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                        <div class="grid grid-cols-1">
@@ -526,28 +492,16 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Laptop asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="laptopempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1">
+                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1">
                                        <label for="option-laptop-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="laptopempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2" checked="">
+                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2" checked="">
                                        <label for="option-laptop-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
-                                 <script>
-                                    function laptopempresa(e){
-                                       if(e.target.value == "no"){
-                                          const array = ["#marca_laptop", "#modelo_laptop", "#serie_laptop"];
-                                          for(var i=0; i < array.length; i++){ $(""+array[i]+"").val(""); $(""+array[i]+"").rules("remove"); $(""+array[i]+"").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $(""+array[i]+"").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $(""+array[i]+"-error").css("display", "none");}
-                                       }else if(e.target.value == "si"){
-                                          $("#marca_laptop").rules("add", { required: true, field_validation: true, messages: { required: "Este campo es requerido", field_validation: 'Solo se permiten carácteres alfabéticos y espacios' }});
-                                          $("#modelo_laptop").rules("add", { required: true, model_validation: true, messages: { required: "Por favor, ingrese el modelo de la laptop", model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios" }});
-                                          $("#serie_laptop").rules("add", { required: true, alphanumeric: true, messages: { required: "Este campo es requerido", alphanumeric: 'Solo se permiten carácteres alfanúmericos' }});
-                                       }
-                                    }
-                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                        <div class="grid grid-cols-1">
@@ -625,25 +579,16 @@
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Posee retención crédito infonavit?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="rretencion; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="rretencion; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
                                     </div>
                                  </div>
-                                 <script>
-                                    function rretencion(e){
-                                       if(e.target.value == "no"){
-                                          $("#monto_mensual").val(''); $("#monto_mensual").rules("remove"); $("#monto_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#monto_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#monto_mensual-error").css("display", "none");
-                                       }else if(e.target.value == "si"){
-                                          $("#monto_mensual").rules("add", { required: true, number: true, messages: { required: "Este campo es requerido", number: "Solo se permiten números y decimales" }}); 
-                                       }
-                                    }
-                                 </script>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
                                        <label class="text-[#64748b] font-semibold mb-2">Monto mensual</label>
