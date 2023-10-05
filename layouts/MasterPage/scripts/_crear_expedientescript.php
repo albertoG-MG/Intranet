@@ -1210,6 +1210,136 @@
                             },
                             param: 10
                         }
+                    },
+                    cantidadpolo: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_nom: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_nom2: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_appat: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_appat2: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_apmat: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_apmat2: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_tel: {
+                        digits: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    emergencia_tel2: {
+                        digits: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    empresa: {
+                        required: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    nomfam: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    apfam: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    amfam: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
                     }
                 },
                 messages: {
@@ -1408,6 +1538,52 @@
                         digits: 'Solo se permiten números',
                         minlength: 'Solo puedes ingresar como mínimo 10 números',
                         maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    cantidadpolo: {
+                        digits: 'Solo se permiten números'
+                    },
+                    emergencia_nom: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_nom2: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_appat: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_appat2: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_apmat: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_apmat2: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_tel: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    emergencia_tel2: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    empresa: {
+                        required: 'Este campo es requerido'
+                    },
+                    nomfam: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    apfam: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    amfam: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     }
                 },
                 submitHandler: function(form) {
