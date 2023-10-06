@@ -736,18 +736,18 @@
                                     }
                                  </script>
                                  <div x-show.important="ine">
-                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                       <img class="w-full" src="../src/img/INE.png">
+                                    <div class="container mx-auto md:mx-7 mt-5">
+                                       <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/INE.png">
                                     </div>
                                  </div>
                                  <div x-show.important="pasaporte">
-                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                       <img class="w-full" src="../src/img/PASAPORTE.png">
+                                    <div class="container mx-auto md:mx-7 mt-5">
+                                       <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/PASAPORTE.png">
                                     </div>
                                  </div>
                                  <div x-show.important="cedula">
-                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                       <img class="w-full" src="../src/img/CEDULA.png">
+                                    <div class="container mx-auto md:mx-7 mt-5">
+                                       <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/CEDULA.png">
                                     </div>
                                  </div>
                                  <div x-show.important="open">
