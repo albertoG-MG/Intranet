@@ -1303,29 +1303,16 @@
 			                     <div class="grid grid-cols-1 mt-5 mx-7">
 				                    <label class="text-[#64748b] font-semibold mb-2">¿Tiene familiares dentro de la empresa?</label>
 				                    <div class="group flex mt-3 items-center">
-				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="rfamiliarempresa; open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
 				                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
 				                       Sí
 				                       </label>
-				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="rfamiliarempresa; open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
 				                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
 				                       No
 				                       </label>
 				                    </div>
 			                     </div>
-			                     <script>
-				                    function rfamiliarempresa(e){
-				                       if(e.target.value == "no"){
-					                      $("#nomfam").val(''); $("#nomfam").rules("remove"); $("#nomfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#nomfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#nomfam-error").css("display", "none");
-                                     $("#apfam").val(''); $("#apfam").rules("remove"); $("#apfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#apfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#apfam-error").css("display", "none");
-                                     $("#amfam").val(''); $("#amfam").rules("remove"); $("#amfam").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#amfam").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#amfam-error").css("display", "none");
-				                       }else if(e.target.value == "si"){
-					                      $("#nomfam").rules("add", {required: true, names_validation: true, messages: { required: "Este campo es requerido", names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios" }});
-                                     $("#apfam").rules("add", {required: true, names_validation: true, messages: { required: "Este campo es requerido", names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios" }});
-                                     $("#amfam").rules("add", {required: true, names_validation: true, messages: { required: "Este campo es requerido", names_validation: "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios" }});
-				                       }
-				                    }
-			                     </script>
 			                     <div x-show.important="open">
 				                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                     <div class="grid grid-cols-1">
@@ -1377,22 +1364,208 @@
                                  <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente.</span>
                                  <div class="my-3 h-px bg-slate-200"></div>
                               </div>
-                              <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios</label>
-                                 <div class="group flex">
-                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                          <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
-                                       </svg>
+                              <div x-data="{ numReferenciasBancarias: 0 }">
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label for="numReferenciasBancarias" class="text-[#64748b] font-semibold mb-2">Número de referencias bancarias</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
+                                          </svg>
+                                       </div>
+                                       <select id="numReferenciasBancarias" name="numReferenciasBancarias" x-model="numReferenciasBancarias" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
+                                          <option value="0">No tengo referencias</option>
+                                          <option value="1">Una referencia</option>
+                                          <option value="2">Dos referencias</option>
+                                       </select>
                                     </div>
-                                    <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" onchange="AgregarBanco()" id="refban" name="refban">
-                                       <option value="0">No tengo referencias</option>
-                                       <option value="1">Una referencia</option>
-                                       <option value="2">Dos referencias</option>
-                                    </select>
                                  </div>
-                              </div>
-                              <div id="ref">
+                                 <div x-show="numReferenciasBancarias >= 1">
+                                    <!-- Referencia 1 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#64748b] font-semibold mb-2">primera referencia</div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rnombre1" placeholder="Nombre (s) de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rapellidopat1" placeholder="Apellido paterno de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rapellidomat1" placeholder="Apellido materno de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Relación</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <select name="infb_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                   <option value="">--Selecciona--</option>
+                                                   <option value="PADRE">PADRE</option>
+                                                   <option value="MADRE">MADRE</option>
+                                                   <option value="CONYUGE">CONYUGE</option>
+                                                   <option value="HIJO">HIJO</option>
+                                                   <option value="HIJA">HIJA</option>
+                                                   <option value="OTRO">OTRO</option>
+                                                </select>
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">RFC</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rrfc1" placeholder="RFC de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">CURP</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rcurp1" placeholder="CURP de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Porcentaje de derecho</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rporcentaje1" x-model="numReferenciasBancarias === '1' ? '100' : '50'" placeholder="Porcentaje de derecho de primera referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="numReferenciasBancarias >= 2">
+                                    <!-- Referencia 2 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#64748b] font-semibold mb-2">segunda referencia</div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rnombre2" placeholder="Nombre (s) de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rapellidopat2" placeholder="Apellido paterno de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Apellido Materno</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rapellidomat2" placeholder="Apellido materno de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Relación</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <select name="infb_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                   <option value="">--Selecciona--</option>
+                                                   <option value="PADRE">PADRE</option>
+                                                   <option value="MADRE">MADRE</option>
+                                                   <option value="CONYUGE">CONYUGE</option>
+                                                   <option value="HIJO">HIJO</option>
+                                                   <option value="HIJA">HIJA</option>
+                                                   <option value="OTRO">OTRO</option>
+                                                </select>
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">RFC</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rrfc2" placeholder="RFC de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">CURP</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rcurp2" placeholder="CURP de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold">Porcentaje de derecho</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
+                                                   </svg>
+                                                </div>
+                                                <input type="text" name="infb_rporcentaje2" x-model="numReferenciasBancarias === '1' ? '100' : '50'" placeholder="Porcentaje de derecho de segunda referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
@@ -1500,6 +1673,7 @@
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
                                  <button type="button" id="siguiente3" name="siguiente3" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>
+                                 <button type="button" id="guardarDB" name="guardarDB" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Guardar progreso</button>
                               </div>
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">

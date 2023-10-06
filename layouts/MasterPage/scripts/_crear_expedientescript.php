@@ -1340,6 +1340,330 @@
                                 return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
                             }
                         }
+                    },
+                    infb_rnombre1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidopat1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidomat1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrelacion1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrfc1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 12
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 13
+                        }
+                    },
+                    infb_rcurp1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 18
+                        }
+                    },
+                    infb_rporcentaje1:{
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rnombre2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidopat2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidomat2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrelacion2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrfc2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 12
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 13
+                        }
+                    },
+                    infb_rcurp2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 18
+                        }
+                    },
+                    infb_rporcentaje2:{
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    banco_personal: {
+                        field_validation: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    cuenta_personal: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10 
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    clabe_personal: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        }
+                    },
+                    plastico_personal: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        }
+                    },
+                    banco_nomina: {
+                        field_validation: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    cuenta_nomina: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    clabe_nomina: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        }
+                    },
+                    plastico: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        }
                     }
                 },
                 messages: {
@@ -1584,6 +1908,102 @@
                     amfam: {
                         required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rnombre1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidopat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidomat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rrelacion1: {
+                        required: 'Este campo es requerido'
+                    },
+                    infb_rrfc1: {
+                        required: 'Este campo es requerido',
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'No puede ser menor a 12 dígitos',
+                        maxlength: 'No puede ser mayor a 13 dígitos'
+                    },
+                    infb_rcurp1: {
+                        required: 'Este campo es requerido',
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'No puede ser menor a 18 dígitos',
+                        maxlength: 'No puede ser mayor a 18 dígitos'
+                    },
+                    infb_rporcentaje1:{
+                        required: 'Este campo es requerido'
+                    },
+                    infb_rnombre2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidopat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidomat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rrelacion2: {
+                        required: 'Este campo es requerido'
+                    },
+                    infb_rrfc2: {
+                        required: 'Este campo es requerido',
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'No puede ser menor a 12 dígitos',
+                        maxlength: 'No puede ser mayor a 13 dígitos'
+                    },
+                    infb_rcurp2: {
+                        required: 'Este campo es requerido',
+                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                        minlength: 'No puede ser menor a 18 dígitos',
+                        maxlength: 'No puede ser mayor a 18 dígitos'
+                    },
+                    infb_rporcentaje2:{
+                        required: 'Este campo es requerido'
+                    },
+                    banco_personal: {
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    cuenta_personal: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+                        maxlength: 'No puede ser mayor a 10 dígitos'
+                    },
+                    clabe_personal: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+                        maxlength: 'No puede ser mayor a 18 dígitos'
+                    },
+                    plastico_personal: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+                        maxlength: 'No puede ser mayor a 16 dígitos'
+                    },
+                    banco_nomina: {
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    cuenta_nomina: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+                        maxlength: 'No puede ser mayor a 10 dígitos'
+                    },
+                    clabe_nomina: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+                        maxlength: 'No puede ser mayor a 18 dígitos'
+                    },
+                    plastico: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+                        maxlength: 'No puede ser mayor a 16 dígitos'
                     }
                 },
                 submitHandler: function(form) {
@@ -1642,6 +2062,17 @@
         });
 
         $(document).on('click', '#guardarDA', function(e) {
+            e.preventDefault(); // Evitar el envío del formulario por defecto
+            
+            var formularioEsValido = $('#Guardar').valid();
+
+            if (formularioEsValido) {
+                // Si la validación es exitosa, puedes enviar el formulario manualmente
+                $('#Guardar').submit();
+            }
+        });
+
+        $(document).on('click', '#guardarDB', function(e) {
             e.preventDefault(); // Evitar el envío del formulario por defecto
             
             var formularioEsValido = $('#Guardar').valid();
