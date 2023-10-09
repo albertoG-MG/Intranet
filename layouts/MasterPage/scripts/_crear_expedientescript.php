@@ -1376,22 +1376,10 @@
                                 return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
-                        alphanumeric: {
+                        rfc_validation: {
                             depends: function(element) {
                                 return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 12
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 13
                         }
                     },
                     infb_rcurp1: {
@@ -1400,22 +1388,10 @@
                                 return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
-                        alphanumeric: {
+                        curp_validation: {
                             depends: function(element) {
                                 return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 18
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 18
                         }
                     },
                     infb_rporcentaje1:{
@@ -1474,22 +1450,10 @@
                                 return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
-                        alphanumeric: {
+                        rfc_validation: {
                             depends: function(element) {
                                 return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 12
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 13
                         }
                     },
                     infb_rcurp2: {
@@ -1498,22 +1462,10 @@
                                 return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
-                        alphanumeric: {
+                        curp_validation: {
                             depends: function(element) {
                                 return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 18
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
-                            },
-                            param: 18
                         }
                     },
                     infb_rporcentaje2:{
@@ -1908,15 +1860,11 @@
                     },
                     infb_rrfc1: {
                         required: 'Este campo es requerido',
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'No puede ser menor a 12 dígitos',
-                        maxlength: 'No puede ser mayor a 13 dígitos'
+                        rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789'
                     },
                     infb_rcurp1: {
                         required: 'Este campo es requerido',
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'No puede ser menor a 18 dígitos',
-                        maxlength: 'No puede ser mayor a 18 dígitos'
+                        curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR'
                     },
                     infb_rporcentaje1:{
                         required: 'Este campo es requerido'
@@ -1938,15 +1886,11 @@
                     },
                     infb_rrfc2: {
                         required: 'Este campo es requerido',
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'No puede ser menor a 12 dígitos',
-                        maxlength: 'No puede ser mayor a 13 dígitos'
+                        rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789'
                     },
                     infb_rcurp2: {
                         required: 'Este campo es requerido',
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'No puede ser menor a 18 dígitos',
-                        maxlength: 'No puede ser mayor a 18 dígitos'
+                        curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR'
                     },
                     infb_rporcentaje2:{
                         required: 'Este campo es requerido'
