@@ -2217,7 +2217,7 @@
 
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
-        var numeroreferenciaslab = $("#reflab").val();
+        var numeroreferenciaslab = $("#numReferencias").val();
         var fechauniforme = $("#fechauniforme").val();
         var cantidadpolo = $("#cantidadpolo").val();
         var tallapolo = $("#tallapolo").val();
@@ -2240,15 +2240,21 @@
         var apellidopatfam = $("#apfam").val();
         var apellidomatfam = $("#amfam").val();
         /*Referencias laborales*/
-        var nreflab =  $("input[name=reflab]").val();
         var reflab = [];
-        for(var i=0; i <nreflab; i++){
-            var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
-            var rapellidopat = $("input[name=infa_rapellidopat" +i+ "]").val();
-            var rapellidomat = $("input[name=infa_rapellidomat" +i+ "]").val();
-            var rrelacion = $("input[name=infa_rrelacion" +i+ "]").val();
-            var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
-            reflab[i] = {nombre: rnombre, apellidopat: rapellidopat, apellidomat: rapellidomat, relacion: rrelacion, telefono: rtelefono};
+        for (var i = 1; i <= numeroreferenciaslab; i++) {
+            var rnombre = $("input[name=infa_rnombre" + i + "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
+            var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
+
+            reflab.push({
+                nombre: rnombre,
+                apellidopat: rapellidopat,
+                apellidomat: rapellidomat,
+                relacion: rrelacion,
+                telefono: rtelefono
+            });
         }
         var pestaña = "DatosA";
         var app="Expediente_temporal";
@@ -2278,7 +2284,6 @@
         fd.append('nomfam', nomfam);
         fd.append('apellidopatfam', apellidopatfam);
         fd.append('apellidomatfam', apellidomatfam);
-        fd.append('nreflab', nreflab);
         fd.append('referencias', JSON.stringify(reflab));
         fd.append('pestaña', pestaña);
         fd.append('app', app);
