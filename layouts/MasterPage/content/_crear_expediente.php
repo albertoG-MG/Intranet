@@ -1451,7 +1451,7 @@
                                                       <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rporcentaje1" x-model="numReferenciasBancarias" x-init="numReferenciasBancarias = (numReferenciasBancarias === '1') ? '100' : '50'" placeholder="Porcentaje de derecho de primera referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rporcentaje1" x-model="numReferenciasBancarias" x-init="numReferenciasB = (numReferenciasBancarias === '1') ? '100' : '50'" placeholder="Porcentaje de derecho de primera referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
@@ -1544,7 +1544,7 @@
                                                       <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rporcentaje2" x-model="numReferenciasBancarias" x-init="numReferenciasBancarias = (numReferenciasBancarias === '1') ? '100' : '50'" placeholder="Porcentaje de derecho de segunda referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rporcentaje2" x-model="numReferenciasBancarias" x-init="numReferenciasB = (numReferenciasBancarias === '1') ? '100' : '50'" placeholder="Porcentaje de derecho de segunda referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
