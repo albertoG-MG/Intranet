@@ -1330,148 +1330,148 @@
                     infb_rnombre1: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         names_validation: {
                             depends: function(element) {
-                                return   ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return   ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rapellidopat1: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         names_validation: {
                             depends: function(element) {
-                                return   ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return   ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rapellidomat1: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         names_validation: {
                             depends: function(element) {
-                                return   ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return   ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rrelacion1: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rrfc1: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         rfc_validation: {
                             depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rcurp1: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         curp_validation: {
                             depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rporcentaje1:{
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rnombre2: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         names_validation: {
                             depends: function(element) {
-                                return   ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return   ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rapellidopat2: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         names_validation: {
                             depends: function(element) {
-                                return   ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return   ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rapellidomat2: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         names_validation: {
                             depends: function(element) {
-                                return   ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return   ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rrelacion2: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rrfc2: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         rfc_validation: {
                             depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rcurp2: {
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         },
                         curp_validation: {
                             depends: function(element) {
-                                return ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
                     infb_rporcentaje2:{
                         required: {
                             depends: function(element) {
-                                return  ($("#numReferenciasBancarias").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
                             }
                         }
                     },
