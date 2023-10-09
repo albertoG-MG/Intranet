@@ -499,6 +499,16 @@
 			return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
 		}, 'not a valid name.');
 
+        //Función que valida el CURP
+        $.validator.addMethod('curp_validation', function (value, element) {
+            return this.optional(element) || /^([A-Z&]|[a-z&]{1})([AEIOU]|[aeiou]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9]{2})$/g.test(value);
+        }, 'not a valid curp.');
+
+        //Función que valida el RFC
+        $.validator.addMethod('rfc_validation', function (value, element) {
+            return this.optional(element) || /^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])(?:[A-Z\d]{3})$/g.test(value);
+        }, 'not a valid rfc.');
+
         //Verifica si el usuario no modificó el dropdown a través de la consola.
         $.validator.addMethod("refvalplus3", function(value, element) {
             if ($("#reflab").val() > 3) {
@@ -947,22 +957,10 @@
                         }
                     },
                     curp:{
-                        alphanumeric: {
+                        curp_validation: {
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            },
-                            param: 18
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            },
-                            param: 18
                         }
                     },
                     nss:{
@@ -985,22 +983,10 @@
                         }
                     },
                     rfc:{
-                        alphanumeric: {
+                        rfc_validation: {
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            },
-                            param: 12
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            },
-                            param: 13
                         }
                     },
                     numReferencias:{
@@ -1783,9 +1769,7 @@
                         field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
                     },
                     curp: {
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'Solo puedes ingresar como mínimo 18 números',
-                        maxlength: 'Solo puedes ingresar como máximo 18 números'
+                        curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR',
                     },
                     nss: {
                         digits: 'Solo se permiten números',
@@ -1793,9 +1777,7 @@
                         maxlength: 'Solo puedes ingresar como máximo 11 números'
                     },
                     rfc: {
-                        alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                        minlength: 'Solo puedes ingresar como mínimo 12 números',
-                        maxlength: 'Solo puedes ingresar como máximo 13 números'
+                        rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789',
                     },
                     numReferencias: {
                         refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
