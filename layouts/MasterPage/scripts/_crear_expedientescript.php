@@ -734,7 +734,7 @@
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             },
-                            param: 4
+                            param: 10
                         }
                     },
                     tel_movil:{
