@@ -2328,7 +2328,7 @@
 
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
-        var numeroreferenciasban = $("#refban").val();
+        var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
         var banco_personal = $("#banco_personal").val();
         var cuenta_personal = $("#cuenta_personal").val();
         var clabe_personal = $("#clabe_personal").val();
@@ -2338,17 +2338,25 @@
         var clabe_nomina = $("#clabe_nomina").val();
         var plastico = $("#plastico").val();
         /*Referencias bancarias*/
-        var nrefbanc =  $("input[name=refban]").val();
         var refbanc = [];
-        for(var i=0; i <nrefbanc; i++){
-            var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
-            var brapellidopat = $("input[name=infb_rapellidopat" +i+ "]").val();
-            var brapellidomat = $("input[name=infb_rapellidomat" +i+ "]").val();
-            var brrelacion = $("input[name=infb_rrelacion" +i+ "]").val();
-            var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
-            var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
-            var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
-            refbanc[i] = {nombre: brnombre, apellidopat: brapellidopat, apellidomat: brapellidomat, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+        for (var i = 1; i <= numeroreferenciasban; i++) {
+            var brnombre = $("input[name=infb_rnombre" + i + "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" + i + "]").val();
+            var brrelacion = $("select[name=infb_rrelacion" + i + "]").val();
+            var brrfc = $("input[name=infb_rrfc" + i + "]").val();
+            var brcurp = $("input[name=infb_rcurp" + i + "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+
+            refbanc.push({
+                nombre: brnombre,
+                apellidopat: brapellidopat,
+                apellidomat: brapellidomat,
+                relacion: brrelacion,
+                rfc: brrfc,
+                curp: brcurp,
+                porcentaje: brporcentaje
+            });
         }
         var pestaña = "DatosB";
         var app="Expediente_temporal";
@@ -2365,7 +2373,6 @@
         fd.append('cuenta_nomina', cuenta_nomina);
         fd.append('clabe_nomina', clabe_nomina);
         fd.append('plastico', plastico);
-        fd.append('nrefbanc', nrefbanc);
         fd.append('refbanc', JSON.stringify(refbanc));
         fd.append('pestaña', pestaña);
         fd.append('app', app);
