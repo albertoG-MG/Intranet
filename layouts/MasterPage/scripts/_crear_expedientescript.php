@@ -2042,7 +2042,7 @@
             }
         });
 
-        $('#finish').on('click', function(e) {
+        $(document).on('click', '#finish', function(e) {
             e.preventDefault(); // Evitar el envío del formulario por defecto
             
             var formularioEsValido = $('#Guardar').valid();
