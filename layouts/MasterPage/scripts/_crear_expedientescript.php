@@ -2426,7 +2426,8 @@
         window.addEventListener('beforeunload', unloadHandler);
         var fd = new FormData();
     
-        /*Inputs*/
+        /*Obtención de valores*/
+        /*Datos generales*/
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
         var numempleado = $("#numempleado").val();
@@ -2473,16 +2474,22 @@
         var rfc = $("#rfc").val();
         var tipoidentificacion = $("#identificacion").val();
         var numeroidentificacion = $("#numeroidentificacion").val();
-        var numeroreferenciaslab = $("#reflab").val();
+
+        /*Datos adicionales*/
+        var numeroreferenciaslab = $("#numReferencias").val();
         var fechauniforme = $("#fechauniforme").val();
         var cantidadpolo = $("#cantidadpolo").val();
         var tallapolo = $("#tallapolo").val();
-        var emergencianom = $("#emergencianom").val();
-        var emergenciaparentesco = $("#emergenciaparentesco").val();
-        var emergenciatel = $("#emergenciatel").val();
-        var emergencianom2 = $("#emergencianom2").val();
-        var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
-        var emergenciatel2 = $("#emergenciatel2").val();
+        var emergencianom = $("#emergencia_nom").val();
+        var emergenciaapat = $("#emergencia_appat").val();
+        var emergenciaamat = $("#emergencia_apmat").val();
+        var emergenciarelacion = $("#emergencia_relacion").val();
+        var emergenciatelefono = $("#emergencia_tel").val();
+        var emergencianom2 = $("#emergencia_nom2").val();
+        var emergenciaapat2 = $("#emergencia_appat2").val();
+        var emergenciaamat2 = $("#emergencia_apmat2").val();
+        var emergenciarelacion2 = $("#emergencia_relacion2").val();
+        var emergenciatelefono2 = $("#emergencia_tel2").val();
 		var capacitacion = $("#capacitacion").val();
         var antidoping = $("#antidoping").val();
         var tipo_sangre = $("#tipo_sangre").val();
@@ -2491,7 +2498,9 @@
         var nomfam = $("#nomfam").val();
         var apellidopatfam = $("#apfam").val();
         var apellidomatfam = $("#amfam").val();
-        var numeroreferenciasban = $("#refban").val();
+
+        /*Datos bancarios*/
+        var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
         var banco_personal = $("#banco_personal").val();
         var cuenta_personal = $("#cuenta_personal").val();
         var clabe_personal = $("#clabe_personal").val();
@@ -2500,47 +2509,58 @@
         var cuenta_nomina = $("#cuenta_nomina").val();
         var clabe_nomina = $("#clabe_nomina").val();
         var plastico = $("#plastico").val();
-        var method = "store";
-        var app = "expediente";
     
         /*Referencias laborales*/
-        var nreflab =  $("input[name=reflab]").val();
         var reflab = [];
-        for(var i=0; i <nreflab; i++){
-            var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
-            var rapellidopat = $("input[name=infa_rapellidopat" +i+ "]").val();
-            var rapellidomat = $("input[name=infa_rapellidomat" +i+ "]").val();
-            var rrelacion = $("input[name=infa_rrelacion" +i+ "]").val();
-            var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
-            reflab[i] = {nombre: rnombre, apellidopat: rapellidopat, apellidomat: rapellidomat, relacion: rrelacion, telefono: rtelefono};
+        for (var i = 1; i <= numeroreferenciaslab; i++) {
+            var rnombre = $("input[name=infa_rnombre" + i + "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
+            var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
+
+            reflab.push({
+                nombre: rnombre,
+                apellidopat: rapellidopat,
+                apellidomat: rapellidomat,
+                relacion: rrelacion,
+                telefono: rtelefono
+            });
         }
     
         /*Referencias bancarias*/
-        var nrefbanc =  $("input[name=refban]").val();
         var refbanc = [];
-        for(var i=0; i <nrefbanc; i++){
-            var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
-            var brapellidopat = $("input[name=infb_rapellidopat" +i+ "]").val();
-            var brapellidomat = $("input[name=infb_rapellidomat" +i+ "]").val();
-            var brrelacion = $("input[name=infb_rrelacion" +i+ "]").val();
-            var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
-            var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
-            var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
-            refbanc[i] = {nombre: brnombre, apellidopat: brapellidopat, apellidomat: brapellidomat, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
+        for (var i = 1; i <= numeroreferenciasban; i++) {
+            var brnombre = $("input[name=infb_rnombre" + i + "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" + i + "]").val();
+            var brrelacion = $("select[name=infb_rrelacion" + i + "]").val();
+            var brrfc = $("input[name=infb_rrfc" + i + "]").val();
+            var brcurp = $("input[name=infb_rcurp" + i + "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+
+            refbanc.push({
+                nombre: brnombre,
+                apellidopat: brapellidopat,
+                apellidomat: brapellidomat,
+                relacion: brrelacion,
+                rfc: brrfc,
+                curp: brcurp,
+                porcentaje: brporcentaje
+            });
         }
     
         /*File uploads*/
         <?php 
             foreach($papeleria as $fetchpapeleria){
-                echo ("
-                    var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];
-                ");
-            } 
-        ?>
+                echo "var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];";
+            }
+        ?> 
+        var app = "expediente";
     
         /*FD appends*/
     
-        /*Inputs*/
+        /*Datos generales*/
         fd.append('select2', select2);
         fd.append('select2text', select2text);
         fd.append('numempleado', numempleado);
@@ -2587,22 +2607,30 @@
         fd.append('rfc', rfc);
         fd.append('identificacion', tipoidentificacion);
         fd.append('numeroidentificacion', numeroidentificacion);
+
+        /*Datos adicionales*/
         fd.append('numeroreferenciaslab', numeroreferenciaslab);
         fd.append('fechauniforme', fechauniforme);
         fd.append('cantidadpolo', cantidadpolo);
         fd.append('tallapolo', tallapolo);
         fd.append('emergencianom', emergencianom);
-        fd.append('emergenciaparentesco', emergenciaparentesco);
-        fd.append('emergenciatel', emergenciatel);
+        fd.append('emergenciaapat', emergenciaapat);
+        fd.append('emergenciaamat', emergenciaamat);
+        fd.append('emergenciarelacion', emergenciarelacion);
+        fd.append('emergenciatelefono', emergenciatelefono);
         fd.append('emergencianom2', emergencianom2);
-        fd.append('emergenciaparentesco2', emergenciaparentesco2);
-        fd.append('emergenciatel2', emergenciatel2);
+        fd.append('emergenciaapat2', emergenciaapat2);
+        fd.append('emergenciaamat2', emergenciaamat2);
+        fd.append('emergenciarelacion2', emergenciarelacion2);
+        fd.append('emergenciatelefono2', emergenciatelefono2);
 		fd.append('capacitacion', capacitacion);
         fd.append('antidoping', antidoping);
         fd.append('tipo_sangre', tipo_sangre);
         fd.append('vacante', vacante);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
+
+        /*Datos bancarios*/
         fd.append('numeroreferenciasban', numeroreferenciasban);
         fd.append('banco_personal', banco_personal);
         fd.append('cuenta_personal', cuenta_personal);
@@ -2612,9 +2640,6 @@
         fd.append('cuenta_nomina', cuenta_nomina);
         fd.append('clabe_nomina', clabe_nomina);
         fd.append('plastico', plastico);
-        fd.append('method', method);
-        fd.append('app', app);
-        
     
         /*Referencias*/
         fd.append('referencias', JSON.stringify(reflab));
@@ -2623,11 +2648,11 @@
         /*File uploads*/
         <?php 
             foreach($papeleria as $fetchpapeleria){
-                echo ("
-                fd.append('papeleria{$fetchpapeleria['id']}', 'papeleria{$fetchpapeleria['id']}');
-                ");
+                echo "fd.append('papeleria{$fetchpapeleria['id']}', papeleria{$fetchpapeleria['id']});";
             } 
         ?>
+
+        fd.append('app', app);
     
     
         /*Ajax*/
