@@ -2192,7 +2192,7 @@
                             icon: "success"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
                         });
                     }else if (array[0] == "error") {
                         Swal.fire({
@@ -2201,7 +2201,7 @@
                             icon: "error"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
                         });
                     }
 				},3000);
@@ -2299,12 +2299,12 @@
                     var array = $.parseJSON(response);
 					if (array[0] == "success") {
                         Swal.fire({
-                            title: "Expediente Creado",
+                            title: "Expediente Almacenado",
                             text: array[1],
                             icon: "success"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-DA').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
                         });
                     }else if (array[0] == "error") {
                         Swal.fire({
@@ -2313,7 +2313,7 @@
                             icon: "error"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-DA').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
                         });
                     }
 				},3000);
@@ -2388,12 +2388,12 @@
                     var array = $.parseJSON(response);
 					if (array[0] == "success") {
                         Swal.fire({
-                            title: "Expediente Creado",
+                            title: "Expediente Almacenado",
                             text: array[1],
                             icon: "success"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-DB').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
                         });
                     }else if (array[0] == "error") {
                         Swal.fire({
@@ -2402,7 +2402,7 @@
                             icon: "error"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-DB').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
                         });
                     }
 				},3000);
