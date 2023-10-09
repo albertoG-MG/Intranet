@@ -781,7 +781,7 @@
                                     <!-- Referencia 1 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">primera referencia</div>
+                                          <div class="text-[#64748b] font-semibold mb-2">REFERENCIA 1</div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -790,7 +790,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rnombre1" placeholder="Nombre (s) de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rnombre1" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -801,18 +801,18 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat1" placeholder="Apellido paterno de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidopat1" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido Materno</label>
+                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat1" placeholder="Apellido materno de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -825,14 +825,19 @@
                                                 </div>
                                                 <select name="infa_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
-                                                   <option value="SUPERVISOR(A)">SUPERVISOR(A)</option>
+                                                   <option value="SUPERVISOR">SUPERVISOR</option>
+                                                   <option value="SUPERVISORA">SUPERVISORA</option>
                                                    <option value="COLEGA">COLEGA</option>
-                                                   <option value="SUBORDINADO(A)">SUBORDINADO(A)</option>
-                                                   <option value="MENTOR(A)">MENTOR(A)</option>
+                                                   <option value="SUBORDINADO">SUBORDINADO</option>
+                                                   <option value="SUBORDINADA">SUBORDINADA</option>
+                                                   <option value="MENTOR">MENTOR</option>
+                                                   <option value="MENTORA">MENTORA</option>
                                                    <option value="CLIENTE">CLIENTE</option>
-                                                   <option value="PROFESOR(A)">PROFESOR(A)</option>
+                                                   <option value="PROFESOR">PROFESOR</option>
+                                                   <option value="PROFESORA">PROFESORA</option>
                                                    <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
-                                                   <option value="PROVEEDOR(A)">PROVEEDOR(A)</option>
+                                                   <option value="PROVEEDOR">PROVEEDOR</option>
+                                                   <option value="PROVEEDORA">PROVEEDORA</option>
                                                    <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
                                                    <option value="OTRO">OTRO</option>
                                                 </select>
@@ -846,7 +851,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rtelefono1" placeholder="Teléfono de primera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rtelefono1" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
@@ -856,7 +861,7 @@
                                     <!-- Referencia 2 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">segunda referencia</div>
+                                          <div class="text-[#64748b] font-semibold mb-2">REFERENCIA 2</div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -865,7 +870,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rnombre2" placeholder="Nombre (s) de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rnombre2" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -876,18 +881,18 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat2" placeholder="Apellido paterno de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidopat2" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido Materno</label>
+                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat2" placeholder="Apellido materno de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidomat2" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -900,14 +905,19 @@
                                                 </div>
                                                 <select name="infa_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
-                                                   <option value="SUPERVISOR(A)">SUPERVISOR(A)</option>
+                                                   <option value="SUPERVISOR">SUPERVISOR</option>
+                                                   <option value="SUPERVISORA">SUPERVISORA</option>
                                                    <option value="COLEGA">COLEGA</option>
-                                                   <option value="SUBORDINADO(A)">SUBORDINADO(A)</option>
-                                                   <option value="MENTOR(A)">MENTOR(A)</option>
+                                                   <option value="SUBORDINADO">SUBORDINADO</option>
+                                                   <option value="SUBORDINADA">SUBORDINADA</option>
+                                                   <option value="MENTOR">MENTOR</option>
+                                                   <option value="MENTORA">MENTORA</option>
                                                    <option value="CLIENTE">CLIENTE</option>
-                                                   <option value="PROFESOR(A)">PROFESOR(A)</option>
+                                                   <option value="PROFESOR">PROFESOR</option>
+                                                   <option value="PROFESORA">PROFESORA</option>
                                                    <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
-                                                   <option value="PROVEEDOR(A)">PROVEEDOR(A)</option>
+                                                   <option value="PROVEEDOR">PROVEEDOR</option>
+                                                   <option value="PROVEEDORA">PROVEEDORA</option>
                                                    <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
                                                    <option value="OTRO">OTRO</option>
                                                 </select>
@@ -921,7 +931,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rtelefono2" placeholder="Teléfono de segunda referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rtelefono2" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
@@ -931,7 +941,7 @@
                                     <!-- Referencia 3 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">tercera referencia</div>
+                                          <div class="text-[#64748b] font-semibold mb-2">REFERENCIA 3</div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -940,7 +950,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rnombre3" placeholder="Nombre (s) de tercera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rnombre3" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -951,18 +961,18 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat3" placeholder="Apellido paterno de tercera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidopat3" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido Materno</label>
+                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat3" placeholder="Apellido materno de tercera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidomat3" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -975,14 +985,19 @@
                                                 </div>
                                                 <select name="infa_rrelacion3" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
-                                                   <option value="SUPERVISOR(A)">SUPERVISOR(A)</option>
+                                                   <option value="SUPERVISOR">SUPERVISOR</option>
+                                                   <option value="SUPERVISORA">SUPERVISORA</option>
                                                    <option value="COLEGA">COLEGA</option>
-                                                   <option value="SUBORDINADO(A)">SUBORDINADO(A)</option>
-                                                   <option value="MENTOR(A)">MENTOR(A)</option>
+                                                   <option value="SUBORDINADO">SUBORDINADO</option>
+                                                   <option value="SUBORDINADA">SUBORDINADA</option>
+                                                   <option value="MENTOR">MENTOR</option>
+                                                   <option value="MENTORA">MENTORA</option>
                                                    <option value="CLIENTE">CLIENTE</option>
-                                                   <option value="PROFESOR(A)">PROFESOR(A)</option>
+                                                   <option value="PROFESOR">PROFESOR</option>
+                                                   <option value="PROFESORA">PROFESORA</option>
                                                    <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
-                                                   <option value="PROVEEDOR(A)">PROVEEDOR(A)</option>
+                                                   <option value="PROVEEDOR">PROVEEDOR</option>
+                                                   <option value="PROVEEDORA">PROVEEDORA</option>
                                                    <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
                                                    <option value="OTRO">OTRO</option>
                                                 </select>
@@ -996,7 +1011,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rtelefono3" placeholder="Teléfono de tercera referencia" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rtelefono3" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
