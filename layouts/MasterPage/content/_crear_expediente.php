@@ -711,7 +711,7 @@
                                              <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                           </svg>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true; ine = true; pasaporte = false; cedula = false;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true; ine = false; pasaporte = true; cedula = false;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true; ine = false; pasaporte = false; cedula = true;}else{tidentificacion($el.value); open = false; ine = false; pasaporte = false; cedula = false;}" id="identificacion" name="identificacion">
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){ open = true; ine = true; pasaporte = false; cedula = false; }else if($el.value == 'PASAPORTE'){ open = true; ine = false; pasaporte = true; cedula = false; }else if($el.value == 'CEDULA'){ open = true; ine = false; pasaporte = false; cedula = true; }else{ open = false; ine = false; pasaporte = false; cedula = false; }" id="identificacion" name="identificacion">
                                           <option value="">--Seleccione--</option>
                                           <option value="INE">INE</option>
                                           <option value="PASAPORTE">PASAPORTE</option>
@@ -719,22 +719,6 @@
                                        </select>
                                     </div>
                                  </div>
-                                 <script>
-                                    function tidentificacion(value){
-                                       if(value == ""){
-                                          $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
-                                       }else {
-                                          $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
-                                          if(value == "INE"){
-                                             $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 13, maxlength: 13, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 13 dígitos', maxlength: 'No puede ser mayor a 13 dígitos' } }); 
-                                          }else if(value == "PASAPORTE"){
-                                             $("#numeroidentificacion").rules("add", { required: true, alphanumeric: true, minlength: 9, maxlength: 9, messages: { required: "Este campo es requerido", alphanumeric: "Solo se permiten carácteres alfanúmericos", minlength: 'No puede ser menor a 9 dígitos', maxlength: 'No puede ser mayor a 9 dígitos' }});
-                                          }else if(value == "CEDULA"){
-                                             $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 8, maxlength: 8, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 8 dígitos', maxlength: 'No puede ser mayor a 8 dígitos' } }); 
-                                          }
-                                       }
-                                    }
-                                 </script>
                                  <div x-show.important="ine">
                                     <div class="container mx-auto md:mx-7 mt-5">
                                        <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/INE.png">
