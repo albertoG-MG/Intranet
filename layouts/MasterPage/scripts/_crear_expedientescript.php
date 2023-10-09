@@ -1980,10 +1980,19 @@
 		                }else{
 			                Swal.fire({
 				                title: "Ocurrió un error",
-				                text: "Su sesión expiró, se guardaran los datos, no cierre el navegador o la página!",
+				                text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
 				                icon: "error"
 			                }).then(function() {
-				                SubmitChanges();
+				                if (pestañaActiva.id === "datosG"){
+                                    $('#submit-DG').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
+                                } else if (pestañaActiva.id === "datosA"){
+                                    $('#submit-DA').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                                } else if (pestañaActiva.id === "datosB"){
+                                    $('#submit-DB').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
+                                } else if (pestañaActiva.id === "documentos"){
+                                    $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                }
+                                window.location.href = "login.php";
 			                });
 		                }
 	                }).catch((error) => {
