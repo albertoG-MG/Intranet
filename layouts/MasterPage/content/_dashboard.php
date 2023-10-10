@@ -13,9 +13,9 @@
     </h2>
 
     <div class="mt-4">
-    <div class="bg-white overflow-hidden shadow-xl rounded-lg" style="background-image: url(../src/img/profile.jpg); background-size: cover; background-position:center; background-repeat:no-repeat;">
-            <div class="flex flex-col">
-                <div class="rounded-3xl p-4 m-4">
+    <div class=" bg-white overflow-hidden shadow-xl rounded-lg" style="background-image: url(../src/img/Atomos-Sinttecom.png); background-size: cover; background-position:center; background-repeat:no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+            <div class="container-image flex flex-col">
+                <div class="rounded-3xl p-4 m-4" style="z-index: 3;">
                     <div class="flex-none text-center items-center sm:flex">
                     <div class="relative shrink-0 h-32 w-32 mx-auto md:m-0 sm:mb-0 mb-3">
                             <?php
@@ -38,10 +38,10 @@
                             ?>
                         </div>
                         <div class="flex-1 flex flex-col min-w-0 sm:ml-5 text-center md:text-left sm:mt-2" style="word-break: break-word;">
-							<span class="text-lg text-white font-bold leading-none">
+							<span class="text-lg text-black font-bold leading-none">
 								<?php echo $profile->nombre. " " .$profile->apellido_pat. " " .$profile->apellido_mat;?>
 							</span>
-							<span class="text-white my-1">
+							<span class="text-black my-1">
 								<?php echo $profile->rolnom; ?>
 							</span>
                         </div>
@@ -351,3 +351,38 @@
         </div>
     </div>
 </div>
+<style>
+        /* Degradado y animación */
+        .container-image {
+        width: 100%;
+        position: relative;
+        }
+
+    .container-image img {
+        width: 100%;
+        }
+
+    .container-image::after {
+        content: "";
+        width: 100%; 
+        height: 300px;  /* El height controla el alto del degradado */
+        position: absolute;
+        height:100%; /*La altura dependerá del degradado*/
+        background-size: 300% 100%; 
+        animation: gradient 17s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+        background-image: linear-gradient(164deg, #ff780070, #ffffff7d);
+    }
+
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%; 
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+</style>
