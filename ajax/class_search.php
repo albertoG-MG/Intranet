@@ -1167,6 +1167,59 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 
+		// Comprueba si el campo "numeroreferenciaslab" no está vacío
+		if (!empty($_POST["numeroreferenciaslab"])) {
+			// Valida que "numeroreferenciaslab" sea un solo dígito y un número
+			if (preg_match("/^\d$/", $_POST["numeroreferenciaslab"])) {
+				// Decodifica el JSON en un arreglo asociativo
+				$referencias_decoded = json_decode($_POST["referencias"], true);
+		
+				// Verifica que el número de referencias coincida con la cantidad real
+				if (is_array($referencias_decoded) && count($referencias_decoded) == $_POST["numeroreferenciaslab"]) {
+					$referencias_contador = 1;
+					//Recorremos el arreglo
+					foreach ($referencias_decoded as $referencia_laboral) {
+						//Checa que los campos no estén vacios
+						if (empty($referencia_laboral["nombre"]) || empty($referencia_laboral["apellidopat"]) || empty($referencia_laboral["apellidomat"]) || empty($referencia_laboral["relacion"]) || empty($referencia_laboral["telefono"])) {
+							die(json_encode(array("error", "Existen campos vacíos en las referencias laborales, por favor, verifique la información")));
+						} else {
+							//validaciones
+							if (!preg_match("/^[\pL\s'-]+$/u", $referencia_laboral["nombre"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el nombre de la referencia laboral " . $referencias_contador)));
+							} else if (!preg_match("/^[\pL\s]+$/u", $referencia_laboral["apellidopat"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido paterno de la referencia laboral " . $referencias_contador)));
+							} else if (!preg_match("/^[\pL\s]+$/u", $referencia_laboral["apellidomat"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido materno de la referencia laboral " . $referencias_contador)));
+							} else if (!preg_match("/^\d{10}$/", $referencia_laboral["telefono"])) {
+								die(json_encode(array("error", "El teléfono de la referencia laboral " . $referencias_contador . " debe tener exactamente 10 dígitos")));
+							}
+						}
+						// Aplicamos strtoupper a los valores de cadena
+						$referencia_laboral["nombre"] = strtoupper($referencia_laboral["nombre"]);
+						$referencia_laboral["apellidopat"] = strtoupper($referencia_laboral["apellidopat"]);
+						$referencia_laboral["apellidomat"] = strtoupper($referencia_laboral["apellidomat"]);
+
+						//Le quitamos los acentos
+						// Aplicamos strtoupper a los valores de cadena
+						$referencia_laboral["nombre"] = quitarAcentos($referencia_laboral["nombre"]);
+						$referencia_laboral["apellidopat"] = quitarAcentos($referencia_laboral["apellidopat"]);
+						$referencia_laboral["apellidomat"] = quitarAcentos($referencia_laboral["apellidomat"]);
+
+						$referencias_contador++;
+					}
+					// Asigna el valor de "referencias" después de validar
+					$referencias = $_POST["referencias"];
+				} else {
+					die(json_encode(array("error", "El número de referencias laborales ingresado no coincide con el enviado, por favor, verifique la información")));
+				}
+			} else {
+				die(json_encode(array("error", "Solo se permite un número de un solo dígito en el campo de número de referencias laborales")));
+			}
+		} else {
+			// Asigna "null" si "numeroreferenciaslab" está vacío
+			$referencias = null;
+		}
+
 
 		/*
 		=============================================
