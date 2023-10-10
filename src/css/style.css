@@ -1181,9 +1181,6 @@ fondo:before {
 .flex-auto {
   flex: 1 1 auto !important;
 }
-.flex-\[1_0_20\%\] {
-  flex: 1 0 20% !important;
-}
 .flex-\[1_0_10\%\] {
   flex: 1 0 10% !important;
 }
@@ -1629,6 +1626,10 @@ fondo:before {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(36 41 47 / var(--tw-bg-opacity)) !important;
 }
+.bg-\[\#067cda\] {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(6 124 218 / var(--tw-bg-opacity)) !important;
+}
 .bg-yellow-50 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(254 252 232 / var(--tw-bg-opacity)) !important;
@@ -1985,6 +1986,14 @@ fondo:before {
 .text-cyan-600 {
   --tw-text-opacity: 1 !important;
   color: rgb(8 145 178 / var(--tw-text-opacity)) !important;
+}
+.text-\[\#067cda\] {
+  --tw-text-opacity: 1 !important;
+  color: rgb(6 124 218 / var(--tw-text-opacity)) !important;
+}
+.text-\[\#000\] {
+  --tw-text-opacity: 1 !important;
+  color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
 }
 .text-yellow-800 {
   --tw-text-opacity: 1 !important;

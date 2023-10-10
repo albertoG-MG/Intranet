@@ -1,13 +1,5 @@
 <div class="container mx-auto px-6 py-8">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Zilla+Slab+Highlight:wght@700&display=swap');
-.Titulos{
-    font-family: 'Poppins', sans-serif;
-    color: #000000;
-    font-size: 2.75rem !important;
-}
-    </style>
-    <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl"> 
+    <h2 class="Titulos text-3xl sm:text-5xl lg:text-6xl"> 
         Mi expediente
     </h2>
     <div class="mt-4">
@@ -19,7 +11,7 @@
                             <div class="container flex flex-col sm:flex-row items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
                                 <a href="dashboard.php" class="inline-flex items-center text-sm font-medium text-gray-700 focus:outline-none focus:text-[#27ceeb] hover:text-[#27ceeb]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
-                                    Home
+                                    Inicio 
                                 </a>
                                 <span class="mx-3 rotate-90 sm:rotate-0 text-gray-500 mt-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -36,11 +28,11 @@
                         </div>
                         <div class="bg-white p-3 shadow-md rounded-b">
                             <?php if($fetch_token_user->exp_date >= $curDate){ ?>
-                                <div class="flex flex-col mt-5 mx-7">
+                                <!-- <div class="flex flex-col mt-5 mx-7">
                                     <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para llenar un expediente</h2>
                                     <span class="text-[#64748b]">Nota: Los campos que poseen asterisco (*) son obligatorios.</span>
                                     <div class="my-3 h-px bg-slate-200"></div>
-                                </div>
+                                </div> -->
                                 <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
                                     <li role="presentation" class="w-full md:w-max">
                                         <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#27ceeb] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="datosG-tab" data-tabs-target="#datosG" type="button" role="tab" aria-controls="datosG" aria-selected="false">
@@ -79,9 +71,10 @@
                                     <div id='menu-contents' style="word-break: break-word;">
                                         <div class="block bg-transparent rounded-lg tab-pane" id="datosG" role="tabpanel" aria-labelledby="datosG-tab">
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Datos del empleado</h2>
-                                                <span class="text-[#64748b]">Información personal del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <h2 class="text-2xl text-celeste font-semibold">Datos del empleado</h2>
+                                                <!-- <span class="text-[#64748b]">Información personal del empleado.</span> -->
+                                                <span class="text-[#64748b]">Nota: Los campos que poseen asterisco (*) son obligatorios.</span>
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
                                                 <label class="text-[#64748b] font-semibold mb-2">Nivel de estudios *</label>
@@ -178,7 +171,7 @@
                                                 </script>
                                                 <div x-show.important="open">
                                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Correo electrónico adicional *</label>
+                                                        <label class="text-[#64748b] font-semibold mb-2">Correo electrónico adicional *</label> 
                                                         <div class="group flex">
                                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -209,9 +202,9 @@
                                                 </div>
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Datos de ubicación</h2>
-                                                <span class="text-[#64748b]">Datos de ubicación del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <h2 class="text-2xl text-celeste font-semibold mt-8">Datos de ubicación</h2>
+                                                <!-- <span class="text-[#64748b]">Datos de ubicación del empleado.</span> -->
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
@@ -222,7 +215,7 @@
                                                                 <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="calle" name="calle" value="<?php echo "{$edit->ecalle}"; ?>" placeholder="Calle">
+                                                        <input onkeyup="this.value = this.value.toUpperCase();" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="calle" name="calle" value="<?php echo "{$edit->ecalle}"; ?>" placeholder="Calle">
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
@@ -257,7 +250,7 @@
                                                                 <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="colonia" name="colonia" value="<?php echo "{$edit->ecolonia}"; ?>" placeholder="Colonia">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="colonia" name="colonia" onkeyup="this.value = this.value.toUpperCase();" value="<?php echo "{$edit->ecolonia}"; ?>" placeholder="Colonia">
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
@@ -295,7 +288,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                            <div class="grid grid-cols-1 ">
                                                 <label class="text-[#64748b] font-semibold mb-2">Código postal *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -306,7 +300,7 @@
                                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="codigo" name="codigo" value="<?php echo "{$edit -> ecodigo}"; ?>" placeholder="Código postal">
                                                 </div>
                                             </div>
-                                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                            <div class="grid grid-cols-1 ">
                                                 <label class="text-[#64748b] font-semibold mb-2">Teléfono de domicilio *</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -317,6 +311,7 @@
                                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="teldom" name="teldom" value="<?php echo "{$edit -> etel_dom}"; ?>" placeholder="Télefono de domicilio">
                                                 </div>
                                             </div>
+                                        </div>
                                             <div x-data="{ open: true }">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                                     <label class="text-[#64748b] font-semibold mb-2">¿Posee teléfono propio?</label>
@@ -345,7 +340,9 @@
                                                                 digits: true,
                                                                 messages: {
                                                                     required: 'Este campo es requerido',
-                                                                    digits: 'Solo se permiten números'
+                                                                    digits: 'Solo se permiten números',
+                                                                    minlength: 'No puede ser menor a 10 dígitos',
+                                                                    maxlength: 'No puede ser mayor a 10 dígitos'
                                                                 }
                                                             });
                                                         }
@@ -366,12 +363,12 @@
                                                 </div>
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Datos relevantes del empleado</h2>
-                                                <span class="text-[#64748b]">Otros datos de interés del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <h2 class="text-2xl text-celeste font-semibold mt-8">Datos relevantes del empleado</h2>
+                                                <!-- <span class="text-[#64748b]">Otros datos de interés del empleado.</span> -->
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">¿Casa propia?</label>
+                                                <label class="text-[#64748b] font-semibold mb-2">¿Posee casa propia?</label>
                                                 <div class="group flex mt-3 items-center">
                                                     <input id="option-casa-1" type="radio" name="casa" value="si" <?= ($edit->ecasa_propia == 'si') ? 'checked' : '' ?> class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" checked="">
                                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
@@ -485,7 +482,7 @@
                                             </div>
                                             <div class="grid grid-cols-1 mx-7">
                                                 <div id="fechas_datosg_help" class="text-[#64748b]">
-                                                    Si deseas borrar la fecha en fecha de incio de contrato y en la fecha de alta, presiona el botón clear cuando el asistente de fechas se muestra.
+                                                    Si deseas borrar la fecha en fecha de incio de contrato y en la fecha de alta, presiona el botón cancelar cuando el asistente de fechas se muestra.
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -501,7 +498,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">NSS *</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Número Seguro Social *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -523,7 +520,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div x-data="{ open: false }">
+                                         <div x-data="{ open: false, ine: false, pasaporte: false, cedula: false }">
+                                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                                     <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación *</label>
                                                     <div class="group flex">
@@ -532,46 +530,60 @@
                                                                 <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
                                                             </svg>
                                                         </div>
-                                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-init="<?php if($edit->etipo_identificacion == 'INE'){ ?> open = true; <?php }else if($edit->etipo_identificacion == 'PASAPORTE'){ ?> open = true; <?php }else if($edit->etipo_identificacion == 'CEDULA'){ ?> open = true; <?php } ?>" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true;}else{tidentificacion($el.value); open = false;}" id="identificacion" name="identificacion">
+                                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true; ine = true; pasaporte = false; cedula = false;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true; ine = false; pasaporte = true; cedula = false;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true; ine = false; pasaporte = false; cedula = true;}else{tidentificacion($el.value); open = false; ine = false; pasaporte = false; cedula = false;}" id="identificacion" name="identificacion">
                                                             <option value="">--Seleccione--</option>
                                                             <option value="INE">INE</option>
                                                             <option value="PASAPORTE">PASAPORTE</option>
                                                             <option value="CEDULA">CEDULA</option>
                                                         </select>
                                                     </div>
-                                                </div>
-                                                <script>
-                                                    function tidentificacion(value) {
-                                                        if (value == "") {
-                                                            $("#numeroidentificacion").val("");
-                                                            $("#numeroidentificacion").rules("remove");
-                                                            $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                                            $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                                            $("#numeroidentificacion-error").css("display", "none");
-                                                        } else {
-                                                            $("#numeroidentificacion").rules("add", {
-                                                                required: true,
-                                                                alphanumeric: true,
-                                                                messages: {
-                                                                    required: "Este campo es requerido",
-                                                                    alphanumeric: "Solo se permiten carácteres alfanúmericos"
-                                                                }
-                                                            });
-                                                        }
-                                                    }
-                                                </script>
-                                                <div x-show.important="open">
-                                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Número de identificación *</label>
-                                                        <div class="group flex">
-                                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
-                                                                </svg>
+                                                    <div x-show.important="open">
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold mb-2">Número de identificación *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
                                                             </div>
-                                                            <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" value="<?php if (!(empty($edit->etipo_identificacion))){ echo $edit->enum_identificacion; } ?>" placeholder="Número de identificación">
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                
+                                                <script>
+                                                    function tidentificacion(value){
+                                                    if(value == ""){
+                                                        $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
+                                                    }else {
+                                                        $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
+                                                        if(value == "INE"){
+                                                            $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 13, maxlength: 13, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 13 dígitos', maxlength: 'No puede ser mayor a 13 dígitos' } }); 
+                                                        }else if(value == "PASAPORTE"){
+                                                            $("#numeroidentificacion").rules("add", { required: true, alphanumeric: true, minlength: 9, maxlength: 9, messages: { required: "Este campo es requerido", alphanumeric: "Solo se permiten carácteres alfanúmericos", minlength: 'No puede ser menor a 9 dígitos', maxlength: 'No puede ser mayor a 9 dígitos' }});
+                                                        }else if(value == "CEDULA"){
+                                                            $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 8, maxlength: 8, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 8 dígitos', maxlength: 'No puede ser mayor a 8 dígitos' } }); 
+                                                        }
+                                                    }
+                                                    }
+                                                    </script>
+                                                    <div x-show.important="ine">
+                                                        <div class=" grid-cols-1 mt-5 ">
+                                                        <img class="w-full" src="../src/img/INE.jpeg">
+                                                        </div>
+                                                    </div>
+                                                    <div x-show.important="pasaporte">
+                                                        <div class="grid grid-cols-1 mt-5 ">
+                                                        <img class="w-full" src="../src/img/PASAPORTE.jpeg">
+                                                        </div>
+                                                    </div>
+                                                    <div x-show.important="cedula">
+                                                        <div class="grid grid-cols-1 mt-5 ">
+                                                        <img class="w-full" src="../src/img/CEDULA.jpeg">
+                                                        </div>
+                                                    </div> 
                                                 </div>
                                             </div>
                                             <div class="mt-12 h-px bg-slate-200"></div>
@@ -582,28 +594,286 @@
                                             </div>
                                         </div>
                                         <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
-                                            <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Referencias laborales</h2>
+                                        <div class="flex flex-col mt-5 mx-7">
+                                                <h2 class="text-2xl text-celeste font-semibold">Referencias laborales</h2>
                                                 <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
-                                            <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Número de referencias laborales *</label>
-                                                <div class="group flex">
+                                           
+                                        <div id="referencias">
+                                            <div x-data="{ numReferencias: 1 }">
+                                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                                    <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">Número de referencias laborales *</label>
+                                                    <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
+                                                            <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
                                                         </svg>
                                                     </div>
-                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="reflab" name="reflab" oninput="AgregarReferencias()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="<?php if(count($array_reflaborales) != 0){ echo count($array_reflaborales);} ?>" placeholder="Número de referencias laborales">
+                                                    <select id="numReferencias" name="numReferencias" x-model="numReferencias" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
+                                                            <option value="0">0</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                                <div x-show="numReferencias >= 1">
+                                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                                    <div class="md:col-span-1">
+                                                        <div class="text-[#000] font-bold mb-2">Primer referencia</div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Nombre (s) *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infa_rnombre1" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Apellido paterno *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infa_rapellidopat1" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Apellido materno *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infa_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-8 md:gap-8">    
+                                                       <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Relación *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <select name="infa_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                <option value="">--Selecciona--</option>
+                                                                <option value="SUPERVISOR">SUPERVISOR</option>
+                                                                <option value="SUPERVISORA">SUPERVISORA</option>
+                                                                <option value="COLEGA">COLEGA</option>
+                                                                <option value="SUBORDINADO">SUBORDINADO</option>
+                                                                <option value="SUBORDINADA">SUBORDINADA</option>
+                                                                <option value="MENTOR">MENTOR</option>
+                                                                <option value="MENTORA">MENTORA</option>
+                                                                <option value="CLIENTE">CLIENTE</option>
+                                                                <option value="PROFESOR">PROFESOR</option>
+                                                                <option value="PROFESORA">PROFESORA</option>
+                                                                <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
+                                                                <option value="PROVEEDOR">PROVEEDOR</option>
+                                                                <option value="PROVEEDORA">PROVEEDORA</option>
+                                                                <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
+                                                                <option value="OTRO">OTRO</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Teléfono *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rtelefono1" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                       </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div x-show="numReferencias >= 2">
+                                                    <!-- Referencia 2 -->
+                                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                                    <div class="md:col-span-1">
+                                                        <div class="text-[#000] font-bold mb-2">Segunda referencia</div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rnombre2" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rapellidopat2" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Apellido materno</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rapellidomat2" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-8 md:gap-8">
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Relación</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <select name="infa_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                    <option value="">--Selecciona--</option>
+                                                                    <option value="SUPERVISOR">SUPERVISOR</option>
+                                                                    <option value="SUPERVISORA">SUPERVISORA</option>
+                                                                    <option value="COLEGA">COLEGA</option>
+                                                                    <option value="SUBORDINADO">SUBORDINADO</option>
+                                                                    <option value="SUBORDINADA">SUBORDINADA</option>
+                                                                    <option value="MENTOR">MENTOR</option>
+                                                                    <option value="MENTORA">MENTORA</option>
+                                                                    <option value="CLIENTE">CLIENTE</option>
+                                                                    <option value="PROFESOR">PROFESOR</option>
+                                                                    <option value="PROFESORA">PROFESORA</option>
+                                                                    <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
+                                                                    <option value="PROVEEDOR">PROVEEDOR</option>
+                                                                    <option value="PROVEEDORA">PROVEEDORA</option>
+                                                                    <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
+                                                                    <option value="OTRO">OTRO</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Teléfono</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infa_rtelefono2" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div x-show="numReferencias >= 3">
+                                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                                    <div class="md:col-span-1">
+                                                        <div class="text-[#000] font-bold mb-2">Tercer referencia</div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">   
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rnombre3" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rapellidopat3" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Apellido materno</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rapellidomat3" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Relación</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <select name="infa_rrelacion3" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                <option value="">--Selecciona--</option>
+                                                                <option value="SUPERVISOR">SUPERVISOR</option>
+                                                                <option value="SUPERVISORA">SUPERVISORA</option>
+                                                                <option value="COLEGA">COLEGA</option>
+                                                                <option value="SUBORDINADO">SUBORDINADO</option>
+                                                                <option value="SUBORDINADA">SUBORDINADA</option>
+                                                                <option value="MENTOR">MENTOR</option>
+                                                                <option value="MENTORA">MENTORA</option>
+                                                                <option value="CLIENTE">CLIENTE</option>
+                                                                <option value="PROFESOR">PROFESOR</option>
+                                                                <option value="PROFESORA">PROFESORA</option>
+                                                                <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
+                                                                <option value="PROVEEDOR">PROVEEDOR</option>
+                                                                <option value="PROVEEDORA">PROVEEDORA</option>
+                                                                <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
+                                                                <option value="OTRO">OTRO</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold">Teléfono</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                </svg>
+                                                                </div>
+                                                                <input type="text" name="infa_rtelefono3" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        <div id="referencias">
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Uniformes</h2>
-                                                <span class="text-[#64748b]">Datos de entrega de uniforme.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <h2 class="text-2xl text-celeste font-semibold mt-8">Uniformes</h2>
+                                                <!-- <span class="text-[#64748b]">Datos de entrega de uniforme.</span> -->
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
                                             <div class="grid grid-cols-1 mt-5 mx-7">
                                                 <label class="text-[#64748b] font-semibold mb-2">Fecha de entrega de uniforme</label>
@@ -616,7 +886,7 @@
                                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechauniforme" name="fechauniforme" placeholder="Fecha de entrega de uniforme" autocomplete="off">
                                                 </div>
                                                 <div id="fecha_uniforme_help" class="text-[#64748b]">
-                                                    Si deseas borrar la fecha en fecha de uniforme, presiona el botón clear cuando el asistente de fechas se muestra.
+                                                    Si deseas borrar la fecha en fecha de uniforme, presiona el botón cancelar cuando el asistente de fechas se muestra.
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -639,89 +909,171 @@
                                                             <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
                                                         </svg>
                                                     </div>
-                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="tallapolo" name="tallapolo" value="<?php echo "{$edit->etalla_polo}"; ?>" placeholder="Talla">
+                                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tallapolo" name="tallapolo">
+                                                        <option value="">--Seleccione--</option>
+                                                        <option value="XXS" <?php if ($edit->etalla_polo == "XXS") echo 'selected="selected"'; ?>>XXS</option>
+                                                        <option value="XS" <?php if ($edit->etalla_polo == "XS") echo 'selected="selected"'; ?>>XS</option>
+                                                        <option value="S" <?php if ($edit->etalla_polo == "S") echo 'selected="selected"'; ?>>S</option>
+                                                        <option value="M" <?php if ($edit->etalla_polo == "M") echo 'selected="selected"'; ?>>M</option>
+                                                        <option value="L" <?php if ($edit->etalla_polo == "L") echo 'selected="selected"'; ?>>L</option>
+                                                        <option value="XL" <?php if ($edit->etalla_polo == "XL") echo 'selected="selected"'; ?>>XL</option>
+                                                        <option value="XXL" <?php if ($edit->etalla_polo == "XXL") echo 'selected="selected"'; ?>>XXL</option>
+                                                        <option value="XXXL" <?php if ($edit->etalla_polo == "XXXL") echo 'selected="selected"'; ?>>XXXL</option>
+                                                    </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
-                                                <span class="text-[#64748b]">Estos son los contactos de emergencia del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
-                                            </div>
-                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                                <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo1 *</label>
-                                                    <div class="group flex">
+                                                <h2 class="text-2xl text-celeste font-semibold mt-8">Contactos de emergencia</h2>
+                                                    <div class="my-3 h-px bg-celeste"></div>
+                                                    <span class="text-[#000] font-bold"> Primer contacto </span>
+                                                </div>
+                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                                    <div class="grid grid-cols-1">
+                                                        <label class="text-[#64748b] font-semibold mb-2">Nombre (s) *</label>
+                                                        <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                                 <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencianom" name="emergencianom" value="<?php echo "{$edit -> eemergencia_nombre}"; ?>" placeholder="Nombre Completo1">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="Nombre (s)">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco1 *</label>
-                                                    <div class="group flex">
+                                                    <div class="grid grid-cols-1">
+                                                        <label class="text-[#64748b] font-semibold mb-2">Apellido paterno *</label>
+                                                        <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciaparentesco" name="emergenciaparentesco" value="<?php echo "{$edit -> eemergencia_parentesco}"; ?>" placeholder="Parentesco1">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="Apellido paterno">
+                                                        </div>
+                                                    </div>
+                                                    <div class="grid grid-cols-1">
+                                                        <label class="text-[#64748b] font-semibold mb-2">Apellido materno *</label>
+                                                        <div class="group flex">
+                                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                            <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                            </svg>
+                                                        </div>
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="Apellido materno">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                                    <div x-data="{ comborelacion: true, svg1: true, svg2: false, textrelacion: false, svg3: false }">   
+                                                        <div class="grid grid-cols-1" >
+                                                            <label class="text-[#64748b] font-semibold mb-2">Relación *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg x-show="svg1" class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <select x-show="comborelacion" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){textrelacion = true; svg2 = true; svg3 = true; svg1 = false; comborelacion = false;}else if($el.value != 'OTRO'){textrelacion = false; svg2 = false; svg3 = false; svg1 = true; comborelacion = true;}" id="emergenciaparentesco" name="emergenciaparentesco">
+                                                                    <option value="">--Selecciona--</option>
+                                                                    <option value="PADRE" <?php if ($edit->eemergencia_parentesco == "PADRE") echo 'selected="selected"'; ?>>Padre</option>
+                                                                    <option value="MADRE" <?php if ($edit->eemergencia_parentesco == "MADRE") echo 'selected="selected"'; ?>>Madre</option>
+                                                                    <option value="HERMANO" <?php if ($edit->eemergencia_parentesco == "HERMANO") echo 'selected="selected"'; ?>>Hermano</option>
+                                                                    <option value="HERMANA" <?php if ($edit->eemergencia_parentesco == "HERMANA") echo 'selected="selected"'; ?>>Hermana</option>
+                                                                    <option value="PAREJA" <?php if ($edit->eemergencia_parentesco == "PAREJA") echo 'selected="selected"'; ?>>Pareja</option>
+                                                                    <option value="OTRO">Otro</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                               
+                                                    <div class="grid grid-cols-1">
+                                                        <label class="text-[#64748b] font-semibold mb-2">Teléfono*</label>
+                                                        <div class="group flex">
+                                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
+                                                                </svg>
+                                                            </div>
+                                                            <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel" name="emergenciatel" maxlength="10" data-msg-maxlength="El número no puede ser mayor de 10 digitos" maxlength="10" data-msg-minlength="El número no puede ser menor de 10 digitos" value="<?php echo "{$edit -> eemergencia_telefono}"; ?>" placeholder="Teléfono1">
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                                <span class="text-[#000] font-bold">Segundo contacto </span>
+                                            </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                                <div class="grid grid-cols-1">
+                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre (s) *</label>
+                                                    <div class="group flex">
+                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="Nombre (s)">
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono1 *</label>
+                                                    <label class="text-[#64748b] font-semibold mb-2">Apellido paterno *</label>
+                                                    <div class="group flex">
+                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="Apellido paterno">
+                                                    </div>
+                                                </div>
+                                                <div class="grid grid-cols-1">
+                                                    <label class="text-[#64748b] font-semibold mb-2">Apellido materno *</label>
+                                                    <div class="group flex">
+                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="Apellido materno">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                                <div x-data="{ comborelacion: true, svg1: true, svg2: false, textrelacion: false, svg3: false }">   
+                                                    <div class="grid grid-cols-1" >
+                                                        <label class="text-[#64748b] font-semibold mb-2">Relación *</label>
+                                                        <div class="group flex">
+                                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg x-show="svg1" class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                                </svg>
+                                                            </div>
+                                                            <select x-show="comborelacion" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){textrelacion = true; svg2 = true; svg3 = true; svg1 = false; comborelacion = false;}else if($el.value != 'OTRO'){textrelacion = false; svg2 = false; svg3 = false; svg1 = true; comborelacion = true;}"  id="emergenciaparentesco2" name="emergenciaparentesco2">
+                                                                <option value="">--Selecciona--</option>
+                                                                <option value="PADRE" <?php if ($edit->eemergencia_parentesco2 == "PADRE") echo 'selected="selected"'; ?>>Padre</option>
+                                                                <option value="MADRE" <?php if ($edit->eemergencia_parentesco2 == "MADRE") echo 'selected="selected"'; ?>>Madre</option>
+                                                                <option value="HERMANO" <?php if ($edit->eemergencia_parentesco2 == "HERMANO") echo 'selected="selected"'; ?>>Hermano</option>
+                                                                <option value="HERMANA" <?php if ($edit->eemergencia_parentesco2 == "HERMANA") echo 'selected="selected"'; ?>>Hermana</option>
+                                                                <option value="PAREJA" <?php if ($edit->eemergencia_parentesco2 == "PAREJA") echo 'selected="selected"'; ?>>Pareja</option>
+                                                                <option value="OTRO">Otro</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="grid grid-cols-1">
+                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono *</label>
                                                     <div class="group flex">
                                                         <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                                 <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                                             </svg>
                                                         </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel" name="emergenciatel" value="<?php echo "{$edit -> eemergencia_telefono}"; ?>" placeholder="Teléfono1">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                                <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Nombre completo2 *</label>
-                                                    <div class="group flex">
-                                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                            <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                            </svg>
-                                                        </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencianom2" name="emergencianom2" value="<?php echo "{$edit -> eemergencia_nombre2}"; ?>" placeholder="Nombre Completo2">
-                                                    </div>
-                                                </div>
-                                                <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Parentesco2 *</label>
-                                                    <div class="group flex">
-                                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                            <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
-                                                            </svg>
-                                                        </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciaparentesco2" name="emergenciaparentesco2" value="<?php echo "{$edit -> eemergencia_parentesco2}"; ?>" placeholder="Parentesco2">
-                                                    </div>
-                                                </div>
-                                                <div class="grid grid-cols-1">
-                                                    <label class="text-[#64748b] font-semibold mb-2">Teléfono2 *</label>
-                                                    <div class="group flex">
-                                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                            <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
-                                                            </svg>
-                                                        </div>
-                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel2" name="emergenciatel2" value="<?php echo "{$edit -> eemergencia_telefono2}"; ?>" placeholder="Teléfono2">
+                                                        <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergenciatel2" name="emergenciatel2" maxlength="10" data-msg-maxlength="El número no puede ser mayor de 10 digitos" maxlength="10" data-msg-minlength="El número no puede ser menor de 10 digitos" value="<?php echo "{$edit -> eemergencia_telefono2}"; ?>" placeholder="Teléfono2">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Otros datos del empleado</h2>
-                                                <span class="text-[#64748b]">Datos extra del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <h2 class="text-2xl text-celeste font-semibold">Otros datos del empleado</h2>
+                                                <!-- <span class="text-[#64748b]">Datos extra del empleado.</span> -->
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
                                             <!-- <div class="grid grid-cols-1 mt-5 mx-7">
                                                 <label class="text-[#64748b] font-semibold mb-2">Capacitación</label>
@@ -770,15 +1122,15 @@
                                                 <label class="text-[#64748b] font-semibold mb-2">¿Cómo se enteró de la vacante?</label>
                                                 <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" d="M12,10L8,4.4L9.6,2H14.4L16,4.4L12,10M15.5,6.8L14.3,8.5C16.5,9.4 18,11.5 18,14A6,6 0 0,1 12,20A6,6 0 0,1 6,14C6,11.5 7.5,9.4 9.7,8.5L8.5,6.8C5.8,8.1 4,10.8 4,14A8,8 0 0,0 12,22A8,8 0 0,0 20,14C20,10.8 18.2,8.1 15.5,6.8Z" />
-                                                        </svg>
+                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" />
+                                                            </svg>
                                                     </div>
                                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="vacante" name="vacante">
-                                                        <option value="">--Selecciona--</option>
+                                                        <option value="">--Seleccione--</option>
                                                         <option value="AVISOS DE OCASION" <?php if ($edit->evacante == "AVISOS DE OCASION") echo 'selected="selected"'; ?>>Avisos de ocasión</option>
                                                         <option value="PLATAFORMA LABORAL" <?php if ($edit->evacante == "PLATAFORMA LABORAL") echo 'selected="selected"'; ?>>Plataforma laboral</option>
-                                                        <option value="RECOMENDACION" <?php if ($edit->evacante == "RECOMENDACION") echo 'selected="selected"'; ?>>Recomendacion</option>
+                                                        <option value="RECOMENDACION" <?php if ($edit->evacante == "RECOMENDACION") echo 'selected="selected"'; ?>>Recomendación</option>
                                                         <option value="REDES SOCIALES" <?php if ($edit->evacante == "REDES SOCIALES") echo 'selected="selected"'; ?>>Redes sociales</option>
                                                     </select>
                                                 </div>
@@ -827,7 +1179,7 @@
                                                                     <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                                                 </svg>
                                                             </div>
-                                                            <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" value="<?php if($edit->efam_dentro_empresa == 'si'){ echo $edit->efam_nombre; } ?>" placeholder="Nombre completo del familiar">
+                                                            <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" onkeyup="this.value = this.value.toUpperCase();" value="<?php if($edit->efam_dentro_empresa == 'si'){ echo $edit->efam_nombre; } ?>" placeholder="Nombre completo del familiar">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -840,28 +1192,222 @@
                                         </div>
                                         <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                                             <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Beneficiarios bancarios</h2>
+                                                <h2 class="text-2xl text-celeste font-semibold">Beneficiarios bancarios</h2>
                                                 <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
+                                                <a class="text-[#64748b]">Es necesario que el beneficiario sea mayor de edad (al menos 18 años).</a>
+                                                <div class="my-3 h-px bg-celeste"></div>
                                             </div>
-                                            <div class="grid grid-cols-1 mt-5 mx-7">
-                                                <label class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios *</label>
-                                                <div class="group flex">
+                                        <div id="ref">
+                                            <div x-data="{ numReferenciasBancarias: 1 }">
+                                                <div class="grid grid-cols-1 mt-5 mx-7">
+                                                    <label for="numReferenciasBancarias" class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios *</label>
+                                                    <div class="group flex">
                                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                         <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
+                                                            <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
                                                         </svg>
                                                     </div>
-                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="refban" name="refban" oninput="AgregarBanco()" maxlength="1" data-msg-maxlength="Solo se permite un número de un dígito" value="<?php if(count($array_refban) != 0){ echo count($array_refban);} ?>" placeholder="Número de beneficiarios bancarios">
+                                                    <select id="refban" name="numReferenciasBancarias" on.change=numReferenciasBancarias x-model="numReferenciasBancarias" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            <div x-show="numReferenciasBancarias >= 1">
+                                                <div class="grid grid-cols-1 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                                    <div class="text-[#000] font-bold ">Primer beneficiario</div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Nombre (s) *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rnombre1" onkeyup="this.value = this.value.toUpperCase();" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Apellido paterno *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rapellidopat1" onkeyup="this.value = this.value.toUpperCase();" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Apellido materno *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rapellidomat1" onkeyup="this.value = this.value.toUpperCase();" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Relación</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <select name="infb_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                    <option value="">--Selecciona--</option>
+                                                                    <option value="PADRE">PADRE</option>
+                                                                    <option value="MADRE">MADRE</option>
+                                                                    <option value="CONYUGE">CONYUGE</option>
+                                                                    <option value="HIJO">HIJO</option>
+                                                                    <option value="HIJA">HIJA</option>
+                                                                    <option value="OTRO">OTRO</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">RFC</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rrfc1" placeholder="RFC" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">CURP</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rcurp1" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Porcentaje de derecho</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rporcentaje1" x-model="numReferenciasBancarias == '1' ? '100' : '50'" placeholder="Porcentaje de derecho de primera referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div x-show="numReferenciasBancarias >= 2">
+                                                    <div class="grid grid-cols-1 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                                        <div class="text-[#000] font-bold">Segundo beneficiario</div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">
+                                                            
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rnombre2"  onkeyup="this.value = this.value.toUpperCase();" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rapellidopat2" onkeyup="this.value = this.value.toUpperCase();" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Apellido Materno</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rapellidomat2" onkeyup="this.value = this.value.toUpperCase();" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Relación</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <select name="infb_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                    <option value="">--Selecciona--</option>
+                                                                    <option value="PADRE">PADRE</option>
+                                                                    <option value="MADRE">MADRE</option>
+                                                                    <option value="CONYUGE">CONYUGE</option>
+                                                                    <option value="HIJO">HIJO</option>
+                                                                    <option value="HIJA">HIJA</option>
+                                                                    <option value="OTRO">OTRO</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">RFC</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rrfc2" placeholder="RFC" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">CURP</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rcurp2" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold">Porcentaje de derecho</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <input type="text" name="infb_rporcentaje2" x-model="numReferenciasBancarias == '1' ? '100' : '50'" placeholder="Porcentaje de derecho de segunda referencia" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div id="ref">
+                                            
                                             </div>
-                                            <div class="flex flex-col mt-5 mx-7">
-                                                <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
-                                                <span class="text-[#64748b]">Credenciales bancarias personales del empleado.</span>
-                                                <div class="my-3 h-px bg-slate-200"></div>
-                                            </div>
+                                               <?php if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico") {?>
+                                                <div class="flex flex-col mt-5 mx-7">
+                                                    <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
+                                                    <span class="text-[#64748b]">Credenciales bancarias personales del empleado.</span>
+                                                    <div class="my-3 h-px bg-slate-200"></div>
+                                                </div>
                                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                                 <div class="grid grid-cols-1">
                                                     <label class="text-[#64748b] font-semibold mb-2">Banco *</label>
@@ -911,6 +1457,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                                <?php }?>
                                             <div class="mt-12 h-px bg-slate-200"></div>
                                             <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                                 <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
@@ -922,8 +1469,8 @@
                                                 <table class="min-w-full border-collapse block md:table">
                                                     <thead class="block md:table-header-group">
                                                         <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-                                                            <th class="bg-gray-800 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Nombre</th>
-                                                            <th class="bg-gray-800 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Acción</th>
+                                                            <th class="bg-gray-800 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell border-white ">Nombre</th>
+                                                            <th class="bg-gray-800 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell border-white ">Acción</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="block md:table-row-group">
@@ -936,7 +1483,7 @@
                                                                 <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                                     <span class="inline-block md:hidden font-bold">Acción</span>
                                                                     <div class="flex flex-col w-full justify-center">
-                                                                        <div id="upload-button<?php echo $fetchtipopapeleria->id ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
+                                                                        <div id="upload-button<?php echo $fetchtipopapeleria->id ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white btn-gris">
                                                                             Subir archivo
                                                                         </div>
                                                                         <div class="flex-1 md:flex items-center justify-between">
@@ -1047,7 +1594,7 @@
         </div>
     </div>
     <style>
-    		.btn-celeste{
+    .btn-celeste{
 		background-color: #00a3ff  !important;
 		border: none !important;
 		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
@@ -1055,8 +1602,23 @@
 		border-bottom: #fff 9px;
 	}
 	
-		.btn-celeste:hover{
+	.btn-celeste:hover{
 		background-color: #008eff !important;
+	}
+
+    .text-celeste{
+        color: #005FB1 !important;
+    }
+
+    .bg-celeste{
+        background-color: #005FB1 !important;
+    }
+    .btn-gris{
+        background-color: #a9a9a9 !important;
+        box-shadow: 2px 1px 5px #cac9c9 !important;
+    }
+    .btn-gris:hover{
+		background-color: #969393 !important;
 	}
     </style>
 </div>

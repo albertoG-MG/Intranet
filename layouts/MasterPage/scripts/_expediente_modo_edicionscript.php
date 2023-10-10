@@ -78,10 +78,10 @@
 
         <?php if($fetch_token_user->exp_date >= $curDate){ ?>
 
-            $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-            $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-            $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
-            $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, locale: { format: 'YYYY/MM/DD', cancelLabel: 'Clear' }, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechanac"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechacon"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechaalta"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+            $('input[name="fechauniforme"]').daterangepicker({ showDropdowns: true, parentEl: "main", singleDatePicker: true, "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
 
             <?php if($edit->efecha_nacimiento != null){ ?> 
                 $('#fechanac').data('daterangepicker').setStartDate('<?php echo $edit->efecha_nacimiento; ?>');
@@ -222,9 +222,36 @@
                 currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
             });
 
+             $("#anterior3").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
+		});
+
             //Termina la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 
             //EMPIEZA EL JQUERY VALIDATION
+            $.validator.addMethod("refvalplus3", function(value, element) {
+            if ($("#reflab").val() > 3) {
+                return false;
+            } 
+            return true;
+            }, "Please enter a valid value in selectbox");
+            
             $.validator.addMethod('email_verification', function (value, element) {
                 return this.optional(element) || /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
             }, 'not a valid email.');
@@ -242,7 +269,16 @@
                 var inputDate = new Date(value);
                 if (value == "" || inputDate < curDate)
                     return true;
-                return false;
+                    return false;
+            }, "Invalid Date!");
+
+            $.validator.addMethod("minDate", function(value, element){
+                var curDate = new Date();
+                var inputDate = new Date(value);
+                var age = Math.floor((curDate-inputDate) / (365.25 * 24 * 60 * 60 * 1000 /* convierte años a milisegundos */ ));
+                if (age > 18)
+                 return true;
+                     return false;
             }, "Invalid Date!");
 
             $.validator.addMethod('names_validation', function (value, element) {
@@ -364,11 +400,15 @@
                         },
                         teldom: {
                             required: true,
-                            digits:true
+                            digits:true,
+                            minlength: 10,
+                            maxlength: 10
                         },
                         telmov: {
                             required:true,
-                            digits:true
+                            digits:true,
+                            minlength: 10,
+                            maxlength: 10
                         },
                         casa: {
                             required: true
@@ -385,27 +425,39 @@
                         },
                         fechanac:{
                             required: true,
+                            minDate: true,
                             maxDate: true
                         },
                         curp:{
                             required: true,
-                            alphanumeric: true
+                            alphanumeric: true,
+                            minlength: 18,
+                            maxlength: 18
                         },
                         nss:{
                             required: true,
-                            digits: true
+                            digits: true,
+                            minlength: 11,
+                            maxlength: 11
                         },
                         rfc:{
                             required: true,
-                            alphanumeric: true
+                            alphanumeric: true,
+                            minlength: 12,
+                            maxlength: 12
                         },
                         identificacion:{
                             required: true
                         },
                         reflab:{
-                            required: true,
+                            refvalplus3: true
+                        },
+                        infa_rtelefono: {
+                            required:true,
                             digits:true,
-                            notOnlyZero: '0'
+                            maxlength: 10,
+                            minlength: 10
+                            
                         },
                         cantidadpolo:{
                             digits: true
@@ -431,11 +483,15 @@
                         },
                         emergenciatel:{
                             required: true,
-                            digits: true
+                            digits: true,
+                            maxlength: 10,
+                            minlength: 10
                         },
                         emergenciatel2:{
                             required: true,
-                            digits: true
+                            digits: true,
+                            maxlength: 10,
+                            minlength: 10
                         },
                         capacitacion:{
                             field_validation: true
@@ -453,11 +509,7 @@
                             required: true,
                             names_validation: true
                         },
-                        refban:{
-                            required: true,
-                            digits:true,
-                            notOnlyZero: '0'
-                        },
+                        
                         banco_personal:{
                             required: true,
                             field_validation:true
@@ -479,7 +531,7 @@
                             digits: true,
                             minlength: 16,
                             maxlength: 16
-                        }
+                        },
                     },
                     messages: {
                         estudios:{
@@ -519,11 +571,15 @@
                         },
                         teldom: {
                             required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
+                            digits: 'Solo se permiten números',
+                            minlength: 'No puede ser menor a 10 dígitos',
+                            maxlength: 'No puede ser mayor a 10 dígitos'
                         },
                         telmov: {
                             required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
+                            digits: 'Solo se permiten números',
+                            minlength: 'No puede ser menor a 10 dígitos',
+                            maxlength: 'No puede ser mayor a 10 dígitos'
                         },
                         casa: {
                             required: "Este campo es requerido"
@@ -540,6 +596,7 @@
                         },
                         fechanac:{
                             required : 'Este campo es requerido',
+                            minDate: 'Favor de ingresar una fecha valida (edad miníma 18 años)',
                             maxDate: 'No se permiten las fechas posteriores al día de hoy'
                         },
                         salario_contrato:{
@@ -550,23 +607,33 @@
                         },
                         curp: {
                             required : 'Este campo es requerido',
-                            alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                            alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                            minlength: 'No puede ser menor a 18 dígitos',
+                            maxlength: 'No puede ser mayor a 18 dígitos'
                         },
                         nss:{
                             required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
+                            digits: 'Solo se permiten números',
+                            minlength: 'No puede ser menor a 11 dígitos',
+                            maxlength: 'No puede ser mayor a 11 dígitos'
                         },
                         rfc:{
                             required : 'Este campo es requerido',
-                            alphanumeric: 'Solo se permiten carácteres alfanúmericos'
+                            alphanumeric: 'Solo se permiten carácteres alfanúmericos',
+                            minlength: 'No puede ser menor a 12 dígitos',
+                            maxlength: 'No puede ser mayor a 12 dígitos'
                         },
                         identificacion:{
                             required : 'Este campo es requerido'
                         },
                         reflab: {
-                            required : 'Este campo es requerido',
+                            refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
+                        },
+                        infa_rtelefono: {
+                            required: 'Este campo es requerido',
                             digits: 'Solo se permiten números',
-                            notOnlyZero: 'Necesita ingresar por lo menos una referencia'
+                            minlength: 'No puede ser menor a 10 dígitos',
+                            maxlength: 'No puede ser mayor a 10 dígitos'
                         },
                         cantidadpolo:{
                             digits: 'Solo se permiten números'
@@ -614,11 +681,7 @@
                             required: 'Este campo es requerido',
                             names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                         },
-                        refban: {
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            notOnlyZero: 'Necesita ingresar por lo menos una referencia'
-                        },
+                    
                         banco_personal:{
                             required: 'Este campo es requerido',
                             field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
@@ -640,7 +703,14 @@
                             digits: 'Solo se permiten números',
                             minlength: 'No puede ser menor a 16 dígitos',
                             maxlength: 'No puede ser mayor a 16 dígitos'
-                        }
+                        },
+
+                        rtelefono:{
+                            required: 'Este campo es requerido',
+                            digits: 'Solo se permiten números',
+                            minlength: 'No puede ser menor a 10 dígitos',
+                            maxlength: 'No puede ser mayor a 10 dígitos'
+                        }                     
                     },
                     submitHandler: function(form) {
                         $('#submit-button').html(
@@ -1004,6 +1074,10 @@
                     inputtext3.setAttribute("data-msg-required", "Este campo es requerido");
                     inputtext3.setAttribute("data-rule-digits", "true");
                     inputtext3.setAttribute("data-msg-digits", "Solo se permiten números");
+                    inputtext3.setAttribute("data-rule-minlength", "10");
+                    inputtext3.setAttribute("data-msg-minlength", "No puede ser menor a 10 dígitos");
+                    inputtext3.setAttribute("data-rule-maxlength", "10");
+                    inputtext3.setAttribute("data-msg-maxlength", "No puede ser mayor a 10 dígitos");
                     inputtext3.setAttribute("placeholder", "Teléfono " +(contador));
                     divgrupo3.appendChild(inputtext3);
                     contador++;
@@ -1019,133 +1093,141 @@
             <?php } ?>
 
             //CARGA DE REFERENCIAS BANCARIAS
-            if ($('#refban').val() != "") {
-                var refbannumber = document.getElementById("refban").value;
-                var refbancontainer = document.getElementById("ref");
-                var childrenCount2 = refbancontainer.childElementCount;
-                var contador2 = childrenCount2 + 1;
-                var refbanjson = '<?php echo $refban_json; ?>';
-                const refbanarr = JSON.parse(refbanjson);
-                var value2 = 0;
-                for (b = 0; b < refbannumber; b++) {
-                    var divrefbancontainer = document.createElement("div");
-                    divrefbancontainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-                    refbancontainer.appendChild(divrefbancontainer);
-                    var refbandiv = document.createElement("div");
-                    refbandiv.classList.add('grid', 'grid-cols-1');
-                    divrefbancontainer.appendChild(refbandiv);
-                    var refbandiv2 = document.createElement("div");
-                    refbandiv2.classList.add('grid', 'grid-cols-1');
-                    divrefbancontainer.appendChild(refbandiv2);
-                    var refbandiv3 = document.createElement("div");
-                    refbandiv3.classList.add('grid', 'grid-cols-1');
-                    divrefbancontainer.appendChild(refbandiv3);
-                    var refbandiv4 = document.createElement("div");
-                    refbandiv4.classList.add('grid', 'grid-cols-1');
-                    divrefbancontainer.appendChild(refbandiv4);
-                    var refbandiv5 = document.createElement("div");
-                    refbandiv5.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
-                    divrefbancontainer.appendChild(refbandiv5);
-                    refbandiv.appendChild(document.createTextNode("Nombre completo" + (contador2) + " *"));
-                    var refbangrupo = document.createElement("div");
-                    refbangrupo.classList.add('group', 'flex');
-                    refbandiv.appendChild(refbangrupo);
-                    var refbanicon = document.createElement("div");
-                    refbanicon.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    refbanicon.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    refbangrupo.appendChild(refbanicon);
-                    var refbaninput = document.createElement("input");
-                    refbaninput.type = "text";
-                    refbaninput.name = "infb_rnombre" + childrenCount2;
-                    refbaninput.value = refbanarr[value2]["nombre"];
-                    refbaninput.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    refbaninput.setAttribute("data-rule-required", "true"); 
-                    refbaninput.setAttribute("data-msg-required", "Este campo es requerido");
-                    refbaninput.setAttribute("data-rule-names_validation", "true"); 
-                    refbaninput.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                    refbaninput.setAttribute("placeholder", "Nombre " +(contador2)); 
-                    refbangrupo.appendChild(refbaninput);
-                    refbandiv2.appendChild(document.createTextNode("Relación " + (contador2) + " *"));
-                    var refbangrupo2 = document.createElement("div");
-                    refbangrupo2.classList.add('group', 'flex');
-                    refbandiv2.appendChild(refbangrupo2);
-                    var refbanicon2 = document.createElement("div");
-                    refbanicon2.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    refbanicon2.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-                    refbangrupo2.appendChild(refbanicon2);
-                    var refbaninput2 = document.createElement("input");
-                    refbaninput2.type = "text";
-                    refbaninput2.name = "infb_rrelacion" + childrenCount2;
-                    refbaninput2.value = refbanarr[value2]["relacion"];
-                    refbaninput2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    refbaninput2.setAttribute("data-rule-required", "true");
-                    refbaninput2.setAttribute("data-msg-required", "Este campo es requerido");
-                    refbaninput2.setAttribute("data-rule-field_validation", "true");
-                    refbaninput2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-                    refbaninput2.setAttribute("placeholder", "Relación " +(contador2)); 
-                    refbangrupo2.appendChild(refbaninput2);
-                    refbandiv3.appendChild(document.createTextNode("RFC " + (contador2) + " *"));
-                    var refbangrupo3 = document.createElement("div");
-                    refbangrupo3.classList.add('group', 'flex');
-                    refbandiv3.appendChild(refbangrupo3);
-                    var refbanicon3 = document.createElement("div");
-                    refbanicon3.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    refbanicon3.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-document-edit-outline</title><path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" /></svg>';
-                    refbangrupo3.appendChild(refbanicon3);
-                    var refbaninput3 = document.createElement("input");
-                    refbaninput3.type = "text";
-                    refbaninput3.name = "infb_rrfc" + childrenCount2;
-                    refbaninput3.value = refbanarr[value2]["rfc"];
-                    refbaninput3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    refbaninput3.setAttribute("data-rule-required", "true");
-                    refbaninput3.setAttribute("data-msg-required", "Este campo es requerido");
-                    refbaninput3.setAttribute("data-rule-alphanumeric", "true");
-                    refbaninput3.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-                    refbaninput3.setAttribute("placeholder", "RFC " +(contador2)); 
-                    refbangrupo3.appendChild(refbaninput3);
-                    refbandiv4.appendChild(document.createTextNode("CURP " + (contador2) + " *"));
-                    var refbangrupo4 = document.createElement("div");
-                    refbangrupo4.classList.add('group', 'flex');
-                    refbandiv4.appendChild(refbangrupo4);
-                    var refbanicon4 = document.createElement("div");
-                    refbanicon4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    refbanicon4.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>badge-account</title><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" /></svg>';
-                    refbangrupo4.appendChild(refbanicon4);
-                    var refbaninput4 = document.createElement("input");
-                    refbaninput4.type = "text";
-                    refbaninput4.name = "infb_rcurp" + childrenCount2;
-                    refbaninput4.value = refbanarr[value2]["curp"];
-                    refbaninput4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    refbaninput4.setAttribute("data-rule-required", "true");
-                    refbaninput4.setAttribute("data-msg-required", "Este campo es requerido");
-                    refbaninput4.setAttribute("data-rule-alphanumeric", "true");
-                    refbaninput4.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-                    refbaninput4.setAttribute("placeholder", "CURP " +(contador2));  
-                    refbangrupo4.appendChild(refbaninput4);
-                    refbandiv5.appendChild(document.createTextNode("Porcentaje de derecho " + (contador2) + " *"));
-                    var refbangrupo5 = document.createElement("div");
-                    refbangrupo5.classList.add('group', 'flex');
-                    refbandiv5.appendChild(refbangrupo5);  
-                    var refbanicon5 = document.createElement("div");
-                    refbanicon5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    refbanicon5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>percent-box</title><path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z" /></svg>';
-                    refbangrupo5.appendChild(refbanicon5);
-                    var refbaninput5 = document.createElement("input");
-                    refbaninput5.type = "text";
-                    refbaninput5.name = "infb_rporcentaje" + childrenCount2;
-                    refbaninput5.value = refbanarr[value2]["prcnt_derecho"];
-                    refbaninput5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    refbaninput5.setAttribute("data-rule-required", "true");
-                    refbaninput5.setAttribute("data-msg-required", "Este campo es requerido");
-                    refbaninput5.setAttribute("data-rule-digits", "true");
-                    refbaninput5.setAttribute("data-msg-digits", "Solo se permiten números");
-                    refbaninput5.setAttribute("placeholder", "Porcentaje de derecho " +(contador2)); 
-                    refbangrupo5.appendChild(refbaninput5);
-                    value2++;
-                    contador2++;
-                    childrenCount2++;
-                }
-            }
+            // if ($('#refban').val() != "") {
+            //     var refbannumber = document.getElementById("refban").value;
+            //     var refbancontainer = document.getElementById("ref");
+            //     var childrenCount2 = refbancontainer.childElementCount;
+            //     var contador2 = childrenCount2 + 1;
+            //     var refbanjson = '<?php echo $refban_json; ?>';
+            //     const refbanarr = JSON.parse(refbanjson);
+            //     var value2 = 0;
+            //     for (b = 0; b < refbannumber; b++) {
+            //         var divrefbancontainer = document.createElement("div");
+            //         divrefbancontainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
+            //         refbancontainer.appendChild(divrefbancontainer);
+            //         var refbandiv = document.createElement("div");
+            //         refbandiv.classList.add('grid', 'grid-cols-1');
+            //         divrefbancontainer.appendChild(refbandiv);
+            //         var refbandiv2 = document.createElement("div");
+            //         refbandiv2.classList.add('grid', 'grid-cols-1');
+            //         divrefbancontainer.appendChild(refbandiv2);
+            //         var refbandiv3 = document.createElement("div");
+            //         refbandiv3.classList.add('grid', 'grid-cols-1');
+            //         divrefbancontainer.appendChild(refbandiv3);
+            //         var refbandiv4 = document.createElement("div");
+            //         refbandiv4.classList.add('grid', 'grid-cols-1');
+            //         divrefbancontainer.appendChild(refbandiv4);
+            //         var refbandiv5 = document.createElement("div");
+            //         refbandiv5.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
+            //         divrefbancontainer.appendChild(refbandiv5);
+            //         refbandiv.appendChild(document.createTextNode("Nombre completo" + (contador2) + " *"));
+            //         var refbangrupo = document.createElement("div");
+            //         refbangrupo.classList.add('group', 'flex');
+            //         refbandiv.appendChild(refbangrupo);
+            //         var refbanicon = document.createElement("div");
+            //         refbanicon.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            //         refbanicon.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
+            //         refbangrupo.appendChild(refbanicon);
+            //         var refbaninput = document.createElement("input");
+            //         refbaninput.type = "text";
+            //         refbaninput.name = "infb_rnombre" + childrenCount2;
+            //         refbaninput.value = refbanarr[value2]["nombre"];
+            //         refbaninput.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+            //         refbaninput.setAttribute("data-rule-required", "true"); 
+            //         refbaninput.setAttribute("data-msg-required", "Este campo es requerido");
+            //         refbaninput.setAttribute("data-rule-names_validation", "true"); 
+            //         refbaninput.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
+            //         refbaninput.setAttribute("placeholder", "Nombre " +(contador2)); 
+            //         refbangrupo.appendChild(refbaninput);
+            //         refbandiv2.appendChild(document.createTextNode("Relación " + (contador2) + " *"));
+            //         var refbangrupo2 = document.createElement("div");
+            //         refbangrupo2.classList.add('group', 'flex');
+            //         refbandiv2.appendChild(refbangrupo2);
+            //         var refbanicon2 = document.createElement("div");
+            //         refbanicon2.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            //         refbanicon2.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
+            //         refbangrupo2.appendChild(refbanicon2);
+            //         var refbaninput2 = document.createElement("input");
+            //         refbaninput2.type = "text";
+            //         refbaninput2.name = "infb_rrelacion" + childrenCount2;
+            //         refbaninput2.value = refbanarr[value2]["relacion"];
+            //         refbaninput2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+            //         refbaninput2.setAttribute("data-rule-required", "true");
+            //         refbaninput2.setAttribute("data-msg-required", "Este campo es requerido");
+            //         refbaninput2.setAttribute("data-rule-field_validation", "true");
+            //         refbaninput2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
+            //         refbaninput2.setAttribute("placeholder", "Relación " +(contador2)); 
+            //         refbangrupo2.appendChild(refbaninput2);
+            //         refbandiv3.appendChild(document.createTextNode("RFC " + (contador2) + " *"));
+            //         var refbangrupo3 = document.createElement("div");
+            //         refbangrupo3.classList.add('group', 'flex');
+            //         refbandiv3.appendChild(refbangrupo3);
+            //         var refbanicon3 = document.createElement("div");
+            //         refbanicon3.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            //         refbanicon3.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-document-edit-outline</title><path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" /></svg>';
+            //         refbangrupo3.appendChild(refbanicon3);
+            //         var refbaninput3 = document.createElement("input");
+            //         refbaninput3.type = "text";
+            //         refbaninput3.name = "infb_rrfc" + childrenCount2;
+            //         refbaninput3.value = refbanarr[value2]["rfc"];
+            //         refbaninput3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+            //         refbaninput3.setAttribute("data-rule-required", "true");
+            //         refbaninput3.setAttribute("data-msg-required", "Este campo es requerido");
+            //         refbaninput3.setAttribute("data-rule-alphanumeric", "true");
+            //         refbaninput3.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
+            //         refbaninput3.setAttribute("data-rule-minlength", "12");
+            //         refbaninput3.setAttribute("data-msg-minlength", "No puede ser menor de 12 digitos");
+            //         refbaninput3.setAttribute("data-rule-maxlength", "12");
+            //         refbaninput3.setAttribute("data-msg-maxlength", "No puede ser mayor de 12 digitos");
+            //         refbaninput3.setAttribute("placeholder", "RFC " +(contador2)); 
+            //         refbangrupo3.appendChild(refbaninput3);
+            //         refbandiv4.appendChild(document.createTextNode("CURP " + (contador2) + " *"));
+            //         var refbangrupo4 = document.createElement("div");
+            //         refbangrupo4.classList.add('group', 'flex');
+            //         refbandiv4.appendChild(refbangrupo4);
+            //         var refbanicon4 = document.createElement("div");
+            //         refbanicon4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            //         refbanicon4.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>badge-account</title><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" /></svg>';
+            //         refbangrupo4.appendChild(refbanicon4);
+            //         var refbaninput4 = document.createElement("input");
+            //         refbaninput4.type = "text";
+            //         refbaninput4.name = "infb_rcurp" + childrenCount2;
+            //         refbaninput4.value = refbanarr[value2]["curp"];
+            //         refbaninput4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+            //         refbaninput4.setAttribute("data-rule-required", "true");
+            //         refbaninput4.setAttribute("data-msg-required", "Este campo es requerido");
+            //         refbaninput4.setAttribute("data-rule-alphanumeric", "true");
+            //         refbaninput4.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
+            //         refbaninput4.setAttribute("data-rule-minlength", "18");
+            //         refbaninput4.setAttribute("data-msg-minlength", "No puede ser menor de 18 digitos");
+            //         refbaninput4.setAttribute("data-rule-maxlength", "18");
+            //         refbaninput4.setAttribute("data-msg-maxlength", "No puede ser mayor de 18 digitos");
+            //         refbaninput4.setAttribute("placeholder", "CURP " +(contador2));  
+            //         refbangrupo4.appendChild(refbaninput4);
+            //         refbandiv5.appendChild(document.createTextNode("Porcentaje de derecho " + (contador2) + " *"));
+            //         var refbangrupo5 = document.createElement("div");
+            //         refbangrupo5.classList.add('group', 'flex');
+            //         refbandiv5.appendChild(refbangrupo5);  
+            //         var refbanicon5 = document.createElement("div");
+            //         refbanicon5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
+            //         refbanicon5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>percent-box</title><path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z" /></svg>';
+            //         refbangrupo5.appendChild(refbanicon5);
+            //         var refbaninput5 = document.createElement("input");
+            //         refbaninput5.type = "text";
+            //         refbaninput5.name = "infb_rporcentaje" + childrenCount2;
+            //         refbaninput5.value = refbanarr[value2]["prcnt_derecho"];
+            //         refbaninput5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
+            //         refbaninput5.setAttribute("data-rule-required", "true");
+            //         refbaninput5.setAttribute("data-msg-required", "Este campo es requerido");
+            //         refbaninput5.setAttribute("data-rule-digits", "true");
+            //         refbaninput5.setAttribute("data-msg-digits", "Solo se permiten números");
+            //         refbaninput5.setAttribute("placeholder", "Porcentaje de derecho " +(contador2)); 
+            //         refbangrupo5.appendChild(refbaninput5);
+            //         value2++;
+            //         contador2++;
+            //         childrenCount2++;
+            //     }
+            // }
             //TERMINA LA CARGA DE REFERENCIAS BANCARIAS
 
 
@@ -1162,21 +1244,26 @@
                 document.getElementById("reflab").value = 0;
                 return "0";
             });
-            var container = document.getElementById("referencias");
-            var childrenCount = container.childElementCount;
-            var count = childrenCount + 1;
-            var result = 0;
-            if (number == 0) {
-                childrenCount = 0;
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                }
-            } else {
-                if (number < childrenCount) {
-                    result = childrenCount - number;
-                    for (j = 0; j < result; j++) {
-                        container.removeChild(container.lastChild);
+                var container = document.getElementById("referencias");
+                var childrenCount = container.childElementCount;
+                var count = childrenCount + 1;
+                var result = 0;
+                if (number == 0) {
+                    childrenCount = 0;
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
                     }
+                }else if(number > 3){
+                    childrenCount = 0;
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                } else {
+                    if (number < childrenCount) {
+                        result = childrenCount - number;
+                        for (j = 0; j < result; j++) {
+                            container.removeChild(container.lastChild);
+                        }
                 } else if (number > childrenCount) {
                     result = number - childrenCount;
                     for (i=0;i<result;i++){
@@ -1244,6 +1331,10 @@
                         input3.setAttribute("data-msg-required", "Este campo es requerido");
                         input3.setAttribute("data-rule-digits", "true");
                         input3.setAttribute("data-msg-digits", "Solo se permiten números");
+                        input3.setAttribute("data-rule-minlength", "10");
+                        input3.setAttribute("data-msg-minlength", "No puede ser menor a 10 dígitos");
+                        input3.setAttribute("data-rule-maxlength", "10");
+                        input3.setAttribute("data-msg-maxlength", "No puede ser mayor a 10 dígitos");
                         input3.setAttribute("placeholder", "Teléfono " +(count));
                         grupo3.appendChild(input3);
                         count++;
@@ -1254,146 +1345,7 @@
         }
         //Terminan las referencias laborales
 
-        //Aquí empiezan las referencias bancarias
-        function AgregarBanco(){
-            var number = document.getElementById("refban").value;
-            number = number.replace(/[^0-9]/g, function replacing() {
-                document.getElementById("refban").value = 0;
-                return "0";
-            });
-            var container = document.getElementById("ref");
-            var childrenCount = container.childElementCount;
-            var count = childrenCount + 1;
-            var result = 0;
-            if (number == 0) {
-                childrenCount = 0;
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                }
-            } else {
-                if (number < childrenCount) {
-                    result = childrenCount - number;
-                    for (j = 0; j < result; j++) {
-                        container.removeChild(container.lastChild);
-                    }
-                } else if (number > childrenCount) {
-                    result = number - childrenCount;
-                    for (i=0;i<result;i++){
-                        var divcontainer = document.createElement("div");
-                        divcontainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-                        container.appendChild(divcontainer);
-                        var div = document.createElement("div");
-                        div.classList.add('grid', 'grid-cols-1');
-                        divcontainer.appendChild(div);
-                        var div2 = document.createElement("div");
-                        div2.classList.add('grid', 'grid-cols-1');
-                        divcontainer.appendChild(div2);
-                        var div3 = document.createElement("div");
-                        div3.classList.add('grid', 'grid-cols-1');
-                        divcontainer.appendChild(div3);
-                        var div7 = document.createElement("div");
-                        div7.classList.add('grid', 'grid-cols-1');
-                        divcontainer.appendChild(div7);
-                        var div9 = document.createElement("div");
-                        div9.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
-                        divcontainer.appendChild(div9);
-                        div.appendChild(document.createTextNode("Nombre completo" + (count) + " *"));
-                        var grupo = document.createElement("div");
-                        grupo.classList.add('group', 'flex');
-                        div.appendChild(grupo);
-                        var div4 = document.createElement("div");
-                        div4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div4.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                        grupo.appendChild(div4);
-                        var input = document.createElement("input");
-                        input.type = "text";
-                        input.name = "infb_rnombre" + childrenCount;
-                        input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input.setAttribute("data-rule-required", "true"); 
-                        input.setAttribute("data-msg-required", "Este campo es requerido");
-                        input.setAttribute("data-rule-names_validation", "true"); 
-                        input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-                        input.setAttribute("placeholder", "Nombre " +(count)); 
-                        grupo.appendChild(input);
-                        div2.appendChild(document.createTextNode("Relación " + (count) + " *"));
-                        var grupo2 = document.createElement("div");
-                        grupo2.classList.add('group', 'flex');
-                        div2.appendChild(grupo2);
-                        var div5 = document.createElement("div");
-                        div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-                        grupo2.appendChild(div5);
-                        var input2 = document.createElement("input");
-                        input2.type = "text";
-                        input2.name = "infb_rrelacion" + childrenCount;
-                        input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input2.setAttribute("data-rule-required", "true");
-                        input2.setAttribute("data-msg-required", "Este campo es requerido");
-                        input2.setAttribute("data-rule-field_validation", "true");
-                        input2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-                        input2.setAttribute("placeholder", "Relación " +(count)); 
-                        grupo2.appendChild(input2);
-                        div3.appendChild(document.createTextNode("RFC " + (count) + " *"));
-                        var grupo3 = document.createElement("div");
-                        grupo3.classList.add('group', 'flex');
-                        div3.appendChild(grupo3);
-                        var div6 = document.createElement("div");
-                        div6.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div6.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-document-edit-outline</title><path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" /></svg>';
-                        grupo3.appendChild(div6);
-                        var input3 = document.createElement("input");
-                        input3.type = "text";
-                        input3.name = "infb_rrfc" + childrenCount;
-                        input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input3.setAttribute("data-rule-required", "true");
-                        input3.setAttribute("data-msg-required", "Este campo es requerido");
-                        input3.setAttribute("data-rule-alphanumeric", "true");
-                        input3.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-                        input3.setAttribute("placeholder", "RFC " +(count)); 
-                        grupo3.appendChild(input3);
-                        div7.appendChild(document.createTextNode("CURP " + (count) + " *"));
-                        var grupo4 = document.createElement("div");
-                        grupo4.classList.add('group', 'flex');
-                        div7.appendChild(grupo4);
-                        var div8 = document.createElement("div");
-                        div8.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div8.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>badge-account</title><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" /></svg>';
-                        grupo4.appendChild(div8);
-                        var input4 = document.createElement("input");
-                        input4.type = "text";
-                        input4.name = "infb_rcurp" + childrenCount;
-                        input4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input4.setAttribute("data-rule-required", "true");
-                        input4.setAttribute("data-msg-required", "Este campo es requerido");
-                        input4.setAttribute("data-rule-alphanumeric", "true");
-                        input4.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-                        input4.setAttribute("placeholder", "CURP " +(count));  
-                        grupo4.appendChild(input4);
-                        div9.appendChild(document.createTextNode("Porcentaje de derecho " + (count) + " *"));
-                        var grupo5 = document.createElement("div");
-                        grupo5.classList.add('group', 'flex');
-                        div9.appendChild(grupo5);  
-                        var div10 = document.createElement("div");
-                        div10.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div10.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>percent-box</title><path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z" /></svg>';
-                        grupo5.appendChild(div10);
-                        var input5 = document.createElement("input");
-                        input5.type = "text";
-                        input5.name = "infb_rporcentaje" + childrenCount;
-                        input5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input5.setAttribute("data-rule-required", "true");
-                        input5.setAttribute("data-msg-required", "Este campo es requerido");
-                        input5.setAttribute("data-rule-digits", "true");
-                        input5.setAttribute("data-msg-digits", "Solo se permiten números");
-                        input5.setAttribute("placeholder", "Porcentaje de derecho " +(count)); 
-                        grupo5.appendChild(input5);
-                        count++;
-                        childrenCount++;     
-                    }
-                }
-            }
-        }
-        //Aquí terminan las referencias bancarias
+
 
         //Checa si el user esta loggeado
         function check_user_logged(){
@@ -1456,15 +1408,27 @@
             var rfc = $("#rfc").val();
             var tipoidentificacion = $("#identificacion").val();
             var numeroidentificacion = $("#numeroidentificacion").val();
-            var numeroreferenciaslab = $("#reflab").val();
+            var numeroreferenciaslab = $("#numReferencias").val();
             var fechauniforme = $("#fechauniforme").val();
             var cantidadpolo = $("#cantidadpolo").val();
             var tallapolo = $("#tallapolo").val();
-            var emergencianom = $("#emergencianom").val();
-            var emergenciaparentesco = $("#emergenciaparentesco").val();
+            var emergencianom = $("#emergencia_nom").val();
+            var emergenciaapat = $("#emergencia_appat").val();
+            var emergenciaamat = $("#emergencia_apmat").val();
+            if($("#emergenciaparentesco").val() == "OTRO"){
+                var emergenciaparentesco = $("#emergenciaparentesco4").val();
+                }else{
+                    var emergenciaparentesco = $("#emergenciaparentesco").val();
+                    }
             var emergenciatel = $("#emergenciatel").val();
-            var emergencianom2 = $("#emergencianom2").val();
-            var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
+            var emergencianom2 = $("#emergencia_nom2").val();
+            var emergenciaapat2 = $("#emergencia_appat2").val();
+            var emergenciaamat2 = $("#emergencia_apmat2").val();
+            if($("#emergenciaparentesco2").val() == "OTRO"){
+                var emergenciaparentesco2 = $("#emergenciaparentesco3").val();
+                }else{
+                    var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
+                    }
             var emergenciatel2 = $("#emergenciatel2").val();
             var capacitacion = $("#capacitacion").val();
             var antidoping = $("#antidoping").val();
@@ -1472,7 +1436,9 @@
             var vacante = $("#vacante").val();
             var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
             var nomfam = $("#nomfam").val();
-            var numeroreferenciasban = $("#refban").val();
+            var apellidopatfam = $("#apfam").val();
+            var apellidomatfam = $("#amfam").val();
+            var numeroreferenciasban = $("#numReferenciasBancarias").val();
             var banco_personal = $("#banco_personal").val();
             var cuenta_personal = $("#cuenta_personal").val();
             var clabe_personal = $("#clabe_personal").val();
@@ -1480,26 +1446,26 @@
             var app = "expediente_modo_edicion";
         
             /*Referencias laborales*/
-            var nreflab =  $("input[name=reflab]").val();
             var reflab = [];
-            for(var i=0; i <nreflab; i++){
-                var rnombre = $("input[name=infa_rnombre" +i+ "]").val();
-                var rrelacion = $("input[name=infa_rrelacion" +i+ "]").val();
-                var rtelefono = $("input[name=infa_rtelefono" +i+ "]").val();
-                reflab[i] = {nombre: rnombre, relacion: rrelacion, telefono: rtelefono};
+        for (var i = 1; i <= numeroreferenciaslab; i++) {
+                var rnombre = $("input[name=infa_rnombre" + i + "]").val();
+                var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
+                var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
+                var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
+                var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
             }
         
             /*Referencias bancarias*/
-            var nrefbanc =  $("input[name=refban]").val();
             var refbanc = [];
-            for(var i=0; i <nrefbanc; i++){
-                var brnombre = $("input[name=infb_rnombre" +i+ "]").val();
-                var brrelacion = $("input[name=infb_rrelacion" +i+ "]").val();
-                var brrfc = $("input[name=infb_rrfc" +i+ "]").val();
-                var brcurp = $("input[name=infb_rcurp" +i+ "]").val();
-                var brporcentaje = $("input[name=infb_rporcentaje" +i+ "]").val();
-                refbanc[i] = {nombre: brnombre, relacion: brrelacion, rfc: brrfc, curp: brcurp, porcentaje: brporcentaje};
-            }
+        for (var i = 1; i <= numeroreferenciasban; i++) {
+            var brnombre = $("input[name=infb_rnombre" + i + "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" + i + "]").val();
+            var brrelacion = $("select[name=infb_rrelacion" + i + "]").val();
+            var brrfc = $("input[name=infb_rrfc" + i + "]").val();
+            var brcurp = $("input[name=infb_rcurp" + i + "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+        }
         
             /*File uploads*/
             <?php 
@@ -1547,11 +1513,15 @@
             fd.append('cantidadpolo', cantidadpolo);
             fd.append('tallapolo', tallapolo);
             fd.append('emergencianom', emergencianom);
-            fd.append('emergenciaparentesco', emergenciaparentesco);
-            fd.append('emergenciatel', emergenciatel);
+            fd.append('emergenciaapat', emergenciaapat);
+            fd.append('emergenciaamat', emergenciaamat);
+            fd.append('emergenciarelacion', emergenciarelacion);
+            fd.append('emergenciatelefono', emergenciatelefono);
             fd.append('emergencianom2', emergencianom2);
-            fd.append('emergenciaparentesco2', emergenciaparentesco2);
-            fd.append('emergenciatel2', emergenciatel2);
+            fd.append('emergenciaapat2', emergenciaapat2);
+            fd.append('emergenciaamat2', emergenciaamat2);
+            fd.append('emergenciarelacion2', emergenciarelacion2);
+            fd.append('emergenciatelefono2', emergenciatelefono2);
             fd.append('capacitacion', capacitacion);
             fd.append('antidoping', antidoping);
             fd.append('tipo_sangre', tipo_sangre);
@@ -1651,7 +1621,7 @@
 
 	.daterangepicker td.active, .daterangepicker td.active:hover{
 		--tw-bg-opacity: 1 !important;
-		background-color: rgb(79 70 229 / var(--tw-bg-opacity)) !important;
+		background-color: rgb(79 70 229) / var(--tw-bg-opacity)) !important;
 		border-color: transparent;
 		color: #fff;
 	}	

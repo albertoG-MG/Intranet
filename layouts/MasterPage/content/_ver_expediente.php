@@ -662,7 +662,7 @@
                               Capacitacion:
                            </div>
                            <span>
-                           <?php if($ver->ecapacitacion == null){ echo "No hay datos"; }else{echo "{$ver->ecapacitacion}";} ?>
+                           <?php if($ver->ecapacitacion == null || $ver->eresultado_antidoping == "undefined"){ echo "No hay datos"; }else{echo "{$ver->ecapacitacion}";} ?>
                            </span>
                         </div>
                         <div class="flex-1 flex flex-col mt-5">
@@ -670,7 +670,7 @@
                               Resultado antidoping:
                            </div>
                            <span>
-                           <?php if($ver->eresultado_antidoping == null){ echo "No hay datos"; }else{echo "{$ver->eresultado_antidoping}";} ?>
+                           <?php if($ver->eresultado_antidoping == null || $ver->eresultado_antidoping == "undefined"){ echo "No hay datos"; }else{echo "{$ver->eresultado_antidoping}";} ?>
                            </span>
                         </div>
                      </div>

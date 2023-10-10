@@ -375,7 +375,7 @@
                 }
                 for(let j=0; j<children; j++){
                     var container = document.createElement("div");
-                    container.classList.add('flex-[1_0_20%]', 'm-[2px]');
+                    container.classList.add('flex-[1_0_10%]', 'm-[2px]');
                     boton.append(container);
                     container.append(array[j]);
                 }
@@ -426,86 +426,6 @@
             var dropdown = document.getElementById('incidencia');
             dropdown.classList.remove("hidden"); 
         <?php } ?>
-    //css de botones filtro
-     var actas_administrativas_vinculadas = document.getElementById("actas_administrativas_vinculadas");
-     var cartas_compromiso_vinculadas = document.getElementById("cartas_compromiso_vinculadas");
-     var administrar_actas_administrativas = document.getElementById("administrar_actas_administrativas");
-     var administrar_cartas_compromiso = document.getElementById("administrar_cartas_compromiso");
-
-     document.getElementById('administrar_cartas_compromiso').addEventListener("click", function(){
-
-            if(administrar_actas_administrativas.classList.contains("active")){
-                administrar_actas_administrativas.classList.remove("active");
-            }
-
-            if(!administrar_cartas_compromiso.classList.contains("active")){
-                administrar_cartas_compromiso.classList.toggle("active");
-            }
-            });
-
-            document.getElementById('administrar_actas_administrativas').addEventListener("click", function(){
-
-            if(administrar_cartas_compromiso.classList.contains("active")){
-                administrar_cartas_compromiso.classList.remove("active");
-            }
-
-            if(!administrar_actas_administrativas.classList.contains("active")){
-                administrar_actas_administrativas.classList.toggle("active");
-            }
-            });
-
-
-    document.getElementById('administrar_cartas_compromiso').addEventListener("click", function(){
-
-        if(administrar_actas_administrativas.classList.contains("active") || cartas_compromiso_vinculadas.classList.contains("active") || actas_administrativas_vinculadas.classList.contains("active")){
-            administrar_actas_administrativas.classList.remove("active");
-            cartas_compromiso_vinculadas.classList.remove("active");
-            actas_administrativas_vinculadas.classList.remove("active");
-        }
-        
-        if(!administrar_cartas_compromiso.classList.contains("active")){
-            administrar_cartas_compromiso.classList.toggle("active");
-        }
-    });
-
-    document.getElementById('administrar_actas_administrativas').addEventListener("click", function(){
-
-        if(administrar_cartas_compromiso.classList.contains("active") || cartas_compromiso_vinculadas.classList.contains("active")|| actas_administrativas_vinculadas.classList.contains("active")){
-            administrar_cartas_compromiso.classList.remove("active");
-            cartas_compromiso_vinculadas.classList.remove("active");
-            actas_administrativas_vinculadas.classList.remove("active");
-        }
-
-        if(!administrar_actas_administrativas.classList.contains("active")){
-            administrar_actas_administrativas.classList.toggle("active");
-        }
-    });
-
-    document.getElementById('cartas_compromiso_vinculadas').addEventListener("click", function(){
-
-        if(administrar_cartas_compromiso.classList.contains("active") || administrar_actas_administrativas.classList.contains("active")|| actas_administrativas_vinculadas.classList.contains("active")){
-            administrar_cartas_compromiso.classList.remove("active");
-            administrar_actas_administrativas.classList.remove("active");
-            actas_administrativas_vinculadas.classList.remove("active");
-        }
-
-        if(!cartas_compromiso_vinculadas.classList.contains("active")){
-            cartas_compromiso_vinculadas.classList.toggle("active");
-        }
-    });
-
-    document.getElementById('actas_administrativas_vinculadas').addEventListener("click", function(){
-
-    if(administrar_cartas_compromiso.classList.contains("active") || administrar_actas_administrativas.classList.contains("active")|| cartas_compromiso_vinculadas.classList.contains("active")){
-        administrar_cartas_compromiso.classList.remove("active");
-        administrar_actas_administrativas.classList.remove("active");
-        cartas_compromiso_vinculadas.classList.remove("active");
-    }
-
-    if(!actas_administrativas_vinculadas.classList.contains("active")){
-        actas_administrativas_vinculadas.classList.toggle("active");
-    }
-    });
        
         $('#datatable').on('click', 'tr .Editar', function () {
             var table = $('#datatable').DataTable();
@@ -1839,6 +1759,88 @@
                 });
             })
         }
+
+
+            //css de botones filtro
+     var actas_administrativas_vinculadas = document.getElementById("actas_administrativas_vinculadas");
+     var cartas_compromiso_vinculadas = document.getElementById("cartas_compromiso_vinculadas");
+     var administrar_actas_administrativas = document.getElementById("administrar_actas_administrativas");
+     var administrar_cartas_compromiso = document.getElementById("administrar_cartas_compromiso");
+
+     document.getElementById('administrar_cartas_compromiso').addEventListener("click", function(){
+
+            if(administrar_actas_administrativas.classList.contains("active")){
+                administrar_actas_administrativas.classList.remove("active");
+            }
+
+            if(!administrar_cartas_compromiso.classList.contains("active")){
+                administrar_cartas_compromiso.classList.toggle("active");
+            }
+            });
+
+            document.getElementById('administrar_actas_administrativas').addEventListener("click", function(){
+
+            if(administrar_cartas_compromiso.classList.contains("active")){
+                administrar_cartas_compromiso.classList.remove("active");
+            }
+
+            if(!administrar_actas_administrativas.classList.contains("active")){
+                administrar_actas_administrativas.classList.toggle("active");
+            }
+            });
+
+
+    document.getElementById('administrar_cartas_compromiso').addEventListener("click", function(){
+
+        if(administrar_actas_administrativas.classList.contains("active") || cartas_compromiso_vinculadas.classList.contains("active") || actas_administrativas_vinculadas.classList.contains("active")){
+            administrar_actas_administrativas.classList.remove("active");
+            cartas_compromiso_vinculadas.classList.remove("active");
+            actas_administrativas_vinculadas.classList.remove("active");
+        }
+        
+        if(!administrar_cartas_compromiso.classList.contains("active")){
+            administrar_cartas_compromiso.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('administrar_actas_administrativas').addEventListener("click", function(){
+
+        if(administrar_cartas_compromiso.classList.contains("active") || cartas_compromiso_vinculadas.classList.contains("active")|| actas_administrativas_vinculadas.classList.contains("active")){
+            administrar_cartas_compromiso.classList.remove("active");
+            cartas_compromiso_vinculadas.classList.remove("active");
+            actas_administrativas_vinculadas.classList.remove("active");
+        }
+
+        if(!administrar_actas_administrativas.classList.contains("active")){
+            administrar_actas_administrativas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('cartas_compromiso_vinculadas').addEventListener("click", function(){
+
+        if(administrar_cartas_compromiso.classList.contains("active") || administrar_actas_administrativas.classList.contains("active")|| actas_administrativas_vinculadas.classList.contains("active")){
+            administrar_cartas_compromiso.classList.remove("active");
+            administrar_actas_administrativas.classList.remove("active");
+            actas_administrativas_vinculadas.classList.remove("active");
+        }
+
+        if(!cartas_compromiso_vinculadas.classList.contains("active")){
+            cartas_compromiso_vinculadas.classList.toggle("active");
+        }
+    });
+
+    document.getElementById('actas_administrativas_vinculadas').addEventListener("click", function(){
+
+        if(administrar_cartas_compromiso.classList.contains("active") || administrar_actas_administrativas.classList.contains("active")|| cartas_compromiso_vinculadas.classList.contains("active")){
+            administrar_cartas_compromiso.classList.remove("active");
+            administrar_actas_administrativas.classList.remove("active");
+            cartas_compromiso_vinculadas.classList.remove("active");
+        }
+
+        if(!actas_administrativas_vinculadas.classList.contains("active")){
+            actas_administrativas_vinculadas.classList.toggle("active");
+        }
+    });
 	});
 
     function checkFile(url, filename, file, type) {
@@ -2030,6 +2032,5 @@
 		.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
-
 
 </style>
