@@ -2134,6 +2134,7 @@
         var tipoidentificacion = $("#identificacion").val();
         var numeroidentificacion = $("#numeroidentificacion").val();
         var pestaña = "DatosG";
+        var method = "store";
         var app="Expediente_temporal";
 
         fd.append('select2', select2);
@@ -2183,6 +2184,7 @@
         fd.append('identificacion', tipoidentificacion);
         fd.append('numeroidentificacion', numeroidentificacion);
         fd.append('pestaña', pestaña);
+        fd.append('method', method);
         fd.append('app', app);
 
         $.ajax({
@@ -2266,6 +2268,7 @@
             });
         }
         var pestaña = "DatosA";
+        var method = "store";
         var app="Expediente_temporal";
 
 
@@ -2295,6 +2298,7 @@
         fd.append('apellidomatfam', apellidomatfam);
         fd.append('referencias', JSON.stringify(reflab));
         fd.append('pestaña', pestaña);
+        fd.append('method', method);
         fd.append('app', app);
 
         $.ajax({
@@ -2368,6 +2372,7 @@
             });
         }
         var pestaña = "DatosB";
+        var method = "store";
         var app="Expediente_temporal";
 
 
@@ -2384,6 +2389,7 @@
         fd.append('plastico', plastico);
         fd.append('refbanc', JSON.stringify(refbanc));
         fd.append('pestaña', pestaña);
+        fd.append('method', method);
         fd.append('app', app);
 
         $.ajax({
@@ -2556,6 +2562,7 @@
                 echo "var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];";
             }
         ?> 
+        var method = "store";
         var app = "expediente";
     
         /*FD appends*/
@@ -2652,6 +2659,7 @@
             } 
         ?>
 
+        fd.append('method', method);
         fd.append('app', app);
     
     
