@@ -376,6 +376,609 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+}else if(isset($_POST["app"]) && $_POST["app"] == "DatosG"){
+	if(isset($_POST["select2"], $_POST["select2text"], $_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], 
+    $_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"], $_POST["nexterior"], $_POST["colonia"], $_POST["estado"],
+    $_POST["estadotext"], $_POST["municipio"], $_POST["municipiotext"], $_POST["codigo"], $_POST["teldom"], $_POST["posee_telmov"], 
+    $_POST["telmov"], $_POST["posee_telempresa"], $_POST["marcacion"], $_POST["serie"], $_POST["sim"], $_POST["numred"], $_POST["modelotel"], 
+    $_POST["marcatel"], $_POST["imei"], $_POST["posee_laptop"], $_POST["marca_laptop"], $_POST["modelo_laptop"], $_POST["serie_laptop"], 
+    $_POST["radio"], $_POST["ecivil"], $_POST["posee_retencion"], $_POST["monto_mensual"], $_POST["fechanac"], $_POST["fechacon"], 
+    $_POST["fechaalta"], $_POST["salario_contrato"], $_POST["salario_fechaalta"], $_POST["observaciones"], $_POST["curp"], 
+    $_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"], $_POST["method"])){
+		//CHECA SI EL USUARIO TIENE PERMISO PARA REALIZAR LAS ACCIONES DE CREAR EXPEDIENTES
+		if($_POST["method"] == "store"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+			}
+		}
+
+		/*
+		=============================================
+		EMPIEZA LA VALIDACIÓN DE LOS DATOS GENERALES
+		=============================================
+		*/
+
+		//SELECT2
+		if($_POST["select2"] != null){
+			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
+			$select2_content -> execute();
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+			}else{
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario al expediente")));
+		}
+
+		//NÚM. EMPLEADO
+		if(empty($_POST["numempleado"])){
+            $num_empleado = null;
+        }else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numempleado"])){
+            die(json_encode(array("error", "Por favor, escriba el número de empleado en el formato correcto")));
+        }else{
+			$query = $object ->_db->prepare("SELECT num_empleado from expedientes where num_empleado=:empleadonum");
+			$query -> execute(array(":empleadonum" => $_POST["numempleado"]));
+			$numempleadocount = $query->rowCount();
+			if($numempleadocount > 0){
+				die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+			}		
+            $num_empleado = $_POST["numempleado"];
+        }
+
+		//PUESTO
+		if(empty($_POST["puesto"])){
+            $puesto = null;
+        }else if(strlen($_POST["puesto"]) < 4){
+            die(json_encode(array("error", "El puesto debe de contener 4 caracteres como mínimo")));
+        }else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["puesto"])){
+            die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el puesto")));
+        }else{
+			$puesto = $_POST["puesto"];
+		}
+
+		//NIVEL DE ESTUDIOS
+		$nivelestudios_array = array("PRIMARIA", "SECUNDARIA", "BACHILLERATO", "CARRERA TECNICA", "LICENCIATURA", "ESPECIALIDAD", "MAESTRIA", "DOCTORADO");
+		if (in_array($_POST["estudios"], $nivelestudios_array)) {
+             $estudios = $_POST["estudios"];
+        }else if(empty($_POST["estudios"])){
+             $estudios = null;
+        }else{
+             die(json_encode(array("error", "El valor escogido en el dropdown de nivel de estudios está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+        }
+		
+		//CORREO ELECTRÓNICO
+		
+		//POSEE CORREO ELECTRÓNICO ADICIONAL?
+		if($_POST["posee_correo"] == "si"){
+			if(empty($_POST["correo_adicional"])){
+				die(json_encode(array("error", "Por favor, ingrese un correo adicional")));
+			}else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $_POST["correo_adicional"])){
+				die(json_encode(array("error", "Asegúrese que el texto ingresado en correo adicional este en formato de email")));
+			}else{
+				$get_correo = $object ->_db->prepare("SELECT correo_adicional from expedientes where correo_adicional=:correo1 UNION ALL SELECT correo from usuarios where correo=:correo2");
+				$get_correo -> execute(array(':correo1' => $_POST["correo_adicional"], ':correo2' => $_POST["correo_adicional"]));
+				$count_query = $get_correo -> rowCount();
+				if($count_query > 0){
+					die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+				}
+				$posee_correo= $_POST["posee_correo"];
+                $correo_adicional = $_POST["correo_adicional"];
+			}
+		}else{
+			$posee_correo = $_POST["posee_correo"];
+			$correo_adicional = null;
+		}
+			
+		//CALLE	
+		if(empty($_POST["calle"])){
+			$calle = null;
+		}else{
+			if(!preg_match("/^([a-zA-Z0-9\x{00C0}-\x{00FF}][?:\.|,]?)+([?:\s|-][a-zA-Z0-9\x{00C0}-\x{00FF}]+[?:\.|,]?)*$/u", $_POST["calle"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios en la calle")));
+			}else{
+				$calle = $_POST["calle"];
+			}
+		}
+		
+		//NÚMERO INTERIOR
+		if(empty($_POST["ninterior"])){
+			$ninterior = null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["ninterior"])){
+				die(json_encode(array("error", "Solo se permiten números en el número interior")));
+			}else{
+				$ninterior = $_POST["ninterior"];
+			}
+		}
+		
+		//NÚMERO EXTERIOR
+		if(empty($_POST["nexterior"])){
+			$nexterior = null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["nexterior"])){
+				die(json_encode(array("error", "Solo se permiten números en el número exterior")));
+			}else{
+				$nexterior = $_POST["nexterior"];
+			}
+		}
+		
+		
+		//COLONIA	
+		if(empty($_POST["colonia"])){
+			$colonia = null;
+		}else{
+			if(!preg_match("/^([a-zA-Z0-9\x{00C0}-\x{00FF}][?:\.|,]?)+([?:\s|-][a-zA-Z0-9\x{00C0}-\x{00FF}]+[?:\.|,]?)*$/u", $_POST["colonia"])){
+				die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios en la colonbia")));
+			}else{
+				$colonia = $_POST["colonia"];
+			}
+		}
+		
+		//ESTADO
+		if(empty($_POST["estado"])){
+			$estado = null;
+		}else{
+			$retrieve_estados = $object -> _db -> prepare("SELECT id, nombre FROM estados");
+			$retrieve_estados -> execute();
+			$fetch_retrieve_estados = $retrieve_estados -> fetchAll(PDO::FETCH_KEY_PAIR);
+			if (array_key_exists($_POST["estado"], $fetch_retrieve_estados)) {
+				$array_key_state_value = $fetch_retrieve_estados[$_POST["estado"]];
+				if(isset($_POST["estadotext"]) && $_POST['estadotext'] == $array_key_state_value){
+					$estado = $_POST["estado"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegúrese que el estado escogido se encuentre en el dropdown")));
+				}
+			}else{
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los estados registrados")));
+			}
+		}
+		
+		//MUNICIPIO
+        if(empty($_POST["municipio"])){
+			$municipio = null;
+		}else if(empty($_POST["estado"]) && !(empty($_POST["municipio"]))){
+			die(json_encode(array("error", "Por favor, seleccione un estado y luego un municipio")));
+		}else{
+			$retrieve_estados_municipio = $object -> _db -> prepare("SELECT id, nombre from municipios where estado=:estado");
+			$retrieve_estados_municipio -> execute(array(':estado' => $_POST["estado"]));
+			$count_retrieve_estados_municipio = $retrieve_estados_municipio -> rowCount();
+			if($count_retrieve_estados_municipio > 0){
+				$fetch_retrieve_estados_municipio = $retrieve_estados_municipio -> fetchAll(PDO::FETCH_KEY_PAIR);
+				if (array_key_exists($_POST["municipio"], $fetch_retrieve_estados_municipio)) {
+					$array_key_municipio_value = $fetch_retrieve_estados_municipio[$_POST["municipio"]];
+					if(isset($_POST["municipiotext"]) && $_POST['municipiotext'] == $array_key_municipio_value){
+						$municipio = $_POST["municipio"];
+					}else{
+						die(json_encode(array("error", "Por favor, asegúrese que el municipio escogido se encuentre en el dropdown")));
+					}
+				}else{
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los municipios registrados")));
+				}
+			}else{
+				die(json_encode(array("error", "El estado elegido no tiene ningún municipio, el dropdown de municipios debe estar vacío")));
+			}
+		}
+		
+		//CÓDIGO POSTAL
+        if(empty($_POST["codigo"])){
+			$codigo = null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["codigo"])){
+				die(json_encode(array("error", "Solo se permiten números en el código postal")));
+			}else{
+				$codigo = $_POST["codigo"];
+			}
+		}
+		
+		//TELÉFONO DE DOMICILIO
+        if(empty($_POST["teldom"])){
+			$teldom= null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["teldom"])){
+				die(json_encode(array("error", "Solo se permiten números en el teléfono de domicilio")));
+			}else if(strlen($_POST["teldom"]) != 10){
+				die(json_encode(array("error", "El teléfono de domicilio debe tener exactamente 10 caracteres")));
+			}else{
+				$teldom = $_POST["teldom"];
+			}
+		}
+		
+		//POSEE TELÉFONO MÓVIL PROPIO?
+		if($_POST["posee_telmov"] == "si"){
+			if(empty($_POST["telmov"])){
+				die(json_encode(array("error", "Por favor, ingrese un teléfono móvil")));
+			}else if(!preg_match("/^[0-9]*$/", $_POST["telmov"])){
+				die(json_encode(array("error", "Solo se permiten números en el teléfono de móvil")));
+			}else if(strlen($_POST["telmov"]) != 10){
+				die(json_encode(array("error", "El teléfono móvil debe tener exactamente 10 caracteres")));
+			}else{
+				$posee_telmov = $_POST["posee_telmov"];
+                $telmov = $_POST["telmov"];
+            }
+		}else{
+			$posee_telmov = $_POST["posee_telmov"];
+			$telmov = null;
+		}
+            
+		//POSEE TELÉFONO ASIGNADO POR LA EMPRESA?
+        if($_POST["posee_telempresa"] == "si"){
+			if(empty($_POST["marcacion"])){
+                die(json_encode(array("error", "Por favor, ingrese la marcación del teléfono asignado")));
+            }else if(!preg_match("/^[0-9]*$/", $_POST["marcacion"])){
+                die(json_encode(array("error", "Solo se permiten números en la marcación del teléfono asignado")));
+            }else if(empty($_POST["serie"])){
+                die(json_encode(array("error", "Por favor, ingrese la serie del teléfono asignado")));
+            }else if(!preg_match("/^[\w]+$/i", $_POST["serie"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos en la serie del teléfono asignado")));
+            }else if(empty($_POST["sim"])){
+                die(json_encode(array("error", "Por favor, ingrese el sim del teléfono asignado")));
+            }else if(!preg_match("/^[0-9]*$/", $_POST["sim"])){
+                die(json_encode(array("error", "Solo se permiten números en el sim del teléfono asignado")));
+            }else if(empty($_POST["numred"])){
+                die(json_encode(array("error", "Por favor, ingrese el número de red del teléfono asignado")));
+            }else if(!preg_match("/^[0-9]*$/", $_POST["numred"])){
+                die(json_encode(array("error", "Solo se permiten números en el número de red del teléfono asignado")));
+            }else if(empty($_POST["modelotel"])){
+                die(json_encode(array("error", "Por favor, ingrese el modelo del teléfono asignado")));
+            }else if(!preg_match("/^([a-zA-Z0-9\x{00C0}-\x{00FF}])+([?:\s|\-|\_][a-zA-Z0-9\x{00C0}-\x{00FF}]+)*$/u", $_POST["modelotel"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios en el modelo del teléfono asignado")));
+             }else if(empty($_POST["marcatel"])){
+                die(json_encode(array("error", "Por favor, ingrese la marca del teléfono asignado")));
+             }else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["marcatel"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en la marca del teléfono asignado")));
+             }else if(empty($_POST["imei"])){
+                die(json_encode(array("error", "Por favor, ingrese el imei del teléfono asignado")));
+             }else if(!preg_match("/^[0-9]*$/", $_POST["imei"])){
+                die(json_encode(array("error", "Solo se permiten números en el imei del teléfono asignado")));
+             }else{
+				$posee_telempresa = $_POST["posee_telempresa"];
+                $marcacion = $_POST["marcacion"];
+                $serie = $_POST["serie"];
+                $sim = $_POST["sim"];
+                $numred = $_POST["numred"];
+                $modelotel = $_POST["modelotel"];
+                $marcatel = $_POST["marcatel"];
+                $imei = $_POST["imei"];
+             }
+		}else{
+				$posee_telempresa = $_POST["posee_telempresa"];
+			    $marcacion = null;
+                $serie = null;
+                $sim = null;
+                $numred = null;
+                $modelotel = null;
+                $marcatel = null;
+                $imei = null;
+		}
+		
+		//POSEE LAPTOP ASIGNADA POR LA EMPRESA?
+        if($_POST["posee_laptop"] == "si"){
+			if(empty($_POST["marca_laptop"])){
+                die(json_encode(array("error", "Por favor, ingrese la marca de la laptop asignada")));
+            }else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["marca_laptop"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en la marca de la laptop asignada")));
+            }else if(empty($_POST["modelo_laptop"])){
+                die(json_encode(array("error", "Por favor, ingrese el modelo de la laptop asignada")));
+            }else if(!preg_match("/^([a-zA-Z0-9\x{00C0}-\x{00FF}])+([?:\s|\-|\_][a-zA-Z0-9\x{00C0}-\x{00FF}]+)*$/u", $_POST["modelo_laptop"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios en el modelo de la laptop asignada")));
+            }else if(empty($_POST["serie_laptop"])){
+                die(json_encode(array("error", "Por favor, ingrese la serie de la laptop asignada")));
+            }else if(!preg_match("/^[\w]+$/i", $_POST["serie_laptop"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos en la serie de la laptop asignada")));
+            }else{
+				$posee_laptop = $_POST["posee_laptop"];
+                $marca_laptop = $_POST["marca_laptop"];
+                $modelo_laptop = $_POST["modelo_laptop"];
+                $serie_laptop = $_POST["serie_laptop"];
+            }
+		}else{
+			$posee_laptop = $_POST["posee_laptop"];
+		    $marca_laptop = null;
+            $modelo_laptop = null;
+            $serie_laptop = null;
+		}
+		
+		//CASA PROPIA
+		if(empty($_POST["radio"])){
+			die(json_encode(array("error", "Por favor, ingrese el radiobutton de casa propia no puede ir vacío")));
+		}else{
+			$casa_propia = $_POST["radio"];
+		}
+
+		//ESTADO CIVIL
+		$estadocivil_array = array("SOLTERO", "CASADO", "DIVORCIADO", "UNION LIBRE");
+		if (in_array($_POST["ecivil"], $estadocivil_array)) {
+            $ecivil = $_POST["ecivil"];
+        }else if(empty($_POST["ecivil"])){
+            $ecivil = null;
+        }else{
+            die(json_encode(array("error", "El valor escogido en el dropdown de estado civil está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+        }
+		
+		//POSEE RETENCIÓN?
+        if($_POST["posee_retencion"] == "si"){
+			if(empty($_POST["monto_mensual"])){
+                die(json_encode(array("error", "Por favor, ingrese el monto mensual")));
+            }else if(!preg_match("/^[1-9]\d*(\.\d+)?$/", $_POST["monto_mensual"])){
+                die(json_encode(array("error", "Solo se permiten números y decimales en el monto mensual")));
+            }else{
+				$posee_retencion = $_POST["posee_retencion"];
+                $monto_mensual = $_POST["monto_mensual"];
+            }
+            
+		}else{
+			$posee_retencion = $_POST["posee_retencion"];
+		    $monto_mensual = null;
+		}
+		
+		function validateDate($date, $format = 'Y-m-d H:i:s')
+		{
+			$d = DateTime::createFromFormat($format, $date);
+			return $d && $d->format($format) == $date;
+		}
+
+		//FECHA DE NACIMIENTO
+        if(empty($_POST["fechanac"])){
+			$fechanac = null;
+		}else{
+			if(!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechanac"])){
+				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de nacimiento")));
+			}else{
+				$check_fechanac = validateDate($_POST["fechanac"], 'Y/m/d');
+				if($check_fechanac = false){
+					die(json_encode(array("error", "La fecha de nacimiento es inválida")));
+				}
+				$fecha_nacimiento = new DateTime($_POST["fechanac"]);
+        		$fecha_hoy = new DateTime();
+
+				$edad = $fecha_nacimiento->diff($fecha_hoy)->y;
+
+				if ($edad < 18) {
+					die(json_encode(array("error", "Debes ser mayor de 18 años para aplicar")));
+				}
+
+				$fechanac = $_POST["fechanac"];
+			}
+		}
+		
+		//FECHA DE INICIO DE CONTRATO
+        if(empty($_POST["fechacon"])){
+			$fechacon = null;
+		}else{
+			if(!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechacon"])){
+				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de contrato")));
+			}else{
+				$check_fechacon = validateDate($_POST["fechacon"], 'Y/m/d');
+				if($check_fechacon = false){
+					die(json_encode(array("error", "La fecha de inicio de contrato es inválida")));
+				}
+				$fechacon = $_POST["fechacon"];
+			}
+		}
+
+        //FECHA DE ALTA
+        if(empty($_POST["fechaalta"])){
+			$fechaalta = null;
+		}else{
+			if(!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechaalta"])){
+				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de alta")));
+			}else{
+				$check_fechaalta = validateDate($_POST["fechaalta"], 'Y/m/d');
+				if($check_fechaalta = false){
+					die(json_encode(array("error", "La fecha de alta es inválida")));
+				}
+				$fechaalta = $_POST["fechaalta"];
+			}
+		}
+		
+		//SALARIO AL INICIO DEL PERIODO DE PRUEBA
+        if(empty($_POST["salario_contrato"])){
+			$salario_contrato = null;
+		}else{
+			if(!preg_match("/^[1-9]\d*(\.\d+)?$/", $_POST["salario_contrato"])){
+				die(json_encode(array("error", "Solo se permiten números y decimales en el salario al inicio del periodo de prueba")));
+			}else{
+				$salario_contrato = $_POST["salario_contrato"];
+			}
+		}
+
+        //SALARIO DESPUÉS DEL PERIODO DE PRUEBA
+        if(empty($_POST["salario_fechaalta"])){
+			$salario_fechaalta = null;
+		}else{
+			if(!preg_match("/^[1-9]\d*(\.\d+)?$/", $_POST["salario_fechaalta"])){
+                die(json_encode(array("error", "Solo se permiten números y decimales en el salario después al periodo de prueba")));
+			}else{
+				$salario_fechaalta = $_POST["salario_fechaalta"];
+			}
+		}
+		
+		//OBSERVACIONES
+		if(empty($_POST["observaciones"])){
+			$observaciones = null;
+		}else{
+			if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["observaciones"])){
+                die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las observaciones")));
+			}else{
+				$observaciones = $_POST["observaciones"];
+			}
+		}
+		
+		//CURP
+		if(empty($_POST["curp"])){
+			$curp = null;
+		}else{
+			if(!preg_match("/^([A-Z&]|[a-z&]{1})([AEIOU]|[aeiou]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([ASas|BCbc|BSbs|CCcc|CScs|CHch|CLcl|CMcm|DFdf|DGdg|GTgt|GRgr|HGhg|JCjc|MCmc|MNmn|MSms|NTnt|NLnl|OCoc|PLpl|QTqt|QRqr|SPsp|SLsl|SRsr|TCtc|TSts|TLtl|VZvz|YNyn|ZSzs|NEne]{2})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9]{2})$/", $_POST["curp"])){
+                die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR")));
+			}else{
+				$curp= $_POST["curp"];
+			}
+		}
+
+        //NÚMERO DE SEGURO SOCIAL
+		if(empty($_POST["nss"])){
+			$nss = null;
+		}else{
+			if(!preg_match("/^[0-9]*$/", $_POST["nss"])){
+                die(json_encode(array("error", "Solo se permiten números en el número de seguro social")));
+			}else{
+				$nss = $_POST["nss"];
+			}
+		}
+
+        //RFC
+		if(empty($_POST["rfc"])){
+			$rfc = null;
+		}else{
+			if(!preg_match("/^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z\d]{3})$/", $_POST["rfc"])){
+                die(json_encode(array("error", "Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789")));
+			}else{
+				$rfc = $_POST["rfc"];
+			}
+		}
+
+		//TIPO DE IDENTIFICACIÓN
+		$identificacion_array = array("INE", "PASAPORTE", "CEDULA");
+		if(in_array($_POST["identificacion"], $identificacion_array)) {
+             $identificacion = $_POST["identificacion"];
+        }else if(empty($_POST["identificacion"])){
+             $identificacion = null;
+        }else{
+             die(json_encode(array("error", "El valor escogido en el dropdown de tipo de identificación está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+        }
+		
+		//NÚMERO DE IDENTIFICACIÓN
+        if(empty($_POST["numeroidentificacion"])){
+            $numeroidentificacion = null;
+        }else{
+            if($_POST["identificacion"] == "INE"){
+				if (!preg_match('/^[A-Za-z0-9]{13}$/', $_POST["numeroidentificacion"])) {
+					die(json_encode(array("error", "El INE solo puede contener 13 dígitos y debe ser alfanúmerico")));
+				}
+			}else if($_POST["identificacion"] == "PASAPORTE"){
+				// Verifica si el OCR del pasaporte tiene el formato correcto (3 letras seguidas de 6 números)
+				if (!preg_match('/^[A-Z]{3}\d{6}$/i', $_POST["numeroidentificacion"])) {
+					die(json_encode(array("error", "El PASAPORTE solo puede contener 9 dígitos, debe ser alfanúmerico y debe comenzar con 3 letras y seguido de 6 números")));
+				}
+			}else if($_POST["identificacion"] == "CEDULA"){
+				if (!preg_match('/^\d{7,10}$/', $_POST["numeroidentificacion"])) {
+					die(json_encode(array("error", "La CEDULA solo puede contener entre 7 y 10 dígitos y debe ser númerico")));
+				}
+			}
+			$numeroidentificacion = $_POST["numeroidentificacion"];
+        }
+
+		/*
+		=============================================
+		TERMINA LA VALIDACIÓN DE LOS DATOS GENERALES
+		=============================================
+		*/
+
+		switch($_POST["method"]){
+            case "store":
+                $expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
+                $expediente ->Expediente_datosG();
+                die(json_encode(array("success", "Se han guardado los datos generales del expediente")));
+            break;
+        }
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "DatosA"){
+	if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciaslab"], $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], 
+	$_POST["emergencianom"], $_POST["emergenciaapat"], $_POST["emergenciaamat"], $_POST["emergenciarelacion"], $_POST["emergenciatelefono"], $_POST["emergencianom2"], 
+	$_POST["emergenciaapat2"], $_POST["emergenciaamat2"], $_POST["emergenciarelacion2"], $_POST["emergenciatelefono2"], $_POST["capacitacion"], $_POST["antidoping"], 
+	$_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"], $_POST["method"])){
+		//CHECA SI EL USUARIO TIENE PERMISO PARA REALIZAR LAS ACCIONES DE CREAR EXPEDIENTES
+		if($_POST["method"] == "store"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+			}
+		}
+
+		/*
+		=============================================
+		EMPIEZA LA VALIDACIÓN DE LOS DATOS ADICIONALES
+		=============================================
+		*/
+
+		//SELECT2
+		if($_POST["select2"] != null){
+			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
+			$select2_content -> execute();
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+			}else{
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario al expediente")));
+		}
+
+
+
+		/*
+		=============================================
+		TERMINA LA VALIDACIÓN DE LOS DATOS ADICIONALES
+		=============================================
+		*/
+	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "DatosB"){
+	if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], 
+	$_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], $_POST["plastico"], $_POST["method"])){
+		//CHECA SI EL USUARIO TIENE PERMISO PARA REALIZAR LAS ACCIONES DE CREAR EXPEDIENTES
+		if($_POST["method"] == "store"){
+			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+				die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+			}
+		}
+
+		/*
+		=============================================
+		EMPIEZA LA VALIDACIÓN DE LOS DATOS BANCARIOS
+		=============================================
+		*/
+
+		//SELECT2
+		if($_POST["select2"] != null){
+			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
+			$select2_content -> execute();
+			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+		
+			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					$select2 = $_POST["select2"];
+				}else{
+					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+				}
+			}else{
+				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+			}
+		}else{
+			die(json_encode(array("error", "Debe asignar un usuario al expediente")));
+		}
+
+
+		/*
+		=============================================
+		TERMINA LA VALIDACIÓN DE LOS DATOS BANCARIOS
+		=============================================
+		*/
+	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "expediente"){
 	if(isset($_POST["select2"], $_POST["select2text"], $_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], 
     $_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"], $_POST["nexterior"], $_POST["colonia"], $_POST["estado"],
@@ -384,12 +987,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     $_POST["marcatel"], $_POST["imei"], $_POST["posee_laptop"], $_POST["marca_laptop"], $_POST["modelo_laptop"], $_POST["serie_laptop"], 
     $_POST["radio"], $_POST["ecivil"], $_POST["posee_retencion"], $_POST["monto_mensual"], $_POST["fechanac"], $_POST["fechacon"], 
     $_POST["fechaalta"], $_POST["salario_contrato"], $_POST["salario_fechaalta"], $_POST["observaciones"], $_POST["curp"], 
-    $_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"], $_POST["numeroreferenciaslab"], 
-    $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], $_POST["emergencianom"], $_POST["emergenciaparentesco"], 
-    $_POST["emergenciatel"], $_POST["emergencianom2"], $_POST["emergenciaparentesco2"], $_POST["emergenciatel2"], $_POST["capacitacion"],
-    $_POST["antidoping"], $_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], 
-    $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], 
-    $_POST["plastico"], $_POST["logged_user"], $_POST["method"])){
+    $_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"],  $_POST["numeroreferenciaslab"], $_POST["fechauniforme"], 
+	$_POST["cantidadpolo"], $_POST["tallapolo"], $_POST["emergencianom"], $_POST["emergenciaapat"], $_POST["emergenciaamat"], $_POST["emergenciarelacion"], 
+	$_POST["emergenciatelefono"], $_POST["emergencianom2"], $_POST["emergenciaapat2"], $_POST["emergenciaamat2"], $_POST["emergenciarelacion2"], $_POST["emergenciatelefono2"],
+	$_POST["capacitacion"], $_POST["antidoping"], $_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"], 
+	$_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["plastico_personal"], $_POST["banco_nomina"], 
+	$_POST["cuenta_nomina"], $_POST["clabe_nomina"], $_POST["plastico"], $_POST["method"])){
         
         //CHECA SI EL EXPEDIENTE EXISTE
         if($_POST["method"] == "edit"){
