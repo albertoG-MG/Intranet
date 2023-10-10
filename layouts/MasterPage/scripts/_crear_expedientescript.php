@@ -525,6 +525,21 @@
             return true;
         }, "Please enter a valid value in selectbox");
 
+        $.validator.addMethod("validateINE", function(value, element) {
+            // La validación específica para INE
+            return /^[a-zA-Z0-9]{13}$/.test(value);
+        }, "INE needs 13 alfanumeric characters.");
+
+        $.validator.addMethod("validatePasaporte", function(value, element) {
+            // La validación específica para Pasaporte (3 letras seguidas de 6 números)
+            return /^[A-Za-z]{3}\d{6}$/.test(value);
+        }, "Passport needs 3 letters and then 6 numbers.");
+
+        $.validator.addMethod("validateCedula", function(value, element) {
+            // La validación específica para Cedula (entre 7 y 10 dígitos)
+            return /^\d{7,10}$/.test(value);
+        }, "Identification needs between 7 and 10 numbers.");
+
         if($('#Guardar').length > 0 ){
             $('#Guardar').validate({
                 ignore: [],
@@ -986,6 +1001,29 @@
                         rfc_validation: {
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    numeroidentificacion: {
+                        required: {
+                            depends: function(element) {
+                                var tipoIdentificacion = $("#identificacion").val();
+                                return (tipoIdentificacion === "INE" || tipoIdentificacion === "PASAPORTE" || tipoIdentificacion === "CEDULA") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        validateINE: {
+                            depends: function(element) {
+                                return ($("#identificacion").val() === "INE") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        validatePasaporte: {
+                            depends: function(element) {
+                                return ($("#identificacion").val() === "PASAPORTE") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        validateCedula: {
+                            depends: function(element) {
+                                return ($("#identificacion").val() === "CEDULA") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
                         }
                     },
@@ -1730,6 +1768,12 @@
                     },
                     rfc: {
                         rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789',
+                    },
+                    numeroidentificacion: {
+                        required: 'Este campo es requerido',
+                        validateINE: 'El INE debe tener exactamente 13 caracteres alfanuméricos',
+                        validatePasaporte: 'El pasaporte debe tener 3 letras seguidas de 6 números',
+                        validateCedula: 'La cédula debe tener entre 7 y 10 dígitos numéricos'
                     },
                     numReferencias: {
                         refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
