@@ -521,7 +521,7 @@
                                                 </div>
                                             </div>
                                          <div x-data="{ open: false, ine: false, pasaporte: false, cedula: false }">
-                                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
+                                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
                                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                                     <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación *</label>
                                                     <div class="group flex">

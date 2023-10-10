@@ -1,5 +1,5 @@
 <div class="container mx-auto px-6 py-8">
-   <h2 class="Titulos text-3xl font-semibold sm:text-5xl lg:text-6xl">
+   <h2 class="Titulos text-3xl sm:text-5xl lg:text-6xl">
       Crear expedientes
    </h2>
    <div class="mt-4">
@@ -40,11 +40,12 @@
                      </div>
                   </div>
                   <div class="bg-white p-3 shadow-md rounded-b">
-                     <div class="flex flex-col mt-5 mx-7">
+                     <!-- <div class="flex flex-col mt-5 mx-7">
                         <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para asignar un expediente a un usuario</h2>
                         <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
                         <div class="my-3 h-px bg-slate-200"></div>
-                     </div>
+                     </div> -->
+                     
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
                         <li role="presentation" class="w-full md:w-max">
                            <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#27ceeb] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="datosG-tab" data-tabs-target="#datosG" type="button" role="tab" aria-controls="datosG" aria-selected="false">
@@ -83,9 +84,9 @@
                         <div id='menu-contents' style="word-break: break-word;">
                            <div class="block bg-transparent rounded-lg tab-pane" id="datosG" role="tabpanel" aria-labelledby="datosG-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Datos del empleado</h2>
-                                 <span class="text-[#64748b]">Información personal del empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold">Datos del empleado</h2>
+                                 <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">
@@ -256,9 +257,8 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Datos de ubicación</h2>
-                                 <span class="text-[#64748b]">Datos de ubicación del empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Datos de ubicación</h2>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -386,9 +386,8 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Dispositivos proporcionados por la empresa</h2>
-                                 <span class="text-[#64748b]">Información sobre los dispositivos proporcionados por la empresa.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Dispositivos proporcionados por la empresa</h2>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ open: false }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
@@ -541,9 +540,8 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Datos relevantes del empleado</h2>
-                                 <span class="text-[#64748b]">Otros datos de interés del empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste mt-5 font-semibold">Datos relevantes del empleado</h2>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Casa propia?</label>
@@ -703,51 +701,71 @@
                                  </div>
                               </div>
                               <div x-data="{ open: false, ine: false, pasaporte: false, cedula: false }">
-                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación</label>
-                                    <div class="group flex">
-                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
-                                          </svg>
-                                       </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){ open = true; ine = true; pasaporte = false; cedula = false; }else if($el.value == 'PASAPORTE'){ open = true; ine = false; pasaporte = true; cedula = false; }else if($el.value == 'CEDULA'){ open = true; ine = false; pasaporte = false; cedula = true; }else{ open = false; ine = false; pasaporte = false; cedula = false; }" id="identificacion" name="identificacion">
-                                          <option value="">--Seleccione--</option>
-                                          <option value="INE">INE</option>
-                                          <option value="PASAPORTE">PASAPORTE</option>
-                                          <option value="CEDULA">CEDULA</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div x-show.important="ine">
-                                    <div class="container mx-auto md:mx-7 mt-5">
-                                       <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/INE.png">
-                                    </div>
-                                 </div>
-                                 <div x-show.important="pasaporte">
-                                    <div class="container mx-auto md:mx-7 mt-5">
-                                       <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/PASAPORTE.png">
-                                    </div>
-                                 </div>
-                                 <div x-show.important="cedula">
-                                    <div class="container mx-auto md:mx-7 mt-5">
-                                       <img class="w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto" src="../src/img/CEDULA.png">
-                                    </div>
-                                 </div>
-                                 <div x-show.important="open">
-                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                       <label class="text-[#64748b] font-semibold mb-2">Número de identificación</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
-                                             </svg>
-                                          </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
+                                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
+                                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                                        <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación *</label>
+                                                        <div class="group flex">
+                                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
+                                                                </svg>
+                                                            </div>
+                                                            <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true; ine = true; pasaporte = false; cedula = false;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true; ine = false; pasaporte = true; cedula = false;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true; ine = false; pasaporte = false; cedula = true;}else{tidentificacion($el.value); open = false; ine = false; pasaporte = false; cedula = false;}" id="identificacion" name="identificacion">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="INE">INE</option>
+                                                                <option value="PASAPORTE">PASAPORTE</option>
+                                                                <option value="CEDULA">CEDULA</option>
+                                                            </select>
+                                                        </div>
+                                                        <div x-show.important="open">
+                                                            <div class="grid grid-cols-1">
+                                                                <label class="text-[#64748b] font-semibold mb-2">Número de identificación *</label>
+                                                                <div class="group flex">
+                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                            <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
+                                                                        </svg>
+                                                                    </div>
+                                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                
+                                                    <script>
+                                                    function tidentificacion(value){
+                                                    if(value == ""){
+                                                        $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
+                                                    }else {
+                                                        $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
+                                                        if(value == "INE"){
+                                                            $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 13, maxlength: 13, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 13 dígitos', maxlength: 'No puede ser mayor a 13 dígitos' } }); 
+                                                        }else if(value == "PASAPORTE"){
+                                                            $("#numeroidentificacion").rules("add", { required: true, alphanumeric: true, minlength: 9, maxlength: 9, messages: { required: "Este campo es requerido", alphanumeric: "Solo se permiten carácteres alfanúmericos", minlength: 'No puede ser menor a 9 dígitos', maxlength: 'No puede ser mayor a 9 dígitos' }});
+                                                        }else if(value == "CEDULA"){
+                                                            $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 8, maxlength: 8, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 8 dígitos', maxlength: 'No puede ser mayor a 8 dígitos' } }); 
+                                                        }
+                                                    }
+                                                    }
+                                                    </script>
+                                                    <div x-show.important="ine">
+                                                        <div class=" grid-cols-1 mt-5 ">
+                                                        <img class="w-full" src="../src/img/INE.jpeg">
+                                                        </div>
+                                                    </div>
+                                                    <div x-show.important="pasaporte">
+                                                        <div class="grid grid-cols-1 mt-5 ">
+                                                        <img class="w-full" src="../src/img/PASAPORTE.jpeg">
+                                                        </div>
+                                                    </div>
+                                                    <div x-show.important="cedula">
+                                                        <div class="grid grid-cols-1 mt-5 ">
+                                                        <img class="w-full" src="../src/img/CEDULA.jpeg">
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
                               <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="siguiente" name="siguiente" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>
@@ -758,9 +776,9 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Referencias laborales</h2>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Referencias laborales</h2>
                                  <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ numReferencias: 0 }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
@@ -783,7 +801,8 @@
                                     <!-- Referencia 1 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">REFERENCIA 1</div>
+                                          <div class="text-[#000] font-bold mb-2">Primer referencia</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -817,6 +836,8 @@
                                                 <input type="text" name="infa_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Relación</label>
                                              <div class="group flex">
@@ -856,6 +877,7 @@
                                                 <input type="text" name="infa_rtelefono1" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
@@ -863,7 +885,8 @@
                                     <!-- Referencia 2 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">REFERENCIA 2</div>
+                                          <div class="text-[#000] font-bold mb-2">Segunda referencia</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -897,6 +920,8 @@
                                                 <input type="text" name="infa_rapellidomat2" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Relación</label>
                                              <div class="group flex">
@@ -936,6 +961,7 @@
                                                 <input type="text" name="infa_rtelefono2" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
@@ -943,7 +969,8 @@
                                     <!-- Referencia 3 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">REFERENCIA 3</div>
+                                          <div class="text-[#000] font-bold mb-2">Tercer referencia</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -977,6 +1004,8 @@
                                                 <input type="text" name="infa_rapellidomat3" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Relación</label>
                                              <div class="group flex">
@@ -1016,14 +1045,14 @@
                                                 <input type="text" name="infa_rtelefono3" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Uniformes</h2>
-                                 <span class="text-[#64748b]">Datos de entrega de uniforme.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Uniformes</h2>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">Fecha de entrega de uniforme</label>
@@ -1071,9 +1100,9 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
-                                 <span class="text-[#64748b]"><b> Primer contacto </b> de emergencia.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Contactos de emergencia</h2>
+                                 <div class="my-3 h-px bg-celeste"></div>
+                                 <span class="text-[#000]"><b> Primer contacto </b> de emergencia.</span>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -1110,7 +1139,7 @@
                                     </div>
                                  </div>
                               </div>
-                              <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                              <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
                                     <label class="text-[#64748b] font-semibold mb-2">Relación</label>
                                     <div class="group flex">
@@ -1149,9 +1178,9 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
-                                 <span class="text-[#64748b]"><b> Segundo contacto </b> de emergencia.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold">Contactos de emergencia</h2>
+                                 <span class="text-[#000]"><b> Segundo contacto </b> de emergencia.</span>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -1188,7 +1217,7 @@
                                     </div>
                                  </div>
                               </div>
-                              <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                              <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
                                     <label class="text-[#64748b] font-semibold mb-2">Relación</label>
                                     <div class="group flex">
@@ -1227,9 +1256,8 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Otros datos del empleado</h2>
-                                 <span class="text-[#64748b]">Datos extra del empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Otros datos del empleado</h2>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Recibió capacitación para el puesto por la empresa?</label>
@@ -1363,9 +1391,9 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Beneficiarios bancarios</h2>
+                                 <h2 class="text-2xl text-celeste font-semibold">Beneficiarios bancarios</h2>
                                  <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente. <b> Nota: los beneficiarios deben ser mayores de 18 años. </b></span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ numBeneficiariosBancarios: 0 }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
@@ -1387,7 +1415,8 @@
                                     <!-- Referencia 1 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">BENEFICIARIO 1</div>
+                                          <div class="text-[#000] font-bold mb-2">Primer beneficiario</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -1421,6 +1450,8 @@
                                                 <input type="text" name="infb_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Relación</label>
                                              <div class="group flex">
@@ -1462,6 +1493,7 @@
                                                 <input type="text" name="infb_rcurp1" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Porcentaje de derecho</label>
                                              <div class="group flex">
@@ -1480,7 +1512,8 @@
                                     <!-- Referencia 2 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">BENEFICIARIO 2</div>
+                                          <div class="text-[#64748b] font-semibold mb-2">Segundo beneficiario</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Nombre (s)</label>
                                              <div class="group flex">
@@ -1514,6 +1547,8 @@
                                                 <input type="text" name="infb_rapellidomat2" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Relación</label>
                                              <div class="group flex">
@@ -1555,6 +1590,7 @@
                                                 <input type="text" name="infb_rcurp2" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
+                                          </div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">Porcentaje de derecho</label>
                                              <div class="group flex">
@@ -1571,9 +1607,9 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
+                                 <h2 class="text-2xl text-celeste mt-5 font-semibold">Cuenta bancaria personal</h2>
                                  <span class="text-[#64748b]">En esta sección se encuentran las credenciales bancarias personales del empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -1622,9 +1658,9 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria asignada por la empresa</h2>
+                                 <h2 class="text-2xl text-celeste font-semibold">Cuenta bancaria asignada por la empresa</h2>
                                  <span class="text-[#64748b]">En esta sección se encuentra la nómina asignada al empleado.</span>
-                                 <div class="my-3 h-px bg-slate-200"></div>
+                                 <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -1700,7 +1736,7 @@
                                           <td width="70%" class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                              <span class="inline-block md:hidden font-bold">Acción</span>
                                              <div class="flex flex-col w-full justify-center">
-                                                <div id="upload-button<?php echo $fetchtipopapeleria["id"] ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white bg-gray-800 hover:bg-gray-900">
+                                                <div id="upload-button<?php echo $fetchtipopapeleria["id"] ?>" class="inline-flex self-start items-center px-6 py-2 cursor-pointer text-xs leading-tight transition duration-150 ease-in-out font-semibold rounded text-white btn-gris">
                                                    Subir archivo
                                                 </div>
                                                 <div class="flex-1 md:flex items-center justify-between">

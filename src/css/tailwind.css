@@ -214,4 +214,25 @@
   .bg-verde{
     background-color: #00ff00 !important;
   }
+
+  .text-celeste{
+    color: #005FB1 !important;
+  }
+
+  .bg-celeste{
+      background-color: #005FB1 !important;
+  }
+  .btn-gris{
+      background-color: #a9a9a9 !important;
+      box-shadow: 2px 1px 5px #cac9c9 !important;
+  }
+  .btn-gris:hover{
+  background-color: #969393 !important;
+  }
+  .border-orange-300 {
+    border-color:  #ffb470 !important;
+  }
+  .text-orange-600 {
+    color: #ff8343 !important;
+  }
 }
