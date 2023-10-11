@@ -1668,11 +1668,130 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$refbanc = null;
 			}
 
+			//CUENTA BANCARIA PERSONAL
+			//Checa si el banco de la cuenta bancaria personal está vacío 
+			if(empty($_POST["banco_personal"])){
+				$banco_personal = null;
+			}else{
+				//Checa si el banco de la cuenta bancaria personal tiene el formato adecuado
+				if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["banco_personal"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el banco de la cuenta personal")));
+				}else{
+					$banco_personal = $_POST["banco_personal"];
+					//Conviertelo en mayúsculas
+					$banco_personal = strtoupper($banco_personal);
+					//Quitale los acentos
+					$banco_personal = quitarAcentos($banco_personal);
+				}
+			}
+
+			//Checa si la cuenta de la cuenta bancaria personal está vacío 
+			if(empty($_POST["cuenta_personal"])){
+				$cuenta_personal = null;
+			}else{
+				//Checa si el banco de la cuenta bancaria personal tiene el formato adecuado
+				if(!preg_match("/^\d{10}$/", $_POST["cuenta_personal"])){
+					die(json_encode(array("error", "La cuenta bancaria personal debe contener exactamente 10 números")));
+				}else{
+					$cuenta_personal = $_POST["cuenta_personal"];
+				}
+			}
+
+			//Checa si la clabe de la cuenta bancaria personal está vacío 
+			if(empty($_POST["clabe_personal"])){
+				$clabe_personal = null;
+			}else{
+				//Checa si la clabe de la cuenta bancaria personal tiene el formato adecuado
+				if(!preg_match("/^\d{18}$/", $_POST["clabe_personal"])){
+					die(json_encode(array("error", "La clabe bancaria personal debe contener exactamente 18 números")));
+				}else{
+					$clabe_personal = $_POST["clabe_personal"];
+				}
+			}
+
+			//Checa si el plástico de la cuenta bancaria personal está vacío 
+			if(empty($_POST["plastico_personal"])){
+				$plastico_personal = null;
+			}else{
+				//Checa si el plástico de la cuenta bancaria personal tiene el formato adecuado
+				if(!preg_match("/^\d{16}$/", $_POST["plastico_personal"])){
+					die(json_encode(array("error", "El plástico de la cuenta bancaria personal debe contener exactamente 16 números")));
+				}else{
+					$plastico_personal = $_POST["plastico_personal"];
+				}
+			}
+
+			//CUENTA BANCARIA NÓMINA
+			//Checa si el banco de la cuenta bancaria nómina está vacío 
+			if(empty($_POST["banco_nomina"])){
+				$banco_nomina = null;
+			}else{
+				//Checa si el banco de la cuenta bancaria nómina tiene el formato adecuado
+				if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["banco_nomina"])){
+					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el banco de la cuenta nómina")));
+				}else{
+					$banco_nomina = $_POST["banco_nomina"];
+					//Conviertelo en mayúsculas
+					$banco_nomina = strtoupper($banco_nomina);
+					//Quitale los acentos
+					$banco_nomina = quitarAcentos($banco_nomina);
+				}
+			}
+
+			//Checa si la cuenta de la cuenta bancaria nómina está vacío 
+			if(empty($_POST["cuenta_nomina"])){
+				$cuenta_nomina = null;
+			}else{
+				//Checa si el banco de la cuenta bancaria nómina tiene el formato adecuado
+				if(!preg_match("/^\d{10}$/", $_POST["cuenta_nomina"])){
+					die(json_encode(array("error", "La cuenta bancaria nómina debe contener exactamente 10 números")));
+				}else{
+					$cuenta_nomina = $_POST["cuenta_nomina"];
+				}
+			}
+
+			//Checa si la clabe de la cuenta bancaria nómina está vacío 
+			if(empty($_POST["clabe_nomina"])){
+				$clabe_nomina = null;
+			}else{
+				//Checa si la clabe de la cuenta bancaria nómina tiene el formato adecuado
+				if(!preg_match("/^\d{18}$/", $_POST["clabe_nomina"])){
+					die(json_encode(array("error", "La clabe bancaria nómina debe contener exactamente 18 números")));
+				}else{
+					$clabe_nomina = $_POST["clabe_nomina"];
+				}
+			}
+
+			//Checa si el plástico de la cuenta bancaria nómina está vacío 
+			if(empty($_POST["plastico"])){
+				$plastico = null;
+			}else{
+				//Checa si el plástico de la cuenta bancaria nómina tiene el formato adecuado
+				if(!preg_match("/^\d{16}$/", $_POST["plastico"])){
+					die(json_encode(array("error", "El plástico de la cuenta bancaria nómina debe contener exactamente 16 números")));
+				}else{
+					$plastico = $_POST["plastico"];
+				}
+			}
+
 			/*
 			=============================================
 			TERMINA LA VALIDACIÓN DE LOS DATOS BANCARIOS
 			=============================================
 			*/
+
+			//Debido a que PHP no acepta el request method PUT (Bueno si lo acepta pero solo acepta json) utilizamos una variable method que nos permite saber si necesitamos insertar o actualizar
+			switch($_POST["method"]){
+				//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
+				case "store":
+					//Hago una instancia de la clase y le envío las variables en la clase
+					$expediente = new Expedientes($select2, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
+					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
+					$expediente ->Expediente_datosB();
+					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
+					die(json_encode(array("success", "Se han guardado los datos bancarios del expediente")));
+				break;
+			}
 		}
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "expediente"){
