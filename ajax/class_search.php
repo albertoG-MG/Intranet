@@ -906,27 +906,30 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			if (empty($_POST["fechanac"])) {
 				$fechanac = null;
 			} else {
-				if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechanac"])) {
+				// Reemplaza las barras oblicuas por guiones
+				$_POST["fechanac"] = str_replace('/', '-', $_POST["fechanac"]);
+			
+				if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechanac"])) {
 					// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de nacimiento")));
 				} else {
-					$check_fechanac = validateDate($_POST["fechanac"], 'Y/m/d');
-
+					$check_fechanac = validateDate($_POST["fechanac"], 'Y-m-d');
+			
 					// Verifica si la fecha de nacimiento es inválida
 					if (!$check_fechanac) {
 						die(json_encode(array("error", "La fecha de nacimiento es inválida")));
 					}
-
+			
 					// Calcula la edad a partir de la fecha de nacimiento
 					$fecha_nacimiento = new DateTime($_POST["fechanac"]);
 					$fecha_hoy = new DateTime();
 					$edad = $fecha_nacimiento->diff($fecha_hoy)->y;
-
+			
 					// Verifica si el solicitante es menor de 18 años
 					if ($edad < 18) {
 						die(json_encode(array("error", "Debes ser mayor de 18 años para aplicar")));
 					}
-
+			
 					$fechanac = $_POST["fechanac"];
 				}
 			}
@@ -936,17 +939,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			if (empty($_POST["fechacon"])) {
 				$fechacon = null;
 			} else {
-				if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechacon"])) {
+				// Reemplaza las barras oblicuas por guiones
+				$_POST["fechacon"] = str_replace('/', '-', $_POST["fechacon"]);
+			
+				if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechacon"])) {
 					// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de contrato")));
 				} else {
-					$check_fechacon = validateDate($_POST["fechacon"], 'Y/m/d');
-
+					$check_fechacon = validateDate($_POST["fechacon"], 'Y-m-d');
+			
 					// Verifica si la fecha de inicio de contrato es inválida
 					if (!$check_fechacon) {
 						die(json_encode(array("error", "La fecha de inicio de contrato es inválida")));
 					}
-
+			
 					$fechacon = $_POST["fechacon"];
 				}
 			}
@@ -956,20 +962,23 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			if (empty($_POST["fechaalta"])) {
 				$fechaalta = null;
 			} else {
-				if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechaalta"])) {
+				// Reemplaza las barras oblicuas por guiones
+				$_POST["fechaalta"] = str_replace('/', '-', $_POST["fechaalta"]);
+			
+				if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechaalta"])) {
 					// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de alta")));
 				} else {
-					$check_fechaalta = validateDate($_POST["fechaalta"], 'Y/m/d');
-
+					$check_fechaalta = validateDate($_POST["fechaalta"], 'Y-m-d');
+			
 					// Verifica si la fecha de alta es inválida
 					if (!$check_fechaalta) {
 						die(json_encode(array("error", "La fecha de alta es inválida")));
 					}
-
+			
 					$fechaalta = $_POST["fechaalta"];
 				}
-			}
+			}	
 
 			//SALARIO AL INICIO DEL PERIODO DE PRUEBA
 			//Checa si el salario al inicio de prueba está vacía
@@ -2323,27 +2332,30 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if (empty($_POST["fechanac"])) {
 			$fechanac = null;
 		} else {
-			if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechanac"])) {
+			// Reemplaza las barras oblicuas por guiones
+			$_POST["fechanac"] = str_replace('/', '-', $_POST["fechanac"]);
+		
+			if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechanac"])) {
 				// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de nacimiento")));
 			} else {
-				$check_fechanac = validateDate($_POST["fechanac"], 'Y/m/d');
-
+				$check_fechanac = validateDate($_POST["fechanac"], 'Y-m-d');
+		
 				// Verifica si la fecha de nacimiento es inválida
 				if (!$check_fechanac) {
 					die(json_encode(array("error", "La fecha de nacimiento es inválida")));
 				}
-
+		
 				// Calcula la edad a partir de la fecha de nacimiento
 				$fecha_nacimiento = new DateTime($_POST["fechanac"]);
 				$fecha_hoy = new DateTime();
 				$edad = $fecha_nacimiento->diff($fecha_hoy)->y;
-
+		
 				// Verifica si el solicitante es menor de 18 años
 				if ($edad < 18) {
 					die(json_encode(array("error", "Debes ser mayor de 18 años para aplicar")));
 				}
-
+		
 				$fechanac = $_POST["fechanac"];
 			}
 		}
@@ -2353,17 +2365,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if (empty($_POST["fechacon"])) {
 			$fechacon = null;
 		} else {
-			if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechacon"])) {
+			// Reemplaza las barras oblicuas por guiones
+			$_POST["fechacon"] = str_replace('/', '-', $_POST["fechacon"]);
+		
+			if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechacon"])) {
 				// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de contrato")));
 			} else {
-				$check_fechacon = validateDate($_POST["fechacon"], 'Y/m/d');
-
+				$check_fechacon = validateDate($_POST["fechacon"], 'Y-m-d');
+		
 				// Verifica si la fecha de inicio de contrato es inválida
 				if (!$check_fechacon) {
 					die(json_encode(array("error", "La fecha de inicio de contrato es inválida")));
 				}
-
+		
 				$fechacon = $_POST["fechacon"];
 			}
 		}
@@ -2373,17 +2388,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if (empty($_POST["fechaalta"])) {
 			$fechaalta = null;
 		} else {
-			if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechaalta"])) {
+			// Reemplaza las barras oblicuas por guiones
+			$_POST["fechaalta"] = str_replace('/', '-', $_POST["fechaalta"]);
+		
+			if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechaalta"])) {
 				// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de alta")));
 			} else {
-				$check_fechaalta = validateDate($_POST["fechaalta"], 'Y/m/d');
-
+				$check_fechaalta = validateDate($_POST["fechaalta"], 'Y-m-d');
+		
 				// Verifica si la fecha de alta es inválida
 				if (!$check_fechaalta) {
 					die(json_encode(array("error", "La fecha de alta es inválida")));
 				}
-
+		
 				$fechaalta = $_POST["fechaalta"];
 			}
 		}
