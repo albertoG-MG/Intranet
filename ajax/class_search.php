@@ -1561,13 +1561,119 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 	}else if(isset($_POST["pestaña"]) && $_POST["pestaña"] == "DatosB"){
+		//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
+		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], 
+		$_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], $_POST["plastico"], $_POST["method"])){
+
+			/*
+			=============================================
+			EMPIEZA LA VALIDACIÓN DE LOS DATOS BANCARIOS
+			=============================================
+			*/
+
+			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
+			if($_POST["select2"] != null){
+				//Traeme todos los usuarios de la base de datos
+				$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
+				$select2_content -> execute();
+				//FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor.
+				$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+			
+				//ARRAY_KEY_EXIST - Función de php que verifica si el id seleccionado por el usuario está presente en los resultados de la consulta 
+				if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
+					$array_key_value = $fetch_select2_content[$_POST["select2"]];
+					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
+					if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+						$select2 = $_POST["select2"];
+					}else{
+						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
+						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					}
+				}else{
+					//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+				}
+			}else{
+				//Si el usuario no seleccionó nada, retorna.
+				die(json_encode(array("error", "Debe asignar un usuario al expediente")));
+			}
+
+			//REFERENCIAS BANCARIAS
+			// Comprueba si el campo "numeroreferenciasban" no está vacío
+			if(!(empty($_POST["numeroreferenciasban"]))){
+				// Valida que "numeroreferenciasban" sea un solo dígito y un número
+				if(preg_match("/^\d$/", $_POST["numeroreferenciasban"])){
+					// Decodifica el JSON en un arreglo asociativo
+					$referenciasbancarias_decoded = json_decode($_POST["refbanc"], true);
+
+					// Verifica que el número de referencias coincida con la cantidad real
+					if (is_array($referenciasbancarias_decoded) && count($referenciasbancarias_decoded) == $_POST["numeroreferenciasban"]) {
+						$referenciasban_contador = 1;
+						//Recorremos el arreglo
+						foreach ($referenciasbancarias_decoded as $referencia_bancaria) {
+							//Checa que los campos no estén vacíos
+							if (empty($referencia_bancaria["nombre"]) || empty($referencia_bancaria["apellidopat"]) || empty($referencia_bancaria["apellidomat"]) || empty($referencia_bancaria["relacion"]) || empty($referencia_bancaria["rfc"]) || empty($referencia_bancaria["curp"]) || empty($referencia_bancaria["porcentaje"])) {
+								die(json_encode(array("error", "Existen campos vacíos en las referencias bancarias, por favor, verifique la información")));
+							}else{
+								//Validaciones
+								if (!preg_match("/^[\pL\s'-]+$/u", $referencia_bancaria["nombre"])) {
+									die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el nombre de la referencia bancaria " . $referenciasban_contador)));
+								} else if (!preg_match("/^[\pL\s]+$/u", $referencia_bancaria["apellidopat"])) {
+									die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido paterno de la referencia bancaria " . $referenciasban_contador)));
+								} else if (!preg_match("/^[\pL\s]+$/u", $referencia_bancaria["apellidomat"])) {
+									die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido materno de la referencia bancaria " . $referenciasban_contador)));
+								} else if (!preg_match("/^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z\d]{3})$/", $referencia_bancaria["rfc"])) {
+									die(json_encode(array("error", "Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789 en el RFC de la referencia bancaria " . $referenciasban_contador)));
+								} else if (!preg_match("/^([A-Z&]|[a-z&]{1})([AEIOU]|[aeiou]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([ASas|BCbc|BSbs|CCcc|CScs|CHch|CLcl|CMcm|DFdf|DGdg|GTgt|GRgr|HGhg|JCjc|MCmc|MNmn|MSms|NTnt|NLnl|OCoc|PLpl|QTqt|QRqr|SPsp|SLsl|SRsr|TCtc|TSts|TLtl|VZvz|YNyn|ZSzs|NEne]{2})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9]{2})$/", $referencia_bancaria["curp"])) {
+									die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR en el CURP de la referencia bancaria " . $referenciasban_contador)));
+								} else if (!preg_match("/^[0-9]+$/", $referencia_laboral["porcentaje"])) {
+									die(json_encode(array("error", "El porcentaje de derecho de la referencia bancaria " . $referencias_contador . " debe ser númerico")));
+								}
+							}
+
+							// Aplicamos strtoupper a los valores de cadena
+							$referencia_bancaria["nombre"] = strtoupper($referencia_bancaria["nombre"]);
+							$referencia_bancaria["apellidopat"] = strtoupper($referencia_bancaria["apellidopat"]);
+							$referencia_bancaria["apellidomat"] = strtoupper($referencia_bancaria["apellidomat"]);
+							$referencia_bancaria["rfc"] = strtoupper($referencia_bancaria["rfc"]);
+							$referencia_bancaria["curp"] = strtoupper($referencia_bancaria["curp"]);
 
 
+							//Le quitamos los acentos
+							$referencia_bancaria["nombre"] = quitarAcentos($referencia_bancaria["nombre"]);
+							$referencia_bancaria["apellidopat"] = quitarAcentos($referencia_bancaria["apellidopat"]);
+							$referencia_bancaria["apellidomat"] = quitarAcentos($referencia_bancaria["apellidomat"]);
+							$referencia_bancaria["rfc"] = quitarAcentos($referencia_bancaria["rfc"]);
+							$referencia_bancaria["curp"] = quitarAcentos($referencia_bancaria["curp"]);
 
+							if($_POST["numeroreferenciasban"] == 1){
+								$referencia_bancaria["porcentaje"] = 100;
+							}else{
+								$referencia_bancaria["porcentaje"] = 50;
+							}
 
+							$referenciasban_contador++;
+						}
+						// Asigna el valor de "refbanc" después de validar
+						$refbanc = $_POST["refbanc"];
+					} else {
+						die(json_encode(array("error", "El número de referencias bancarias ingresado no coincide con el enviado, por favor, verifique la información")));
+					}
+				} else {
+					die(json_encode(array("error", "Solo se permite un número de un solo dígito en el campo de número de referencias laborales")));
+				}
+			} else {
+				// Asigna "null" si "numeroreferenciasban" está vacío
+				$refbanc = null;
+			}
 
-
-
+			/*
+			=============================================
+			TERMINA LA VALIDACIÓN DE LOS DATOS BANCARIOS
+			=============================================
+			*/
+		}
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "expediente"){
 	if(isset($_POST["select2"], $_POST["select2text"], $_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], 
