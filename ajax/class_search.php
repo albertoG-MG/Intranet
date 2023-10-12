@@ -1242,17 +1242,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			if (empty($_POST["fechauniforme"])) {
 				$fechauniforme = null;
 			} else {
-				if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechauniforme"])) {
+				// Reemplaza las barras oblicuas por guiones
+				$_POST["fechauniforme"] = str_replace('/', '-', $_POST["fechauniforme"]);
+			
+				if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechauniforme"])) {
 					// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 					die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de uniforme")));
 				} else {
-					$check_fechauniforme = validateDate($_POST["fechauniforme"], 'Y/m/d');
-
+					$check_fechauniforme = validateDate($_POST["fechauniforme"], 'Y-m-d');
+			
 					// Verifica si la fecha de uniforme es inválida
 					if (!$check_fechauniforme) {
 						die(json_encode(array("error", "La fecha de uniforme es inválida")));
 					}
-
+			
 					$fechauniforme = $_POST["fechauniforme"];
 				}
 			}
@@ -2626,17 +2629,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if (empty($_POST["fechauniforme"])) {
 			$fechauniforme = null;
 		} else {
-			if (!preg_match("/^\d{4}\-\d{2}\-\d{2}$/", $_POST["fechauniforme"])) {
+			// Reemplaza las barras oblicuas por guiones
+			$_POST["fechauniforme"] = str_replace('/', '-', $_POST["fechauniforme"]);
+		
+			if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $_POST["fechauniforme"])) {
 				// Si la fecha no cumple con el formato 'AAAA-MM-DD', muestra un error
 				die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de uniforme")));
 			} else {
-				$check_fechauniforme = validateDate($_POST["fechauniforme"], 'Y/m/d');
-
+				$check_fechauniforme = validateDate($_POST["fechauniforme"], 'Y-m-d');
+		
 				// Verifica si la fecha de uniforme es inválida
 				if (!$check_fechauniforme) {
 					die(json_encode(array("error", "La fecha de uniforme es inválida")));
 				}
-
+		
 				$fechauniforme = $_POST["fechauniforme"];
 			}
 		}
