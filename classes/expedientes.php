@@ -163,19 +163,138 @@ class expedientes {
         //Conexión
         $object = new connection_database();
         //Checa si el expediente ya existe o no
-        $check_temporal_table = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
-        $check_temporal_table -> execute(array(':userid' => $this->select2));
+        $check_temporal_table_DG = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
+        $check_temporal_table_DG -> execute(array(':userid' => $this->select2));
         //Contamos las filas si existen
-        $count_results = $check_temporal_table -> rowCount();
+        $count_results_DG = $check_temporal_table_DG -> rowCount();
         //Si los datos existen, actualiza, si no existe, inserta
-        if($count_results > 0){
+        if($count_results_DG > 0){
             //Recuperar información almacenada de la base de datos y traerla de vuelta a la aplicación para su procesamiento
-            $fetch_results = $check_temporal_table -> fetch(PDO::FETCH_ASSOC);
+            $fetch_results_DG = $check_temporal_table_DG -> fetch(PDO::FETCH_ASSOC);
             //Actualiza la tabla, el primer dato que te pide es el nombre de la tabla, los campos a actualizar, la condición y el valor de la condición
             $crud->update('expedientes_temporales', ['num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'estatus_expediente' => 'Incompleto'], "id=:idexpediente", ['idexpediente' => $fetch_results['id']]);
         }else{
             //Crea un registro en la base de datos, los datos que te pide son el nombre de la tabla y los campos a almacenar
             $crud->store('expedientes_temporales', ['users_id' => $this->select2, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'estatus_expediente' => 'Incompleto']);
+        }
+    }
+
+    public function Crear_expediente_datosA(){
+        //Clase gateway para insertar, editar y eliminar en la base de datos
+        $crud = new crud();
+        //Conexión
+        $object = new connection_database();
+        //Checa si el expediente ya existe o no
+        $check_temporal_table_DA = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
+        $check_temporal_table_DA -> execute(array(':userid' => $this->select2));
+        //Contamos las filas si existen
+        $count_results_DA = $check_temporal_table_DA -> rowCount();
+        //Si los datos existen, actualiza, si no existe, inserta
+        if($count_results_DA > 0){
+            //Recuperar información almacenada de la base de datos y traerla de vuelta a la aplicación para su procesamiento
+            $fetch_results_DA = $check_temporal_table_DA -> fetch(PDO::FETCH_ASSOC);
+            //Actualiza la tabla, el primer dato que te pide es el nombre de la tabla, los campos a actualizar, la condición y el valor de la condición
+            $crud->update('expedientes_temporales', ['fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 
+            'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,
+            'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 
+            'emergenciatelefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante,
+            'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'estatus_expediente' => 'Incompleto'], "id=:idexpediente", ['idexpediente' => $fetch_results['id']]);
+            //Debido a que el ID del expediente ya lo tenemos en el fetch, no es necesario usar el lastInsertId para obtener el ID
+            //En esta parte debemos actualizar las referencias laborales, tanto si agregó nuevas, si quitó algunas ó si modificó el valor de los campos
+            //Checa si hay referencias laborales insertadas en la base de datos temporal
+            $checkreflab_temporales = $object -> _db ->prepare("SELECT * FROM ref_laborales_temporales WHERE expediente_id=:expedienteid");
+            $checkreflab_temporales -> execute(array(':expedienteid' => $fetch_results['id']));
+            $countreflab_temporales = $checkreflab_temporales -> rowCount();
+            //Si hay referencias laborales en la base de datos, creamos un nuevo metodo para actualizar los campos, el numero de referencias laborales tanto si el usuario agregó nuevas o qutó referencias laborales
+            if($countreflab_temporales > 0){
+                //Si el usuario modificó los valores de la referencias pero no agregó más referencias ni quitó referencias, el arreglo de ID nos facilita hacer tracking de los cambios
+                $array_ids = $checkreflab_temporales->fetchAll(PDO::FETCH_ASSOC);
+                //Si hay registro de referencias laborales pero la variable referencias está vacía, eso signfica que el usuario eliminó todas las referencias laborales
+                if(is_null($this->referencias)){
+                    $crud -> delete('ref_laborales_temporales', 'expediente_id=:idexpediente', ['idexpediente' => $fetch_results['id']]);
+                }else{
+                    //Si el usuario modificó el valor de las variables, agregó o quitó referencias significa que tenemos que actualizar las referencias
+                    $jsonData = stripslashes(html_entity_decode($this->referencias));
+                    $ref = json_decode($jsonData);
+                    //Enviamos al metodo el id del expediente, el total de referencias laborales, el arreglo de ids y el json de las referencias laborales
+                    expedientes::Editar_referenciaslab_temporales($fetch_results['id'], $countreflab, $array_ids, $ref);
+                }
+            }else{
+                //Si no hay referencias laborales registradas y el usuario no envío nada, entonces no hagas nada
+                if(!(is_null($this->referencias))){
+                    $jsonData = stripslashes(html_entity_decode($this->referencias));
+                    $ref = json_decode($jsonData);
+                    expedientes::Crear_referenciaslab_temporales($fetch_results['id'], $ref);
+                }
+            }
+        }else{
+            //Crea un registro en la base de datos, los datos que te pide son el nombre de la tabla y los campos a almacenar
+            $crud->store('expedientes_temporales', ['users_id' => $this->select2, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 
+            'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,
+            'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 
+            'emergenciatelefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante,
+            'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'estatus_expediente' => 'Incompleto']);
+            //Obtiene el último id insertado
+            $id_expediente = $object -> _db -> lastInsertId();
+            //Checa si el usuario insertó referencias laborales
+            if(!(is_null($this->referencias))){
+                //Sirve para eliminar las barras invertidas (\) que pueden estar presentes en una cadena. Esto pasa por seguridad cuando mandas por lo general un json y te escapa las comillas presentes usando barras invertidas.
+                $jsonData = stripslashes(html_entity_decode($this->referencias));
+                //Decodificamos el json
+                $ref = json_decode($jsonData);
+                //Llamamos al metodo correspondiente obviamente con el id del expediente y las referencias laborales a insertar
+                expedientes::Crear_referenciaslab_temporales($id_expediente, $ref);
+            }
+        }
+    }
+
+    //Metodo encargado de guardar las referencias laborales en la tabla temporal cuando se crea el expediente
+    public static function Crear_referenciaslab_temporales($id_expediente, $ref){
+        $refcrud = new crud();
+        foreach ($ref as $referencia) {
+            $ref_nombre = $referencia->nombre;
+            $ref_apellidopat = $referencia->apellidopat;
+            $ref_apellidomat = $referencia-> apellidomat;
+            $ref_relacion = $referencia->relacion;
+            $ref_telefono = $referencia->telefono;
+            
+            // Luego, almacena la referencia laboral en la base de datos
+            $refcrud->store('ref_laborales_temporales', [
+                'expediente_id' => $id_expediente, // Usar el ID del expediente proporcionado
+                'nombre' => $ref_nombre,
+                'apellido_pat' => $ref_apellidopat,
+                'apellido_mat' => $ref_apellidomat,
+                'relacion' => $ref_relacion,
+                'telefono' => $ref_telefono
+            ]);
+        }
+    }
+
+    //Metodo encargado de editar las referencias laborales en la tabla temporal cuando se crea el expediente
+    public static function Editar_referenciaslab_temporales($id_expediente, $countreflab, $array, $ref) {
+        $crud = new crud();
+        //Contamos el total de referencias laborales que el usuario envió
+        $numero = count($ref);
+    
+        foreach ($ref as $i => $referencia) {
+            $ref_nombre = $referencia->nombre;
+            $ref_apellidopat = $referencia->apellidopat;
+            $ref_apellidomat = $referencia-> apellidomat;
+            $ref_relacion = $referencia->relacion;
+            $ref_telefono = $referencia->telefono;
+
+            if ($i < $countreflab) {
+                // Si el índice es menor que el total de referencias en la base de datos, actualiza la referencia.
+                $crud->update('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+            } else {
+                // Si el índice es mayor que el total de referencias en la base de datos, almacena una nueva referencia.
+                $crud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion, 'expediente_id' => $id_expediente]);
+            }
+        }
+
+        // Si hay más referencias en la base de datos que las enviadas, elimina las referencias adicionales.
+        foreach (array_slice($array, $numero) as $referenciaEliminar) {
+            $crud->delete('ref_laborales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $referenciaEliminar["id"], 'expedienteid' => $id_expediente]);
         }
     }
 

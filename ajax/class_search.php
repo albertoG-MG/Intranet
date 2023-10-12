@@ -1575,7 +1575,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					//Hago una instancia de la clase y le envío las variables en la clase
 					$expediente = new Expedientes($select2, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
-					$expediente ->Expediente_datosA();
+					$expediente ->Crear_expediente_datosA();
+					//Verifica si la sesión ya existe
+					if (!(isset($_SESSION['expediente_id']))) {
+						//Asigna una sesión del expediente enviado si la sesión no existe
+						$_SESSION['expediente_id'] = $select2;
+					}
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos adicionales del expediente")));
 				break;
