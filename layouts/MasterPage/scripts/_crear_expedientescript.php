@@ -2249,6 +2249,8 @@
                             window.removeEventListener('beforeunload', unloadHandler);
                             //El objetivo es hacer que el expediente sea inmutable una vez guardado, lo que implica que, una vez almacenado, no podrás modificar la asignación de usuarios.
                             $('#user').prop("disabled", true);
+                            //Se añaden las clases de bloqueo para el select2
+                            $('#user').data('select2').$container.addClass('bg-gray-200');
                             $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
                         });
                     }else if (array[0] == "error") {
