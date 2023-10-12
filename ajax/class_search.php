@@ -414,6 +414,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$_POST["fechaalta"], $_POST["salario_contrato"], $_POST["salario_fechaalta"], $_POST["observaciones"], $_POST["curp"], 
 		$_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"], $_POST["method"])){
 			
+			//Checa si el usuario ya guardó con anterioridad el expediente temporal
+			if (isset($_SESSION['expediente_id'])) {
+				if($_SESSION['expediente_id'] !== $_POST['select2']){
+					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
+				}
+			}
+
 			/*
 			=============================================
 			EMPIEZA LA VALIDACIÓN DE LOS DATOS GENERALES
@@ -1127,6 +1134,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					$expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
 					$expediente ->Crear_expediente_datosG();
+					//Verifica si la sesión ya existe
+					if (!(isset($_SESSION['expediente_id']))) {
+						//Asigna una sesión del expediente enviado si la sesión no existe
+						$_SESSION['expediente_id'] = $select2;
+					}
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos generales del expediente")));
 				break;

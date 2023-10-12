@@ -2247,6 +2247,8 @@
                             icon: "success"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
+                            //El objetivo es hacer que el expediente sea inmutable una vez guardado, lo que implica que, una vez almacenado, no podrás modificar la asignación de usuarios.
+                            $('#user').prop("disabled", false);
                             $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
                         });
                     }else if (array[0] == "error") {
@@ -2501,7 +2503,7 @@
 
     }
 
-    //Metodo que envía el formulario
+    //Metodo que envía el formulario completo, cuando el usuario hace clic en el botón de guardado final
     function SubmitChanges(){
         window.addEventListener('beforeunload', unloadHandler);
         var fd = new FormData();
@@ -2782,6 +2784,16 @@
         });
     }
 
+    //El objetivo es eliminar la sesión en caso de que el usuario abandone la página
+    $(window).on('beforeunload', function () {
+        $.ajax({
+            type: 'POST',
+            url: '../config/destruirsesion_expediente.php', // Ruta a un script PHP u otra URL
+            async: true, // Esto permite que la solicitud continúe en segundo plano
+        });
+    });
+
+    //Se usa en conjunto con el metodo siguiente para mostrar la leyenda no hay resultados
     function waitForElm(selector) {
         return new Promise(resolve => {
             if (document.querySelector(selector)) {
@@ -2803,6 +2815,7 @@
     }
 
 
+    //Muestra la leyenda no hay resultados si el select2 se queda sin opciones
     $('#user').on('select2:open', function (e) {
         waitForElm('.select2-results__options').then((elm) => {
             if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
