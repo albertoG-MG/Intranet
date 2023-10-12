@@ -90,7 +90,7 @@
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">
-                                 Asignar expediente a:
+                                    Asignar expediente a:
                                  </label>
                                  <div class="group flex" id="selectuser" style="display:none !important; position:relative;">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -102,24 +102,34 @@
                                        <option></option>
                                        <optgroup label="Usuarios">
                                           <?php
-                                             $arr = array();
-                                             $checkexpuser = $object -> _db -> prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id"); 
-                                             $checkexpuser -> execute();
-                                             while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)){
-                                                $arr[] = $fetchuserexp->id;
-                                             }
-                                             $usuarios = user::FetchUsuarios();
-                                             foreach ($usuarios as $row) {
-                                                if($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo")
-                                                {
-                                                   if(!in_array($row->id, $arr))
-                                                   {
-                                                         echo "<option value='" . $row->id . "'>";
-                                                         echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                         echo "</option>";
-                                                   }
+                                          $arr = array();
+
+                                          // Consulta para verificar la relación de usuarios con "expedientes"
+                                          $checkexpuser = $object->_db->prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id = usuarios.id");
+                                          $checkexpuser->execute();
+
+                                          while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)) {
+                                             $arr[] = $fetchuserexp->id;
+                                          }
+
+                                          // Consulta para verificar la relación de usuarios con "expedientes_temporales"
+                                          $checktempuser = $object->_db->prepare("SELECT usuarios.id FROM expedientes_temporales INNER JOIN usuarios ON expedientes_temporales.users_id = usuarios.id");
+                                          $checktempuser->execute();
+
+                                          while ($fetchusertemp = $checktempuser->fetch(PDO::FETCH_OBJ)) {
+                                             $arr[] = $fetchusertemp->id;
+                                          }
+
+                                          $usuarios = user::FetchUsuarios();
+                                          foreach ($usuarios as $row) {
+                                             if ($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo") {
+                                                if (!in_array($row->id, $arr)) {
+                                                   echo "<option value='" . $row->id . "'>";
+                                                   echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                   echo "</option>";
                                                 }
                                              }
+                                          }
                                           ?>
                                        </optgroup>
                                     </select>
