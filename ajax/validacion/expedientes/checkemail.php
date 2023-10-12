@@ -2,15 +2,22 @@
 	include_once __DIR__ . "/../../../config/conexion.php";
 	$object = new connection_database();
 
-	
 	$correo = $_GET["correo_adicional"];
-	$get_correo = $object -> _db -> prepare("SELECT correo_adicional from expedientes where correo_adicional=:correo1 UNION ALL SELECT correo from usuarios where correo=:correo2");
-	$get_correo -> execute(array(':correo1' => $correo, ':correo2' => $correo));
-	$count_query = $get_correo -> rowCount();
-	if($count_query > 0){
+	$get_correo = $object->_db->prepare("
+        SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo
+        UNION ALL
+        SELECT correo FROM usuarios WHERE correo = :correo
+        UNION ALL
+        SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo
+    ");
+	$get_correo->execute(array(':correo' => $correo));
+	$count_query = $get_correo->rowCount();
+
+	if ($count_query > 0) {
 		$output = "Este correo está repetido, por favor, ingrese otro correo";
-	}else{
+	} else {
 		$output = true;
 	}
+
 	echo json_encode($output);
 ?>
