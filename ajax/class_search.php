@@ -1576,7 +1576,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
 				case "store":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
+					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
 					$expediente ->Crear_expediente_datosA();
 					//Verifica si la sesión ya existe
