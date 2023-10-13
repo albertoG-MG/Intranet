@@ -2764,6 +2764,8 @@
         fd.append('vacante', vacante);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
+        fd.append('apellidopatfam', apellidopatfam);
+        fd.append('apellidomatfam', apellidomatfam);
 
         /*Datos bancarios*/
         fd.append('numeroreferenciasban', numeroreferenciasban);
