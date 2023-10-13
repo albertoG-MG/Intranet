@@ -294,7 +294,7 @@ class expedientes {
 
         // Si hay más referencias en la base de datos que las enviadas, elimina las referencias adicionales.
         foreach (array_slice($array, $numero) as $referenciaEliminar) {
-            $crud->delete('ref_laborales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $referenciaEliminar["id"], 'expedienteid' => $id_expediente]);
+            $crud->delete('ref_laborales_temporales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $referenciaEliminar["id"], 'expedienteid' => $id_expediente]);
         }
     }
 
