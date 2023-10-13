@@ -2852,7 +2852,7 @@ CREATE TABLE `ref_laborales_temporales` (
   `apellido_mat` varchar(100) NOT NULL,
   `relacion` varchar(100) NOT NULL,
   `telefono` varchar(100) NOT NULL,
-  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+  FOREIGN KEY (expediente_id) REFERENCES expedientes_temporales(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2871,7 +2871,7 @@ CREATE TABLE `ben_bancarios_temporales` (
   `rfc` varchar(100) NOT NULL,
   `curp` varchar(100) NOT NULL,
   `porcentaje` varchar(100) NOT NULL,
-  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+  FOREIGN KEY (expediente_id) REFERENCES expedientes_temporales(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------    
