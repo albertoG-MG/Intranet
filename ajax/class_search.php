@@ -1635,7 +1635,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					if (is_array($referenciasbancarias_decoded) && count($referenciasbancarias_decoded) == $_POST["numeroreferenciasban"]) {
 						$referenciasban_contador = 1;
 						//Recorremos el arreglo
-						foreach ($referenciasbancarias_decoded as $referencia_bancaria) {
+						foreach ($referenciasbancarias_decoded as &$referencia_bancaria) {
 							//Checa que los campos no estén vacíos
 							if (empty($referencia_bancaria["nombre"]) || empty($referencia_bancaria["apellidopat"]) || empty($referencia_bancaria["apellidomat"]) || empty($referencia_bancaria["relacion"]) || empty($referencia_bancaria["rfc"]) || empty($referencia_bancaria["curp"]) || empty($referencia_bancaria["porcentaje"])) {
 								die(json_encode(array("error", "Existen campos vacíos en las referencias bancarias, por favor, verifique la información")));
@@ -1657,19 +1657,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 							}
 
 							// Aplicamos strtoupper a los valores de cadena
-							$referencia_bancaria["nombre"] = strtoupper($referencia_bancaria["nombre"]);
-							$referencia_bancaria["apellidopat"] = strtoupper($referencia_bancaria["apellidopat"]);
-							$referencia_bancaria["apellidomat"] = strtoupper($referencia_bancaria["apellidomat"]);
-							$referencia_bancaria["rfc"] = strtoupper($referencia_bancaria["rfc"]);
-							$referencia_bancaria["curp"] = strtoupper($referencia_bancaria["curp"]);
-
-
 							//Le quitamos los acentos
-							$referencia_bancaria["nombre"] = quitarAcentos($referencia_bancaria["nombre"]);
-							$referencia_bancaria["apellidopat"] = quitarAcentos($referencia_bancaria["apellidopat"]);
-							$referencia_bancaria["apellidomat"] = quitarAcentos($referencia_bancaria["apellidomat"]);
-							$referencia_bancaria["rfc"] = quitarAcentos($referencia_bancaria["rfc"]);
-							$referencia_bancaria["curp"] = quitarAcentos($referencia_bancaria["curp"]);
+							$referencia_bancaria["nombre"] = strtoupper(quitarAcentos($referencia_bancaria["nombre"]));
+							$referencia_bancaria["apellidopat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidopat"]));
+							$referencia_bancaria["apellidomat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidomat"]));
+							$referencia_bancaria["rfc"] = strtoupper(quitarAcentos($referencia_bancaria["rfc"]));
+							$referencia_bancaria["curp"] = strtoupper(quitarAcentos($referencia_bancaria["curp"]));
 
 							if($_POST["numeroreferenciasban"] == 1){
 								$referencia_bancaria["porcentaje"] = 100;
@@ -1680,7 +1673,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 							$referenciasban_contador++;
 						}
 						// Asigna el valor de "refbanc" después de validar
-						$refbanc = $_POST["refbanc"];
+						$refbanc = json_encode($referenciasbancarias_decoded); // Convierte el arreglo de vuelta a JSON
 					} else {
 						die(json_encode(array("error", "El número de referencias bancarias ingresado no coincide con el enviado, por favor, verifique la información")));
 					}
@@ -2966,7 +2959,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				if (is_array($referenciasbancarias_decoded) && count($referenciasbancarias_decoded) == $_POST["numeroreferenciasban"]) {
 					$referenciasban_contador = 1;
 					//Recorremos el arreglo
-					foreach ($referenciasbancarias_decoded as $referencia_bancaria) {
+					foreach ($referenciasbancarias_decoded as &$referencia_bancaria) {
 						//Checa que los campos no estén vacíos
 						if (empty($referencia_bancaria["nombre"]) || empty($referencia_bancaria["apellidopat"]) || empty($referencia_bancaria["apellidomat"]) || empty($referencia_bancaria["relacion"]) || empty($referencia_bancaria["rfc"]) || empty($referencia_bancaria["curp"]) || empty($referencia_bancaria["porcentaje"])) {
 							die(json_encode(array("error", "Existen campos vacíos en las referencias bancarias, por favor, verifique la información")));
@@ -2988,19 +2981,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 						}
 
 						// Aplicamos strtoupper a los valores de cadena
-						$referencia_bancaria["nombre"] = strtoupper($referencia_bancaria["nombre"]);
-						$referencia_bancaria["apellidopat"] = strtoupper($referencia_bancaria["apellidopat"]);
-						$referencia_bancaria["apellidomat"] = strtoupper($referencia_bancaria["apellidomat"]);
-						$referencia_bancaria["rfc"] = strtoupper($referencia_bancaria["rfc"]);
-						$referencia_bancaria["curp"] = strtoupper($referencia_bancaria["curp"]);
-
-
 						//Le quitamos los acentos
-						$referencia_bancaria["nombre"] = quitarAcentos($referencia_bancaria["nombre"]);
-						$referencia_bancaria["apellidopat"] = quitarAcentos($referencia_bancaria["apellidopat"]);
-						$referencia_bancaria["apellidomat"] = quitarAcentos($referencia_bancaria["apellidomat"]);
-						$referencia_bancaria["rfc"] = quitarAcentos($referencia_bancaria["rfc"]);
-						$referencia_bancaria["curp"] = quitarAcentos($referencia_bancaria["curp"]);
+						$referencia_bancaria["nombre"] = strtoupper(quitarAcentos($referencia_bancaria["nombre"]));
+						$referencia_bancaria["apellidopat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidopat"]));
+						$referencia_bancaria["apellidomat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidomat"]));
+						$referencia_bancaria["rfc"] = strtoupper(quitarAcentos($referencia_bancaria["rfc"]));
+						$referencia_bancaria["curp"] = strtoupper(quitarAcentos($referencia_bancaria["curp"]));
 
 						if($_POST["numeroreferenciasban"] == 1){
 							$referencia_bancaria["porcentaje"] = 100;
@@ -3011,7 +2997,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 						$referenciasban_contador++;
 					}
 					// Asigna el valor de "refbanc" después de validar
-					$refbanc = $_POST["refbanc"];
+					$refbanc = json_encode($referenciasbancarias_decoded); // Convierte el arreglo de vuelta a JSON
 				} else {
 					die(json_encode(array("error", "El número de referencias bancarias ingresado no coincide con el enviado, por favor, verifique la información")));
 				}
