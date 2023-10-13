@@ -1150,6 +1150,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$_POST["emergencianom"], $_POST["emergenciaapat"], $_POST["emergenciaamat"], $_POST["emergenciarelacion"], $_POST["emergenciatelefono"], $_POST["emergencianom2"], 
 		$_POST["emergenciaapat2"], $_POST["emergenciaamat2"], $_POST["emergenciarelacion2"], $_POST["emergenciatelefono2"], $_POST["capacitacion"], $_POST["antidoping"], 
 		$_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"], $_POST["method"])){
+			
+			//Checa si el usuario ya guardó con anterioridad el expediente temporal
+			if (isset($_SESSION['expediente_id'])) {
+				if($_SESSION['expediente_id'] !== $_POST['select2']){
+					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
+				}
+			}
+			
 			/*
 			=============================================
 			EMPIEZA LA VALIDACIÓN DE LOS DATOS ADICIONALES
@@ -1589,6 +1597,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], 
 		$_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], $_POST["plastico"], $_POST["method"])){
 
+			//Checa si el usuario ya guardó con anterioridad el expediente temporal
+			if (isset($_SESSION['expediente_id'])) {
+				if($_SESSION['expediente_id'] !== $_POST['select2']){
+					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
+				}
+			}
+			
 			/*
 			=============================================
 			EMPIEZA LA VALIDACIÓN DE LOS DATOS BANCARIOS
@@ -1805,6 +1820,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
 					$expediente ->Crear_expediente_datosB();
+					//Verifica si la sesión ya existe
+					if (!(isset($_SESSION['expediente_id']))) {
+						//Asigna una sesión del expediente enviado si la sesión no existe
+						$_SESSION['expediente_id'] = $select2;
+					}
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos bancarios del expediente")));
 				break;
