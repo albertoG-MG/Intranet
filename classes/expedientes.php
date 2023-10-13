@@ -217,7 +217,7 @@ class expedientes {
                     $jsonData = stripslashes(html_entity_decode($this->referencias));
                     $ref = json_decode($jsonData);
                     //Enviamos al metodo el id del expediente, el total de referencias laborales, el arreglo de ids y el json de las referencias laborales
-                    expedientes::Editar_referenciaslab_temporales($fetch_results_DA['id'], $countreflab, $array_ids, $ref);
+                    expedientes::Editar_referenciaslab_temporales($fetch_results_DA['id'], $countreflab_temporales, $array_ids, $ref);
                 }
             }else{
                 //Si no hay referencias laborales registradas y el usuario no envío nada, entonces no hagas nada
