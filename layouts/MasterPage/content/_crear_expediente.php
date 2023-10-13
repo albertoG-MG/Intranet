@@ -40,13 +40,11 @@
                      </div>
                   </div>
                   <div class="bg-white p-3 shadow-md rounded-b">
-                     <!-- <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Formulario para asignar un expediente a un usuario</h2>
-                        <span class="text-[#64748b]">Por favor, proporciona todos los datos necesarios.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
-                     </div> -->
+                     <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
+                        <b>CREAR EXPEDIENTE: </b>El formulario se divide en varias secciones o pestañas para organizar la información. Cada sección contiene un conjunto específico de datos que el usuario debe completar. La característica clave aquí es que no es necesario completar todo el formulario de una vez; en su lugar, el usuario puede guardar los datos de cada sección individualmente sin necesidad de llenar todas las secciones antes de avanzar. <b> Nota: </b> El botón de guardar progreso no es consecutivo, esto significa que los datos se almacenan por separado en función de la pestaña en la que se encuentra el usuario. 
+                     </div>
                      
-                     <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 gap-3'>
+                     <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 mt-5 gap-3'>
                         <li role="presentation" class="w-full md:w-max">
                            <button class="menu-active w-full group flex items-center space-x-2 rounded-lg bg-[#27ceeb] px-4 py-2.5 tracking-wide text-white outline-none transition-all" id="datosG-tab" data-tabs-target="#datosG" type="button" role="tab" aria-controls="datosG" aria-selected="false">
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
