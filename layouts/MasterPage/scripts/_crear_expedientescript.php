@@ -180,7 +180,14 @@
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-		});
+		
+            // Actualiza la variable pestañaActiva a datos adicionales
+            pestañaActiva = {
+                id: 'datosA',
+                triggerMenu: $('#datosA-tab'),
+                targetMenu: $('#datosA')
+            };
+        });
 
         $("#siguiente2").on("click", function () {
 			let tabContents = document.querySelector("#menu-contents");
@@ -200,7 +207,14 @@
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-		});
+		
+            // Actualiza la variable pestañaActiva a datos adicionales
+            pestañaActiva = {
+                id: 'datosB',
+                triggerMenu: $('#datosB-tab'),
+                targetMenu: $('#datosB')
+            };
+        });
 
         $("#anterior").on("click", function () {
 			let tabContents = document.querySelector("#menu-contents");
@@ -220,7 +234,14 @@
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
-		});
+		
+            // Actualiza la variable pestañaActiva a datos adicionales
+            pestañaActiva = {
+                id: 'datosG',
+                triggerMenu: $('#datosG-tab'),
+                targetMenu: $('#datosG')
+            };
+        });
 
         $("#siguiente3").on("click", function () {
 			let tabContents = document.querySelector("#menu-contents");
@@ -240,7 +261,14 @@
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-		});
+		
+            // Actualiza la variable pestañaActiva a datos adicionales
+            pestañaActiva = {
+                id: 'documentos',
+                triggerMenu: $('#documentos-tab'),
+                targetMenu: $('#documentos')
+            };
+        });
 		
 			
 		$("#anterior2").on("click", function () {
@@ -261,7 +289,14 @@
 			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
-		});
+		
+            // Actualiza la variable pestañaActiva a datos adicionales
+            pestañaActiva = {
+                id: 'datosA',
+                triggerMenu: $('#datosA-tab'),
+                targetMenu: $('#datosA')
+            };
+        });
 
         $("#anterior3").on("click", function () {
 			let tabContents = document.querySelector("#menu-contents");
@@ -281,7 +316,14 @@
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
-		});
+		
+            // Actualiza la variable pestañaActiva a datos adicionales
+            pestañaActiva = {
+                id: 'datosB',
+                triggerMenu: $('#datosB-tab'),
+                targetMenu: $('#datosB')
+            };
+        });
 
 		//Termina la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 
