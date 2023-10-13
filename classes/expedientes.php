@@ -288,7 +288,7 @@ class expedientes {
                 $crud->update('ref_laborales_temporales', ['nombre' => $ref_nombre, 'apellido_pat' => $ref_apellidopat, 'apellido_mat' => $ref_apellidomat, 'relacion' => $ref_relacion, 'telefono' => $ref_telefono], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
             } else {
                 // Si el índice es mayor que el total de referencias en la base de datos, almacena una nueva referencia.
-                $crud->store('ref_laborales_temporales', ['nombre' => $ref_nombre, 'apellido_pat' => $ref_apellidopat, 'apellido_mat' => $ref_apellidomat, 'relacion' => $ref_relacion, 'telefono' => $ref_telefono]);
+                $crud->store('ref_laborales_temporales', ['expediente_id' => $id_expediente, 'nombre' => $ref_nombre, 'apellido_pat' => $ref_apellidopat, 'apellido_mat' => $ref_apellidomat, 'relacion' => $ref_relacion, 'telefono' => $ref_telefono]);
             }
         }
 
