@@ -298,6 +298,124 @@ class expedientes {
         }
     }
 
+    public function Crear_expediente_datosB(){
+        //Clase gateway para insertar, editar y eliminar en la base de datos
+        $crud = new crud();
+        //Conexión
+        $object = new connection_database();
+        //Checa si el expediente ya existe o no
+        $check_temporal_table_DB = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
+        $check_temporal_table_DB -> execute(array(':userid' => $this->select2));
+        //Contamos las filas si existen
+        $count_results_DB = $check_temporal_table_DB -> rowCount();
+        //Si los datos existen, actualiza, si no existe, inserta
+        if($count_results_DB > 0){
+            //Recuperar información almacenada de la base de datos y traerla de vuelta a la aplicación para su procesamiento
+            $fetch_results_DB = $check_temporal_table_DB -> fetch(PDO::FETCH_ASSOC);
+            //Actualiza la tabla, el primer dato que te pide es el nombre de la tabla, los campos a actualizar, la condición y el valor de la condición
+            $crud->update('expedientes_temporales', ['banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 
+            'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 
+            'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico, 'estatus_expediente' => 'Incompleto'], "id=:idexpediente", ['idexpediente' => $fetch_results_DB['id']]);
+            //Debido a que el ID del expediente ya lo tenemos en el fetch, no es necesario usar el lastInsertId para obtener el ID
+            //En esta parte debemos actualizar los beneficiarios bancarios, tanto si agregó nuevas, si quitó algunas ó si modificó el valor de los campos
+            //Checa si hay beneficiarios bancarios en insertados en la base de datos temporal
+            $checkbenban_temporales = $object -> _db ->prepare("SELECT * FROM ben_bancarios_temporales WHERE expediente_id=:expedienteid");
+            $checkbenban_temporales -> execute(array(':expedienteid' => $fetch_results_DB['id']));
+            $countbenban_temporales = $checkbenban_temporales -> rowCount();
+            //Si hay beneficiarios bancarios en la base de datos, creamos un nuevo metodo para actualizar los campos, el numero de beneficiarios bancarios tanto si el usuario agregó nuevas o quitó beneficiarios bancarios
+            if($countbenban_temporales > 0){
+                //Si el usuario modificó los valores de los beneficiarios pero no agregó más ni quitó, el arreglo de ID nos facilita hacer tracking de los cambios
+                $array_ids = $checkbenban_temporales->fetchAll(PDO::FETCH_ASSOC);
+                //Si hay registro de beneficiarios bancarios pero la variable refbanc está vacía, eso signfica que el usuario eliminó todas losbeneficiarios bancarios
+                if(is_null($this->ref_banc)){
+                    $crud -> delete('ben_bancarios_temporales', 'expediente_id=:idexpediente', ['idexpediente' => $fetch_results_DB['id']]);
+                }else{
+                    //Si el usuario modificó el valor de las variables, agregó o quitó beneficiarios significa que tenemos que actualizar las beneficiarios
+                    $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                    $ref_banc = json_decode($jsonData2);
+                    //Enviamos al metodo el id del expediente, el total de beneficiarios bancarios, el arreglo de ids y el json de los beneficiarios bancarios
+                    expedientes::Editar_beneficiariosbanc_temporales($fetch_results_DB['id'], $countbenban_temporales, $array_ids, $ref_banc);
+                }
+            }else{
+                //Si no hay beneficiarios bancarios registrados y el usuario no envío nada, entonces no hagas nada
+                if(!(is_null($this->ref_banc))){
+                    $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                    $ref_banc = json_decode($jsonData2);
+                    expedientes::Crear_beneficiariosbanc_temporales($fetch_results_DB['id'], $ref_banc);
+                }
+            }
+        }else{
+            //Crea un registro en la base de datos, los datos que te pide son el nombre de la tabla y los campos a almacenar
+            $crud->store('expedientes_temporales', ['users_id' => $this->select2, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 
+            'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 
+            'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico, 'estatus_expediente' => 'Incompleto']);
+            //Obtiene el último id insertado
+            $id_expediente = $object -> _db -> lastInsertId();
+            //Checa si el usuario insertó beneficiarios bancarios
+            if(!(is_null($this->ref_banc))){
+                $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                $ref_banc = json_decode($jsonData2);
+                expedientes::Crear_beneficiariosbanc_temporales($id_expediente, $ref_banc);
+            }
+        }
+    }
+
+    //Metodo encargado de guardar los beneficiarios bancarios en la tabla temporal cuando se crea el expediente
+    public static function Crear_beneficiariosbanc_temporales($id_expediente, $ref_banc){
+        $refbanc_crud = new crud();
+        foreach ($ref_banc as $beneficiario) {
+            $ben_nombre = $beneficiario->nombre;
+            $ben_apellidopat = $beneficiario->apellidopat;
+            $ben_apellidomat = $beneficiario->apellidomat;
+            $ben_relacion = $beneficiario->relacion;
+            $ben_rfc = $beneficiario->rfc;
+            $ben_curp = $beneficiario->curp;
+            $ben_porcentaje = $beneficiario->porcentaje;
+            
+            // Luego, almacena el beneficiario bancario en la base de datos
+            $refbanc_crud->store('ben_bancarios_temporales', [
+                'expediente_id' => $id_expediente, // Usar el ID del expediente proporcionado
+                'nombre' => $ben_nombre,
+                'apellido_pat' => $ben_apellidopat,
+                'apellido_mat' => $ben_apellidomat,
+                'relacion' => $ben_relacion,
+                'rfc' =>  $ben_rfc,
+                'curp' => $ben_curp,
+                'porcentaje' => $ben_porcentaje
+            ]);
+        }
+    }
+
+    //Metodo encargado de editar los beneficiarios bancarios en la tabla temporal cuando se crea el expediente
+    public static function Editar_beneficiariosbanc_temporales($id_expediente, $countbenban, $array, $ref_banc) {
+        $crud = new crud();
+        //Contamos el total de beneficiarios bancarios que el usuario envió
+        $numero = count($ref_banc);
+    
+        foreach ($ref_banc as $i => $beneficiario) {
+            $benban_nombre = $beneficiario->nombre;
+            $benban_apellidopat = $beneficiario->apellidopat;
+            $benban_apellidomat = $beneficiario->apellidomat;
+            $benban_relacion = $beneficiario->relacion;
+            $benban_rfc = $beneficiario->rfc;
+            $benban_curp = $beneficiario->curp;
+            $benban_porcentaje = $beneficiario->porcentaje;
+
+            if ($i < $countbenban) {
+                // Si el índice es menor que el total de referencias en la base de datos, actualiza la referencia.
+                $crud->update('ben_bancarios_temporales', ['nombre' => $benban_nombre, 'apellido_pat' => $benban_apellidopat, 'apellido_mat' => $benban_apellidomat, 'relacion' => $benban_relacion, 'rfc' => $benban_rfc, 'curp' => $benban_curp, 'porcentaje' => $benban_porcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
+            } else {
+                // Si el índice es mayor que el total de referencias en la base de datos, almacena una nueva referencia.
+                $crud->store('ben_bancarios_temporales', ['nombre' => $benban_nombre, 'apellido_pat' => $benban_apellidopat, 'apellido_mat' => $benban_apellidomat, 'relacion' => $benban_relacion, 'rfc' => $benban_rfc, 'curp' => $benban_curp, 'porcentaje' => $benban_porcentaje]);
+            }
+        }
+
+        // Si hay más referencias en la base de datos que las enviadas, elimina las referencias adicionales.
+        foreach (array_slice($array, $numero) as $referenciaEliminar) {
+            $crud->delete('ben_bancarios_temporales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $referenciaEliminar["id"], 'expedienteid' => $id_expediente]);
+        }
+    }
+
     public function Crear_expediente($id, $logged_user){
         $crud = new crud();
         $object = new connection_database();

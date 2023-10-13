@@ -1802,9 +1802,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
 				case "store":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
+					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
-					$expediente ->Expediente_datosB();
+					$expediente ->Crear_expediente_datosB();
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos bancarios del expediente")));
 				break;
