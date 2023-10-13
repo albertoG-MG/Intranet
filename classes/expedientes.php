@@ -327,19 +327,19 @@ class expedientes {
                 //Si el usuario modificó los valores de los beneficiarios pero no agregó más ni quitó, el arreglo de ID nos facilita hacer tracking de los cambios
                 $array_ids = $checkbenban_temporales->fetchAll(PDO::FETCH_ASSOC);
                 //Si hay registro de beneficiarios bancarios pero la variable refbanc está vacía, eso signfica que el usuario eliminó todas losbeneficiarios bancarios
-                if(is_null($this->ref_banc)){
+                if(is_null($this->refbanc)){
                     $crud -> delete('ben_bancarios_temporales', 'expediente_id=:idexpediente', ['idexpediente' => $fetch_results_DB['id']]);
                 }else{
                     //Si el usuario modificó el valor de las variables, agregó o quitó beneficiarios significa que tenemos que actualizar las beneficiarios
-                    $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                    $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
                     $ref_banc = json_decode($jsonData2);
                     //Enviamos al metodo el id del expediente, el total de beneficiarios bancarios, el arreglo de ids y el json de los beneficiarios bancarios
                     expedientes::Editar_beneficiariosbanc_temporales($fetch_results_DB['id'], $countbenban_temporales, $array_ids, $ref_banc);
                 }
             }else{
                 //Si no hay beneficiarios bancarios registrados y el usuario no envío nada, entonces no hagas nada
-                if(!(is_null($this->ref_banc))){
-                    $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+                if(!(is_null($this->refbanc))){
+                    $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
                     $ref_banc = json_decode($jsonData2);
                     expedientes::Crear_beneficiariosbanc_temporales($fetch_results_DB['id'], $ref_banc);
                 }
@@ -352,8 +352,8 @@ class expedientes {
             //Obtiene el último id insertado
             $id_expediente = $object -> _db -> lastInsertId();
             //Checa si el usuario insertó beneficiarios bancarios
-            if(!(is_null($this->ref_banc))){
-                $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
+            if(!(is_null($this->refbanc))){
+                $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
                 $ref_banc = json_decode($jsonData2);
                 expedientes::Crear_beneficiariosbanc_temporales($id_expediente, $ref_banc);
             }
