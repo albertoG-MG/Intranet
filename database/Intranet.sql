@@ -2858,6 +2858,25 @@ CREATE TABLE `ref_laborales_temporales` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ben_bancarios_temporales`
+--
+
+CREATE TABLE `ben_bancarios_temporales` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido_pat` varchar(100) NOT NULL,
+  `apellido_mat` varchar(100) NOT NULL,
+  `relacion` varchar(100) NOT NULL,
+  `rfc` varchar(100) NOT NULL,
+  `curp` varchar(100) NOT NULL,
+  `porcentaje` varchar(100) NOT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------    
+
+--
 -- Table structure for table `ref_laborales`
 --
 
