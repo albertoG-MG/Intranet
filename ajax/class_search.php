@@ -1666,8 +1666,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 									die(json_encode(array("error", "Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789 en el RFC de la referencia bancaria " . $referenciasban_contador)));
 								} else if (!preg_match("/^([A-Z&]|[a-z&]{1})([AEIOU]|[aeiou]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([ASas|BCbc|BSbs|CCcc|CScs|CHch|CLcl|CMcm|DFdf|DGdg|GTgt|GRgr|HGhg|JCjc|MCmc|MNmn|MSms|NTnt|NLnl|OCoc|PLpl|QTqt|QRqr|SPsp|SLsl|SRsr|TCtc|TSts|TLtl|VZvz|YNyn|ZSzs|NEne]{2})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9]{2})$/", $referencia_bancaria["curp"])) {
 									die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR en el CURP de la referencia bancaria " . $referenciasban_contador)));
-								} else if (!preg_match("/^[0-9]+$/", $referencia_laboral["porcentaje"])) {
-									die(json_encode(array("error", "El porcentaje de derecho de la referencia bancaria " . $referencias_contador . " debe ser númerico")));
+								} else if (!preg_match("/^[0-9]+$/", $referencia_bancaria["porcentaje"])) {
+									die(json_encode(array("error", "El porcentaje de derecho de la referencia bancaria " . $referenciasban_contador . " debe ser númerico")));
 								}
 							}
 
