@@ -406,7 +406,7 @@ class expedientes {
                 $crud->update('ben_bancarios_temporales', ['nombre' => $benban_nombre, 'apellido_pat' => $benban_apellidopat, 'apellido_mat' => $benban_apellidomat, 'relacion' => $benban_relacion, 'rfc' => $benban_rfc, 'curp' => $benban_curp, 'porcentaje' => $benban_porcentaje], "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
             } else {
                 // Si el índice es mayor que el total de referencias en la base de datos, almacena una nueva referencia.
-                $crud->store('ben_bancarios_temporales', ['nombre' => $benban_nombre, 'apellido_pat' => $benban_apellidopat, 'apellido_mat' => $benban_apellidomat, 'relacion' => $benban_relacion, 'rfc' => $benban_rfc, 'curp' => $benban_curp, 'porcentaje' => $benban_porcentaje]);
+                $crud->store('ben_bancarios_temporales', ['expediente_id' => $id_expediente, 'nombre' => $benban_nombre, 'apellido_pat' => $benban_apellidopat, 'apellido_mat' => $benban_apellidomat, 'relacion' => $benban_relacion, 'rfc' => $benban_rfc, 'curp' => $benban_curp, 'porcentaje' => $benban_porcentaje]);
             }
         }
 
