@@ -1195,7 +1195,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					if (is_array($referencias_decoded) && count($referencias_decoded) == $_POST["numeroreferenciaslab"]) {
 						$referencias_contador = 1;
 						//Recorremos el arreglo
-						foreach ($referencias_decoded as $referencia_laboral) {
+						foreach ($referencias_decoded as &$referencia_laboral) {
 							//Checa que los campos no estén vacios
 							if (empty($referencia_laboral["nombre"]) || empty($referencia_laboral["apellidopat"]) || empty($referencia_laboral["apellidomat"]) || empty($referencia_laboral["relacion"]) || empty($referencia_laboral["telefono"])) {
 								die(json_encode(array("error", "Existen campos vacíos en las referencias laborales, por favor, verifique la información")));
@@ -1212,20 +1212,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 								}
 							}
 							// Aplicamos strtoupper a los valores de cadena
-							$referencia_laboral["nombre"] = strtoupper($referencia_laboral["nombre"]);
-							$referencia_laboral["apellidopat"] = strtoupper($referencia_laboral["apellidopat"]);
-							$referencia_laboral["apellidomat"] = strtoupper($referencia_laboral["apellidomat"]);
-
 							//Le quitamos los acentos
-							// Aplicamos strtoupper a los valores de cadena
-							$referencia_laboral["nombre"] = quitarAcentos($referencia_laboral["nombre"]);
-							$referencia_laboral["apellidopat"] = quitarAcentos($referencia_laboral["apellidopat"]);
-							$referencia_laboral["apellidomat"] = quitarAcentos($referencia_laboral["apellidomat"]);
+							$referencia_laboral["nombre"] = strtoupper(quitarAcentos($referencia_laboral["nombre"]));
+							$referencia_laboral["apellidopat"] = strtoupper(quitarAcentos($referencia_laboral["apellidopat"]));
+							$referencia_laboral["apellidomat"] = strtoupper(quitarAcentos($referencia_laboral["apellidomat"]));
 
 							$referencias_contador++;
 						}
 						// Asigna el valor de "referencias" después de validar
-						$referencias = $_POST["referencias"];
+						$referencias = json_encode($referencias_decoded); // Convierte el arreglo de vuelta a JSON
 					} else {
 						die(json_encode(array("error", "El número de referencias laborales ingresado no coincide con el enviado, por favor, verifique la información")));
 					}
@@ -2582,7 +2577,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				if (is_array($referencias_decoded) && count($referencias_decoded) == $_POST["numeroreferenciaslab"]) {
 					$referencias_contador = 1;
 					//Recorremos el arreglo
-					foreach ($referencias_decoded as $referencia_laboral) {
+					foreach ($referencias_decoded as &$referencia_laboral) {
 						//Checa que los campos no estén vacios
 						if (empty($referencia_laboral["nombre"]) || empty($referencia_laboral["apellidopat"]) || empty($referencia_laboral["apellidomat"]) || empty($referencia_laboral["relacion"]) || empty($referencia_laboral["telefono"])) {
 							die(json_encode(array("error", "Existen campos vacíos en las referencias laborales, por favor, verifique la información")));
@@ -2599,20 +2594,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 							}
 						}
 						// Aplicamos strtoupper a los valores de cadena
-						$referencia_laboral["nombre"] = strtoupper($referencia_laboral["nombre"]);
-						$referencia_laboral["apellidopat"] = strtoupper($referencia_laboral["apellidopat"]);
-						$referencia_laboral["apellidomat"] = strtoupper($referencia_laboral["apellidomat"]);
-
 						//Le quitamos los acentos
-						// Aplicamos strtoupper a los valores de cadena
-						$referencia_laboral["nombre"] = quitarAcentos($referencia_laboral["nombre"]);
-						$referencia_laboral["apellidopat"] = quitarAcentos($referencia_laboral["apellidopat"]);
-						$referencia_laboral["apellidomat"] = quitarAcentos($referencia_laboral["apellidomat"]);
+						$referencia_laboral["nombre"] = strtoupper(quitarAcentos($referencia_laboral["nombre"]));
+						$referencia_laboral["apellidopat"] = strtoupper(quitarAcentos($referencia_laboral["apellidopat"]));
+						$referencia_laboral["apellidomat"] = strtoupper(quitarAcentos($referencia_laboral["apellidomat"]));
 
 						$referencias_contador++;
 					}
 					// Asigna el valor de "referencias" después de validar
-					$referencias = $_POST["referencias"];
+					$referencias = json_encode($referencias_decoded); // Convierte el arreglo de vuelta a JSON
 				} else {
 					die(json_encode(array("error", "El número de referencias laborales ingresado no coincide con el enviado, por favor, verifique la información")));
 				}
