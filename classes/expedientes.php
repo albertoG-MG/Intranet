@@ -416,79 +416,107 @@ class expedientes {
         }
     }
 
-    public function Crear_expediente($id, $logged_user){
+    public function Crear_expediente($logged_user){
         $crud = new crud();
         $object = new connection_database();
+        //SET_LOGGED_USER es utilizado para tener un historial de quién hace cambios en los expedientes, obtiene el nombre de la persona que está creando el expediente
         $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
         $set_logged_user -> execute(array(':loggeduser' => $logged_user));
-        $crud->store('expedientes', ['users_id' => $id, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->num_interior, 'num_exterior' => $this->num_exterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado_id, 'municipio_id' => $this->municipio_id, 'codigo' => $this->codigo, 'tel_dom' => $this->tel_dom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->tel_mov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fecha_nacimiento, 'fecha_inicioc' => $this->fecha_inicioc, 'fecha_alta' => $this->fecha_alta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->tipo_identificacion, 'num_identificacion' => $this->num_identificacion, 'capacitacion' => $this->capacitacion, 'fecha_enuniforme' => $this->fecha_enuniforme, 'cantidad_polo' => $this->cantidad_polo, 'talla_polo' => $this->talla_polo, 'emergencia_nombre' => $this->emergencia_nombre, 'emergencia_parentesco' => $this->emergencia_parentesco, 'emergencia_telefono' => $this->emergencia_telefono, 'emergencia_nombre2' => $this->emergencia_nombre2, 'emergencia_parentesco2' => $this->emergencia_parentesco2, 'emergencia_telefono2' => $this->emergencia_telefono2, 'resultado_antidoping' => $this->resultado_antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->fam_dentro_empresa, 'fam_nombre' => $this->fam_nombre, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]); 
-        $exp_id = $object -> _db -> lastInsertId();
+        //Primero checar si el usuario tiene un expediente temporal
+        $check_expediente_temporal = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
+        $check_expediente_temporal -> execute(array(':userid' => $this->select2));
+        $count_expediente_temporal = $check_expediente_temporal -> rowCount();
+        if($count_expediente_temporal > 0){
+            //Debemos eliminar los datos en las tablas temporales
+            $delete_temp_data = $object -> _db -> prepare("DELETE ben, ref, exp FROM ben_bancarios_temporales AS ben JOIN ref_laborales_temporales AS ref ON ben.expediente_id = ref.expediente_id JOIN expedientes_temporales AS exp ON ref.expediente_id = exp.id WHERE exp.users_id = :userid");
+            $delete_temp_data -> execute(array(':userid' => $this->select2));
+        }
+        //Una vez guardados, procedemos a guardarlos en la tabla principal de expedientes
+        $crud->store('expedientes', ['users_id' => $this->select2, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico, 'estatus_expediente' => "Completo"]);
+        //Obtenemos el id del último expediente insertado
+        $id_expediente = $object -> _db -> lastInsertId();
+        //Checamos si las referencias laborales no están vacías
         if(!(is_null($this->referencias))){
             $jsonData = stripslashes(html_entity_decode($this->referencias));
-            $ref = json_decode($jsonData);
-            expedientes::Crear_referenciaslab($exp_id, $ref);
+            $referencias = json_decode($jsonData);
+            expedientes::Crear_referenciaslab($id_expediente, $referencias);
         }
-        if(!(is_null($this->ref_banc))){
-            $jsonData2 = stripslashes(html_entity_decode($this->ref_banc));
-            $ref_banc = json_decode($jsonData2);
-            expedientes::Crear_referenciasbanc($exp_id, $ref_banc);
+        //Checamos si las referencias bancarias no están vacías
+        if(!(is_null($this->refbanc))){
+            $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
+            $refbanc = json_decode($jsonData2);
+            expedientes::Crear_beneficiariosbanc($id_expediente, $refbanc);
         }
+
+        //Verifica cuantos documentos hay en la base de datos
         $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
         $checktipospapeleria -> execute();
         $counttipospapeleria = $checktipospapeleria -> rowCount();
 
-        for($i = 1; $i <= $counttipospapeleria; $i++){
-            if(!(empty($this->arraypapeleria[$i]))){
+        foreach ($this->arraypapeleria as $i => $documento) {
+            if (!empty($documento)) {
                 $crud = new crud();
                 $papeleria = $i;
-                $filename = $this->arraypapeleria[$i]["name"];
+                $filename = $documento["name"];
                 $location = "../src/documents/";
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 $uploadfile = Expedientes::tempnam_sfx($location, $ext);
-                if(move_uploaded_file($this->arraypapeleria[$i]['tmp_name'],$uploadfile)){
+                
+                if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
                     date_default_timezone_set("America/Monterrey");
                     $fecha_subida = date('y-m-d h:i:s');
-                    $crud -> store('papeleria_empleado', ['expediente_id' => $exp_id, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                    $crud->store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
                 }
             }
         }
         date_default_timezone_set("America/Monterrey");
 		$fecha_estatus = date('Y-m-d');
-        $crud -> store('estatus_empleado', ['expedientes_id' => $exp_id, 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
+        $crud -> store('estatus_empleado', ['expedientes_id' => $id_expediente, 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
     }
 
-    public static function Crear_referenciaslab($exp_id, $ref){
+    public static function Crear_referenciaslab($id_expediente, $referencias){
         $refcrud = new crud();
-        $numero  = count($ref);
-        try{
-            for($i=0; $i<$numero; $i++){
-                $refnombre= $ref[$i]->nombre;
-                $refrelacion = $ref[$i]->relacion;
-                $reftelefono = $ref[$i]->telefono;
-                $refcrud->store('ref_laborales', ['nombre' => $refnombre, 'telefono' => $reftelefono, 'relacion' => $refrelacion, 'expediente_id' => $exp_id]);
-            }
-        } catch (Exception $e) {
-                $refcrud -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
-                exit('Ocurrio un error al momento de grabar las referencias laborales');   
+        foreach ($referencias as $referencia) {
+            $ref_nombre = $referencia->nombre;
+            $ref_apellidopat = $referencia->apellidopat;
+            $ref_apellidomat = $referencia-> apellidomat;
+            $ref_relacion = $referencia->relacion;
+            $ref_telefono = $referencia->telefono;
+            
+            // Luego, almacena la referencia laboral en la base de datos
+            $refcrud->store('ref_laborales', [
+                'expediente_id' => $id_expediente, // Usar el ID del expediente proporcionado
+                'nombre' => $ref_nombre,
+                'apellido_pat' => $ref_apellidopat,
+                'apellido_mat' => $ref_apellidomat,
+                'relacion' => $ref_relacion,
+                'telefono' => $ref_telefono
+            ]);
         }
     }
 
-    public static function Crear_referenciasbanc($exp_id, $ref_banc){
-        $refcrud_banc = new crud();
-        $numerocont  = count($ref_banc);
-        try{
-            for($a=0; $a<$numerocont; $a++){
-                $brefnombre= $ref_banc[$a]->nombre;
-                $brefrelacion = $ref_banc[$a]->relacion;
-                $brefrfc = $ref_banc[$a]->rfc;
-                $brefcurp = $ref_banc[$a]->curp;
-                $brefporcentaje = $ref_banc[$a]->porcentaje;
-
-                $refcrud_banc->store('ref_bancarias', ['expediente_id' => $exp_id, 'nombre' => $brefnombre, 'relacion' => $brefrelacion, 'rfc' => $brefrfc, 'curp' => $brefcurp, 'prcnt_derecho' => $brefporcentaje]);
-            }
-        } catch (Exception $e) {
-                $refcrud_banc -> delete ('expedientes', 'id=:id', ['id' => $exp_id]);
-                exit('Ocurrio un error al momento de grabar las referencias laborales');   
+    public static function Crear_beneficiariosbanc($id_expediente, $refbanc){
+        $refbanc_crud = new crud();
+        foreach ($refbanc as $beneficiario) {
+            $ben_nombre = $beneficiario->nombre;
+            $ben_apellidopat = $beneficiario->apellidopat;
+            $ben_apellidomat = $beneficiario->apellidomat;
+            $ben_relacion = $beneficiario->relacion;
+            $ben_rfc = $beneficiario->rfc;
+            $ben_curp = $beneficiario->curp;
+            $ben_porcentaje = $beneficiario->porcentaje;
+            
+            // Luego, almacena el beneficiario bancario en la base de datos
+            $refbanc_crud->store('ben_bancarios', [
+                'expediente_id' => $id_expediente, // Usar el ID del expediente proporcionado
+                'nombre' => $ben_nombre,
+                'apellido_pat' => $ben_apellidopat,
+                'apellido_mat' => $ben_apellidomat,
+                'relacion' => $ben_relacion,
+                'rfc' =>  $ben_rfc,
+                'curp' => $ben_curp,
+                'porcentaje' => $ben_porcentaje
+            ]);
         }
     }
 
