@@ -228,10 +228,6 @@
 
     //Adaptar todo al nuevo editar expediente
     /*
-        $estado = $object->_db->prepare("select * from estados");
-        $estado->execute();
-        $contestado=0;
-
         $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
         $referencias_laborales->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
         $referencias_laborales->execute();

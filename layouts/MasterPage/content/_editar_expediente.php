@@ -92,44 +92,37 @@
                                  </label>
                                  <div class="group flex" id="selectuser" style="display:none !important; position:relative;">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                                          <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                       </svg>
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                          </svg>
                                     </div>
                                     <select id="user" name="user">
-                                       <option></option>
-                                       <optgroup label="Usuarios">
-                                          <?php
-                                          $arr = array();
-
-                                          // Consulta para verificar la relación de usuarios con "expedientes"
-                                          $checkexpuser = $object->_db->prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id = usuarios.id");
-                                          $checkexpuser->execute();
-
-                                          while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)) {
-                                             $arr[] = $fetchuserexp->id;
-                                          }
-
-                                          // Consulta para verificar la relación de usuarios con "expedientes_temporales"
-                                          $checktempuser = $object->_db->prepare("SELECT usuarios.id FROM expedientes_temporales INNER JOIN usuarios ON expedientes_temporales.users_id = usuarios.id");
-                                          $checktempuser->execute();
-
-                                          while ($fetchusertemp = $checktempuser->fetch(PDO::FETCH_OBJ)) {
-                                             $arr[] = $fetchusertemp->id;
-                                          }
-
-                                          $usuarios = user::FetchUsuarios();
-                                          foreach ($usuarios as $row) {
-                                             if ($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo") {
-                                                if (!in_array($row->id, $arr)) {
-                                                   echo "<option value='" . $row->id . "'>";
-                                                   echo "$row->nombre $row->apellido_pat $row->apellido_mat";
-                                                   echo "</option>";
+                                          <option></option>
+                                          <optgroup label="Usuarios">
+                                             <?php
+                                             $arr = array();
+                                             $checkexpuser = $object->_db->prepare("SELECT usuarios.id FROM expedientes INNER JOIN usuarios ON expedientes.users_id = usuarios.id WHERE expedientes.id != :expedienteid");
+                                             $checkexpuser->bindParam('expedienteid', $Editarid, PDO::PARAM_INT);
+                                             $checkexpuser->execute();
+                                             while ($fetchuserexp = $checkexpuser->fetch(PDO::FETCH_OBJ)) {
+                                                $arr[] = $fetchuserexp->id;
+                                             }
+                                             $usuarios = user::FetchUsuarios();
+                                             foreach ($usuarios as $row) {
+                                                if ($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo") {
+                                                      if (!in_array($row->id, $arr)) {
+                                                         echo "<option value='" . $row->id . "'";
+                                                         if ($row->id == $edit->userid) {
+                                                            echo 'selected';
+                                                         }
+                                                         echo ">";
+                                                         echo "$row->nombre $row->apellido_pat $row->apellido_mat";
+                                                         echo "</option>";
+                                                      }
                                                 }
                                              }
-                                          }
-                                          ?>
-                                       </optgroup>
+                                             ?>
+                                          </optgroup>
                                     </select>
                                  </div>
                               </div>
@@ -143,7 +136,7 @@
                                           <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="numempleado_help" id="numempleado" name="numempleado" placeholder="i.e. L-35">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="numempleado_help" id="numempleado" name="numempleado" value="<?php if($counttemp > 0){ if($temp['num_empleado'] !== null){echo "{$temp['num_empleado']}";}else{ if($edit->enum_empleado !== null){ echo "{$edit->enum_empleado}"; }}}else{if($edit->enum_empleado !== null){ echo "{$edit->enum_empleado}"; }} ?>" placeholder="i.e. L-35">
                                  </div>
                                  <div id="loader-numempleado" class="hidden mt-5">
                                     <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +176,7 @@
                                           <path fill="currentColor" d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="puesto" name="puesto" placeholder="Puesto">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="puesto" name="puesto" value="<?php if($counttemp > 0){ if($temp['puesto'] !== null){echo "{$temp['puesto']}";}else{ if($edit->epuesto !== null){ echo "{$edit->epuesto}"; }}}else{if($edit->epuesto !== null){ echo "{$edit->epuesto}"; }} ?>" placeholder="Puesto">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -196,14 +189,14 @@
                                     </div>
                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estudios" name="estudios">
                                        <option value="">-- Seleccione --</option>
-                                       <option value="PRIMARIA">Primaria</option>
-                                       <option value="SECUNDARIA">Secundaria</option>
-                                       <option value="BACHILLERATO">Bachillerato</option>
-                                       <option value="CARRERA TECNICA">Carrera técnica</option>
-                                       <option value="LICENCIATURA">Licenciatura</option>
-                                       <option value="ESPECIALIDAD">Especialidad</option>
-                                       <option value="MAESTRIA">Maestría</option>
-                                       <option value="DOCTORADO">Doctorado</option>
+                                       <option value="PRIMARIA" <?php if($counttemp > 0){if($temp['estudios'] == "PRIMARIA"){echo 'selected="selected"';}}else{if($edit->eestudios == "PRIMARIA"){echo 'selected="selected"';}} ?>>Primaria</option>
+                                       <option value="SECUNDARIA" <?php if($counttemp > 0){if($temp['estudios'] == "SECUNDARIA"){echo 'selected="selected"';}}else{if($edit->eestudios == "SECUNDARIA"){echo 'selected="selected"';}} ?>>Secundaria</option>
+                                       <option value="BACHILLERATO" <?php if($counttemp > 0){if($temp['estudios'] == "BACHILLERATO"){echo 'selected="selected"';}}else{if($edit->eestudios == "BACHILLERATO"){echo 'selected="selected"';}} ?>>Bachillerato</option>
+                                       <option value="CARRERA TECNICA" <?php if($counttemp > 0){if($temp['estudios'] == "CARRERA TECNICA"){echo 'selected="selected"';}}else{if($edit->eestudios == "CARRERA TECNICA"){echo 'selected="selected"';}} ?>>Carrera técnica</option>
+                                       <option value="LICENCIATURA" <?php if($counttemp > 0){if($temp['estudios'] == "LICENCIATURA"){echo 'selected="selected"';}}else{if($edit->eestudios == "LICENCIATURA"){echo 'selected="selected"';}} ?>>Licenciatura</option>
+                                       <option value="ESPECIALIDAD" <?php if($counttemp > 0){if($temp['estudios'] == "ESPECIALIDAD"){echo 'selected="selected"';}}else{if($edit->eestudios == "ESPECIALIDAD"){echo 'selected="selected"';}} ?>>Especialidad</option>
+                                       <option value="MAESTRIA" <?php if($counttemp > 0){if($temp['estudios'] == "MAESTRIA"){echo 'selected="selected"';}}else{if($edit->eestudios == "MAESTRIA"){echo 'selected="selected"';}} ?>>Maestría</option>
+                                       <option value="DOCTORADO" <?php if($counttemp > 0){if($temp['estudios'] == "DOCTORADO"){echo 'selected="selected"';}}else{if($edit->eestudios == "DOCTORADO"){echo 'selected="selected"';}} ?>>Doctorado</option>
                                     </select>
                                  </div>
                               </div>
@@ -218,15 +211,15 @@
                                     <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="correo_usuario" name="correo_usuario" placeholder="Correo" readonly>
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['posee_correo'] === 'SI' ? 'true' : 'false';}else{echo $edit->eposee_correo === 'SI' ? 'true' : 'false';} ?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Desea agregar un correo electrónico adicional?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1">
+                                       <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" <?php if($counttemp > 0){echo $temp['posee_correo'] === 'SI' ? 'checked' : '';}else{echo $edit->eposee_correo === 'SI' ? 'checked' : '';} ?>>
                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2" checked="">
+                                       <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2" <?php if($counttemp > 0){echo $temp['posee_correo'] === 'NO' ? 'checked' : '';}else{echo $edit->eposee_correo === 'NO' ? 'checked' : '';} ?>>
                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -241,7 +234,7 @@
                                                 <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="correoadicional_help" id="correo_adicional" name="correo_adicional" placeholder="i.e. example@example.com">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" aria-describedby="correoadicional_help" id="correo_adicional" name="correo_adicional" value="<?php if($counttemp > 0){echo $temp['posee_correo'] === 'SI' ? $temp['correo_adicional'] : '';}else{echo $edit->eposee_correo === 'SI' ? $edit->ecorreo_adicional : '';} ?>" placeholder="i.e. example@example.com">
                                        </div>
                                        <div id="loader-correo" class="hidden mt-5">
                                           <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -277,7 +270,7 @@
                                              <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="calle" name="calle" placeholder="Calle">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="calle" name="calle" value="<?php if($counttemp > 0){ if($temp['calle'] !== null){echo "{$temp['calle']}";}else{ if($edit->ecalle !== null){ echo "{$edit->ecalle}"; }}}else{if($edit->ecalle !== null){ echo "{$edit->ecalle}"; }} ?>" placeholder="Calle">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -288,7 +281,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="ninterior" name="ninterior" placeholder="Número Interior">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="ninterior" name="ninterior" value="<?php if($counttemp > 0){ if($temp['num_interior'] !== null){echo "{$temp['num_interior']}";}else{ if($edit->enum_interior !== null){ echo "{$edit->enum_interior}"; }}}else{if($edit->enum_interior !== null){ echo "{$edit->enum_interior}"; }} ?>" placeholder="Número Interior">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -299,7 +292,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nexterior" name="nexterior" placeholder="Número exterior">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nexterior" name="nexterior" value="<?php if($counttemp > 0){ if($temp['num_exterior'] !== null){echo "{$temp['num_exterior']}";}else{ if($edit->enum_exterior !== null){ echo "{$edit->enum_exterior}"; }}}else{if($edit->enum_exterior !== null){ echo "{$edit->enum_exterior}"; }} ?>" placeholder="Número exterior">
                                     </div>
                                  </div>
                               </div>
@@ -312,7 +305,7 @@
                                              <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="colonia" name="colonia" placeholder="Colonia">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="colonia" name="colonia" value="<?php if($counttemp > 0){ if($temp['colonia'] !== null){echo "{$temp['colonia']}";}else{ if($edit->ecolonia !== null){ echo "{$edit->ecolonia}"; }}}else{if($edit->ecolonia !== null){ echo "{$edit->ecolonia}"; }} ?>" placeholder="Colonia">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -325,7 +318,14 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estado" name="estado">
                                           <option value="">--Seleccione--</option>
-                                          <?php while ($r = $estado->fetch(PDO::FETCH_OBJ)) { $contestado++; ?> <option value="<?php echo $contestado; ?>"><?php echo $r->nombre; ?></option> <?php } ?>
+                                          <?php
+                                             while ($r = $estado->fetch(PDO::FETCH_OBJ)) {
+                                                $contestado++;
+                                          ?>
+                                          <option value="<?php echo $contestado; ?>" <?php if($counttemp > 0){if($contestado == $temp['estado']){echo 'selected="selected"';}}else{if($contestado == $edit->eestado){echo 'selected="selected"';}} ?>><?php echo $r->nombre; ?></option>
+                                          <?php
+                                             }
+                                          ?>
                                        </select>
                                     </div>
                                  </div>
@@ -351,7 +351,7 @@
                                           <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="codigo" name="codigo" placeholder="Código postal">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="codigo" name="codigo" value="<?php if($counttemp > 0){ if($temp['codigo'] !== null){echo "{$temp['codigo']}";}else{ if($edit->ecodigo !== null){ echo "{$edit->ecodigo}"; }}}else{if($edit->ecodigo !== null){ echo "{$edit->ecodigo}"; }} ?>" placeholder="Código postal">
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
@@ -362,18 +362,18 @@
                                           <path fill="currentColor" d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="teldom" name="teldom" placeholder="Télefono de domicilio">
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="teldom" name="teldom" value="<?php if($counttemp > 0){ if($temp['tel_dom'] !== null){echo "{$temp['tel_dom']}";}else{ if($edit->etel_dom !== null){ echo "{$edit->etel_dom}"; }}}else{if($edit->etel_dom !== null){ echo "{$edit->etel_dom}"; }} ?>" placeholder="Télefono de domicilio">
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['posee_telmov'] === 'SI' ? 'true' : 'false';}else{echo $edit->eposee_telmov === 'SI' ? 'true' : 'false';} ?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Posee teléfono propio?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                       <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php if($counttemp > 0){echo $temp['posee_telmov'] === 'SI' ? 'checked' : '';}else{echo $edit->eposee_telmov === 'SI' ? 'checked' : '';} ?>>
                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                       <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php if($counttemp > 0){echo $temp['posee_telmov'] === 'NO' ? 'checked' : '';}else{echo $edit->eposee_telmov === 'NO' ? 'checked' : '';} ?>>
                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -388,7 +388,7 @@
                                                 <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="telmov" name="telmov"  placeholder="Télefono móvil propio">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="telmov" name="telmov" value="<?php if($counttemp > 0){echo $temp['posee_telmov'] === 'SI' ? $temp['tel_mov'] : '';}else{echo $edit->eposee_telmov === 'SI' ? $edit->etel_mov : '';} ?>" placeholder="Télefono móvil propio">
                                        </div>
                                     </div>
                                  </div>
@@ -397,15 +397,15 @@
                                  <h2 class="text-2xl text-celeste font-semibold mt-5">Dispositivos proporcionados por la empresa</h2>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
-                              <div x-data="{ open: false }">
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? 'true' : 'false';}else{echo $edit->eposee_telempresa === 'SI' ? 'true' : 'false';} ?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Teléfono asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                       <input id="option-telempresa-1" type="radio" name="tel_movil_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? 'checked' : '';}else{echo $edit->eposee_telempresa === 'SI' ? 'checked' : '';} ?>>
                                        <label for="option-telempresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                       <input id="option-telempresa-2" type="radio" name="tel_movil_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'NO' ? 'checked' : '';}else{echo $edit->eposee_telempresa === 'NO' ? 'checked' : '';} ?>>
                                        <label for="option-telempresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -421,7 +421,7 @@
                                                    <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marcacion" name="marcacion" placeholder="i.e. 767">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marcacion" name="marcacion" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['marcacion'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->emarcacion : '';} ?>" placeholder="i.e. 767">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -432,7 +432,7 @@
                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie" name="serie" placeholder="i.e. DB168091200530">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie" name="serie" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['serie'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->eserie : '';} ?>" placeholder="i.e. DB168091200530">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -443,7 +443,7 @@
                                                    <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="sim" name="sim" placeholder="i.e 89014103211118510720">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="sim" name="sim" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['sim'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->esim : '';} ?>" placeholder="i.e 89014103211118510720">
                                           </div>
                                        </div>
                                     </div>
@@ -456,7 +456,7 @@
                                                    <path fill="currentColor" d="M4.93,4.93C3.12,6.74 2,9.24 2,12C2,14.76 3.12,17.26 4.93,19.07L6.34,17.66C4.89,16.22 4,14.22 4,12C4,9.79 4.89,7.78 6.34,6.34L4.93,4.93M19.07,4.93L17.66,6.34C19.11,7.78 20,9.79 20,12C20,14.22 19.11,16.22 17.66,17.66L19.07,19.07C20.88,17.26 22,14.76 22,12C22,9.24 20.88,6.74 19.07,4.93M7.76,7.76C6.67,8.85 6,10.35 6,12C6,13.65 6.67,15.15 7.76,16.24L9.17,14.83C8.45,14.11 8,13.11 8,12C8,10.89 8.45,9.89 9.17,9.17L7.76,7.76M16.24,7.76L14.83,9.17C15.55,9.89 16,10.89 16,12C16,13.11 15.55,14.11 14.83,14.83L16.24,16.24C17.33,15.15 18,13.65 18,12C18,10.35 17.33,8.85 16.24,7.76M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numred" name="numred" placeholder="i.e. 310260">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numred" name="numred" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['numerored_empresa'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->enumred : '';} ?>" placeholder="i.e. 310260">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -467,7 +467,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="modelotel" name="modelotel" placeholder="i.e. TP802A">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="modelotel" name="modelotel" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['modelotel_empresa'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->modeltel : '';} ?>" placeholder="i.e. TP802A">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -478,7 +478,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marcatel" name="marcatel" placeholder="i.e. Samsung Galaxy">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marcatel" name="marcatel" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['marcatel_empresa'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->marcatel : '';} ?>" placeholder="i.e. Samsung Galaxy">
                                           </div>
                                        </div>
                                     </div>
@@ -490,20 +490,20 @@
                                                 <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="imei" name="imei" placeholder="i.e. 861536030196001">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="imei" name="imei" value="<?php if($counttemp > 0){echo $temp['posee_telempresa'] === 'SI' ? $temp['imei'] : '';}else{echo $edit->eposee_telempresa === 'SI' ? $edit->eimei : '';} ?>" placeholder="i.e. 861536030196001">
                                        </div>
                                     </div>
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['posee_laptop'] === 'SI' ? 'true' : 'false';}else{echo $edit->eposee_laptop === 'SI' ? 'true' : 'false';} ?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Laptop asignado por la empresa?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1">
+                                       <input id="option-laptop-1" type="radio" name="laptop_empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-1" aria-describedby="option-laptop-1" <?php if($counttemp > 0){echo $temp['posee_laptop'] === 'SI' ? 'checked' : '';}else{echo $edit->eposee_laptop === 'SI' ? 'checked' : '';} ?>>
                                        <label for="option-laptop-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2" checked="">
+                                       <input id="option-laptop-2" type="radio" name="laptop_empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-laptop-2" aria-describedby="option-laptop-2" <?php if($counttemp > 0){echo $temp['posee_laptop'] === 'NO' ? 'checked' : '';}else{echo $edit->eposee_laptop === 'NO' ? 'checked' : '';} ?>>
                                        <label for="option-laptop-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -519,7 +519,7 @@
                                                    <path fill="currentColor" d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marca_laptop" name="marca_laptop" placeholder="i.e. Lenovo">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="marca_laptop" name="marca_laptop" value="<?php if($counttemp > 0){echo $temp['posee_laptop'] === 'SI' ? $temp['marca_laptop'] : '';}else{echo $edit->eposee_laptop === 'SI' ? $edit->emarca_laptop : '';} ?>" placeholder="i.e. Lenovo">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -530,7 +530,7 @@
                                                    <path fill="currentColor" d="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="modelo_laptop" name="modelo_laptop" placeholder="i.e. Lenovo Ideapad 330-15ARR">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="modelo_laptop" name="modelo_laptop" value="<?php if($counttemp > 0){echo $temp['posee_laptop'] === 'SI' ? $temp['modelo_laptop'] : '';}else{echo $edit->eposee_laptop === 'SI' ? $edit->emodelo_laptop : '';} ?>" placeholder="i.e. Lenovo Ideapad 330-15ARR">
                                           </div>
                                        </div>
                                        <div class="grid grid-cols-1">
@@ -541,7 +541,7 @@
                                                    <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
                                                 </svg>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie_laptop" name="serie_laptop" placeholder="i.e. S100NWDJ">
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="serie_laptop" name="serie_laptop" value="<?php if($counttemp > 0){echo $temp['posee_laptop'] === 'SI' ? $temp['serie_laptop'] : '';}else{echo $edit->eposee_laptop === 'SI' ? $edit->eserie_laptop : '';} ?>" placeholder="i.e. S100NWDJ">
                                           </div>
                                        </div>
                                     </div>
@@ -554,11 +554,11 @@
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">¿Casa propia?</label>
                                  <div class="group flex mt-3 items-center">
-                                    <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                    <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php if($counttemp > 0){echo $temp['casa_propia'] === 'SI' ? 'checked' : '';}else{echo $edit->ecasa_propia === 'SI' ? 'checked' : '';} ?>>
                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                     Sí
                                     </label>
-                                    <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                    <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php if($counttemp > 0){echo $temp['casa_propia'] === 'NO' ? 'checked' : '';}else{echo $edit->ecasa_propia === 'NO' ? 'checked' : '';} ?>>
                                     <label for="option-casa-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                     No
                                     </label>
@@ -574,22 +574,22 @@
                                     </div>
                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="ecivil" name="ecivil">
                                        <option value="">--Seleccione--</option>
-                                       <option value="SOLTERO">Soltero</option>
-                                       <option value="CASADO">Casado</option>
-                                       <option value="DIVORCIADO">Divorciado</option>
-                                       <option value="UNION LIBRE">Unión libre</option>
+                                       <option value="SOLTERO" <?php if($counttemp > 0){if($temp['ecivil'] == "SOLTERO"){echo 'selected="selected"';}}else{if($edit->eecivil == "SOLTERO"){echo 'selected="selected"';}} ?>>Soltero</option>
+                                       <option value="CASADO" <?php if($counttemp > 0){if($temp['ecivil'] == "CASADO"){echo 'selected="selected"';}}else{if($edit->eecivil == "CASADO"){echo 'selected="selected"';}} ?>>Casado</option>
+                                       <option value="DIVORCIADO" <?php if($counttemp > 0){if($temp['ecivil'] == "DIVORCIADO"){echo 'selected="selected"';}}else{if($edit->eecivil == "DIVORCIADO"){echo 'selected="selected"';}} ?>>Divorciado</option>
+                                       <option value="UNION LIBRE" <?php if($counttemp > 0){if($temp['ecivil'] == "UNION LIBRE"){echo 'selected="selected"';}}else{if($edit->eecivil == "UNION LIBRE"){echo 'selected="selected"';}} ?>>Unión libre</option>
                                     </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['posee_retencion'] === 'SI' ? 'true' : 'false';}else{echo $edit->eposee_retencion === 'SI' ? 'true' : 'false';} ?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label class="text-[#64748b] font-semibold mb-2">¿Posee retención crédito infonavit?</label>
                                     <div class="group flex mt-3 items-center">
-                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
+                                       <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php if($counttemp > 0){echo $temp['posee_retencion'] === 'SI' ? 'checked' : '';}else{echo $edit->eposee_retencion === 'SI' ? 'checked' : '';} ?>>
                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
                                        Sí
                                        </label>
-                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
+                                       <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php if($counttemp > 0){echo $temp['posee_retencion'] === 'NO' ? 'checked' : '';}else{echo $edit->eposee_retencion === 'NO' ? 'checked' : '';} ?>>
                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
                                        No
                                        </label>
@@ -604,7 +604,7 @@
                                                 <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="monto_mensual" name="monto_mensual" placeholder="Monto mensual">
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="monto_mensual" name="monto_mensual" value="<?php if($counttemp > 0){echo $temp['posee_retencion'] === 'SI' ? $temp['monto_mensual'] : '';}else{echo $edit->eposee_retencion === 'SI' ? $edit->emonto_mensual : '';} ?>" placeholder="Monto mensual">
                                        </div>
                                     </div>
                                  </div>
@@ -653,7 +653,7 @@
                                              <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="salario_contrato" name="salario_contrato" placeholder="Salario al inicio del periodo de prueba">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="salario_contrato" name="salario_contrato" value="<?php if($counttemp > 0){ if($temp['salario_contrato'] !== null){echo "{$temp['salario_contrato']}";}else{ if($edit->esalario_contrato !== null){ echo "{$edit->esalario_contrato}"; }}}else{if($edit->esalario_contrato !== null){ echo "{$edit->esalario_contrato}"; }} ?>" placeholder="Salario al inicio del periodo de prueba">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -664,13 +664,13 @@
                                              <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="salario_fechaalta" name="salario_fechaalta" placeholder="Salario después del periodo de prueba">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="salario_fechaalta" name="salario_fechaalta" value="<?php if($counttemp > 0){ if($temp['salario_fechaalta'] !== null){echo "{$temp['salario_fechaalta']}";}else{ if($edit->esalario_fechaalta !== null){ echo "{$edit->esalario_fechaalta}"; }}}else{if($edit->esalario_fechaalta !== null){ echo "{$edit->esalario_fechaalta}"; }} ?>" placeholder="Salario después del periodo de prueba">
                                     </div>
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
                                  <label class="text-[#64748b] font-semibold mb-2">Observaciones</label>
-                                 <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="observaciones" name="observaciones" placeholder="Observaciones"></textarea>
+                                 <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="observaciones" name="observaciones" placeholder="Observaciones"><?php if($counttemp > 0){ if($temp['observaciones'] !== null){echo "{$temp['observaciones']}";}else{ if($edit->eobservaciones !== null){ echo "{$edit->eobservaciones}"; }}}else{if($edit->eobservaciones !== null){ echo "{$edit->eobservaciones}"; }} ?></textarea>
                                  <div id="error_observaciones"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -682,7 +682,7 @@
                                              <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="curp" name="curp" placeholder="Curp">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="curp" name="curp" value="<?php if($counttemp > 0){ if($temp['curp'] !== null){echo "{$temp['curp']}";}else{ if($edit->ecurp !== null){ echo "{$edit->ecurp}"; }}}else{if($edit->ecurp !== null){ echo "{$edit->ecurp}"; }} ?>" placeholder="Curp">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -693,7 +693,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nss" name="nss" placeholder="NSS">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nss" name="nss" value="<?php if($counttemp > 0){ if($temp['nss'] !== null){echo "{$temp['nss']}";}else{ if($edit->enss !== null){ echo "{$edit->enss}"; }}}else{if($edit->enss !== null){ echo "{$edit->enss}"; }} ?>" placeholder="NSS">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -704,76 +704,58 @@
                                              <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="rfc" name="rfc" placeholder="RFC">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="rfc" name="rfc" value="<?php if($counttemp > 0){ if($temp['rfc'] !== null){echo "{$temp['rfc']}";}else{ if($edit->erfc !== null){ echo "{$edit->erfc}"; }}}else{if($edit->erfc !== null){ echo "{$edit->erfc}"; }} ?>" placeholder="RFC">
                                     </div>
                                  </div>
                               </div>
-                              <div x-data="{ open: false, ine: false, pasaporte: false, cedula: false }">
-                                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
-                                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación *</label>
-                                                        <div class="group flex">
-                                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                    <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
-                                                                </svg>
-                                                            </div>
-                                                            <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){tidentificacion($el.value); open = true; ine = true; pasaporte = false; cedula = false;}else if($el.value == 'PASAPORTE'){tidentificacion($el.value); open = true; ine = false; pasaporte = true; cedula = false;}else if($el.value == 'CEDULA'){tidentificacion($el.value); open = true; ine = false; pasaporte = false; cedula = true;}else{tidentificacion($el.value); open = false; ine = false; pasaporte = false; cedula = false;}" id="identificacion" name="identificacion">
-                                                                <option value="">--Seleccione--</option>
-                                                                <option value="INE">INE</option>
-                                                                <option value="PASAPORTE">PASAPORTE</option>
-                                                                <option value="CEDULA">CEDULA</option>
-                                                            </select>
-                                                        </div>
-                                                        <div x-show.important="open">
-                                                            <div class="grid grid-cols-1">
-                                                                <label class="text-[#64748b] font-semibold mb-2">Número de identificación *</label>
-                                                                <div class="group flex">
-                                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                            <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
-                                                                        </svg>
-                                                                    </div>
-                                                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" placeholder="Número de identificación">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                
-                                                    <script>
-                                                    function tidentificacion(value){
-                                                    if(value == ""){
-                                                        $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
-                                                    }else {
-                                                        $("#numeroidentificacion").val(""); $("#numeroidentificacion").rules("remove"); $("#numeroidentificacion").removeClass("error border-2 border-rose-500 focus:ring-rose-600"); $("#numeroidentificacion").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); $("#numeroidentificacion-error").css("display", "none");
-                                                        if(value == "INE"){
-                                                            $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 13, maxlength: 13, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 13 dígitos', maxlength: 'No puede ser mayor a 13 dígitos' } }); 
-                                                        }else if(value == "PASAPORTE"){
-                                                            $("#numeroidentificacion").rules("add", { required: true, alphanumeric: true, minlength: 9, maxlength: 9, messages: { required: "Este campo es requerido", alphanumeric: "Solo se permiten carácteres alfanúmericos", minlength: 'No puede ser menor a 9 dígitos', maxlength: 'No puede ser mayor a 9 dígitos' }});
-                                                        }else if(value == "CEDULA"){
-                                                            $("#numeroidentificacion").rules("add", { required: true, number: true, minlength: 8, maxlength: 8, messages: { required: "Este campo es requerido", number: "Solo se permiten números", minlength: 'No puede ser menor a 8 dígitos', maxlength: 'No puede ser mayor a 8 dígitos' } }); 
-                                                        }
-                                                    }
-                                                    }
-                                                    </script>
-                                                    <div x-show.important="ine">
-                                                        <div class=" grid-cols-1 mt-5 ">
-                                                        <img class="w-full" src="../src/img/INE.jpeg">
-                                                        </div>
-                                                    </div>
-                                                    <div x-show.important="pasaporte">
-                                                        <div class="grid grid-cols-1 mt-5 ">
-                                                        <img class="w-full" src="../src/img/PASAPORTE.jpeg">
-                                                        </div>
-                                                    </div>
-                                                    <div x-show.important="cedula">
-                                                        <div class="grid grid-cols-1 mt-5 ">
-                                                        <img class="w-full" src="../src/img/CEDULA.jpeg">
-                                                        </div>
-                                                    </div> 
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['tipo_identificacion'] !== null ? 'true' : 'false';}else{echo $edit->etipo_identificacion !== null ? 'true' : 'false';} ?>, ine: <?php if($counttemp > 0){echo $temp['tipo_identificacion'] === "INE" ? 'true' : 'false';}else{echo $edit->etipo_identificacion === "INE" ? 'true' : 'false';} ?>, pasaporte: <?php if($counttemp > 0){echo $temp['tipo_identificacion'] === "PASAPORTE" ? 'true' : 'false';}else{echo $edit->etipo_identificacion === "PASAPORTE" ? 'true' : 'false';} ?>, cedula: <?php if($counttemp > 0){echo $temp['tipo_identificacion'] === "CEDULA" ? 'true' : 'false';}else{echo $edit->etipo_identificacion === "CEDULA" ? 'true' : 'false';} ?> }">
+                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14" />
+                                             </svg>
+                                          </div>
+                                          <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'INE'){open = true; ine = true; pasaporte = false; cedula = false;}else if($el.value == 'PASAPORTE'){open = true; ine = false; pasaporte = true; cedula = false;}else if($el.value == 'CEDULA'){open = true; ine = false; pasaporte = false; cedula = true;}else{open = false; ine = false; pasaporte = false; cedula = false;}" id="identificacion" name="identificacion">
+                                             <option value="">--Seleccione--</option>
+                                             <option value="INE" <?php if($counttemp > 0){if($temp['tipo_identificacion'] == "INE"){echo 'selected="selected"';}}else{if($edit->etipo_identificacion == "INE"){echo 'selected="selected"';}} ?>>INE</option>
+                                             <option value="PASAPORTE" <?php if($counttemp > 0){if($temp['tipo_identificacion'] == "PASAPORTE"){echo 'selected="selected"';}}else{if($edit->etipo_identificacion == "PASAPORTE"){echo 'selected="selected"';}} ?>>PASAPORTE</option>
+                                             <option value="CEDULA" <?php if($counttemp > 0){if($temp['tipo_identificacion'] == "CEDULA"){echo 'selected="selected"';}}else{if($edit->etipo_identificacion == "CEDULA"){echo 'selected="selected"';}} ?>>CEDULA</option>
+                                          </select>
+                                       </div>
+                                       <div x-show.important="open">
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold mb-2">Número de identificación</label>
+                                             <div class="group flex">
+                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M22,18V22H18V19H15V16H12L9.74,13.74C9.19,13.91 8.61,14 8,14A6,6 0 0,1 2,8A6,6 0 0,1 8,2A6,6 0 0,1 14,8C14,8.61 13.91,9.19 13.74,9.74L22,18M7,5A2,2 0 0,0 5,7A2,2 0 0,0 7,9A2,2 0 0,0 9,7A2,2 0 0,0 7,5Z" />
+                                                   </svg>
                                                 </div>
-                                            </div>
+                                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numeroidentificacion" name="numeroidentificacion" value="<?php if($counttemp > 0){echo $temp['tipo_identificacion'] !== null ? $temp['num_identificacion'] : '';}else{echo $edit->etipo_identificacion !== null ? $edit->enum_identificacion : '';} ?>" placeholder="Número de identificación">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div x-show.important="ine">
+                                       <div class=" grid-cols-1 mt-5 ">
+                                          <img class="w-full" src="../src/img/INE.jpeg">
+                                       </div>
+                                    </div>
+                                    <div x-show.important="pasaporte">
+                                       <div class="grid grid-cols-1 mt-5 ">
+                                          <img class="w-full" src="../src/img/PASAPORTE.jpeg">
+                                       </div>
+                                    </div>
+                                    <div x-show.important="cedula">
+                                       <div class="grid grid-cols-1 mt-5 ">
+                                          <img class="w-full" src="../src/img/CEDULA.jpeg">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
                               <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="siguiente" name="siguiente" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>

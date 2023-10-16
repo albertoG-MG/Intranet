@@ -666,8 +666,11 @@
                             }
                         },
                         remote: {
-                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_num_empleado.php" : false,
-                            type: "GET",
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/checkedit_num_empleado.php" : false,
+                            type: "POST",
+                            data: {
+                                "editarid": <?php echo $Editarid; ?>
+                            },
                             beforeSend: function () {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
                                     $('#loader-numempleado').removeClass('hidden');
@@ -2094,6 +2097,95 @@
         $('#user').on("change", function (e) {
             $(this).valid()
         });
+
+        //VALIDACIÓN PARA EL NÚMERO DE EMPLEADO CUANDO CARGUE LA PÁGINA
+        if (!($('#numempleado').val().length === 0)) {
+            $("#numempleado").valid();
+        }
+
+        //CORREO ELECTRÓNICO Y DEPARTAMENTO AL CARGAR LA PÁGINA
+        if($('#user').val() != ""){ 
+            var fd =new FormData();
+            var id = $('#user').val();
+            fd.append('id', id);
+            $.ajax({
+                type: 'post',
+                url: '../ajax/expedientes/checkuserinformation.php',
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    var array = $.parseJSON(data);
+                    $("#departamento").val(array[0]);
+                    $("#correo_usuario").val(array[1]);
+                }
+            });
+        }
+
+        //MUNICIPIOS
+        if($('#estado').val() != ""){
+            var state = $('#estado').val();
+        
+            var data = {
+                id:state,
+                idExpediente: <?php echo ($Editarid); ?>
+            };
+        
+            $.ajax({
+                url: '../ajax/expedientes/municipios.php',
+                type:'POST',
+                data: data,
+                dataType: 'html',
+                success: function(data){
+                    $('#imunicipio').html(data);
+                },
+                error: function (data) {
+                    $("#ajax-error").text('Fail to send request');
+                }
+            });
+        }
+
+        //FECHA DE NACIMIENTO
+        <?php
+            if ($counttemp > 0) {
+                $fecha_nacimiento = $temp['fecha_nacimiento'];
+            } elseif ($edit->efecha_nacimiento !== null) {
+                $fecha_nacimiento = $edit->efecha_nacimiento;
+            }
+
+            if (isset($fecha_nacimiento)) {
+                $fechaConvertida = str_replace("-", "/", $fecha_nacimiento);
+                echo '$("input[name=\'fechanac\']").data(\'daterangepicker\').setStartDate(' . json_encode($fechaConvertida) . ');';
+            }
+        ?>
+
+        //FECHA DE CONTRATO
+        <?php
+            if ($counttemp > 0) {
+                $fecha_contrato = $temp['fecha_inicioc'];
+            } elseif ($edit->efecha_inicioc !== null) {
+                $fecha_contrato = $edit->efecha_inicioc;
+            }
+
+            if (isset($fecha_contrato)) {
+                $fechaConvertida = str_replace("-", "/", $fecha_contrato);
+                echo '$("input[name=\'fechacon\']").data(\'daterangepicker\').setStartDate(' . json_encode($fechaConvertida) . ');';
+            }
+        ?>
+
+        //FECHA DE ALTA
+        <?php
+            if ($counttemp > 0) {
+                $fecha_alta = $temp['fecha_alta'];
+            } elseif ($edit->efecha_alta !== null) {
+                $fecha_alta = $edit->efecha_alta;
+            }
+
+            if (isset($fecha_alta)) {
+                $fechaConvertida = str_replace("-", "/", $fecha_alta);
+                echo '$("input[name=\'fechaalta\']").data(\'daterangepicker\').setStartDate(' . json_encode($fechaConvertida) . ');';
+            }
+        ?>
 
         $(document).on('click', '#guardarDG', function(e) {
             e.preventDefault(); // Evitar el envío del formulario por defecto
