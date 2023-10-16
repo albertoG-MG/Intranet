@@ -1171,15 +1171,39 @@
                                                     }
                                                 </script>
                                                 <div x-show.important="open">
-                                                    <div class="grid grid-cols-1 mt-5 mx-7">
-                                                        <label class="text-[#64748b] font-semibold mb-2">Nombre completo del familiar *</label>
-                                                        <div class="group flex">
-                                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                                    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                                </svg>
+                                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 items-start">
+                                                        <div class="grid grid-cols-1 mt-5 mx-7">
+                                                            <label class="text-[#64748b] font-semibold mb-2">Nombre(s) *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" onkeyup="this.value = this.value.toUpperCase();" value="<?php if($edit->efam_dentro_empresa == 'si'){ echo $edit->efam_nombre; } ?>" placeholder="Nombre(s)">
                                                             </div>
-                                                            <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" onkeyup="this.value = this.value.toUpperCase();" value="<?php if($edit->efam_dentro_empresa == 'si'){ echo $edit->efam_nombre; } ?>" placeholder="Nombre completo del familiar">
+                                                        </div>
+                                                        <div class="grid grid-cols-1 mt-5 mx-7">
+                                                            <label class="text-[#64748b] font-semibold mb-2">Apellido Paterno *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" onkeyup="this.value = this.value.toUpperCase();" value="<?php if($edit->efam_dentro_empresa == 'si'){ echo $edit->efam_apellidopat; } ?>" placeholder="Apellido Paterno">
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-1 mt-5 mx-7">
+                                                            <label class="text-[#64748b] font-semibold mb-2">Apellido Materno *</label>
+                                                            <div class="group flex">
+                                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                                    </svg>
+                                                                </div>
+                                                                <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" onkeyup="this.value = this.value.toUpperCase();" value="<?php if($edit->efam_dentro_empresa == 'si'){ echo $edit->efam_apellidomat; } ?>" placeholder="Apellido Materno">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -813,7 +813,7 @@
                               <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                                  <div class="flex-1 flex flex-col mt-5">
                                     <div class="text-[#64748b] font-semibold">
-                                       Nombre completo:
+                                       Nombre(s):
                                     </div>
                                     <span>
                                     <?php if($view->eemergencia_nombre == null){ echo "No hay datos"; }else{echo "{$view->eemergencia_nombre}";} ?>
@@ -821,10 +821,26 @@
                                  </div>
                                  <div class="flex-1 flex flex-col mt-5">
                                     <div class="text-[#64748b] font-semibold">
-                                       Parentesco:
+                                       Apellido Paterno:
                                     </div>
                                     <span>
-                                    <?php if($view -> eemergencia_parentesco == null){ echo "No hay datos"; }else{echo "{$view -> eemergencia_parentesco}";} ?>
+                                    <?php if($view->eemergencia_appelidopat == null){ echo "No hay datos"; }else{echo "{$view->eemergencia_appelidopat}";} ?>
+                                    </span>
+                                 </div>
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Apellido Materno:
+                                    </div>
+                                    <span>
+                                    <?php if($view->eemergencia_appelidomat == null){ echo "No hay datos"; }else{echo "{$view->eemergencia_appelidomat}";} ?>
+                                    </span>
+                                 </div>
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Relación:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> eemergencia_relacion == null){ echo "No hay datos"; }else{echo "{$view -> eemergencia_relacion}";} ?>
                                     </span>
                                  </div>
                               </div>
@@ -841,7 +857,7 @@
                               <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                                  <div class="flex-1 flex flex-col mt-5">
                                     <div class="text-[#64748b] font-semibold">
-                                       Nombre completo2:
+                                       Nombre completo 2:
                                     </div>
                                     <span>
                                     <?php if($view -> eemergencia_nombre2 == null){ echo "No hay datos"; }else{echo "{$view -> eemergencia_nombre2}";} ?>
@@ -849,10 +865,26 @@
                                  </div>
                                  <div class="flex-1 flex flex-col mt-5">
                                     <div class="text-[#64748b] font-semibold">
-                                       Parentesco2:
+                                       Apellido Paterno 2:
                                     </div>
                                     <span>
-                                    <?php if($view -> eemergencia_parentesco2 == null){ echo "No hay datos"; }else{echo "{$view -> eemergencia_parentesco2}";} ?>
+                                    <?php if($view->eemergencia_appelidopat2 == null){ echo "No hay datos"; }else{echo "{$view->eemergencia_appelidopat2}";} ?>
+                                    </span>
+                                 </div>
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Apellido Materno 2:
+                                    </div>
+                                    <span>
+                                    <?php if($view->eemergencia_appelidomat2 == null){ echo "No hay datos"; }else{echo "{$view->eemergencia_appelidomat2}";} ?>
+                                    </span>
+                                 </div>
+                                 <div class="flex-1 flex flex-col mt-5">
+                                    <div class="text-[#64748b] font-semibold">
+                                       Relación 2:
+                                    </div>
+                                    <span>
+                                    <?php if($view -> eemergencia_relacion2 == null){ echo "No hay datos"; }else{echo "{$view -> eemergencia_relacion2}";} ?>
                                     </span>
                                  </div>
                               </div>
@@ -922,10 +954,34 @@
                                     <div class="flex flex-col mx-7">
                                        <div class="flex-1 flex flex-col mt-5">
                                           <div class="text-[#64748b] font-semibold">
-                                             Nombre completo del familiar:
+                                             Nombre(s):
                                           </div>
                                           <span>
                                           <?php if($view->efam_nombre == null){ echo "No hay datos"; }else{echo "{$view->efam_nombre}";} ?>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="showfamiliar">
+                                    <div class="flex flex-col mx-7">
+                                       <div class="flex-1 flex flex-col mt-5">
+                                          <div class="text-[#64748b] font-semibold">
+                                             Apellido Paterno:
+                                          </div>
+                                          <span>
+                                          <?php if($view->efam_apellidopat == null){ echo "No hay datos"; }else{echo "{$view->efam_apellidopat}";} ?>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="showfamiliar">
+                                    <div class="flex flex-col mx-7">
+                                       <div class="flex-1 flex flex-col mt-5">
+                                          <div class="text-[#64748b] font-semibold">
+                                             Apellido Materno:
+                                          </div>
+                                          <span>
+                                          <?php if($view->efam_apellidomat == null){ echo "No hay datos"; }else{echo "{$view->efam_apellidomat}";} ?>
                                           </span>
                                        </div>
                                     </div>

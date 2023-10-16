@@ -40,14 +40,14 @@
     $curDate = date("Y-m-d H:i:s",$formatDate);
     
     /*REFERENCIAS LABORALES*/
-    $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
+    $referencias_laborales = $object->_db->prepare("select nombre, apellido_pat, apellido_mat, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
     $referencias_laborales->bindParam("expedienteid", $fetch_token_user -> idExpediente, PDO::PARAM_INT);
     $referencias_laborales->execute();
     $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
     $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
 
     /*REFERENCIAS BANCARIAS*/
-    $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
+    $referencias_bancarias = $object->_db->prepare("select nombre, apellido_pat, apellido_mat, relacion, rfc, curp, porcentaje from ben_bancarios where expediente_id =:expedienteid");
     $referencias_bancarias->bindParam("expedienteid", $fetch_token_user -> idExpediente, PDO::PARAM_INT);
     $referencias_bancarias->execute();
     $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
