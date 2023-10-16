@@ -218,7 +218,7 @@
     $edit=Expedientes::FetchEditExpediente($Editarid);
 
     $checkiftemp = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
-    $checkiftemp -> execute(array('userid' => $edit->users_id));
+    $checkiftemp -> execute(array('userid' => $edit->userid));
     $counttemp = $checkiftemp ->rowCount();
 
     if($counttemp > 0){
