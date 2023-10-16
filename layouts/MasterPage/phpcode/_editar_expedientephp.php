@@ -1,6 +1,7 @@
 <?php
     include_once __DIR__ . "/../../../config/conexion.php";
     include_once __DIR__ . "/../../../classes/user.php";
+    include_once __DIR__ . "/../../../classes/expedientes.php";
     $object = new connection_database();
     
     session_start();
@@ -11,7 +12,7 @@
         die();
     }
 
-    if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+    if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
 		header("HTTP/1.0 403 Forbidden");
 	    echo "
 	    <html>
@@ -201,6 +202,51 @@
 	    </html>";
 		die();
     }
+
+     /*Si el id no existe, regresa*/
+	if($_GET['idExpediente'] == null){
+		header('Location: expedientes.php');
+	}else{
+		$Editarid = $_GET['idExpediente'];
+        /*Checa si el expediente esta vinculado*/
+        $checkexp=Expedientes::Checkusuarioxexpediente($Editarid);
+        if($checkexp == 0){
+            header('Location: expedientes.php');
+        }
+	}
+
+    //Adaptar todo al nuevo editar expediente
+    /*
+         $edit=Expedientes::Fetcheditexpediente($Editarid);
+
+        $estado = $object->_db->prepare("select * from estados");
+        $estado->execute();
+        $contestado=0;
+
+        $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
+        $referencias_laborales->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+        $referencias_laborales->execute();
+        $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
+        $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
+
+        $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
+        $referencias_bancarias->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
+        $referencias_bancarias->execute();
+        $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
+        $refban_json = json_encode($array_refban, JSON_UNESCAPED_UNICODE);
+
+        $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
+        $papeleria->execute(array(':expedienteid' => $Editarid));
+        $array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
+        $papeleria_contador = 0;
+        $buscar_papeleria="true";
+
+        $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
+        $checktipospapeleria -> execute();
+        $counttipospapeleria = $checktipospapeleria -> rowCount();
+
+        $logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
+    */
 
     $estado = $object->_db->prepare("select * from estados");
     $estado->execute();

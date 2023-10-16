@@ -1,6 +1,6 @@
 <div class="container mx-auto px-6 py-8">
    <h2 class="Titulos text-3xl sm:text-5xl lg:text-6xl">
-      Crear expedientes
+      Editar expedientes
    </h2>
    <div class="mt-4">
       <div class="flex flex-col mt-8">
@@ -35,13 +35,13 @@
                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M14 2H6C4.89 2 4 2.89 4 4V20C4 21.11 4.89 22 6 22H13.81C13.28 21.09 13 20.05 13 19C13 18.67 13.03 18.33 13.08 18H6V16H13.81C14.27 15.2 14.91 14.5 15.68 14H6V12H18V13.08C18.33 13.03 18.67 13 19 13S19.67 13.03 20 13.08V8L14 2M13 9V3.5L18.5 9H13M18 15V18H15V20H18V23H20V20H23V18H20V15H18Z" />
                            </svg>
-                           <span class="text-sm font-medium">Crear expedientes</span>
+                           <span class="text-sm font-medium">Editar expedientes</span>
                         </div>
                      </div>
                   </div>
                   <div class="bg-white p-3 shadow-md rounded-b">
                      <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
-                        <b>CREAR EXPEDIENTE: </b>El formulario se divide en varias secciones o pestañas para organizar la información. Cada sección contiene un conjunto específico de datos que el usuario debe completar. La característica clave aquí es que no es necesario completar todo el formulario de una vez; en su lugar, el usuario puede guardar los datos de cada sección individualmente sin necesidad de llenar todas las secciones antes de avanzar. <b> Nota: </b> El botón de guardar progreso no es consecutivo, esto significa que los datos se almacenan por separado en función de la pestaña en la que se encuentra el usuario. 
+                        <b>EDITAR EXPEDIENTE: </b>El formulario se divide en varias secciones o pestañas para organizar la información. Cada sección contiene un conjunto específico de datos que el usuario debe completar. La característica clave aquí es que no es necesario completar todo el formulario de una vez; en su lugar, el usuario puede guardar los datos de cada sección individualmente sin necesidad de llenar todas las secciones antes de avanzar. <b> Nota: </b> El botón de guardar progreso no es consecutivo, esto significa que los datos se almacenan por separado en función de la pestaña en la que se encuentra el usuario. 
                      </div>
                      
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 mt-5 gap-3'>
