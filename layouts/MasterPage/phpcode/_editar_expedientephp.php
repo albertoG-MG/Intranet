@@ -215,10 +215,19 @@
         }
 	}
 
+    $edit=Expedientes::FetchEditExpediente($Editarid);
+
+    $checkiftemp = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
+    $checkiftemp -> execute(array('userid' => $edit['users_id']));
+    $counttemp = $checkiftemp ->rowCount();
+
+    if($counttemp > 0){
+        $fetchtemp = $checkiftemp -> fetch(PDO::FETCH_ASSOC);
+        $temp = Expedientes::FetchTempEditExpediente($fetchtemp['id']);
+    }
+
     //Adaptar todo al nuevo editar expediente
     /*
-         $edit=Expedientes::Fetcheditexpediente($Editarid);
-
         $estado = $object->_db->prepare("select * from estados");
         $estado->execute();
         $contestado=0;
