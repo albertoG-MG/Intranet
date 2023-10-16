@@ -2839,11 +2839,11 @@
     }
 
     //El objetivo es eliminar la sesión en caso de que el usuario abandone la página
-    $(window).on('beforeunload', function () {
+    $(window).on('unload', function () {
         $.ajax({
             type: 'POST',
-            url: '../config/destruirsesion_expediente.php', // Ruta a un script PHP u otra URL
-            async: true, // Esto permite que la solicitud continúe en segundo plano
+            url: '../config/destruirsesion_expediente.php',
+            async: false, // Puedes cambiar esto a 'false' si deseas esperar a que la solicitud se complete antes de que la página se descargue
         });
     });
 
