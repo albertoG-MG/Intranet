@@ -1610,7 +1610,7 @@
                                              <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="banco_personal" name="banco_personal" placeholder="Banco">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="banco_personal" name="banco_personal" value="<?php if($counttemp > 0){ if($temp['banco_personal'] !== null){echo "{$temp['banco_personal']}";}else{ if($edit->ebanco_personal !== null){ echo "{$edit->ebanco_personal}"; }}}else{if($edit->ebanco_personal !== null){ echo "{$edit->ebanco_personal}"; }} ?>" placeholder="Banco">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1621,7 +1621,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cuenta_personal" name="cuenta_personal" placeholder="Cuenta">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cuenta_personal" name="cuenta_personal" value="<?php if($counttemp > 0){ if($temp['cuenta_personal'] !== null){echo "{$temp['cuenta_personal']}";}else{ if($edit->ecuenta_personal !== null){ echo "{$edit->ecuenta_personal}"; }}}else{if($edit->ecuenta_personal !== null){ echo "{$edit->ecuenta_personal}"; }} ?>" placeholder="Cuenta">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1632,7 +1632,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="clabe_personal" name="clabe_personal" placeholder="Clabe">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="clabe_personal" name="clabe_personal" value="<?php if($counttemp > 0){ if($temp['clabe_personal'] !== null){echo "{$temp['clabe_personal']}";}else{ if($edit->eclabe_personal !== null){ echo "{$edit->eclabe_personal}"; }}}else{if($edit->eclabe_personal !== null){ echo "{$edit->eclabe_personal}"; }} ?>" placeholder="Clabe">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1 lg:col-span-3">
@@ -1643,7 +1643,7 @@
                                              <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z"></path>
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="plastico_personal" name="plastico_personal" placeholder="Plástico asignado">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="plastico_personal" name="plastico_personal" value="<?php if($counttemp > 0){ if($temp['plastico_personal'] !== null){echo "{$temp['plastico_personal']}";}else{ if($edit->eplastico_personal !== null){ echo "{$edit->eplastico_personal}"; }}}else{if($edit->eplastico_personal !== null){ echo "{$edit->eplastico_personal}"; }} ?>" placeholder="Plástico asignado">
                                     </div>
                                  </div>
                               </div>
@@ -1661,7 +1661,7 @@
                                              <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="banco_nomina" name="banco_nomina" placeholder="Banco">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="banco_nomina" name="banco_nomina" value="<?php if($counttemp > 0){ if($temp['banco_nomina'] !== null){echo "{$temp['banco_nomina']}";}else{ if($edit->ebanco_nomina !== null){ echo "{$edit->ebanco_nomina}"; }}}else{if($edit->ebanco_nomina !== null){ echo "{$edit->ebanco_nomina}"; }} ?>" placeholder="Banco">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1672,7 +1672,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cuenta_nomina" name="cuenta_nomina" placeholder="Cuenta">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cuenta_nomina" name="cuenta_nomina" value="<?php if($counttemp > 0){ if($temp['cuenta_nomina'] !== null){echo "{$temp['cuenta_nomina']}";}else{ if($edit->ecuenta_nomina !== null){ echo "{$edit->ecuenta_nomina}"; }}}else{if($edit->ecuenta_nomina !== null){ echo "{$edit->ecuenta_nomina}"; }} ?>" placeholder="Cuenta">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1683,7 +1683,7 @@
                                              <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="clabe_nomina" name="clabe_nomina" placeholder="Clabe">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="clabe_nomina" name="clabe_nomina" value="<?php if($counttemp > 0){ if($temp['clabe_nomina'] !== null){echo "{$temp['clabe_nomina']}";}else{ if($edit->eclabe_nomina !== null){ echo "{$edit->eclabe_nomina}"; }}}else{if($edit->eclabe_nomina !== null){ echo "{$edit->eclabe_nomina}"; }} ?>" placeholder="Clabe">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1 lg:col-span-3">
@@ -1694,7 +1694,7 @@
                                              <path fill="currentColor" d="M19.83 7.5L17.56 5.23C17.63 4.81 17.74 4.42 17.88 4.08C17.96 3.9 18 3.71 18 3.5C18 2.67 17.33 2 16.5 2C14.86 2 13.41 2.79 12.5 4H7.5C4.46 4 2 6.46 2 9.5S4.5 21 4.5 21H10V19H12V21H17.5L19.18 15.41L22 14.47V7.5H19.83M16 11C15.45 11 15 10.55 15 10S15.45 9 16 9C16.55 9 17 9.45 17 10S16.55 11 16 11Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="plastico" name="plastico" placeholder="Plástico asignado">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="plastico" name="plastico" value="<?php if($counttemp > 0){ if($temp['plastico'] !== null){echo "{$temp['plastico']}";}else{ if($edit->eplastico !== null){ echo "{$edit->eplastico}"; }}}else{if($edit->eplastico !== null){ echo "{$edit->eplastico}"; }} ?>" placeholder="Plástico asignado">
                                     </div>
                                  </div>
                               </div>
