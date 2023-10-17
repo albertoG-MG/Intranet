@@ -3148,35 +3148,39 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		*/
 
         //DOCUMENTOS
-        $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
-        $checktipospapeleria -> execute();
-        $counttipospapeleria = $checktipospapeleria -> rowCount();
-        if($counttipospapeleria > 0){
-            $fetchtipopapeleria = $checktipospapeleria -> fetchAll(PDO::FETCH_ASSOC);
-            $arraypapeleria = [];
-            for($i = 1; $i <= $counttipospapeleria; $i++){
-                if(isset($_FILES['papeleria'.$i.'']['name'])){
-                    $allowed = array('jpeg', 'png', 'jpg', 'pdf');
-                    $filename = $_FILES['papeleria'.$i.'']['name'];
-                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                    if (!in_array($ext, $allowed)) {
-                        die(json_encode(array("error", "Solo se permite jpg, jpeg, pngs y pdfs en " .$fetchtipopapeleria[$i]["nombre"])));
-                    }else if($_FILES['papeleria'.$i.'']['size'] > 10485760){
-                        die(json_encode(array("error", "El archivo debe pesar ser menos de 10 MB en " .$fetchtipopapeleria[$i]["nombre"])));
-                    }else{
-                        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                        $mimetype = finfo_file($finfo, $_FILES['papeleria'.$i.'']["tmp_name"]);
-                        finfo_close($finfo);
-                        if($mimetype != "image/jpeg" && $mimetype != "image/png" && $mimetype != "application/pdf"){
-                            die(json_encode(array("error", "Por favor, asegurese que la imagen sea originalmente un archivo png, jpg, jpeg y pdf en " .$fetchtipopapeleria[$i]["nombre"])));
-                        }
-                        $arraypapeleria[$i] = $_FILES['papeleria'.$i.''];
-                    }
-                }else{
-                    $arraypapeleria[$i] = null;
-                }
-            }
-        }
+        $checktipospapeleria = $object->_db->prepare("SELECT id, nombre FROM tipo_papeleria"); // Añadir "id" a la consulta
+		$checktipospapeleria->execute();
+		$fetchtipopapeleria = $checktipospapeleria->fetchAll(PDO::FETCH_ASSOC);
+
+		$arraypapeleria = [];
+
+		foreach ($fetchtipopapeleria as $tipo) {
+			$inputName = 'papeleria' . $tipo["id"]; // Usar el ID como clave en lugar de la secuencia
+
+			if (isset($_FILES[$inputName]['name'])) {
+				$allowed = array('jpeg', 'png', 'jpg', 'pdf');
+				$filename = $_FILES[$inputName]['name'];
+				$ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+				if (!in_array($ext, $allowed)) {
+					die(json_encode(array("error", "Solo se permite jpg, jpeg, pngs y pdfs en " . $tipo["nombre"])));
+				} elseif ($_FILES[$inputName]['size'] > 10485760) {
+					die(json_encode(array("error", "El archivo debe pesar ser menos de 10 MB en " . $tipo["nombre"])));
+				} else {
+					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$mimetype = finfo_file($finfo, $_FILES[$inputName]["tmp_name"]);
+					finfo_close($finfo);
+
+					if ($mimetype != "image/jpeg" && $mimetype != "image/png" && $mimetype != "application/pdf") {
+						die(json_encode(array("error", "Por favor, asegúrese de que la imagen sea originalmente un archivo png, jpg, jpeg y pdf en " . $tipo["nombre"])));
+					}
+
+					$arraypapeleria[$tipo["id"]] = $_FILES[$inputName]; // Usar el ID como clave
+				}
+			} else {
+				$arraypapeleria[$tipo["id"]] = null; // Usar el ID como clave
+			}
+		}
 
         /*
 		===============================================
