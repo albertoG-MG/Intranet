@@ -2187,6 +2187,20 @@
             }
         ?>
 
+        //FECHA UNIFORME
+        <?php
+            if ($counttemp > 0) {
+                $fecha_uniforme = $temp['fecha_enuniforme'];
+            } elseif ($edit->efecha_enuniforme !== null) {
+                $fecha_uniforme = $edit->efecha_enuniforme;
+            }
+
+            if (isset($fecha_uniforme)) {
+                $fechaConvertida = str_replace("-", "/", $fecha_uniforme);
+                echo '$("input[name=\'fechauniforme\']").data(\'daterangepicker\').setStartDate(' . json_encode($fechaConvertida) . ');';
+            }
+        ?>
+
         $(document).on('click', '#guardarDG', function(e) {
             e.preventDefault(); // Evitar el envío del formulario por defecto
             

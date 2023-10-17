@@ -780,10 +780,10 @@
                                           </svg>
                                        </div>
                                        <select id="numReferencias" name="numReferencias" x-model="numReferencias" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
-                                             <option value="0">No tengo referencias</option>
-                                             <option value="1">Una referencia</option>
-                                             <option value="2">Dos referencias</option>
-                                             <option value="3">Tres referencias</option>
+                                          <option value="0">No tengo referencias</option>
+                                          <option value="1">Una referencia</option>
+                                          <option value="2">Dos referencias</option>
+                                          <option value="3">Tres referencias</option>
                                        </select>
                                     </div>
                                  </div>
@@ -793,80 +793,80 @@
                                        <div class="md:col-span-1">
                                           <div class="text-[#000] font-bold mb-2">Primer referencia</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Nombre (s)</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rnombre1" value="<?php echo ($referencias_count >= 1) ? $fetch_referencias[0]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rnombre1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["nombre"]; ?>' : ''" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido paterno</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rapellidopat1" value="<?php echo ($referencias_count >= 1) ? $fetch_referencias[0]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["apellido_pat"]; ?>' : ''" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Apellido materno</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rapellidomat1" value="<?php echo ($referencias_count >= 1) ? $fetch_referencias[0]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["apellido_mat"]; ?>' : ''" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
                                           </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Relación</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Relación</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <select name="infa_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                      <option value="">--Selecciona--</option>
+                                                      <option value="SUPERVISOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISOR") ? 'selected' : ''; ?>>SUPERVISOR</option>
+                                                      <option value="SUPERVISORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISORA") ? 'selected' : ''; ?>>SUPERVISORA</option>
+                                                      <option value="COLEGA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "COLEGA") ? 'selected' : ''; ?>>COLEGA</option>
+                                                      <option value="SUBORDINADO" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADO") ? 'selected' : ''; ?>>SUBORDINADO</option>
+                                                      <option value="SUBORDINADA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADA") ? 'selected' : ''; ?>>SUBORDINADA</option>
+                                                      <option value="MENTOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTOR") ? 'selected' : ''; ?>>MENTOR</option>
+                                                      <option value="MENTORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTORA") ? 'selected' : ''; ?>>MENTORA</option>
+                                                      <option value="CLIENTE" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "CLIENTE") ? 'selected' : ''; ?>>CLIENTE</option>
+                                                      <option value="PROFESOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESOR") ? 'selected' : ''; ?>>PROFESOR</option>
+                                                      <option value="PROFESORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESORA") ? 'selected' : ''; ?>>PROFESORA</option>
+                                                      <option value="DEPARTAMENTO DE PERSONAL" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "DEPARTAMENTO DE PERSONAL") ? 'selected' : ''; ?>>DEPARTAMENTO DE PERSONAL</option>
+                                                      <option value="PROVEEDOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDOR") ? 'selected' : ''; ?>>PROVEEDOR</option>
+                                                      <option value="PROVEEDORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDORA") ? 'selected' : ''; ?>>PROVEEDORA</option>
+                                                      <option value="MIEMBRO DE UN COMITE" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MIEMBRO DE UN COMITE") ? 'selected' : ''; ?>>MIEMBRO DE UN COMITÉ</option>
+                                                      <option value="OTRO" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                   </select>
                                                 </div>
-                                                <select name="infa_rrelacion1" x-bind:value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["relacion"]; ?>' : ''" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
-                                                   <option value="">--Selecciona--</option>
-                                                   <option value="SUPERVISOR">SUPERVISOR</option>
-                                                   <option value="SUPERVISORA">SUPERVISORA</option>
-                                                   <option value="COLEGA">COLEGA</option>
-                                                   <option value="SUBORDINADO">SUBORDINADO</option>
-                                                   <option value="SUBORDINADA">SUBORDINADA</option>
-                                                   <option value="MENTOR">MENTOR</option>
-                                                   <option value="MENTORA">MENTORA</option>
-                                                   <option value="CLIENTE">CLIENTE</option>
-                                                   <option value="PROFESOR">PROFESOR</option>
-                                                   <option value="PROFESORA">PROFESORA</option>
-                                                   <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
-                                                   <option value="PROVEEDOR">PROVEEDOR</option>
-                                                   <option value="PROVEEDORA">PROVEEDORA</option>
-                                                   <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
-                                                   <option value="OTRO">OTRO</option>
-                                                </select>
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Teléfono</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Teléfono</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rtelefono1" value="<?php echo ($referencias_count >= 1) ? $fetch_referencias[0]["telefono"] : ''; ?>" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rtelefono1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["telefono"]; ?>' : ''" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
                                           </div>
                                        </div>
                                     </div>
@@ -877,80 +877,80 @@
                                        <div class="md:col-span-1">
                                           <div class="text-[#000] font-bold mb-2">Segunda referencia</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Nombre (s)</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rnombre2" value="<?php echo ($referencias_count >= 2) ? $fetch_referencias[1]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rnombre2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["nombre"]; ?>' : ''" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido paterno</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rapellidopat2" value="<?php echo ($referencias_count >= 2) ? $fetch_referencias[1]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["apellido_pat"]; ?>' : ''" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Apellido materno</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rapellidomat2" value="<?php echo ($referencias_count >= 2) ? $fetch_referencias[1]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["apellido_mat"]; ?>' : ''" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
                                           </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Relación</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Relación</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <select name="infa_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                      <option value="">--Selecciona--</option>
+                                                      <option value="SUPERVISOR" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "SUPERVISOR") ? 'selected' : ''; ?>>SUPERVISOR</option>
+                                                      <option value="SUPERVISORA" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "SUPERVISORA") ? 'selected' : ''; ?>>SUPERVISORA</option>
+                                                      <option value="COLEGA" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "COLEGA") ? 'selected' : ''; ?>>COLEGA</option>
+                                                      <option value="SUBORDINADO" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "SUBORDINADO") ? 'selected' : ''; ?>>SUBORDINADO</option>
+                                                      <option value="SUBORDINADA" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "SUBORDINADA") ? 'selected' : ''; ?>>SUBORDINADA</option>
+                                                      <option value="MENTOR" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "MENTOR") ? 'selected' : ''; ?>>MENTOR</option>
+                                                      <option value="MENTORA" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "MENTORA") ? 'selected' : ''; ?>>MENTORA</option>
+                                                      <option value="CLIENTE" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "CLIENTE") ? 'selected' : ''; ?>>CLIENTE</option>
+                                                      <option value="PROFESOR" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "PROFESOR") ? 'selected' : ''; ?>>PROFESOR</option>
+                                                      <option value="PROFESORA" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "PROFESORA") ? 'selected' : ''; ?>>PROFESORA</option>
+                                                      <option value="DEPARTAMENTO DE PERSONAL" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "DEPARTAMENTO DE PERSONAL") ? 'selected' : ''; ?>>DEPARTAMENTO DE PERSONAL</option>
+                                                      <option value="PROVEEDOR" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "PROVEEDOR") ? 'selected' : ''; ?>>PROVEEDOR</option>
+                                                      <option value="PROVEEDORA" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "PROVEEDORA") ? 'selected' : ''; ?>>PROVEEDORA</option>
+                                                      <option value="MIEMBRO DE UN COMITE" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "MIEMBRO DE UN COMITE") ? 'selected' : ''; ?>>MIEMBRO DE UN COMITÉ</option>
+                                                      <option value="OTRO" <?php echo ($referencias_count >= 2 && $fetch_referencias[1]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                   </select>
                                                 </div>
-                                                <select name="infa_rrelacion2" x-bind:value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["relacion"]; ?>' : ''" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
-                                                   <option value="">--Selecciona--</option>
-                                                   <option value="SUPERVISOR">SUPERVISOR</option>
-                                                   <option value="SUPERVISORA">SUPERVISORA</option>
-                                                   <option value="COLEGA">COLEGA</option>
-                                                   <option value="SUBORDINADO">SUBORDINADO</option>
-                                                   <option value="SUBORDINADA">SUBORDINADA</option>
-                                                   <option value="MENTOR">MENTOR</option>
-                                                   <option value="MENTORA">MENTORA</option>
-                                                   <option value="CLIENTE">CLIENTE</option>
-                                                   <option value="PROFESOR">PROFESOR</option>
-                                                   <option value="PROFESORA">PROFESORA</option>
-                                                   <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
-                                                   <option value="PROVEEDOR">PROVEEDOR</option>
-                                                   <option value="PROVEEDORA">PROVEEDORA</option>
-                                                   <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
-                                                   <option value="OTRO">OTRO</option>
-                                                </select>
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Teléfono</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Teléfono</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rtelefono2" value="<?php echo ($referencias_count >= 2) ? $fetch_referencias[1]["telefono"] : ''; ?>" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rtelefono2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["telefono"]; ?>' : ''" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
                                           </div>
                                        </div>
                                     </div>
@@ -961,80 +961,80 @@
                                        <div class="md:col-span-1">
                                           <div class="text-[#000] font-bold mb-2">Tercer referencia</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Nombre (s)</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Nombre (s)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rnombre3" value="<?php echo ($referencias_count >= 3) ? $fetch_referencias[2]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rnombre3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["nombre"]; ?>' : ''" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido paterno</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Apellido paterno</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rapellidopat3" value="<?php echo ($referencias_count >= 3) ? $fetch_referencias[2]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["apellido_pat"]; ?>' : ''" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Apellido materno</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Apellido materno</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rapellidomat3" value="<?php echo ($referencias_count >= 3) ? $fetch_referencias[2]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["apellido_mat"]; ?>' : ''" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
                                           </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Relación</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Relación</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <select name="infa_rrelacion3" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                      <option value="">--Selecciona--</option>
+                                                      <option value="SUPERVISOR" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "SUPERVISOR") ? 'selected' : ''; ?>>SUPERVISOR</option>
+                                                      <option value="SUPERVISORA" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "SUPERVISORA") ? 'selected' : ''; ?>>SUPERVISORA</option>
+                                                      <option value="COLEGA" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "COLEGA") ? 'selected' : ''; ?>>COLEGA</option>
+                                                      <option value="SUBORDINADO" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "SUBORDINADO") ? 'selected' : ''; ?>>SUBORDINADO</option>
+                                                      <option value="SUBORDINADA" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "SUBORDINADA") ? 'selected' : ''; ?>>SUBORDINADA</option>
+                                                      <option value="MENTOR" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "MENTOR") ? 'selected' : ''; ?>>MENTOR</option>
+                                                      <option value="MENTORA" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "MENTORA") ? 'selected' : ''; ?>>MENTORA</option>
+                                                      <option value="CLIENTE" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "CLIENTE") ? 'selected' : ''; ?>>CLIENTE</option>
+                                                      <option value="PROFESOR" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "PROFESOR") ? 'selected' : ''; ?>>PROFESOR</option>
+                                                      <option value="PROFESORA" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "PROFESORA") ? 'selected' : ''; ?>>PROFESORA</option>
+                                                      <option value="DEPARTAMENTO DE PERSONAL" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "DEPARTAMENTO DE PERSONAL") ? 'selected' : ''; ?>>DEPARTAMENTO DE PERSONAL</option>
+                                                      <option value="PROVEEDOR" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "PROVEEDOR") ? 'selected' : ''; ?>>PROVEEDOR</option>
+                                                      <option value="PROVEEDORA" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "PROVEEDORA") ? 'selected' : ''; ?>>PROVEEDORA</option>
+                                                      <option value="MIEMBRO DE UN COMITE" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "MIEMBRO DE UN COMITE") ? 'selected' : ''; ?>>MIEMBRO DE UN COMITÉ</option>
+                                                      <option value="OTRO" <?php echo ($referencias_count >= 3 && $fetch_referencias[2]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                   </select>
                                                 </div>
-                                                <select name="infa_rrelacion3" x-bind:value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["relacion"]; ?>' : ''" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
-                                                   <option value="">--Selecciona--</option>
-                                                   <option value="SUPERVISOR">SUPERVISOR</option>
-                                                   <option value="SUPERVISORA">SUPERVISORA</option>
-                                                   <option value="COLEGA">COLEGA</option>
-                                                   <option value="SUBORDINADO">SUBORDINADO</option>
-                                                   <option value="SUBORDINADA">SUBORDINADA</option>
-                                                   <option value="MENTOR">MENTOR</option>
-                                                   <option value="MENTORA">MENTORA</option>
-                                                   <option value="CLIENTE">CLIENTE</option>
-                                                   <option value="PROFESOR">PROFESOR</option>
-                                                   <option value="PROFESORA">PROFESORA</option>
-                                                   <option value="DEPARTAMENTO DE PERSONAL">DEPARTAMENTO DE PERSONAL</option>
-                                                   <option value="PROVEEDOR">PROVEEDOR</option>
-                                                   <option value="PROVEEDORA">PROVEEDORA</option>
-                                                   <option value="MIEMBRO DE UN COMITÉ">MIEMBRO DE UN COMITÉ</option>
-                                                   <option value="OTRO">OTRO</option>
-                                                </select>
                                              </div>
-                                          </div>
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">Teléfono</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">Teléfono</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infa_rtelefono3" value="<?php echo ($referencias_count >= 3) ? $fetch_referencias[2]["telefono"] : ''; ?>" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                 </div>
-                                                <input type="text" name="infa_rtelefono3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["telefono"]; ?>' : ''" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
-                                          </div>
                                           </div>
                                        </div>
                                     </div>
@@ -1064,7 +1064,7 @@
                                              <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cantidadpolo" name="cantidadpolo" placeholder="Cantidad">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cantidadpolo" name="cantidadpolo" value="<?php if($counttemp > 0){ if($temp['cantidad_polo'] !== null){echo "{$temp['cantidad_polo']}";}else{ if($edit->ecantidad_polo !== null){ echo "{$edit->ecantidad_polo}"; }}}else{if($edit->ecantidad_polo !== null){ echo "{$edit->ecantidad_polo}"; }} ?>" placeholder="Cantidad">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1077,14 +1077,14 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tallapolo" name="tallapolo">
                                           <option value="">--Seleccione--</option>
-                                          <option value="XSS">XSS</option>
-                                          <option value="XS">XS</option>
-                                          <option value="S">S</option>
-                                          <option value="M">M</option>
-                                          <option value="L">L</option>
-                                          <option value="XL">XL</option>
-                                          <option value="XXL">XXL</option>
-                                          <option value="XXXL">XXXL</option>
+                                          <option value="XSS" <?php if($counttemp > 0){if($temp['talla_polo'] == "XSS"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "XSS"){echo 'selected="selected"';}} ?>>XSS</option>
+                                          <option value="XS" <?php if($counttemp > 0){if($temp['talla_polo'] == "XS"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "XS"){echo 'selected="selected"';}} ?>>XS</option>
+                                          <option value="S" <?php if($counttemp > 0){if($temp['talla_polo'] == "S"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "S"){echo 'selected="selected"';}} ?>>S</option>
+                                          <option value="M" <?php if($counttemp > 0){if($temp['talla_polo'] == "M"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "M"){echo 'selected="selected"';}} ?>>M</option>
+                                          <option value="L" <?php if($counttemp > 0){if($temp['talla_polo'] == "L"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "L"){echo 'selected="selected"';}} ?>>L</option>
+                                          <option value="XL" <?php if($counttemp > 0){if($temp['talla_polo'] == "XL"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "XL"){echo 'selected="selected"';}} ?>>XL</option>
+                                          <option value="XXL" <?php if($counttemp > 0){if($temp['talla_polo'] == "XXL"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "XXL"){echo 'selected="selected"';}} ?>>XXL</option>
+                                          <option value="XXXL" <?php if($counttemp > 0){if($temp['talla_polo'] == "XXXL"){echo 'selected="selected"';}}else{if($edit->etalla_polo == "XXXL"){echo 'selected="selected"';}} ?>>XXXL</option>
                                        </select>
                                     </div>
                                  </div>
@@ -1103,7 +1103,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" placeholder="Nombre (s)">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom" name="emergencia_nom" value="<?php if($counttemp > 0){ if($temp['emergencia_nombre'] !== null){echo "{$temp['emergencia_nombre']}";}else{ if($edit->eemergencia_nombre !== null){ echo "{$edit->eemergencia_nombre}"; }}}else{if($edit->eemergencia_nombre !== null){ echo "{$edit->eemergencia_nombre}"; }} ?>" placeholder="Nombre (s)">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1114,7 +1114,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" placeholder="Apellido paterno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat" name="emergencia_appat" value="<?php if($counttemp > 0){ if($temp['emergencia_apellidopat'] !== null){echo "{$temp['emergencia_apellidopat']}";}else{ if($edit->eemergencia_appelidopat !== null){ echo "{$edit->eemergencia_appelidopat}"; }}}else{if($edit->eemergencia_appelidopat !== null){ echo "{$edit->eemergencia_appelidopat}"; }} ?>" placeholder="Apellido paterno">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1125,7 +1125,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" placeholder="Apellido materno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat" name="emergencia_apmat" value="<?php if($counttemp > 0){ if($temp['emergencia_apellidomat'] !== null){echo "{$temp['emergencia_apellidomat']}";}else{ if($edit->eemergencia_appelidomat !== null){ echo "{$edit->eemergencia_appelidomat}"; }}}else{if($edit->eemergencia_appelidomat !== null){ echo "{$edit->eemergencia_appelidomat}"; }} ?>" placeholder="Apellido materno">
                                     </div>
                                  </div>
                               </div>
@@ -1140,18 +1140,18 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion" name="emergencia_relacion">
                                           <option value="">--Selecciona--</option>
-                                          <option value="PADRE">Padre</option>
-                                          <option value="MADRE">Madre</option>
-                                          <option value="HERMANO">Hermano</option>
-                                          <option value="HERMANA">Hermana</option>
-                                          <option value="CONYUGE">Cónyuge</option>
-                                          <option value="PAREJA">Pareja</option>
-                                          <option value="AMIGO">Amigo</option>
-                                          <option value="AMIGA">Amiga</option>
-                                          <option value="VECINO">Vecino</option>
-                                          <option value="COMPAÑERO_DE_TRABAJO">Compañero de trabajo</option>
-                                          <option value="COMPAÑERA_DE_TRABAJO">Compañera de trabajo</option>
-                                          <option value="OTRO">Otro</option>
+                                          <option value="PADRE" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "PADRE"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "PADRE"){echo 'selected="selected"';}} ?>>Padre</option>
+                                          <option value="MADRE" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "MADRE"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "MADRE"){echo 'selected="selected"';}} ?>>Madre</option>
+                                          <option value="HERMANO" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "HERMANO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "HERMANO"){echo 'selected="selected"';}} ?>>Hermano</option>
+                                          <option value="HERMANA" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "HERMANA"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "HERMANA"){echo 'selected="selected"';}} ?>>Hermana</option>
+                                          <option value="CONYUGE" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "CONYUGE"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "CONYUGE"){echo 'selected="selected"';}} ?>>Cónyuge</option>
+                                          <option value="PAREJA" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "PAREJA"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "PAREJA"){echo 'selected="selected"';}} ?>>Pareja</option>
+                                          <option value="AMIGO" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "AMIGO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "AMIGO"){echo 'selected="selected"';}} ?>>Amigo</option>
+                                          <option value="AMIGA" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "AMIGA"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "AMIGA"){echo 'selected="selected"';}} ?>>Amiga</option>
+                                          <option value="VECINO" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "VECINO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "VECINO"){echo 'selected="selected"';}} ?>>Vecino</option>
+                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';}} ?>>Compañero de trabajo</option>
+                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';}} ?>>Compañera de trabajo</option>
+                                          <option value="OTRO" <?php if($counttemp > 0){if($temp['emergencia_relacion'] == "OTRO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion == "OTRO"){echo 'selected="selected"';}} ?>>Otro</option>
                                        </select>
                                     </div>
                                  </div>
@@ -1163,7 +1163,7 @@
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" placeholder="Teléfono">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel" name="emergencia_tel" value="<?php if($counttemp > 0){ if($temp['emergencia_telefono'] !== null){echo "{$temp['emergencia_telefono']}";}else{ if($edit->eemergencia_telefono !== null){ echo "{$edit->eemergencia_telefono}"; }}}else{if($edit->eemergencia_telefono !== null){ echo "{$edit->eemergencia_telefono}"; }} ?>" placeholder="Teléfono">
                                     </div>
                                  </div>
                               </div>
@@ -1181,7 +1181,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" placeholder="Nombre (s)">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_nom2" name="emergencia_nom2" value="<?php if($counttemp > 0){ if($temp['emergencia_nombre2'] !== null){echo "{$temp['emergencia_nombre2']}";}else{ if($edit->eemergencia_nombre2 !== null){ echo "{$edit->eemergencia_nombre2}"; }}}else{if($edit->eemergencia_nombre2 !== null){ echo "{$edit->eemergencia_nombre2}"; }} ?>" placeholder="Nombre (s)">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1192,7 +1192,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" placeholder="Apellido paterno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_appat2" name="emergencia_appat2" value="<?php if($counttemp > 0){ if($temp['emergencia_apellidopat2'] !== null){echo "{$temp['emergencia_apellidopat2']}";}else{ if($edit->eemergencia_appelidopat2 !== null){ echo "{$edit->eemergencia_appelidopat2}"; }}}else{if($edit->eemergencia_appelidopat2 !== null){ echo "{$edit->eemergencia_appelidopat2}"; }} ?>" placeholder="Apellido paterno">
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
@@ -1203,7 +1203,7 @@
                                              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" placeholder="Apellido materno">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_apmat2" name="emergencia_apmat2" value="<?php if($counttemp > 0){ if($temp['emergencia_apellidomat2'] !== null){echo "{$temp['emergencia_apellidomat2']}";}else{ if($edit->eemergencia_appelidomat2 !== null){ echo "{$edit->eemergencia_appelidomat2}"; }}}else{if($edit->eemergencia_appelidomat2 !== null){ echo "{$edit->eemergencia_appelidomat2}"; }} ?>" placeholder="Apellido materno">
                                     </div>
                                  </div>
                               </div>
@@ -1218,18 +1218,18 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion2" name="emergencia_relacion2">
                                           <option value="">--Selecciona--</option>
-                                          <option value="PADRE">Padre</option>
-                                          <option value="MADRE">Madre</option>
-                                          <option value="HERMANO">Hermano</option>
-                                          <option value="HERMANA">Hermana</option>
-                                          <option value="CONYUGE">Cónyuge</option>
-                                          <option value="PAREJA">Pareja</option>
-                                          <option value="AMIGO">Amigo</option>
-                                          <option value="AMIGA">Amiga</option>
-                                          <option value="VECINO">Vecino</option>
-                                          <option value="COMPAÑERO_DE_TRABAJO">Compañero de trabajo</option>
-                                          <option value="COMPAÑERA_DE_TRABAJO">Compañera de trabajo</option>
-                                          <option value="OTRO">Otro</option>
+                                          <option value="PADRE" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "PADRE"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "PADRE"){echo 'selected="selected"';}} ?>>Padre</option>
+                                          <option value="MADRE" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "MADRE"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "MADRE"){echo 'selected="selected"';}} ?>>Madre</option>
+                                          <option value="HERMANO" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "HERMANO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "HERMANO"){echo 'selected="selected"';}} ?>>Hermano</option>
+                                          <option value="HERMANA" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "HERMANA"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "HERMANA"){echo 'selected="selected"';}} ?>>Hermana</option>
+                                          <option value="CONYUGE" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "CONYUGE"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "CONYUGE"){echo 'selected="selected"';}} ?>>Cónyuge</option>
+                                          <option value="PAREJA" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "PAREJA"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "PAREJA"){echo 'selected="selected"';}} ?>>Pareja</option>
+                                          <option value="AMIGO" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "AMIGO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "AMIGO"){echo 'selected="selected"';}} ?>>Amigo</option>
+                                          <option value="AMIGA" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "AMIGA"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "AMIGA"){echo 'selected="selected"';}} ?>>Amiga</option>
+                                          <option value="VECINO" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "VECINO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "VECINO"){echo 'selected="selected"';}} ?>>Vecino</option>
+                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';}} ?>>Compañero de trabajo</option>
+                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';}} ?>>Compañera de trabajo</option>
+                                          <option value="OTRO" <?php if($counttemp > 0){if($temp['emergencia_relacion2'] == "OTRO"){echo 'selected="selected"';}}else{if($edit->eemergencia_relacion2 == "OTRO"){echo 'selected="selected"';}} ?>>Otro</option>
                                        </select>
                                     </div>
                                  </div>
@@ -1241,7 +1241,7 @@
                                              <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" placeholder="Teléfono">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="emergencia_tel2" name="emergencia_tel2" value="<?php if($counttemp > 0){ if($temp['emergencia_telefono2'] !== null){echo "{$temp['emergencia_telefono2']}";}else{ if($edit->eemergencia_telefono2 !== null){ echo "{$edit->eemergencia_telefono2}"; }}}else{if($edit->eemergencia_telefono2 !== null){ echo "{$edit->eemergencia_telefono2}"; }} ?>" placeholder="Teléfono">
                                     </div>
                                  </div>
                               </div>
@@ -1259,8 +1259,8 @@
                                     </div>
                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="capacitacion" name="capacitacion">
                                        <option value="">--Seleccione--</option>
-                                       <option value="SI">Sí</option>
-                                       <option value="NO">No</option>
+                                       <option value="SI" <?php if($counttemp > 0){if($temp['capacitacion'] == "SI"){echo 'selected="selected"';}}else{if($edit->ecapacitacion == "SI"){echo 'selected="selected"';}} ?>>Sí</option>
+                                       <option value="NO" <?php if($counttemp > 0){if($temp['capacitacion'] == "NO"){echo 'selected="selected"';}}else{if($edit->ecapacitacion == "NO"){echo 'selected="selected"';}} ?>>No</option>
                                     </select>
                                  </div>
                               </div>
@@ -1274,9 +1274,9 @@
                                     </div>
                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="antidoping" name="antidoping">
                                        <option value="">--Seleccione--</option>
-                                       <option value="POSITIVO">Positivo</option>
-                                       <option value="NEGATIVO">Negativo</option>
-                                       <option value="NO APLICA">No aplica</option>
+                                       <option value="POSITIVO" <?php if($counttemp > 0){if($temp['resultado_antidoping'] == "POSITIVO"){echo 'selected="selected"';}}else{if($edit->eresultado_antidoping == "POSITIVO"){echo 'selected="selected"';}} ?>>Positivo</option>
+                                       <option value="NEGATIVO" <?php if($counttemp > 0){if($temp['resultado_antidoping'] == "NEGATIVO"){echo 'selected="selected"';}}else{if($edit->eresultado_antidoping == "NEGATIVO"){echo 'selected="selected"';}} ?>>Negativo</option>
+                                       <option value="NO APLICA" <?php if($counttemp > 0){if($temp['resultado_antidoping'] == "NO APLICA"){echo 'selected="selected"';}}else{if($edit->eresultado_antidoping == "NO APLICA"){echo 'selected="selected"';}} ?>>No aplica</option>
                                     </select>
                                  </div>
                               </div>
@@ -1290,14 +1290,14 @@
                                     </div>
                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tipo_sangre" name="tipo_sangre">
                                        <option value="">--Seleccione--</option>
-                                       <option value="A_POSITIVO">A+</option>
-                                       <option value="A_NEGATIVO">A-</option>
-                                       <option value="B_POSITIVO">B+</option>
-                                       <option value="B_NEGATIVO">B-</option>
-                                       <option value="AB_POSITIVO">AB+</option>
-                                       <option value="AB_NEGATIVO">AB-</option>
-                                       <option value="O_POSITIVO">O+</option>
-                                       <option value="O_NEGATIVO">O-</option>
+                                       <option value="A_POSITIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "A_POSITIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "A_POSITIVO"){echo 'selected="selected"';}} ?>>A+</option>
+                                       <option value="A_NEGATIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "A_NEGATIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "A_NEGATIVO"){echo 'selected="selected"';}} ?>>A-</option>
+                                       <option value="B_POSITIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "B_POSITIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "B_POSITIVO"){echo 'selected="selected"';}} ?>>B+</option>
+                                       <option value="B_NEGATIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "B_NEGATIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "B_NEGATIVO"){echo 'selected="selected"';}} ?>>B-</option>
+                                       <option value="AB_POSITIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "AB_POSITIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "AB_POSITIVO"){echo 'selected="selected"';}} ?>>AB+</option>
+                                       <option value="AB_NEGATIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "AB_NEGATIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "AB_NEGATIVO"){echo 'selected="selected"';}} ?>>AB-</option>
+                                       <option value="O_POSITIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "O_POSITIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "O_POSITIVO"){echo 'selected="selected"';}} ?>>O+</option>
+                                       <option value="O_NEGATIVO" <?php if($counttemp > 0){if($temp['tipo_sangre'] == "O_NEGATIVO"){echo 'selected="selected"';}}else{if($edit->etipo_sangre == "O_NEGATIVO"){echo 'selected="selected"';}} ?>>O-</option>
                                     </select>
                                  </div>
                               </div>
@@ -1311,70 +1311,70 @@
                                     </div>
                                     <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="vacante" name="vacante">
                                        <option value="">--Seleccione--</option>
-                                       <option value="PLATAFORMA LABORAL">Plataforma laboral</option>
-                                       <option value="RECOMENDACION">Recomendación</option>
-                                       <option value="REDES SOCIALES">Redes sociales</option>
-                                       <option value="AVISOS DE OCASION">Avisos de ocasión</option>
+                                       <option value="PLATAFORMA LABORAL" <?php if($counttemp > 0){if($temp['vacante'] == "PLATAFORMA LABORAL"){echo 'selected="selected"';}}else{if($edit->evacante == "PLATAFORMA LABORAL"){echo 'selected="selected"';}} ?>>Plataforma laboral</option>
+                                       <option value="RECOMENDACION" <?php if($counttemp > 0){if($temp['vacante'] == "RECOMENDACION"){echo 'selected="selected"';}}else{if($edit->evacante == "RECOMENDACION"){echo 'selected="selected"';}} ?>>Recomendación</option>
+                                       <option value="REDES SOCIALES" <?php if($counttemp > 0){if($temp['vacante'] == "REDES SOCIALES"){echo 'selected="selected"';}}else{if($edit->evacante == "REDES SOCIALES"){echo 'selected="selected"';}} ?>>Redes sociales</option>
+                                       <option value="AVISOS DE OCASION" <?php if($counttemp > 0){if($temp['vacante'] == "AVISOS DE OCASION"){echo 'selected="selected"';}}else{if($edit->evacante == "AVISOS DE OCASION"){echo 'selected="selected"';}} ?>>Avisos de ocasión</option>
                                     </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
-			                     <div class="grid grid-cols-1 mt-5 mx-7">
-				                    <label class="text-[#64748b] font-semibold mb-2">¿Tiene familiares dentro de la empresa?</label>
-				                    <div class="group flex mt-3 items-center">
-				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
-				                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-				                       Sí
-				                       </label>
-				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
-				                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-				                       No
-				                       </label>
-				                    </div>
-			                     </div>
-			                     <div x-show.important="open">
-				                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                    <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">Nombre(s)</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                             </svg>
+                              <div x-data="{ open: <?php if($counttemp > 0){echo $temp['fam_dentro_empresa'] === 'SI' ? 'true' : 'false';}else{echo $edit->efam_dentro_empresa === 'SI' ? 'true' : 'false';} ?> }">
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">¿Tiene familiares dentro de la empresa?</label>
+                                    <div class="group flex mt-3 items-center">
+                                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php if($counttemp > 0){echo $temp['fam_dentro_empresa'] === 'SI' ? 'checked' : '';}else{echo $edit->efam_dentro_empresa === 'SI' ? 'checked' : '';} ?>>
+                                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
+                                          Sí
+                                       </label>
+                                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php if($counttemp > 0){echo $temp['fam_dentro_empresa'] === 'NO' ? 'checked' : '';}else{echo $edit->efam_dentro_empresa === 'NO' ? 'checked' : '';} ?>>
+                                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
+                                          No
+                                       </label>
+                                    </div>
+                                 </div>
+                                 <div x-show.important="open">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                       <div class="grid grid-cols-1">
+                                          <label class="text-[#64748b] font-semibold mb-2">Nombre(s)</label>
+                                          <div class="group flex">
+                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                </svg>
+                                             </div>
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" value="<?php if($counttemp > 0){echo $temp['fam_dentro_empresa'] === 'SI' ? $temp['fam_nombre'] : '';}else{echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_nombre : '';} ?>" placeholder="Nombre">
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre">
+                                       </div>
+                                       <div class="grid grid-cols-1">
+                                          <label class="text-[#64748b] font-semibold mb-2">Apellido paterno</label>
+                                          <div class="group flex">
+                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                </svg>
+                                             </div>
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" value="<?php if($counttemp > 0){echo $temp['fam_dentro_empresa'] === 'SI' ? $temp['fam_apellidopat'] : '';}else{echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_apellidopat : '';} ?>" placeholder="Apellido paterno">
+                                          </div>
+                                       </div>
+                                       <div class="grid grid-cols-1">
+                                          <label class="text-[#64748b] font-semibold mb-2">Apellido materno</label>
+                                          <div class="group flex">
+                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                </svg>
+                                             </div>
+                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" value="<?php if($counttemp > 0){echo $temp['fam_dentro_empresa'] === 'SI' ? $temp['fam_apellidomat'] : '';}else{echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_apellidomat : '';} ?>" placeholder="Apellido materno">
+                                          </div>
                                        </div>
                                     </div>
-                                    <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">Apellido paterno</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                             </svg>
-                                          </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" placeholder="Apellido paterno">
-                                       </div>
-                                    </div>
-                                    <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">Apellido materno</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                             </svg>
-                                          </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" placeholder="Apellido materno">
-                                       </div>
-                                    </div>
-				                     </div>
-			                     </div>
-		                     </div>
-                           <div class="mt-12 h-px bg-slate-200"></div>
+                                 </div>
+                              </div>
+                              <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior" name="anterior" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
                                  <button type="button" id="siguiente2" name="siguiente2" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">Siguiente</button>
-                                 <div id="submit-DA">   
+                                 <div id="submit-DA">
                                     <button type="button" id="guardarDA" name="guardarDA" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Guardar progreso</button>
                                  </div>
                               </div>
