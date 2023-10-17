@@ -276,20 +276,11 @@
         $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Adaptar todo al nuevo editar expediente
-    /*
-        $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
-        $papeleria->execute(array(':expedienteid' => $Editarid));
-        $array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
-        $papeleria_contador = 0;
-        $buscar_papeleria="true";
-
-        $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
-        $checktipospapeleria -> execute();
-        $counttipospapeleria = $checktipospapeleria -> rowCount();
-
-        $logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
-    */
+    $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
+	$papeleria->execute(array(':expedienteid' => $Editarid));
+	$array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
+	$papeleria_contador = 0;
+	$buscar_papeleria="true";
 
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
     $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);
