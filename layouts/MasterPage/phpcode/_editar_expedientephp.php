@@ -226,14 +226,31 @@
         $temp = Expedientes::FetchTempEditExpediente($fetchtemp['id']);
     }
 
+    // Verificar si existen datos en la tabla temporal (ref_laborales_temporales)
+    $check_ref_temporales = $object->_db->prepare("SELECT COUNT(*) FROM ref_laborales_temporales WHERE expediente_id = :expedienteid");
+    $check_ref_temporales->execute(array(':expedienteid' => $Editarid));
+    $ref_temporales_exist = (int)$check_ref_temporales->fetchColumn();
+
+    // Inicializar el arreglo de referencias
+    $fetch_referencias = [];
+
+    // Usar una expresión ternaria para determinar la consulta a ejecutar
+    $query = ($ref_temporales_exist > 0) ?
+        "SELECT * FROM ref_laborales_temporales WHERE expediente_id = :expedienteid" :
+        "SELECT * FROM ref_laborales WHERE expediente_id = :expedienteid";
+
+    // Ejecutar la consulta
+    $referencias_laborales = $object->_db->prepare($query);
+    $referencias_laborales->execute(array(':expedienteid' => $Editarid));
+    $referencias_count = $referencias_laborales -> rowCount();
+
+    // Verificar si se obtuvieron datos de la consulta
+    if ($referencias_count > 0) {
+        $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //Adaptar todo al nuevo editar expediente
     /*
-        $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
-        $referencias_laborales->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
-        $referencias_laborales->execute();
-        $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
-        $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
-
         $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
         $referencias_bancarias->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
         $referencias_bancarias->execute();

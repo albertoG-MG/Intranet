@@ -770,7 +770,7 @@
                                  <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
-                              <div x-data="{ numReferencias: 0 }">
+                              <div x-data="{ numReferencias: <?php if($referencias_count == 0){ echo 0; }else if($referencias_count == 1){ echo 1; }else if($referencias_count == 2){ echo 2; }else if($referencias_count == 3){ echo 3; }?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">Número de referencias laborales</label>
                                     <div class="group flex">
@@ -801,7 +801,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rnombre1" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rnombre1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["nombre"]; ?>' : ''" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -812,7 +812,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat1" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidopat1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["apellido_pat"]; ?>' : ''" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -823,7 +823,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidomat1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["apellido_mat"]; ?>' : ''" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -836,7 +836,7 @@
                                                       <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
                                                    </svg>
                                                 </div>
-                                                <select name="infa_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <select name="infa_rrelacion1" x-bind:value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["relacion"]; ?>' : ''" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
                                                    <option value="SUPERVISOR">SUPERVISOR</option>
                                                    <option value="SUPERVISORA">SUPERVISORA</option>
@@ -864,7 +864,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rtelefono1" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rtelefono1" :value="numReferencias >= 1 ? '<?php echo $fetch_referencias[0]["telefono"]; ?>' : ''" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -885,7 +885,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rnombre2" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rnombre2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["nombre"]; ?>' : ''" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -896,7 +896,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat2" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidopat2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["apellido_pat"]; ?>' : ''" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -907,7 +907,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat2" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidomat2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["apellido_mat"]; ?>' : ''" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -920,7 +920,7 @@
                                                       <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
                                                    </svg>
                                                 </div>
-                                                <select name="infa_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <select name="infa_rrelacion2" x-bind:value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["relacion"]; ?>' : ''" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
                                                    <option value="SUPERVISOR">SUPERVISOR</option>
                                                    <option value="SUPERVISORA">SUPERVISORA</option>
@@ -948,7 +948,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rtelefono2" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rtelefono2" :value="numReferencias >= 2 ? '<?php echo $fetch_referencias[1]["telefono"]; ?>' : ''" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -969,7 +969,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rnombre3" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rnombre3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["nombre"]; ?>' : ''" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -980,7 +980,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidopat3" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidopat3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["apellido_pat"]; ?>' : ''" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -991,7 +991,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rapellidomat3" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rapellidomat3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["apellido_mat"]; ?>' : ''" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -1004,7 +1004,7 @@
                                                       <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
                                                    </svg>
                                                 </div>
-                                                <select name="infa_rrelacion3" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <select name="infa_rrelacion3" x-bind:value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["relacion"]; ?>' : ''" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
                                                    <option value="SUPERVISOR">SUPERVISOR</option>
                                                    <option value="SUPERVISORA">SUPERVISORA</option>
@@ -1032,7 +1032,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infa_rtelefono3" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infa_rtelefono3" :value="numReferencias >= 3 ? '<?php echo $fetch_referencias[2]["telefono"]; ?>' : ''" placeholder="Teléfono" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
