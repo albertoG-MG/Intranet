@@ -226,6 +226,10 @@
         $temp = Expedientes::FetchTempEditExpediente($fetchtemp['id']);
     }
 
+    $estado = $object->_db->prepare("select * from estados");
+    $estado->execute();
+    $contestado=0;
+
     // Verificar si existen datos en la tabla temporal (ref_laborales_temporales)
     $check_ref_temporales = $object->_db->prepare("SELECT COUNT(*) FROM ref_laborales_temporales WHERE expediente_id = :expedienteid");
     $check_ref_temporales->execute(array(':expedienteid' => $Editarid));
@@ -249,14 +253,31 @@
         $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Verificar si existen datos en la tabla "ben_bancarios_temporales"
+    $check_ben_temporales = $object->_db->prepare("SELECT COUNT(*) FROM ben_bancarios_temporales WHERE expediente_id = :expedienteid");
+    $check_ben_temporales->execute(array(':expedienteid' => $Editarid));
+    $ben_temporales_exist = (int)$check_ben_temporales->fetchColumn();
+
+    // Inicializar el arreglo de referencias
+    $fetch_ben_bancarios = [];
+
+    // Usar una expresión ternaria para determinar la consulta a ejecutar
+    $query = ($ben_temporales_exist > 0) ?
+        "SELECT * FROM ben_bancarios_temporales WHERE expediente_id = :expedienteid" :
+        "SELECT * FROM ben_bancarios WHERE expediente_id = :expedienteid";
+
+    // Ejecutar la consulta
+    $ben_bancarios = $object->_db->prepare($query);
+    $ben_bancarios->execute(array(':expedienteid' => $Editarid));
+    $ben_bancarios_count = $ben_bancarios->rowCount();
+
+    // Verificar si se obtuvieron datos de la consulta
+    if ($ben_bancarios_count > 0) {
+        $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //Adaptar todo al nuevo editar expediente
     /*
-        $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
-        $referencias_bancarias->bindParam("expedienteid", $Editarid, PDO::PARAM_INT);
-        $referencias_bancarias->execute();
-        $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
-        $refban_json = json_encode($array_refban, JSON_UNESCAPED_UNICODE);
-
         $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
         $papeleria->execute(array(':expedienteid' => $Editarid));
         $array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
@@ -269,10 +290,6 @@
 
         $logged_user= $_SESSION["nombre"]. " " .$_SESSION["apellidopat"]. " " .$_SESSION["apellidomat"];
     */
-
-    $estado = $object->_db->prepare("select * from estados");
-    $estado->execute();
-    $contestado=0;
 
     $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
     $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);

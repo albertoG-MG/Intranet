@@ -1385,7 +1385,7 @@
                                  <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente. <b> Nota: los beneficiarios deben ser mayores de 18 años. </b></span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
-                              <div x-data="{ numBeneficiariosBancarios: 0 }">
+                              <div x-data="{ numBeneficiariosBancarios: <?php if($ben_bancarios_count == 0){ echo 0; }else if($ben_bancarios_count == 1){ echo 1; }else if($ben_bancarios_count == 2){ echo 2; }?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
                                     <label for="numBeneficiariosBancarios" class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios</label>
                                     <div class="group flex">
@@ -1415,7 +1415,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rnombre1" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rnombre1" value="<?php echo ($ben_bancarios_count >= 1) ? $fetch_ben_bancarios[0]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -1426,7 +1426,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rapellidopat1" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rapellidopat1" value="<?php echo ($ben_bancarios_count >= 1) ? $fetch_ben_bancarios[0]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -1437,7 +1437,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rapellidomat1" value="<?php echo ($ben_bancarios_count >= 1) ? $fetch_ben_bancarios[0]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -1452,12 +1452,12 @@
                                                 </div>
                                                 <select name="infb_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
-                                                   <option value="PADRE">PADRE</option>
-                                                   <option value="MADRE">MADRE</option>
-                                                   <option value="CONYUGE">CONYUGE</option>
-                                                   <option value="HIJO">HIJO</option>
-                                                   <option value="HIJA">HIJA</option>
-                                                   <option value="OTRO">OTRO</option>
+                                                   <option value="PADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
+                                                   <option value="MADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
+                                                   <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
+                                                   <option value="HIJO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
+                                                   <option value="HIJA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
+                                                   <option value="OTRO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
                                                 </select>
                                              </div>
                                           </div>
@@ -1469,7 +1469,7 @@
                                                       <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rrfc1" placeholder="RFC" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rrfc1" value="<?php echo ($ben_bancarios_count >= 1) ? $fetch_ben_bancarios[0]["rfc"] : ''; ?>" placeholder="RFC" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -1480,7 +1480,7 @@
                                                       <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rcurp1" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rcurp1" value="<?php echo ($ben_bancarios_count >= 1) ? $fetch_ben_bancarios[0]["curp"] : ''; ?>" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -1492,7 +1492,7 @@
                                                       <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rporcentaje1" x-bind:value="numBeneficiariosBancarios === '1' ? '100' : '50'" placeholder="Porcentaje de derecho" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rporcentaje1" x-bind:value="numBeneficiariosBancarios == '1' ? '100' : '50'" placeholder="Porcentaje de derecho" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
@@ -1512,7 +1512,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rnombre2" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rnombre2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -1523,7 +1523,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rapellidopat2" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rapellidopat2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -1534,7 +1534,7 @@
                                                       <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rapellidomat2" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rapellidomat2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -1549,12 +1549,12 @@
                                                 </div>
                                                 <select name="infb_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                                    <option value="">--Selecciona--</option>
-                                                   <option value="PADRE">PADRE</option>
-                                                   <option value="MADRE">MADRE</option>
-                                                   <option value="CONYUGE">CONYUGE</option>
-                                                   <option value="HIJO">HIJO</option>
-                                                   <option value="HIJA">HIJA</option>
-                                                   <option value="OTRO">OTRO</option>
+                                                   <option value="PADRE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
+                                                   <option value="MADRE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
+                                                   <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
+                                                   <option value="HIJO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
+                                                   <option value="HIJA" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
+                                                   <option value="OTRO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
                                                 </select>
                                              </div>
                                           </div>
@@ -1566,7 +1566,7 @@
                                                       <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rrfc2" placeholder="RFC" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rrfc2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["rfc"] : ''; ?>" placeholder="RFC" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1">
@@ -1577,7 +1577,7 @@
                                                       <path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rcurp2" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rcurp2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["curp"] : ''; ?>" placeholder="CURP" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                           </div>
@@ -1589,7 +1589,7 @@
                                                       <path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z"></path>
                                                    </svg>
                                                 </div>
-                                                <input type="text" name="infb_rporcentaje2" x-bind:value="numBeneficiariosBancarios === '1' ? '100' : '50'" placeholder="Porcentaje de derecho" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
+                                                <input type="text" name="infb_rporcentaje2" x-bind:value="numBeneficiariosBancarios == '1' ? '100' : '50'" placeholder="Porcentaje de derecho" readonly="readonly" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-gray-200 bg-gray-200 text-gray-900 outline-none focus:ring-2 focus:ring-celeste-600">
                                              </div>
                                           </div>
                                        </div>
