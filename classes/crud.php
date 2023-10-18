@@ -84,7 +84,15 @@ class crud {
 			$statement->execute($pdoparam);
 	
 			// Obtener los resultados de la consulta con el tipo de fetch especificado.
-			$results = $statement->fetchAll($fetchStyle);
+			if ($fetchStyle === PDO::FETCH_KEY_PAIR) {
+				// En caso de FETCH_KEY_PAIR, crearemos el arreglo asociativo manualmente.
+				$results = [];
+				while ($row = $statement->fetch(PDO::FETCH_NUM)) {
+					$results[$row[0]] = $row[1];
+				}
+			} else {
+				$results = $statement->fetchAll($fetchStyle);
+			}
 	
 			// Contar las filas resultantes.
 			$rowCount = $statement->rowCount();
@@ -116,7 +124,15 @@ class crud {
 			$statement->execute($pdoparam);
 	
 			// Obtener los resultados de la consulta con el tipo de fetch especificado.
-			$results = $statement->fetchAll($fetchStyle);
+			if ($fetchStyle === PDO::FETCH_KEY_PAIR) {
+				// En caso de FETCH_KEY_PAIR, crearemos el arreglo asociativo manualmente.
+				$results = [];
+				while ($row = $statement->fetch(PDO::FETCH_NUM)) {
+					$results[$row[0]] = $row[1];
+				}
+			} else {
+				$results = $statement->fetchAll($fetchStyle);
+			}
 	
 			// Contar las filas resultantes.
 			$rowCount = $statement->rowCount();
