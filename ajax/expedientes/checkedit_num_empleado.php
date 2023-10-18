@@ -6,13 +6,14 @@
 	$idexpediente = $_POST["editarid"];
 
 	$query = $object->_db->prepare("
-		SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum AND id != :idexpediente
-		UNION
-		SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum AND expedientes_temporales.id != :idexpediente
+    SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum AND id != :idexpediente
+    UNION
+    SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum
 	");
 	$query->bindParam(":empleadonum", $numempleado, PDO::PARAM_STR);
 	$query->bindParam(":idexpediente", $idexpediente, PDO::PARAM_INT);
 	$query->execute();
+
 
 	$numempleadocount = $query->rowCount();
 
