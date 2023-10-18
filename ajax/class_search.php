@@ -11,6 +11,7 @@ include_once __DIR__ . "/../classes/vacaciones.php";
 include_once __DIR__ . "/../classes/alertas.php";
 include_once __DIR__ . "/../classes/avisos.php";
 include_once __DIR__ . "/../classes/comunicados.php";
+include_once __DIR__ . "/../classes/crud.php";
 include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
@@ -400,12 +401,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if (!isset($_POST['id_expediente'])) {
 			die(json_encode(array("error", "La variable idExpediente no está definida")));
 		}
-	
-		$expediente_check = $object->_db->prepare("SELECT * FROM expedientes WHERE id = :expedienteid");
-		$expediente_check->execute(array(':expedienteid' => $_POST["id_expediente"]));
-		$count_expediente_check = $expediente_check->rowCount();
-	
-		if ($count_expediente_check == 0) {
+		$expediente_check = $crud->readWithCount('expedientes', '*', 'WHERE id = :expedienteid', [':expedienteid' => $_POST["id_expediente"]]);
+		if ($expediente_check['count'] == 0) {
 			die(json_encode(array("expediente_deleted", "Este expediente ya no existe!")));
 		}
 	}
@@ -459,18 +456,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
 			if($_POST["select2"] != null){
-				//Traeme todos los usuarios de la base de datos
-				$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
-				$select2_content -> execute();
-				//FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor.
-				$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
 			
-				//ARRAY_KEY_EXIST - Función de php que verifica si el id seleccionado por el usuario está presente en los resultados de la consulta 
-				if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
 					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-					$array_key_value = $fetch_select2_content[$_POST["select2"]];
+					$array_key_value = $select2_content['data'][$_POST["select2"]];
 					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-					if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
 						$select2 = $_POST["select2"];
 					}else{
 						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
@@ -495,17 +489,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				//Checa si el número de empleado no está repetido
 				if($_POST["method"] == "store"){
-					$query = $object ->_db->prepare("SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum");
-					$query -> execute(array(":empleadonum" => $_POST["numempleado"]));
-					$numempleadocount = $query->rowCount();
-					if($numempleadocount > 0){
+					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+					if($query['count'] > 0){
 						die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
 					}		
 				}else if($_POST["method"] == "edit"){
-					$query = $object ->_db->prepare("SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum AND id != :idexpediente UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum");
-					$query -> execute(array(":empleadonum" => $_POST["numempleado"], ":idexpediente" => $_POST["id_expediente"]));
-					$numempleadocount = $query->rowCount();
-					if($numempleadocount > 0){
+					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum AND id != :idexpediente UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"], ':idexpediente' => $_POST["id_expediente"]]);
+					if($query['count'] > 0){
 						die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
 					}
 				}	
@@ -556,17 +546,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					//Verifica si el correo no está repetido en la base de datos
 					if($_POST["method"] == "store"){
-						$get_correo = $object ->_db->prepare("SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo");
-						$get_correo->execute(array(':correo' => $_POST["correo_adicional"]));
-						$count_query = $get_correo -> rowCount();
-						if($count_query > 0){
+						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo', [':correo' => $_POST["correo_adicional"]]);
+						if($get_correo['count'] > 0){
 							die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
 						}
 					}else if($_POST["method"] == "edit"){
-						$get_correo = $object -> _db -> prepare("SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo");
-						$get_correo->execute(array(':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]));
-						$count_query = $get_correo -> rowCount();
-						if($count_query > 0){
+						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo', [':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]]);
+						if($get_correo['count'] > 0){
 							die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
 						}
 					}
@@ -1230,18 +1216,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
 			if($_POST["select2"] != null){
-				//Traeme todos los usuarios de la base de datos
-				$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
-				$select2_content -> execute();
-				//FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor.
-				$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
 			
-				//ARRAY_KEY_EXIST - Función de php que verifica si el id seleccionado por el usuario está presente en los resultados de la consulta 
-				if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
 					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-					$array_key_value = $fetch_select2_content[$_POST["select2"]];
+					$array_key_value = $select2_content['data'][$_POST["select2"]];
 					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-					if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
 						$select2 = $_POST["select2"];
 					}else{
 						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
@@ -1692,18 +1675,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
 			if($_POST["select2"] != null){
-				//Traeme todos los usuarios de la base de datos
-				$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
-				$select2_content -> execute();
-				//FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor.
-				$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
 			
-				//ARRAY_KEY_EXIST - Función de php que verifica si el id seleccionado por el usuario está presente en los resultados de la consulta 
-				if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
 					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-					$array_key_value = $fetch_select2_content[$_POST["select2"]];
+					$array_key_value = $select2_content['data'][$_POST["select2"]];
 					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-					if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
 						$select2 = $_POST["select2"];
 					}else{
 						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
@@ -1952,12 +1932,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if (!isset($_POST['id_expediente'])) {
 			die(json_encode(array("error", "La variable idExpediente no está definida")));
 		}
-	
-		$expediente_check = $object->_db->prepare("SELECT * FROM expedientes WHERE id = :expedienteid");
-		$expediente_check->execute(array(':expedienteid' => $_POST["id_expediente"]));
-		$count_expediente_check = $expediente_check->rowCount();
-	
-		if ($count_expediente_check == 0) {
+		$expediente_check = $crud->readWithCount('expedientes', '*', 'WHERE id = :expedienteid', [':expedienteid' => $_POST["id_expediente"]]);
+		if ($expediente_check['count'] == 0) {
 			die(json_encode(array("expediente_deleted", "Este expediente ya no existe!")));
 		}
 	}
@@ -1998,18 +1974,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
 		if($_POST["select2"] != null){
-			//Traeme todos los usuarios de la base de datos
-			$select2_content = $object -> _db -> prepare("SELECT usuarios.id AS userid, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre FROM usuarios INNER JOIN roles ON roles.id=usuarios.roles_id WHERE roles.nombre NOT IN ('Superadministrador', 'Administrador', 'Director general', 'Usuario externo') AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id=expedientes.users_id)");
-			$select2_content -> execute();
-			//FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor.
-			$fetch_select2_content = $select2_content -> fetchAll(PDO::FETCH_KEY_PAIR);
+			//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+			$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
 		
-			//ARRAY_KEY_EXIST - Función de php que verifica si el id seleccionado por el usuario está presente en los resultados de la consulta 
-			if (array_key_exists($_POST["select2"], $fetch_select2_content)) {
+			//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+			if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
 				// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-				$array_key_value = $fetch_select2_content[$_POST["select2"]];
+				$array_key_value = $select2_content['data'][$_POST["select2"]];
 				// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-				if(isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value){
+				if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
 					$select2 = $_POST["select2"];
 				}else{
 					//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
@@ -2034,17 +2007,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			//Checa si el número de empleado no está repetido
 			if($_POST["method"] == "store"){
-				$query = $object ->_db->prepare("SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum");
-				$query -> execute(array(":empleadonum" => $_POST["numempleado"]));
-				$numempleadocount = $query->rowCount();
-				if($numempleadocount > 0){
+				$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+				if($query['count'] > 0){
 					die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
 				}		
 			}else if($_POST["method"] == "edit"){
-				$query = $object ->_db->prepare("SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum AND id != :idexpediente UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum");
-				$query -> execute(array(":empleadonum" => $_POST["numempleado"], ":idexpediente" => $_POST["id_expediente"]));
-				$numempleadocount = $query->rowCount();
-				if($numempleadocount > 0){
+				$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum AND id != :idexpediente UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"], ':idexpediente' => $_POST["id_expediente"]]);
+				if($query['count'] > 0){
 					die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
 				}
 			}	
@@ -2095,17 +2064,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				//Verifica si el correo no está repetido en la base de datos
 				if($_POST["method"] == "store"){
-					$get_correo = $object ->_db->prepare("SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo");
-					$get_correo->execute(array(':correo' => $_POST["correo_adicional"]));
-					$count_query = $get_correo -> rowCount();
-					if($count_query > 0){
+					$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo', [':correo' => $_POST["correo_adicional"]]);
+					if($get_correo['count'] > 0){
 						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
 					}
 				}else if($_POST["method"] == "edit"){
-					$get_correo = $object -> _db -> prepare("SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo");
-					$get_correo->execute(array(':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]));
-					$count_query = $get_correo -> rowCount();
-					if($count_query > 0){
+					$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo', [':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]]);
+					if($get_correo['count'] > 0){
 						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
 					}
 				}
