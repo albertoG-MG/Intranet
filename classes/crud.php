@@ -1,4 +1,3 @@
-
 <?php
 include_once __DIR__ . "/../config/conexion.php";
 class crud {
@@ -72,7 +71,7 @@ class crud {
 		$conteo = $resultado['count'];
 		$datos = $resultado['data'];
 	*/
-	public function readWithCount($table, $columns, $condition, $pdoparam) {
+	public function readWithCount($table, $columns, $condition, $pdoparam, $fetchStyle = PDO::FETCH_ASSOC) {
 		$sql = sprintf(
 			'SELECT %s FROM %s %s',
 			is_array($columns) ? implode(', ', $columns) : $columns,
@@ -84,14 +83,13 @@ class crud {
 			$statement = $this->conn->_db->prepare($sql);
 			$statement->execute($pdoparam);
 	
-			// Obtener los resultados de la consulta como un arreglo asociativo.
-			$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+			// Obtener los resultados de la consulta con el tipo de fetch especificado.
+			$results = $statement->fetchAll($fetchStyle);
 	
 			// Contar las filas resultantes.
 			$rowCount = $statement->rowCount();
 	
 			return ['count' => $rowCount, 'data' => $results];
-	
 		} catch (Exception $e) {
 			die($e->getMessage());
 		}
@@ -104,7 +102,7 @@ class crud {
 		$conteo = $resultado['count'];
 		$datos = $resultado['data'];
 	*/
-	public function readWithJoinsAndCount($table, $columns, $joins, $condition, $pdoparam) {
+	public function readWithJoinsAndCount($table, $columns, $joins, $condition, $pdoparam, $fetchStyle = PDO::FETCH_ASSOC) {
 		$sql = sprintf(
 			'SELECT %s FROM %s %s %s',
 			is_array($columns) ? implode(', ', $columns) : $columns,
@@ -117,14 +115,13 @@ class crud {
 			$statement = $this->conn->_db->prepare($sql);
 			$statement->execute($pdoparam);
 	
-			// Obtener los resultados de la consulta como un arreglo asociativo.
-			$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+			// Obtener los resultados de la consulta con el tipo de fetch especificado.
+			$results = $statement->fetchAll($fetchStyle);
 	
 			// Contar las filas resultantes.
 			$rowCount = $statement->rowCount();
 	
 			return ['count' => $rowCount, 'data' => $results];
-	
 		} catch (Exception $e) {
 			die($e->getMessage());
 		}
