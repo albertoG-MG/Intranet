@@ -1928,6 +1928,57 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "expediente"){
+
+	//La variable method, solamente puede contener 2 valores: store y edit
+	if (isset($_POST["method"]) && ($_POST["method"] != "store" && $_POST["method"] != "edit")) {
+		// Mostrar un mensaje de error porque el valor de "method" no es válido.
+		die(json_encode(array("error", "El valor de 'method' no es válido ó no existe")));
+	}
+
+	//Checa si el usuario tiene permiso para crear ó editar expedientes
+	if($_POST["method"] == "store"){
+		if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+		}
+	}else if($_POST["method"] == "edit"){
+		if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Editar expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
+			die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
+		}       
+	}
+
+	//En el caso de editar, checa si el expediente aún existe
+	if ($_POST["method"] == "edit") {
+		// Verificar si la variable $_POST['id_expediente'] está definida
+		if (!isset($_POST['id_expediente'])) {
+			die(json_encode(array("error", "La variable idExpediente no está definida")));
+		}
+	
+		$expediente_check = $object->_db->prepare("SELECT * FROM expedientes WHERE id = :expedienteid");
+		$expediente_check->execute(array(':expedienteid' => $_POST["id_expediente"]));
+		$count_expediente_check = $expediente_check->rowCount();
+	
+		if ($count_expediente_check == 0) {
+			die(json_encode(array("expediente_deleted", "Este expediente ya no existe!")));
+		}
+	}
+
+	// Función para validar si una fecha es válida en el formato especificado
+	function validateDate($date, $format = 'Y-m-d H:i:s')
+	{
+		$d = DateTime::createFromFormat($format, $date);
+		return $d && $d->format($format) == $date;
+	}
+
+	//Función que reemplaza caracteres acentuados por sus equivalentes sin acentos
+	function quitarAcentos($texto) {
+		$texto = str_replace(
+			['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú'],
+			['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'],
+			$texto
+		);
+		return $texto;
+	}
+
 	if (isset($_POST["select2"], $_POST["select2text"], $_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], $_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"],
 	$_POST["nexterior"], $_POST["colonia"], $_POST["estado"], $_POST["estadotext"], $_POST["municipio"], $_POST["municipiotext"], $_POST["codigo"], $_POST["teldom"], $_POST["posee_telmov"], $_POST["telmov"],
 	$_POST["posee_telempresa"], $_POST["marcacion"], $_POST["serie"], $_POST["sim"], $_POST["numred"], $_POST["modelotel"], $_POST["marcatel"], $_POST["imei"], $_POST["posee_laptop"], $_POST["marca_laptop"],
@@ -1937,32 +1988,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	$_POST["emergenciarelacion"], $_POST["emergenciatelefono"], $_POST["emergencianom2"], $_POST["emergenciaapat2"], $_POST["emergenciaamat2"], $_POST["emergenciarelacion2"], $_POST["emergenciatelefono2"], 
 	$_POST["capacitacion"], $_POST["antidoping"], $_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"], 
 	$_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], 
-	$_POST["clabe_nomina"], $_POST["plastico"], $_POST["method"])) 
-	{
-		// Función para validar si una fecha es válida en el formato especificado
-		function validateDate($date, $format = 'Y-m-d H:i:s')
-		{
-			$d = DateTime::createFromFormat($format, $date);
-			return $d && $d->format($format) == $date;
-		}
-
-		//Función que reemplaza caracteres acentuados por sus equivalentes sin acentos
-		function quitarAcentos($texto) {
-			$texto = str_replace(
-				['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú'],
-				['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'],
-				$texto
-			);
-			return $texto;
-		}
-
-		//Checa si el usuario tiene permiso para crear expedientes
-		if($_POST["method"] == "store"){
-			if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
-				die(json_encode(array("forbidden", "No tiene permisos para realizar estas acciones")));
-			}
-		}
-
+	$_POST["clabe_nomina"], $_POST["plastico"])){
 
 		/*
 		=============================================
@@ -2007,12 +2033,21 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			die(json_encode(array("error", "Por favor, escriba el número de empleado en el formato correcto")));
 		}else{
 			//Checa si el número de empleado no está repetido
-			$query = $object ->_db->prepare("SELECT num_empleado from expedientes where num_empleado=:empleadonum");
-			$query -> execute(array(":empleadonum" => $_POST["numempleado"]));
-			$numempleadocount = $query->rowCount();
-			if($numempleadocount > 0){
-				die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
-			}		
+			if($_POST["method"] == "store"){
+				$query = $object ->_db->prepare("SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum");
+				$query -> execute(array(":empleadonum" => $_POST["numempleado"]));
+				$numempleadocount = $query->rowCount();
+				if($numempleadocount > 0){
+					die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+				}		
+			}else if($_POST["method"] == "edit"){
+				$query = $object ->_db->prepare("SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum AND id != :idexpediente UNION SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum");
+				$query -> execute(array(":empleadonum" => $_POST["numempleado"], ":idexpediente" => $_POST["id_expediente"]));
+				$numempleadocount = $query->rowCount();
+				if($numempleadocount > 0){
+					die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+				}
+			}	
 			$num_empleado = $_POST["numempleado"];
 		}
 
@@ -2059,11 +2094,20 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				die(json_encode(array("error", "Asegúrese que el texto ingresado en correo adicional este en formato de email")));
 			}else{
 				//Verifica si el correo no está repetido en la base de datos
-				$get_correo = $object ->_db->prepare("SELECT correo_adicional from expedientes where correo_adicional=:correo1 UNION ALL SELECT correo from usuarios where correo=:correo2");
-				$get_correo -> execute(array(':correo1' => $_POST["correo_adicional"], ':correo2' => $_POST["correo_adicional"]));
-				$count_query = $get_correo -> rowCount();
-				if($count_query > 0){
-					die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+				if($_POST["method"] == "store"){
+					$get_correo = $object ->_db->prepare("SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo");
+					$get_correo->execute(array(':correo' => $_POST["correo_adicional"]));
+					$count_query = $get_correo -> rowCount();
+					if($count_query > 0){
+						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+					}
+				}else if($_POST["method"] == "edit"){
+					$get_correo = $object -> _db -> prepare("SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo UNION ALL SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo");
+					$get_correo->execute(array(':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]));
+					$count_query = $get_correo -> rowCount();
+					if($count_query > 0){
+						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+					}
 				}
 				$posee_correo= $_POST["posee_correo"];
 				//Conviertelo en mayúsculas
@@ -3296,7 +3340,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 				die(json_encode(array("success", "Se ha creado el expediente")));
 			break;
+			//En este caso, voy a editar el expediente completo
+			case "edit":
+				//Hago una instancia de la clase y le envío las variables en la clase
+				$expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
+				$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
+				//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
+				$expediente ->Editar_expediente($logged_user, $_POST["id_expediente"]);
+				//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
+				die(json_encode(array("success", "Se ha editado el expediente")));
+			break;
 		}
+	}else{
+		die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 	}
 }else if(isset($_POST["app"]) && $_POST["app"] == "Incidencias"){
 	if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Permiso"){
