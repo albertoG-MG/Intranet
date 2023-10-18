@@ -2279,6 +2279,7 @@
         var fd = new FormData();
 
         /*Inputs*/
+        var id_expediente = <?php echo $Editarid; ?>;
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
         var numempleado = $("#numempleado").val();
@@ -2326,9 +2327,10 @@
         var tipoidentificacion = $("#identificacion").val();
         var numeroidentificacion = $("#numeroidentificacion").val();
         var pestaña = "DatosG";
-        var method = "store";
+        var method = "edit";
         var app="Expediente_temporal";
 
+        fd.append('id_expediente', id_expediente);
         fd.append('select2', select2);
         fd.append('select2text', select2text);
         fd.append('numempleado', numempleado);
@@ -2432,6 +2434,7 @@
         window.addEventListener('beforeunload', unloadHandler);
         var fd = new FormData();
 
+        var id_expediente = <?php echo $Editarid; ?>;
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
         var numeroreferenciaslab = $("#numReferencias").val();
@@ -2474,10 +2477,11 @@
             });
         }
         var pestaña = "DatosA";
-        var method = "store";
+        var method = "edit";
         var app="Expediente_temporal";
 
 
+        fd.append('id_expediente', id_expediente);
         fd.append('select2', select2);
         fd.append('select2text', select2text);
         fd.append('numeroreferenciaslab', numeroreferenciaslab);
@@ -2559,6 +2563,7 @@
         window.addEventListener('beforeunload', unloadHandler);
         var fd = new FormData();
 
+        var id_expediente = <?php echo $Editarid; ?>;
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
         var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
@@ -2592,10 +2597,10 @@
             });
         }
         var pestaña = "DatosB";
-        var method = "store";
+        var method = "edit";
         var app="Expediente_temporal";
 
-
+        fd.append('id_expediente', id_expediente);
         fd.append('select2', select2);
         fd.append('select2text', select2text);
         fd.append('numeroreferenciasban', numeroreferenciasban);
@@ -2668,6 +2673,7 @@
     
         /*Obtención de valores*/
         /*Datos generales*/
+        var id_expediente = <?php echo $Editarid; ?>;
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
         var numempleado = $("#numempleado").val();
@@ -2796,12 +2802,13 @@
                 echo "var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];";
             }
         ?> 
-        var method = "store";
+        var method = "edit";
         var app = "expediente";
     
         /*FD appends*/
     
         /*Datos generales*/
+        fd.append('id_expediente', id_expediente);
         fd.append('select2', select2);
         fd.append('select2text', select2text);
         fd.append('numempleado', numempleado);
