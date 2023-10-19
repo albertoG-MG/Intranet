@@ -2676,10 +2676,30 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `expedientes`
+-- Table structure for table `estatus expedientes`
+--
+  CREATE TABLE `estatus_expediente` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nombre_estatus` varchar(100) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- --------------------------------------------------------
+
+--
+-- Insert for table `estatus expedientes`
+--
+  INSERT INTO `estatus_expediente` (`id`, `nombre_estatus`) VALUES
+  (1, 'COMPLETADO'),
+  (2, 'EN PROCESO DE CREACION'),
+  (3, 'EN REVISION'),
+  (4, 'TOKEN ASIGNADO'),
+  (5, 'EN REVISION POR EL EMPLEADO'),
+  (6, 'TOKEN EXPIRADO');
+
+--
+-- Table structure for table `estatus expedientes`
 --
 
-CREATE TABLE `expedientes` (
+  CREATE TABLE `expedientes` (
   `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
   `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
@@ -2753,169 +2773,13 @@ CREATE TABLE `expedientes` (
   `cuenta_nomina` varchar(100) DEFAULT NULL,
   `clabe_nomina` varchar(100) DEFAULT NULL,
   `plastico` varchar(100) DEFAULT NULL,
-  `estatus_expediente` varchar(100) DEFAULT NULL,
+  `estatus_expediente` int NOT NULL,
   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
   FOREIGN KEY (estado_id) REFERENCES estados(id),
-  FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+  FOREIGN KEY (municipio_id) REFERENCES municipios(Id),
+  FOREIGN KEY (estatus_expediente) REFERENCES estatus_expediente(id)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
-
---
--- Table structure for table `expedientes_temporales`
---
-
-CREATE TABLE `expedientes_temporales` (
-  `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `users_id` int NOT NULL,
-  `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
-  `puesto` varchar(100) DEFAULT NULL,
-  `estudios` varchar(100) DEFAULT NULL,
-  `posee_correo` varchar(100) DEFAULT NULL,
-  `correo_adicional` varchar(100) DEFAULT NULL UNIQUE,
-  `calle` varchar(100) DEFAULT NULL,
-  `num_interior` varchar(100) DEFAULT NULL,
-  `num_exterior` varchar(100) DEFAULT NULL,
-  `colonia` varchar(100) DEFAULT NULL,
-  `estado_id` int DEFAULT NULL,
-  `municipio_id` int DEFAULT NULL,
-  `codigo` varchar(100) DEFAULT NULL,
-  `tel_dom` varchar(100) DEFAULT NULL,
-  `posee_telmov` varchar(100) DEFAULT NULL,
-  `tel_mov` varchar(100) DEFAULT NULL,
-  `posee_telempresa` varchar(100) DEFAULT NULL,
-  `marcacion` varchar(100) DEFAULT NULL,
-  `serie` varchar(100) DEFAULT NULL,
-  `sim` varchar(100) DEFAULT NULL,
-  `numerored_empresa` varchar(100) DEFAULT NULL,
-  `modelotel_empresa` varchar(100) DEFAULT NULL,
-  `marcatel_empresa` varchar(100) DEFAULT NULL,
-  `imei` varchar(200) DEFAULT NULL,
-  `posee_laptop` varchar(200) DEFAULT NULL,
-  `marca_laptop` varchar(200) DEFAULT NULL,
-  `modelo_laptop` varchar(200) DEFAULT NULL,
-  `serie_laptop` varchar(200) DEFAULT NULL,
-  `casa_propia` varchar(100) DEFAULT NULL,
-  `ecivil` varchar(100) DEFAULT NULL,
-  `posee_retencion` varchar(100) DEFAULT NULL,
-  `monto_mensual` float DEFAULT NULL,  
-  `fecha_nacimiento` date DEFAULT NULL,
-  `fecha_inicioc` date DEFAULT NULL,
-  `fecha_alta` date DEFAULT NULL,
-  `salario_contrato` float DEFAULT NULL,
-  `salario_fechaalta` float DEFAULT NULL,
-  `observaciones` text DEFAULT NULL,
-  `curp` varchar(100) DEFAULT NULL,
-  `nss` varchar(100) DEFAULT NULL,
-  `rfc` varchar(100) DEFAULT NULL,
-  `tipo_identificacion` varchar(100) DEFAULT NULL,
-  `num_identificacion` varchar(100) DEFAULT NULL,
-  `fecha_enuniforme` date DEFAULT NULL,
-  `cantidad_polo` varchar(100) DEFAULT NULL,
-  `talla_polo` varchar(100) DEFAULT NULL,
-  `emergencia_nombre` varchar(100) DEFAULT NULL,
-  `emergencia_apellidopat` varchar(100) DEFAULT NULL,
-  `emergencia_apellidomat` varchar(100) DEFAULT NULL,
-  `emergencia_relacion` varchar(100) DEFAULT NULL,
-  `emergencia_telefono` varchar(100) DEFAULT NULL,
-  `emergencia_nombre2` varchar(100) DEFAULT NULL,
-  `emergencia_apellidopat2` varchar(100) DEFAULT NULL,
-  `emergencia_apellidomat2` varchar(100) DEFAULT NULL,
-  `emergencia_relacion2` varchar(100) DEFAULT NULL,
-  `emergencia_telefono2` varchar(100) DEFAULT NULL,
-  `capacitacion` varchar(100) DEFAULT NULL,
-  `resultado_antidoping` varchar(100) DEFAULT NULL,
-  `tipo_sangre` varchar(100) DEFAULT NULL,
-  `vacante` varchar(100) DEFAULT NULL,
-  `fam_dentro_empresa` varchar(100) DEFAULT NULL,
-  `fam_nombre` varchar(100) DEFAULT NULL,
-  `fam_apellidopat` varchar(100) DEFAULT NULL,
-  `fam_apellidomat` varchar(100) DEFAULT NULL,
-  `banco_personal` varchar(100) DEFAULT NULL,
-  `cuenta_personal` varchar(100) DEFAULT NULL,
-  `clabe_personal` varchar(100) DEFAULT NULL,
-  `plastico_personal` varchar(100) DEFAULT NULL,
-  `banco_nomina` varchar(100) DEFAULT NULL,
-  `cuenta_nomina` varchar(100) DEFAULT NULL,
-  `clabe_nomina` varchar(100) DEFAULT NULL,
-  `plastico` varchar(100) DEFAULT NULL,
-  `estatus_expediente` varchar(100) DEFAULT NULL,
-  FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-  FOREIGN KEY (estado_id) REFERENCES estados(id),
-  FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ref_laborales_temporales`
---
-
-CREATE TABLE `ref_laborales_temporales` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `expediente_id` int NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido_pat` varchar(100) NOT NULL,
-  `apellido_mat` varchar(100) NOT NULL,
-  `relacion` varchar(100) NOT NULL,
-  `telefono` varchar(100) NOT NULL,
-  FOREIGN KEY (expediente_id) REFERENCES expedientes_temporales(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ben_bancarios_temporales`
---
-
-CREATE TABLE `ben_bancarios_temporales` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `expediente_id` int NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido_pat` varchar(100) NOT NULL,
-  `apellido_mat` varchar(100) NOT NULL,
-  `relacion` varchar(100) NOT NULL,
-  `rfc` varchar(100) NOT NULL,
-  `curp` varchar(100) NOT NULL,
-  `porcentaje` varchar(100) NOT NULL,
-  FOREIGN KEY (expediente_id) REFERENCES expedientes_temporales(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------    
-
--- TABLA BENEFICIARIOS TEMPORALES DE TOKEN --
-
-CREATE TABLE `ben_bancarios_tokentemporales` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `expediente_id` int NOT NULL,
-  `nombre` 		    varchar(100) NOT NULL,
-  `apellido_pat`  varchar(100) NOT NULL,
-  `apellido_mat`  varchar(100) NOT NULL,
-  `relacion`   	  varchar(100) NOT NULL,
-  `rfc` 	   	    varchar(100) NOT NULL,
-  `curp` 	   	    varchar(100) NOT NULL,
-  `porcentaje` 	  varchar(100) NOT NULL,
-  FOREIGN KEY (expediente_id) REFERENCES expediente_temporal_token(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------    
-
-
--- TABLA REFERENCIAS TEMPORALES DE TOKEN --
-
-CREATE TABLE `ref_laborales_tokentemporales` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `expediente_id` int NOT NULL,
-  `nombre` 		    varchar(100) NOT NULL,
-  `apellido_pat`  varchar(100) NOT NULL,
-  `apellido_mat`  varchar(100) NOT NULL,
-  `relacion` 	    varchar(100) NOT NULL,
-  `telefono`	    varchar(100) NOT NULL,
-  FOREIGN KEY (expediente_id) REFERENCES expediente_temporal_token(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------    
-
 --
 -- Table structure for table `ref_laborales`
 --
@@ -2951,104 +2815,6 @@ CREATE TABLE `ben_bancarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
--- TABLA EXPEDIENTE TEMPORAL TOKEN --
-
-CREATE TABLE `expediente_temporal_token` (
-  `id` 		 				        int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `users_id` 				      int  NOT NULL,
-  `num_empleado` 			    varchar(100) DEFAULT NULL UNIQUE,
-  `puesto` 		 			      varchar(100) DEFAULT NULL,
-  `estudios` 	 			      varchar(100) DEFAULT NULL,
-  `posee_correo` 			    varchar(100) DEFAULT NULL,
-  `correo_adicional` 		  varchar(100) DEFAULT NULL UNIQUE,
-  `calle` 					      varchar(100) DEFAULT NULL,
-  `num_interior` 			    varchar(100) DEFAULT NULL,
-  `num_exterior` 			    varchar(100) DEFAULT NULL,
-  `colonia` 				      varchar(100) DEFAULT NULL,
-  `estado_id` 				    int DEFAULT NULL,
-  `municipio_id` 			    int DEFAULT NULL,
-  `codigo` 					      varchar(100) DEFAULT NULL,
-  `tel_dom` 				      varchar(100) DEFAULT NULL,
-  `posee_telmov` 			    varchar(100) DEFAULT NULL,
-  `tel_mov` 				      varchar(100) DEFAULT NULL,
-  `posee_telempresa` 		  varchar(100) DEFAULT NULL,
-  `marcacion` 				    varchar(100) DEFAULT NULL,
-  `serie` 					      varchar(100) DEFAULT NULL,
-  `sim` 					        varchar(100) DEFAULT NULL,
-  `numerored_empresa` 		varchar(100) DEFAULT NULL,
-  `modelotel_empresa`		  varchar(100) DEFAULT NULL,
-  `marcatel_empresa` 		  varchar(100) DEFAULT NULL,
-  `imei` 					        varchar(200) DEFAULT NULL,
-  `posee_laptop` 			    varchar(200) DEFAULT NULL,
-  `marca_laptop` 			    varchar(200) DEFAULT NULL,
-  `modelo_laptop` 			  varchar(200) DEFAULT NULL,
-  `serie_laptop` 			    varchar(200) DEFAULT NULL,
-  `casa_propia` 			    varchar(100) DEFAULT NULL,
-  `ecivil` 					      varchar(100) DEFAULT NULL,
-  `posee_retencion` 		  varchar(100) DEFAULT NULL,
-  `monto_mensual` 			  float DEFAULT NULL,  
-  `fecha_nacimiento` 		  date DEFAULT NULL,
-  `fecha_inicioc` 			  date DEFAULT NULL,
-  `fecha_alta` 				    date DEFAULT NULL,
-  `salario_contrato` 		  float DEFAULT NULL,
-  `salario_fechaalta` 		float DEFAULT NULL,
-  `observaciones` 			  text DEFAULT NULL,
-  `curp`					        varchar(100) DEFAULT NULL,
-  `nss` 					        varchar(100) DEFAULT NULL,
-  `rfc` 					        varchar(100) DEFAULT NULL,
-  `tipo_identificacion` 	varchar(100) DEFAULT NULL,
-  `num_identificacion` 		varchar(100) DEFAULT NULL,
-  `fecha_enuniforme` 		  date DEFAULT NULL,
-  `cantidad_polo` 			  varchar(100) DEFAULT NULL,
-  `talla_polo` 			      varchar(100) DEFAULT NULL,
-  `emergencia_nombre` 		  varchar(100) DEFAULT NULL,
-  `emergencia_apellidopat`  varchar(100) DEFAULT NULL,
-  `emergencia_apellidomat`  varchar(100) DEFAULT NULL,
-  `emergencia_relacion` 	  varchar(100) DEFAULT NULL,
-  `emergencia_telefono` 	  varchar(100) DEFAULT NULL,
-  `emergencia_nombre2` 		  varchar(100) DEFAULT NULL,
-  `emergencia_apellidopat2` varchar(100) DEFAULT NULL,
-  `emergencia_apellidomat2` varchar(100) DEFAULT NULL,
-  `emergencia_relacion2` 	  varchar(100) DEFAULT NULL,
-  `emergencia_telefono2` 	  varchar(100) DEFAULT NULL,
-  `capacitacion` 		 	      varchar(100) DEFAULT NULL,
-  `resultado_antidoping` 	  varchar(100) DEFAULT NULL,
-  `tipo_sangre` 	   		    varchar(100) DEFAULT NULL,
-  `vacante` 		   		      varchar(100) DEFAULT NULL,
-  `fam_dentro_empresa` 		  varchar(100) DEFAULT NULL,
-  `fam_nombre`         		  varchar(100) DEFAULT NULL,
-  `fam_apellidopat`    		  varchar(100) DEFAULT NULL,
-  `fam_apellidomat`    		  varchar(100) DEFAULT NULL,
-  `banco_personal` 	   		  varchar(100) DEFAULT NULL,
-  `cuenta_personal`    		  varchar(100) DEFAULT NULL,
-  `clabe_personal`     		  varchar(100) DEFAULT NULL,
-  `plastico_personal`  		  varchar(100) DEFAULT NULL,
-  `banco_nomina` 	   		    varchar(100) DEFAULT NULL,
-  `cuenta_nomina` 	   		  varchar(100) DEFAULT NULL,
-  `clabe_nomina` 	   		    varchar(100) DEFAULT NULL,
-  `plastico` 	 	   		      varchar(100) DEFAULT NULL,
-  `estatus_expediente` 		  varchar(100) DEFAULT NULL,
-  FOREIGN KEY (users_id) 	 REFERENCES usuarios(id) ON DELETE CASCADE,
-  FOREIGN KEY (estado_id) 	 REFERENCES estados(id),
-  FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- --------------------------------------------------------    
-
-
-
--- TABLA EXPEDIENTES RELACIÓN --
-CREATE TABLE `expedientes_relacion` (
-			`id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-			`expediente_temporal_id`  int DEFAULT NULL,
-			`expediente_principal_id` int DEFAULT NULL,
-   			`exp_temtoken_id` 		  int DEFAULT NULL,
-			`fecha_vinculacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			FOREIGN KEY (`expediente_temporal_id`) 	REFERENCES `expedientes_temporales`(`id`) ON DELETE CASCADE,
-			FOREIGN KEY (`expediente_principal_id`) REFERENCES `expedientes`(`id`) ON DELETE CASCADE,
-    		FOREIGN KEY (`exp_temtoken_id`) 		REFERENCES `expediente_temporal_token`(`id`) ON DELETE CASCADE
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------    
 
 
 --

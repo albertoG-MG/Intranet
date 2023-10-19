@@ -25,7 +25,7 @@ include_once __DIR__ . ($codigophp);
         <div x-data="{ sidebarOpen: false }" class="flex h-screen">
             <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>
 
-            <div :class=" sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform overflow-y-auto lg:translate-x-0 lg:static lg:inset-0" style=" box-shadow: -2px 0px 16px #000000ad !important; background-image: linear-gradient(rgba(0, 94, 177, 0.9), rgba(0, 183, 230, 0.7)), url(../src/img/fondo-hexagonos.png) !important; background:linear-gradient(350deg , #005FB1 0%, #00B7E6 84%, #005FB1 84%, #002169 18%);  border-bottom-right-radius: 20px !important;" >
+            <div :class=" sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform overflow-y-auto lg:translate-x-0 lg:static lg:inset-0" style=" box-shadow: -2px 0px 16px #000000ad !important; background-image: linear-gradient(rgba(0, 94, 177, 0.9), rgba(0, 183, 230, 0.7)), url(../src/img/fondo-hexagonos.png) !important; background:linear-gradient(350deg , #005FB1 0%, #00B7E6 84%, #005FB1 84%, #002169 18%);  border-bottom-right-radius: 20px !important; background-size: cover;" >
                 <div class="flex items-center justify-center mt-2">
                     <?php include_once __DIR__ . ($sidebar); ?>
             </div>
