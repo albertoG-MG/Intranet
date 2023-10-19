@@ -2883,6 +2883,39 @@ CREATE TABLE `ben_bancarios_temporales` (
 
 -- --------------------------------------------------------    
 
+-- TABLA BENEFICIARIOS TEMPORALES DE TOKEN --
+
+CREATE TABLE `ben_bancarios_tokentemporales` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `nombre` 		    varchar(100) NOT NULL,
+  `apellido_pat`  varchar(100) NOT NULL,
+  `apellido_mat`  varchar(100) NOT NULL,
+  `relacion`   	  varchar(100) NOT NULL,
+  `rfc` 	   	    varchar(100) NOT NULL,
+  `curp` 	   	    varchar(100) NOT NULL,
+  `porcentaje` 	  varchar(100) NOT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expediente_temporal_token(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------    
+
+
+-- TABLA REFERENCIAS TEMPORALES DE TOKEN --
+
+CREATE TABLE `ref_laborales_tokentemporales` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `nombre` 		    varchar(100) NOT NULL,
+  `apellido_pat`  varchar(100) NOT NULL,
+  `apellido_mat`  varchar(100) NOT NULL,
+  `relacion` 	    varchar(100) NOT NULL,
+  `telefono`	    varchar(100) NOT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expediente_temporal_token(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------    
+
 --
 -- Table structure for table `ref_laborales`
 --
@@ -2999,8 +3032,8 @@ CREATE TABLE `expediente_temporal_token` (
   FOREIGN KEY (estado_id) 	 REFERENCES estados(id),
   FOREIGN KEY (municipio_id) REFERENCES municipios(Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- --------------------------------------------------------    
 
--- FIN EXPEDIENTE TEMPORAL TOKEN --
 
 
 -- TABLA EXPEDIENTES RELACIÓN --
@@ -3015,7 +3048,9 @@ CREATE TABLE `expedientes_relacion` (
     		FOREIGN KEY (`exp_temtoken_id`) 		REFERENCES `expediente_temporal_token`(`id`) ON DELETE CASCADE
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- FIN EXPEDIENTES RELACIÓN --
+-- --------------------------------------------------------    
+
+
 --
 -- Table structure for table `estatus_empleado`
 --
