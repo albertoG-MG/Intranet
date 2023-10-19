@@ -464,7 +464,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$texto
 		);
 		return $texto;
-	}	
+	}
+	
+	/**
+	 * !   ██████   █████  ████████  ██████  ███████  ██████  
+	 * !   ██   ██ ██   ██    ██    ██    ██ ██      ██       
+	 * !   ██   ██ ███████    ██    ██    ██ ███████ ██   ███ 
+	 * !   ██   ██ ██   ██    ██    ██    ██      ██ ██    ██ 
+	 * !   ██████  ██   ██    ██     ██████  ███████  ██████                                                        
+	*/
 
 	if($_POST["pestaña"] == "DatosG"){
 		//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
@@ -1230,6 +1238,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 		}
+
+	/**
+	 * !   ██████   █████  ████████  ██████  ███████  █████  
+	 * !   ██   ██ ██   ██    ██    ██    ██ ██      ██   ██ 
+	 * !   ██   ██ ███████    ██    ██    ██ ███████ ███████ 
+	 * !   ██   ██ ██   ██    ██    ██    ██      ██ ██   ██ 
+	 * !   ██████  ██   ██    ██     ██████  ███████ ██   ██                                                       
+	*/
+
 	}else if($_POST["pestaña"] == "DatosA"){
 		//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
 		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciaslab"], $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], 
@@ -1691,6 +1708,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 		}
+
+	/**
+	 * !   ██████   █████  ████████  ██████  ███████ ██████  
+	 * !   ██   ██ ██   ██    ██    ██    ██ ██      ██   ██ 
+	 * !   ██   ██ ███████    ██    ██    ██ ███████ ██████  
+	 * !   ██   ██ ██   ██    ██    ██    ██      ██ ██   ██ 
+	 * !   ██████  ██   ██    ██     ██████  ███████ ██████                                                        
+	*/
+
 	}else if($_POST["pestaña"] == "DatosB"){
 		//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
 		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], 
@@ -2008,6 +2034,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	$_POST["capacitacion"], $_POST["antidoping"], $_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"], 
 	$_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], $_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], 
 	$_POST["clabe_nomina"], $_POST["plastico"])){
+
+		/**
+		 * !   ██████   █████  ████████  ██████  ███████  ██████  
+		 * !   ██   ██ ██   ██    ██    ██    ██ ██      ██       
+		 * !   ██   ██ ███████    ██    ██    ██ ███████ ██   ███ 
+		 * !   ██   ██ ██   ██    ██    ██    ██      ██ ██    ██ 
+		 * !   ██████  ██   ██    ██     ██████  ███████  ██████                                                        
+		*/
 
 		/*
 		=============================================
@@ -2721,6 +2755,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		=============================================
 		*/
 
+		/**
+		 * !   ██████   █████  ████████  ██████  ███████  █████  
+		 * !   ██   ██ ██   ██    ██    ██    ██ ██      ██   ██ 
+		 * !   ██   ██ ███████    ██    ██    ██ ███████ ███████ 
+		 * !   ██   ██ ██   ██    ██    ██    ██      ██ ██   ██ 
+		 * !   ██████  ██   ██    ██     ██████  ███████ ██   ██                                                       
+		*/
+
 		/*
 		=============================================
 		EMPIEZA LA VALIDACIÓN DE LOS DATOS ADICIONALES
@@ -3109,6 +3151,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		=============================================
 		*/
 
+		/**
+		 * !   ██████   █████  ████████  ██████  ███████ ██████  
+		 * !   ██   ██ ██   ██    ██    ██    ██ ██      ██   ██ 
+		 * !   ██   ██ ███████    ██    ██    ██ ███████ ██████  
+		 * !   ██   ██ ██   ██    ██    ██    ██      ██ ██   ██ 
+		 * !   ██████  ██   ██    ██     ██████  ███████ ██████                                                        
+		*/
+
 		/*
 		=============================================
 		EMPIEZA LA VALIDACIÓN DE LOS DATOS BANCARIOS
@@ -3287,6 +3337,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		=============================================
 		TERMINA LA VALIDACIÓN DE LOS DATOS BANCARIOS
 		=============================================
+		*/
+
+		/**
+		 * !   ██████   ██████   ██████ ██    ██ ███    ███ ███████ ███    ██ ████████  █████   ██████ ██  ██████  ███    ██ 
+		 * !   ██   ██ ██    ██ ██      ██    ██ ████  ████ ██      ████   ██    ██    ██   ██ ██      ██ ██    ██ ████   ██ 
+		 * !   ██   ██ ██    ██ ██      ██    ██ ██ ████ ██ █████   ██ ██  ██    ██    ███████ ██      ██ ██    ██ ██ ██  ██ 
+		 * !   ██   ██ ██    ██ ██      ██    ██ ██  ██  ██ ██      ██  ██ ██    ██    ██   ██ ██      ██ ██    ██ ██  ██ ██ 
+		 * !   ██████   ██████   ██████  ██████  ██      ██ ███████ ██   ████    ██    ██   ██  ██████ ██  ██████  ██   ████                                                                                                                   
 		*/
 
 		/*
