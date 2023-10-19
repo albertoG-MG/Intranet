@@ -16,6 +16,14 @@ include_once __DIR__ . "/../config/conexion.php";
 $object = new connection_database();
 session_start();
 
+/*
+██    ██ ███████ ██    ██  █████  ██████  ██  ██████  
+██    ██ ██      ██    ██ ██   ██ ██   ██ ██ ██    ██ 
+██    ██ ███████ ██    ██ ███████ ██████  ██ ██    ██ 
+██    ██      ██ ██    ██ ██   ██ ██   ██ ██ ██    ██ 
+ ██████  ███████  ██████  ██   ██ ██   ██ ██  ██████  
+*/
+
 if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
     if(isset($_POST["usuario"], $_POST["password"], $_POST["confirmar_password"], $_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"], $_POST["departamento"], $_POST["departamentonom"], $_POST["roles_id"], $_POST["rolnom"], $_POST["subrol_id"], $_POST["subrol_nom"], $_POST["method"])){
         
@@ -303,6 +311,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             
         }
     }
+/*
+██████  ███████ ██████  ███    ███ ██ ███████  ██████  ███████ 
+██   ██ ██      ██   ██ ████  ████ ██ ██      ██    ██ ██      
+██████  █████   ██████  ██ ████ ██ ██ ███████ ██    ██ ███████ 
+██      ██      ██   ██ ██  ██  ██ ██      ██ ██    ██      ██ 
+██      ███████ ██   ██ ██      ██ ██ ███████  ██████  ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "permisos"){
     if(isset($_POST["permisos"]) && isset($_POST["categorias"]) && isset($_POST["method"])){
         $permisos = $_POST["permisos"];
@@ -323,6 +338,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+/*
+██████   ██████  ██      ███████ ███████ 
+██   ██ ██    ██ ██      ██      ██      
+██████  ██    ██ ██      █████   ███████ 
+██   ██ ██    ██ ██      ██           ██ 
+██   ██  ██████  ███████ ███████ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "roles"){
     if(isset($_POST["roles"]) && isset($_POST["method"])){
         $roles = $_POST["roles"];
@@ -358,6 +380,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                 break;
         }
     }
+/*
+██████  ███████ ██████   █████  ██████  ████████  █████  ███    ███ ███████ ███    ██ ████████  ██████  ███████ 
+██   ██ ██      ██   ██ ██   ██ ██   ██    ██    ██   ██ ████  ████ ██      ████   ██    ██    ██    ██ ██      
+██   ██ █████   ██████  ███████ ██████     ██    ███████ ██ ████ ██ █████   ██ ██  ██    ██    ██    ██ ███████ 
+██   ██ ██      ██      ██   ██ ██   ██    ██    ██   ██ ██  ██  ██ ██      ██  ██ ██    ██    ██    ██      ██ 
+██████  ███████ ██      ██   ██ ██   ██    ██    ██   ██ ██      ██ ███████ ██   ████    ██     ██████  ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "departamentos"){
     if(isset($_POST["departamentos"]) && isset($_POST["method"])){
         $departamentos = $_POST["departamentos"];
@@ -377,6 +406,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+/*
+███████ ██   ██ ██████  ███████ ██████  ██ ███████ ███    ██ ████████ ███████     ████████ ███████ ███    ███ ██████   ██████  ██████   █████  ██      
+██       ██ ██  ██   ██ ██      ██   ██ ██ ██      ████   ██    ██    ██             ██    ██      ████  ████ ██   ██ ██    ██ ██   ██ ██   ██ ██      
+█████     ███   ██████  █████   ██   ██ ██ █████   ██ ██  ██    ██    █████          ██    █████   ██ ████ ██ ██████  ██    ██ ██████  ███████ ██      
+██       ██ ██  ██      ██      ██   ██ ██ ██      ██  ██ ██    ██    ██             ██    ██      ██  ██  ██ ██      ██    ██ ██   ██ ██   ██ ██      
+███████ ██   ██ ██      ███████ ██████  ██ ███████ ██   ████    ██    ███████        ██    ███████ ██      ██ ██       ██████  ██   ██ ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "Expediente_temporal"){
 	//La variable method, solamente puede contener 2 valores: store y edit
 	if (isset($_POST["method"]) && ($_POST["method"] != "store" && $_POST["method"] != "edit")) {
@@ -1907,6 +1943,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 		}
 	}
+/*
+███████ ██   ██ ██████  ███████ ██████  ██ ███████ ███    ██ ████████ ███████ 
+██       ██ ██  ██   ██ ██      ██   ██ ██ ██      ████   ██    ██    ██      
+█████     ███   ██████  █████   ██   ██ ██ █████   ██ ██  ██    ██    █████   
+██       ██ ██  ██      ██      ██   ██ ██ ██      ██  ██ ██    ██    ██      
+███████ ██   ██ ██      ███████ ██████  ██ ███████ ██   ████    ██    ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "expediente"){
 
 	//La variable method, solamente puede contener 2 valores: store y edit
@@ -3319,6 +3362,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}else{
 		die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 	}
+/*
+██ ███    ██  ██████ ██ ██████  ███████ ███    ██  ██████ ██  █████  ███████ 
+██ ████   ██ ██      ██ ██   ██ ██      ████   ██ ██      ██ ██   ██ ██      
+██ ██ ██  ██ ██      ██ ██   ██ █████   ██ ██  ██ ██      ██ ███████ ███████ 
+██ ██  ██ ██ ██      ██ ██   ██ ██      ██  ██ ██ ██      ██ ██   ██      ██ 
+██ ██   ████  ██████ ██ ██████  ███████ ██   ████  ██████ ██ ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "Incidencias"){
 	if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Permiso"){
 
@@ -3998,6 +4048,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			break;
 		}
 	}
+/*
+███████ ██████  ██ ████████  █████  ██████      ██ ███    ██  ██████ ██ ██████  ███████ ███    ██  ██████ ██  █████  ███████ 
+██      ██   ██ ██    ██    ██   ██ ██   ██     ██ ████   ██ ██      ██ ██   ██ ██      ████   ██ ██      ██ ██   ██ ██      
+█████   ██   ██ ██    ██    ███████ ██████      ██ ██ ██  ██ ██      ██ ██   ██ █████   ██ ██  ██ ██      ██ ███████ ███████ 
+██      ██   ██ ██    ██    ██   ██ ██   ██     ██ ██  ██ ██ ██      ██ ██   ██ ██      ██  ██ ██ ██      ██ ██   ██      ██ 
+███████ ██████  ██    ██    ██   ██ ██   ██     ██ ██   ████  ██████ ██ ██████  ███████ ██   ████  ██████ ██ ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "Editar_incidencias"){
 	if(isset($_POST["method"])){
 		if(isset($_POST["tipo_incidencia_papel"]) && $_POST["tipo_incidencia_papel"] == "Acta_administrativa"){
@@ -4169,6 +4226,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 	}
+/*
+███████  ██████  ██      ██  ██████ ██ ████████ ██    ██ ██████      ██ ███    ██  ██████ ██ ██████  ███████ ███    ██  ██████ ██  █████  
+██      ██    ██ ██      ██ ██      ██    ██    ██    ██ ██   ██     ██ ████   ██ ██      ██ ██   ██ ██      ████   ██ ██      ██ ██   ██ 
+███████ ██    ██ ██      ██ ██      ██    ██    ██    ██ ██   ██     ██ ██ ██  ██ ██      ██ ██   ██ █████   ██ ██  ██ ██      ██ ███████ 
+     ██ ██    ██ ██      ██ ██      ██    ██    ██    ██ ██   ██     ██ ██  ██ ██ ██      ██ ██   ██ ██      ██  ██ ██ ██      ██ ██   ██ 
+███████  ██████  ███████ ██  ██████ ██    ██     ██████  ██████      ██ ██   ████  ██████ ██ ██████  ███████ ██   ████  ██████ ██ ██   ██ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_incidencia"){
     if(isset($_POST["estatus"]) && isset($_POST["incidenciaid"]) && isset($_POST["method"])){
 		
@@ -4224,6 +4288,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+/*
+ █████   ██████ ████████  █████  ███████     ██    ██      ██████  █████  ██████  ████████  █████  ███████ 
+██   ██ ██         ██    ██   ██ ██           ██  ██      ██      ██   ██ ██   ██    ██    ██   ██ ██      
+███████ ██         ██    ███████ ███████       ████       ██      ███████ ██████     ██    ███████ ███████ 
+██   ██ ██         ██    ██   ██      ██        ██        ██      ██   ██ ██   ██    ██    ██   ██      ██ 
+██   ██  ██████    ██    ██   ██ ███████        ██         ██████ ██   ██ ██   ██    ██    ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "actas_cartas"){
 	if(isset($_POST["incidenciaid"], $_POST["tipo"], $_FILES["archivo"], $_POST["method"])){
 		if(Permissions::CheckPermissions($_SESSION["id"], "Ver todos los documentos administrativos") == "false" && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador"){
@@ -4304,6 +4375,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 	}
+/*
+ ██████  █████  ████████ ███████  ██████   ██████  ██████  ██  █████  ███████ 
+██      ██   ██    ██    ██      ██       ██    ██ ██   ██ ██ ██   ██ ██      
+██      ███████    ██    █████   ██   ███ ██    ██ ██████  ██ ███████ ███████ 
+██      ██   ██    ██    ██      ██    ██ ██    ██ ██   ██ ██ ██   ██      ██ 
+ ██████ ██   ██    ██    ███████  ██████   ██████  ██   ██ ██ ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "categorias"){
     if(isset($_POST["categorias"]) && isset($_POST["method"])){
         $categorias = $_POST["categorias"];
@@ -4323,6 +4401,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+/*
+███████ ██    ██ ██████  ██████   ██████  ██      ███████ ███████ 
+██      ██    ██ ██   ██ ██   ██ ██    ██ ██      ██      ██      
+███████ ██    ██ ██████  ██████  ██    ██ ██      █████   ███████ 
+     ██ ██    ██ ██   ██ ██   ██ ██    ██ ██      ██           ██ 
+███████  ██████  ██████  ██   ██  ██████  ███████ ███████ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "subroles"){
     if(isset($_POST["roles"]) && isset($_POST["subroles"]) && isset($_POST["method"])){
         $roles = $_POST["roles"];
@@ -4348,6 +4433,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+/*
+██████  ███████ ██████  ███████ ██ ██           ██████  ███████ ███    ██ ███████ ██████   █████  ██      
+██   ██ ██      ██   ██ ██      ██ ██          ██       ██      ████   ██ ██      ██   ██ ██   ██ ██      
+██████  █████   ██████  █████   ██ ██          ██   ███ █████   ██ ██  ██ █████   ██████  ███████ ██      
+██      ██      ██   ██ ██      ██ ██          ██    ██ ██      ██  ██ ██ ██      ██   ██ ██   ██ ██      
+██      ███████ ██   ██ ██      ██ ███████      ██████  ███████ ██   ████ ███████ ██   ██ ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "perfil_general"){
     if(isset($_POST["nombre"], $_POST["apellido_pat"], $_POST["apellido_mat"], $_POST["correo"])){
         /*Nombre del empleado*/
@@ -4417,6 +4509,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         User::Editarperfilgeneral($nombre, $apellido_pat, $apellido_mat, $correo, $nombre_archivo, $foto_perfil, $_SESSION["id"], $delete);
         die(json_encode(array("success", "Se ha editado tu información general!")));
     }
+/*
+██████  ███████ ██████  ███████ ██ ██          ██████   █████  ███████ ███████ ██     ██  ██████  ██████  ██████  
+██   ██ ██      ██   ██ ██      ██ ██          ██   ██ ██   ██ ██      ██      ██     ██ ██    ██ ██   ██ ██   ██ 
+██████  █████   ██████  █████   ██ ██          ██████  ███████ ███████ ███████ ██  █  ██ ██    ██ ██████  ██   ██ 
+██      ██      ██   ██ ██      ██ ██          ██      ██   ██      ██      ██ ██ ███ ██ ██    ██ ██   ██ ██   ██ 
+██      ███████ ██   ██ ██      ██ ███████     ██      ██   ██ ███████ ███████  ███ ███   ██████  ██   ██ ██████  
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "perfil_password"){
     if(isset($_POST["password"], $_POST["password_confirm"], $_POST["current_password"])){
 		$password = $_POST["password"];
@@ -4491,6 +4590,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 	}
+/*
+██    ██  █████   ██████  █████   ██████ ██  ██████  ███    ██ ███████ ███████ 
+██    ██ ██   ██ ██      ██   ██ ██      ██ ██    ██ ████   ██ ██      ██      
+██    ██ ███████ ██      ███████ ██      ██ ██    ██ ██ ██  ██ █████   ███████ 
+ ██  ██  ██   ██ ██      ██   ██ ██      ██ ██    ██ ██  ██ ██ ██           ██ 
+  ████   ██   ██  ██████ ██   ██  ██████ ██  ██████  ██   ████ ███████ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "Vacaciones"){
 	if(isset($_POST["periodo_vacaciones"]) && isset($_POST["method"])){
 
@@ -4719,6 +4825,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
 	}
+/*
+███████  ██████  ██      ██  ██████ ██ ████████ ██    ██ ██████      ██    ██  █████   ██████  █████   ██████ ██  ██████  ███    ██ ███████ ███████ 
+██      ██    ██ ██      ██ ██      ██    ██    ██    ██ ██   ██     ██    ██ ██   ██ ██      ██   ██ ██      ██ ██    ██ ████   ██ ██      ██      
+███████ ██    ██ ██      ██ ██      ██    ██    ██    ██ ██   ██     ██    ██ ███████ ██      ███████ ██      ██ ██    ██ ██ ██  ██ █████   ███████ 
+     ██ ██    ██ ██      ██ ██      ██    ██    ██    ██ ██   ██      ██  ██  ██   ██ ██      ██   ██ ██      ██ ██    ██ ██  ██ ██ ██           ██ 
+███████  ██████  ███████ ██  ██████ ██    ██     ██████  ██████        ████   ██   ██  ██████ ██   ██  ██████ ██  ██████  ██   ████ ███████ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "solicitud_vacaciones"){
     if(isset($_POST["solicitud_vacaciones"]) && isset($_POST["estatus"]) && isset($_POST["method"])){
 
@@ -4763,6 +4876,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
         }
     }
+/*
+ █████  ██      ███████ ██████  ████████  █████  ███████ 
+██   ██ ██      ██      ██   ██    ██    ██   ██ ██      
+███████ ██      █████   ██████     ██    ███████ ███████ 
+██   ██ ██      ██      ██   ██    ██    ██   ██      ██ 
+██   ██ ███████ ███████ ██   ██    ██    ██   ██ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "alertas"){
 	if(isset($_POST["titulo_alerta"], $_POST["descripcion_alerta"], $_POST["method"])){
 		//TÍTULO DE LA ALERTA
@@ -4853,6 +4973,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			break;
         }
 	}
+/*
+ █████  ██    ██ ██ ███████  ██████  ███████ 
+██   ██ ██    ██ ██ ██      ██    ██ ██      
+███████ ██    ██ ██ ███████ ██    ██ ███████ 
+██   ██  ██  ██  ██      ██ ██    ██      ██ 
+██   ██   ████   ██ ███████  ██████  ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "avisos"){
 	if(isset($_POST["titulo_aviso"], $_POST["descripcion_aviso"], $_POST["method"])){
 		//TÍTULO DEL AVISO
@@ -4943,6 +5070,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			break;
         }
 	}
+/*
+ ██████  ██████  ███    ███ ██    ██ ███    ██ ██  ██████  █████  ██████   ██████  ███████ 
+██      ██    ██ ████  ████ ██    ██ ████   ██ ██ ██      ██   ██ ██   ██ ██    ██ ██      
+██      ██    ██ ██ ████ ██ ██    ██ ██ ██  ██ ██ ██      ███████ ██   ██ ██    ██ ███████ 
+██      ██    ██ ██  ██  ██ ██    ██ ██  ██ ██ ██ ██      ██   ██ ██   ██ ██    ██      ██ 
+ ██████  ██████  ██      ██  ██████  ██   ████ ██  ██████ ██   ██ ██████   ██████  ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "comunicados"){
 	if(isset($_POST["titulo_comunicado"], $_POST["descripcion_comunicado"], $_POST["method"])){
 		//TÍTULO DEL COMUNICADO
@@ -5033,6 +5167,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			break;
 		}
 	}
+/*
+███████ ██████  ██ ████████  █████  ██████      ███████ ███████ ████████  █████  ████████ ██    ██ ███████ 
+██      ██   ██ ██    ██    ██   ██ ██   ██     ██      ██         ██    ██   ██    ██    ██    ██ ██      
+█████   ██   ██ ██    ██    ███████ ██████      █████   ███████    ██    ███████    ██    ██    ██ ███████ 
+██      ██   ██ ██    ██    ██   ██ ██   ██     ██           ██    ██    ██   ██    ██    ██    ██      ██ 
+███████ ██████  ██    ██    ██   ██ ██   ██     ███████ ███████    ██    ██   ██    ██     ██████  ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus"){
 	if(isset($_POST["estatus"], $_POST["sueldo"], $_POST["comentarios"], $_POST["id"])){
 
@@ -5084,6 +5225,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		Incidencias::editStatus($id, $estatus, $sueldo, $comentarios, $_SESSION["id"]);
         die(json_encode(array("success", "Se ha editado el estatus de la incidencia!")));
 	}
+/*
+███████ ██████  ██ ████████  █████  ██████      ███████ ███████ ████████  █████  ████████ ██    ██ ███████     ██    ██  █████   ██████  █████   ██████ ██  ██████  ███    ██ ███████ ███████ 
+██      ██   ██ ██    ██    ██   ██ ██   ██     ██      ██         ██    ██   ██    ██    ██    ██ ██          ██    ██ ██   ██ ██      ██   ██ ██      ██ ██    ██ ████   ██ ██      ██      
+█████   ██   ██ ██    ██    ███████ ██████      █████   ███████    ██    ███████    ██    ██    ██ ███████     ██    ██ ███████ ██      ███████ ██      ██ ██    ██ ██ ██  ██ █████   ███████ 
+██      ██   ██ ██    ██    ██   ██ ██   ██     ██           ██    ██    ██   ██    ██    ██    ██      ██      ██  ██  ██   ██ ██      ██   ██ ██      ██ ██    ██ ██  ██ ██ ██           ██ 
+███████ ██████  ██    ██    ██   ██ ██   ██     ███████ ███████    ██    ██   ██    ██     ██████  ███████       ████   ██   ██  ██████ ██   ██  ██████ ██  ██████  ██   ████ ███████ ███████                                                                                                                                                                                         
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "editStatus_vacaciones"){
 	if(isset($_POST["estatus_vacaciones"], $_POST["comentarios_vacaciones"], $_POST["id"])){
 
@@ -5123,6 +5271,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		Vacaciones::editStatus($id, $estatus_vacaciones, $comentarios_vacaciones, $_SESSION["id"]);
         die(json_encode(array("success", "Se ha editado el estatus de la solicitud de vacaciones!")));
 	}
+/*
+██   ██ ██ ███████ ████████  ██████  ██████  ██  █████  ██          ██    ██  █████   ██████  █████   ██████ ██  ██████  ███    ██ ███████ ███████ 
+██   ██ ██ ██         ██    ██    ██ ██   ██ ██ ██   ██ ██          ██    ██ ██   ██ ██      ██   ██ ██      ██ ██    ██ ████   ██ ██      ██      
+███████ ██ ███████    ██    ██    ██ ██████  ██ ███████ ██          ██    ██ ███████ ██      ███████ ██      ██ ██    ██ ██ ██  ██ █████   ███████ 
+██   ██ ██      ██    ██    ██    ██ ██   ██ ██ ██   ██ ██           ██  ██  ██   ██ ██      ██   ██ ██      ██ ██    ██ ██  ██ ██ ██           ██ 
+██   ██ ██ ███████    ██     ██████  ██   ██ ██ ██   ██ ███████       ████   ██   ██  ██████ ██   ██  ██████ ██  ██████  ██   ████ ███████ ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "Historial_vacaciones"){
 	if(isset($_POST["select2"], $_POST["select2text"], $_POST["periodo_vacaciones"], $_POST["fecha_vacaciones"], $_POST["estatus_vacaciones"], $_POST["method"])){
 		
@@ -5236,6 +5391,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             break;
 		}
 	}
+/*
+████████  ██████  ██   ██ ███████ ███    ██     ███████ ██   ██ ██████  ███████ ██████  ██ ███████ ███    ██ ████████ ███████ 
+   ██    ██    ██ ██  ██  ██      ████   ██     ██       ██ ██  ██   ██ ██      ██   ██ ██ ██      ████   ██    ██    ██      
+   ██    ██    ██ █████   █████   ██ ██  ██     █████     ███   ██████  █████   ██   ██ ██ █████   ██ ██  ██    ██    █████   
+   ██    ██    ██ ██  ██  ██      ██  ██ ██     ██       ██ ██  ██      ██      ██   ██ ██ ██      ██  ██ ██    ██    ██      
+   ██     ██████  ██   ██ ███████ ██   ████     ███████ ██   ██ ██      ███████ ██████  ██ ███████ ██   ████    ██    ███████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "token_expediente"){
 	if(isset($_POST["select2"], $_POST["select2text"])){	
 		$check_token_user_expediente = $object -> _db -> prepare("SELECT expedientes.* FROM expedientes INNER JOIN usuarios ON usuarios.id=expedientes.users_id WHERE NOT EXISTS(SELECT token FROM token_expediente WHERE token_expediente.expedientes_id=expedientes.id) AND expedientes.id=:expedienteid");
@@ -5267,6 +5429,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		Expedientes::Asignar_token($_POST["select2"]);
 		die(json_encode(array("success", "Se ha asignado un token al expediente", $_POST["select2"], $_POST["select2text"])));
 	}
+/*
+███████ ██   ██ ██████  ███████ ██████  ██ ███████ ███    ██ ████████ ███████     ███    ███  ██████  ██████   ██████      ███████ ██████  ██  ██████ ██  ██████  ███    ██ 
+██       ██ ██  ██   ██ ██      ██   ██ ██ ██      ████   ██    ██    ██          ████  ████ ██    ██ ██   ██ ██    ██     ██      ██   ██ ██ ██      ██ ██    ██ ████   ██ 
+█████     ███   ██████  █████   ██   ██ ██ █████   ██ ██  ██    ██    █████       ██ ████ ██ ██    ██ ██   ██ ██    ██     █████   ██   ██ ██ ██      ██ ██    ██ ██ ██  ██ 
+██       ██ ██  ██      ██      ██   ██ ██ ██      ██  ██ ██    ██    ██          ██  ██  ██ ██    ██ ██   ██ ██    ██     ██      ██   ██ ██ ██      ██ ██    ██ ██  ██ ██ 
+███████ ██   ██ ██      ███████ ██████  ██ ███████ ██   ████    ██    ███████     ██      ██  ██████  ██████   ██████      ███████ ██████  ██  ██████ ██  ██████  ██   ████ 
+*/
 }else if(isset($_POST["app"]) && $_POST["app"] == "expediente_modo_edicion"){
 	if(isset($_POST["estudios"], $_POST["posee_correo"], $_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"], $_POST["nexterior"], $_POST["colonia"], $_POST["estado"],
     $_POST["estadotext"], $_POST["municipio"], $_POST["municipiotext"], $_POST["codigo"], $_POST["teldom"], $_POST["posee_telmov"], $_POST["telmov"], $_POST["radio"], $_POST["ecivil"], 
