@@ -1,8 +1,16 @@
 <script>
-    <?php if($fetch_token_user->exp_date >= $curDate){ ?>
+   
+   <?php if($fetch_token_user->exp_date >= $curDate){ ?>
+
+    let menuExpedientes = [];
+        let pestañaActiva = {
+            id: 'datosG',
+            triggerMenu: $('#datosG-tab'),
+            targetMenu: $('#datosG')
+        };
 
         //Empieza la configuración del menú 
-        const menuExpedientes = [{
+        menuExpedientes = [{
                 id: 'datosG',
                 triggerMenu: document.querySelector('#datosG-tab'),
                 targetMenu: document.querySelector('#datosG')
@@ -25,18 +33,21 @@
         ];
 
         menuExpedientes.forEach((menu) => {
-            menu.triggerMenu.addEventListener('click', () => {
-                objective = menu;
+		menu.triggerMenu.addEventListener('click', () => {
+			objective = menu;
+            if (menu.id !== pestañaActiva.id) {
+                pestañaActiva = menu;
+            }
 
-                menuExpedientes.forEach((trigger) => {
-                    trigger.targetMenu.classList.remove("block")
-                    trigger.targetMenu.classList.add("hidden");
-                    trigger.triggerMenu.classList.remove("bg-[#27ceeb]", "text-white", "menu-active");
-                    trigger.triggerMenu.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
-                    "focus:bg-slate-100", "focus:text-slate-800");
-                    trigger.triggerMenu.firstElementChild.classList.add("text-slate-400", "transition-colors", 
-                    "group-hover:text-slate-500", "group-focus:text-slate-500");
-                })
+			menuExpedientes.forEach((trigger) => {
+				trigger.targetMenu.classList.remove("block")
+				trigger.targetMenu.classList.add("hidden");
+				trigger.triggerMenu.classList.remove("bg-[#27ceeb]", "text-white", "menu-active");
+				trigger.triggerMenu.classList.add("hover:bg-slate-100", "hover:text-slate-800", 
+				"focus:bg-slate-100", "focus:text-slate-800");
+				trigger.triggerMenu.firstElementChild.classList.add("text-slate-400", "transition-colors", 
+				"group-hover:text-slate-500", "group-focus:text-slate-500");
+			})
                 objective.targetMenu.classList.remove("hidden");
                 objective.targetMenu.classList.add("block");
                 objective.triggerMenu.classList.add("bg-[#27ceeb]", "text-white", "menu-active");
@@ -44,8 +55,8 @@
                 "focus:bg-slate-100", "focus:text-slate-800");
                 objective.triggerMenu.firstElementChild.classList.remove("text-slate-400", "transition-colors", 
                 "group-hover:text-slate-500", "group-focus:text-slate-500");
-            })
-        });
+		})
+	                                        });
         //Termina la configuración del menú
 
         //Empieza la configuración del estado y municipio
@@ -119,110 +130,140 @@
 
             //Empieza la navegación por los expedientes por medio de los botones (Siguiente y anterior).
             let tabsContainer = document.querySelector("#menu");
-            let tabTogglers = tabsContainer.querySelectorAll("button");
+		    let tabTogglers = tabsContainer.querySelectorAll("button");
 
-            $("#siguiente").on("click", function () {
-                let tabContents = document.querySelector("#menu-contents");
-                let currentTab = document.querySelector(".menu-active");
-                let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
-                for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
-                    tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                    tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-                    tabContents.children[i].classList.remove('hidden');
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        tabTogglers[i].classList.add('menu-active');
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-                }
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-            });
+		$("#siguiente").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+	
+            pestañaActiva = {
+                id: 'datosA',
+                triggerMenu: $('#datosA-tab'),
+                targetMenu: $('#datosA')
+            };
+        });
 
-            $("#siguiente2").on("click", function () {
-                let tabContents = document.querySelector("#menu-contents");
-                let currentTab = document.querySelector(".menu-active");
-                let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
-                for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
-                    tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                    tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-                    tabContents.children[i].classList.remove('hidden');
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        tabTogglers[i].classList.add('menu-active');
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-                }
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-            });
+        $("#siguiente2").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
 
-            $("#anterior").on("click", function () {
-                let tabContents = document.querySelector("#menu-contents");
-                let currentTab = document.querySelector(".menu-active");
-                let tabName = currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.getAttribute("data-tabs-target");
-                for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
-                    tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                    tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-                    tabContents.children[i].classList.remove('hidden');
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        tabTogglers[i].classList.add('menu-active');
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-                }
-                currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
-                currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
-            });
+            pestañaActiva = {
+                id: 'datosB',
+                triggerMenu: $('#datosB-tab'),
+                targetMenu: $('#datosB')
+            };
+        });
 
-            $("#siguiente3").on("click", function () {
-                let tabContents = document.querySelector("#menu-contents");
-                let currentTab = document.querySelector(".menu-active");
-                let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
-                for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
-                    tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                    tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-                    tabContents.children[i].classList.remove('hidden');
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        tabTogglers[i].classList.add('menu-active');
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-                }
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-            });
-            
-                
-            $("#anterior2").on("click", function () {
-                let tabContents = document.querySelector("#menu-contents");
-                let currentTab = document.querySelector(".menu-active");
-                let tabName = currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.getAttribute("data-tabs-target");
-                for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
-                    tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                    tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
-                    tabContents.children[i].classList.remove('hidden');
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        tabTogglers[i].classList.add('menu-active');
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-                }
-                currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
-                currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
-                currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
-            });
+        $("#anterior").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.parentElement.children[0].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
+		
+            pestañaActiva = {
+                id: 'datosG',
+                triggerMenu: $('#datosG-tab'),
+                targetMenu: $('#datosG')
+            };
+        });
 
-             $("#anterior3").on("click", function () {
+        $("#siguiente3").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.nextElementSibling.firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+		
+            pestañaActiva = {
+                id: 'documentos',
+                triggerMenu: $('#documentos-tab'),
+                targetMenu: $('#documentos')
+            };
+        });
+		
+			
+		$("#anterior2").on("click", function () {
+			let tabContents = document.querySelector("#menu-contents");
+			let currentTab = document.querySelector(".menu-active");
+			let tabName = currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.getAttribute("data-tabs-target");
+			for (let i = 0; i < tabContents.children.length; i++) {
+				tabTogglers[i].classList.remove('bg-[#27ceeb]', 'text-white', 'menu-active');
+				tabTogglers[i].classList.add('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+				tabTogglers[i].firstChild.nextElementSibling.classList.add('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');
+				tabContents.children[i].classList.remove('hidden');
+				if ("#" + tabContents.children[i].id === tabName) {
+					tabTogglers[i].classList.add('menu-active');
+					continue;
+				}
+				tabContents.children[i].classList.add("hidden");
+			}
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
+			currentTab.parentElement.parentElement.children[1].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
+		
+            pestañaActiva = {
+                id: 'datosA',
+                triggerMenu: $('#datosA-tab'),
+                targetMenu: $('#datosA')
+            };
+        });
+
+        $("#anterior3").on("click", function () {
 			let tabContents = document.querySelector("#menu-contents");
 			let currentTab = document.querySelector(".menu-active");
 			let tabName = currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.getAttribute("data-tabs-target");
@@ -240,508 +281,1649 @@
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.add('bg-[#27ceeb]', 'text-white', 'menu-active');
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.classList.remove('hover:bg-slate-100', 'hover:text-slate-800', 'focus:bg-slate-100', 'focus:text-slate-800');
 			currentTab.parentElement.parentElement.children[2].firstChild.nextElementSibling.firstChild.nextElementSibling.classList.remove('text-slate-400', 'transition-colors', 'group-hover:text-slate-500', 'group-focus:text-slate-500');	
-		});
+		
+            pestañaActiva = {
+                id: 'datosB',
+                triggerMenu: $('#datosB-tab'),
+                targetMenu: $('#datosB')
+            };
+        });
 
-            //Termina la navegación por los expedientes por medio de los botones (Siguiente y anterior).
+		//Termina la navegación por los expedientes por medio de los botones (Siguiente y anterior).
 
-            //EMPIEZA EL JQUERY VALIDATION
-            $.validator.addMethod("refvalplus3", function(value, element) {
-            if ($("#reflab").val() > 3) {
-                return false;
-            } 
-            return true;
-            }, "Please enter a valid value in selectbox");
-            
-            $.validator.addMethod('email_verification', function (value, element) {
-                return this.optional(element) || /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
-            }, 'not a valid email.');
 
-            $.validator.addMethod('field_validation', function (value, element) {
-                return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
-            }, 'not a valid field.');
+        //EMPIEZA EL JQUERY VALIDATION - Estas funciones personalizadas para ciertas validaciones en jquery validation
 
-            $.validator.addMethod('location_validation', function (value) {
-                return /^(?:([a-zA-Z0-9\u00C0-\u00FF][?:\.|,]?)+([?:\s|-][a-zA-Z0-9\u00C0-\u00FF]+[?:\.|,]?)*)?$/.test(value);
-            }, 'not a valid field.');
+        //Valida si el email está escrito correctamente - eg: flavio@flavio.com.
+        $.validator.addMethod('email_verification', function (value, element) {
+            return this.optional(element) || /^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i.test(value);
+        }, 'not a valid email.');
+		
+        //Valida si el número de empleado empieza con F y L, seguido de un guión y al final cualquier número.
+		$.validator.addMethod('num_empleado', function (value, element) {
+            return this.optional(element) || /^([FL]){1}-([0-9])+$/.test(value);
+        }, 'invalid employee number.');
+		
+        //Un validador que acepta minúsculas y mayúsculas además permite un espacio entre palabras.
+		$.validator.addMethod('field_validation', function (value, element) {
+            return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+([\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+        }, 'not a valid field.');
 
-            $.validator.addMethod("maxDate", function(value, element) {
-                var curDate = new Date();
-                var inputDate = new Date(value);
-                if (value == "" || inputDate < curDate)
-                    return true;
-                    return false;
-            }, "Invalid Date!");
+        //Lo mismo que lo anterior solo que acepta números y algunos carácteres especiales.
+        $.validator.addMethod('location_validation', function (value) {
+            return /^(?:([a-zA-Z0-9\u00C0-\u00FF][?:\.|,]?)+([?:\s|-][a-zA-Z0-9\u00C0-\u00FF]+[?:\.|,]?)*)?$/.test(value);
+        }, 'not a valid field.');
 
-            $.validator.addMethod("minDate", function(value, element){
-                var curDate = new Date();
+        //Lo mismo que lo anterior solo que acepta números y algunos carácteres especiales.
+        jQuery.validator.addMethod("model_validation", function(value, element) {
+            return this.optional(element) || /^([a-zA-Z0-9\u00C0-\u00FF])+([?:\s|\-|\_][a-zA-Z0-9\u00C0-\u00FF]+)*$/i.test(value);
+        }, "invalid model");
+
+        //Función que valida si se es mayor que 18.
+        jQuery.validator.addMethod("mayor18", function(value, element) {              
+            var curDate = new Date();
                 var inputDate = new Date(value);
                 var age = Math.floor((curDate-inputDate) / (365.25 * 24 * 60 * 60 * 1000 /* convierte años a milisegundos */ ));
                 if (age > 18)
                  return true;
                      return false;
-            }, "Invalid Date!");
+        }, "Sorry, you must be 18 years of age to apply");
 
-            $.validator.addMethod('names_validation', function (value, element) {
-                return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
-            }, 'not a valid name.');
+        //Función que valida nombres escritos en los campos.
+        $.validator.addMethod('names_validation', function (value, element) {
+			return this.optional(element) || /^[a-zA-Z\u00C0-\u00FF]+(?:[-'\s][a-zA-Z\u00C0-\u00FF]+)*$/.test(value);
+		}, 'not a valid name.');
 
-            $.validator.addMethod("notOnlyZero", function (value, element, param) {
-                return this.optional(element) || parseInt(value) > 0;
-            });
+        //Función que valida el CURP
+        $.validator.addMethod('curp_validation', function (value, element) {
+            return this.optional(element) || /^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/g.test(value);
+        }, 'not a valid curp.');
 
-            $.validator.addMethod('filesize', function(value, element, param) {
-                return this.optional(element) || (element.files[0].size <= param * 1048576)
-            }, 'File size must be less than {0} MB');
+        //Función que valida el RFC
+        $.validator.addMethod('rfc_validation', function (value, element) {
+            return this.optional(element) || /^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])(?:[A-Z\d]{3})$/g.test(value);
+        }, 'not a valid rfc.');
 
-            if($('#Guardar').length > 0 ){
-                $('#Guardar').validate({
-                    ignore: [],
-                    onkeyup: false,
-                    errorPlacement: function(error, element) {
-                        <?php 
-                            while($papeleria_contador3 < $counttipospapeleria){
-                                if($papeleria_contador3 == 0){
-                                    echo "if((element.attr('name') === 'infp_papeleria".$array_papeleria[$papeleria_contador3]['id']."')){";
-                                }else{
-                                    echo "else if((element.attr('name') === 'infp_papeleria".$array_papeleria[$papeleria_contador3]['id']."')){";
-                                }
-                                echo "error.appendTo('div#error-container".$array_papeleria[$papeleria_contador3]['id']."');";
-                                echo "}";
-                                $papeleria_contador3++;
-                            }      
-                        ?>
-                        else{
-                            error.insertAfter(element.parent('.group.flex'));
+        //Verifica si el usuario no modificó el dropdown a través de la consola.
+        $.validator.addMethod("refvalplus3", function(value, element) {
+            if ($("#reflab").val() > 3) {
+                return false;
+            } 
+            return true;
+        }, "Please enter a valid value in selectbox");
+
+        //Lo mismo que lo anterior pero para referencias bancarias.
+        $.validator.addMethod("refbanplus3", function(value, element) {
+            if ($("#refban").val() > 3) {
+                return false;
+            } 
+            return true;
+        }, "Please enter a valid value in selectbox");
+
+        $.validator.addMethod("validateINE", function(value, element) {
+            // La validación específica para INE
+            return /^[a-zA-Z0-9]{13}$/.test(value);
+        }, "INE needs 13 alfanumeric characters.");
+
+        $.validator.addMethod("validatePasaporte", function(value, element) {
+            // La validación específica para Pasaporte (3 letras seguidas de 6 números)
+            return /^[A-Za-z]{3}\d{6}$/.test(value);
+        }, "Passport needs 3 letters and then 6 numbers.");
+
+        $.validator.addMethod("validateCedula", function(value, element) {
+            // La validación específica para Cedula (entre 7 y 10 dígitos)
+            return /^\d{7,10}$/.test(value);
+        }, "Identification needs between 7 and 10 numbers.");
+
+        if($('#Guardar').length > 0 ){
+            $('#Guardar').validate({
+                ignore: [],
+                onkeyup: false,
+                errorPlacement: function(error, element) {
+                    if($(element).attr("type") === "file"){
+                        error.insertAfter($(element));
+                    }else if((element.attr('name') === 'observaciones')){
+                        error.appendTo("div#error_observaciones");  
+                    }else{
+                        error.insertAfter(element.parent('.group.flex'));
+                    }
+                },
+                invalidHandler: function(e, validator){
+                    if(!($('#error-container').length)){
+                        this.$div = $('<div id="error-container" class="grid grid-cols-1 mx-7 py-4"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex items-center"><div class="p-2"><div class="flex items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-lg">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#menu");
+                    }
+                    $("#arrayerrors").html(""); 
+                    $.each(validator.errorMap, function( index, value ) { 
+                        this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
+                        $("#arrayerrors").append(this.$arrayerror);
+                    });
+                    if (validator.errorList.length) {
+                        // Obtén el primer error del validador
+                        var primerError = validator.errorList[0];
+
+                        // Verifica si hay un error
+                        if (primerError) {
+                            // Obtiene la pestaña a la que pertenece el elemento con error
+                            var tabConError = jQuery(primerError.element).closest(".tab-pane").attr("id");
+
+                            // Actualiza la pestaña activa al hacer clic en un botón de menú
+                            pestañaActiva = {
+                                id: tabConError,
+                                triggerMenu: $('#menu button[data-tabs-target="#' + tabConError + '"]'),
+                                targetMenu: $('#' + tabConError)
+                            };
+
+                            // Activa la pestaña con error y aplica estilos
+                            pestañaActiva.triggerMenu.addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+
+                            // Activa los contenidos de la pestaña con el primer error
+                            pestañaActiva.targetMenu.removeClass("hidden");
+
+                            // Desactiva las otras pestañas
+                            $('#menu button[data-tabs-target]').not('[data-tabs-target="#' + tabConError + '"]').removeClass("menu-active bg-[#27ceeb] text-white").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
+
+                            // Oculta los contenidos de las otras pestañas
+                            $("#menu-contents > div[id]").not('#' + tabConError).addClass("hidden");
                         }
-                    },
-                    invalidHandler: function(e, validator){
-                        if(!($('#error-container').length)){
-                            this.$div = $('<div id="error-container" class="grid grid-cols-1 mx-7 py-4"><div class="bg-red-50 border-l-8 border-red-900 mb-2"><div class="flex items-center"><div class="p-2"><div class="flex items-center"><div class="ml-2"><svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><p class="px-6 py-4 text-red-900 font-semibold text-lg">Por favor, arregla los siguientes errores.</p></div><div id="arrayerrors" class="px-16 mb-4"></div></div></div></div>').insertBefore("#menu");
-                        }
-                        $("#arrayerrors").html(""); 
-                        $.each(validator.errorMap, function( index, value ) { 
-                            this.$arrayerror = $('<li class="text-md font-bold text-red-500 text-sm">'+index+ ": " +validator.errorMap[index]+'</li>');
-                            $("#arrayerrors").append(this.$arrayerror);
-                        });
-                        if(validator.errorList.length){
-                            //Agregar los tabpane
-                            var taberror = jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id');
-                            if(taberror != "documentos"){
-                                $('#menu button[data-tabs-target="#' + jQuery(validator.errorList[0].element).closest(".tab-pane").removeClass("hidden") + '"]');
-                                $('#menu > li > button[data-tabs-target="#'+taberror+'"]').addClass("menu-active bg-[#27ceeb] text-white").removeClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().removeClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
-                                $('#menu > li > button:last').removeClass("bg-[#27ceeb] text-white menu-active").addClass("hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800").children().first().addClass("text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500");
-                                $("#menu-contents > div:last").addClass("hidden");
-                            }
-                        }
-                    },
-                    highlight: function(element) {
+                    }
+                },
+                highlight: function(element) {
+                    var elem = $(element);
+                    if (elem.hasClass("select2-hidden-accessible")) {
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); 
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border-2 border-rose-500 border-2"); 
+                    }else{
                         $(element).removeClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
                         $(element).addClass("border-2 border-rose-500 focus:ring-rose-600");
-                    },
-                    unhighlight: function(element) {
+                    }
+                },
+                unhighlight: function(element) {
+                    var elem = $(element);
+                    if (elem.hasClass("select2-hidden-accessible")) {
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().removeClass("border-2 border-rose-500 border-2");
+                        $("#select2-" + elem.attr("id") + "-container").parent().parent().parent().addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"); 
+                    }else{
                         $(element).removeClass("border-2 border-rose-500 focus:ring-rose-600");
                         $(element).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                    }
+                },
+                //Inicializamos en la primera pestaña que es Datos generales
+                rules: {
+                    user: {
+                        required: true
                     },
-                    rules: {
-                        estudios:{
-                            required: true
+                    numempleado: {
+                        num_empleado: {
+                            depends: function(element) {
+                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
+                            }
                         },
-                        posee_correo:{
-                            required: true
-                        },
-                        correo_adicional: {
-                            required: true,
-                            email_verification: true,
-                            remote: {
-                                url: "../ajax/validacion/expedientes/checkeditemail.php",
-                                type: "POST",
-                                data: {
-                                    "editarid": <?php echo $fetch_token_user -> idExpediente; ?>
-                                },
-                                beforeSend: function () {
-                                    $('#loader-correo').removeClass('hidden');
-                                    $('#correct-correo').addClass('hidden');
-                                },
-                                complete: function(data){
-                                    if(data.responseText == "true") {
-                                        $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                                        $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
-                                    }else{
-                                        $('#loader-correo').addClass('hidden');
-                                        $('#correct-correo').addClass('hidden');
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos"),
+                            type: "GET",
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-numempleado').removeClass('hidden');
+                                    $('#correct-numempleado').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    } else {
+                                        $('#loader-numempleado').addClass('hidden');
+                                        $('#correct-numempleado').addClass('hidden');
                                     }
                                 }
                             }
-                        },
-                        calle: {
-                            required: true,
-                            location_validation:true
-                        },
-                        ninterior: {
-                            digits:true
-                        },
-                        nexterior: {
-                            required: true,
-                            digits:true
-                        },
-                        colonia: {
-                            required: true,
-                            location_validation:true
-                        },
-                        estado: {
-                            required: true
-                        },
-                        municipio: {
-                            required: true
-                        },
-                        codigo: {
-                            required: true,
-                            digits:true
-                        },
-                        teldom: {
-                            required: true,
-                            digits:true,
-                            minlength: 10,
-                            maxlength: 10
-                        },
-                        telmov: {
-                            required:true,
-                            digits:true,
-                            minlength: 10,
-                            maxlength: 10
-                        },
-                        casa: {
-                            required: true
-                        },
-                        ecivil: {
-                            required: true
-                        },
-                        retencion:{
-                            required: true
-                        },
-                        monto_mensual:{
-                            required: true,
-                            number: true
-                        },
-                        fechanac:{
-                            required: true,
-                            minDate: true,
-                            maxDate: true
-                        },
-                        curp:{
-                            required: true,
-                            alphanumeric: true,
-                            minlength: 18,
-                            maxlength: 18
-                        },
-                        nss:{
-                            required: true,
-                            digits: true,
-                            minlength: 11,
-                            maxlength: 11
-                        },
-                        rfc:{
-                            required: true,
-                            alphanumeric: true,
-                            minlength: 12,
-                            maxlength: 12
-                        },
-                        identificacion:{
-                            required: true
-                        },
-                        reflab:{
-                            refvalplus3: true
-                        },
-                        infa_rtelefono: {
-                            required:true,
-                            digits:true,
-                            maxlength: 10,
-                            minlength: 10
-                            
-                        },
-                        cantidadpolo:{
-                            digits: true
-                        },
-                        tallapolo:{
-                            field_validation: true
-                        },
-                        emergencianom:{
-                            required: true,
-                            names_validation: true
-                        },
-                        emergencianom2:{
-                            required: true,
-                            names_validation: true
-                        },
-                        emergenciaparentesco:{
-                            required: true,
-                            field_validation: true
-                        },
-                        emergenciaparentesco2:{
-                            required: true,
-                            field_validation: true
-                        },
-                        emergenciatel:{
-                            required: true,
-                            digits: true,
-                            maxlength: 10,
-                            minlength: 10
-                        },
-                        emergenciatel2:{
-                            required: true,
-                            digits: true,
-                            maxlength: 10,
-                            minlength: 10
-                        },
-                        capacitacion:{
-                            field_validation: true
-                        },
-                        antidoping:{
-			                field_validation: true
-		                },
-                        vacante:{
-                            field_validation: true
-                        },
-                        empresa:{
-                            required: true
-                        },
-                        nomfam:{
-                            required: true,
-                            names_validation: true
-                        },
-                        
-                        banco_personal:{
-                            required: true,
-                            field_validation:true
-                        },
-                        cuenta_personal:{
-                            required: true,
-                            digits:true,
-                            minlength: 10,
-                            maxlength: 10
-                        },
-                        clabe_personal:{
-                            required: true,
-                            digits:true,
-                            minlength: 18,
-                            maxlength: 18
-                        },
-                        plastico_personal:{
-                            required: true,
-                            digits: true,
-                            minlength: 16,
-                            maxlength: 16
-                        },
+                        }
                     },
-                    messages: {
-                        estudios:{
-                            required : 'Este campo es requerido'
+                    puesto: {
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
                         },
-                        posee_correo:{
-                            required : 'Este campo es requerido'
-                        },
-                        correo_adicional: {
-                            required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Este campo es requerido"; },
-                            email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
-                        },
-                        calle: {
-                            required : 'Este campo es requerido',
-                            location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-                        },
-                        ninterior: {
-                            digits: 'Solo se permiten números'
-                        },
-                        nexterior: {
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
-                        },
-                        colonia: {
-                            required : 'Este campo es requerido',
-                            location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-                        },
-                        estado: {
-                            required: 'Este campo es requerido'
-                        },
-                        municipio: {
-                            required: 'Este campo es requerido'
-                        },
-                        codigo: {
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
-                        },
-                        teldom: {
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 10 dígitos',
-                            maxlength: 'No puede ser mayor a 10 dígitos'
-                        },
-                        telmov: {
-                            required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 10 dígitos',
-                            maxlength: 'No puede ser mayor a 10 dígitos'
-                        },
-                        casa: {
-                            required: "Este campo es requerido"
-                        },
-                        ecivil: {
-                            required: "Este campo es requerido"
-                        },
-                        retencion:{
-                            required: "Este campo es requerido"
-                        },
-                        monto_mensual:{
-                            required: "Este campo es requerido",
-                            number: "Solo se permiten números y decimales"
-                        },
-                        fechanac:{
-                            required : 'Este campo es requerido',
-                            minDate: 'Favor de ingresar una fecha valida (edad miníma 18 años)',
-                            maxDate: 'No se permiten las fechas posteriores al día de hoy'
-                        },
-                        salario_contrato:{
-                            number: 'Solo se permiten números y decimales'
-                        },
-                        salario_fechaalta:{
-                            number: 'Solo se permiten números y decimales'
-                        },
-                        curp: {
-                            required : 'Este campo es requerido',
-                            alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                            minlength: 'No puede ser menor a 18 dígitos',
-                            maxlength: 'No puede ser mayor a 18 dígitos'
-                        },
-                        nss:{
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 11 dígitos',
-                            maxlength: 'No puede ser mayor a 11 dígitos'
-                        },
-                        rfc:{
-                            required : 'Este campo es requerido',
-                            alphanumeric: 'Solo se permiten carácteres alfanúmericos',
-                            minlength: 'No puede ser menor a 12 dígitos',
-                            maxlength: 'No puede ser mayor a 12 dígitos'
-                        },
-                        identificacion:{
-                            required : 'Este campo es requerido'
-                        },
-                        reflab: {
-                            refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
-                        },
-                        infa_rtelefono: {
-                            required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 10 dígitos',
-                            maxlength: 'No puede ser mayor a 10 dígitos'
-                        },
-                        cantidadpolo:{
-                            digits: 'Solo se permiten números'
-                        },
-                        tallapolo:{
-                            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                        },
-                        emergencianom:{
-                            required : 'Este campo es requerido',
-                            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-                        },
-                        emergencianom2:{
-                            required : 'Este campo es requerido',
-                            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-                        },
-                        emergenciaparentesco:{
-                            required : 'Este campo es requerido',
-                            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                        },
-                        emergenciaparentesco2:{
-                            required : 'Este campo es requerido',
-                            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                        },
-                        emergenciatel:{
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
-                        },
-                        emergenciatel2:{
-                            required : 'Este campo es requerido',
-                            digits: 'Solo se permiten números'
-                        },
-                        // capacitacion:{
-			            //     field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-		                // },
-                        // antidoping:{
-			            //     field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-		                // },
-                        vacante:{
-                            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                        },
-                        empresa:{
-                            required: 'Este campo es requerido'
-                        },
-                        nomfam:{
-                            required: 'Este campo es requerido',
-                            names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
-                        },
-                    
-                        banco_personal:{
-                            required: 'Este campo es requerido',
-                            field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                        },
-                        cuenta_personal:{
-                            required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 10 dígitos',
-                            maxlength: 'No puede ser mayor a 10 dígitos'
-                        },
-                        clabe_personal:{
-                            required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 18 dígitos',
-                            maxlength: 'No puede ser mayor a 18 dígitos'
-                        },
-                        plastico_personal:{
-                            required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 16 dígitos',
-                            maxlength: 'No puede ser mayor a 16 dígitos'
-                        },
-
-                        rtelefono:{
-                            required: 'Este campo es requerido',
-                            digits: 'Solo se permiten números',
-                            minlength: 'No puede ser menor a 10 dígitos',
-                            maxlength: 'No puede ser mayor a 10 dígitos'
-                        }                     
-                    },
-                    submitHandler: function(form) {
-                        $('#submit-button').html(
-                            '<button disabled type="submit" id="finish" name="finish" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">'+
-                                '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
-                                '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
-                                '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
-                                '</svg>'+
-                                'Cargando...'+
-                            '</button>');
-                        $('#error-container').html("");
-                        check_user_logged().then((response) => {
-                            if(response == "true"){
-                                SubmitChanges();
-                            }else{
-                                Swal.fire({
-                                    title: "Ocurrió un error",
-                                    text: "Su sesión expiró, se guardaran los datos, no cierre el navegador o la página!",
-                                    icon: "error"
-                                }).then(function() {
-                                    SubmitChanges();
-                                });
+                        field_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
-                        }).catch((error) => {
-                            console.log(error)
-                        })
-                    return false;
+                        }
+                    },
+                    posee_correo:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    correo_adicional: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='posee_correo']:checked").val() === "si"  && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        email_verification: {
+                            depends: function(element) {
+                                return  $("input[name='posee_correo']:checked").val() === "si"  && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos"),
+                            type: "GET",
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-correo').removeClass('hidden');
+                                    $('#correct-correo').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-correo').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-correo').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  }); 
+                                    } else {
+                                        $('#loader-correo').addClass('hidden');
+                                        $('#correct-correo').addClass('hidden'); 
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    calle: {
+                        location_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    ninterior: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    nexterior: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    colonia: {
+                        location_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    codigo: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    teldom: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    tel_movil:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    telmov: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    tel_movil_empresa:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    marcacion: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    serie: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    sim: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    numred: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    modelotel: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        model_validation: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    marcatel: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        field_validation: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    imei: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    laptop_empresa: {
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    marca_laptop: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        field_validation: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    modelo_laptop: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        model_validation: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    serie_laptop: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        alphanumeric: {
+                            depends: function(element) {
+                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    casa:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    retencion:{
+                        required: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    monto_mensual: {
+                        required: {
+                            depends: function(element) {
+                                return  $("input[name='retencion']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        number: {
+                            depends: function(element) {
+                                return  $("input[name='retencion']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                    },
+                    fechanac:{
+                        mayor18: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    salario_contrato:{
+                        number:{
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    salario_fechaalta:{
+                        number: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    observaciones:{
+                        field_validation:{
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    curp:{
+                        curp_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    nss:{
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 11
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 11
+                        }
+                    },
+                    rfc:{
+                        rfc_validation: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    numeroidentificacion: {
+                        required: {
+                            depends: function(element) {
+                                var tipoIdentificacion = $("#identificacion").val();
+                                return (tipoIdentificacion === "INE" || tipoIdentificacion === "PASAPORTE" || tipoIdentificacion === "CEDULA") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        validateINE: {
+                            depends: function(element) {
+                                return ($("#identificacion").val() === "INE") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        validatePasaporte: {
+                            depends: function(element) {
+                                return ($("#identificacion").val() === "PASAPORTE") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        validateCedula: {
+                            depends: function(element) {
+                                return ($("#identificacion").val() === "CEDULA") && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    numReferencias:{
+                        refvalplus3: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    infa_rnombre1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidopat1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidomat1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rrelacion1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rtelefono1: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 1 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        }
+                    },
+                    infa_rnombre2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidopat2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidomat2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rrelacion2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rtelefono2: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 2 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        }
+                    },
+                    infa_rnombre3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidopat3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rapellidomat3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rrelacion3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infa_rtelefono3: {
+                        required:{
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        digits: {
+                            depends: function(element) {
+                                return   ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return ($("#numReferencias").val() >= 3 && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            },
+                            param: 10
+                        }
+                    },
+                    cantidadpolo: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_nom: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_nom2: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_appat: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_appat2: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_apmat: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_apmat2: {
+                        names_validation: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    emergencia_tel: {
+                        digits: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    emergencia_tel2: {
+                        digits: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return   (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    empresa: {
+                        required: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    nomfam: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    apfam: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    amfam: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("input[name='empresa']:checked").val() === "si" && (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rnombre1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidopat1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidomat1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrelacion1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrfc1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        rfc_validation: {
+                            depends: function(element) {
+                                return ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rcurp1: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        curp_validation: {
+                            depends: function(element) {
+                                return ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rporcentaje1:{
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 1 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rnombre2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidopat2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rapellidomat2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        names_validation: {
+                            depends: function(element) {
+                                return   ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrelacion2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rrfc2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        rfc_validation: {
+                            depends: function(element) {
+                                return ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rcurp2: {
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        },
+                        curp_validation: {
+                            depends: function(element) {
+                                return ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    infb_rporcentaje2:{
+                        required: {
+                            depends: function(element) {
+                                return  ($("#numBeneficiariosBancarios").val() >= 2 && (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos"));
+                            }
+                        }
+                    },
+                    banco_personal: {
+                        field_validation: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    cuenta_personal: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10 
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    clabe_personal: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        }
+                    },
+                    plastico_personal: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        }
+                    },
+                    banco_nomina: {
+                        field_validation: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        }
+                    },
+                    cuenta_nomina: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 10
+                        }
+                    },
+                    clabe_nomina: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 18
+                        }
+                    },
+                    plastico: {
+                        digits: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
+                            },
+                            param: 16
+                        }
                     }
-                });
+                },
+                messages: {
+                    user: {
+                        required: 'Este campo es requerido'
+                    },
+                    numempleado: {
+                        num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
+                        remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
+                    },
+                    puesto: {
+                        minlength: 'El puesto debe de contener 4 caracteres como mínimo',
+                        field_validation:'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    posee_correo: {
+                        required: 'Este campo es requerido'
+                    },
+                    correo_adicional: {
+                        required:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Por favor, ingrese un correo electrónico"; },
+                        email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
+                    },
+                    calle: {
+                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                    },
+                    ninterior: {
+                        digits: 'Solo se permiten números'
+                    },
+                    nexterior: {
+                        digits: 'Solo se permiten números'
+                    },
+                    colonia: {
+                        location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
+                    },
+                    codigo: {
+                        digits: 'Solo se permiten números'
+                    },
+                    teldom: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    tel_movil: {
+                        required: 'Este campo es requerido'
+                    },
+                    telmov: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength:'Solo puedes ingresar como máximo 10 números'
+                    },
+                    tel_movil_empresa: {
+                        required: 'Este campo es requerido'
+                    },
+                    marcacion: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    serie: {
+                        required: "Este campo es requerido",
+                        alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                    },
+                    sim: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    numred: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    modelotel: {
+                        required: "Este campo es requerido",
+                        model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
+                    },
+                    marcatel: {
+                        required: "Este campo es requerido",
+                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                    },
+                    imei: {
+                        required: "Este campo es requerido",
+                        digits: "Solo se permiten números"
+                    },
+                    laptop_empresa: {
+                        required: 'Este campo es requerido'
+                    },
+                    marca_laptop: {
+                        required: "Este campo es requerido",
+                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                    },
+                    modelo_laptop: {
+                        required: "Por favor, ingrese el modelo de la laptop",
+                        model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
+                    },
+                    serie_laptop: {
+                        required: "Este campo es requerido",
+                        alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                    },
+                    casa: {
+                        required: 'Este campo es requerido'
+                    },
+                    retencion: {
+                        required: 'Este campo es requerido'
+                    },
+                    monto_mensual: {
+                        required: "Este campo es requerido",
+                        number: "Solo se permiten números y decimales"
+                    },
+                    fechanac: {
+                        mayor18: 'Debes tener por lo menos 18 años para aplicar'
+                    },
+                    salario_contrato: {
+                        number: 'Solo se permiten números y decimales'
+                    },
+                    salario_fechaalta: {
+                        number: 'Solo se permiten números y decimales'
+                    },
+                    observaciones: {
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    curp: {
+                        curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR',
+                    },
+                    nss: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 11 números',
+                        maxlength: 'Solo puedes ingresar como máximo 11 números'
+                    },
+                    rfc: {
+                        rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789',
+                    },
+                    numeroidentificacion: {
+                        required: 'Este campo es requerido',
+                        validateINE: 'El INE debe tener exactamente 13 caracteres alfanuméricos',
+                        validatePasaporte: 'El pasaporte debe tener 3 letras seguidas de 6 números',
+                        validateCedula: 'La cédula debe tener entre 7 y 10 dígitos numéricos'
+                    },
+                    numReferencias: {
+                        refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
+                    },
+                    infa_rnombre1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidopat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidomat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rrelacion1: {
+                        required: 'Este campo es requerido'
+                    },
+                    infa_rtelefono1: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    infa_rnombre2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidopat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidomat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rrelacion2: {
+                        required: 'Este campo es requerido'
+                    },
+                    infa_rtelefono2: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    infa_rnombre3: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidopat3: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rapellidomat3: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infa_rrelacion3: {
+                        required: 'Este campo es requerido'
+                    },
+                    infa_rtelefono3: {
+                        required: 'Este campo es requerido',
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    cantidadpolo: {
+                        digits: 'Solo se permiten números'
+                    },
+                    emergencia_nom: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_nom2: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_appat: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_appat2: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_apmat: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_apmat2: {
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    emergencia_tel: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    emergencia_tel2: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 10 números',
+                        maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    empresa: {
+                        required: 'Este campo es requerido'
+                    },
+                    nomfam: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    apfam: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    amfam: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rnombre1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidopat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidomat1: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rrelacion1: {
+                        required: 'Este campo es requerido'
+                    },
+                    infb_rrfc1: {
+                        required: 'Este campo es requerido',
+                        rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789'
+                    },
+                    infb_rcurp1: {
+                        required: 'Este campo es requerido',
+                        curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR'
+                    },
+                    infb_rporcentaje1:{
+                        required: 'Este campo es requerido'
+                    },
+                    infb_rnombre2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidopat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rapellidomat2: {
+                        required: 'Este campo es requerido',
+                        names_validation: 'Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    infb_rrelacion2: {
+                        required: 'Este campo es requerido'
+                    },
+                    infb_rrfc2: {
+                        required: 'Este campo es requerido',
+                        rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789'
+                    },
+                    infb_rcurp2: {
+                        required: 'Este campo es requerido',
+                        curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR'
+                    },
+                    infb_rporcentaje2:{
+                        required: 'Este campo es requerido'
+                    },
+                    banco_personal: {
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    cuenta_personal: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+                        maxlength: 'No puede ser mayor a 10 dígitos'
+                    },
+                    clabe_personal: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+                        maxlength: 'No puede ser mayor a 18 dígitos'
+                    },
+                    plastico_personal: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+                        maxlength: 'No puede ser mayor a 16 dígitos'
+                    },
+                    banco_nomina: {
+                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
+                    },
+                    cuenta_nomina: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 10 dígitos',
+                        maxlength: 'No puede ser mayor a 10 dígitos'
+                    },
+                    clabe_nomina: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 18 dígitos',
+                        maxlength: 'No puede ser mayor a 18 dígitos'
+                    },
+                    plastico: {
+                        digits: 'Solo se permiten números',
+                        minlength: 'No puede ser menor a 16 dígitos',
+                        maxlength: 'No puede ser mayor a 16 dígitos'
+                    }
+                },
+                submitHandler: function(form) {
+	                $('#error-container').html("");
+	                check_user_logged().then((response) => {
+		                if(response == "true"){
+			                if (pestañaActiva.id === "datosG"){
+                                $('#submit-DG').html(
+                                '<button disabled type="button" id="guardarDG" name="guardarDG" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                    '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                    '</svg>'+
+                                    'Cargando...'+
+                                '</button>');
+                                DatosG();
+                            } else if (pestañaActiva.id === "datosA"){
+                                $('#submit-DA').html(
+                                '<button disabled type="button" id="guardarDA" name="guardarDA" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                    '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                    '</svg>'+
+                                    'Cargando...'+
+                                '</button>');
+                                DatosA();
+                            } else if (pestañaActiva.id === "datosB"){
+                                $('#submit-DB').html(
+                                '<button disabled type="button" id="guardarDB" name="guardarDB" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                    '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                    '</svg>'+
+                                    'Cargando...'+
+                                '</button>');
+                                DatosB();
+                            } else if (pestañaActiva.id === "documentos"){
+                                $('#submit-button').html(
+                                '<button disabled type="button" id="finish" name="finish" class="button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                    '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                    '</svg>'+
+                                    'Cargando...'+
+                                '</button>');
+                                SubmitChanges();
+                            }
+		                }else{
+			                Swal.fire({
+				                title: "Ocurrió un error",
+				                text: "Su sesión expiró ó limpio el caché del navegador ó cerro sesión, por favor, vuelva a iniciar sesión!",
+				                icon: "error"
+			                }).then(function() {
+				                if (pestañaActiva.id === "datosG"){
+                                    $('#submit-DG').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
+                                } else if (pestañaActiva.id === "datosA"){
+                                    $('#submit-DA').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                                } else if (pestañaActiva.id === "datosB"){
+                                    $('#submit-DB').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
+                                } else if (pestañaActiva.id === "documentos"){
+                                    $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                                }
+                                window.location.href = "login.php";
+			                });
+		                }
+	                }).catch((error) => {
+		                console.log(error)
+	                })
+                return false;
+                }
+            });
+        }
+        //TERMINA EL JQUERY VALIDATION
+
+            $(document).on('click', '#guardarDG', function(e) {
+            e.preventDefault(); // Evitar el envío del formulario por defecto
+            
+            var formularioEsValido = $('#Guardar').valid();
+
+            if (formularioEsValido) {
+                // Si la validación es exitosa, puedes enviar el formulario manualmente
+                $('#Guardar').submit();
             }
-            //TERMINA EL JQUERY VALIDATION
+        });
+
+            $(document).on('click', '#guardarDA', function(e) {
+                e.preventDefault(); 
+                
+                var formularioEsValido = $('#Guardar').valid();
+
+                if (formularioEsValido) {
+                    $('#Guardar').submit();
+                }
+            });
+
+            $(document).on('click', '#guardarDB', function(e) {
+                e.preventDefault(); 
+                
+                var formularioEsValido = $('#Guardar').valid();
+
+                if (formularioEsValido) {
+                    $('#Guardar').submit();
+                }
+            });
+
+            $(document).on('click', '#finish', function(e) {
+                e.preventDefault(); 
+                
+                var formularioEsValido = $('#Guardar').valid();
+
+                if (formularioEsValido) {
+                    $('#Guardar').submit();
+                }
+            });
+
 
             //Empieza la configuración de los fileupload
             <?php 
@@ -925,9 +2107,9 @@
             //Termina la configuración de los fileupload
 
             //SIMULAR CLICK EN CORREO ADICIONAL CUANDO ES NO Y CUANDO HAY VALOR ACTIVAR EL AJAX
-            <?php if($edit->eposee_correo == 'no'){ ?>
+            <?php if($edit->eposee_correo == 'NO'){ ?>
                 $('input[name="posee_correo"][value="no"]').trigger('click');
-            <?php }else if($edit->eposee_correo == 'si'){ ?>
+            <?php }else if($edit->eposee_correo == 'SI'){ ?>
                 $('#correo_adicional').valid();
             <?php } ?>
 
@@ -953,16 +2135,6 @@
                     }
                 });
             }
-
-            //CARGA DE TELÉFONO MÓVIL PROPIO
-            <?php if($edit->eposee_telmov == 'no'){ ?>
-                $('input[name="tel_movil"][value="no"]').trigger('click');
-            <?php } ?>
-
-            //RETENCIÓN
-            <?php if($edit->eposee_retencion == 'no'){ ?>
-                $('input[name="retencion"][value="no"]').trigger('click');
-            <?php } ?>
 
             //IDENTIFICACIÓN
             <?php if($edit->etipo_identificacion == 'INE'){ ?>
@@ -997,355 +2169,10 @@
                 });
             <?php } ?>
 
-            //CARGA DE REFERENCIAS LABORALES
-            if ($('#reflab').val() != "") {
-                var refnumber = document.getElementById("reflab").value;
-                var refcontainer = document.getElementById("referencias");
-                var childrenCount = refcontainer.childElementCount;
-                var contador = childrenCount + 1;
-                var refjson = '<?php echo $reflaborales_json; ?>';
-                const refarr = JSON.parse(refjson);
-                var value = 0;
-                for (a = 0; a < refnumber; a++) {
-                    var divcharge = document.createElement("div");
-                    divcharge.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-3', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-                    refcontainer.appendChild(divcharge);
-                    var divcolumn = document.createElement("div");
-                    divcolumn.classList.add('grid', 'grid-cols-1');
-                    divcharge.appendChild(divcolumn);
-                    var divcolumn2 = document.createElement("div");
-                    divcolumn2.classList.add('grid', 'grid-cols-1');
-                    divcharge.appendChild(divcolumn2);
-                    var divcolumn3 = document.createElement("div");
-                    divcolumn3.classList.add('grid', 'grid-cols-1');
-                    divcharge.appendChild(divcolumn3);
-                    divcolumn.appendChild(document.createTextNode("Nombre completo" + (contador) + " *"));
-                    var divgrupo = document.createElement("div");
-                    divgrupo.classList.add('group', 'flex');
-                    divcolumn.appendChild(divgrupo);
-                    var icon = document.createElement("div");
-                    icon.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    icon.innerHTML = ' <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                    divgrupo.appendChild(icon);
-                    var inputtext = document.createElement("input");
-                    inputtext.type = "text";
-                    inputtext.name = "infa_rnombre" + childrenCount;
-                    inputtext.value = refarr[value]["nombre"];
-                    inputtext.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    inputtext.setAttribute("data-rule-required", "true");
-                    inputtext.setAttribute("data-msg-required", "Este campo es requerido");
-                    inputtext.setAttribute("data-rule-names_validation", "true");
-                    inputtext.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                    inputtext.setAttribute("placeholder", "Nombre " +(contador)); 
-                    divgrupo.appendChild(inputtext);
-                    divcolumn2.appendChild(document.createTextNode("Relación " + (contador) + " *"));
-                    var divgrupo2 = document.createElement("div");
-                    divgrupo2.classList.add('group', 'flex');
-                    divcolumn2.appendChild(divgrupo2);
-                    var icon2 = document.createElement("div");
-                    icon2.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    icon2.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-                    divgrupo2.appendChild(icon2);
-                    var inputtext2 = document.createElement("input");
-                    inputtext2.type = "text";
-                    inputtext2.name = "infa_rrelacion" + childrenCount;
-                    inputtext2.value = refarr[value]["relacion"];
-                    inputtext2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    inputtext2.setAttribute("data-rule-required", "true");
-                    inputtext2.setAttribute("data-msg-required", "Este campo es requerido");
-                    inputtext2.setAttribute("data-rule-field_validation", "true");
-                    inputtext2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-                    inputtext2.setAttribute("placeholder", "Relación " +(contador));
-                    divgrupo2.appendChild(inputtext2);
-                    divcolumn3.appendChild(document.createTextNode("Teléfono " + (contador) + " *"));
-                    var divgrupo3 = document.createElement("div");
-                    divgrupo3.classList.add('group', 'flex');
-                    divcolumn3.appendChild(divgrupo3);
-                    var icon3 = document.createElement("div");
-                    icon3.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                    icon3.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>cellphone</title><path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" /></svg>';
-                    divgrupo3.appendChild(icon3);
-                    var inputtext3 = document.createElement("input");
-                    inputtext3.type = "text";
-                    inputtext3.name = "infa_rtelefono" + childrenCount;
-                    inputtext3.value = refarr[value]["telefono"];
-                    inputtext3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                    inputtext3.setAttribute("data-rule-required", "true");
-                    inputtext3.setAttribute("data-msg-required", "Este campo es requerido");
-                    inputtext3.setAttribute("data-rule-digits", "true");
-                    inputtext3.setAttribute("data-msg-digits", "Solo se permiten números");
-                    inputtext3.setAttribute("data-rule-minlength", "10");
-                    inputtext3.setAttribute("data-msg-minlength", "No puede ser menor a 10 dígitos");
-                    inputtext3.setAttribute("data-rule-maxlength", "10");
-                    inputtext3.setAttribute("data-msg-maxlength", "No puede ser mayor a 10 dígitos");
-                    inputtext3.setAttribute("placeholder", "Teléfono " +(contador));
-                    divgrupo3.appendChild(inputtext3);
-                    contador++;
-                    childrenCount++;
-                    value++;
-                }
-            }
-            //TERMINA LA CARGA DE REFERENCIAS LABORALES
-
-            //NOMBRE COMPLETO DEL FAMILIAR
-            <?php if($edit->efam_dentro_empresa == 'no'){ ?>
-                $('input[name="empresa"][value="no"]').trigger('click');
-            <?php } ?>
-
-            //CARGA DE REFERENCIAS BANCARIAS
-            // if ($('#refban').val() != "") {
-            //     var refbannumber = document.getElementById("refban").value;
-            //     var refbancontainer = document.getElementById("ref");
-            //     var childrenCount2 = refbancontainer.childElementCount;
-            //     var contador2 = childrenCount2 + 1;
-            //     var refbanjson = '<?php echo $refban_json; ?>';
-            //     const refbanarr = JSON.parse(refbanjson);
-            //     var value2 = 0;
-            //     for (b = 0; b < refbannumber; b++) {
-            //         var divrefbancontainer = document.createElement("div");
-            //         divrefbancontainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-            //         refbancontainer.appendChild(divrefbancontainer);
-            //         var refbandiv = document.createElement("div");
-            //         refbandiv.classList.add('grid', 'grid-cols-1');
-            //         divrefbancontainer.appendChild(refbandiv);
-            //         var refbandiv2 = document.createElement("div");
-            //         refbandiv2.classList.add('grid', 'grid-cols-1');
-            //         divrefbancontainer.appendChild(refbandiv2);
-            //         var refbandiv3 = document.createElement("div");
-            //         refbandiv3.classList.add('grid', 'grid-cols-1');
-            //         divrefbancontainer.appendChild(refbandiv3);
-            //         var refbandiv4 = document.createElement("div");
-            //         refbandiv4.classList.add('grid', 'grid-cols-1');
-            //         divrefbancontainer.appendChild(refbandiv4);
-            //         var refbandiv5 = document.createElement("div");
-            //         refbandiv5.classList.add('grid', 'grid-cols-1', 'col-span-1', 'md:col-span-2');
-            //         divrefbancontainer.appendChild(refbandiv5);
-            //         refbandiv.appendChild(document.createTextNode("Nombre completo" + (contador2) + " *"));
-            //         var refbangrupo = document.createElement("div");
-            //         refbangrupo.classList.add('group', 'flex');
-            //         refbandiv.appendChild(refbangrupo);
-            //         var refbanicon = document.createElement("div");
-            //         refbanicon.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-            //         refbanicon.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-            //         refbangrupo.appendChild(refbanicon);
-            //         var refbaninput = document.createElement("input");
-            //         refbaninput.type = "text";
-            //         refbaninput.name = "infb_rnombre" + childrenCount2;
-            //         refbaninput.value = refbanarr[value2]["nombre"];
-            //         refbaninput.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-            //         refbaninput.setAttribute("data-rule-required", "true"); 
-            //         refbaninput.setAttribute("data-msg-required", "Este campo es requerido");
-            //         refbaninput.setAttribute("data-rule-names_validation", "true"); 
-            //         refbaninput.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");  
-            //         refbaninput.setAttribute("placeholder", "Nombre " +(contador2)); 
-            //         refbangrupo.appendChild(refbaninput);
-            //         refbandiv2.appendChild(document.createTextNode("Relación " + (contador2) + " *"));
-            //         var refbangrupo2 = document.createElement("div");
-            //         refbangrupo2.classList.add('group', 'flex');
-            //         refbandiv2.appendChild(refbangrupo2);
-            //         var refbanicon2 = document.createElement("div");
-            //         refbanicon2.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-            //         refbanicon2.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-            //         refbangrupo2.appendChild(refbanicon2);
-            //         var refbaninput2 = document.createElement("input");
-            //         refbaninput2.type = "text";
-            //         refbaninput2.name = "infb_rrelacion" + childrenCount2;
-            //         refbaninput2.value = refbanarr[value2]["relacion"];
-            //         refbaninput2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-            //         refbaninput2.setAttribute("data-rule-required", "true");
-            //         refbaninput2.setAttribute("data-msg-required", "Este campo es requerido");
-            //         refbaninput2.setAttribute("data-rule-field_validation", "true");
-            //         refbaninput2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-            //         refbaninput2.setAttribute("placeholder", "Relación " +(contador2)); 
-            //         refbangrupo2.appendChild(refbaninput2);
-            //         refbandiv3.appendChild(document.createTextNode("RFC " + (contador2) + " *"));
-            //         var refbangrupo3 = document.createElement("div");
-            //         refbangrupo3.classList.add('group', 'flex');
-            //         refbandiv3.appendChild(refbangrupo3);
-            //         var refbanicon3 = document.createElement("div");
-            //         refbanicon3.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-            //         refbanicon3.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-document-edit-outline</title><path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" /></svg>';
-            //         refbangrupo3.appendChild(refbanicon3);
-            //         var refbaninput3 = document.createElement("input");
-            //         refbaninput3.type = "text";
-            //         refbaninput3.name = "infb_rrfc" + childrenCount2;
-            //         refbaninput3.value = refbanarr[value2]["rfc"];
-            //         refbaninput3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-            //         refbaninput3.setAttribute("data-rule-required", "true");
-            //         refbaninput3.setAttribute("data-msg-required", "Este campo es requerido");
-            //         refbaninput3.setAttribute("data-rule-alphanumeric", "true");
-            //         refbaninput3.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-            //         refbaninput3.setAttribute("data-rule-minlength", "12");
-            //         refbaninput3.setAttribute("data-msg-minlength", "No puede ser menor de 12 digitos");
-            //         refbaninput3.setAttribute("data-rule-maxlength", "12");
-            //         refbaninput3.setAttribute("data-msg-maxlength", "No puede ser mayor de 12 digitos");
-            //         refbaninput3.setAttribute("placeholder", "RFC " +(contador2)); 
-            //         refbangrupo3.appendChild(refbaninput3);
-            //         refbandiv4.appendChild(document.createTextNode("CURP " + (contador2) + " *"));
-            //         var refbangrupo4 = document.createElement("div");
-            //         refbangrupo4.classList.add('group', 'flex');
-            //         refbandiv4.appendChild(refbangrupo4);
-            //         var refbanicon4 = document.createElement("div");
-            //         refbanicon4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-            //         refbanicon4.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>badge-account</title><path fill="currentColor" d="M17,3H14V6H10V3H7A2,2 0 0,0 5,5V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V5A2,2 0 0,0 17,3M12,8A2,2 0 0,1 14,10A2,2 0 0,1 12,12A2,2 0 0,1 10,10A2,2 0 0,1 12,8M16,16H8V15C8,13.67 10.67,13 12,13C13.33,13 16,13.67 16,15V16M13,5H11V1H13V5M16,19H8V18H16V19M12,21H8V20H12V21Z" /></svg>';
-            //         refbangrupo4.appendChild(refbanicon4);
-            //         var refbaninput4 = document.createElement("input");
-            //         refbaninput4.type = "text";
-            //         refbaninput4.name = "infb_rcurp" + childrenCount2;
-            //         refbaninput4.value = refbanarr[value2]["curp"];
-            //         refbaninput4.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-            //         refbaninput4.setAttribute("data-rule-required", "true");
-            //         refbaninput4.setAttribute("data-msg-required", "Este campo es requerido");
-            //         refbaninput4.setAttribute("data-rule-alphanumeric", "true");
-            //         refbaninput4.setAttribute("data-msg-alphanumeric", "Solo se permiten carácteres alfanúmericos");
-            //         refbaninput4.setAttribute("data-rule-minlength", "18");
-            //         refbaninput4.setAttribute("data-msg-minlength", "No puede ser menor de 18 digitos");
-            //         refbaninput4.setAttribute("data-rule-maxlength", "18");
-            //         refbaninput4.setAttribute("data-msg-maxlength", "No puede ser mayor de 18 digitos");
-            //         refbaninput4.setAttribute("placeholder", "CURP " +(contador2));  
-            //         refbangrupo4.appendChild(refbaninput4);
-            //         refbandiv5.appendChild(document.createTextNode("Porcentaje de derecho " + (contador2) + " *"));
-            //         var refbangrupo5 = document.createElement("div");
-            //         refbangrupo5.classList.add('group', 'flex');
-            //         refbandiv5.appendChild(refbangrupo5);  
-            //         var refbanicon5 = document.createElement("div");
-            //         refbanicon5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-            //         refbanicon5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>percent-box</title><path fill="currentColor" d="M19 3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.89 20.1 3 19 3M8.83 7.05C9.81 7.05 10.6 7.84 10.6 8.83C10.6 9.81 9.81 10.6 8.83 10.6C7.84 10.6 7.05 9.81 7.05 8.83C7.05 7.84 7.84 7.05 8.83 7.05M15.22 17C14.24 17 13.45 16.2 13.45 15.22C13.45 14.24 14.24 13.45 15.22 13.45C16.2 13.45 17 14.24 17 15.22C17 16.2 16.2 17 15.22 17M8.5 17.03L7 15.53L15.53 7L17.03 8.5L8.5 17.03Z" /></svg>';
-            //         refbangrupo5.appendChild(refbanicon5);
-            //         var refbaninput5 = document.createElement("input");
-            //         refbaninput5.type = "text";
-            //         refbaninput5.name = "infb_rporcentaje" + childrenCount2;
-            //         refbaninput5.value = refbanarr[value2]["prcnt_derecho"];
-            //         refbaninput5.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-            //         refbaninput5.setAttribute("data-rule-required", "true");
-            //         refbaninput5.setAttribute("data-msg-required", "Este campo es requerido");
-            //         refbaninput5.setAttribute("data-rule-digits", "true");
-            //         refbaninput5.setAttribute("data-msg-digits", "Solo se permiten números");
-            //         refbaninput5.setAttribute("placeholder", "Porcentaje de derecho " +(contador2)); 
-            //         refbangrupo5.appendChild(refbaninput5);
-            //         value2++;
-            //         contador2++;
-            //         childrenCount2++;
-            //     }
-            // }
-            //TERMINA LA CARGA DE REFERENCIAS BANCARIAS
-
-
-        <?php } ?>
-
-        
+        <?php } ?>     
     });
 
     <?php if($fetch_token_user->exp_date >= $curDate){ ?>
-        //Aquí empiezan las referencias laborales
-        function AgregarReferencias(){
-            var number = document.getElementById("reflab").value;
-            number = number.replace(/[^0-9]/g, function replacing() {
-                document.getElementById("reflab").value = 0;
-                return "0";
-            });
-                var container = document.getElementById("referencias");
-                var childrenCount = container.childElementCount;
-                var count = childrenCount + 1;
-                var result = 0;
-                if (number == 0) {
-                    childrenCount = 0;
-                    while (container.firstChild) {
-                        container.removeChild(container.firstChild);
-                    }
-                }else if(number > 3){
-                    childrenCount = 0;
-                    while (container.firstChild) {
-                        container.removeChild(container.firstChild);
-                    }
-                } else {
-                    if (number < childrenCount) {
-                        result = childrenCount - number;
-                        for (j = 0; j < result; j++) {
-                            container.removeChild(container.lastChild);
-                        }
-                } else if (number > childrenCount) {
-                    result = number - childrenCount;
-                    for (i=0;i<result;i++){
-                        var divrow = document.createElement("div");
-                        divrow.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-3', 'gap-5', 'md:gap-8', 'mt-5', 'mx-7', 'items-start');
-                        container.appendChild(divrow);
-                        var div = document.createElement("div");
-                        div.classList.add('grid', 'grid-cols-1');
-                        divrow.appendChild(div);
-                        var div2 = document.createElement("div");
-                        div2.classList.add('grid', 'grid-cols-1');
-                        divrow.appendChild(div2);
-                        var div3 = document.createElement("div");
-                        div3.classList.add('grid', 'grid-cols-1');
-                        divrow.appendChild(div3);
-                        div.appendChild(document.createTextNode("Nombre completo" + (count) + " *"));
-                        var grupo = document.createElement("div");
-                        grupo.classList.add('group', 'flex');
-                        div.appendChild(grupo);
-                        var div4 = document.createElement("div");
-                        div4.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div4.innerHTML = ' <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>';
-                        grupo.appendChild(div4);
-                        var input = document.createElement("input");
-                        input.type = "text";
-                        input.name = "infa_rnombre" + childrenCount;
-                        input.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input.setAttribute("data-rule-required", "true");
-                        input.setAttribute("data-msg-required", "Este campo es requerido");
-                        input.setAttribute("data-rule-names_validation", "true");
-                        input.setAttribute("data-msg-names_validation", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios");
-                        input.setAttribute("placeholder", "Nombre " +(count)); 
-                        grupo.appendChild(input);
-                        div2.appendChild(document.createTextNode("Relación " + (count) + " *"));
-                        var grupo2 = document.createElement("div");
-                        grupo2.classList.add('group', 'flex');
-                        div2.appendChild(grupo2);
-                        var div5 = document.createElement("div");
-                        div5.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div5.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>';
-                        grupo2.appendChild(div5);
-                        var input2 = document.createElement("input");
-                        input2.type = "text";
-                        input2.name = "infa_rrelacion" + childrenCount;
-                        input2.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input2.setAttribute("data-rule-required", "true");
-                        input2.setAttribute("data-msg-required", "Este campo es requerido");
-                        input2.setAttribute("data-rule-field_validation", "true");
-                        input2.setAttribute("data-msg-field_validation", "Solo se permiten carácteres alfabéticos y espacios");
-                        input2.setAttribute("placeholder", "Relación " +(count));
-                        grupo2.appendChild(input2);
-                        div3.appendChild(document.createTextNode("Teléfono " + (count) + " *"));
-                        var grupo3 = document.createElement("div");
-                        grupo3.classList.add('group', 'flex');
-                        div3.appendChild(grupo3);
-                        var div6 = document.createElement("div");
-                        div6.classList.add('w-10', 'z-10', 'pl-1', 'text-center', 'pointer-events-none', 'flex', 'items-center', 'justify-center');
-                        div6.innerHTML = '<svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>cellphone</title><path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" /></svg>';
-                        grupo3.appendChild(div6);
-                        var input3 = document.createElement("input");
-                        input3.type = "text";
-                        input3.name = "infa_rtelefono" + childrenCount;
-                        input3.classList.add('w-full', '-ml-10', 'pl-10', 'py-2', 'h-11', 'border', 'rounded-md', 'border-[#d1d5db]', 'focus:ring-2', 'focus:ring-celeste-600');
-                        input3.setAttribute("data-rule-required", "true");
-                        input3.setAttribute("data-msg-required", "Este campo es requerido");
-                        input3.setAttribute("data-rule-digits", "true");
-                        input3.setAttribute("data-msg-digits", "Solo se permiten números");
-                        input3.setAttribute("data-rule-minlength", "10");
-                        input3.setAttribute("data-msg-minlength", "No puede ser menor a 10 dígitos");
-                        input3.setAttribute("data-rule-maxlength", "10");
-                        input3.setAttribute("data-msg-maxlength", "No puede ser mayor a 10 dígitos");
-                        input3.setAttribute("placeholder", "Teléfono " +(count));
-                        grupo3.appendChild(input3);
-                        count++;
-                        childrenCount++;
-                    }
-                }
-            }
-        }
-        //Terminan las referencias laborales
-
-
 
         //Checa si el user esta loggeado
         function check_user_logged(){
@@ -1374,89 +2201,261 @@
             e.returnValue = '';
         }
 
-        //Metodo que envía el formulario
-        function SubmitChanges(){
-            window.addEventListener('beforeunload', unloadHandler);
-            var fd = new FormData();
-        
-            /*Inputs*/
-            var token = "<?php echo $token; ?>";
-            var estudios = $("#estudios").val();
-            var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
-            var correo_adicional = $("#correo_adicional").val();
-            var calle = $("#calle").val();
-            var ninterior = $("#ninterior").val();
-            var nexterior = $("#nexterior").val();
-            var colonia = $("#colonia").val();
-            var estado = $("#estado").val();
-            var estadotext = $("#estado option:selected").text();
-            var municipio = $("#municipio").val();
-            var municipiotext = $("#municipio option:selected").text();
-            var codigo = $("#codigo").val();
-            var teldom = $("#teldom").val();
-            var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
-            var telmov = $("#telmov").val();
-            var radio = $("input[name=casa]:checked", "#Guardar").val();
-            var ecivil = $("#ecivil").val();
-            var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
-            var monto_mensual = $("#monto_mensual").val();
-            var fechanac = $("#fechanac").val();
-            var fechacon = $("#fechacon").val();
-            var fechaalta = $("#fechaalta").val();
-            var curp = $("#curp").val();
-            var nss = $("#nss").val();
-            var rfc = $("#rfc").val();
-            var tipoidentificacion = $("#identificacion").val();
-            var numeroidentificacion = $("#numeroidentificacion").val();
-            var numeroreferenciaslab = $("#numReferencias").val();
-            var fechauniforme = $("#fechauniforme").val();
-            var cantidadpolo = $("#cantidadpolo").val();
-            var tallapolo = $("#tallapolo").val();
-            var emergencianom = $("#emergencia_nom").val();
-            var emergenciaapat = $("#emergencia_appat").val();
-            var emergenciaamat = $("#emergencia_apmat").val();
-            if($("#emergenciaparentesco").val() == "OTRO"){
-                var emergenciaparentesco = $("#emergenciaparentesco4").val();
-                }else{
-                    var emergenciaparentesco = $("#emergenciaparentesco").val();
+//Metodo alamcena en la tabla temporal de expedientes que envía los datosG
+function DatosG(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+
+        var token = "<?php echo $token; ?>";
+        var numempleado = $("#numempleado").val();
+        var puesto = $("#puesto").val();
+        var estudios = $("#estudios").val();
+        var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
+        var correo_adicional = $("#correo_adicional").val();
+        var calle = $("#calle").val();
+        var ninterior = $("#ninterior").val();
+        var nexterior = $("#nexterior").val();
+        var colonia = $("#colonia").val();
+        var estado = $("#estado").val();
+        var estadotext = $("#estado option:selected").text();
+        var municipio = $("#municipio").val();
+        var municipiotext = $("#municipio option:selected").text();
+        var codigo = $("#codigo").val();
+        var teldom = $("#teldom").val();
+        var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
+        var telmov = $("#telmov").val();
+        var radio = $("input[name=casa]:checked", "#Guardar").val();
+        var ecivil = $("#ecivil").val();
+        var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+        var monto_mensual = $("#monto_mensual").val();
+        var fechanac = $("#fechanac").val();
+        var fechacon = $("#fechacon").val();
+        var fechaalta = $("#fechaalta").val();
+        var curp = $("#curp").val();
+        var nss = $("#nss").val();
+        var rfc = $("#rfc").val();
+        var tipoidentificacion = $("#identificacion").val();
+        var numeroidentificacion = $("#numeroidentificacion").val();
+        var pestaña = "DatosG";
+        var method = "edit";
+        var app="Expediente_temporal";
+
+        fd.append('token', token);
+        fd.append('numempleado', numempleado);
+        fd.append('puesto', puesto);
+        fd.append('estudios', estudios);
+        fd.append('posee_correo', posee_correo);
+        fd.append('correo_adicional', correo_adicional);
+        fd.append('calle', calle);
+        fd.append('ninterior', ninterior);
+        fd.append('nexterior', nexterior);
+        fd.append('colonia', colonia);
+        fd.append('estado', estado);
+        fd.append('estadotext', estadotext);
+        fd.append('municipio', municipio);
+        fd.append('municipiotext', municipiotext);
+        fd.append('codigo', codigo);
+        fd.append('teldom', teldom);
+        fd.append('posee_telmov', posee_telmov);
+        fd.append('telmov', telmov);
+        fd.append('radio', radio);
+        fd.append('ecivil', ecivil);
+        fd.append('posee_retencion', posee_retencion);
+        fd.append('monto_mensual', monto_mensual);
+        fd.append('fechanac', fechanac);
+        fd.append('fechacon', fechacon);
+        fd.append('fechaalta', fechaalta);
+        fd.append('curp', curp);
+        fd.append('nss', nss);
+        fd.append('rfc', rfc);
+        fd.append('identificacion', tipoidentificacion);
+        fd.append('numeroidentificacion', numeroidentificacion);
+        fd.append('pestaña', pestaña);
+        fd.append('method', method);
+        fd.append('app', app);
+
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Almacenado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "forbidden") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DG').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
+                        });
                     }
-            var emergenciatel = $("#emergenciatel").val();
-            var emergencianom2 = $("#emergencia_nom2").val();
-            var emergenciaapat2 = $("#emergencia_appat2").val();
-            var emergenciaamat2 = $("#emergencia_apmat2").val();
-            if($("#emergenciaparentesco2").val() == "OTRO"){
-                var emergenciaparentesco2 = $("#emergenciaparentesco3").val();
-                }else{
-                    var emergenciaparentesco2 = $("#emergenciaparentesco2").val();
-                    }
-            var emergenciatel2 = $("#emergenciatel2").val();
-            var capacitacion = $("#capacitacion").val();
-            var antidoping = $("#antidoping").val();
-            var tipo_sangre = $("#tipo_sangre").val();
-            var vacante = $("#vacante").val();
-            var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
-            var nomfam = $("#nomfam").val();
-            var apellidopatfam = $("#apfam").val();
-            var apellidomatfam = $("#amfam").val();
-            var numeroreferenciasban = $("#numReferenciasBancarias").val();
-            var banco_personal = $("#banco_personal").val();
-            var cuenta_personal = $("#cuenta_personal").val();
-            var clabe_personal = $("#clabe_personal").val();
-            var plastico_personal = $("#plastico_personal").val();
-            var app = "expediente_modo_edicion";
-        
-            /*Referencias laborales*/
-            var reflab = [];
-        for (var i = 1; i <= numeroreferenciaslab; i++) {
-                var rnombre = $("input[name=infa_rnombre" + i + "]").val();
-                var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
-                var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
-                var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
-                var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
+				},3000);
             }
-        
-            /*Referencias bancarias*/
-            var refbanc = [];
+        });
+    }
+
+    //Metodo alamcena en la tabla temporal de expedientes que envía los datosA
+    function DatosA(){
+
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+
+        var token = "<?php echo $token; ?>";
+        var numeroreferenciaslab = $("#numReferencias").val();
+        var fechauniforme = $("#fechauniforme").val();
+        var cantidadpolo = $("#cantidadpolo").val();
+        var tallapolo = $("#tallapolo").val();
+        var emergencianom = $("#emergencia_nom").val();
+        var emergenciaapat = $("#emergencia_appat").val();
+        var emergenciaamat = $("#emergencia_apmat").val();
+        var emergenciarelacion = $("#emergencia_relacion").val();
+        var emergenciatelefono = $("#emergencia_tel").val();
+        var emergencianom2 = $("#emergencia_nom2").val();
+        var emergenciaapat2 = $("#emergencia_appat2").val();
+        var emergenciaamat2 = $("#emergencia_apmat2").val();
+        var emergenciarelacion2 = $("#emergencia_relacion2").val();
+        var emergenciatelefono2 = $("#emergencia_tel2").val();
+		var capacitacion = $("#capacitacion").val();
+        var antidoping = $("#antidoping").val();
+        var tipo_sangre = $("#tipo_sangre").val();
+        var vacante = $("#vacante").val();
+        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+        var nomfam = $("#nomfam").val();
+        var apellidopatfam = $("#apfam").val();
+        var apellidomatfam = $("#amfam").val();
+        //
+        var reflab = [];
+        for (var i = 1; i <= numeroreferenciaslab; i++) {
+            var rnombre = $("input[name=infa_rnombre" + i + "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
+            var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
+
+            reflab.push({
+                nombre: rnombre,
+                apellidopat: rapellidopat,
+                apellidomat: rapellidomat,
+                relacion: rrelacion,
+                telefono: rtelefono
+            });
+        }
+        var pestaña = "DatosA";
+        var method = "edit";
+        var app="Expediente_temporal";
+
+
+        fd.append('token', token);
+        fd.append('numeroreferenciaslab', numeroreferenciaslab);
+        fd.append('fechauniforme', fechauniforme);
+        fd.append('cantidadpolo', cantidadpolo);
+        fd.append('tallapolo', tallapolo);
+        fd.append('emergencianom', emergencianom);
+        fd.append('emergenciaapat', emergenciaapat);
+        fd.append('emergenciaamat', emergenciaamat);
+        fd.append('emergenciarelacion', emergenciarelacion);
+        fd.append('emergenciatelefono', emergenciatelefono);
+        fd.append('emergencianom2', emergencianom2);
+        fd.append('emergenciaapat2', emergenciaapat2);
+        fd.append('emergenciaamat2', emergenciaamat2);
+        fd.append('emergenciarelacion2', emergenciarelacion2);
+        fd.append('emergenciatelefono2', emergenciatelefono2);
+		fd.append('capacitacion', capacitacion);
+        fd.append('antidoping', antidoping);
+        fd.append('tipo_sangre', tipo_sangre);
+        fd.append('vacante', vacante);
+        fd.append('radio2', radio2);
+        fd.append('nomfam', nomfam);
+        fd.append('apellidopatfam', apellidopatfam);
+        fd.append('apellidomatfam', apellidomatfam);
+        fd.append('referencias', JSON.stringify(reflab));
+        fd.append('pestaña', pestaña);
+        fd.append('method', method);
+        fd.append('app', app);
+
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Almacenado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DA').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DA').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "forbidden") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DA').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
+                        });
+                    }
+				},3000);
+            }
+        });
+    }
+
+    //Metodo alamcena en la tabla temporal de expedientes que envía los datosB
+    function DatosB(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+
+        var token = "<?php echo $token; ?>";
+        var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
+        var banco_personal = $("#banco_personal").val();
+        var cuenta_personal = $("#cuenta_personal").val();
+        var clabe_personal = $("#clabe_personal").val();
+        var plastico_personal = $("#plastico_personal").val();
+        var banco_nomina = $("#banco_nomina").val();
+        var cuenta_nomina = $("#cuenta_nomina").val();
+        var clabe_nomina = $("#clabe_nomina").val();
+        var plastico = $("#plastico").val();
+        //
+        var refbanc = [];
         for (var i = 1; i <= numeroreferenciasban; i++) {
             var brnombre = $("input[name=infb_rnombre" + i + "]").val();
             var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
@@ -1465,92 +2464,274 @@
             var brrfc = $("input[name=infb_rrfc" + i + "]").val();
             var brcurp = $("input[name=infb_rcurp" + i + "]").val();
             var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+
+            refbanc.push({
+                nombre: brnombre,
+                apellidopat: brapellidopat,
+                apellidomat: brapellidomat,
+                relacion: brrelacion,
+                rfc: brrfc,
+                curp: brcurp,
+                porcentaje: brporcentaje
+            });
         }
-        
-            /*File uploads*/
-            <?php 
-                while($papeleria_contador4 < $counttipospapeleria){
-                    echo ("
-                        var papeleria{$papeleria_contador4} = $('#infp_papeleria{$array_papeleria[$papeleria_contador4]['id']}')[0].files[0];
-                    ");
-                    $papeleria_contador4++;
-                } 
-            ?>
-        
-            /*FD appends*/
-        
-            /*Inputs*/
-            fd.append('token', token);
-            fd.append('estudios', estudios);
-            fd.append('posee_correo', posee_correo);
-            fd.append('correo_adicional', correo_adicional);
-            fd.append('calle', calle);
-            fd.append('ninterior', ninterior);
-            fd.append('nexterior', nexterior);
-            fd.append('colonia', colonia);
-            fd.append('estado', estado);
-            fd.append('estadotext', estadotext);
-            fd.append('municipio', municipio);
-            fd.append('municipiotext', municipiotext);
-            fd.append('codigo', codigo);
-            fd.append('teldom', teldom);
-            fd.append('posee_telmov', posee_telmov);
-            fd.append('telmov', telmov);
-            fd.append('radio', radio);
-            fd.append('ecivil', ecivil);
-            fd.append('posee_retencion', posee_retencion);
-            fd.append('monto_mensual', monto_mensual);
-            fd.append('fechanac', fechanac);
-            fd.append('fechacon', fechacon);
-            fd.append('fechaalta', fechaalta);
-            fd.append('curp', curp);
-            fd.append('nss', nss);
-            fd.append('rfc', rfc);
-            fd.append('identificacion', tipoidentificacion);
-            fd.append('numeroidentificacion', numeroidentificacion);
-            fd.append('numeroreferenciaslab', numeroreferenciaslab);
-            fd.append('fechauniforme', fechauniforme);
-            fd.append('cantidadpolo', cantidadpolo);
-            fd.append('tallapolo', tallapolo);
-            fd.append('emergencianom', emergencianom);
-            fd.append('emergenciaapat', emergenciaapat);
-            fd.append('emergenciaamat', emergenciaamat);
-            fd.append('emergenciarelacion', emergenciarelacion);
-            fd.append('emergenciatelefono', emergenciatelefono);
-            fd.append('emergencianom2', emergencianom2);
-            fd.append('emergenciaapat2', emergenciaapat2);
-            fd.append('emergenciaamat2', emergenciaamat2);
-            fd.append('emergenciarelacion2', emergenciarelacion2);
-            fd.append('emergenciatelefono2', emergenciatelefono2);
-            fd.append('capacitacion', capacitacion);
-            fd.append('antidoping', antidoping);
-            fd.append('tipo_sangre', tipo_sangre);
-            fd.append('vacante', vacante);
-            fd.append('radio2', radio2);
-            fd.append('nomfam', nomfam);
-            fd.append('numeroreferenciasban', numeroreferenciasban);
-            fd.append('banco_personal', banco_personal);
-            fd.append('cuenta_personal', cuenta_personal);
-            fd.append('clabe_personal', clabe_personal);
-            fd.append('plastico_personal', plastico_personal);
-            fd.append('app', app);
-            
-        
-            /*Referencias*/
-            fd.append('referencias', JSON.stringify(reflab));
-            fd.append('refbanc', JSON.stringify(refbanc));
-        
-            /*File uploads*/
-            <?php
-                while($papeleria_contador5 < $counttipospapeleria){
-                    echo ("
-                        fd.append('papeleria{$papeleria_contador5}', papeleria{$papeleria_contador5});
-                    ");
-                    $papeleria_contador5++;
-                } 
-            ?>
-        
-        
+        var pestaña = "DatosB";
+        var method = "edit";
+        var app="Expediente_temporal";
+
+
+        fd.append('token', token);
+        fd.append('numeroreferenciasban', numeroreferenciasban);
+        fd.append('banco_personal', banco_personal);
+        fd.append('cuenta_personal', cuenta_personal);
+        fd.append('clabe_personal', clabe_personal);
+        fd.append('plastico_personal', plastico_personal);
+        fd.append('banco_nomina', banco_nomina);
+        fd.append('cuenta_nomina', cuenta_nomina);
+        fd.append('clabe_nomina', clabe_nomina);
+        fd.append('plastico', plastico);
+        fd.append('refbanc', JSON.stringify(refbanc));
+        fd.append('pestaña', pestaña);
+        fd.append('method', method);
+        fd.append('app', app);
+
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Almacenado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DB').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DB').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "forbidden") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-DB').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
+                        });
+                    }
+				},3000);
+            }
+        });
+
+
+    }
+
+    //Metodo que envía el formulario completo
+    function SubmitChanges(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+    
+        /*Obtención de valores*/
+        /*Datos generales*/
+        var token = "<?php echo $token; ?>";
+        var estudios = $("#estudios").val();
+        var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
+        var correo_adicional = $("#correo_adicional").val();
+        var calle = $("#calle").val();
+        var ninterior = $("#ninterior").val();
+        var nexterior = $("#nexterior").val();
+        var colonia = $("#colonia").val();
+        var estado = $("#estado").val();
+        var estadotext = $("#estado option:selected").text();
+        var municipio = $("#municipio").val();
+        var municipiotext = $("#municipio option:selected").text();
+        var codigo = $("#codigo").val();
+        var teldom = $("#teldom").val();
+        var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
+        var telmov = $("#telmov").val();
+        var radio = $("input[name=casa]:checked", "#Guardar").val();
+        var ecivil = $("#ecivil").val();
+        var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+        var monto_mensual = $("#monto_mensual").val();
+        var fechanac = $("#fechanac").val();
+        var fechacon = $("#fechacon").val();
+        var fechaalta = $("#fechaalta").val();
+        var curp = $("#curp").val();
+        var nss = $("#nss").val();
+        var rfc = $("#rfc").val();
+        var tipoidentificacion = $("#identificacion").val();
+        var numeroidentificacion = $("#numeroidentificacion").val();
+
+        /*Datos adicionales*/
+        var numeroreferenciaslab = $("#numReferencias").val();
+        var fechauniforme = $("#fechauniforme").val();
+        var cantidadpolo = $("#cantidadpolo").val();
+        var tallapolo = $("#tallapolo").val();
+        var emergencianom = $("#emergencia_nom").val();
+        var emergenciaapat = $("#emergencia_appat").val();
+        var emergenciaamat = $("#emergencia_apmat").val();
+        var emergenciarelacion = $("#emergencia_relacion").val();
+        var emergenciatelefono = $("#emergencia_tel").val();
+        var emergencianom2 = $("#emergencia_nom2").val();
+        var emergenciaapat2 = $("#emergencia_appat2").val();
+        var emergenciaamat2 = $("#emergencia_apmat2").val();
+        var emergenciarelacion2 = $("#emergencia_relacion2").val();
+        var emergenciatelefono2 = $("#emergencia_tel2").val();
+		var capacitacion = $("#capacitacion").val();
+        var antidoping = $("#antidoping").val();
+        var tipo_sangre = $("#tipo_sangre").val();
+        var vacante = $("#vacante").val();
+        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+        var nomfam = $("#nomfam").val();
+        var apellidopatfam = $("#apfam").val();
+        var apellidomatfam = $("#amfam").val();
+
+        /*Datos bancarios*/
+        var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
+        var banco_personal = $("#banco_personal").val();
+        var cuenta_personal = $("#cuenta_personal").val();
+        var clabe_personal = $("#clabe_personal").val();
+        var plastico_personal = $("#plastico_personal").val();
+    
+        /*Referencias laborales*/
+        var reflab = [];
+        for (var i = 1; i <= numeroreferenciaslab; i++) {
+            var rnombre = $("input[name=infa_rnombre" + i + "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
+            var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
+
+            reflab.push({
+                nombre: rnombre,
+                apellidopat: rapellidopat,
+                apellidomat: rapellidomat,
+                relacion: rrelacion,
+                telefono: rtelefono
+            });
+        }
+    
+        /*Referencias bancarias*/
+        var refbanc = [];
+        for (var i = 1; i <= numeroreferenciasban; i++) {
+            var brnombre = $("input[name=infb_rnombre" + i + "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" + i + "]").val();
+            var brrelacion = $("select[name=infb_rrelacion" + i + "]").val();
+            var brrfc = $("input[name=infb_rrfc" + i + "]").val();
+            var brcurp = $("input[name=infb_rcurp" + i + "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+
+            refbanc.push({
+                nombre: brnombre,
+                apellidopat: brapellidopat,
+                apellidomat: brapellidomat,
+                relacion: brrelacion,
+                rfc: brrfc,
+                curp: brcurp,
+                porcentaje: brporcentaje
+            });
+        }
+    
+        /*File uploads*/
+        <?php 
+            foreach($papeleria as $fetchpapeleria){
+                echo "var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];";
+            }
+        ?> 
+        var method = "edit";
+        var app = "expediente_modo_edicion";
+    
+    
+        /*Datos generales*/
+        fd.append('token', token);
+        fd.append('estudios', estudios);
+        fd.append('posee_correo', posee_correo);
+        fd.append('correo_adicional', correo_adicional);
+        fd.append('calle', calle);
+        fd.append('ninterior', ninterior);
+        fd.append('nexterior', nexterior);
+        fd.append('colonia', colonia);
+        fd.append('estado', estado);
+        fd.append('estadotext', estadotext);
+        fd.append('municipio', municipio);
+        fd.append('municipiotext', municipiotext);
+        fd.append('codigo', codigo);
+        fd.append('teldom', teldom);
+        fd.append('posee_telmov', posee_telmov);
+        fd.append('telmov', telmov);
+        fd.append('radio', radio);
+        fd.append('ecivil', ecivil);
+        fd.append('posee_retencion', posee_retencion);
+        fd.append('monto_mensual', monto_mensual);
+        fd.append('fechanac', fechanac);
+        fd.append('fechacon', fechacon);
+        fd.append('fechaalta', fechaalta);
+        fd.append('curp', curp);
+        fd.append('nss', nss);
+        fd.append('rfc', rfc);
+        fd.append('identificacion', tipoidentificacion);
+        fd.append('numeroidentificacion', numeroidentificacion);
+ 
+        /*Datos adicionales*/
+        fd.append('numeroreferenciaslab', numeroreferenciaslab);
+        fd.append('fechauniforme', fechauniforme);
+        fd.append('cantidadpolo', cantidadpolo);
+        fd.append('tallapolo', tallapolo);
+        fd.append('emergencianom', emergencianom);
+        fd.append('emergenciaapat', emergenciaapat);
+        fd.append('emergenciaamat', emergenciaamat);
+        fd.append('emergenciarelacion', emergenciarelacion);
+        fd.append('emergenciatelefono', emergenciatelefono);
+        fd.append('emergencianom2', emergencianom2);
+        fd.append('emergenciaapat2', emergenciaapat2);
+        fd.append('emergenciaamat2', emergenciaamat2);
+        fd.append('emergenciarelacion2', emergenciarelacion2);
+        fd.append('emergenciatelefono2', emergenciatelefono2);
+		fd.append('capacitacion', capacitacion);
+        fd.append('antidoping', antidoping);
+        fd.append('tipo_sangre', tipo_sangre);
+        fd.append('vacante', vacante);
+        fd.append('radio2', radio2);
+        fd.append('nomfam', nomfam);
+        fd.append('apellidopatfam', apellidopatfam);
+        fd.append('apellidomatfam', apellidomatfam);
+
+        /*Datos bancarios*/
+        fd.append('numeroreferenciasban', numeroreferenciasban);
+        fd.append('banco_personal', banco_personal);
+        fd.append('cuenta_personal', cuenta_personal);
+        fd.append('clabe_personal', clabe_personal);
+        fd.append('plastico_personal', plastico_personal);
+    
+        /*Referencias*/
+        fd.append('referencias', JSON.stringify(reflab));
+        fd.append('refbanc', JSON.stringify(refbanc));
+    
+        /*File uploads*/
+        <?php 
+            foreach($papeleria as $fetchpapeleria){
+                echo "fd.append('papeleria{$fetchpapeleria['id']}', papeleria{$fetchpapeleria['id']});";
+            } 
+        ?>
+
+        fd.append('method', method);
+        fd.append('app', app);
+    
             /*Ajax*/
             $.ajax({
                 type: "POST",
@@ -1600,7 +2781,17 @@
                                 $('#submit-button').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                                 window.location.href = "dashboard.php";
                             });
-                        }
+                        }else if (array[0] == "forbidden") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
+                        });
+                    }
                     },3000);
                 }
             });
@@ -1621,7 +2812,7 @@
 
 	.daterangepicker td.active, .daterangepicker td.active:hover{
 		--tw-bg-opacity: 1 !important;
-		background-color: rgb(79 70 229) / var(--tw-bg-opacity)) !important;
+		background-color: rgb(79 70 229) / var(--tw-bg-opacity)) ;
 		border-color: transparent;
 		color: #fff;
 	}	

@@ -40,18 +40,28 @@
     $curDate = date("Y-m-d H:i:s",$formatDate);
     
     /*REFERENCIAS LABORALES*/
-    $referencias_laborales = $object->_db->prepare("select nombre, apellido_pat, apellido_mat, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
-    $referencias_laborales->bindParam("expedienteid", $fetch_token_user -> idExpediente, PDO::PARAM_INT);
-    $referencias_laborales->execute();
-    $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
-    $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
+    $fetch_referencias = [];
+    $query =  "SELECT * FROM ref_laborales WHERE expediente_id = :expedienteid";
+
+        $referencias_laborales = $object->_db->prepare($query);
+        $referencias_laborales->execute(array(':expedienteid' =>($fetch_token_user -> idExpediente)));
+        $referencias_count = $referencias_laborales -> rowCount();
+
+    if ($referencias_count > 0) {
+        $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /*REFERENCIAS BANCARIAS*/
-    $referencias_bancarias = $object->_db->prepare("select nombre, apellido_pat, apellido_mat, relacion, rfc, curp, porcentaje from ben_bancarios where expediente_id =:expedienteid");
-    $referencias_bancarias->bindParam("expedienteid", $fetch_token_user -> idExpediente, PDO::PARAM_INT);
-    $referencias_bancarias->execute();
-    $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
-    $refban_json = json_encode($array_refban, JSON_UNESCAPED_UNICODE);
+    $fetch_ben_bancarios = [];
+    $query = "SELECT * FROM ben_bancarios WHERE expediente_id = :expedienteid";
+
+        $ben_bancarios = $object->_db->prepare($query);
+        $ben_bancarios->execute(array(':expedienteid' => ($fetch_token_user -> idExpediente)));
+        $ben_bancarios_count = $ben_bancarios->rowCount();
+
+    if ($ben_bancarios_count > 0) {
+        $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     /* Papelería  */
     $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid WHERE tipo_papeleria.nombre NOT IN('CONTRATO DEFINITIVO', 'ALTA DE IMSS', 'CONTRATO NOMINA BANCARIA', 'CONTRATO DE PRUEBA', 'CONTRATO INTERNO', 'CONTRATO SUPERVIVENCIA', 'MODIFICACION SALARIAL', 'REGLAMENTO INTERIOR DEL TRABAJO', 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS', 'BAJA ANTE IMSS', 'EVALUACION PSICOMETRICA', 'CARTA DE SEGUNDO TRABAJO', 'ACTA DE MATRIMONIO') order by id asc");
@@ -64,7 +74,14 @@
 	$papeleria_contador5 = 0;
     $buscar_papeleria="true";
 
-    $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria WHERE tipo_papeleria.nombre NOT IN('CONTRATO DEFINITIVO', 'ALTA DE IMSS', 'CONTRATO NOMINA BANCARIA', 'CONTRATO DE PRUEBA', 'CONTRATO INTERNO', 'CONTRATO SUPERVIVENCIA', 'MODIFICACION SALARIAL', 'REGLAMENTO INTERIOR DEL TRABAJO', 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS', 'BAJA ANTE IMSS', 'EVALUACION PSICOMETRICA', 'CARTA DE SEGUNDO TRABAJO', 'ACTA DE MATRIMONIO')");
-    $checktipospapeleria -> execute();
-    $counttipospapeleria = $checktipospapeleria -> rowCount();
+    if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico") {
+        //Si el rol del usuario es técnico se muestra la pepeleria IMAGEN DE DATOS BANCARIOS 
+        $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria WHERE tipo_papeleria.nombre NOT IN('CONTRATO DEFINITIVO', 'ALTA DE IMSS', 'CONTRATO NOMINA BANCARIA', 'CONTRATO DE PRUEBA', 'CONTRATO INTERNO', 'CONTRATO SUPERVIVENCIA', 'MODIFICACION SALARIAL', 'REGLAMENTO INTERIOR DEL TRABAJO', 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS', 'BAJA ANTE IMSS', 'EVALUACION PSICOMETRICA', 'CARTA DE SEGUNDO TRABAJO', 'ACTA DE MATRIMONIO')");
+        $checktipospapeleria -> execute();
+        $counttipospapeleria = $checktipospapeleria -> rowCount();
+    }else{
+            $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria WHERE tipo_papeleria.nombre NOT IN('CONTRATO DEFINITIVO', 'ALTA DE IMSS', 'CONTRATO NOMINA BANCARIA', 'CONTRATO DE PRUEBA', 'CONTRATO INTERNO', 'CONTRATO SUPERVIVENCIA', 'MODIFICACION SALARIAL', 'REGLAMENTO INTERIOR DEL TRABAJO', 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS', 'BAJA ANTE IMSS', 'EVALUACION PSICOMETRICA', 'CARTA DE SEGUNDO TRABAJO', 'ACTA DE MATRIMONIO', 'IMAGEN DE DATOS BANCARIOS (SOLO PARA TECNICOS EN CAMPO)')");
+            $checktipospapeleria -> execute();
+            $counttipospapeleria = $checktipospapeleria -> rowCount();
+        }
 ?>
