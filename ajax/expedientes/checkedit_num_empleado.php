@@ -7,8 +7,6 @@
 
 	$query = $object->_db->prepare("
     SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum AND id != :idexpediente
-    UNION
-    SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum
 	");
 	$query->bindParam(":empleadonum", $numempleado, PDO::PARAM_STR);
 	$query->bindParam(":idexpediente", $idexpediente, PDO::PARAM_INT);

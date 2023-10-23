@@ -7,8 +7,6 @@
         SELECT correo_adicional FROM expedientes WHERE correo_adicional = :correo
         UNION ALL
         SELECT correo FROM usuarios WHERE correo = :correo
-        UNION ALL
-        SELECT correo_adicional FROM expedientes_temporales WHERE correo_adicional = :correo
     ");
 	$get_correo->execute(array(':correo' => $correo));
 	$count_query = $get_correo->rowCount();

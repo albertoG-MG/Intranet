@@ -7,8 +7,6 @@ $numempleado = $_GET["numempleado"];
 // Consulta en ambas tablas usando UNION
 $query = $object->_db->prepare("
     SELECT num_empleado FROM expedientes WHERE num_empleado = :empleadonum
-    UNION
-    SELECT num_empleado FROM expedientes_temporales WHERE num_empleado = :empleadonum
 ");
 $query->execute(array(":empleadonum" => $numempleado));
 $numempleadocount = $query->rowCount();
