@@ -110,14 +110,6 @@
                                              $arr[] = $fetchuserexp->id;
                                           }
 
-                                          // Consulta para verificar la relación de usuarios con "expedientes_temporales"
-                                          $checktempuser = $object->_db->prepare("SELECT usuarios.id FROM expedientes_temporales INNER JOIN usuarios ON expedientes_temporales.users_id = usuarios.id");
-                                          $checktempuser->execute();
-
-                                          while ($fetchusertemp = $checktempuser->fetch(PDO::FETCH_OBJ)) {
-                                             $arr[] = $fetchusertemp->id;
-                                          }
-
                                           $usuarios = user::FetchUsuarios();
                                           foreach ($usuarios as $row) {
                                              if ($row->rolnom != "Superadministrador" && $row->rolnom != "Administrador" && $row->rolnom != "Director general" && $row->rolnom != "Usuario externo") {
