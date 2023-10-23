@@ -2,6 +2,23 @@
 include_once __DIR__ . "/../config/conexion.php";
 include_once __DIR__ . "/crud.php";
 class expedientes {
+
+    /**
+     * &    █████  ████████ ██████  ██ ██████  ██    ██ ████████  ██████  ███████ 
+     * &   ██   ██    ██    ██   ██ ██ ██   ██ ██    ██    ██    ██    ██ ██      
+     * &   ███████    ██    ██████  ██ ██████  ██    ██    ██    ██    ██ ███████ 
+     * &   ██   ██    ██    ██   ██ ██ ██   ██ ██    ██    ██    ██    ██      ██ 
+     * &   ██   ██    ██    ██   ██ ██ ██████   ██████     ██     ██████  ███████                                                                            
+    */
+
+    /**
+	 * *	=======================================================================================================================================================================================
+	 * *	Son variables que representan características o datos asociados a objetos creados a partir de esa clase. Pueden tener diferentes tipos de visibilidad como public, private o protected,
+     * *    un tipo de dato que específica que valor puede obtener ejemplo: public string $puesto y un valor inicial. Los atributos de una clase se utilizan para representar las columnas de una 
+     * *    base de datos en una aplicación y sus valores se obtienen a través de una instancia u objeto de esa clase; en este caso, Class_search. 
+	 * *    =======================================================================================================================================================================================
+	*/
+
     public $select2;
     public $num_empleado;
     public $puesto;
@@ -77,6 +94,22 @@ class expedientes {
     public $clabe_nomina;
     public $plastico;
     public $arraypapeleria;
+
+    /**
+     * &    ██████  ██████  ███    ██ ███████ ████████ ██████  ██    ██  ██████ ████████  ██████  ██████  
+     * &   ██      ██    ██ ████   ██ ██         ██    ██   ██ ██    ██ ██         ██    ██    ██ ██   ██ 
+     * &   ██      ██    ██ ██ ██  ██ ███████    ██    ██████  ██    ██ ██         ██    ██    ██ ██████  
+     * &   ██      ██    ██ ██  ██ ██      ██    ██    ██   ██ ██    ██ ██         ██    ██    ██ ██   ██ 
+     * &    ██████  ██████  ██   ████ ███████    ██    ██   ██  ██████   ██████    ██     ██████  ██   ██                                                                                                   
+    */
+
+    /**
+	 * *	=======================================================================================================================================================================================
+	 * *	Es un método especial en programación orientada a objectos para inicializar los objectos ó atributos de una clase. En la sección de parámetros del constructor se encuentran las
+     * *    variables que recibe de a través de una instancia(pueden ser opcionales si se igualan a null) y después se asignan a los atributos de una clase usando $this Ejemplo:
+     * *    $this->select2=select2;
+	 * *    =======================================================================================================================================================================================
+	*/
 
     public function __construct($select2, $num_empleado = null, $puesto = null, $estudios = null, $posee_correo = null, $correo_adicional = null, $calle = null, $ninterior = null, $nexterior = null, $colonia = null, $estado = null, $municipio = null, $codigo = null, $teldom = null, $posee_telmov = null, $telmov = null, $posee_telempresa = null, $marcacion = null, $serie = null, $sim = null, $numred = null, $modelotel = null, $marcatel = null, $imei = null, $posee_laptop = null, $marca_laptop = null, $modelo_laptop = null, $serie_laptop = null, $casa_propia = null, $ecivil = null, $posee_retencion = null, $monto_mensual = null, $fechanac = null, $fechacon = null, $fechaalta = null, $salario_contrato = null, $salario_fechaalta = null, $observaciones = null, $curp = null, $nss = null, $rfc = null, $identificacion = null, $numeroidentificacion = null, $referencias = null, $fechauniforme = null, $cantidadpolo = null, $tallapolo = null, $emergencianom = null, $emergenciaapat = null, $emergenciaamat = null, $emergenciarelacion = null, $emergenciatelefono = null, $emergencianom2 = null, $emergenciaapat2 = null, $emergenciaamat2 = null, $emergenciarelacion2 = null, $emergenciatelefono2 = null, $capacitacion = null, $antidoping = null, $tipo_sangre = null, $vacante = null, $radio2 = null, $nomfam = null, $apellidopatfam = null, $apellidomatfam = null, $refbanc = null, $banco_personal = null, $cuenta_personal = null, $clabe_personal = null, $plastico_personal = null, $banco_nomina = null, $cuenta_nomina = null, $clabe_nomina = null, $plastico = null, $arraypapeleria = null) {
         $this->select2 = $select2;
@@ -156,26 +189,51 @@ class expedientes {
         $this->arraypapeleria = $arraypapeleria;
     }
 
+    /**
+     * &   ██████   █████  ████████  ██████  ███████  ██████  
+     * &   ██   ██ ██   ██    ██    ██    ██ ██      ██       
+     * &   ██   ██ ███████    ██    ██    ██ ███████ ██   ███ 
+     * &   ██   ██ ██   ██    ██    ██    ██      ██ ██    ██ 
+     * &   ██████  ██   ██    ██     ██████  ███████  ██████                                                     
+    */
+
+    /**
+	 * *	=======================================================================================================================================================================================
+	 * *	Recibe los datos de la primera pestaña a través del class search una vez hecha todas las validaciones; su función es crear el expediente y en caso de que ya exista, actualizarlo.
+	 * *    =======================================================================================================================================================================================
+	*/
 
     public function Crear_expediente_datosG(){
-        //Clase gateway para insertar, editar y eliminar en la base de datos
+        /**
+         * ? Clase gateway para insertar, editar y eliminar en la base de datos
+        */
         $crud = new crud();
-        //Conexión
+        /**
+         * ? Conexión
+        */
         $object = new connection_database();
-        //Checa si el expediente ya existe o no
-        $check_temporal_table_DG = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
-        $check_temporal_table_DG -> execute(array(':userid' => $this->select2));
-        //Contamos las filas si existen
-        $count_results_DG = $check_temporal_table_DG -> rowCount();
-        //Si los datos existen, actualiza, si no existe, inserta
-        if($count_results_DG > 0){
-            //Recuperar información almacenada de la base de datos y traerla de vuelta a la aplicación para su procesamiento
-            $fetch_results_DG = $check_temporal_table_DG -> fetch(PDO::FETCH_ASSOC);
-            //Actualiza la tabla, el primer dato que te pide es el nombre de la tabla, los campos a actualizar, la condición y el valor de la condición
-            $crud->update('expedientes_temporales', ['num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'estatus_expediente' => 'Incompleto'], "id=:idexpediente", ['idexpediente' => $fetch_results_DG['id']]);
+        /**
+         * ? Checa si el expediente ya existe o no
+        */
+        $check_table_DG = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $this->select2]);
+        /**
+         * ? Si los datos existen, actualiza, si no existe, inserta
+        */
+        if($check_table_DG['count'] > 0){
+            /**
+             * ? Recuperar información almacenada de la base de datos y traerla de vuelta a la aplicación para su procesamiento; en este caso, como solo nos trae una fila, 
+             * ? debemos acceder a él utilizando [0]
+            */
+            $results_table_DG = $check_table_DG['data'][0];
+            /**
+             * ? Actualiza la tabla, el primer dato que te pide es el nombre de la tabla, los campos a actualizar, la condición y el valor de la condición
+            */
+            $crud->update('expedientes', ['num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion], "id=:idexpediente", [':idexpediente' => $fetch_results_DG['id']]);
         }else{
-            //Crea un registro en la base de datos, los datos que te pide son el nombre de la tabla y los campos a almacenar
-            $crud->store('expedientes_temporales', ['users_id' => $this->select2, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'estatus_expediente' => 'Incompleto']);
+            /**
+             * ? Crea un registro en la base de datos, los datos que te pide son el nombre de la tabla y los campos a almacenar
+            */
+            $crud->store('expedientes', ['users_id' => $this->select2, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion]);
         }
     }
 
