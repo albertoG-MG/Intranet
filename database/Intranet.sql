@@ -2688,12 +2688,12 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 -- Insert for table `estatus expedientes`
 --
   INSERT INTO `estatus_expediente` (`id`, `nombre_estatus`) VALUES
-  (1, 'COMPLETADO'),
-  (2, 'EN PROCESO DE CREACION'),
-  (3, 'EN REVISION'),
-  (4, 'TOKEN ASIGNADO'),
-  (5, 'EN REVISION POR EL EMPLEADO'),
-  (6, 'TOKEN EXPIRADO');
+  (1, 'APROBADO'),
+  (2, 'RECHAZADO'),
+  (3, 'ASIGNADO'),
+  (4, 'EN REVISION'),
+  (5, 'EXPIRADO'),
+  (6, 'LISTO PARA REVISION');
 
 --
 -- Table structure for table `estatus expedientes`
@@ -2783,15 +2783,24 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 --
 -- Table structure for table `ref_laborales`
 --
-
 CREATE TABLE `ref_laborales` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido_pat` varchar(100) NOT NULL,
-  `apellido_mat` varchar(100) NOT NULL,
-  `relacion` varchar(100) NOT NULL,
-  `telefono` varchar(100) NOT NULL,
+  `nombre1` varchar(100) NOT NULL,
+  `apellido_pat1` varchar(100) NOT NULL,
+  `apellido_mat1` varchar(100) NOT NULL,
+  `relacion1` varchar(100) NOT NULL,
+  `telefono1` varchar(100) NOT NULL,
+  `nombre2` varchar(100) NOT NULL,
+  `apellido_pat2` varchar(100) NOT NULL,
+  `apellido_mat2` varchar(100) NOT NULL,
+  `relacion2` varchar(100) NOT NULL,
+  `telefono2` varchar(100) NOT NULL,
+  `nombre3` varchar(100) NOT NULL,
+  `apellido_pat3` varchar(100) NOT NULL,
+  `apellido_mat3` varchar(100) NOT NULL,
+  `relacion3` varchar(100) NOT NULL,
+  `telefono3` varchar(100) NOT NULL,
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2804,13 +2813,20 @@ CREATE TABLE `ref_laborales` (
 CREATE TABLE `ben_bancarios` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido_pat` varchar(100) NOT NULL,
-  `apellido_mat` varchar(100) NOT NULL,
-  `relacion` varchar(100) NOT NULL,
-  `rfc` varchar(100) NOT NULL,
-  `curp` varchar(100) NOT NULL,
-  `porcentaje` varchar(100) NOT NULL,
+  `nombre1` varchar(100) NOT NULL,
+  `apellido_pat1` varchar(100) NOT NULL,
+  `apellido_mat1` varchar(100) NOT NULL,
+  `relacion1` varchar(100) NOT NULL,
+  `rfc1` varchar(100) NOT NULL,
+  `curp1` varchar(100) NOT NULL,
+  `porcentaje1` varchar(100) NOT NULL,
+  `nombre2` varchar(100) NOT NULL,
+  `apellido_pat2` varchar(100) NOT NULL,
+  `apellido_mat2` varchar(100) NOT NULL,
+  `relacion2` varchar(100) NOT NULL,
+  `rfc2` varchar(100) NOT NULL,
+  `curp2` varchar(100) NOT NULL,
+  `porcentaje2` varchar(100) NOT NULL,
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2893,7 +2909,6 @@ INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
 --
 -- Table structure for table `papeleria_empleado`
 --
-
 CREATE TABLE `papeleria_empleado` (
   `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `expediente_id` int NOT NULL,
@@ -2901,6 +2916,7 @@ CREATE TABLE `papeleria_empleado` (
   `nombre_archivo` longtext NOT NULL,
   `identificador` longtext NOT NULL,
   `fecha_subida` datetime NOT NULL,
+  `estatus` varchar(100) NOT NULL
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
