@@ -539,9 +539,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				//Checa si el número de empleado no está repetido
 				if($_POST["method"] == "store"){
-					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
-					if($query['count'] > 0){
-						die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+					if($check_form_exist['count'] > 0){
+						$fetch_form = $check_form_exist['data'][0];
+						if($fetch_form["num_empleado"] !== $_POST['numempleado']){
+							$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+							if($query['count'] > 0){
+								die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+							}
+						}
+					}else{
+						$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+						if($query['count'] > 0){
+							die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+						}		
 					}		
 				}else if($_POST["method"] == "edit"){
 					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum AND id != :idexpediente', [':empleadonum' => $_POST["numempleado"], ':idexpediente' => $_POST["id_expediente"]]);
@@ -2112,9 +2122,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			//Checa si el número de empleado no está repetido
 			if($_POST["method"] == "store"){
-				$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
-				if($query['count'] > 0){
-					die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+				if($check_form_exist['count'] > 0){
+					$fetch_form = $check_form_exist['data'][0];
+					if($fetch_form["num_empleado"] !== $_POST['numempleado']){
+						$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+						if($query['count'] > 0){
+							die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+						}
+					}
+				}else{
+					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+					if($query['count'] > 0){
+						die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+					}		
 				}		
 			}else if($_POST["method"] == "edit"){
 				$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum AND id != :idexpediente', [':empleadonum' => $_POST["numempleado"], ':idexpediente' => $_POST["id_expediente"]]);

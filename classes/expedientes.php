@@ -906,6 +906,47 @@ class expedientes {
                     expedientes::Crear_benbanc($results_checkreflab['id'], $ref_banc);
                 }
             }
+    
+            /**
+             * ? Verifica cuantos documentos hay en la base de datos
+            */
+            $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
+            $checktipospapeleria -> execute();
+            $counttipospapeleria = $checktipospapeleria -> rowCount();
+
+            /**
+             * ? Se utiliza un bucle foreach para iterar a través de un arreglo de documentos llamado $this->arraypapeleria. Cada elemento en este arreglo representa un documento que se cargará
+             * ? Dentro del bucle, se verifica si el documento no está vacío utilizando la función !empty($documento). Esto garantiza que solo se procesen los documentos que realmente se han proporcionado
+             * ? Se crea una instancia de la clase crud, lo que sugiere que esta clase se utiliza para interactuar con la base de datos
+             * ? Se obtiene el valor de $i, que probablemente se refiere a un tipo de documento o alguna forma de identificador para el tipo de papelería
+             * ? Se obtiene el nombre original del archivo que se está cargando, utilizando $documento["name"]
+             * ? Se define una ubicación de directorio en la variable $location, donde se guardarán los archivos. Supongo que "../src/documents/" es la ubicación donde se almacenarán los archivos cargados
+             * ? Se utiliza la función pathinfo para extraer la extensión del nombre del archivo original. Esto se almacena en la variable $ext
+             * ? Se llama a la función tempnam_sfx para generar un nombre de archivo único en la ubicación de destino ($location) utilizando la extensión del archivo ($ext). Esto se almacena en la variable $uploadfile
+             * ? Se utiliza move_uploaded_file para mover el archivo cargado desde su ubicación temporal (especificada en $documento['tmp_name']) a la ubicación definitiva especificada en $uploadfile
+             * ? Se establece la zona horaria actual en "America/Monterrey" utilizando date_default_timezone_set. Esto se hace para obtener la fecha y hora actual en esta zona horaria
+             * ? Se obtiene la fecha y hora actual en el formato "yy-mm-dd hh:mm:ss" y se almacena en la variable $fecha_subida
+             * ? Se utiliza la instancia de la clase crud para almacenar la información del documento en la tabla papeleria_empleado de la base de datos. Los datos que se almacenan incluyen el ID del expediente al que se asocia el documento, el tipo de archivo, el nombre del archivo original, un identificador del archivo (probablemente el nombre generado único), y la fecha de subida
+            */
+            foreach ($this->arraypapeleria as $i => $documento) {
+                if (!empty($documento)) {
+                    $crud = new crud();
+                    $papeleria = $i;
+                    $filename = $documento["name"];
+                    $location = "../src/documents/";
+                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                    $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+                    
+                    if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
+                        date_default_timezone_set("America/Monterrey");
+                        $fecha_subida = date('y-m-d h:i:s');
+                        $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                    }
+                }
+            }
+            date_default_timezone_set("America/Monterrey");
+            $fecha_estatus = date('Y-m-d');
+            $crud -> store('estatus_empleado', ['expedientes_id' => $results_expediente['id'], 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
         }else{
             /**
              * ? Guardamos el expediente en caso de que no exista
@@ -932,48 +973,48 @@ class expedientes {
                 $refbanc = json_decode($jsonData2);
                 expedientes::Crear_benbanc($id_expediente, $refbanc);
             }
-        }
+    
+            /**
+             * ? Verifica cuantos documentos hay en la base de datos
+            */
+            $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
+            $checktipospapeleria -> execute();
+            $counttipospapeleria = $checktipospapeleria -> rowCount();
 
-        /**
-         * ? Verifica cuantos documentos hay en la base de datos
-        */
-        $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
-        $checktipospapeleria -> execute();
-        $counttipospapeleria = $checktipospapeleria -> rowCount();
-
-        /**
-         * ? Se utiliza un bucle foreach para iterar a través de un arreglo de documentos llamado $this->arraypapeleria. Cada elemento en este arreglo representa un documento que se cargará
-         * ? Dentro del bucle, se verifica si el documento no está vacío utilizando la función !empty($documento). Esto garantiza que solo se procesen los documentos que realmente se han proporcionado
-         * ? Se crea una instancia de la clase crud, lo que sugiere que esta clase se utiliza para interactuar con la base de datos
-         * ? Se obtiene el valor de $i, que probablemente se refiere a un tipo de documento o alguna forma de identificador para el tipo de papelería
-         * ? Se obtiene el nombre original del archivo que se está cargando, utilizando $documento["name"]
-         * ? Se define una ubicación de directorio en la variable $location, donde se guardarán los archivos. Supongo que "../src/documents/" es la ubicación donde se almacenarán los archivos cargados
-         * ? Se utiliza la función pathinfo para extraer la extensión del nombre del archivo original. Esto se almacena en la variable $ext
-         * ? Se llama a la función tempnam_sfx para generar un nombre de archivo único en la ubicación de destino ($location) utilizando la extensión del archivo ($ext). Esto se almacena en la variable $uploadfile
-         * ? Se utiliza move_uploaded_file para mover el archivo cargado desde su ubicación temporal (especificada en $documento['tmp_name']) a la ubicación definitiva especificada en $uploadfile
-         * ? Se establece la zona horaria actual en "America/Monterrey" utilizando date_default_timezone_set. Esto se hace para obtener la fecha y hora actual en esta zona horaria
-         * ? Se obtiene la fecha y hora actual en el formato "yy-mm-dd hh:mm:ss" y se almacena en la variable $fecha_subida
-         * ? Se utiliza la instancia de la clase crud para almacenar la información del documento en la tabla papeleria_empleado de la base de datos. Los datos que se almacenan incluyen el ID del expediente al que se asocia el documento, el tipo de archivo, el nombre del archivo original, un identificador del archivo (probablemente el nombre generado único), y la fecha de subida
-        */
-        foreach ($this->arraypapeleria as $i => $documento) {
-            if (!empty($documento)) {
-                $crud = new crud();
-                $papeleria = $i;
-                $filename = $documento["name"];
-                $location = "../src/documents/";
-                $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                $uploadfile = Expedientes::tempnam_sfx($location, $ext);
-                
-                if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
-                    date_default_timezone_set("America/Monterrey");
-                    $fecha_subida = date('y-m-d h:i:s');
-                    $crud->store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+            /**
+             * ? Se utiliza un bucle foreach para iterar a través de un arreglo de documentos llamado $this->arraypapeleria. Cada elemento en este arreglo representa un documento que se cargará
+             * ? Dentro del bucle, se verifica si el documento no está vacío utilizando la función !empty($documento). Esto garantiza que solo se procesen los documentos que realmente se han proporcionado
+             * ? Se crea una instancia de la clase crud, lo que sugiere que esta clase se utiliza para interactuar con la base de datos
+             * ? Se obtiene el valor de $i, que probablemente se refiere a un tipo de documento o alguna forma de identificador para el tipo de papelería
+             * ? Se obtiene el nombre original del archivo que se está cargando, utilizando $documento["name"]
+             * ? Se define una ubicación de directorio en la variable $location, donde se guardarán los archivos. Supongo que "../src/documents/" es la ubicación donde se almacenarán los archivos cargados
+             * ? Se utiliza la función pathinfo para extraer la extensión del nombre del archivo original. Esto se almacena en la variable $ext
+             * ? Se llama a la función tempnam_sfx para generar un nombre de archivo único en la ubicación de destino ($location) utilizando la extensión del archivo ($ext). Esto se almacena en la variable $uploadfile
+             * ? Se utiliza move_uploaded_file para mover el archivo cargado desde su ubicación temporal (especificada en $documento['tmp_name']) a la ubicación definitiva especificada en $uploadfile
+             * ? Se establece la zona horaria actual en "America/Monterrey" utilizando date_default_timezone_set. Esto se hace para obtener la fecha y hora actual en esta zona horaria
+             * ? Se obtiene la fecha y hora actual en el formato "yy-mm-dd hh:mm:ss" y se almacena en la variable $fecha_subida
+             * ? Se utiliza la instancia de la clase crud para almacenar la información del documento en la tabla papeleria_empleado de la base de datos. Los datos que se almacenan incluyen el ID del expediente al que se asocia el documento, el tipo de archivo, el nombre del archivo original, un identificador del archivo (probablemente el nombre generado único), y la fecha de subida
+            */
+            foreach ($this->arraypapeleria as $i => $documento) {
+                if (!empty($documento)) {
+                    $crud = new crud();
+                    $papeleria = $i;
+                    $filename = $documento["name"];
+                    $location = "../src/documents/";
+                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                    $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+                    
+                    if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
+                        date_default_timezone_set("America/Monterrey");
+                        $fecha_subida = date('y-m-d h:i:s');
+                        $crud->store('papeleria_empleado', ['expediente_id' => $id_expediente, 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                    }
                 }
             }
+            date_default_timezone_set("America/Monterrey");
+            $fecha_estatus = date('Y-m-d');
+            $crud -> store('estatus_empleado', ['expedientes_id' => $id_expediente, 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
         }
-        date_default_timezone_set("America/Monterrey");
-		$fecha_estatus = date('Y-m-d');
-        $crud -> store('estatus_empleado', ['expedientes_id' => $id_expediente, 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
     }
 
     public static function tempnam_sfx($path, $suffix){
