@@ -11,6 +11,11 @@
         die();
     }
 
+    if (isset($_SESSION['expediente_id'])) {
+        // La variable de sesión existe, puedes proceder a destruirla
+        unset($_SESSION['expediente_id']); // Esto eliminará la variable de sesión
+    }
+
     if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a expedientes") == "false" || Permissions::CheckPermissions($_SESSION["id"], "Crear expediente") == "false") && Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" && Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") {
 		header("HTTP/1.0 403 Forbidden");
 	    echo "

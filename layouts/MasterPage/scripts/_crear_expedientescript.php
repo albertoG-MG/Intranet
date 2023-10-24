@@ -2838,15 +2838,6 @@
         });
     }
 
-    //El objetivo es eliminar la sesión en caso de que el usuario abandone la página
-    $(window).on('unload', function () {
-        $.ajax({
-            type: 'POST',
-            url: '../config/destruirsesion_expediente.php',
-            async: false, // Puedes cambiar esto a 'false' si deseas esperar a que la solicitud se complete antes de que la página se descargue
-        });
-    });
-
     //Se usa en conjunto con el metodo siguiente para mostrar la leyenda no hay resultados
     function waitForElm(selector) {
         return new Promise(resolve => {
