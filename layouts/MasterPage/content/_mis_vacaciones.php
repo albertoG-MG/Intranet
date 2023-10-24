@@ -115,7 +115,7 @@
                             <span>Información extra</span>
                         </div>
                         <div class="px-4 py-2 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
-                            <span class="font-medium">Aviso!</span> Las vacaciones deben disfrutarse antes de la fecha de vencimiento.
+                            <span class="font-medium">Aviso!</span> Las vacaciones deben disfrutarse antes de la fecha de aniversario.
                         </div>
                         <div class="grid grid-cols-1" style="word-break:break-word;">
                             <div class="px-4 py-2 font-semibold">
@@ -149,7 +149,7 @@
                                 <div class="px-4 py-2">N/A</div>
                             <?php } ?>
                             <div class="px-4 py-2 font-semibold">
-                                Fecha de vencimiento
+                                Fecha de aniversario
                             </div>
                             <?php if($countexpediente > 0){ ?>
                                 <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>

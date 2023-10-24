@@ -47,7 +47,7 @@ $ver_municipio = $municipio_perfil->fetch(PDO::FETCH_OBJ);
 /*REFERENCIAS LABORALES*/
 $array = [];
 $contador_array = 0;
-$referencias_laborales = $object->_db->prepare("select ref_laborales.nombre as reflabnom, ref_laborales.apellido_pat as reflabcapat, ref_laborales.apellido_mat as reflabamat, ref_laborales.telefono as reflabtel, ref_laborales.relacion as reflabrelacion from ref_laborales inner join expedientes on expedientes.id=ref_laborales.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
+$referencias_laborales = $object->_db->prepare("select ref_laborales.nombre1 as reflabnom, ref_laborales.apellido_pat1 as reflabcapat, ref_laborales.apellido_mat1 as reflabamat, ref_laborales.telefono1 as reflabtel, ref_laborales.relacion1 as reflabrelacion from ref_laborales inner join expedientes on expedientes.id=ref_laborales.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
 $referencias_laborales->bindParam("sessionid", $_SESSION["id"], PDO::PARAM_INT);
 $referencias_laborales->execute();
 $cont_referencias = $referencias_laborales->rowCount();
@@ -64,7 +64,7 @@ $json = json_encode($array, JSON_UNESCAPED_UNICODE);
 /*REFERENCIAS BANCARIAS*/
 $array2 = [];
 $contador_array2 = 0;
-$datos_bancarios = $object->_db->prepare("select ben_bancarios.nombre as refbancnom, ben_bancarios.apellido_pat as refbancapat, ben_bancarios.apellido_mat as refbancamat,  ben_bancarios.relacion as refbancrelacion, ben_bancarios.rfc as refbancrfc, ben_bancarios.curp as refbanccurp, ben_bancarios.porcentaje as refbancderecho from ben_bancarios inner join expedientes on expedientes.id=ben_bancarios.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
+$datos_bancarios = $object->_db->prepare("select ben_bancarios.nombre1 as refbancnom, ben_bancarios.apellido_pat1 as refbancapat, ben_bancarios.apellido_mat1 as refbancamat,  ben_bancarios.relacion1 as refbancrelacion, ben_bancarios.rfc1 as refbancrfc, ben_bancarios.curp1 as refbanccurp, ben_bancarios.porcentaje1 as refbancderecho from ben_bancarios inner join expedientes on expedientes.id=ben_bancarios.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
 $datos_bancarios->bindParam("sessionid", $_SESSION["id"], PDO::PARAM_INT);
 $datos_bancarios->execute();
 $cont_datos = $datos_bancarios->rowCount();

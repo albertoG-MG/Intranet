@@ -36,7 +36,7 @@
                             <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                 <thead>
                                 <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                    
-                                        <th class="py-3 text-left min-tablet dt-tituloL border-white">Empleado ID</th>
+                                        <th class="py-3 text-left min-tablet dt-tituloL border-white">Expediente</th>
                                         <th class="py-3 text-left all border-white">Asignado a</th>
                                         <th class="py-3 text-center desktop border-white">Estatus</th>
                                         <th class="py-3 text-center desktop border-white">Departamento</th>

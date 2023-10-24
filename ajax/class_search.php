@@ -1115,7 +1115,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$curp = null;
 			}else{
 				//Checa si el CURP tiene el formato adecuado
-				if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})(AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne){2}([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9A-Z&]{2})$/", $_POST["curp"])){
+				if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/", $_POST["curp"])){
 					die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR")));
 				}else{
 					$curp= $_POST["curp"];
@@ -1787,7 +1787,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 									die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido materno de la referencia bancaria " . $referenciasban_contador)));
 								} else if (!preg_match("/^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z\d]{3})$/", $referencia_bancaria["rfc"])) {
 									die(json_encode(array("error", "Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789 en el RFC de la referencia bancaria " . $referenciasban_contador)));
-								} else if (!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})(AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne){2}([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9A-Z&]{2})$/", $referencia_bancaria["curp"])) {
+								} else if (!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/", $referencia_bancaria["curp"])) {
 									die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR en el CURP de la referencia bancaria " . $referenciasban_contador)));
 								} else if (!preg_match("/^[0-9]+$/", $referencia_bancaria["porcentaje"])) {
 									die(json_encode(array("error", "El porcentaje de derecho de la referencia bancaria " . $referenciasban_contador . " debe ser númerico")));
@@ -2666,7 +2666,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$curp = null;
 		}else{
 			//Checa si el CURP tiene el formato adecuado
-			if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})(AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne){2}([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9A-Z&]{2})$/", $_POST["curp"])){
+			if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/", $_POST["curp"])){
 				die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR")));
 			}else{
 				$curp= $_POST["curp"];
@@ -3192,7 +3192,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido materno de la referencia bancaria " . $referenciasban_contador)));
 							} else if (!preg_match("/^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z\d]{3})$/", $referencia_bancaria["rfc"])) {
 								die(json_encode(array("error", "Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789 en el RFC de la referencia bancaria " . $referenciasban_contador)));
-							} else if (!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})(AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne){2}([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9A-Z&]{2})$/", $referencia_bancaria["curp"])) {
+							} else if (!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/", $referencia_bancaria["curp"])) {
 								die(json_encode(array("error", "Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR en el CURP de la referencia bancaria " . $referenciasban_contador)));
 							} else if (!preg_match("/^[0-9]+$/", $referencia_bancaria["porcentaje"])) {
 								die(json_encode(array("error", "El porcentaje de derecho de la referencia bancaria " . $referenciasban_contador . " debe ser númerico")));
@@ -5801,7 +5801,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if(empty($_POST["curp"])){
 			die(json_encode(array("error", "El curp no puede estar vacío")));
 		}else{
-			if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})(AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne){2}([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9A-Z&]{2})$/", $_POST["curp"])){
+			if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/", $_POST["curp"])){
                 die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos en el curp")));
 			}else{
 				$curp= $_POST["curp"];
@@ -6094,7 +6094,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
                                     die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en las relacion " .$referenciasban_contador. " de las referencias bancarias")));
                                 }else if(!preg_match("/^[\w]+$/i", $referenciasbancarias_decoded[$i]["rfc"])){
                                     die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos en el rfc " .$referenciasban_contador. " de las referencias bancarias")));
-                                }else if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})(AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne){2}([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([^AaEeIiOoUu]{1})([0-9A-Z&]{2})$/", $referenciasbancarias_decoded[$i]["curp"])){
+                                }else if(!preg_match("/^([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([A-Z&]|[a-z&]{1})([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([HM]|[hm]{1})([AS|as|BC|bc|BS|bs|CC|cc|CS|cs|CH|ch|CL|cl|CM|cm|DF|df|DG|dg|GT|gt|GR|gr|HG|hg|JC|jc|MC|mc|MN|mn|MS|ms|NT|nt|NL|nl|OC|oc|PL|pl|QT|qt|QR|qr|SP|sp|SL|sl|SR|sr|TC|tc|TS|ts|TL|tl|VZ|vz|YN|yn|ZS|zs|NE|ne]{2})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([^A|a|E|e|I|i|O|o|U|u]{1})([0-9A-Z&]{2})$/", $referenciasbancarias_decoded[$i]["curp"])){
                                     die(json_encode(array("error", "Solo se permiten carácteres alfanúmericos en el curp " .$referenciasban_contador. " de las referencias bancarias")));
                                 }else if(!preg_match("/^[0-9]*$/", $referenciasbancarias_decoded[$i]["porcentaje"])){
                                     die(json_encode(array("error", "Solo se permiten números en el porcentaje de derecho " .$referenciasban_contador. " de las referencias bancarias")));
