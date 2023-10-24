@@ -485,13 +485,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$_POST["radio"], $_POST["ecivil"], $_POST["posee_retencion"], $_POST["monto_mensual"], $_POST["fechanac"], $_POST["fechacon"], 
 		$_POST["fechaalta"], $_POST["salario_contrato"], $_POST["salario_fechaalta"], $_POST["observaciones"], $_POST["curp"], 
 		$_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"])){
-		
-			//Checa si el usuario ya guardó con anterioridad el expediente temporal
-			if (isset($_SESSION['expediente_id'])) {
-				if($_SESSION['expediente_id'] !== $_POST['select2']){
-					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
-				}
-			}
 
 			/*
 			=============================================
@@ -499,29 +492,41 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			=============================================
 			*/
 
-			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
-			if($_POST["select2"] != null){
-				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
-				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+			$check_form_exist = $crud -> readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_POST["select2"]]);
 			
-				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
-				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
-					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-					$array_key_value = $select2_content['data'][$_POST["select2"]];
-					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
-						$select2 = $_POST["select2"];
+			if($check_form_exist['count'] > 0){
+				if (isset($_SESSION['expediente_id'])) {
+					if($_SESSION['expediente_id'] !== $_POST['select2']){
+						die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
 					}else{
-						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
-						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						$select2 = $_POST['select2'];
+					}
+				}	
+			}else{
+				//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
+				if($_POST["select2"] != null){
+					//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+					$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+				
+					//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+					if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
+						// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
+						$array_key_value = $select2_content['data'][$_POST["select2"]];
+						// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
+						if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
+							$select2 = $_POST["select2"];
+						}else{
+							//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
 					}
 				}else{
-					//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
-					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+					//Si el usuario no seleccionó nada, retorna.
+					die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 				}
-			}else{
-				//Si el usuario no seleccionó nada, retorna.
-				die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 			}
 
 			//NÚM. EMPLEADO
@@ -1255,42 +1260,47 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$_POST["emergenciaapat2"], $_POST["emergenciaamat2"], $_POST["emergenciarelacion2"], $_POST["emergenciatelefono2"], $_POST["capacitacion"], $_POST["antidoping"], 
 		$_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"])){
 			
-			//Checa si el usuario ya guardó con anterioridad el expediente temporal
-			if (isset($_SESSION['expediente_id'])) {
-				if($_SESSION['expediente_id'] !== $_POST['select2']){
-					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
-				}
-			}
-			
 			/*
 			=============================================
 			EMPIEZA LA VALIDACIÓN DE LOS DATOS ADICIONALES
 			=============================================
 			*/
 
-			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
-			if($_POST["select2"] != null){
-				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
-				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+			$check_form_exist = $crud -> readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_POST["select2"]]);
 			
-				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
-				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
-					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-					$array_key_value = $select2_content['data'][$_POST["select2"]];
-					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
-						$select2 = $_POST["select2"];
+			if($check_form_exist['count'] > 0){
+				if (isset($_SESSION['expediente_id'])) {
+					if($_SESSION['expediente_id'] !== $_POST['select2']){
+						die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
 					}else{
-						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
-						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						$select2 = $_POST['select2'];
+					}
+				}	
+			}else{
+				//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
+				if($_POST["select2"] != null){
+					//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+					$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+				
+					//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+					if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
+						// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
+						$array_key_value = $select2_content['data'][$_POST["select2"]];
+						// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
+						if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
+							$select2 = $_POST["select2"];
+						}else{
+							//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
 					}
 				}else{
-					//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
-					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+					//Si el usuario no seleccionó nada, retorna.
+					die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 				}
-			}else{
-				//Si el usuario no seleccionó nada, retorna.
-				die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 			}
 
 			// Comprueba si el campo "numeroreferenciaslab" no está vacío
@@ -1722,13 +1732,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
 		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], 
 		$_POST["plastico_personal"], $_POST["banco_nomina"], $_POST["cuenta_nomina"], $_POST["clabe_nomina"], $_POST["plastico"])){
-
-			//Checa si el usuario ya guardó con anterioridad el expediente temporal
-			if (isset($_SESSION['expediente_id'])) {
-				if($_SESSION['expediente_id'] !== $_POST['select2']){
-					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
-				}
-			}
 			
 			/*
 			=============================================
@@ -1736,29 +1739,41 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			=============================================
 			*/
 
-			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
-			if($_POST["select2"] != null){
-				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
-				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+			$check_form_exist = $crud -> readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_POST["select2"]]);
 			
-				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
-				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
-					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-					$array_key_value = $select2_content['data'][$_POST["select2"]];
-					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
-						$select2 = $_POST["select2"];
+			if($check_form_exist['count'] > 0){
+				if (isset($_SESSION['expediente_id'])) {
+					if($_SESSION['expediente_id'] !== $_POST['select2']){
+						die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
 					}else{
-						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
-						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						$select2 = $_POST['select2'];
+					}
+				}	
+			}else{
+				//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
+				if($_POST["select2"] != null){
+					//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+					$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+				
+					//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+					if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
+						// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
+						$array_key_value = $select2_content['data'][$_POST["select2"]];
+						// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
+						if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
+							$select2 = $_POST["select2"];
+						}else{
+							//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
+							die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+						}
+					}else{
+						//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
+						die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
 					}
 				}else{
-					//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
-					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+					//Si el usuario no seleccionó nada, retorna.
+					die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 				}
-			}else{
-				//Si el usuario no seleccionó nada, retorna.
-				die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 			}
 
 			//REFERENCIAS BANCARIAS
@@ -2050,29 +2065,41 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		=============================================
 		*/
 
-		//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
-		if($_POST["select2"] != null){
-			//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
-			$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
-		
-			//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
-			if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
-				// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
-				$array_key_value = $select2_content['data'][$_POST["select2"]];
-				// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
-				if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
-					$select2 = $_POST["select2"];
+		$check_form_exist = $crud -> readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_POST["select2"]]);
+			
+		if($check_form_exist['count'] > 0){
+			if (isset($_SESSION['expediente_id'])) {
+				if($_SESSION['expediente_id'] !== $_POST['select2']){
+					die(json_encode(array("error", "No puedes modificar la asignación de usuarios una vez guardado el expediente.")));
 				}else{
-					//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
-					die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					$select2 = $_POST['select2'];
+				}
+			}	
+		}else{
+			//SELECT2 - El select2 trae a todos los usuarios de la base de datos y verifica que el usuario no haya modificado el id del usuario o el texto
+			if($_POST["select2"] != null){
+				//Traeme todos los usuarios de la base de datos y haz un FETCH_KEY_PAIR. FETCH_KEY_PAIR convierte los resultados de una consulta en un arreglo, utilizando el ID como clave y el nombre como valor
+				$select2_content = $crud->readWithJoinsAndCount('usuarios', 'usuarios.id AS userid, CONCAT(usuarios.nombre, " ", usuarios.apellido_pat, " ", usuarios.apellido_mat) AS nombre', 'INNER JOIN roles ON roles.id = usuarios.roles_id', 'WHERE roles.nombre NOT IN (:val1, :val2, :val3, :val4) AND NOT EXISTS (SELECT 1 FROM expedientes WHERE usuarios.id = expedientes.users_id)', [':val1' => 'Superadministrador', ':val2' => 'Administrador', ':val3' => 'Director general', ':val4' => 'Usuario externo'], PDO::FETCH_KEY_PAIR);
+			
+				//En este código, primero usamos array_keys($select2_content['data']) para obtener un arreglo de los IDs de usuarios y luego verificamos si $_POST["select2"] está en ese arreglo con in_array.
+				if (in_array($_POST["select2"], array_keys($select2_content['data']))) {
+					// Guarda el valor correspondiente al ID seleccionado en el arreglo en una variable en este caso $array_key_value
+					$array_key_value = $select2_content['data'][$_POST["select2"]];
+					// Verifica si la variable existe y si su valor coincide con la opción seleccionada en el arreglo
+					if (isset($_POST["select2text"]) && $_POST['select2text'] == $array_key_value) {
+						$select2 = $_POST["select2"];
+					}else{
+						//Si el usuario ha modificado el texto en el 'select2' y este valor no coincide con ningún usuario en la base de datos, retorna.
+						die(json_encode(array("error", "Por favor, asegurese que el usuario escogido se encuentre en el dropdown")));
+					}
+				}else{
+					//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
+					die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
 				}
 			}else{
-				//Si el usuario ha modificado el id en el 'select2' y este id no coincide con ningún usuario en la base de datos, retorna.
-				die(json_encode(array("error", "El id seleccionado no coincide con ninguno de los usuarios registrados")));
+				//Si el usuario no seleccionó nada, retorna.
+				die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 			}
-		}else{
-			//Si el usuario no seleccionó nada, retorna.
-			die(json_encode(array("error", "Debe asignar un usuario al expediente")));
 		}
 
 		//NÚM. EMPLEADO
