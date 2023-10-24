@@ -385,60 +385,62 @@ class expedientes {
 	 * *    ====================================================
 	*/
     public static function Crear_reflaborales($id_expediente, $ref){
-        /**
-         * ? Clase gateway para insertar, editar y eliminar en la base de datos
-        */
         $refcrud = new crud();
-
+        $object = new connection_database();
+    
         /**
-         * ? Se define un arreglo llamado $columnas que se utiliza para mantener un seguimiento de las columnas de la tabla ref_laborales. El arreglo se inicializa con valores 'NULL' para todas las 
-         * ? columnas de referencias laborales (nombre1, apellido_pat1, nombre2, etc.)
+         * ? Inicializamos las columnas y los valores
         */
-        $columnas = array(
-            'nombre1' => 'NULL',
-            'apellido_pat1' => 'NULL',
-            'apellido_mat1' => 'NULL',
-            'relacion1' => 'NULL',
-            'telefono1' => 'NULL',
-            'nombre2' => 'NULL',
-            'apellido_pat2' => 'NULL',
-            'apellido_mat2' => 'NULL',
-            'relacion2' => 'NULL',
-            'telefono2' => 'NULL',
-            'nombre3' => 'NULL',
-            'apellido_pat3' => 'NULL',
-            'apellido_mat3' => 'NULL',
-            'relacion3' => 'NULL',
-            'telefono3' => 'NULL'
-        );
-
-        /**
-         * ? A continuación, se itera sobre el arreglo $ref, que contiene la información de las referencias laborales enviadas. Para cada referencia, se actualiza el arreglo $columnas con los valores 
-         * ? proporcionados en $referencia. Esto garantiza que las columnas relevantes se llenen con la información correcta de las referencias
-        */
-
+        $columnNames = array();
+        $columnValues = array();
+    
         foreach ($ref as $indice => $referencia) {
-            $columnas["nombre$indice"] = "'" . $referencia->nombre . "'";
-            $columnas["apellido_pat$indice"] = "'" . $referencia->apellidopat . "'";
-            $columnas["apellido_mat$indice"] = "'" . $referencia->apellidomat . "'";
-            $columnas["relacion$indice"] = "'" . $referencia->relacion . "'";
-            $columnas["telefono$indice"] = "'" . $referencia->telefono . "'";
+            /**
+             * ? Ajusta el índice para comenzar desde 1
+            */
+            $indice += 1;
+            
+            $columnNames = array_merge($columnNames, [
+                "nombre$indice",
+                "apellido_pat$indice",
+                "apellido_mat$indice",
+                "relacion$indice",
+                "telefono$indice"
+            ]);
+    
+            $columnValues = array_merge($columnValues, [
+                $referencia->nombre,
+                $referencia->apellidopat,
+                $referencia->apellidomat,
+                $referencia->relacion,
+                $referencia->telefono
+            ]);
+        }
+    
+        /**
+         * ? Construye la consulta SQL dinámicamente
+        */
+        $sql = "INSERT INTO ref_laborales (expediente_id, " . implode(', ', $columnNames) . ") VALUES (:expediente_id, " . implode(', ', array_map(function($column) {
+            return ":$column";
+        }, $columnNames)) . ")";
+            
+        /**
+         * ? Prepara la consulta
+        */
+        $insertar_referencias = $object->_db->prepare($sql);
+        $insertar_referencias->bindParam(':expediente_id', $id_expediente, PDO::PARAM_INT);
+
+        /**
+         * ? Vincula los valores a los marcadores de posición
+        */
+        foreach ($columnNames as $index => $column) {
+            $insertar_referencias->bindParam(":$column", $columnValues[$index], PDO::PARAM_STR);
         }
 
         /**
-         * ? Luego, se construye una consulta SQL para insertar los datos en la tabla ref_laborales. El SQL se construye de la siguiente manera:
-         * ? Se establece la parte fija de la consulta con "INSERT INTO ref_laborales"
-         * ? Se agregan los nombres de las columnas al SQL utilizando implode(', ', array_keys($columnas)). Esto generará una cadena que representa las columnas en la base de datos
-         * ? Se agrega la parte de los valores con "VALUES ($id_expediente, "
-         * ? Se agregan los valores correspondientes a cada columna desde el arreglo $columnas utilizando implode(', ', $columnas). Esto generará una cadena que representa los valores que se insertarán en la base de datos
-         * ? Se cierra la consulta SQL con ")"
+         * ? Ejecuta la consulta
         */
-
-        $sql = "INSERT INTO ref_laborales (expediente_id, ";
-        $sql .= implode(', ', array_keys($columnas)); // Columnas
-        $sql .= ") VALUES ($id_expediente, ";
-        $sql .= implode(', ', $columnas); // Valores
-        $sql .= ")";
+        $insertar_referencias->execute();
     }
 
     /**
