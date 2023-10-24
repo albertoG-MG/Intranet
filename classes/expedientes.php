@@ -272,7 +272,7 @@ class expedientes {
              * ? Recuperar información almacenada de la base de datos y traerla de vuelta a la aplicación para su procesamiento; en este caso, como solo nos trae una fila, 
              * ? debemos acceder a él utilizando [0]
             */
-            $results_table_DA = $fetch_results_DA['data'][0];
+            $results_table_DA = $check_table_DA['data'][0];
             /**
              * ? Actualiza la tabla, el primer dato que te pide es el nombre de la tabla, los campos a actualizar, la condición y el valor de la condición
             */
@@ -286,7 +286,7 @@ class expedientes {
              * ? En esta parte debemos actualizar las referencias laborales, tanto si agregó nuevas, si quitó algunas ó si modificó el valor de los campos
              * ? Checa si hay referencias laborales insertadas en la base de datos
             */
-            $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $fetch_results_DA['id']]);
+            $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DA['id']]);
 
             /**
              * ? Si hay referencias laborales en la base de datos, creamos un nuevo metodo para actualizar los campos, el numero de referencias laborales tanto si el usuario agregó nuevas ó quitó referencias
