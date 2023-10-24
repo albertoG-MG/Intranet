@@ -1330,7 +1330,7 @@
         padding: 16px 20px ;
         border-radius: 107px !important;
         position: relative;
-        z-index: 1;
+        z-index: 0;
         overflow: hidden;
         display: inline-block;
 
