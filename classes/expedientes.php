@@ -431,52 +431,46 @@ class expedientes {
 	 * *	Metodo encargado de editar las referencias laborales
 	 * *    =====================================================
 	*/
-    public static function Editar_reflaborales($id_expediente, $countreflab, $array, $ref) {
+    public static function Editar_reflaborales($id_expediente, $ref) {
         $crud = new crud();
-        
-        /**
-         * ? Itera sobre las referencias enviadas
-        */
-        foreach ($ref as $i => $referencia) {
-            /**
-             * ? Para cada referencia, crea un arreglo $columnas que contendrá los valores de las columnas de la tabla ref_laborales para esa referencia en particular
-            */
-            $columnas = [];
-            $columnPrefix = $i + 1;
     
-            $ref_nombre = $referencia->nombre;
-            $ref_apellidopat = $referencia->apellidopat;
-            $ref_apellidomat = $referencia->apellidomat;
-            $ref_relacion = $referencia->relacion;
-            $ref_telefono = $referencia->telefono;
+        // Insertar el valor de expediente_id una vez
+        $expediente_id = $id_expediente;
     
-            $columnas["nombre$columnPrefix"] = $ref_nombre;
-            $columnas["apellido_pat$columnPrefix"] = $ref_apellidopat;
-            $columnas["apellido_mat$columnPrefix"] = $ref_apellidomat;
-            $columnas["relacion$columnPrefix"] = $ref_relacion;
-            $columnas["telefono$columnPrefix"] = $ref_telefono;
+        // Crear un arreglo para una fila de datos
+        $row = [
+            'nombre1' => null,
+            'apellido_pat1' => null,
+            'apellido_mat1' => null,
+            'relacion1' => null,
+            'telefono1' => null,
+            'nombre2' => null,
+            'apellido_pat2' => null,
+            'apellido_mat2' => null,
+            'relacion2' => null,
+            'telefono2' => null,
+            'nombre3' => null,
+            'apellido_pat3' => null,
+            'apellido_mat3' => null,
+            'relacion3' => null,
+            'telefono3' => null,
+            'expediente_id' => $expediente_id
+        ];
     
-            if ($i < $countreflab) {
-                /**
-                 * ? Verifica si el índice actual ($i) es menor que la cantidad de referencias existentes ($countreflab) en la base de datos. Si es menor, actualiza la referencia en la base de datos 
-                 * ? utilizando la función update.
-                */
-                $crud->update('ref_laborales', $columnas, "id=:idreferencia AND expediente_id=:expedienteid", ['idreferencia' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
-            } else {
-                /**
-                 * ? Si el índice es mayor que la cantidad de referencias existentes, significa que es una nueva referencia y se inserta en la base de datos utilizando la función store
-                */
-                $columnas['expediente_id'] = $id_expediente;
-                $crud->store('ref_laborales', $columnas);
+        // Llenar el arreglo con los valores de las referencias
+        for ($indice = 1; $indice <= 3; $indice++) {
+            if (isset($ref[$indice - 1])) {
+                $referencia = $ref[$indice - 1];
+                $row['nombre' . $indice] = $referencia->nombre;
+                $row['apellido_pat' . $indice] = $referencia->apellidopat;
+                $row['apellido_mat' . $indice] = $referencia->apellidomat;
+                $row['relacion' . $indice] = $referencia->relacion;
+                $row['telefono' . $indice] = $referencia->telefono;
             }
         }
     
-        /**
-         * ? Luego, se verifica si hay referencias en la base de datos que no se enviaron en $ref, y se eliminan utilizando la función delete
-        */
-        foreach (array_slice($array, count($ref)) as $referenciaEliminar) {
-            $crud->delete('ref_laborales', 'id=:idreferencia AND expediente_id=:expedienteid', ['idreferencia' => $referenciaEliminar["id"], 'expedienteid' => $id_expediente]);
-        }
+        // Insertar una fila en la base de datos
+        $crud->update('ref_laborales', $row, 'expediente_id=:idexpediente', [':idexpediente' => $id_expediente]);
     }
 
     /**
