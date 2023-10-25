@@ -812,8 +812,28 @@
                            <div class="text-[#64748b] font-semibold">
                               Referencias bancarias:
                            </div>
-                           <div id="ref" class="mt-5">
-                           </div>
+                           <?php if (empty($referencias_bancarias['data'])): ?>
+                              <p>No hay beneficiarios bancarios</p>
+                           <?php else: ?>
+                              <?php foreach ($referencias_bancarias['data'] as $item_bancario): ?>
+                                 <div class="bg-gray-200 p-4 rounded mb-4">
+                                    <div class="grid grid-cols-2 gap-4">
+                                       <?php for ($a = 1; $a <= 2; $a++): ?>
+                                          <div>
+                                             <p class="font-semibold">Referencia <?php echo $a; ?></p>
+                                             <p>Nombre: <?php echo $item_bancario['nombre' . $a] ? $item_bancario['nombre' . $a] : 'No hay datos'; ?></p>
+                                             <p>Apellido Paterno: <?php echo $item_bancario['apellido_pat' . $a] ? $item_bancario['apellido_pat' . $a] : 'No hay datos'; ?></p>
+                                             <p>Apellido Materno: <?php echo $item_bancario['apellido_mat' . $a] ? $item_bancario['apellido_mat' . $a] : 'No hay datos'; ?></p>
+                                             <p>Relación: <?php echo $item_bancario['relacion' . $a] ? $item_bancario['relacion' . $a] : 'No hay datos'; ?></p>
+                                             <p>RFC: <?php echo $item_bancario['rfc' . $a] ? $item_bancario['rfc' . $a] : 'No hay datos'; ?></p>
+                                             <p>CURP: <?php echo $item_bancario['curp' . $a] ? $item_bancario['curp' . $a] : 'No hay datos'; ?></p>
+                                             <p>Porcentaje: <?php echo $item_bancario['porcentaje' . $a] ? $item_bancario['porcentaje' . $a] : 'No hay datos'; ?></p>
+                                          </div>
+                                       <?php endfor; ?>
+                                    </div>
+                                 </div>
+                              <?php endforeach; ?>
+                           <?php endif; ?>
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
