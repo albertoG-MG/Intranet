@@ -567,20 +567,16 @@ class expedientes {
                  * ? Si el usuario modificó los valores de las referencias pero no agregó más ni quitó, el arreglo de ID nos facilita hacer tracking de los cambios
                 */
                 $results_checkreflab = $checkreflab['data'];
-                $array_ids = array();
 
                 /**
                  * ? Las referencias laborales pueden ser 1 ó más, como no existe el fetchAll en el gateway class; debemos iterar sobre $results_checkreflab e insertarla en el arreglo $array_ids
                 */
-                foreach ($results_checkreflab as $fila_checkreflab) {
-                    $array_ids[] = $fila_checkreflab['id'];
-                }
 
                 /**
                  * ? Si hay registro de referencias laborales pero la variable referencias está vacía, eso signfica que el usuario eliminó todas las referencias laborales
                 */
                 if(is_null($this->referencias)){
-                    $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $results_checkreflab['id']]);
+                    $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
                 }else{
                     /**
                      * ? Sirve para eliminar las barras invertidas (\) que pueden estar presentes en una cadena. Esto pasa por seguridad cuando mandas por lo general un json y te escapa las comillas presentes usando barras invertidas.
@@ -593,7 +589,7 @@ class expedientes {
                     /**
                      * ? Llamamos al método correspondiente enviando el id, las filas de las referencias laborales en la base de datos, el arreglo de ids y el json de las referencias
                     */
-                    expedientes::Editar_reflaborales($results_checkreflab['id'], $checkreflab['count'], $array_ids, $ref);
+                    expedientes::Editar_reflaborales($results_expediente['id'], $ref);
                 }
             }else{
 
@@ -609,7 +605,7 @@ class expedientes {
                     /**
                      * ? Enviamos al metodo el id del expediente y el json de las referencias laborales
                     */
-                    expedientes::Crear_reflaborales($results_checkreflab['id'], $ref);
+                    expedientes::Crear_reflaborales($results_expediente['id'], $ref);
                 }
             }
 

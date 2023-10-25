@@ -326,7 +326,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
         switch($_POST["method"]){
             case "store":
                 $permiso = new Permissions($permisos, $categorias);
-                $permiso = (strtoupper($permiso) ->CrearPermisos());
+                $permiso = (mb_strtoupper($permiso, 'UTF-8') ->CrearPermisos());
                 exit("success");
             break;
             case "edit":
@@ -575,7 +575,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$puesto = $_POST["puesto"];
 				//Conviertelo en mayúsculas
-				$puesto = strtoupper($puesto);
+				$puesto = mb_strtoupper($puesto, 'UTF-8');
+				
 				//Quitale los acentos
 				$puesto = quitarAcentos($puesto);
 			}
@@ -606,19 +607,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					//Verifica si el correo no está repetido en la base de datos
 					if($_POST["method"] == "store"){
-						if($check_form_exist['count'] > 0){
-							$fetch_form_correo = $check_form_exist['data'][0];
-							if($fetch_form_correo["correo_adicional"] !== $_POST['correo_adicional']){
-								$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
-								if($get_correo['count'] > 0){
-									die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
-								}
-							}
-						}else{
-							$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
-							if($get_correo['count'] > 0){
-								die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
-							}		
+						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
+						if($get_correo['count'] > 0){
+							die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
 						}
 					}else if($_POST["method"] == "edit"){
 						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]]);
@@ -628,7 +619,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					}
 					$posee_correo= $_POST["posee_correo"];
 					//Conviertelo en mayúsculas
-					$posee_correo = strtoupper($posee_correo);
+					$posee_correo = mb_strtoupper($posee_correo, 'UTF-8');
 					//Quitale los acentos
 					$posee_correo = quitarAcentos($posee_correo);
 					//Los servidores de correo y los sistemas de correo electrónico generalmente son sensibles a los acentos en los caracteres. Esto significa que "mi.correo@gmail.com" y "mí.correo@gmail.com" se considerarían direcciones de correo electrónico distintas, lo mismo que las mayúsculas lo cual significa que aquí la regla de los acentos y mayúsculas no aplican en los correos
@@ -637,7 +628,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$posee_correo = $_POST["posee_correo"];
 				//Conviertelo en mayúsculas
-				$posee_correo = strtoupper($posee_correo);
+				$posee_correo = mb_strtoupper($posee_correo, 'UTF-8');
 				//Quitale los acentos
 				$posee_correo = quitarAcentos($posee_correo);
 				//Si está vacío, nullificalo
@@ -655,7 +646,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$calle = $_POST["calle"];  //Asigna si pasa la validación
 					//Conviertelo en mayúsculas
-					$calle = strtoupper($calle);
+					$calle = mb_strtoupper($calle, 'UTF-8');
 					//Quitale los acentos
 					$calle = quitarAcentos($calle);
 				}
@@ -698,7 +689,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$colonia = $_POST["colonia"]; // Asignamos la colonia si pasa la validación.
 					//Conviertelo en mayúsculas
-					$colonia = strtoupper($colonia);
+					$colonia = mb_strtoupper($colonia, 'UTF-8');
 					//Quitale los acentos
 					$colonia = quitarAcentos($colonia);
 				}
@@ -815,7 +806,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$posee_telmov = $_POST["posee_telmov"];
 					//Conviertelo en mayúsculas
-					$posee_telmov = strtoupper($posee_telmov);
+					$posee_telmov = mb_strtoupper($posee_telmov, 'UTF-8');
 					//Quitale los acentos
 					$posee_telmov = quitarAcentos($posee_telmov);
 					$telmov = $_POST["telmov"];
@@ -824,7 +815,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si no se selecciona "Sí" para poseer teléfono móvil, establecer los valores correspondientes
 				$posee_telmov = $_POST["posee_telmov"];
 				//Conviertelo en mayúsculas
-				$posee_telmov = strtoupper($posee_telmov);
+				$posee_telmov = mb_strtoupper($posee_telmov, 'UTF-8');
 				//Quitale los acentos
 				$posee_telmov = quitarAcentos($posee_telmov);
 				$telmov = null;
@@ -866,25 +857,25 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					// Asignar valores si todas las validaciones son exitosas
 					$posee_telempresa = $_POST["posee_telempresa"];
 					//Conviertelo en mayúsculas
-					$posee_telempresa = strtoupper($posee_telempresa);
+					$posee_telempresa = mb_strtoupper($posee_telempresa, 'UTF-8');
 					//Quitale los acentos
 					$posee_telempresa = quitarAcentos($posee_telempresa);
 					$marcacion = $_POST["marcacion"];
 					$serie = $_POST["serie"];
 					//Conviertelo en mayúsculas
-					$serie = strtoupper($serie);
+					$serie = mb_strtoupper($serie, 'UTF-8');
 					//Quitale los acentos
 					$serie = quitarAcentos($serie);
 					$sim = $_POST["sim"];
 					$numred = $_POST["numred"];
 					$modelotel = $_POST["modelotel"];
 					//Conviertelo en mayúsculas
-					$modelotel = strtoupper($modelotel);
+					$modelotel = mb_strtoupper($modelotel, 'UTF-8');
 					//Quitale los acentos
 					$modelotel = quitarAcentos($modelotel);
 					$marcatel = $_POST["marcatel"];
 					//Conviertelo en mayúsculas
-					$marcatel = strtoupper($marcatel);
+					$marcatel = mb_strtoupper($marcatel, 'UTF-8');
 					//Quitale los acentos
 					$marcatel = quitarAcentos($marcatel);
 					$imei = $_POST["imei"];
@@ -893,7 +884,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si no se selecciona "Sí" para poseer teléfono de la empresa, establecer los valores correspondientes
 				$posee_telempresa = $_POST["posee_telempresa"];
 				//Conviertelo en mayúsculas
-				$posee_telempresa = strtoupper($posee_telempresa);
+				$posee_telempresa = mb_strtoupper($posee_telempresa, 'UTF-8');
 				//Quitale los acentos
 				$posee_telempresa = quitarAcentos($posee_telempresa);
 				$marcacion = null;
@@ -925,22 +916,22 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					// Si todas las validaciones son exitosas, asigna los valores a las variables correspondientes
 					$posee_laptop = $_POST["posee_laptop"];
 					//Conviertelo en mayúsculas
-					$posee_laptop = strtoupper($posee_laptop);
+					$posee_laptop = mb_strtoupper($posee_laptop, 'UTF-8');
 					//Quitale los acentos
 					$posee_laptop = quitarAcentos($posee_laptop);
 					$marca_laptop = $_POST["marca_laptop"];
 					//Conviertelo en mayúsculas
-					$marca_laptop = strtoupper($marca_laptop);
+					$marca_laptop = mb_strtoupper($marca_laptop, 'UTF-8');
 					//Quitale los acentos
 					$marca_laptop = quitarAcentos($marca_laptop);
 					$modelo_laptop = $_POST["modelo_laptop"];
 					//Conviertelo en mayúsculas
-					$modelo_laptop = strtoupper($modelo_laptop);
+					$modelo_laptop = mb_strtoupper($modelo_laptop, 'UTF-8');
 					//Quitale los acentos
 					$modelo_laptop = quitarAcentos($modelo_laptop);
 					$serie_laptop = $_POST["serie_laptop"];
 					//Conviertelo en mayúsculas
-					$serie_laptop = strtoupper($serie_laptop);
+					$serie_laptop = mb_strtoupper($serie_laptop, 'UTF-8');
 					//Quitale los acentos
 					$serie_laptop = quitarAcentos($serie_laptop);
 				}
@@ -948,7 +939,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si "posee_laptop" no es igual a "si", asigna valores nulos a las variables correspondientes
 				$posee_laptop = $_POST["posee_laptop"];
 				//Conviertelo en mayúsculas
-				$posee_laptop = strtoupper($posee_laptop);
+				$posee_laptop = mb_strtoupper($posee_laptop, 'UTF-8');
 				//Quitale los acentos
 				$posee_laptop = quitarAcentos($posee_laptop);
 				$marca_laptop = null;
@@ -963,7 +954,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$casa_propia = $_POST["radio"];
 				//Conviertelo en mayúsculas
-				$casa_propia = strtoupper($casa_propia);
+				$casa_propia = mb_strtoupper($casa_propia, 'UTF-8');
 				//Quitale los acentos
 				$casa_propia = quitarAcentos($casa_propia);
 			}
@@ -997,7 +988,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					// Si todas las validaciones son exitosas, asigna los valores a las variables correspondientes
 					$posee_retencion = $_POST["posee_retencion"];
 					//Conviertelo en mayúsculas
-					$posee_retencion = strtoupper($posee_retencion);
+					$posee_retencion = mb_strtoupper($posee_retencion, 'UTF-8');
 					//Quitale los acentos
 					$posee_retencion = quitarAcentos($posee_retencion);
 					$monto_mensual = $_POST["monto_mensual"];
@@ -1006,7 +997,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si "posee_retencion" no es igual a "si", asigna valores nulos a las variables correspondientes
 				$posee_retencion = $_POST["posee_retencion"];
 				//Conviertelo en mayúsculas
-				$posee_retencion = strtoupper($posee_retencion);
+				$posee_retencion = mb_strtoupper($posee_retencion, 'UTF-8');
 				//Quitale los acentos
 				$posee_retencion = quitarAcentos($posee_retencion);
 				$monto_mensual = null;
@@ -1128,7 +1119,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$observaciones = $_POST["observaciones"];
 					//Conviertelo en mayúsculas
-					$observaciones = strtoupper($observaciones);
+					$observaciones = mb_strtoupper($observaciones, 'UTF-8');
 					//Quitale los acentos
 					$observaciones = quitarAcentos($observaciones);
 				}
@@ -1145,7 +1136,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$curp= $_POST["curp"];
 					//Conviertelo en mayúsculas
-					$curp = strtoupper($curp);
+					$curp = mb_strtoupper($curp, 'UTF-8');
 					//Quitale los acentos
 					$curp = quitarAcentos($curp);
 				}
@@ -1175,7 +1166,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$rfc = $_POST["rfc"];
 					//Conviertelo en mayúsculas
-					$rfc = strtoupper($rfc);
+					$rfc = mb_strtoupper($rfc, 'UTF-8');
 					//Quitale los acentos
 					$rfc = quitarAcentos($rfc);
 				}
@@ -1217,7 +1208,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$numeroidentificacion = $_POST["numeroidentificacion"];
 				//Conviertelo en mayúsculas
-				$numeroidentificacion = strtoupper($numeroidentificacion);
+				$numeroidentificacion = mb_strtoupper($numeroidentificacion, 'UTF-8');
 				//Quitale los acentos
 				$numeroidentificacion = quitarAcentos($numeroidentificacion);
 			}
@@ -1350,11 +1341,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 									die(json_encode(array("error", "El teléfono de la referencia laboral " . $referencias_contador . " debe tener exactamente 10 dígitos")));
 								}
 							}
-							// Aplicamos strtoupper a los valores de cadena
+							// Aplicamos mb_strtoupper a los valores de cadena
 							//Le quitamos los acentos
-							$referencia_laboral["nombre"] = strtoupper(quitarAcentos($referencia_laboral["nombre"]));
-							$referencia_laboral["apellidopat"] = strtoupper(quitarAcentos($referencia_laboral["apellidopat"]));
-							$referencia_laboral["apellidomat"] = strtoupper(quitarAcentos($referencia_laboral["apellidomat"]));
+							$referencia_laboral["nombre"] = mb_strtoupper(quitarAcentos($referencia_laboral["nombre"], 'UTF-8'));
+							$referencia_laboral["apellidopat"] = mb_strtoupper(quitarAcentos($referencia_laboral["apellidopat"], 'UTF-8'));
+							$referencia_laboral["apellidomat"] = mb_strtoupper(quitarAcentos($referencia_laboral["apellidomat"], 'UTF-8'));
 
 							$referencias_contador++;
 						}
@@ -1435,7 +1426,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$emergencianom = $_POST["emergencianom"];
 					//Conviertelo en mayúsculas
-					$emergencianom = strtoupper($emergencianom);
+					$emergencianom = mb_strtoupper($emergencianom, 'UTF-8');
 					//Quitale los acentos
 					$emergencianom = quitarAcentos($emergencianom);
 				}
@@ -1452,7 +1443,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$emergenciaapat = $_POST["emergenciaapat"];
 					//Conviertelo en mayúsculas
-					$emergenciaapat = strtoupper($emergenciaapat);
+					$emergenciaapat = mb_strtoupper($emergenciaapat, 'UTF-8');
 					//Quitale los acentos
 					$emergenciaapat = quitarAcentos($emergenciaapat);
 				}
@@ -1469,7 +1460,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$emergenciaamat = $_POST["emergenciaamat"];
 					//Conviertelo en mayúsculas
-					$emergenciaamat = strtoupper($emergenciaamat);
+					$emergenciaamat = mb_strtoupper($emergenciaamat, 'UTF-8');
 					//Quitale los acentos
 					$emergenciaamat = quitarAcentos($emergenciaamat);
 				}
@@ -1517,7 +1508,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$emergencianom2 = $_POST["emergencianom2"];
 					//Conviertelo en mayúsculas
-					$emergencianom2 = strtoupper($emergencianom2);
+					$emergencianom2 = mb_strtoupper($emergencianom2, 'UTF-8');
 					//Quitale los acentos
 					$emergencianom2 = quitarAcentos($emergencianom2);
 				}
@@ -1534,7 +1525,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$emergenciaapat2 = $_POST["emergenciaapat2"];
 					//Conviertelo en mayúsculas
-					$emergenciaapat2 = strtoupper($emergenciaapat2);
+					$emergenciaapat2 = mb_strtoupper($emergenciaapat2, 'UTF-8');
 					//Quitale los acentos
 					$emergenciaapat2 = quitarAcentos($emergenciaapat2);
 				}
@@ -1551,7 +1542,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$emergenciaamat2 = $_POST["emergenciaamat2"];
 					//Conviertelo en mayúsculas
-					$emergenciaamat2 = strtoupper($emergenciaamat2);
+					$emergenciaamat2 = mb_strtoupper($emergenciaamat2, 'UTF-8');
 					//Quitale los acentos
 					$emergenciaamat2 = quitarAcentos($emergenciaamat2);
 				}
@@ -1668,22 +1659,22 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					// Si todas las validaciones son exitosas, asigna los valores a las variables correspondientes
 					$radio2 = $_POST["radio2"];
 					//Conviertelo en mayúsculas
-					$radio2 = strtoupper($radio2);
+					$radio2 = mb_strtoupper($radio2, 'UTF-8');
 					//Quitale los acentos
 					$radio2 = quitarAcentos($radio2);
 					$nomfam = $_POST["nomfam"];
 					//Conviertelo en mayúsculas
-					$nomfam = strtoupper($nomfam);
+					$nomfam = mb_strtoupper($nomfam, 'UTF-8');
 					//Quitale los acentos
 					$nomfam = quitarAcentos($nomfam);
 					$apellidopatfam = $_POST["apellidopatfam"];
 					//Conviertelo en mayúsculas
-					$apellidopatfam = strtoupper($apellidopatfam);
+					$apellidopatfam = mb_strtoupper($apellidopatfam, 'UTF-8');
 					//Quitale los acentos
 					$apellidopatfam = quitarAcentos($apellidopatfam);
 					$apellidomatfam = $_POST["apellidomatfam"];
 					//Conviertelo en mayúsculas
-					$apellidomatfam = strtoupper($apellidomatfam);
+					$apellidomatfam = mb_strtoupper($apellidomatfam, 'UTF-8');
 					//Quitale los acentos
 					$apellidomatfam = quitarAcentos($apellidomatfam);
 				}
@@ -1691,7 +1682,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si "radio2" no es igual a "si", asigna valores nulos a las variables correspondientes
 				$radio2 = $_POST["radio2"];
 				//Conviertelo en mayúsculas
-				$radio2 = strtoupper($radio2);
+				$radio2 = mb_strtoupper($radio2, 'UTF-8');
 				//Quitale los acentos
 				$radio2 = quitarAcentos($radio2);
 				$nomfam = null;
@@ -1829,13 +1820,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 								}
 							}
 
-							// Aplicamos strtoupper a los valores de cadena
+							// Aplicamos mb_strtoupper a los valores de cadena
 							//Le quitamos los acentos
-							$referencia_bancaria["nombre"] = strtoupper(quitarAcentos($referencia_bancaria["nombre"]));
-							$referencia_bancaria["apellidopat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidopat"]));
-							$referencia_bancaria["apellidomat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidomat"]));
-							$referencia_bancaria["rfc"] = strtoupper(quitarAcentos($referencia_bancaria["rfc"]));
-							$referencia_bancaria["curp"] = strtoupper(quitarAcentos($referencia_bancaria["curp"]));
+							$referencia_bancaria["nombre"] = mb_strtoupper(quitarAcentos($referencia_bancaria["nombre"], 'UTF-8'));
+							$referencia_bancaria["apellidopat"] = mb_strtoupper(quitarAcentos($referencia_bancaria["apellidopat"], 'UTF-8'));
+							$referencia_bancaria["apellidomat"] = mb_strtoupper(quitarAcentos($referencia_bancaria["apellidomat"], 'UTF-8'));
+							$referencia_bancaria["rfc"] = mb_strtoupper(quitarAcentos($referencia_bancaria["rfc"], 'UTF-8'));
+							$referencia_bancaria["curp"] = mb_strtoupper(quitarAcentos($referencia_bancaria["curp"], 'UTF-8'));
 
 							if($_POST["numeroreferenciasban"] == 1){
 								$referencia_bancaria["porcentaje"] = 100;
@@ -1869,7 +1860,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$banco_personal = $_POST["banco_personal"];
 					//Conviertelo en mayúsculas
-					$banco_personal = strtoupper($banco_personal);
+					$banco_personal = mb_strtoupper($banco_personal, 'UTF-8');
 					//Quitale los acentos
 					$banco_personal = quitarAcentos($banco_personal);
 				}
@@ -1922,7 +1913,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					$banco_nomina = $_POST["banco_nomina"];
 					//Conviertelo en mayúsculas
-					$banco_nomina = strtoupper($banco_nomina);
+					$banco_nomina = mb_strtoupper($banco_nomina, 'UTF-8');
 					//Quitale los acentos
 					$banco_nomina = quitarAcentos($banco_nomina);
 				}
@@ -2168,7 +2159,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			$puesto = $_POST["puesto"];
 			//Conviertelo en mayúsculas
-			$puesto = strtoupper($puesto);
+			$puesto = mb_strtoupper($puesto, 'UTF-8');
 			//Quitale los acentos
 			$puesto = quitarAcentos($puesto);
 		}
@@ -2199,19 +2190,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				//Verifica si el correo no está repetido en la base de datos
 				if($_POST["method"] == "store"){
-					if($check_form_exist['count'] > 0){
-						$fetch_form_correo = $check_form_exist['data'][0];
-						if($fetch_form_correo["correo_adicional"] !== $_POST['correo_adicional']){
-							$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
-							if($get_correo['count'] > 0){
-								die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
-							}
-						}
-					}else{
-						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
-						if($get_correo['count'] > 0){
-							die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
-						}		
+					$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
+					if($get_correo['count'] > 0){
+						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
 					}
 				}else if($_POST["method"] == "edit"){
 					$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]]);
@@ -2221,7 +2202,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 				$posee_correo= $_POST["posee_correo"];
 				//Conviertelo en mayúsculas
-				$posee_correo = strtoupper($posee_correo);
+				$posee_correo = mb_strtoupper($posee_correo, 'UTF-8');
 				//Quitale los acentos
 				$posee_correo = quitarAcentos($posee_correo);
 				//Los servidores de correo y los sistemas de correo electrónico generalmente son sensibles a los acentos en los caracteres. Esto significa que "mi.correo@gmail.com" y "mí.correo@gmail.com" se considerarían direcciones de correo electrónico distintas, lo mismo que las mayúsculas lo cual significa que aquí la regla de los acentos y mayúsculas no aplican en los correos
@@ -2230,7 +2211,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			$posee_correo = $_POST["posee_correo"];
 			//Conviertelo en mayúsculas
-			$posee_correo = strtoupper($posee_correo);
+			$posee_correo = mb_strtoupper($posee_correo, 'UTF-8');
 			//Quitale los acentos
 			$posee_correo = quitarAcentos($posee_correo);
 			//Si está vacío, nullificalo
@@ -2248,7 +2229,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$calle = $_POST["calle"];  //Asigna si pasa la validación
 				//Conviertelo en mayúsculas
-				$calle = strtoupper($calle);
+				$calle = mb_strtoupper($calle, 'UTF-8');
 				//Quitale los acentos
 				$calle = quitarAcentos($calle);
 			}
@@ -2291,7 +2272,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$colonia = $_POST["colonia"]; // Asignamos la colonia si pasa la validación.
 				//Conviertelo en mayúsculas
-				$colonia = strtoupper($colonia);
+				$colonia = mb_strtoupper($colonia, 'UTF-8');
 				//Quitale los acentos
 				$colonia = quitarAcentos($colonia);
 			}
@@ -2408,7 +2389,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$posee_telmov = $_POST["posee_telmov"];
 				//Conviertelo en mayúsculas
-				$posee_telmov = strtoupper($posee_telmov);
+				$posee_telmov = mb_strtoupper($posee_telmov, 'UTF-8');
 				//Quitale los acentos
 				$posee_telmov = quitarAcentos($posee_telmov);
 				$telmov = $_POST["telmov"];
@@ -2417,7 +2398,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			// Si no se selecciona "Sí" para poseer teléfono móvil, establecer los valores correspondientes
 			$posee_telmov = $_POST["posee_telmov"];
 			//Conviertelo en mayúsculas
-			$posee_telmov = strtoupper($posee_telmov);
+			$posee_telmov = mb_strtoupper($posee_telmov, 'UTF-8');
 			//Quitale los acentos
 			$posee_telmov = quitarAcentos($posee_telmov);
 			$telmov = null;
@@ -2459,25 +2440,25 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Asignar valores si todas las validaciones son exitosas
 				$posee_telempresa = $_POST["posee_telempresa"];
 				//Conviertelo en mayúsculas
-				$posee_telempresa = strtoupper($posee_telempresa);
+				$posee_telempresa = mb_strtoupper($posee_telempresa, 'UTF-8');
 				//Quitale los acentos
 				$posee_telempresa = quitarAcentos($posee_telempresa);
 				$marcacion = $_POST["marcacion"];
 				$serie = $_POST["serie"];
 				//Conviertelo en mayúsculas
-				$serie = strtoupper($serie);
+				$serie = mb_strtoupper($serie, 'UTF-8');
 				//Quitale los acentos
 				$serie = quitarAcentos($serie);
 				$sim = $_POST["sim"];
 				$numred = $_POST["numred"];
 				$modelotel = $_POST["modelotel"];
 				//Conviertelo en mayúsculas
-				$modelotel = strtoupper($modelotel);
+				$modelotel = mb_strtoupper($modelotel, 'UTF-8');
 				//Quitale los acentos
 				$modelotel = quitarAcentos($modelotel);
 				$marcatel = $_POST["marcatel"];
 				//Conviertelo en mayúsculas
-				$marcatel = strtoupper($marcatel);
+				$marcatel = mb_strtoupper($marcatel, 'UTF-8');
 				//Quitale los acentos
 				$marcatel = quitarAcentos($marcatel);
 				$imei = $_POST["imei"];
@@ -2486,7 +2467,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			// Si no se selecciona "Sí" para poseer teléfono de la empresa, establecer los valores correspondientes
 			$posee_telempresa = $_POST["posee_telempresa"];
 			//Conviertelo en mayúsculas
-			$posee_telempresa = strtoupper($posee_telempresa);
+			$posee_telempresa = mb_strtoupper($posee_telempresa, 'UTF-8');
 			//Quitale los acentos
 			$posee_telempresa = quitarAcentos($posee_telempresa);
 			$marcacion = null;
@@ -2518,22 +2499,22 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si todas las validaciones son exitosas, asigna los valores a las variables correspondientes
 				$posee_laptop = $_POST["posee_laptop"];
 				//Conviertelo en mayúsculas
-				$posee_laptop = strtoupper($posee_laptop);
+				$posee_laptop = mb_strtoupper($posee_laptop, 'UTF-8');
 				//Quitale los acentos
 				$posee_laptop = quitarAcentos($posee_laptop);
 				$marca_laptop = $_POST["marca_laptop"];
 				//Conviertelo en mayúsculas
-				$marca_laptop = strtoupper($marca_laptop);
+				$marca_laptop = mb_strtoupper($marca_laptop, 'UTF-8');
 				//Quitale los acentos
 				$marca_laptop = quitarAcentos($marca_laptop);
 				$modelo_laptop = $_POST["modelo_laptop"];
 				//Conviertelo en mayúsculas
-				$modelo_laptop = strtoupper($modelo_laptop);
+				$modelo_laptop = mb_strtoupper($modelo_laptop, 'UTF-8');
 				//Quitale los acentos
 				$modelo_laptop = quitarAcentos($modelo_laptop);
 				$serie_laptop = $_POST["serie_laptop"];
 				//Conviertelo en mayúsculas
-				$serie_laptop = strtoupper($serie_laptop);
+				$serie_laptop = mb_strtoupper($serie_laptop, 'UTF-8');
 				//Quitale los acentos
 				$serie_laptop = quitarAcentos($serie_laptop);
 			}
@@ -2541,7 +2522,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			// Si "posee_laptop" no es igual a "si", asigna valores nulos a las variables correspondientes
 			$posee_laptop = $_POST["posee_laptop"];
 			//Conviertelo en mayúsculas
-			$posee_laptop = strtoupper($posee_laptop);
+			$posee_laptop = mb_strtoupper($posee_laptop, 'UTF-8');
 			//Quitale los acentos
 			$posee_laptop = quitarAcentos($posee_laptop);
 			$marca_laptop = null;
@@ -2556,7 +2537,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}else{
 			$casa_propia = $_POST["radio"];
 			//Conviertelo en mayúsculas
-			$casa_propia = strtoupper($casa_propia);
+			$casa_propia = mb_strtoupper($casa_propia, 'UTF-8');
 			//Quitale los acentos
 			$casa_propia = quitarAcentos($casa_propia);
 		}
@@ -2590,7 +2571,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si todas las validaciones son exitosas, asigna los valores a las variables correspondientes
 				$posee_retencion = $_POST["posee_retencion"];
 				//Conviertelo en mayúsculas
-				$posee_retencion = strtoupper($posee_retencion);
+				$posee_retencion = mb_strtoupper($posee_retencion, 'UTF-8');
 				//Quitale los acentos
 				$posee_retencion = quitarAcentos($posee_retencion);
 				$monto_mensual = $_POST["monto_mensual"];
@@ -2599,7 +2580,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			// Si "posee_retencion" no es igual a "si", asigna valores nulos a las variables correspondientes
 			$posee_retencion = $_POST["posee_retencion"];
 			//Conviertelo en mayúsculas
-			$posee_retencion = strtoupper($posee_retencion);
+			$posee_retencion = mb_strtoupper($posee_retencion, 'UTF-8');
 			//Quitale los acentos
 			$posee_retencion = quitarAcentos($posee_retencion);
 			$monto_mensual = null;
@@ -2721,7 +2702,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$observaciones = $_POST["observaciones"];
 				//Conviertelo en mayúsculas
-				$observaciones = strtoupper($observaciones);
+				$observaciones = mb_strtoupper($observaciones, 'UTF-8');
 				//Quitale los acentos
 				$observaciones = quitarAcentos($observaciones);
 			}
@@ -2738,7 +2719,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$curp= $_POST["curp"];
 				//Conviertelo en mayúsculas
-				$curp = strtoupper($curp);
+				$curp = mb_strtoupper($curp, 'UTF-8');
 				//Quitale los acentos
 				$curp = quitarAcentos($curp);
 			}
@@ -2768,7 +2749,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$rfc = $_POST["rfc"];
 				//Conviertelo en mayúsculas
-				$rfc = strtoupper($rfc);
+				$rfc = mb_strtoupper($rfc, 'UTF-8');
 				//Quitale los acentos
 				$rfc = quitarAcentos($rfc);
 			}
@@ -2810,7 +2791,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 			$numeroidentificacion = $_POST["numeroidentificacion"];
 			//Conviertelo en mayúsculas
-			$numeroidentificacion = strtoupper($numeroidentificacion);
+			$numeroidentificacion = mb_strtoupper($numeroidentificacion, 'UTF-8');
 			//Quitale los acentos
 			$numeroidentificacion = quitarAcentos($numeroidentificacion);
 		}
@@ -2864,11 +2845,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 								die(json_encode(array("error", "El teléfono de la referencia laboral " . $referencias_contador . " debe tener exactamente 10 dígitos")));
 							}
 						}
-						// Aplicamos strtoupper a los valores de cadena
+						// Aplicamos mb_strtoupper a los valores de cadena
 						//Le quitamos los acentos
-						$referencia_laboral["nombre"] = strtoupper(quitarAcentos($referencia_laboral["nombre"]));
-						$referencia_laboral["apellidopat"] = strtoupper(quitarAcentos($referencia_laboral["apellidopat"]));
-						$referencia_laboral["apellidomat"] = strtoupper(quitarAcentos($referencia_laboral["apellidomat"]));
+						$referencia_laboral["nombre"] = mb_strtoupper(quitarAcentos($referencia_laboral["nombre"], 'UTF-8'));
+						$referencia_laboral["apellidopat"] = mb_strtoupper(quitarAcentos($referencia_laboral["apellidopat"], 'UTF-8'));
+						$referencia_laboral["apellidomat"] = mb_strtoupper(quitarAcentos($referencia_laboral["apellidomat"], 'UTF-8'));
 
 						$referencias_contador++;
 					}
@@ -2949,7 +2930,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$emergencianom = $_POST["emergencianom"];
 				//Conviertelo en mayúsculas
-				$emergencianom = strtoupper($emergencianom);
+				$emergencianom = mb_strtoupper($emergencianom, 'UTF-8');
 				//Quitale los acentos
 				$emergencianom = quitarAcentos($emergencianom);
 			}
@@ -2966,7 +2947,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$emergenciaapat = $_POST["emergenciaapat"];
 				//Conviertelo en mayúsculas
-				$emergenciaapat = strtoupper($emergenciaapat);
+				$emergenciaapat = mb_strtoupper($emergenciaapat, 'UTF-8');
 				//Quitale los acentos
 				$emergenciaapat = quitarAcentos($emergenciaapat);
 			}
@@ -2983,7 +2964,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$emergenciaamat = $_POST["emergenciaamat"];
 				//Conviertelo en mayúsculas
-				$emergenciaamat = strtoupper($emergenciaamat);
+				$emergenciaamat = mb_strtoupper($emergenciaamat, 'UTF-8');
 				//Quitale los acentos
 				$emergenciaamat = quitarAcentos($emergenciaamat);
 			}
@@ -3031,7 +3012,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$emergencianom2 = $_POST["emergencianom2"];
 				//Conviertelo en mayúsculas
-				$emergencianom2 = strtoupper($emergencianom2);
+				$emergencianom2 = mb_strtoupper($emergencianom2, 'UTF-8');
 				//Quitale los acentos
 				$emergencianom2 = quitarAcentos($emergencianom2);
 			}
@@ -3048,7 +3029,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$emergenciaapat2 = $_POST["emergenciaapat2"];
 				//Conviertelo en mayúsculas
-				$emergenciaapat2 = strtoupper($emergenciaapat2);
+				$emergenciaapat2 = mb_strtoupper($emergenciaapat2, 'UTF-8');
 				//Quitale los acentos
 				$emergenciaapat2 = quitarAcentos($emergenciaapat2);
 			}
@@ -3065,7 +3046,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$emergenciaamat2 = $_POST["emergenciaamat2"];
 				//Conviertelo en mayúsculas
-				$emergenciaamat2 = strtoupper($emergenciaamat2);
+				$emergenciaamat2 = mb_strtoupper($emergenciaamat2, 'UTF-8');
 				//Quitale los acentos
 				$emergenciaamat2 = quitarAcentos($emergenciaamat2);
 			}
@@ -3182,22 +3163,22 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si todas las validaciones son exitosas, asigna los valores a las variables correspondientes
 				$radio2 = $_POST["radio2"];
 				//Conviertelo en mayúsculas
-				$radio2 = strtoupper($radio2);
+				$radio2 = mb_strtoupper($radio2, 'UTF-8');
 				//Quitale los acentos
 				$radio2 = quitarAcentos($radio2);
 				$nomfam = $_POST["nomfam"];
 				//Conviertelo en mayúsculas
-				$nomfam = strtoupper($nomfam);
+				$nomfam = mb_strtoupper($nomfam, 'UTF-8');
 				//Quitale los acentos
 				$nomfam = quitarAcentos($nomfam);
 				$apellidopatfam = $_POST["apellidopatfam"];
 				//Conviertelo en mayúsculas
-				$apellidopatfam = strtoupper($apellidopatfam);
+				$apellidopatfam = mb_strtoupper($apellidopatfam, 'UTF-8');
 				//Quitale los acentos
 				$apellidopatfam = quitarAcentos($apellidopatfam);
 				$apellidomatfam = $_POST["apellidomatfam"];
 				//Conviertelo en mayúsculas
-				$apellidomatfam = strtoupper($apellidomatfam);
+				$apellidomatfam = mb_strtoupper($apellidomatfam, 'UTF-8');
 				//Quitale los acentos
 				$apellidomatfam = quitarAcentos($apellidomatfam);
 			}
@@ -3205,7 +3186,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			// Si "radio2" no es igual a "si", asigna valores nulos a las variables correspondientes
 			$radio2 = $_POST["radio2"];
 			//Conviertelo en mayúsculas
-			$radio2 = strtoupper($radio2);
+			$radio2 = mb_strtoupper($radio2, 'UTF-8');
 			//Quitale los acentos
 			$radio2 = quitarAcentos($radio2);
 			$nomfam = null;
@@ -3266,13 +3247,13 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 							}
 						}
 
-						// Aplicamos strtoupper a los valores de cadena
+						// Aplicamos mb_strtoupper a los valores de cadena
 						//Le quitamos los acentos
-						$referencia_bancaria["nombre"] = strtoupper(quitarAcentos($referencia_bancaria["nombre"]));
-						$referencia_bancaria["apellidopat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidopat"]));
-						$referencia_bancaria["apellidomat"] = strtoupper(quitarAcentos($referencia_bancaria["apellidomat"]));
-						$referencia_bancaria["rfc"] = strtoupper(quitarAcentos($referencia_bancaria["rfc"]));
-						$referencia_bancaria["curp"] = strtoupper(quitarAcentos($referencia_bancaria["curp"]));
+						$referencia_bancaria["nombre"] = mb_strtoupper(quitarAcentos($referencia_bancaria["nombre"], 'UTF-8'));
+						$referencia_bancaria["apellidopat"] = mb_strtoupper(quitarAcentos($referencia_bancaria["apellidopat"], 'UTF-8'));
+						$referencia_bancaria["apellidomat"] = mb_strtoupper(quitarAcentos($referencia_bancaria["apellidomat"], 'UTF-8'));
+						$referencia_bancaria["rfc"] = mb_strtoupper(quitarAcentos($referencia_bancaria["rfc"], 'UTF-8'));
+						$referencia_bancaria["curp"] = mb_strtoupper(quitarAcentos($referencia_bancaria["curp"], 'UTF-8'));
 
 						if($_POST["numeroreferenciasban"] == 1){
 							$referencia_bancaria["porcentaje"] = 100;
@@ -3306,7 +3287,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$banco_personal = $_POST["banco_personal"];
 				//Conviertelo en mayúsculas
-				$banco_personal = strtoupper($banco_personal);
+				$banco_personal = mb_strtoupper($banco_personal, 'UTF-8');
 				//Quitale los acentos
 				$banco_personal = quitarAcentos($banco_personal);
 			}
@@ -3359,7 +3340,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				$banco_nomina = $_POST["banco_nomina"];
 				//Conviertelo en mayúsculas
-				$banco_nomina = strtoupper($banco_nomina);
+				$banco_nomina = mb_strtoupper($banco_nomina, 'UTF-8');
 				//Quitale los acentos
 				$banco_nomina = quitarAcentos($banco_nomina);
 			}
@@ -6293,5 +6274,54 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		Expedientes::Insertar_expediente_token($token, $logged_user, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $familiar_en_la_empresa, $nomfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $refbanc, $arraypapeleria);
 		die(json_encode(array("success", "Se han guardado los cambios")));
 	}
+}else if(isset($_POST["app"]) && $_POST["app"] == "DatosG_token_expediente"){
+
+if($_POST["pestaña"] == "DatosG"){
+	//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
+	if(isset($_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], 
+	$_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"], $_POST["nexterior"], $_POST["colonia"], $_POST["estado"],
+	$_POST["estadotext"], $_POST["municipio"], $_POST["municipiotext"], $_POST["codigo"], $_POST["teldom"], $_POST["posee_telmov"], 
+	$_POST["telmov"], $_POST["posee_telempresa"], $_POST["marcacion"], $_POST["serie"], $_POST["sim"], $_POST["numred"], $_POST["modelotel"], 
+	$_POST["marcatel"], $_POST["imei"], $_POST["posee_laptop"], $_POST["marca_laptop"], $_POST["modelo_laptop"], $_POST["serie_laptop"], 
+	$_POST["radio"], $_POST["ecivil"], $_POST["posee_retencion"], $_POST["monto_mensual"], $_POST["fechanac"], $_POST["fechacon"], 
+	$_POST["fechaalta"], $_POST["salario_contrato"], $_POST["salario_fechaalta"], $_POST["observaciones"], $_POST["curp"], 
+	$_POST["nss"], $_POST["rfc"], $_POST["identificacion"], $_POST["numeroidentificacion"])){
+
+		//Debido a que PHP no acepta el request method PUT (Bueno si lo acepta pero solo acepta json) utilizamos una variable method que nos permite saber si necesitamos insertar o actualizar
+		switch($_POST["method"]){
+			//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
+			case "store":
+				//Hago una instancia de la clase y le envío las variables en la clase
+				$expediente = new Expedientes(null, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
+				//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
+				$expediente ->Crear_expediente_datosG();
+				//Verifica si la sesión ya existe
+				if (!(isset($_SESSION['expediente_id']))) {
+					//Asigna una sesión del expediente enviado si la sesión no existe
+					$_SESSION['expediente_id'] = $select2;
+				}
+				//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
+				die(json_encode(array("success", "Se han guardado los datos generales del expediente")));
+			break;
+			//Este es la versión de editar expediente, su función sera duplicar los datos en la tabla temporal con un estatus diferente
+			case "edit":
+				//Hago una instancia de la clase y le envío las variables en la clase
+				$expediente = new Expedientes($id_expediente, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
+				//Una vez que se hayan almacenado las variables, llamar al metodo correspondiente obviamente enviando el id del expediente
+				$expediente ->Crear_tokenexpediente_datosG($_POST["id_expediente"]);
+				//Verifica si la sesión ya existe
+				if (!(isset($_SESSION['expediente_id']))) {
+					//Asigna una sesión del expediente enviado si la sesión no existe
+					$_SESSION['expediente_id'] = $id_expediente;
+				}
+				//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
+				die(json_encode(array("success", "Se han guardado los datos generales del expediente")));
+			break;
+		}
+	}else{
+		die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
+	}
 }
+}
+
 ?>
