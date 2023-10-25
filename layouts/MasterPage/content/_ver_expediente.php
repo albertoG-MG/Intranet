@@ -49,7 +49,7 @@
             </div>
             <div class="bg-white p-3 shadow-md rounded-b">
                <div class="flex flex-col mt-5 mx-7">
-                  <h2 class="text-2xl text-[#64748b] font-semibold">Expediente del Empleado: <?php echo $selected->nombre. " " .$selected->apellido_pat. " " .$selected->apellido_mat ?></h2>
+                  <h2 class="text-2xl text-celeste font-semibold">Expediente del Empleado: <?php echo $selected->nombre. " " .$selected->apellido_pat. " " .$selected->apellido_mat ?></h2>
                   <span class="text-[#64748b]">En esta sección puede visualizar la información de un empleado.</span>
                   <div class="my-3 h-px bg-slate-200"></div>
                </div>
@@ -83,16 +83,15 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-500 group-focus:text-slate-500" viewBox="0 0 24 24">
                            <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
                         </svg>
-                        <span>Papelería recibida</span>
+                        <span>Papelería</span>
                      </button>
                   </li>
                </ul>
                <div id='menu-contents' style="word-break: break-word;">
                   <div class="block bg-transparent rounded-lg tab-pane" id="datosG" role="tabpanel" aria-labelledby="datosG-tab">
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Datos del empleado</h2>
-                        <span class="text-[#64748b]">Información personal del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Datos del empleado</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -149,9 +148,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Estatus del empleado</h2>
-                        <span class="text-[#64748b]">Visualización del estatus del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Estatus del empleado</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -192,9 +190,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Datos de ubicación</h2>
-                        <span class="text-[#64748b]">Datos de ubicación del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Datos de ubicación</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -279,9 +276,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Dispositivos proporcionados por la empresa</h2>
-                        <span class="text-[#64748b]">Información sobre los dispositivos proporcionados por la empresa.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Dispositivos proporcionados por la empresa</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -404,9 +400,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Datos relevantes del empleado</h2>
-                        <span class="text-[#64748b]">Otros datos de interés del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Datos relevantes del empleado</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -548,6 +543,10 @@
                      </div>
                   </div>
                   <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
+                     <div class="flex flex-col mt-5 mx-7">
+                        <h2 class="text-2xl text-celeste font-semibold">Referencias laborales</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
+                     </div>
                      <div class="flex flex-col mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
@@ -576,9 +575,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Uniformes</h2>
-                        <span class="text-[#64748b]">Datos de entrega de uniforme.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Uniformes</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -609,9 +607,9 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
-                        <span class="text-[#64748b]"><b>Primer contacto</b> de emergencia.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Contactos de emergencia</h2>
+                        <span class="text-[#000]"><b>Primer contacto</b> de emergencia.</span>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -660,9 +658,9 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Contactos de emergencia</h2>
-                        <span class="text-[#64748b]"><b>Segundo contacto</b> de emergencia.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Contactos de emergencia</h2>
+                        <span class="text-[#000]"><b>Segundo contacto</b> de emergencia.</span>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -711,9 +709,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Otros datos del empleado</h2>
-                        <span class="text-[#64748b]">En esta sección encontrará datos extra del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Otros datos del empleado</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -803,9 +800,8 @@
                   </div>
                   <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Datos bancarios del empleado</h2>
-                        <span class="text-[#64748b]">En esta sección encontrará información sobre los datos bancarios del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Beneficiarios Bancarios</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -837,9 +833,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria personal</h2>
-                        <span class="text-[#64748b]">En esta sección se encuentran las credenciales bancarias personales del empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Cuenta bancaria personal</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -878,9 +873,8 @@
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Cuenta bancaria asignada por la empresa</h2>
-                        <span class="text-[#64748b]">En esta sección se encuentra la nómina asignada al empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Cuenta bancaria asignada por la empresa</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
@@ -928,9 +922,8 @@
                   </div>
                   <div class="hidden bg-transparent rounded-lg tab-pane" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
                      <div class="flex flex-col mt-5 mx-7">
-                        <h2 class="text-2xl text-[#64748b] font-semibold">Documentos necesarios</h2>
-                        <span class="text-[#64748b]">En esta sección encontrará todos los documentos entregados por el empleado.</span>
-                        <div class="my-3 h-px bg-slate-200"></div>
+                        <h2 class="text-2xl text-celeste font-semibold">Documentos</h2>
+                        <div class="my-3 h-px bg-celeste"></div>
                      </div>
                      <div class="mt-5 px-7">
                         <table class="min-w-full border-collapse block md:table">
