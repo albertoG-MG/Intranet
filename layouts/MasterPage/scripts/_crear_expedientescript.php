@@ -577,6 +577,11 @@
             return /^[A-Za-z]{3}\d{6}$/.test(value);
         }, "Passport needs 3 letters and then 6 numbers.");
 
+         // La validación para no aceptar 0
+        $.validator.addMethod("notOnlyZero", function (value, element, param) {
+                return this.optional(element) || parseInt(value) > 0;
+            });
+
         $.validator.addMethod("validateCedula", function(value, element) {
             // La validación específica para Cedula (entre 7 y 10 dígitos)
             return /^\d{7,10}$/.test(value);
@@ -1281,7 +1286,13 @@
                         digits: {
                             depends: function(element) {
                                 return  (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
-                            }
+                            }  
+                        },
+                        notOnlyZero: {
+                            depends: function(element) {
+                                return  (pestañaActiva.id === "datosA" || pestañaActiva.id == "documentos");
+                            },
+                            param: 0
                         }
                     },
                     emergencia_nom: {
@@ -1884,7 +1895,8 @@
                         maxlength: 'Solo puedes ingresar como máximo 10 números'
                     },
                     cantidadpolo: {
-                        digits: 'Solo se permiten números'
+                        digits: 'Solo se permiten números',
+                        notOnlyZero: 'Favor de ingresar una cantidad válida'
                     },
                     emergencia_nom: {
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
