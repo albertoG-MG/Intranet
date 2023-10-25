@@ -2147,11 +2147,6 @@
 
         //FECHA DE NACIMIENTO
         <?php
-            if ($counttemp > 0) {
-                $fecha_nacimiento = $temp['fecha_nacimiento'];
-            } elseif ($edit->efecha_nacimiento !== null) {
-                $fecha_nacimiento = $edit->efecha_nacimiento;
-            }
 
             if (isset($fecha_nacimiento)) {
                 $fechaConvertida = str_replace("-", "/", $fecha_nacimiento);
@@ -2161,11 +2156,7 @@
 
         //FECHA DE CONTRATO
         <?php
-            if ($counttemp > 0) {
-                $fecha_contrato = $temp['fecha_inicioc'];
-            } elseif ($edit->efecha_inicioc !== null) {
-                $fecha_contrato = $edit->efecha_inicioc;
-            }
+
 
             if (isset($fecha_contrato)) {
                 $fechaConvertida = str_replace("-", "/", $fecha_contrato);
@@ -2175,11 +2166,7 @@
 
         //FECHA DE ALTA
         <?php
-            if ($counttemp > 0) {
-                $fecha_alta = $temp['fecha_alta'];
-            } elseif ($edit->efecha_alta !== null) {
-                $fecha_alta = $edit->efecha_alta;
-            }
+
 
             if (isset($fecha_alta)) {
                 $fechaConvertida = str_replace("-", "/", $fecha_alta);
@@ -2189,11 +2176,6 @@
 
         //FECHA UNIFORME
         <?php
-            if ($counttemp > 0) {
-                $fecha_uniforme = $temp['fecha_enuniforme'];
-            } elseif ($edit->efecha_enuniforme !== null) {
-                $fecha_uniforme = $edit->efecha_enuniforme;
-            }
 
             if (isset($fecha_uniforme)) {
                 $fechaConvertida = str_replace("-", "/", $fecha_uniforme);

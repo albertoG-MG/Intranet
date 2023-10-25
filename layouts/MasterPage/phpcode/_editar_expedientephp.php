@@ -217,64 +217,56 @@
 
     $edit=Expedientes::FetchEditExpediente($Editarid);
 
-    $checkiftemp = $object -> _db -> prepare("SELECT * FROM expedientes_temporales WHERE users_id=:userid");
-    $checkiftemp -> execute(array('userid' => $edit->userid));
-    $counttemp = $checkiftemp ->rowCount();
-
-    if($counttemp > 0){
-        $fetchtemp = $checkiftemp -> fetch(PDO::FETCH_ASSOC);
-        $temp = Expedientes::FetchTempEditExpediente($fetchtemp['id']);
-    }
-
     $estado = $object->_db->prepare("select * from estados");
     $estado->execute();
     $contestado=0;
+        /*REFERENCIAS LABORALES*/
+        $fetch_referencias = [];
+        $query =  "SELECT * FROM ref_laborales WHERE expediente_id = :expedienteid";
+    
+            $referencias_laborales = $object->_db->prepare($query);
+            $referencias_laborales->execute(array(':expedienteid' => $Editarid));
+            $referencias_count = $referencias_laborales -> rowCount();
+    
+        if ($referencias_count > 0) {
+            $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
+        }
+    
+        /*REFERENCIAS BANCARIAS*/
+        $fetch_ben_bancarios = [];
+        $query = "SELECT * FROM ben_bancarios WHERE expediente_id = :expedienteid";
+    
+            $ben_bancarios = $object->_db->prepare($query);
+            $ben_bancarios->execute(array(':expedienteid' => $Editarid));
+            $ben_bancarios_count = $ben_bancarios->rowCount();
+    
+        if ($ben_bancarios_count > 0) {
+            $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
+        }
 
-    // Verificar si existen datos en la tabla temporal (ref_laborales_temporales)
-    $check_ref_temporales = $object->_db->prepare("SELECT COUNT(*) FROM ref_laborales_temporales WHERE expediente_id = :expedienteid");
-    $check_ref_temporales->execute(array(':expedienteid' => $Editarid));
-    $ref_temporales_exist = (int)$check_ref_temporales->fetchColumn();
-
-    // Inicializar el arreglo de referencias
-    $fetch_referencias = [];
-
-    // Usar una expresión ternaria para determinar la consulta a ejecutar
-    $query = ($ref_temporales_exist > 0) ?
-        "SELECT * FROM ref_laborales_temporales WHERE expediente_id = :expedienteid" :
-        "SELECT * FROM ref_laborales WHERE expediente_id = :expedienteid";
-
-    // Ejecutar la consulta
-    $referencias_laborales = $object->_db->prepare($query);
-    $referencias_laborales->execute(array(':expedienteid' => $Editarid));
-    $referencias_count = $referencias_laborales -> rowCount();
-
-    // Verificar si se obtuvieron datos de la consulta
-    if ($referencias_count > 0) {
-        $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // Verificar si existen datos en la tabla "ben_bancarios_temporales"
-    $check_ben_temporales = $object->_db->prepare("SELECT COUNT(*) FROM ben_bancarios_temporales WHERE expediente_id = :expedienteid");
-    $check_ben_temporales->execute(array(':expedienteid' => $Editarid));
-    $ben_temporales_exist = (int)$check_ben_temporales->fetchColumn();
-
-    // Inicializar el arreglo de referencias
-    $fetch_ben_bancarios = [];
-
-    // Usar una expresión ternaria para determinar la consulta a ejecutar
-    $query = ($ben_temporales_exist > 0) ?
-        "SELECT * FROM ben_bancarios_temporales WHERE expediente_id = :expedienteid" :
-        "SELECT * FROM ben_bancarios WHERE expediente_id = :expedienteid";
-
-    // Ejecutar la consulta
-    $ben_bancarios = $object->_db->prepare($query);
-    $ben_bancarios->execute(array(':expedienteid' => $Editarid));
-    $ben_bancarios_count = $ben_bancarios->rowCount();
-
-    // Verificar si se obtuvieron datos de la consulta
-    if ($ben_bancarios_count > 0) {
-        $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
-    }
+       /*REFERENCIAS LABORALES*/
+       $fetch_referencias = [];
+       $query =  "SELECT * FROM ref_laborales WHERE expediente_id = :expedienteid";
+   
+           $referencias_laborales = $object->_db->prepare($query);
+           $referencias_laborales->execute(array(':expedienteid' => $Editarid));
+           $referencias_count = $referencias_laborales -> rowCount();
+   
+       if ($referencias_count > 0) {
+           $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
+       }
+   
+       /*REFERENCIAS BANCARIAS*/
+       $fetch_ben_bancarios = [];
+       $query = "SELECT * FROM ben_bancarios WHERE expediente_id = :expedienteid";
+   
+           $ben_bancarios = $object->_db->prepare($query);
+           $ben_bancarios->execute(array(':expedienteid' => $Editarid));
+           $ben_bancarios_count = $ben_bancarios->rowCount();
+   
+       if ($ben_bancarios_count > 0) {
+           $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
+       }
 
     $checktipospapeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
     $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);
