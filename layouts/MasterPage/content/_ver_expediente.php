@@ -144,7 +144,7 @@
                               Correo electrónico adicional:
                            </div>
                            <span>
-                           <?php if($ver->eposee_correo == "no"){ echo "No posee un correo electrónico adicional"; }else{echo "{$ver->ecorreo_adicional}";} ?>
+                           <?php echo ($ver->eposee_correo == "NO") ? "No posee un correo electrónico adicional" : ($ver->ecorreo_adicional ?? "No hay datos"); ?>
                            </span>
                         </div>
                      </div>
@@ -274,7 +274,7 @@
                               Teléfono propio:
                            </div>
                            <span>
-                           <?php if($ver->eposee_telmov == "no"){ echo "No posee un teléfono propio"; }else{echo "{$ver->etel_mov}";} ?>
+                           <?php echo ($ver->eposee_telmov == "NO") ? "No posee un teléfono propio" : ($ver->etel_mov ?? "No hay datos"); ?>
                            </span>
                         </div>
                      </div>
@@ -289,11 +289,11 @@
                               ¿Teléfono proporcionado por la empresa?:
                            </div>
                            <span>
-                           <?php if($ver -> eposee_telempresa == "no"){ echo "Sin teléfono proporcionado por la empresa"; }else{echo "{$ver -> eposee_telempresa}";} ?>
+                           <?php echo ($ver->eposee_telempresa == "NO") ? "Sin teléfono proporcionado por la empresa" : ($ver->eposee_telempresa ?? "No hay datos"); ?>
                            </span>
                         </div>
                      </div>
-                     <div x-data="{ showtelefonoempresa:  <?php if($ver -> eposee_telempresa == "no"){ echo "false";  }else{ echo "true";} ?>}">
+                     <div x-data="{ showtelefonoempresa:  <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "false" : "true"; ?>}">
                         <div x-show="showtelefonoempresa">
                            <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                               <div class="flex-1 flex flex-col mt-5">
@@ -301,7 +301,7 @@
                                     Marcación corta:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_telempresa == "no"){ echo "No hay datos"; }else{echo "{$ver -> emarcacion}";} ?>
+                                 <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "No hay datos" : $ver->emarcacion; ?>
                                  </span>
                               </div>
                               <div class="flex-1 flex flex-col mt-5">
@@ -309,7 +309,7 @@
                                     Número de serie:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_telempresa == "no"){ echo "No hay datos"; }else{echo "{$ver -> eserie}";} ?>
+                                 <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "No hay datos" : $ver->eserie; ?>
                                  </span>
                               </div>
                            </div>
@@ -319,7 +319,7 @@
                                     SIM:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_telempresa == "no"){ echo "No hay datos"; }else{echo "{$ver -> esim}";} ?>
+                                 <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "No hay datos" : $ver->esim; ?>
                                  </span>
                               </div>
                               <div class="flex-1 flex flex-col mt-5">
@@ -327,7 +327,7 @@
                                     Número de red:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_telempresa == "no"){ echo "No hay datos"; }else{echo "{$ver -> enumred}";} ?>
+                                 <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "No hay datos" : $ver->enumred; ?>
                                  </span>
                               </div>
                            </div>
@@ -337,7 +337,7 @@
                                     Modelo:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_telempresa == "no"){ echo "No hay datos"; }else{echo "{$ver -> modeltel}";} ?>
+                                 <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "No hay datos" : $ver->modeltel; ?>
                                  </span>
                               </div>
                               <div class="flex-1 flex flex-col mt-5">
@@ -345,7 +345,7 @@
                                     Marca:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_telempresa == "no"){ echo "No hay datos"; }else{echo "{$ver -> marcatel}";} ?>
+                                 <?php echo ($ver->eposee_telempresa == "NO" || $ver->eposee_telempresa === null) ? "No hay datos" : $ver->marcatel; ?>
                                  </span>
                               </div>
                            </div>
@@ -355,7 +355,7 @@
                                     IMEI:
                                  </div>
                                  <span>
-                                 <?php if($ver->eposee_telmov == "no"){ echo "No hay datos"; }else{echo "{$ver->eimei}";} ?>
+                                 <?php echo ($ver->eposee_telmov == "NO" || $ver->eposee_telmov === null) ? "No hay datos" : $ver->eimei; ?>
                                  </span>
                               </div>
                            </div>
@@ -367,11 +367,11 @@
                               ¿Laptop asignado por la empresa?:
                            </div>
                            <span>
-                           <?php if($ver -> eposee_laptop == "no"){ echo "Sin laptop proporcionado por la empresa"; }else{echo "{$ver -> eposee_laptop}";} ?>
+                           <?php echo ($ver->eposee_laptop == "NO") ? "Sin laptop proporcionada por la empresa" : ($ver->eposee_laptop ?? "No hay datos"); ?>
                            </span>
                         </div>
                      </div>
-                     <div x-data="{ showlaptopempresa:  <?php if($ver -> eposee_laptop == "no"){ echo "false";  }else{ echo "true";} ?>}">
+                     <div x-data="{ showlaptopempresa:  <?php echo ($ver->eposee_laptop == "NO" || $ver->eposee_laptop === null) ? "false" : "true"; ?>}">
                         <div x-show="showlaptopempresa">
                            <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                               <div class="flex-1 flex flex-col mt-5">
@@ -379,7 +379,7 @@
                                     Marca de la laptop:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_laptop == "no"){ echo "No hay datos"; }else{echo "{$ver -> emarca_laptop}";} ?>
+                                 <?php echo ($ver->eposee_laptop == "NO" || $ver->eposee_laptop === null) ? "No hay datos" : $ver->emarca_laptop; ?>
                                  </span>
                               </div>
                               <div class="flex-1 flex flex-col mt-5">
@@ -387,7 +387,7 @@
                                     Modelo de la laptop:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_laptop == "no"){ echo "No hay datos"; }else{echo "{$ver -> emodelo_laptop}";} ?>
+                                 <?php echo ($ver->eposee_laptop == "NO" || $ver->eposee_laptop === null) ? "No hay datos" : $ver->emodelo_laptop; ?>
                                  </span>
                               </div>
                            </div>
@@ -397,7 +397,7 @@
                                     Serie de la laptop:
                                  </div>
                                  <span>
-                                 <?php if($ver -> eposee_laptop == "no"){ echo "No hay datos"; }else{echo "{$ver -> eserie_laptop}";} ?>
+                                 <?php echo ($ver->eposee_laptop == "no" || $ver->eposee_laptop === null) ? "No hay datos" : $ver->eserie_laptop; ?>
                                  </span>
                               </div>
                            </div>
@@ -414,7 +414,7 @@
                               ¿Casa propia?:
                            </div>
                            <span>
-                           <?php if($ver -> ecasa_propia == null){ echo "No hay datos"; }else{echo "{$ver -> ecasa_propia}";} ?>
+                           <?php echo ($ver->ecasa_propia === null) ? "No hay datos" : $ver->ecasa_propia; ?>
                            </span>
                         </div>
                         <div class="flex-1 flex flex-col mt-5">
@@ -432,7 +432,7 @@
                               Monto mensual de retención:
                            </div>
                            <span>
-                           <?php if($ver -> eposee_retencion == "no"){ echo "No tiene retención"; }else{echo "{$ver -> emonto_mensual}";} ?>
+                           <?php echo ($ver->eposee_retencion === null) ? "No hay datos" : ($ver->eposee_retencion == "NO" ? "No tiene retención" : $ver->emonto_mensual); ?>
                            </span>
                         </div>
                         <div class="flex-1 flex flex-col mt-5">

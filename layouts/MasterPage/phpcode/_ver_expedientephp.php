@@ -2,9 +2,11 @@
     include_once __DIR__ . "/../../../config/conexion.php";
     include_once __DIR__ . "/../../../classes/user.php";
     include_once __DIR__ . "/../../../classes/expedientes.php";
+    include_once __DIR__ . "/../../../classes/crud.php";
     $object = new connection_database();
     
     session_start();
+    $crud = new Crud();
 
     if ($_SESSION['loggedin'] != true) {
         $_SESSION['redirectURL'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -237,20 +239,9 @@
     if($countmunicipio > 0){
     $vermunicipio = $municipio->fetch(PDO::FETCH_OBJ);
     }
-
-
-    /*REFERENCIAS LABORALES*/
-    $referencias_laborales = $object->_db->prepare("select nombre, relacion, telefono from ref_laborales where expediente_id =:expedienteid");
-    $referencias_laborales->execute(array(':expedienteid' => $Verid));
-    $array_reflaborales = $referencias_laborales -> fetchAll(PDO::FETCH_ASSOC);
-    $reflaborales_json = json_encode($array_reflaborales, JSON_UNESCAPED_UNICODE);
-
-    /*REFERENCIAS BANCARIAS*/
-    $referencias_bancarias = $object->_db->prepare("select nombre, relacion, rfc, curp, prcnt_derecho from ref_bancarias where expediente_id =:expedienteid");
-    $referencias_bancarias->bindParam("expedienteid", $Verid, PDO::PARAM_INT);
-    $referencias_bancarias->execute();
-    $array_refban = $referencias_bancarias -> fetchAll(PDO::FETCH_ASSOC);
-    $refban_json = json_encode($array_refban, JSON_UNESCAPED_UNICODE);
+    
+    $referencias_laborales = $crud -> readWithCount('ref_laborales', 'nombre1, apellido_pat1, apellido_mat1, relacion1, telefono1, nombre2, apellido_pat2, apellido_mat2, relacion2, telefono2, nombre3, apellido_pat3, apellido_mat3, relacion3, telefono3', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $Verid]);
+    $referencias_bancarias = $crud -> readWithCount('ben_bancarios', 'nombre1, apellido_pat1, apellido_mat1, relacion1, rfc1, curp1, porcentaje1, nombre2, apellido_pat2, apellido_mat2, relacion2, rfc2, curp2, porcentaje2', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $Verid]);
 
     /*PAPELERIA*/
     $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
