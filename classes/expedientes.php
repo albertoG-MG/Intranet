@@ -663,58 +663,47 @@ class expedientes {
 	 * *	Metodo encargado de editar los beneficiarios bancarios
 	 * *    =======================================================
 	*/
-    public static function Editar_benbanc($id_expediente, $countbenban, $array, $ref_banc) {
-        /**
-         * ? Clase gateway para insertar, editar y eliminar en la base de datos
-        */
+    public static function Editar_benbanc($id_expediente, $ref_banc) {
         $crud = new crud();
-        /**
-         * ? Itera sobre los beneficiarios enviados
-        */
-        foreach ($ref_banc as $i => $beneficiario) {
-            /**
-             * ? Para cada referencia, crea un arreglo $columnas que contendrá los valores de las columnas de la tabla ben_bancarios para ese beneficiario en particular
-            */
-            $columnas = [];
-            $columnPrefix = $i + 1;
     
-            $ref_nombre = $beneficiario->nombre;
-            $ref_apellidopat = $beneficiario->apellidopat;
-            $ref_apellidomat = $beneficiario->apellidomat;
-            $ref_relacion = $beneficiario->relacion;
-            $ref_rfc = $beneficiario->rfc;
-            $ref_curp = $beneficiario->curp;
-            $ref_porcentaje = $beneficiario->porcentaje;
+        // Insertar el valor de expediente_id una vez
+        $expediente_id = $id_expediente;
     
-            $columnas["nombre$columnPrefix"] = $ref_nombre;
-            $columnas["apellido_pat$columnPrefix"] = $ref_apellidopat;
-            $columnas["apellido_mat$columnPrefix"] = $ref_apellidomat;
-            $columnas["relacion$columnPrefix"] = $ref_relacion;
-            $columnas["rfc$columnPrefix"] = $ref_rfc;
-            $columnas["curp$columnPrefix"] = $ref_curp;
-            $columnas["porcentaje$columnPrefix"] = $ref_porcentaje;
+        // Crear un arreglo para una fila de datos
+        $row = [
+            'nombre1' => null,
+            'apellido_pat1' => null,
+            'apellido_mat1' => null,
+            'relacion1' => null,
+            'rfc1' => null,
+			'curp1' => null,
+			'porcentaje1' => null,
+			'nombre2' => null,
+            'apellido_pat2' => null,
+            'apellido_mat2' => null,
+            'relacion2' => null,
+            'rfc2' => null,
+			'curp2' => null,
+			'porcentaje2' => null,
+            'expediente_id' => $expediente_id
+        ];
     
-            if ($i < $countbenban) {
-                /**
-                 * ? Verifica si el índice actual ($i) es menor que la cantidad de beneficiarios existentes ($countbenban) en la base de datos. Si es menor, actualiza el benficiario en la base de datos 
-                 * ? utilizando la función update.
-                */
-                $crud->update('ben_bancarios', $columnas, "id=:idbeneficiario AND expediente_id=:expedienteid", ['idbeneficiario' => $array[$i]["id"], 'expedienteid' => $id_expediente]);
-            } else {
-                /**
-                 * ? Si el índice es mayor que la cantidad de beneficiarios existentes, significa que es una nuevo beneficiario y se inserta en la base de datos utilizando la función store
-                */
-                $columnas['expediente_id'] = $id_expediente;
-                $crud->store('ben_bancarios', $columnas);
+        // Llenar el arreglo con los valores de los beneficiarios
+        for ($indice = 1; $indice <= 3; $indice++) {
+            if (isset($ref_banc[$indice - 1])) {
+                $referencia = $ref_banc[$indice - 1];
+                $row['nombre' . $indice] = $referencia->nombre;
+                $row['apellido_pat' . $indice] = $referencia->apellidopat;
+                $row['apellido_mat' . $indice] = $referencia->apellidomat;
+                $row['relacion' . $indice] = $referencia->relacion;
+                $row['rfc' . $indice] = $referencia->rfc;
+				$row['curp' . $indice] = $referencia->curp;
+				$row['porcentaje' . $indice] = $referencia->porcentaje;
             }
         }
     
-        /**
-         * ? Luego, se verifica si hay beneficiarios en la base de datos que no se enviaron en $ref_banc, y se eliminan utilizando la función delete
-        */
-        foreach (array_slice($array, count($ref_banc)) as $beneficiarioEliminar) {
-            $crud->delete('ben_bancarios', 'id=:idbeneficiario AND expediente_id=:expedienteid', ['idbeneficiario' => $beneficiarioEliminar["id"], 'expedienteid' => $id_expediente]);
-        }
+        // Insertar una fila en la base de datos
+        $crud->update('ben_bancarios', $row, 'expediente_id=:idexpediente', [':idexpediente' => $id_expediente]);
     }
 
     /**
