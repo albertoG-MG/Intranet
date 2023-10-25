@@ -384,63 +384,46 @@ class expedientes {
 	 * *	Metodo encargado de crear las referencias laborales
 	 * *    ====================================================
 	*/
-    public static function Crear_reflaborales($id_expediente, $ref){
-        $refcrud = new crud();
-        $object = new connection_database();
+    public static function Crear_reflaborales($id_expediente, $ref) {
+        $crud = new crud();
     
-        /**
-         * ? Inicializamos las columnas y los valores
-        */
-        $columnNames = array();
-        $columnValues = array();
+        // Insertar el valor de expediente_id una vez
+        $expediente_id = $id_expediente;
     
-        foreach ($ref as $indice => $referencia) {
-            /**
-             * ? Ajusta el índice para comenzar desde 1
-            */
-            $indice += 1;
-            
-            $columnNames = array_merge($columnNames, [
-                "nombre$indice",
-                "apellido_pat$indice",
-                "apellido_mat$indice",
-                "relacion$indice",
-                "telefono$indice"
-            ]);
+        // Crear un arreglo para una fila de datos
+        $row = [
+            'nombre1' => null,
+            'apellido_pat1' => null,
+            'apellido_mat1' => null,
+            'relacion1' => null,
+            'telefono1' => null,
+            'nombre2' => null,
+            'apellido_pat2' => null,
+            'apellido_mat2' => null,
+            'relacion2' => null,
+            'telefono2' => null,
+            'nombre3' => null,
+            'apellido_pat3' => null,
+            'apellido_mat3' => null,
+            'relacion3' => null,
+            'telefono3' => null,
+            'expediente_id' => $expediente_id
+        ];
     
-            $columnValues = array_merge($columnValues, [
-                $referencia->nombre,
-                $referencia->apellidopat,
-                $referencia->apellidomat,
-                $referencia->relacion,
-                $referencia->telefono
-            ]);
+        // Llenar el arreglo con los valores de las referencias
+        for ($indice = 1; $indice <= 3; $indice++) {
+            if (isset($ref[$indice - 1])) {
+                $referencia = $ref[$indice - 1];
+                $row['nombre' . $indice] = $referencia->nombre;
+                $row['apellido_pat' . $indice] = $referencia->apellidopat;
+                $row['apellido_mat' . $indice] = $referencia->apellidomat;
+                $row['relacion' . $indice] = $referencia->relacion;
+                $row['telefono' . $indice] = $referencia->telefono;
+            }
         }
     
-        /**
-         * ? Construye la consulta SQL dinámicamente
-        */
-        $sql = "INSERT INTO ref_laborales (expediente_id, " . implode(', ', $columnNames) . ") VALUES (:expediente_id, " . implode(', ', array_map(function($column) {
-            return ":$column";
-        }, $columnNames)) . ")";
-            
-        /**
-         * ? Prepara la consulta
-        */
-        $insertar_referencias = $object->_db->prepare($sql);
-        $insertar_referencias->bindParam(':expediente_id', $id_expediente, PDO::PARAM_INT);
-
-        /**
-         * ? Vincula los valores a los marcadores de posición
-        */
-        foreach ($columnNames as $index => $column) {
-            $insertar_referencias->bindParam(":$column", $columnValues[$index], PDO::PARAM_STR);
-        }
-
-        /**
-         * ? Ejecuta la consulta
-        */
-        $insertar_referencias->execute();
+        // Insertar una fila en la base de datos
+        $crud->store('ref_laborales', $row);
     }
 
     /**
