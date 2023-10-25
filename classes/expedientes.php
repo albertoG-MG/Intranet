@@ -528,164 +528,51 @@ class expedientes {
 	 * *    =========================================================================
 	*/
     public function Crear_expediente($logged_user){
-        /**
-         * ? Clase gateway para insertar, editar y eliminar en la base de datos
-        */
         $crud = new crud();
-        /**
-         * ? Conexión
-        */
         $object = new connection_database();
-        /**
-         * ? SET_LOGGED_USER es utilizado para tener un historial de quién hace cambios en los expedientes, obtiene el nombre de la persona que está creando el expediente
-        */
         $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
         $set_logged_user -> execute(array(':loggeduser' => $logged_user));
-        /**
-         * ? Primero checar si el usuario tiene un expediente ya guardado
-        */
         $check_expediente = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $this->select2]);
-        
         if($check_expediente['count'] > 0){
-            /**
-             * ? Como solo nos trae una fila el $check_expediente hay que acceder a él usando [0]
-            */
             $results_expediente = $check_expediente['data'][0];
-            /**
-             * ? Actualizamos el expediente
-            */
             $crud->update('expedientes', ['users_id' => $this->select2, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico], "id=:expedienteid", [':expedienteid' => $results_expediente["id"]]);
-        
-            /**
-                * ? Referencias laborales
-            */
-
             $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
-
             if($checkreflab['count'] > 0){
-                /**
-                 * ? Si el usuario modificó los valores de las referencias pero no agregó más ni quitó, el arreglo de ID nos facilita hacer tracking de los cambios
-                */
                 $results_checkreflab = $checkreflab['data'];
-
-                /**
-                 * ? Las referencias laborales pueden ser 1 ó más, como no existe el fetchAll en el gateway class; debemos iterar sobre $results_checkreflab e insertarla en el arreglo $array_ids
-                */
-
-                /**
-                 * ? Si hay registro de referencias laborales pero la variable referencias está vacía, eso signfica que el usuario eliminó todas las referencias laborales
-                */
                 if(is_null($this->referencias)){
                     $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
                 }else{
-                    /**
-                     * ? Sirve para eliminar las barras invertidas (\) que pueden estar presentes en una cadena. Esto pasa por seguridad cuando mandas por lo general un json y te escapa las comillas presentes usando barras invertidas.
-                    */
                     $jsonData = stripslashes(html_entity_decode($this->referencias));
-                    /**
-                     * ? Decodificamos el json
-                    */
                     $ref = json_decode($jsonData);
-                    /**
-                     * ? Llamamos al método correspondiente enviando el id, las filas de las referencias laborales en la base de datos, el arreglo de ids y el json de las referencias
-                    */
                     expedientes::Editar_reflaborales($results_expediente['id'], $ref);
                 }
             }else{
-
                 if(!(is_null($this->referencias))){
-                    /**
-                     * ? Sirve para eliminar las barras invertidas (\) que pueden estar presentes en una cadena. Esto pasa por seguridad cuando mandas por lo general un json y te escapa las comillas presentes usando barras invertidas.
-                    */
                     $jsonData = stripslashes(html_entity_decode($this->referencias));
-                    /**
-                     * ? Decodificamos el json
-                    */
                     $ref = json_decode($jsonData);
-                    /**
-                     * ? Enviamos al metodo el id del expediente y el json de las referencias laborales
-                    */
                     expedientes::Crear_reflaborales($results_expediente['id'], $ref);
                 }
             }
-
-            /**
-             * ? Referencias bancarias
-            */
-
             $checkbenban = $crud->readWithCount('ben_bancarios', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
-
             if($checkbenban['count'] > 0){
-                /**
-                 * ? Si el usuario modificó los valores de los beneficiarios pero no agregó más ni quitó, el arreglo de ID nos facilita hacer tracking de los cambios
-                */
                 $results_checkbenban = $checkbenban['data'];
-                $array_banc_ids = array();
-
-                /**
-                 * ? Los beneficiarios bancarios pueden ser 1 ó más, como no existe el fetchAll en el gateway class; debemos iterar sobre $results_checkbenban e insertarla en el arreglo $array_ids
-                */
-                foreach ($results_checkbenban as $fila_checkbenban) {
-                    $array_banc_ids[] = $fila_checkbenban['id'];
-                }
-
-                /**
-                 * ? Si hay registro de beneficiarios bancarios pero la variable beneficiarios está vacía, eso signfica que el usuario eliminó todas los beneficiarios bancarios
-                */
                 if(is_null($this->refbanc)){
-                    $crud -> delete('ben_bancarios', 'expediente_id=:idexpediente', ['idexpediente' => $results_checkbenban['id']]);
+                    $crud -> delete('ben_bancarios', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
                 }else{
-                    /**
-                     * ? Sirve para eliminar las barras invertidas (\) que pueden estar presentes en una cadena. Esto pasa por seguridad cuando mandas por lo general un json y te escapa las comillas presentes usando barras invertidas.
-                    */
                     $jsonData = stripslashes(html_entity_decode($this->refbanc));
-                    /**
-                     * ? Decodificamos el json
-                    */
                     $ref_banc = json_decode($jsonData);
-                    /**
-                     * ? Llamamos al método correspondiente enviando el id, las filas de los beneficiarios en la base de datos, el arreglo de ids y el json de los beneficiarios
-                    */
-                    expedientes::Editar_benbanc($results_checkbenban['id'], $checkbenban['count'], $array_banc_ids, $ref_banc);
+                    expedientes::Editar_benbanc($results_expediente['id'], $ref_banc);
                 }
             }else{
                 if(!(is_null($this->refbanc))){
-                    /**
-                     * ? Sirve para eliminar las barras invertidas (\) que pueden estar presentes en una cadena. Esto pasa por seguridad cuando mandas por lo general un json y te escapa las comillas presentes usando barras invertidas.
-                    */
                     $jsonData = stripslashes(html_entity_decode($this->refbanc));
-                    /**
-                     * ? Decodificamos el json
-                    */
                     $ref_banc = json_decode($jsonData);
-                    /**
-                     * ? Enviamos al metodo el id del expediente y el json de las referencias laborales
-                    */
-                    expedientes::Crear_benbanc($results_checkreflab['id'], $ref_banc);
+                    expedientes::Crear_benbanc($results_expediente['id'], $ref_banc);
                 }
             }
-    
-            /**
-             * ? Verifica cuantos documentos hay en la base de datos
-            */
             $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
             $checktipospapeleria -> execute();
             $counttipospapeleria = $checktipospapeleria -> rowCount();
-
-            /**
-             * ? Se utiliza un bucle foreach para iterar a través de un arreglo de documentos llamado $this->arraypapeleria. Cada elemento en este arreglo representa un documento que se cargará
-             * ? Dentro del bucle, se verifica si el documento no está vacío utilizando la función !empty($documento). Esto garantiza que solo se procesen los documentos que realmente se han proporcionado
-             * ? Se crea una instancia de la clase crud, lo que sugiere que esta clase se utiliza para interactuar con la base de datos
-             * ? Se obtiene el valor de $i, que probablemente se refiere a un tipo de documento o alguna forma de identificador para el tipo de papelería
-             * ? Se obtiene el nombre original del archivo que se está cargando, utilizando $documento["name"]
-             * ? Se define una ubicación de directorio en la variable $location, donde se guardarán los archivos. Supongo que "../src/documents/" es la ubicación donde se almacenarán los archivos cargados
-             * ? Se utiliza la función pathinfo para extraer la extensión del nombre del archivo original. Esto se almacena en la variable $ext
-             * ? Se llama a la función tempnam_sfx para generar un nombre de archivo único en la ubicación de destino ($location) utilizando la extensión del archivo ($ext). Esto se almacena en la variable $uploadfile
-             * ? Se utiliza move_uploaded_file para mover el archivo cargado desde su ubicación temporal (especificada en $documento['tmp_name']) a la ubicación definitiva especificada en $uploadfile
-             * ? Se establece la zona horaria actual en "America/Monterrey" utilizando date_default_timezone_set. Esto se hace para obtener la fecha y hora actual en esta zona horaria
-             * ? Se obtiene la fecha y hora actual en el formato "yy-mm-dd hh:mm:ss" y se almacena en la variable $fecha_subida
-             * ? Se utiliza la instancia de la clase crud para almacenar la información del documento en la tabla papeleria_empleado de la base de datos. Los datos que se almacenan incluyen el ID del expediente al que se asocia el documento, el tipo de archivo, el nombre del archivo original, un identificador del archivo (probablemente el nombre generado único), y la fecha de subida
-            */
             foreach ($this->arraypapeleria as $i => $documento) {
                 if (!empty($documento)) {
                     $crud = new crud();
@@ -706,53 +593,21 @@ class expedientes {
             $fecha_estatus = date('Y-m-d');
             $crud -> store('estatus_empleado', ['expedientes_id' => $results_expediente['id'], 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
         }else{
-            /**
-             * ? Guardamos el expediente en caso de que no exista
-            */
             $crud->store('expedientes', ['users_id' => $this->select2, 'num_empleado' => $this->num_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]);
-            /**
-             * ? Obtenemos el id del último expediente insertado
-            */
             $id_expediente = $object -> _db -> lastInsertId();
-
-            /**
-             * ? Checamos si las referencias laborales no están vacías
-            */
             if(!(is_null($this->referencias))){
                 $jsonData = stripslashes(html_entity_decode($this->referencias));
                 $referencias = json_decode($jsonData);
                 expedientes::Crear_reflaborales($id_expediente, $referencias);
             }
-            /**
-             * ? Checamos si las beneficiarios bancarios no están vacíos
-            */
             if(!(is_null($this->refbanc))){
                 $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
                 $refbanc = json_decode($jsonData2);
                 expedientes::Crear_benbanc($id_expediente, $refbanc);
             }
-    
-            /**
-             * ? Verifica cuantos documentos hay en la base de datos
-            */
             $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
             $checktipospapeleria -> execute();
             $counttipospapeleria = $checktipospapeleria -> rowCount();
-
-            /**
-             * ? Se utiliza un bucle foreach para iterar a través de un arreglo de documentos llamado $this->arraypapeleria. Cada elemento en este arreglo representa un documento que se cargará
-             * ? Dentro del bucle, se verifica si el documento no está vacío utilizando la función !empty($documento). Esto garantiza que solo se procesen los documentos que realmente se han proporcionado
-             * ? Se crea una instancia de la clase crud, lo que sugiere que esta clase se utiliza para interactuar con la base de datos
-             * ? Se obtiene el valor de $i, que probablemente se refiere a un tipo de documento o alguna forma de identificador para el tipo de papelería
-             * ? Se obtiene el nombre original del archivo que se está cargando, utilizando $documento["name"]
-             * ? Se define una ubicación de directorio en la variable $location, donde se guardarán los archivos. Supongo que "../src/documents/" es la ubicación donde se almacenarán los archivos cargados
-             * ? Se utiliza la función pathinfo para extraer la extensión del nombre del archivo original. Esto se almacena en la variable $ext
-             * ? Se llama a la función tempnam_sfx para generar un nombre de archivo único en la ubicación de destino ($location) utilizando la extensión del archivo ($ext). Esto se almacena en la variable $uploadfile
-             * ? Se utiliza move_uploaded_file para mover el archivo cargado desde su ubicación temporal (especificada en $documento['tmp_name']) a la ubicación definitiva especificada en $uploadfile
-             * ? Se establece la zona horaria actual en "America/Monterrey" utilizando date_default_timezone_set. Esto se hace para obtener la fecha y hora actual en esta zona horaria
-             * ? Se obtiene la fecha y hora actual en el formato "yy-mm-dd hh:mm:ss" y se almacena en la variable $fecha_subida
-             * ? Se utiliza la instancia de la clase crud para almacenar la información del documento en la tabla papeleria_empleado de la base de datos. Los datos que se almacenan incluyen el ID del expediente al que se asocia el documento, el tipo de archivo, el nombre del archivo original, un identificador del archivo (probablemente el nombre generado único), y la fecha de subida
-            */
             foreach ($this->arraypapeleria as $i => $documento) {
                 if (!empty($documento)) {
                     $crud = new crud();
