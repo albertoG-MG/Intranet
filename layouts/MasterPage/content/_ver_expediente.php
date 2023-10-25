@@ -941,37 +941,33 @@
                               </tr>
                            </thead>
                            <tbody class="block md:table-row-group">
-                              <?php foreach($array_papeleria as $documents){ ?>
+                              <?php foreach($papeleria as $fetchtipopapeleria){ ?>
                               <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
                                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                     <span class="inline-block w-1/3 md:hidden font-bold">Nombre del documento</span>
-                                    <p><?php echo ucfirst(strtolower($documents["nombre"])); ?></p>
+                                    <p><?php echo ucfirst(strtolower($fetchtipopapeleria["nombre"])); ?></p>
                                  </td>
                                  <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                     <span class="inline-block w-1/3 md:hidden font-bold">
                                     Archivo
                                     </span>
                                     <?php
-                                       $checkdocument = $object -> _db -> prepare("SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:archivo");
-                                       $checkdocument -> execute(array(":expedienteid" => $Verid, ":archivo" => $documents["id"]));
-                                       $countdocument = $checkdocument -> rowCount();
-                                       $historial_expedientes = $object -> _db -> prepare("SELECT * FROM historial_papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo UNION SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid2 AND tipo_archivo=:tipo2");
-                                       $historial_expedientes -> execute(array(':expedienteid' => $Verid, ':tipo' => $documents["id"], ':expedienteid2' => $Verid, ':tipo2' => $documents["id"]));
-                                       $count_historial = $historial_expedientes -> rowCount();
-                                       if($countdocument > 0){
-                                          $path = __DIR__ . "/../../../src/documents/".$documents["identificador"];  
+                                       $checkdocument = $crud -> readWithCount('papeleria_empleado', '*', 'WHERE expediente_id=:expedienteid AND tipo_archivo=:archivo', [':expedienteid' => $Verid, ':archivo' => $fetchtipopapeleria["tipo_archivo"]]);
+                                       $historial_expedientes = $crud -> readWithCount('historial_papeleria_empleado', '*', 'WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo UNION SELECT * FROM papeleria_empleado WHERE expediente_id=:expedienteid AND tipo_archivo=:tipo', [':expedienteid' => $Verid, ':tipo' => $fetchtipopapeleria["tipo_archivo"]]);
+                                       if($checkdocument['count'] > 0){
+                                          $path = __DIR__ . "/../../../src/documents/".$fetchtipopapeleria["identificador"];  
                                           if(is_file($path)){  
-                                             echo "<p><a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/{$documents["identificador"]}'>{$documents["nombre_archivo"]}</a></p>"; 
+                                             echo "<p><a class='text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer' href='../src/documents/{$fetchtipopapeleria["identificador"]}'>{$fetchtipopapeleria["nombre_archivo"]}</a></p>"; 
                                           }else{ 
                                              echo "<p style='color: rgb(250 30 45);'>El sistema no puede encontrar el archivo especificado.</p>"; 
                                           } 
                                        }else{
-                                          if($count_historial > 0){ echo "<p style='color: rgb(250 30 45);'>No existe un archivo vinculado.</p>"; }else{ echo "<p>No hay registros del archivo.</p>"; }
+                                          if($historial_expedientes['count'] > 0){ echo "<p style='color: rgb(250 30 45);'>No existe un archivo vinculado.</p>"; }else{ echo "<p>No hay registros del archivo.</p>"; }
                                        }
-                                       if($count_historial > 0){
+                                       if($historial_expedientes['count'] > 0){
                                     ?>  
-                                          <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?idExpediente=<?php echo $Verid; ?>&tipo_papeleria=<?php print ($documents['id']); ?>">
-                                             <?php echo "Ver historial de archivos subidos de " .ucfirst(strtolower($documents["nombre"])). "..."?>
+                                          <a class="text-blue-600 hover:border-b-2 hover:border-blue-600" href="ver_historial.php?idExpediente=<?php echo $Verid; ?>&tipo_papeleria=<?php print ($fetchtipopapeleria['tipo_archivo']); ?>">
+                                             <?php echo "Ver historial de archivos subidos de " .ucfirst(strtolower($fetchtipopapeleria["nombre"])). "..."?>
                                           </a>
                                     <?php
                                        }

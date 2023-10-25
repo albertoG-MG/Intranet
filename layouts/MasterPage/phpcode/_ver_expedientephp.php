@@ -244,13 +244,10 @@
     $referencias_bancarias = $crud -> readWithCount('ben_bancarios', 'nombre1, apellido_pat1, apellido_mat1, relacion1, rfc1, curp1, porcentaje1, nombre2, apellido_pat2, apellido_mat2, relacion2, rfc2, curp2, porcentaje2', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $Verid]);
 
     /*PAPELERIA*/
-    $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
-    $papeleria->execute(array(':expedienteid' => $Verid));
-    $array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
-    $papeleria_contador = 0;
-
-    $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
-    $checktipospapeleria -> execute();
+    $checktipospapeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.tipo_archivo as tipo_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");
+    $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);
+    $checktipospapeleria->execute(array(':expedienteid' => $Verid));
     $counttipospapeleria = $checktipospapeleria -> rowCount();
+    $papeleria = $checktipospapeleria->fetchAll();
 
 ?>

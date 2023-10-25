@@ -2922,7 +2922,6 @@ CREATE TABLE `papeleria_empleado` (
   `nombre_archivo` longtext NOT NULL,
   `identificador` longtext NOT NULL,
   `fecha_subida` datetime NOT NULL,
-  `estatus` varchar(100) NOT NULL
   FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE,
   FOREIGN KEY (tipo_archivo) REFERENCES tipo_papeleria(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
