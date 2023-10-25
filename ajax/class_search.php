@@ -607,9 +607,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}else{
 					//Verifica si el correo no está repetido en la base de datos
 					if($_POST["method"] == "store"){
-						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
-						if($get_correo['count'] > 0){
-							die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+						if($check_form_exist['count'] > 0){
+							$fetch_form_correo = $check_form_exist['data'][0];
+							if($fetch_form_correo["correo_adicional"] !== $_POST['correo_adicional']){
+								$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
+								if($get_correo['count'] > 0){
+									die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+								}
+							}
+						}else{
+							$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
+							if($get_correo['count'] > 0){
+								die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+							}		
 						}
 					}else if($_POST["method"] == "edit"){
 						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]]);
@@ -2190,9 +2200,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}else{
 				//Verifica si el correo no está repetido en la base de datos
 				if($_POST["method"] == "store"){
-					$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
-					if($get_correo['count'] > 0){
-						die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+					if($check_form_exist['count'] > 0){
+						$fetch_form_correo = $check_form_exist['data'][0];
+						if($fetch_form_correo["correo_adicional"] !== $_POST['correo_adicional']){
+							$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
+							if($get_correo['count'] > 0){
+								die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+							}
+						}
+					}else{
+						$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"]]);
+						if($get_correo['count'] > 0){
+							die(json_encode(array("error", "El correo adicional ingresado ya existe, por favor, escriba otro")));
+						}		
 					}
 				}else if($_POST["method"] == "edit"){
 					$get_correo = $crud->readWithCount('expedientes', 'correo_adicional', 'WHERE correo_adicional = :correo AND id != :idexpediente UNION ALL SELECT correo FROM usuarios WHERE correo = :correo', [':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]]);
