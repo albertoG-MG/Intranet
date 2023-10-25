@@ -542,7 +542,7 @@ class expedientes {
                  * ? Si hay registro de beneficiarios bancarios pero la variable refbanc está vacía, eso signfica que el usuario eliminó todas los beneficiarios bancarios
                 */
                 if(is_null($this->refbanc)){
-                    $crud -> delete('ben_bancarios', 'expediente_id=:idexpediente', ['idexpediente' => $results_checkbenban['id']]);
+                    $crud -> delete('ben_bancarios', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DB['id']]);
                 }else{
                     /**
                      * ? Si el usuario modificó el valor de las variables, agregó o quitó beneficiarios significa que tenemos que actualizar los beneficiarios
@@ -558,7 +558,7 @@ class expedientes {
                     /**
                      * ? Enviamos al metodo el id del expediente, el total de beneficiarios bancarios, el arreglo de ids y el json de los beneficiarios bancarios
                     */
-                    expedientes::Editar_benbanc($results_checkbenban['id'], $checkbenban['count'], $array_ids, $ref_banc);
+                    expedientes::Editar_benbanc($results_table_DB['id'], $ref_banc);
                 }
             }else{
                 /**
@@ -576,7 +576,7 @@ class expedientes {
                     /**
                      * ? Enviamos al metodo el id del expediente y el json de los beneficiarios bancarios
                     */
-                    expedientes::Crear_benbanc($results_checkbenban['id'], $ref_banc);
+                    expedientes::Crear_benbanc($results_table_DB['id'], $ref_banc);
                 }
             }
         }else{
@@ -615,61 +615,47 @@ class expedientes {
 	 * *	Metodo encargado de guardar los beneficiarios bancarios
 	 * *    ========================================================
 	*/
-    public static function Crear_benbanc($id_expediente, $ref_banc){
-        /**
-         * ? Clase gateway para insertar, editar y eliminar en la base de datos
-        */
-        $refbanc_crud = new crud();
-        /**
-         * ? Se define un arreglo llamado $columnas que se utiliza para mantener un seguimiento de las columnas de la tabla ben_bancarios. El arreglo se inicializa con valores 'NULL' para todas las 
-         * ? columnas de beneficiarios bancarios (nombre1, apellido_pat1, nombre2, etc.)
-        */
-        $columnas = array(
-            'nombre1' => 'NULL',
-            'apellido_pat1' => 'NULL',
-            'apellido_mat1' => 'NULL',
-            'relacion1' => 'NULL',
-            'rfc1' => 'NULL',
-            'curp1' => 'NULL',
-            'porcentaje1' => 'NULL',
-            'nombre2' => 'NULL',
-            'apellido_pat2' => 'NULL',
-            'apellido_mat2' => 'NULL',
-            'relacion2' => 'NULL',
-            'rfc2' => 'NULL',
-            'curp2' => 'NULL',
-            'porcentaje2' => 'NULL'
-        );
-
-        /**
-         * ? A continuación, se itera sobre el arreglo $ref_banc, que contiene la información de los beneficiarios bancarios enviados. Para cada beneficiario, se actualiza el arreglo $columnas con los valores 
-         * ? proporcionados en $beneficiario. Esto garantiza que las columnas relevantes se llenen con la información correcta de los beneficiarios
-        */
-
-        foreach ($ref_banc as $indice => $beneficiario) {
-            $columnas["nombre$indice"] = "'" . $beneficiario->nombre . "'";
-            $columnas["apellido_pat$indice"] = "'" . $beneficiario->apellidopat . "'";
-            $columnas["apellido_mat$indice"] = "'" . $beneficiario->apellidomat . "'";
-            $columnas["relacion$indice"] = "'" . $beneficiario->relacion . "'";
-            $columnas["rfc$indice"] = "'" . $beneficiario->rfc . "'";
-            $columnas["curp$indice"] = "'" . $beneficiario->curp . "'";
-            $columnas["porcentaje$indice"] = "'" . $beneficiario->porcentaje . "'";
+    public static function Crear_benbanc($id_expediente, $ref_banc) {
+        $crud = new crud();
+    
+        // Insertar el valor de expediente_id una vez
+        $expediente_id = $id_expediente;
+    
+        // Crear un arreglo para una fila de datos
+        $row = [
+            'nombre1' => null,
+            'apellido_pat1' => null,
+            'apellido_mat1' => null,
+            'relacion1' => null,
+            'rfc1' => null,
+			'curp1' => null,
+			'porcentaje1' => null,
+			'nombre2' => null,
+            'apellido_pat2' => null,
+            'apellido_mat2' => null,
+            'relacion2' => null,
+            'rfc2' => null,
+			'curp2' => null,
+			'porcentaje2' => null,
+            'expediente_id' => $expediente_id
+        ];
+    
+        // Llenar el arreglo con los valores de las referencias
+        for ($indice = 1; $indice <= 3; $indice++) {
+            if (isset($ref_banc[$indice - 1])) {
+                $referencia = $ref_banc[$indice - 1];
+                $row['nombre' . $indice] = $referencia->nombre;
+                $row['apellido_pat' . $indice] = $referencia->apellidopat;
+                $row['apellido_mat' . $indice] = $referencia->apellidomat;
+                $row['relacion' . $indice] = $referencia->relacion;
+                $row['rfc' . $indice] = $referencia->rfc;
+				$row['curp' . $indice] = $referencia->curp;
+				$row['porcentaje' . $indice] = $referencia->porcentaje;
+            }
         }
-
-        /**
-         * ? Luego, se construye una consulta SQL para insertar los datos en la tabla ben_bancarios. El SQL se construye de la siguiente manera:
-         * ? Se establece la parte fija de la consulta con "INSERT INTO ben_bancarios"
-         * ? Se agregan los nombres de las columnas al SQL utilizando implode(', ', array_keys($columnas)). Esto generará una cadena que representa las columnas en la base de datos
-         * ? Se agrega la parte de los valores con "VALUES ($id_expediente, "
-         * ? Se agregan los valores correspondientes a cada columna desde el arreglo $columnas utilizando implode(', ', $columnas). Esto generará una cadena que representa los valores que se insertarán en la base de datos
-         * ? Se cierra la consulta SQL con ")"
-        */
-
-        $sql = "INSERT INTO ben_bancarios (expediente_id, ";
-        $sql .= implode(', ', array_keys($columnas)); // Columnas
-        $sql .= ") VALUES ($id_expediente, ";
-        $sql .= implode(', ', $columnas); // Valores
-        $sql .= ")";        
+    
+        // Insertar una fila en la base de datos
+        $crud->store('ben_bancarios', $row);
     }
 
     /**
