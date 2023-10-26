@@ -215,7 +215,7 @@
                 </a>
             <?php } ?>
    
-            <?php if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true" || (Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true")) || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            <?php if (((Permissions::CheckPermissions($_SESSION["id"], "Acceso a acta administrativa") == "true" || Permissions::CheckPermissions($_SESSION["id"], "Acceso a carta compromiso") == "true")) || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
                 <?php if(basename($_SERVER['PHP_SELF']) == 'actas_cartas.php' || basename($_SERVER['PHP_SELF']) == 'editar_documento_administrativo.php' || basename($_SERVER['PHP_SELF']) == 'ver_documento_administrativo.php'|| basename($_SERVER['PHP_SELF']) == 'ver_documento_vinculado.php' ){?>   
                 <a href="actas_cartas.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
                 <?php }else{ ?>
