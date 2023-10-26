@@ -97,6 +97,12 @@
                                     "<span>DESTAJO</span>" +
                                 "</div>"
                             );
+                        }else if(row[2] == "Sin estatus"){
+                            return (
+                                "<div class='text-left lg:text-center'>" +
+                                    "<span>SIN ESTATUS</span>" +
+                                "</div>"
+                            );
                         }
                     }
                 },
