@@ -22,8 +22,8 @@
                 $("#datatable").show();
             },
             "columns":[
-                {"data": "empleado_id"},
-                {"data": "expediente_id", visible: false, searchable: false},
+                {"data": "empleado_id", visible: false, searchable: false},
+                {"data": "expediente_id"},
                 {"data": "asignado_a"},
                 {"data": "filename_foto", visible: false, searchable: false},
                 {"data": "foto_identificador", visible: false, searchable: false},
@@ -35,11 +35,11 @@
             "columnDefs": 
             [
                 {
-                    target: [0],
+                    target: [1],
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left'>" +
-                                "<span>" + row["empleado_id"] + "</span>" +
+                                "<span>" + row["expediente_id"] + "</span>" +
                             "</div>"
                         );
                     }
