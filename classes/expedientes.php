@@ -901,6 +901,138 @@ class expedientes {
         $crud->delete('token_expediente', 'token=:token', [':token' => $eliminar_token]);
     }
 
+/**
+ * &   ███████ ██   ██ ██████  ███████ ██████  ██ ███████ ███    ██ ████████ ███████     ███    ███  ██████  ██████   ██████      ███████ ██████  ██  ██████ ██  ██████  ███    ██ 
+ * *   ██       ██ ██  ██   ██ ██      ██   ██ ██ ██      ████   ██    ██    ██          ████  ████ ██    ██ ██   ██ ██    ██     ██      ██   ██ ██ ██      ██ ██    ██ ████   ██ 
+ * &   █████     ███   ██████  █████   ██   ██ ██ █████   ██ ██  ██    ██    █████       ██ ████ ██ ██    ██ ██   ██ ██    ██     █████   ██   ██ ██ ██      ██ ██    ██ ██ ██  ██ 
+ * *   ██       ██ ██  ██      ██      ██   ██ ██ ██      ██  ██ ██    ██    ██          ██  ██  ██ ██    ██ ██   ██ ██    ██     ██      ██   ██ ██ ██      ██ ██    ██ ██  ██ ██ 
+ * &   ███████ ██   ██ ██      ███████ ██████  ██ ███████ ██   ████    ██    ███████     ██      ██  ██████  ██████   ██████      ███████ ██████  ██  ██████ ██  ██████  ██   ████                                                                                                                                                                                 
+*/
+
+    //DATOS GENERALES 
+    public function Insertar_expedientetoken_datosG(){
+        $crud = new crud();
+        $object = new connection_database();
+        $check_table_DG = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_SESSION['id']]);
+        if($check_table_DG['count'] > 0){
+            $results_table_DG = $check_table_DG['data'][0];
+            $crud->update('expedientes', ['estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion], "id=:idexpediente", [':idexpediente' => $results_table_DG['id']]);
+        }
+    }
+
+   //DATOS ADICIONALES
+   public function Insertar_expediente_datosA(){
+    $crud = new crud();
+    $object = new connection_database();
+    $check_table_DA = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_SESSION['id']]);
+    if($check_table_DA['count'] > 0){
+        $results_table_DA = $check_table_DA['data'][0];
+        $crud->update('expedientes', ['fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante,'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam], "id=:idexpediente", ['idexpediente' => $results_table_DA['id']]);
+        $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DA['id']]);
+        if($checkreflab['count'] > 0){
+            $results_checkreflab = $checkreflab['data'];
+            if(is_null($this->referencias)){
+                $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
+            }else{
+                $jsonData = stripslashes(html_entity_decode($this->referencias));
+                $ref = json_decode($jsonData);
+                expedientes::Insertar_reflaborales($results_table_DA['id'], $ref);
+                $results_table_DA = $referencias->fetchAll(PDO::FETCH_ASSOC);
+            }
+        }else{
+            if(!(is_null($this->referencias))){
+                $jsonData = stripslashes(html_entity_decode($this->referencias));
+                $ref = json_decode($jsonData);
+                expedientes::Insertar_tokenreflaborales($results_table_DA['id'], $ref);
+            }
+        }
+    }
+}
+
+public static function Insertar_tokenreflaborales($id_expediente, $ref) {
+    $crud = new crud();
+
+    // Insertar el valor de expediente_id una vez
+    $expediente_id = $id_expediente;
+
+    // Crear un arreglo para una fila de datos
+    $row = [
+        'nombre1' => null,
+        'apellido_pat1' => null,
+        'apellido_mat1' => null,
+        'relacion1' => null,
+        'telefono1' => null,
+        'nombre2' => null,
+        'apellido_pat2' => null,
+        'apellido_mat2' => null,
+        'relacion2' => null,
+        'telefono2' => null,
+        'nombre3' => null,
+        'apellido_pat3' => null,
+        'apellido_mat3' => null,
+        'relacion3' => null,
+        'telefono3' => null,
+        'expediente_id' => $expediente_id
+    ];
+
+    // Llenar el arreglo con los valores de las referencias
+    for ($indice = 1; $indice <= 3; $indice++) {
+        if (isset($ref[$indice - 1])) {
+            $referencia = $ref[$indice - 1];
+            $row['nombre' . $indice] = $referencia->nombre;
+            $row['apellido_pat' . $indice] = $referencia->apellidopat;
+            $row['apellido_mat' . $indice] = $referencia->apellidomat;
+            $row['relacion' . $indice] = $referencia->relacion;
+            $row['telefono' . $indice] = $referencia->telefono;
+        }
+    }
+
+    // Insertar una fila en la base de datos
+    $crud->store('ref_laborales', $row);
+}
+
+public static function Insertar_reflaborales($id_expediente, $ref) {
+    $crud = new crud();
+
+    // Insertar el valor de expediente_id una vez
+    $expediente_id = $id_expediente;
+
+    // Crear un arreglo para una fila de datos
+    $row = [
+        'nombre1' => null,
+        'apellido_pat1' => null,
+        'apellido_mat1' => null,
+        'relacion1' => null,
+        'telefono1' => null,
+        'nombre2' => null,
+        'apellido_pat2' => null,
+        'apellido_mat2' => null,
+        'relacion2' => null,
+        'telefono2' => null,
+        'nombre3' => null,
+        'apellido_pat3' => null,
+        'apellido_mat3' => null,
+        'relacion3' => null,
+        'telefono3' => null,
+        'expediente_id' => $expediente_id
+    ];
+
+    // Llenar el arreglo con los valores de las referencias
+    for ($indice = 1; $indice <= 3; $indice++) {
+        if (isset($ref[$indice - 1])) {
+            $referencia = $ref[$indice - 1];
+            $row['nombre' . $indice] = $referencia->nombre;
+            $row['apellido_pat' . $indice] = $referencia->apellidopat;
+            $row['apellido_mat' . $indice] = $referencia->apellidomat;
+            $row['relacion' . $indice] = $referencia->relacion;
+            $row['telefono' . $indice] = $referencia->telefono;
+        }
+    }
+
+    // Insertar una fila en la base de datos
+    $crud->update('ref_laborales', $row, 'expediente_id=:idexpediente', [':idexpediente' => $id_expediente]);
+} 
+
     public static function Insertar_expediente_token($token, $logged_user, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $capacitacion, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciaparentesco, $emergenciatel, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciaparentesco2, $emergenciatel2, $antidoping, $tipo_sangre, $vacante, $posee_familiar, $nomfam, $apellidopatfam, $apellidomatfam, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $refbanc, $arraypapeleria){
         $crud = new crud();
         $object = new connection_database();
