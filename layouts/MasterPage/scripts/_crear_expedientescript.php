@@ -493,9 +493,9 @@
         }, 'not a valid email.');
 		
         //Valida si el número de empleado empieza con F y L, seguido de un guión y al final cualquier número.
-		$.validator.addMethod('num_empleado', function (value, element) {
+		$.validator.addMethod('expediente_identifier', function (value, element) {
             return this.optional(element) || /^([FL]){1}-([0-9])+$/.test(value);
-        }, 'invalid employee number.');
+        }, 'invalid identifier.');
 		
         //Un validador que acepta minúsculas y mayúsculas además permite un espacio entre palabras.
 		$.validator.addMethod('field_validation', function (value, element) {
@@ -664,29 +664,109 @@
                     user: {
                         required: true
                     },
-                    numempleado: {
-                        num_empleado: {
+                    numero_expediente: {
+                        expediente_identifier: {
                             depends: function(element) {
                                 return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
                             }
                         },
                         remote: {
-                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_num_empleado.php" : false,
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_identifier_record.php" : false,
                             type: "GET",
                             beforeSend: function () {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
-                                    $('#loader-numempleado').removeClass('hidden');
-                                    $('#correct-numempleado').addClass('hidden');
+                                    $('#loader-numero-expediente').removeClass('hidden');
+                                    $('#correct-numero-expediente').addClass('hidden');
                                 }
                             },
                             complete: function(data) {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
                                     if (data.responseText == "true") {
-                                        $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                                        $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                        $('#loader-numero-expediente').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-numero-expediente').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
                                     } else {
-                                        $('#loader-numempleado').addClass('hidden');
-                                        $('#correct-numempleado').addClass('hidden');
+                                        $('#loader-numero-expediente').addClass('hidden');
+                                        $('#correct-numero-expediente').addClass('hidden');
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    numero_nomina: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_nomina.php" : false,
+                            type: "GET",
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-numero-nomina').removeClass('hidden');
+                                    $('#correct-numero-nomina').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-numero-nomina').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-numero-nomina').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    } else {
+                                        $('#loader-numero-nomina').addClass('hidden');
+                                        $('#correct-numero-nomina').addClass('hidden');
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    asistencia_empleado: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_assistance_num.php" : false,
+                            type: "GET",
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-asistencia').removeClass('hidden');
+                                    $('#correct-asistencia').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-asistencia').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-asistencia').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    } else {
+                                        $('#loader-asistencia').addClass('hidden');
+                                        $('#correct-asistencia').addClass('hidden');
                                     }
                                 }
                             }
@@ -1699,9 +1779,21 @@
                     user: {
                         required: 'Este campo es requerido'
                     },
-                    numempleado: {
-                        num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
-                        remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
+                    numero_expediente: {
+                        expediente_identifier:function () {$('#loader-numero-expediente').addClass('hidden'); $('#correct-numero-expediente').addClass('hidden'); $("#numero_expediente").removeData("previousValue"); return "Número de expediente inválido"; },
+                        remote:function () {$('#loader-numero-expediente').addClass('hidden'); $('#correct-numero-expediente').addClass('hidden'); $("#numero_expediente").removeData("previousValue"); return "Número de expediente repetido"; }
+                    },
+                    numero_nomina: {
+                        digits:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina solo puede contener dígitos"; },
+                        minlength:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina solo puede contener 4 dígitos como mínimo"; },
+                        maxlength:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina solo puede contener 4 dígitos como máximo"; },
+                        remote:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina repetido"; }
+                    },
+                    asistencia_empleado: {
+                        digits:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado solo puede contener dígitos"; },
+                        minlength:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado solo puede contener 4 dígitos como mínimo"; },
+                        maxlength:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado solo puede contener 4 dígitos como máximo"; },
+                        remote:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado repetido"; }
                     },
                     puesto: {
                         minlength: 'El puesto debe de contener 4 caracteres como mínimo',
@@ -2187,7 +2279,9 @@
         /*Inputs*/
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
-        var numempleado = $("#numempleado").val();
+        var numero_expediente = $("#numero_expediente").val();
+        var numero_nomina = $("#numero_nomina").val();
+        var asistencia_empleado = $("#asistencia_empleado").val();
         var puesto = $("#puesto").val();
         var estudios = $("#estudios").val();
         var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
@@ -2237,7 +2331,9 @@
 
         fd.append('select2', select2);
         fd.append('select2text', select2text);
-        fd.append('numempleado', numempleado);
+        fd.append('numero_expediente', numero_expediente);
+        fd.append('numero_nomina', numero_nomina);
+        fd.append('asistencia_empleado', asistencia_empleado);
         fd.append('puesto', puesto);
         fd.append('estudios', estudios);
         fd.append('posee_correo', posee_correo);
@@ -2576,7 +2672,9 @@
         /*Datos generales*/
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
-        var numempleado = $("#numempleado").val();
+        var numero_expediente = $("#numero_expediente").val();
+        var numero_nomina = $("#numero_nomina").val();
+        var asistencia_empleado = $("#asistencia_empleado").val();
         var puesto = $("#puesto").val();
         var estudios = $("#estudios").val();
         var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
@@ -2710,7 +2808,9 @@
         /*Datos generales*/
         fd.append('select2', select2);
         fd.append('select2text', select2text);
-        fd.append('numempleado', numempleado);
+        fd.append('numero_expediente', numero_expediente);
+        fd.append('numero_nomina', numero_nomina);
+        fd.append('asistencia_empleado', asistencia_empleado);
         fd.append('puesto', puesto);
         fd.append('estudios', estudios);
         fd.append('posee_correo', posee_correo);
