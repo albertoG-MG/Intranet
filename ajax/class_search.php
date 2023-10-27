@@ -477,7 +477,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 	if($_POST["pestaña"] == "DatosG"){
 		//El usuario debe proporcionar los datos correspondientes a la pestaña; si falta algún dato, la operación no se llevará a cabo
-		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], 
+		if(isset($_POST["select2"], $_POST["select2text"], $_POST["numero_expediente"], $_POST["numero_nomina"], $_POST["asistencia_empleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], 
 		$_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"], $_POST["nexterior"], $_POST["colonia"], $_POST["estado"],
 		$_POST["estadotext"], $_POST["municipio"], $_POST["municipiotext"], $_POST["codigo"], $_POST["teldom"], $_POST["posee_telmov"], 
 		$_POST["telmov"], $_POST["posee_telempresa"], $_POST["marcacion"], $_POST["serie"], $_POST["sim"], $_POST["numred"], $_POST["modelotel"], 
@@ -529,37 +529,103 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				}
 			}
 
-			//NÚM. EMPLEADO
-			//Checa si el numero de empleado no está vacío, en caso que si lo esté, nullifica la variable
-			if(empty($_POST["numempleado"])){
-				$num_empleado = null;
-			//PREG_MATCH - Función de php que verifica si el usuario escribió el número de empleado correctamente - F de foráneo y L de local seguido de un guión y al final números
-			}else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numempleado"])){
-				die(json_encode(array("error", "Por favor, escriba el número de empleado en el formato correcto")));
+			//NUM DE EXPEDIENTE
+			//Checa si el numero de expediente no está vacío, en caso que si lo esté, nullifica la variable
+			if(empty($_POST["numero_expediente"])){
+				$numero_expediente = null;
+			//PREG_MATCH - Función de php que verifica si el usuario escribió el número de expediente correctamente - F de foráneo y L de local seguido de un guión y al final números
+			}else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numero_expediente"])){
+				die(json_encode(array("error", "Por favor, escriba el número de expediente en el formato correcto")));
 			}else{
-				//Checa si el número de empleado no está repetido
+				//Checa si el número de expediente no está repetido
 				if($_POST["method"] == "store"){
 					if($check_form_exist['count'] > 0){
 						$fetch_form = $check_form_exist['data'][0];
-						if($fetch_form["num_empleado"] !== $_POST['numempleado']){
-							$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+						if($fetch_form["numero_expediente"] !== $_POST['numero_expediente']){
+							$query = $crud->readWithCount('expedientes', 'numero_expediente', 'WHERE numero_expediente = :expedientenum', [':expedientenum' => $_POST["numero_expediente"]]);
 							if($query['count'] > 0){
-								die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+								die(json_encode(array("error", "Este número de expediente ya existe, por favor, escriba otro")));
 							}
 						}
 					}else{
-						$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+						$query = $crud->readWithCount('expedientes', 'numero_expediente', 'WHERE numero_expediente = :expedientenum', [':expedientenum' => $_POST["numero_expediente"]]);
 						if($query['count'] > 0){
-							die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+							die(json_encode(array("error", "Este número de expediente ya existe, por favor, escriba otro")));
 						}		
 					}		
 				}else if($_POST["method"] == "edit"){
-					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum AND id != :idexpediente', [':empleadonum' => $_POST["numempleado"], ':idexpediente' => $_POST["id_expediente"]]);
+					$query = $crud->readWithCount('expedientes', 'numero_expediente', 'WHERE numero_expediente = :expedientenum AND id != :idexpediente', [':expedientenum' => $_POST["numero_expediente"], ':idexpediente' => $_POST["id_expediente"]]);
 					if($query['count'] > 0){
-						die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+						die(json_encode(array("error", "Este número de expediente ya existe, por favor, escriba otro")));
 					}
 				}	
-				$num_empleado = $_POST["numempleado"];
+				$numero_expediente = $_POST["numero_expediente"];
+			}
+
+			//NUM DE NÓMINA
+			//Checa si el numero de nómina no está vacío, en caso que si lo esté, nullifica la variable
+			if(empty($_POST["numero_nomina"])){
+				$numero_nomina = null;
+			//PREG_MATCH - Función de php que verifica si el usuario escribió el número de nómina correctamente - F de foráneo y L de local seguido de un guión y al final números
+			}else if(!preg_match("/^[0-9]{4}$/", $_POST["numero_nomina"])){
+				die(json_encode(array("error", "Por favor, escriba el número de nómina con exactamente 4 dígitos")));
+			}else{
+				//Checa si el número de nómina no está repetido
+				if($_POST["method"] == "store"){
+					if($check_form_exist['count'] > 0){
+						$fetch_form = $check_form_exist['data'][0];
+						if($fetch_form["numero_nomina"] !== $_POST['numero_nomina']){
+							$query = $crud->readWithCount('expedientes', 'numero_nomina', 'WHERE numero_nomina = :nominanum', [':nominanum' => $_POST["numero_nomina"]]);
+							if($query['count'] > 0){
+								die(json_encode(array("error", "Este número de nómina ya existe, por favor, escriba otro")));
+							}
+						}
+					}else{
+						$query = $crud->readWithCount('expedientes', 'numero_nomina', 'WHERE numero_nomina = :nominanum', [':nominanum' => $_POST["numero_nomina"]]);
+						if($query['count'] > 0){
+							die(json_encode(array("error", "Este número de nómina ya existe, por favor, escriba otro")));
+						}		
+					}		
+				}else if($_POST["method"] == "edit"){
+					$query = $crud->readWithCount('expedientes', 'numero_nomina', 'WHERE numero_nomina = :nominanum AND id != :idexpediente', [':nominanum' => $_POST["numero_nomina"], ':idexpediente' => $_POST["id_expediente"]]);
+					if($query['count'] > 0){
+						die(json_encode(array("error", "Este número de nómina ya existe, por favor, escriba otro")));
+					}
+				}	
+				$numero_nomina = $_POST["numero_nomina"];
+			}
+
+			//NUM DE ASISTENCIA/NUM DE EMPLEADO
+			//Checa si el numero de asistencia no está vacío, en caso que si lo esté, nullifica la variable
+			if(empty($_POST["asistencia_empleado"])){
+				$asistencia_empleado = null;
+			//PREG_MATCH - Función de php que verifica si el usuario escribió el número de asistencia correctamente - F de foráneo y L de local seguido de un guión y al final números
+			}else if(!preg_match("/^[0-9]{4}$/", $_POST["asistencia_empleado"])){
+				die(json_encode(array("error", "Por favor, escriba el número de asistencia con exactamente 4 dígitos")));
+			}else{
+				//Checa si el número de asistencia no está repetido
+				if($_POST["method"] == "store"){
+					if($check_form_exist['count'] > 0){
+						$fetch_form = $check_form_exist['data'][0];
+						if($fetch_form["numero_asistencia"] !== $_POST['asistencia_empleado']){
+							$query = $crud->readWithCount('expedientes', 'numero_asistencia', 'WHERE numero_asistencia = :asistencianum', [':asistencianum' => $_POST["asistencia_empleado"]]);
+							if($query['count'] > 0){
+								die(json_encode(array("error", "Este número de asistencia/numempleado ya existe, por favor, escriba otro")));
+							}
+						}
+					}else{
+						$query = $crud->readWithCount('expedientes', 'numero_asistencia', 'WHERE numero_asistencia = :asistencianum', [':asistencianum' => $_POST["asistencia_empleado"]]);
+						if($query['count'] > 0){
+							die(json_encode(array("error", "Este número de asistencia/numempleado ya existe, por favor, escriba otro")));
+						}		
+					}		
+				}else if($_POST["method"] == "edit"){
+					$query = $crud->readWithCount('expedientes', 'numero_asistencia', 'WHERE numero_asistencia = :asistencianum AND id != :idexpediente', [':asistencianum' => $_POST["asistencia_empleado"], ':idexpediente' => $_POST["id_expediente"]]);
+					if($query['count'] > 0){
+						die(json_encode(array("error", "Este número de asistencia/numempleado ya existe, por favor, escriba otro")));
+					}
+				}	
+				$asistencia_empleado = $_POST["asistencia_empleado"];
 			}
 
 			//PUESTO
@@ -1236,7 +1302,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
 				case "store":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
+					$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
 					$expediente ->Crear_expediente_datosG();
 					//Verifica si la sesión ya existe
@@ -1250,7 +1316,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//Este es la versión de editar expediente, su función sera duplicar los datos en la tabla temporal con un estatus diferente
 				case "edit":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
+					$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
 					//Una vez que se hayan almacenado las variables, llamar al metodo correspondiente obviamente enviando el id del expediente
 					$expediente ->Editar_expediente_datosG($_POST["id_expediente"]);
 					//Verifica si la sesión ya existe
@@ -1711,7 +1777,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
 				case "store":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
+					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
 					$expediente ->Crear_expediente_datosA();
 					//Verifica si la sesión ya existe
@@ -1725,7 +1791,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//Este es la versión de editar expediente, su función sera duplicar los datos en la tabla temporal con un estatus diferente
 				case "edit":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
+					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
 					//Una vez que se hayan almacenado las variables, llama al metodo correspondiente obviamente enviando el id del expediente
 					$expediente ->Editar_expediente_datosA($_POST["id_expediente"]);
 					//Verifica si la sesión ya existe
@@ -1976,7 +2042,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//En este caso, voy a insertar un nuevo expediente en una tabla temporal en la base de datos usando la variable method con el valor store
 				case "store":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
+					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
 					//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente temporal
 					$expediente ->Crear_expediente_datosB();
 					//Verifica si la sesión ya existe
@@ -1990,7 +2056,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//Este es la versión de editar expediente, su función sera duplicar los datos en la tabla temporal con un estatus diferente
 				case "edit":
 					//Hago una instancia de la clase y le envío las variables en la clase
-					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
+					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
 					//Una vez que se hayan almacenado las variables, llama al metodo correspondiente y le mando el id del expediente
 					$expediente ->Editar_expediente_datosB($_POST["id_expediente"]);
 					//Verifica si la sesión ya existe
@@ -2061,7 +2127,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		return $texto;
 	}
 
-	if (isset($_POST["select2"], $_POST["select2text"], $_POST["numempleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], $_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"],
+	if (isset($_POST["select2"], $_POST["select2text"], $_POST["numero_expediente"], $_POST["numero_nomina"], $_POST["asistencia_empleado"], $_POST["puesto"], $_POST["estudios"], $_POST["posee_correo"], $_POST["correo_adicional"], $_POST["calle"], $_POST["ninterior"],
 	$_POST["nexterior"], $_POST["colonia"], $_POST["estado"], $_POST["estadotext"], $_POST["municipio"], $_POST["municipiotext"], $_POST["codigo"], $_POST["teldom"], $_POST["posee_telmov"], $_POST["telmov"],
 	$_POST["posee_telempresa"], $_POST["marcacion"], $_POST["serie"], $_POST["sim"], $_POST["numred"], $_POST["modelotel"], $_POST["marcatel"], $_POST["imei"], $_POST["posee_laptop"], $_POST["marca_laptop"],
 	$_POST["modelo_laptop"], $_POST["serie_laptop"], $_POST["radio"], $_POST["ecivil"], $_POST["posee_retencion"], $_POST["monto_mensual"], $_POST["fechanac"], $_POST["fechacon"], $_POST["fechaalta"], 
@@ -2123,37 +2189,103 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			}
 		}
 
-		//NÚM. EMPLEADO
-		//Checa si el numero de empleado no está vacío, en caso que si lo esté, nullifica la variable
-		if(empty($_POST["numempleado"])){
-			$num_empleado = null;
-		//PREG_MATCH - Función de php que verifica si el usuario escribió el número de empleado correctamente - F de foráneo y L de local seguido de un guión y al final números
-		}else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numempleado"])){
-			die(json_encode(array("error", "Por favor, escriba el número de empleado en el formato correcto")));
+		//NUM DE EXPEDIENTE
+		//Checa si el numero de expediente no está vacío, en caso que si lo esté, nullifica la variable
+		if(empty($_POST["numero_expediente"])){
+			$numero_expediente = null;
+		//PREG_MATCH - Función de php que verifica si el usuario escribió el número de expediente correctamente - F de foráneo y L de local seguido de un guión y al final números
+		}else if(!preg_match("/^([FL]){1}-([0-9])+$/", $_POST["numero_expediente"])){
+			die(json_encode(array("error", "Por favor, escriba el número de expediente en el formato correcto")));
 		}else{
-			//Checa si el número de empleado no está repetido
+			//Checa si el número de expediente no está repetido
 			if($_POST["method"] == "store"){
 				if($check_form_exist['count'] > 0){
 					$fetch_form = $check_form_exist['data'][0];
-					if($fetch_form["num_empleado"] !== $_POST['numempleado']){
-						$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+					if($fetch_form["numero_expediente"] !== $_POST['numero_expediente']){
+						$query = $crud->readWithCount('expedientes', 'numero_expediente', 'WHERE numero_expediente = :expedientenum', [':expedientenum' => $_POST["numero_expediente"]]);
 						if($query['count'] > 0){
-							die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+							die(json_encode(array("error", "Este número de expediente ya existe, por favor, escriba otro")));
 						}
 					}
 				}else{
-					$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum', [':empleadonum' => $_POST["numempleado"]]);
+					$query = $crud->readWithCount('expedientes', 'numero_expediente', 'WHERE numero_expediente = :expedientenum', [':expedientenum' => $_POST["numero_expediente"]]);
 					if($query['count'] > 0){
-						die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+						die(json_encode(array("error", "Este número de expediente ya existe, por favor, escriba otro")));
 					}		
 				}		
 			}else if($_POST["method"] == "edit"){
-				$query = $crud->readWithCount('expedientes', 'num_empleado', 'WHERE num_empleado = :empleadonum AND id != :idexpediente', [':empleadonum' => $_POST["numempleado"], ':idexpediente' => $_POST["id_expediente"]]);
+				$query = $crud->readWithCount('expedientes', 'numero_expediente', 'WHERE numero_expediente = :expedientenum AND id != :idexpediente', [':expedientenum' => $_POST["numero_expediente"], ':idexpediente' => $_POST["id_expediente"]]);
 				if($query['count'] > 0){
-					die(json_encode(array("error", "Este número de empleado ya existe, por favor, escriba otro")));
+					die(json_encode(array("error", "Este número de expediente ya existe, por favor, escriba otro")));
 				}
 			}	
-			$num_empleado = $_POST["numempleado"];
+			$numero_expediente = $_POST["numero_expediente"];
+		}
+
+		//NUM DE NÓMINA
+		//Checa si el numero de nómina no está vacío, en caso que si lo esté, nullifica la variable
+		if(empty($_POST["numero_nomina"])){
+			$numero_nomina = null;
+		//PREG_MATCH - Función de php que verifica si el usuario escribió el número de nómina correctamente - F de foráneo y L de local seguido de un guión y al final números
+		}else if(!preg_match("/^[0-9]{4}$/", $_POST["numero_nomina"])){
+			die(json_encode(array("error", "Por favor, escriba el número de nómina con exactamente 4 dígitos")));
+		}else{
+			//Checa si el número de nómina no está repetido
+			if($_POST["method"] == "store"){
+				if($check_form_exist['count'] > 0){
+					$fetch_form = $check_form_exist['data'][0];
+					if($fetch_form["numero_nomina"] !== $_POST['numero_nomina']){
+						$query = $crud->readWithCount('expedientes', 'numero_nomina', 'WHERE numero_nomina = :nominanum', [':nominanum' => $_POST["numero_nomina"]]);
+						if($query['count'] > 0){
+							die(json_encode(array("error", "Este número de nómina ya existe, por favor, escriba otro")));
+						}
+					}
+				}else{
+					$query = $crud->readWithCount('expedientes', 'numero_nomina', 'WHERE numero_nomina = :nominanum', [':nominanum' => $_POST["numero_nomina"]]);
+					if($query['count'] > 0){
+						die(json_encode(array("error", "Este número de nómina ya existe, por favor, escriba otro")));
+					}		
+				}		
+			}else if($_POST["method"] == "edit"){
+				$query = $crud->readWithCount('expedientes', 'numero_nomina', 'WHERE numero_nomina = :nominanum AND id != :idexpediente', [':nominanum' => $_POST["numero_nomina"], ':idexpediente' => $_POST["id_expediente"]]);
+				if($query['count'] > 0){
+					die(json_encode(array("error", "Este número de nómina ya existe, por favor, escriba otro")));
+				}
+			}	
+			$numero_nomina = $_POST["numero_nomina"];
+		}
+
+		//NUM DE ASISTENCIA/NUM DE EMPLEADO
+		//Checa si el numero de asistencia no está vacío, en caso que si lo esté, nullifica la variable
+		if(empty($_POST["asistencia_empleado"])){
+			$asistencia_empleado = null;
+		//PREG_MATCH - Función de php que verifica si el usuario escribió el número de asistencia correctamente - F de foráneo y L de local seguido de un guión y al final números
+		}else if(!preg_match("/^[0-9]{4}$/", $_POST["asistencia_empleado"])){
+			die(json_encode(array("error", "Por favor, escriba el número de asistencia con exactamente 4 dígitos")));
+		}else{
+			//Checa si el número de asistencia no está repetido
+			if($_POST["method"] == "store"){
+				if($check_form_exist['count'] > 0){
+					$fetch_form = $check_form_exist['data'][0];
+					if($fetch_form["numero_asistencia"] !== $_POST['asistencia_empleado']){
+						$query = $crud->readWithCount('expedientes', 'numero_asistencia', 'WHERE numero_asistencia = :asistencianum', [':asistencianum' => $_POST["asistencia_empleado"]]);
+						if($query['count'] > 0){
+							die(json_encode(array("error", "Este número de asistencia/numempleado ya existe, por favor, escriba otro")));
+						}
+					}
+				}else{
+					$query = $crud->readWithCount('expedientes', 'numero_asistencia', 'WHERE numero_asistencia = :asistencianum', [':asistencianum' => $_POST["asistencia_empleado"]]);
+					if($query['count'] > 0){
+						die(json_encode(array("error", "Este número de asistencia/numempleado ya existe, por favor, escriba otro")));
+					}		
+				}		
+			}else if($_POST["method"] == "edit"){
+				$query = $crud->readWithCount('expedientes', 'numero_asistencia', 'WHERE numero_asistencia = :asistencianum AND id != :idexpediente', [':asistencianum' => $_POST["asistencia_empleado"], ':idexpediente' => $_POST["id_expediente"]]);
+				if($query['count'] > 0){
+					die(json_encode(array("error", "Este número de asistencia/numempleado ya existe, por favor, escriba otro")));
+				}
+			}	
+			$asistencia_empleado = $_POST["asistencia_empleado"];
 		}
 
 		//PUESTO
@@ -3468,7 +3600,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			//En este caso, voy a insertar el expediente completo
 			case "store":
 				//Hago una instancia de la clase y le envío las variables en la clase
-				$expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
+				$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
 				$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 				//Una vez que se hayan almacenado las variables, llama al metodo para crear el expediente
 				$expediente ->Crear_expediente($logged_user);
@@ -3478,7 +3610,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			//En este caso, voy a editar el expediente completo
 			case "edit":
 				//Hago una instancia de la clase y le envío las variables en la clase
-				$expediente = new Expedientes($select2, $num_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
+				$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
 				$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 				//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
 				$expediente ->Editar_expediente($logged_user, $_POST["id_expediente"]);
