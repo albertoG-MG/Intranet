@@ -22,8 +22,8 @@
                 $("#datatable").show();
             },
             "columns":[
-                {"data": "empleado_id", visible: false, searchable: false},
-                {"data": "expediente_id"},
+                {"data": "numero_expediente"},
+                {"data": "expediente_id", visible: false, searchable: false},
                 {"data": "asignado_a"},
                 {"data": "filename_foto", visible: false, searchable: false},
                 {"data": "foto_identificador", visible: false, searchable: false},
@@ -620,4 +620,4 @@
 		.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
-    </style>
+</style>

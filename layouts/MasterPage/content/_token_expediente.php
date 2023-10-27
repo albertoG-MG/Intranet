@@ -92,8 +92,8 @@
                                 <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                     <thead>
                                     <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
-                                            <th>Número de empleado</th>
-                                            <th class="py-3 text-left all dt-tituloL border-white">Expediente</th>
+                                            <th class="py-3 text-left all">Expediente</th>
+                                            <th>Expediente_id</th>
                                             <th class="py-3 text-left desktop">Asignado a</th>
                                             <th>Filename_foto</th>
                                             <th>Foto_identificador</th>
