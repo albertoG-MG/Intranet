@@ -35,14 +35,14 @@
             },
             "columns": 
             [
-                {data: [0], searchable: false},
+                {data: [0]},
                 {data: [1]},
                 {data: [2]},
                 {data: [3]},
                 {data: [4]},
                 {data: [5]},
                 {data: [6], visible: false, searchable: false},
-                {data: [7]}
+                {data: [7], searchable: false}
             ],
             "columnDefs": 
             [
@@ -51,7 +51,7 @@
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left'>" +
-                                "<span>" + row[7] + "</span>" +
+                                "<span>" + row[0] + "</span>" +
                             "</div>"
                         );
                     }
@@ -378,4 +378,4 @@
 		.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
-    </style>
+</style>
