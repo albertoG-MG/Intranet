@@ -96,10 +96,28 @@
                      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
-                              Número de empleado:
+                              Número de expediente:
                            </div>
                            <span>
-                           <?php if($ver->enum_empleado == null){ echo "No hay datos"; }else{echo "{$ver->enum_empleado}";} ?>
+                           <?php if($ver->enum_expediente == null){ echo "No hay datos"; }else{echo "{$ver->enum_expediente}";} ?>
+                           </span>
+                        </div>
+                        <div class="flex-1 flex flex-col mt-5">
+                           <div class="text-[#64748b] font-semibold">
+                              Número de nómina:
+                           </div>
+                           <span>
+                           <?php if($ver->enum_nomina == null){ echo "No hay datos"; }else{echo "{$ver->enum_nomina}";} ?>
+                           </span>
+                        </div>
+                     </div>
+                     <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
+                        <div class="flex-1 flex flex-col mt-5">
+                           <div class="text-[#64748b] font-semibold">
+                              Número de asistencia/empleado:
+                           </div>
+                           <span>
+                           <?php if($ver->enum_asistencia == null){ echo "No hay datos"; }else{echo "{$ver->enum_asistencia}";} ?>
                            </span>
                         </div>
                         <div class="flex-1 flex flex-col mt-5">
