@@ -2098,9 +2098,19 @@
             $(this).valid()
         });
 
-        //VALIDACIÓN PARA EL NÚMERO DE EMPLEADO CUANDO CARGUE LA PÁGINA
-        if (!($('#numempleado').val().length === 0)) {
-            $("#numempleado").valid();
+        //VALIDACIÓN PARA EL NÚMERO DE EXPEDIENTE CUANDO CARGUE LA PÁGINA
+        if (!($('#numero_expediente').val().length === 0)) {
+            $("#numero_expediente").valid();
+        }
+
+        //VALIDACIÓN PARA EL NÚMERO DE NOMINA CUANDO CARGUE LA PÁGINA
+        if (!($('#numero_nomina').val().length === 0)) {
+            $("#numero_nomina").valid();
+        }
+
+        //VALIDACIÓN PARA EL NÚMERO DE ASISTENCIA CUANDO CARGUE LA PÁGINA
+        if (!($('#asistencia_empleado').val().length === 0)) {
+            $("#asistencia_empleado").valid();
         }
 
         //CORREO ELECTRÓNICO Y DEPARTAMENTO AL CARGAR LA PÁGINA
