@@ -11,7 +11,7 @@
 		UNION ALL
 		SELECT correo FROM usuarios WHERE correo = :correo
 	");
-	$get_correo->execute(array(':correo' => $_POST["correo_adicional"], 'idexpediente' => $_POST["id_expediente"]));
+	$get_correo->execute(array(':correo' => $_POST["correo_adicional"], ':idexpediente' => $Editarid));
 	$count_query = $get_correo->rowCount();
 
 	if ($count_query > 0) {

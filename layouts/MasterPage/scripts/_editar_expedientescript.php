@@ -808,8 +808,11 @@
                             }
                         },
                         remote: {
-                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/validacion/expedientes/checkemail.php" : false,
-                            type: "GET",
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/validacion/expedientes/checkeditemail.php" : false,
+                            type: "POST",
+                            data: {
+                                "editarid": <?php echo $Editarid; ?>
+                            },
                             beforeSend: function () {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
                                     $('#loader-correo').removeClass('hidden');
