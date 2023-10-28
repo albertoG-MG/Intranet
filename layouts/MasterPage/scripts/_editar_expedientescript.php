@@ -2363,7 +2363,9 @@
         var id_expediente = <?php echo $Editarid; ?>;
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
-        var numempleado = $("#numempleado").val();
+        var numero_expediente = $("#numero_expediente").val();
+        var numero_nomina = $("#numero_nomina").val();
+        var asistencia_empleado = $("#asistencia_empleado").val();
         var puesto = $("#puesto").val();
         var estudios = $("#estudios").val();
         var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
@@ -2414,7 +2416,9 @@
         fd.append('id_expediente', id_expediente);
         fd.append('select2', select2);
         fd.append('select2text', select2text);
-        fd.append('numempleado', numempleado);
+        fd.append('numero_expediente', numero_expediente);
+        fd.append('numero_nomina', numero_nomina);
+        fd.append('asistencia_empleado', asistencia_empleado);
         fd.append('puesto', puesto);
         fd.append('estudios', estudios);
         fd.append('posee_correo', posee_correo);
@@ -2787,7 +2791,9 @@
         var id_expediente = <?php echo $Editarid; ?>;
         var select2 = $("#user").val();
         var select2text = $("#user option:selected").text();
-        var numempleado = $("#numempleado").val();
+        var numero_expediente = $("#numero_expediente").val();
+        var numero_nomina = $("#numero_nomina").val();
+        var asistencia_empleado = $("#asistencia_empleado").val();
         var puesto = $("#puesto").val();
         var estudios = $("#estudios").val();
         var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
@@ -2922,7 +2928,9 @@
         fd.append('id_expediente', id_expediente);
         fd.append('select2', select2);
         fd.append('select2text', select2text);
-        fd.append('numempleado', numempleado);
+        fd.append('numero_expediente', numero_expediente);
+        fd.append('numero_nomina', numero_nomina);
+        fd.append('asistencia_empleado', asistencia_empleado);
         fd.append('puesto', puesto);
         fd.append('estudios', estudios);
         fd.append('posee_correo', posee_correo);
