@@ -1345,12 +1345,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					//Hago una instancia de la clase y le envío las variables en la clase
 					$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
 					//Una vez que se hayan almacenado las variables, llamar al metodo correspondiente obviamente enviando el id del expediente
-					$expediente ->Editar_expediente_datosG($_POST["id_expediente"]);
-					//Verifica si la sesión ya existe
-					if (!(isset($_SESSION['expediente_id']))) {
-						//Asigna una sesión del expediente enviado si la sesión no existe
-						$_SESSION['expediente_id'] = $select2;
-					}
+					$expediente ->Crear_expediente_datosG();
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos generales del expediente")));
 				break;
@@ -1847,12 +1842,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					//Hago una instancia de la clase y le envío las variables en la clase
 					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
 					//Una vez que se hayan almacenado las variables, llama al metodo correspondiente obviamente enviando el id del expediente
-					$expediente ->Editar_expediente_datosA($_POST["id_expediente"]);
-					//Verifica si la sesión ya existe
-					if (!(isset($_SESSION['expediente_id']))) {
-						//Asigna una sesión del expediente enviado si la sesión no existe
-						$_SESSION['expediente_id'] = $select2;
-					}
+					$expediente ->Crear_expediente_datosA();
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos adicionales del expediente")));
 				break;
@@ -2139,12 +2129,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					//Hago una instancia de la clase y le envío las variables en la clase
 					$expediente = new Expedientes($select2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico);
 					//Una vez que se hayan almacenado las variables, llama al metodo correspondiente y le mando el id del expediente
-					$expediente ->Editar_expediente_datosB($_POST["id_expediente"]);
-					//Verifica si la sesión ya existe
-					if (!(isset($_SESSION['expediente_id']))) {
-						//Asigna una sesión del expediente enviado si la sesión no existe
-						$_SESSION['expediente_id'] = $select2;
-					}
+					$expediente ->Crear_expediente_datosB();
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos bancarios del expediente")));
 				break;
@@ -3721,7 +3706,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
 				$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 				//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
-				$expediente ->Editar_expediente($logged_user, $_POST["id_expediente"]);
+				$expediente ->Crear_expediente($logged_user);
 				//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 				die(json_encode(array("success", "Se ha editado el expediente")));
 			break;
