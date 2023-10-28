@@ -2194,7 +2194,8 @@
         fd.append('pestaña', pestaña);
         fd.append('app', app);
 
-        $.ajax({
+               /*Ajax*/
+               $.ajax({
             type: "POST",
             url: "../ajax/class_search.php",
             data: fd,
@@ -2210,7 +2211,7 @@
                             icon: "success"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
+                            $('#submit-button').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                         });
                     }else if (array[0] == "error") {
                         Swal.fire({
@@ -2219,7 +2220,7 @@
                             icon: "error"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-DG').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDG' name='guardarDG' type='button'>Guardar progreso</button>");
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
                         });
                     }else if (array[0] == "forbidden") {
                         Swal.fire({
@@ -2228,8 +2229,8 @@
                             icon: "error"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-DG').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
-                            window.location.href = "expedientes.php";
+                            $('#submit-button').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
                         });
                     }
 				},3000);
@@ -2282,8 +2283,7 @@
         }
         var pestaña = "DatosA";
         var app="expediente_modo_edicion";
-
-
+        
         fd.append('numeroreferenciaslab', numeroreferenciaslab);
         fd.append('fechauniforme', fechauniforme);
         fd.append('cantidadpolo', cantidadpolo);
@@ -2343,7 +2343,322 @@
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
                             $('#submit-DA').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
-                            window.location.href = "expedientes.php";
+                            window.location.href = "dashboard.php";
+                        });
+                    }
+				},3000);
+            }
+        });
+    }
+
+    function DatosB(){
+    window.addEventListener('beforeunload', unloadHandler);
+    var fd = new FormData();
+
+    var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
+    var banco_personal = $("#banco_personal").val();
+    var cuenta_personal = $("#cuenta_personal").val();
+    var clabe_personal = $("#clabe_personal").val();
+    var plastico_personal = $("#plastico_personal").val();
+    /*Referencias bancarias*/
+    var refbanc = [];
+    for (var i = 1; i <= numeroreferenciasban; i++) {
+        var brnombre = $("input[name=infb_rnombre" + i + "]").val();
+        var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
+        var brapellidomat = $("input[name=infb_rapellidomat" + i + "]").val();
+        var brrelacion = $("select[name=infb_rrelacion" + i + "]").val();
+        var brrfc = $("input[name=infb_rrfc" + i + "]").val();
+        var brcurp = $("input[name=infb_rcurp" + i + "]").val();
+        var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+
+        refbanc.push({
+            nombre: brnombre,
+            apellidopat: brapellidopat,
+            apellidomat: brapellidomat,
+            relacion: brrelacion,
+            rfc: brrfc,
+            curp: brcurp,
+            porcentaje: brporcentaje
+        });
+    }
+    var pestaña = "DatosB";
+    var app="expediente_modo_edicion";
+
+    fd.append('numeroreferenciasban', numeroreferenciasban);
+    fd.append('banco_personal', banco_personal);
+    fd.append('cuenta_personal', cuenta_personal);
+    fd.append('clabe_personal', clabe_personal);
+    fd.append('plastico_personal', plastico_personal);
+    fd.append('refbanc', JSON.stringify(refbanc));
+    fd.append('pestaña', pestaña);
+    fd.append('app', app);
+
+    $.ajax({
+        type: "POST",
+        url: "../ajax/class_search.php",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            setTimeout(function(){
+                var array = $.parseJSON(response);
+                if (array[0] == "success") {
+                    Swal.fire({
+                        title: "Expediente Almacenado",
+                        text: array[1],
+                        icon: "success"
+                    }).then(function() {
+                        window.removeEventListener('beforeunload', unloadHandler);
+                        $('#submit-DB').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
+                    });
+                }else if (array[0] == "error") {
+                    Swal.fire({
+                        title: "Error",
+                        text: array[1],
+                        icon: "error"
+                    }).then(function() {
+                        window.removeEventListener('beforeunload', unloadHandler);
+                        $('#submit-DB').html("<button class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDB' name='guardarDB' type='button'>Guardar progreso</button>");
+                    });
+                }else if (array[0] == "forbidden") {
+                    Swal.fire({
+                        title: "Error",
+                        text: array[1],
+                        icon: "error"
+                    }).then(function() {
+                        window.removeEventListener('beforeunload', unloadHandler);
+                        $('#submit-DB').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                        window.location.href = "dashboard.php";
+                    });
+                }
+            },3000);
+        }
+    });
+}
+
+    function SubmitChanges(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+    
+        /*Obtención de valores*/
+        /*Datos generales*/
+        var estudios = $("#estudios").val();
+        var posee_correo = $("input[name=posee_correo]:checked", "#Guardar").val();
+        var correo_adicional = $("#correo_adicional").val();
+        var calle = $("#calle").val();
+        var ninterior = $("#ninterior").val();
+        var nexterior = $("#nexterior").val();
+        var colonia = $("#colonia").val();
+        var estado = $("#estado").val();
+        var estadotext = $("#estado option:selected").text();
+        var municipio = $("#municipio").val();
+        var municipiotext = $("#municipio option:selected").text();
+        var codigo = $("#codigo").val();
+        var teldom = $("#teldom").val();
+        var posee_telmov = $("input[name=tel_movil]:checked", "#Guardar").val();
+        var telmov = $("#telmov").val();
+        var radio = $("input[name=casa]:checked", "#Guardar").val();
+        var ecivil = $("#ecivil").val();
+        var posee_retencion = $("input[name=retencion]:checked", "#Guardar").val();
+        var monto_mensual = $("#monto_mensual").val();
+        var fechanac = $("#fechanac").val();
+        var fechacon = $("#fechacon").val();
+        var fechaalta = $("#fechaalta").val();
+        var curp = $("#curp").val();
+        var nss = $("#nss").val();
+        var rfc = $("#rfc").val();
+        var tipoidentificacion = $("#identificacion").val();
+        var numeroidentificacion = $("#numeroidentificacion").val();
+
+        /*Datos adicionales*/
+        var numeroreferenciaslab = $("#numReferencias").val();
+        var fechauniforme = $("#fechauniforme").val();
+        var cantidadpolo = $("#cantidadpolo").val();
+        var tallapolo = $("#tallapolo").val();
+        var emergencianom = $("#emergencia_nom").val();
+        var emergenciaapat = $("#emergencia_appat").val();
+        var emergenciaamat = $("#emergencia_apmat").val();
+        var emergenciarelacion = $("#emergencia_relacion").val();
+        var emergenciatelefono = $("#emergencia_tel").val();
+        var emergencianom2 = $("#emergencia_nom2").val();
+        var emergenciaapat2 = $("#emergencia_appat2").val();
+        var emergenciaamat2 = $("#emergencia_apmat2").val();
+        var emergenciarelacion2 = $("#emergencia_relacion2").val();
+        var emergenciatelefono2 = $("#emergencia_tel2").val();
+        var tipo_sangre = $("#tipo_sangre").val();
+        var vacante = $("#vacante").val();
+        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+        var nomfam = $("#nomfam").val();
+        var apellidopatfam = $("#apfam").val();
+        var apellidomatfam = $("#amfam").val();
+
+        /*Datos bancarios*/
+        var numeroreferenciasban = $("#numBeneficiariosBancarios").val();
+        var banco_personal = $("#banco_personal").val();
+        var cuenta_personal = $("#cuenta_personal").val();
+        var clabe_personal = $("#clabe_personal").val();
+        var plastico_personal = $("#plastico_personal").val();
+    
+        /*Referencias laborales*/
+        var reflab = [];
+        for (var i = 1; i <= numeroreferenciaslab; i++) {
+            var rnombre = $("input[name=infa_rnombre" + i + "]").val();
+            var rapellidopat = $("input[name=infa_rapellidopat" + i + "]").val();
+            var rapellidomat = $("input[name=infa_rapellidomat" + i + "]").val();
+            var rrelacion = $("select[name=infa_rrelacion" + i + "]").val();
+            var rtelefono = $("input[name=infa_rtelefono" + i + "]").val();
+
+            reflab.push({
+                nombre: rnombre,
+                apellidopat: rapellidopat,
+                apellidomat: rapellidomat,
+                relacion: rrelacion,
+                telefono: rtelefono
+            });
+        }
+    
+        /*Referencias bancarias*/
+        var refbanc = [];
+        for (var i = 1; i <= numeroreferenciasban; i++) {
+            var brnombre = $("input[name=infb_rnombre" + i + "]").val();
+            var brapellidopat = $("input[name=infb_rapellidopat" + i + "]").val();
+            var brapellidomat = $("input[name=infb_rapellidomat" + i + "]").val();
+            var brrelacion = $("select[name=infb_rrelacion" + i + "]").val();
+            var brrfc = $("input[name=infb_rrfc" + i + "]").val();
+            var brcurp = $("input[name=infb_rcurp" + i + "]").val();
+            var brporcentaje = $("input[name=infb_rporcentaje" + i + "]").val();
+
+            refbanc.push({
+                nombre: brnombre,
+                apellidopat: brapellidopat,
+                apellidomat: brapellidomat,
+                relacion: brrelacion,
+                rfc: brrfc,
+                curp: brcurp,
+                porcentaje: brporcentaje
+            });
+        }
+    
+        /*File uploads*/
+        <?php 
+            foreach($papeleria as $fetchpapeleria){
+                echo "var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];";
+            }
+        ?> 
+        var pestaña = "documentos";
+        var app = "expediente_modo_edicion";
+    
+        /*FD appends*/
+    
+        /*Datos generales*/
+        fd.append('estudios', estudios);
+        fd.append('posee_correo', posee_correo);
+        fd.append('correo_adicional', correo_adicional);
+        fd.append('calle', calle);
+        fd.append('ninterior', ninterior);
+        fd.append('nexterior', nexterior);
+        fd.append('colonia', colonia);
+        fd.append('estado', estado);
+        fd.append('estadotext', estadotext);
+        fd.append('municipio', municipio);
+        fd.append('municipiotext', municipiotext);
+        fd.append('codigo', codigo);
+        fd.append('teldom', teldom);
+        fd.append('posee_telmov', posee_telmov);
+        fd.append('telmov', telmov);
+        fd.append('radio', radio);
+        fd.append('ecivil', ecivil);
+        fd.append('posee_retencion', posee_retencion);
+        fd.append('monto_mensual', monto_mensual);
+        fd.append('fechanac', fechanac);
+        fd.append('fechacon', fechacon);
+        fd.append('fechaalta', fechaalta);
+        fd.append('curp', curp);
+        fd.append('nss', nss);
+        fd.append('rfc', rfc);
+        fd.append('identificacion', tipoidentificacion);
+        fd.append('numeroidentificacion', numeroidentificacion);
+
+        /*Datos adicionales*/
+        fd.append('numeroreferenciaslab', numeroreferenciaslab);
+        fd.append('fechauniforme', fechauniforme);
+        fd.append('cantidadpolo', cantidadpolo);
+        fd.append('tallapolo', tallapolo);
+        fd.append('emergencianom', emergencianom);
+        fd.append('emergenciaapat', emergenciaapat);
+        fd.append('emergenciaamat', emergenciaamat);
+        fd.append('emergenciarelacion', emergenciarelacion);
+        fd.append('emergenciatelefono', emergenciatelefono);
+        fd.append('emergencianom2', emergencianom2);
+        fd.append('emergenciaapat2', emergenciaapat2);
+        fd.append('emergenciaamat2', emergenciaamat2);
+        fd.append('emergenciarelacion2', emergenciarelacion2);
+        fd.append('emergenciatelefono2', emergenciatelefono2);
+        fd.append('tipo_sangre', tipo_sangre);
+        fd.append('vacante', vacante);
+        fd.append('radio2', radio2);
+        fd.append('nomfam', nomfam);
+        fd.append('apellidopatfam', apellidopatfam);
+        fd.append('apellidomatfam', apellidomatfam);
+
+        /*Datos bancarios*/
+        fd.append('numeroreferenciasban', numeroreferenciasban);
+        fd.append('banco_personal', banco_personal);
+        fd.append('cuenta_personal', cuenta_personal);
+        fd.append('clabe_personal', clabe_personal);
+        fd.append('plastico_personal', plastico_personal);
+    
+        /*Referencias*/
+        fd.append('referencias', JSON.stringify(reflab));
+        fd.append('refbanc', JSON.stringify(refbanc));
+    
+        /*File uploads*/
+        <?php 
+            foreach($papeleria as $fetchpapeleria){
+                echo "fd.append('papeleria{$fetchpapeleria['id']}', papeleria{$fetchpapeleria['id']});";
+            } 
+        ?>
+        fd.append('pestaña', pestaña);
+        fd.append('app', app);
+    
+    
+        /*Ajax*/
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Expediente Almacenado",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button disabled class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700' id='finish' name='finish' type='submit'>Guardar</button>");
+                        });
+                    }else if (array[0] == "forbidden") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-button').html("<button disabled class='button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
                         });
                     }
 				},3000);
