@@ -493,9 +493,9 @@
         }, 'not a valid email.');
 		
         //Valida si el número de empleado empieza con F y L, seguido de un guión y al final cualquier número.
-		$.validator.addMethod('num_empleado', function (value, element) {
+		$.validator.addMethod('expediente_identifier', function (value, element) {
             return this.optional(element) || /^([FL]){1}-([0-9])+$/.test(value);
-        }, 'invalid employee number.');
+        }, 'invalid identifier.');
 		
         //Un validador que acepta minúsculas y mayúsculas además permite un espacio entre palabras.
 		$.validator.addMethod('field_validation', function (value, element) {
@@ -659,32 +659,118 @@
                     user: {
                         required: true
                     },
-                    numempleado: {
-                        num_empleado: {
+                    numero_expediente: {
+                        expediente_identifier: {
                             depends: function(element) {
                                 return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
                             }
                         },
                         remote: {
-                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/checkedit_num_empleado.php" : false,
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_edit_identifier_record.php" : false,
                             type: "POST",
                             data: {
                                 "editarid": <?php echo $Editarid; ?>
                             },
                             beforeSend: function () {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
-                                    $('#loader-numempleado').removeClass('hidden');
-                                    $('#correct-numempleado').addClass('hidden');
+                                    $('#loader-numero-expediente').removeClass('hidden');
+                                    $('#correct-numero-expediente').addClass('hidden');
                                 }
                             },
                             complete: function(data) {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
                                     if (data.responseText == "true") {
-                                        $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                                        $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                        $('#loader-numero-expediente').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-numero-expediente').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
                                     } else {
-                                        $('#loader-numempleado').addClass('hidden');
-                                        $('#correct-numempleado').addClass('hidden');
+                                        $('#loader-numero-expediente').addClass('hidden');
+                                        $('#correct-numero-expediente').addClass('hidden');
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    numero_nomina: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_edit_nomina.php" : false,
+                            type: "POST",
+                            data: {
+                                "editarid": <?php echo $Editarid; ?>
+                            },
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-numero-nomina').removeClass('hidden');
+                                    $('#correct-numero-nomina').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-numero-nomina').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-numero-nomina').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    } else {
+                                        $('#loader-numero-nomina').addClass('hidden');
+                                        $('#correct-numero-nomina').addClass('hidden');
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    asistencia_empleado: {
+                        digits: {
+                            depends: function(element) {
+                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
+                            }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        maxlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 4
+                        },
+                        remote: {
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_edit_assistance_num.php" : false,
+                            type: "POST",
+                            data: {
+                                "editarid": <?php echo $Editarid; ?>
+                            },
+                            beforeSend: function () {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    $('#loader-asistencia').removeClass('hidden');
+                                    $('#correct-asistencia').addClass('hidden');
+                                }
+                            },
+                            complete: function(data) {
+                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
+                                    if (data.responseText == "true") {
+                                        $('#loader-asistencia').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
+                                        $('#correct-asistencia').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
+                                    } else {
+                                        $('#loader-asistencia').addClass('hidden');
+                                        $('#correct-asistencia').addClass('hidden');
                                     }
                                 }
                             }
