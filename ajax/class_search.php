@@ -7433,15 +7433,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$plastico_personal = $_POST["plastico_personal"];
 		}
 	}
-
-
-			$expediente = new Expedientes($_SESSION['id'], null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal,null,null,null,null);
-			$expediente ->Insertar_expediente_datosB();
-			die(json_encode(array("success", "Se han guardado los datos bancarios del expediente")));
-}else{
-	die(json_encode(array("error", "Faltan variables solicitadas en el expediente")));
-
-}
 /** 
 		=============================================     TERMINA LA VALIDACIÓN DE LOS DATOS BANCARIOS 			=============================================
 */
@@ -7499,5 +7490,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	}else{
 		die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 	}
+}
 }
 ?>
