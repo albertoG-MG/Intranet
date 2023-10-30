@@ -1515,7 +1515,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 			// TALLA CAMISA
 			//Crea un arreglo con todas las opciones correspondientes en el HTML
-			$tallacamisa_array = array("XSS", "XS", "S", "M", "L", "XL", "XXL", "XXXL");
+			$tallacamisa_array = array("XS", "S", "M", "L", "XL", "XXL", "XXXL");
 
 			// Verifica si el valor de "tallapolo" se encuentra en el array de opciones de talla camisa
 			if (in_array($_POST["tallapolo"], $tallacamisa_array)) {
@@ -3129,7 +3129,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		// TALLA CAMISA
 		//Crea un arreglo con todas las opciones correspondientes en el HTML
-		$tallacamisa_array = array("XSS", "XS", "S", "M", "L", "XL", "XXL", "XXXL");
+		$tallacamisa_array = array("XS", "S", "M", "L", "XL", "XXL", "XXXL");
 
 		// Verifica si el valor de "tallapolo" se encuentra en el array de opciones de talla camisa
 		if (in_array($_POST["tallapolo"], $tallacamisa_array)) {
@@ -6289,7 +6289,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		// TALLA CAMISA
-		$tallacamisa_array = array("XSS", "XS", "S", "M", "L", "XL", "XXL", "XXXL");
+		$tallacamisa_array = array("XS", "S", "M", "L", "XL", "XXL", "XXXL");
 
 		if (in_array($_POST["tallapolo"], $tallacamisa_array)) {
 			$tallapolo = $_POST["tallapolo"];
@@ -7111,7 +7111,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		// TALLA CAMISA
-		$tallacamisa_array = array("XSS", "XS", "S", "M", "L", "XL", "XXL", "XXXL");
+		$tallacamisa_array = array("XS", "S", "M", "L", "XL", "XXL", "XXXL");
 
 		if (in_array($_POST["tallapolo"], $tallacamisa_array)) {
 			$tallapolo = $_POST["tallapolo"];

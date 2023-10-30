@@ -1149,7 +1149,6 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tallapolo" name="tallapolo">
                                           <option value="">--Seleccione--</option>
-                                          <option value="XSS">XSS</option>
                                           <option value="XS">XS</option>
                                           <option value="S">S</option>
                                           <option value="M">M</option>

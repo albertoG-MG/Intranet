@@ -788,7 +788,6 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tallapolo" name="tallapolo">
                                           <option value="">--Seleccione--</option>
-                                          <option value="XSS" <?php if($edit->etalla_polo == "XSS"){echo 'selected="selected"';} ?>>XSS</option>
                                           <option value="XS" <?php if($edit->etalla_polo == "XS"){echo 'selected="selected"';} ?>>XS</option>
                                           <option value="S" <?php if($edit->etalla_polo == "S"){echo 'selected="selected"';} ?>>S</option>
                                           <option value="M" <?php if($edit->etalla_polo == "M"){echo 'selected="selected"';} ?>>M</option>
