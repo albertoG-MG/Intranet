@@ -1038,7 +1038,7 @@
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">CALLE <label style="color:red;"> *</label></label>
+                                    <label class="text-[#64748b] font-semibold mb-2">CALLE</label>
                                     <div class="group flex"> 
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -1060,7 +1060,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">NUMERO EXTERIOR <label style="color:red;"> *</label></label>
+                                    <label class="text-[#64748b] font-semibold mb-2">NUMERO EXTERIOR</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -1119,7 +1119,7 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">CODIGO POSTAL <label style="color:red;"> *</label></label>
+                                 <label class="text-[#64748b] font-semibold mb-2">CODIGO POSTAL</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -1130,7 +1130,7 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">TELEFONO DE DOMICILIO <label style="color:red;"> *</label></label>
+                                 <label class="text-[#64748b] font-semibold mb-2">TELEFONO DE DOMICILIO</label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
