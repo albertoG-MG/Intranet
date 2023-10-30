@@ -143,7 +143,7 @@
                 </a>
             <?php } ?>
 
-            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Token expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Administrar tokens a expedientes") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
             <?php if(basename($_SERVER['PHP_SELF']) == 'token_expediente.php'){?>
                 <a href="token_expediente.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
                 <?php }else{ ?>
