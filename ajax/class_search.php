@@ -593,9 +593,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			//Checa si el numero de nómina no está vacío, en caso que si lo esté, nullifica la variable
 			if(empty($_POST["numero_nomina"])){
 				$numero_nomina = null;
-			//PREG_MATCH - Función de php que verifica si el usuario escribió el número de nómina correctamente - F de foráneo y L de local seguido de un guión y al final números
-			}else if(!preg_match("/^[0-9]{4}$/", $_POST["numero_nomina"])){
-				die(json_encode(array("error", "Por favor, escriba el número de nómina con exactamente 4 dígitos")));
 			}else{
 				//Checa si el número de nómina no está repetido
 				if($_POST["method"] == "store"){
@@ -626,9 +623,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			//Checa si el numero de asistencia no está vacío, en caso que si lo esté, nullifica la variable
 			if(empty($_POST["asistencia_empleado"])){
 				$asistencia_empleado = null;
-			//PREG_MATCH - Función de php que verifica si el usuario escribió el número de asistencia correctamente - F de foráneo y L de local seguido de un guión y al final números
-			}else if(!preg_match("/^[0-9]{4}$/", $_POST["asistencia_empleado"])){
-				die(json_encode(array("error", "Por favor, escriba el número de asistencia con exactamente 4 dígitos")));
 			}else{
 				//Checa si el número de asistencia no está repetido
 				if($_POST["method"] == "store"){
@@ -950,8 +944,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					die(json_encode(array("error", "Solo se permiten carácteres alfanuméricos, guiones intermedios y espacios en el modelo del teléfono asignado")));
 				}else if(empty($_POST["marcatel"])){
 					die(json_encode(array("error", "Por favor, ingrese la marca del teléfono asignado")));
-				}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["marcatel"])){
-					die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en la marca del teléfono asignado")));
 				}else if(empty($_POST["imei"])){
 					die(json_encode(array("error", "Por favor, ingrese el IMEI del teléfono asignado")));
 				}else if(!preg_match("/^[0-9]*$/", $_POST["imei"])){
@@ -1005,9 +997,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				// Si es "si", continúa con las siguientes validaciones
 				if(empty($_POST["marca_laptop"])){
 					die(json_encode(array("error", "Por favor, ingrese la marca de la laptop asignada")));
-				} else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["marca_laptop"])){
-					die(json_encode(array("error", "Solo se permiten caracteres alfabéticos y espacios en la marca de la laptop asignada")));
-				} else if(empty($_POST["modelo_laptop"])){
+				}  else if(empty($_POST["modelo_laptop"])){
 					die(json_encode(array("error", "Por favor, ingrese el modelo de la laptop asignada")));
 				} else if(!preg_match("/^([a-zA-Z0-9\x{00C0}-\x{00FF}])+([?:\s|\-|\_][a-zA-Z0-9\x{00C0}-\x{00FF}]+)*$/u", $_POST["modelo_laptop"])){
 					die(json_encode(array("error", "Solo se permiten caracteres alfanuméricos, guiones intermedios y espacios en el modelo de la laptop asignada")));
@@ -2319,9 +2309,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//Checa si el numero de nómina no está vacío, en caso que si lo esté, nullifica la variable
 		if(empty($_POST["numero_nomina"])){
 			$numero_nomina = null;
-		//PREG_MATCH - Función de php que verifica si el usuario escribió el número de nómina correctamente - F de foráneo y L de local seguido de un guión y al final números
-		}else if(!preg_match("/^[0-9]{4}$/", $_POST["numero_nomina"])){
-			die(json_encode(array("error", "Por favor, escriba el número de nómina con exactamente 4 dígitos")));
 		}else{
 			//Checa si el número de nómina no está repetido
 			if($_POST["method"] == "store"){
@@ -2352,9 +2339,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//Checa si el numero de asistencia no está vacío, en caso que si lo esté, nullifica la variable
 		if(empty($_POST["asistencia_empleado"])){
 			$asistencia_empleado = null;
-		//PREG_MATCH - Función de php que verifica si el usuario escribió el número de asistencia correctamente - F de foráneo y L de local seguido de un guión y al final números
-		}else if(!preg_match("/^[0-9]{4}$/", $_POST["asistencia_empleado"])){
-			die(json_encode(array("error", "Por favor, escriba el número de asistencia con exactamente 4 dígitos")));
 		}else{
 			//Checa si el número de asistencia no está repetido
 			if($_POST["method"] == "store"){
@@ -2675,8 +2659,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				die(json_encode(array("error", "Solo se permiten carácteres alfanuméricos, guiones intermedios y espacios en el modelo del teléfono asignado")));
 			}else if(empty($_POST["marcatel"])){
 				die(json_encode(array("error", "Por favor, ingrese la marca del teléfono asignado")));
-			}else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["marcatel"])){
-				die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en la marca del teléfono asignado")));
 			}else if(empty($_POST["imei"])){
 				die(json_encode(array("error", "Por favor, ingrese el IMEI del teléfono asignado")));
 			}else if(!preg_match("/^[0-9]*$/", $_POST["imei"])){
@@ -2730,8 +2712,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			// Si es "si", continúa con las siguientes validaciones
 			if(empty($_POST["marca_laptop"])){
 				die(json_encode(array("error", "Por favor, ingrese la marca de la laptop asignada")));
-			} else if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["marca_laptop"])){
-				die(json_encode(array("error", "Solo se permiten caracteres alfabéticos y espacios en la marca de la laptop asignada")));
 			} else if(empty($_POST["modelo_laptop"])){
 				die(json_encode(array("error", "Por favor, ingrese el modelo de la laptop asignada")));
 			} else if(!preg_match("/^([a-zA-Z0-9\x{00C0}-\x{00FF}])+([?:\s|\-|\_][a-zA-Z0-9\x{00C0}-\x{00FF}]+)*$/u", $_POST["modelo_laptop"])){

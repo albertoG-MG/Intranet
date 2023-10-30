@@ -698,11 +698,11 @@
                                 return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
                             }
                         },
-                        minlength: {
+                        notOnlyZero: {
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             },
-                            param: 4
+                            param: 0
                         },
                         maxlength: {
                             depends: function(element) {
@@ -738,11 +738,11 @@
                                 return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
                             }
                         },
-                        minlength: {
+                        notOnlyZero: {
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             },
-                            param: 4
+                            param: 0
                         },
                         maxlength: {
                             depends: function(element) {
@@ -982,11 +982,6 @@
                             depends: function(element) {
                                 return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
-                        },
-                        field_validation: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
                         }
                     },
                     imei: {
@@ -1010,11 +1005,6 @@
                     },
                     marca_laptop: {
                         required: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        field_validation: {
                             depends: function(element) {
                                 return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
@@ -1785,13 +1775,13 @@
                     },
                     numero_nomina: {
                         digits:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina solo puede contener dígitos"; },
-                        minlength:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina solo puede contener 4 dígitos como mínimo"; },
+                        notOnlyZero:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Favor de ingresar un número de nómina válido"; },
                         maxlength:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina solo puede contener 4 dígitos como máximo"; },
                         remote:function () {$('#loader-numero-nomina').addClass('hidden'); $('#correct-numero-nomina').addClass('hidden'); $("#numero_nomina").removeData("previousValue"); return "Número de nómina repetido"; }
                     },
                     asistencia_empleado: {
                         digits:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado solo puede contener dígitos"; },
-                        minlength:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado solo puede contener 4 dígitos como mínimo"; },
+                        notOnlyZero:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Favor de ingresar un número de nómina válido"; },
                         maxlength:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado solo puede contener 4 dígitos como máximo"; },
                         remote:function () {$('#loader-asistencia').addClass('hidden'); $('#correct-asistencia').addClass('hidden'); $("#asistencia_empleado").removeData("previousValue"); return "Número de asistencia/empleado repetido"; }
                     },
@@ -1859,8 +1849,7 @@
                         model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
                     },
                     marcatel: {
-                        required: "Este campo es requerido",
-                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                        required: "Este campo es requerido"
                     },
                     imei: {
                         required: "Este campo es requerido",
@@ -1870,8 +1859,7 @@
                         required: 'Este campo es requerido'
                     },
                     marca_laptop: {
-                        required: "Este campo es requerido",
-                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                        required: "Este campo es requerido"
                     },
                     modelo_laptop: {
                         required: "Por favor, ingrese el modelo de la laptop",
