@@ -6509,7 +6509,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 */
 
 			$expediente = new Expedientes($_SESSION['id'], null,null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, null, null, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
-			$expediente ->Insertar_expediente_datosA();
+			$expediente ->Crear_expediente_datosA();
 			die(json_encode(array("success", "Se han guardado exitosamente los datos adicionales")));
 
 		}else{
