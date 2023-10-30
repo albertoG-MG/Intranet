@@ -2221,6 +2221,204 @@
             });
         }
 
+        //CARGA DE ESTATUS
+        if ($('#situacion').val() == "ALTA") {
+            $('#estatus_empleado').html(
+                "<option value=\"NUEVO INGRESO\" <?php if($edit -> eestatus_del_empleado == "NUEVO INGRESO"){ echo "selected";} ?>>NUEVO INGRESO</option>"+
+                "<option value=\"REINGRESO\" <?php if($edit -> eestatus_del_empleado == "REINGRESO"){ echo "selected";} ?>>REINGRESO</option>");
+        }else if ($('#situacion').val() == "BAJA"){
+            $('#estatus_empleado').html(
+                "<option value=\"FALLECIMIENTO\" <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO"){ echo "selected";} ?>>FALLECIMIENTO</option>"+
+                "<option value=\"ABANDONO_DE_TRABAJO\" <?php if($edit -> eestatus_del_empleado == "ABANDONO_DE_TRABAJO"){ echo "selected";} ?>>ABANDONO DE TRABAJO</option>"+
+                "<option value=\"RENUNCIA_VOLUNTARIA\" <?php if($edit -> eestatus_del_empleado == "RENUNCIA_VOLUNTARIA"){ echo "selected";} ?>>RENUNCIA VOLUNTARIA</option>"+
+                "<option value=\"LIQUIDACION\" <?php if($edit -> eestatus_del_empleado == "LIQUIDACION"){ echo "selected";} ?>>LIQUIDACIÓN</option>");
+        }else if ($('#situacion').val() == "PRESTADOR_DE_SERVICIOS"){
+            $('#estatus_empleado').html(
+                "<option value=\"FIJO\" <?php if($edit -> eestatus_del_empleado == "FIJO"){ echo "selected";} ?>>FIJO</option>"+
+                "<option value=\"ESQUEMA_DE_PAGO\" <?php if($edit -> eestatus_del_empleado == "ESQUEMA_DE_PAGO"){ echo "selected";} ?>>ESQUEMA DE PAGO</option>");
+        }
+
+        //JQUERY VALIDATION ESTATUS
+        <?php if($edit -> eestatus_del_empleado == "FALLECIMIENTO") { ?>
+            $("#numero_baja").rules("add", {
+                required: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                digits: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                messages: {
+                    required: "Este campo es requerido",
+                    digits: "Solo se permiten números"
+                }
+            });
+        <?php }else if($edit -> eestatus_del_empleado == "ABANDONO_DE_TRABAJO"){ ?>
+            $("#estatus_motivo").rules("add", {
+                required: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                field_validation: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                messages: {
+                    required: "Este campo es requerido",
+                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                }
+            });
+            $("#numero_baja").rules("add", {
+                required: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                digits: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                messages: {
+                    required: "Este campo es requerido",
+                    digits: "Solo se permiten números"
+                }
+            });
+        <?php }else if($edit -> eestatus_del_empleado == "RENUNCIA_VOLUNTARIA"){ ?>
+            $("#estatus_motivo").rules("add", {
+                required: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                field_validation: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                messages: {
+                    required: "Este campo es requerido",
+                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                }
+            });
+            $("#numero_baja").rules("add", {
+                required: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                digits: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                messages: {
+                    required: "Este campo es requerido",
+                    digits: "Solo se permiten números"
+                }
+            });
+        <?php }else if($edit -> eestatus_del_empleado == "LIQUIDACION"){ ?>
+            $("#estatus_motivo").rules("add", {
+                required: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                field_validation: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                messages: {
+                    required: "Este campo es requerido",
+                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                }
+            });
+            $("#numero_baja").rules("add", {
+                required: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                digits: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                messages: {
+                    required: "Este campo es requerido",
+                    digits: "Solo se permiten números"
+                }
+            });
+        <?php }else if($edit -> eestatus_del_empleado == "FIJO"){ ?>
+            $("#estatus_motivo").rules("add", {
+                required: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                field_validation: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                messages: {
+                    required: "Este campo es requerido",
+                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                }
+            });
+
+            $("#fijo_mensual").rules("add", {
+                required: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                number: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                messages: {
+                    required: "Este campo es requerido",
+                    number: "Solo se permiten números y decimales"
+                }
+            });
+        <?php }else if($edit -> eestatus_del_empleado == "ESQUEMA_DE_PAGO"){ ?>
+            $("#estatus_motivo").rules("add", {
+                required: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                field_validation: {
+                    depends: function(element) {
+                    return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                            },
+                messages: {
+                    required: "Este campo es requerido",
+                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                }
+            });
+
+            $("#esquema_pago").rules("add", {
+                required: {
+                    depends: function(element) {
+                        return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                    }
+                },
+                messages: {
+                    required: "Este campo es requerido"
+                }
+            });
+        <?php } ?>
+
         //MUNICIPIOS
         if($('#estado').val() != ""){
             var state = $('#estado').val();

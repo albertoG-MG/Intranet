@@ -320,6 +320,719 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
+                                 <h2 class="text-2xl text-[#64748b] font-semibold">Estatus del empleado</h2>
+                                 <span class="text-[#64748b]">Esta sección es para modificar el estatus del empleado en la empresa.</span>
+                                 <div class="my-3 h-px bg-slate-200"></div>
+                              </div>
+                              <div x-data="{ open: true, baja: true, fijo:true, pago:true, status }">
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">SITUACIÓN DEL EMPLEADO</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M12 0L11.34 .03L15.15 3.84L16.5 2.5C19.75 4.07 22.09 7.24 22.45 11H23.95C23.44 4.84 18.29 0 12 0M12 4C10.07 4 8.5 5.57 8.5 7.5C8.5 9.43 10.07 11 12 11C13.93 11 15.5 9.43 15.5 7.5C15.5 5.57 13.93 4 12 4M.05 13C.56 19.16 5.71 24 12 24L12.66 23.97L8.85 20.16L7.5 21.5C4.25 19.94 1.91 16.76 1.55 13H.05M12 13C8.13 13 5 14.57 5 16.5V18H19V16.5C19 14.57 15.87 13 12 13Z" />
+                                          </svg>
+                                       </div>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="rsituaciondelempleado($el.value);" id="situacion" name="situacion">
+                                          <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?>>ALTA</option>
+                                          <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?>>BAJA</option>
+                                          <option value="PRESTADOR_DE_SERVICIOS" <?php if($edit -> esituacion_del_empleado == "PRESTADOR_DE_SERVICIOS"){ echo "selected"; }?>>PRESTADOR DE SERVICIOS</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <script>
+                                    function rsituaciondelempleado(value) {
+                                       if(value == "ALTA"){
+                                       $('#estatus_empleado').html(
+                                       "<option value=\"NUEVO INGRESO\" x-init=\"statusmethod($el.value,status); open = false; baja = false; fijo = false; pago = false;  \">NUEVO INGRESO</option>"+
+                                       "<option value=\"REINGRESO\">REINGRESO</option>");
+                                       }else if(value == "BAJA"){
+                                       $('#estatus_empleado').html(
+                                       "<option value=\"FALLECIMIENTO\" x-init=\"statusmethod($el.value,status); open = false; baja = true; fijo = false; pago = false;  \">FALLECIMIENTO</option>"+
+                                       "<option value=\"ABANDONO_DE_TRABAJO\">ABANDONO DE TRABAJO</option>"+
+                                       "<option value=\"RENUNCIA_VOLUNTARIA\">RENUNCIA VOLUNTARIA</option>"+
+                                       "<option value=\"LIQUIDACION\">LIQUIDACIÓN</option>");
+                                       }else if(value == "PRESTADOR_DE_SERVICIOS"){
+                                       $('#estatus_empleado').html(
+                                       "<option value=\"FIJO\" x-init=\"statusmethod($el.value,status); open = true; baja = false; fijo = true; pago = false;   \">FIJO</option>"+
+                                                "<option value=\"ESQUEMA_DE_PAGO\">ESQUEMA DE PAGO</option>");
+                                       }
+                                    }	
+                                 </script>
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">ESTATUS DEL EMPLEADO</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                          <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
+                                       </svg>
+                                       </div>
+                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estatus_empleado" name="estatus_empleado" x-init="status=retrieveselected(); if(status == 'FALLECIMIENTO'){open=false; baja=true; fijo=false; pago=false;}else if(status == 'ABANDONO_DE_TRABAJO'){open=true; baja=true; fijo=false; pago=false;}else if(status == 'RENUNCIA_VOLUNTARIA'){open=true; baja=true; fijo=false; pago=false;}else if(status == 'LIQUIDACION'){open=true; baja=true; fijo=false; pago=false;}else if(status == 'FIJO'){open=true; baja=false; fijo=true; pago=false;}else if(status == 'ESQUEMA_DE_PAGO'){open=true; baja=false; fijo=false; pago=true;}else{open=false; baja=false; fijo=false; pago=false;}" x-on:change="if($el.value == 'NUEVO INGRESO'){statusmethod($el.value,status); open=false; baja=false; fijo=false; pago=false;}else if($el.value == 'REINGRESO'){statusmethod($el.value,status); open=false; baja=false; fijo=false; pago=false;}else if($el.value == 'FALLECIMIENTO'){ statusmethod($el.value,status); open=false; baja=true; fijo=false; pago=false;}else if($el.value == 'ABANDONO_DE_TRABAJO'){statusmethod($el.value,status); open=true; baja=true; fijo=false; pago=false;}else if($el.value == 'RENUNCIA_VOLUNTARIA'){statusmethod($el.value,status); open=true; baja=true; fijo=false; pago=false;}else if($el.value == 'LIQUIDACION'){statusmethod($el.value,status); open=true; baja=true; fijo=false; pago=false; }else if($el.value == 'FIJO'){ statusmethod($el.value,status); open=true; baja=false; fijo=true; pago=false; }else if($el.value == 'ESQUEMA_DE_PAGO'){ statusmethod($el.value,status); open=true; baja=false; fijo=false; pago=true; }">
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <script>
+                                    function statusmethod(value, statusretrieved){
+                                       if(value == statusretrieved){
+                                          $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
+                                          $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
+                                          if(value == "NUEVO INGRESO"){
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "REINGRESO"){
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "FALLECIMIENTO"){
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+
+                                          }else if(value == "ABANDONO_DE_TRABAJO"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+
+                                          }else if(value == "RENUNCIA_VOLUNTARIA"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "LIQUIDACION"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "FIJO"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                number: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   number: "Solo se permiten números y decimales"
+                                                }
+                                             });
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "ESQUEMA_DE_PAGO"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+
+                                             $("#esquema_pago").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido"
+                                                }
+                                             });
+
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+                                          }
+                                       }else{
+                                          var now = new Date();
+                                          var day = ("0" + now.getDate()).slice(-2);
+                                          var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                          var today = now.getFullYear()+"-"+(month)+"-"+(day);
+                                          $('#fecha_estatus').val(today);
+                                          $('#estatus_motivo').val('');
+                                          if(value == "NUEVO INGRESO"){
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "REINGRESO"){
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "FALLECIMIENTO"){
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#estatus_motivo").rules("remove");
+                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#estatus_motivo-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "ABANDONO_DE_TRABAJO"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+
+                                          }else if(value == "RENUNCIA_VOLUNTARIA"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "LIQUIDACION"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+                                             $("#numero_baja").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                digits: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   digits: "Solo se permiten números"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "FIJO"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+
+                                             $("#fijo_mensual").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                number: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   number: "Solo se permiten números y decimales"
+                                                }
+                                             });
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#esquema_pago").rules("remove");
+                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#esquema_pago-error").css("display", "none");
+                                          }else if(value == "ESQUEMA_DE_PAGO"){
+                                             $("#estatus_motivo").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                field_validation: {
+                                                   depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                         },
+                                                messages: {
+                                                   required: "Este campo es requerido",
+                                                   field_validation: "Solo se permiten carácteres alfabéticos y espacios"
+                                                }
+                                             });
+
+                                             $("#esquema_pago").rules("add", {
+                                                required: {
+                                                   depends: function(element) {
+                                                      return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                   }
+                                                },
+                                                messages: {
+                                                   required: "Este campo es requerido"
+                                                }
+                                             });
+
+
+                                             $("#numero_baja").rules("remove");
+                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#numero_baja-error").css("display", "none");
+
+                                             $("#fijo_mensual").rules("remove");
+                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $("#fijo_mensual-error").css("display", "none");
+                                          }
+                                       }
+                                    }
+                                    
+                                    function retrieveselected(){
+                                       var estatus = "<?php echo $edit -> eestatus_del_empleado; ?>";
+                                       return estatus;
+                                    }
+                                 </script>
+                                 <div x-show.important="baja">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label class="text-[#64748b] font-semibold mb-2">NÚMERO DE BAJA</label>
+                                       <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
+                                          </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="numero_baja" name="numero_baja" placeholder="NÚMERO DE BAJA">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show.important="fijo">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label class="text-[#64748b] font-semibold mb-2">CANTIDAD MENSUAL</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"></path>
+                                             </svg>
+                                          </div>
+                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fijo_mensual" name="fijo_mensual" value="" placeholder="CANTIDAD MENSUAL">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show.important="pago">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label class="text-[#64748b] font-semibold mb-2">TIPO DE ESQUEMA DE PAGO</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"></path>
+                                             </svg>
+                                          </div>
+                                          <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="esquema_pago" name="esquema_pago">
+                                             <option value="NORMAL">NORMAL</option>
+                                             <option value="NORMAL2">NORMAL2</option>
+                                             <option value="NORMAL3">NORMAL3</option>
+                                             <option value="NORMAL4">NORMAL4</option>
+                                             <option value="ESPECIAL">ESPECIAL</option>
+                                             <option value="ESPECIAL2">ESPECIAL2</option>
+                                             <option value="ESPECIAL3">ESPECIAL3</option>
+                                             <option value="PLUS">PLUS</option>
+                                             <option value="PLUS2">PLUS2</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="grid grid-cols-1 mt-5 mx-7">
+                                    <label class="text-[#64748b] font-semibold mb-2">FECHA DE ESTATUS</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                          <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
+                                       </svg>
+                                       </div>
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fecha_estatus" name="fecha_estatus" value="<?php echo "{$edit->eestatus_fecha}"; ?>">
+                                    </div>
+                                 </div>
+                                 <div x-show.important="open">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label class="text-[#64748b] font-semibold mb-2">MOTIVO DEL ESTATUS</label>
+                                       <textarea class="w-full py-2 h-20 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="estatus_motivo" name="estatus_motivo" placeholder="INGRESE EL MOTIVO"><?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }?></textarea>
+                                       <div id="error_estatus_motivo"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-celeste font-semibold mt-5">Datos de ubicación</h2>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
