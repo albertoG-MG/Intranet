@@ -195,7 +195,7 @@
             </a>
          <?php } ?>
          <?php } ?>
-         <?php if ((Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true" || (Permissions::CheckPermissions($_SESSION["id"], "Crear incidencia") == "true")) || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
+         <?php if (Permissions::CheckPermissions($_SESSION["id"],"Crear incidencia") == "true"|| Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
         <?php if(basename($_SERVER['PHP_SELF']) == 'crear_incidencia.php' || basename($_SERVER['PHP_SELF']) == 'ver_documento_vinculado.php'){?>
             <a href="crear_incidencia.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
                 <?php }else{ ?>

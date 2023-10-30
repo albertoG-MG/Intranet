@@ -99,7 +99,9 @@ INSERT INTO `categorias` (`id`, `nombre`) VALUES
 (6, 'Incidencias'),
 (7, 'Solicitud incidencias'),
 (8, 'Vacaciones'),
-(9, 'Solicitud vacaciones');
+(9, 'Solicitud vacaciones'),
+(10, 'Subroles'),
+(11, 'Categorias');
 
 -- --------------------------------------------------------
 
@@ -159,7 +161,9 @@ INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
 (38, 'Ver todas las vacaciones', 8),
 (39, 'Acceso al historial de vacaciones', 8),
 (40, 'Editar estatus de las vacaciones', 8),
-(41, 'Acceso a solicitud vacaciones', 9);
+(41, 'Acceso a solicitud vacaciones', 9),
+(42, 'Acceso a subroles', 10),
+(43, 'Categorias', 11);
 
 -- --------------------------------------------------------
 
