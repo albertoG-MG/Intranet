@@ -73,7 +73,7 @@
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">Nivel de estudios</label>
+                                 <label class="text-[#64748b] font-semibold mb-2">Nivel de estudios <label style="color:red;"> *</label></label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -191,7 +191,7 @@
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Colonia</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Colonia <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -202,7 +202,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Estado</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Estado <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -223,7 +223,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Municipio</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Municipio <label style="color:red;"> *</label></label>
                                     <div class="group flex" id="imunicipio">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -304,7 +304,7 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 mt-5 mx-7">
-                                 <label class="text-[#64748b] font-semibold mb-2">Estado civil</label>
+                                 <label class="text-[#64748b] font-semibold mb-2">Estado civil <label style="color:red;"> *</label></label>
                                  <div class="group flex">
                                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
@@ -350,7 +350,7 @@
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Fecha de nacimiento</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Fecha de nacimiento <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -386,7 +386,7 @@
 
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Curp</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Curp <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -397,7 +397,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Número de seguro social</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Número de seguro social <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -408,7 +408,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">RFC</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">RFC <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -422,7 +422,7 @@
                               <div x-data="{ open: <?php echo $edit->etipo_identificacion !== null ? 'true' : 'false'; ?>, ine: <?php echo $edit->etipo_identificacion === "INE" ? 'true' : 'false'; ?>, pasaporte: <?php echo $edit->etipo_identificacion === "PASAPORTE" ? 'true' : 'false';?>, cedula: <?php echo $edit->etipo_identificacion === "CEDULA" ? 'true' : 'false'; ?> }">
                                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                       <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación</label>
+                                       <label class="text-[#64748b] font-semibold mb-2">Tipo de identificación <label style="color:red;"> *</label></label>
                                        <div class="group flex">
                                           <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                              <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -438,7 +438,7 @@
                                        </div>
                                        <div x-show.important="open">
                                           <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold mb-2">Número de identificación</label>
+                                             <label class="text-[#64748b] font-semibold mb-2">Número de identificación <label style="color:red;"> *</label></label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -477,13 +477,13 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Referencias laborales</h2>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Referencias laborales <label style="color:red;"> *</label></h2>
                                  <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ numReferencias: <?php if($referencias_count == 0){ echo 0; }else if($referencias_count == 1){ echo 1; }else if($referencias_count == 2){ echo 2; }else if($referencias_count == 3){ echo 3; }?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">Número de referencias laborales</label>
+                                    <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">Número de referencias laborales <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -801,9 +801,9 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Contactos de emergencia</h2>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Contactos de emergencia <label style="color:red;"> *</label></h2>
                                  <div class="my-3 h-px bg-celeste"></div>
-                                 <span class="text-[#000]"><b> Primer contacto </b> de emergencia.</span>
+                                 <span class="text-[#000]"><b> Primer contacto </b> <label style="color:red;"> *</label></span>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
@@ -879,8 +879,7 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-celeste font-semibold">Contactos de emergencia</h2>
-                                 <span class="text-[#000]"><b> Segundo contacto </b> de emergencia.</span>
+                                 <span class="text-[#000]"><b> Segundo contacto </b> <label style="color:red;"> *</label></span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
@@ -1061,13 +1060,13 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-celeste font-semibold">Beneficiarios bancarios</h2>
+                                 <h2 class="text-2xl text-celeste font-semibold">Beneficiarios bancarios <label style="color:red;"> *</label></h2>
                                  <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente. <b> Nota: los beneficiarios deben ser mayores de 18 años. </b></span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ numBeneficiariosBancarios: <?php if($ben_bancarios_count == 0){ echo 0; }else if($ben_bancarios_count == 1){ echo 1; }else if($ben_bancarios_count == 2){ echo 2; }?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label for="numBeneficiariosBancarios" class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios</label>
+                                    <label for="numBeneficiariosBancarios" class="text-[#64748b] font-semibold mb-2">Número de beneficiarios bancarios <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1277,13 +1276,13 @@
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-celeste mt-5 font-semibold">Cuenta bancaria personal</h2>
+                                 <h2 class="text-2xl text-celeste mt-5 font-semibold">Cuenta bancaria personal <label style="color:red;"> *</label></h2>
                                  <span class="text-[#64748b]">En esta sección se encuentran las credenciales bancarias personales del empleado.</span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Banco</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Banco <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1294,7 +1293,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Cuenta</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Cuenta <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1305,7 +1304,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">Clabe</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Clabe <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1316,7 +1315,7 @@
                                     </div>
                                  </div>
                                  <div class="grid grid-cols-1 lg:col-span-3">
-                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">Plástico asignado <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
