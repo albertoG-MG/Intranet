@@ -24,22 +24,25 @@
         $estatus_expediente = $SelectEstatus['estatus_expediente'];
         $link = $SelectEstatus['link'];
         $exp_date = $SelectEstatus['exp_date'];
+
+        $fecha = date("d/m/Y", strtotime($exp_date)); // Obtener la fecha sin horas y en formato d-m-y
     
-        if ($estatus_expediente == 3) {  // En caso de que el estatus sea asignado   ?>
+        if ($estatus_expediente == 3) {  // En caso de que el estatus sea asignado   
+
+        ?>
+
             <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
-                <span class="font-medium">SE LE ASIGNO UN EXPEDIENTE</span>  <a href="<?php echo $link ?>" class="text-yellow-800"><u>Haz clic aquí para acceder</u></a>.
-                <br><p class="font-medium" style="font-style: italic; color: #c6910f;">Favor de llenarlo antes del:  <?php echo $exp_date ?></p>
+                <span class="font-medium">SE LE ASIGNO UN EXPEDIENTE. </span>  <a href="<?php echo $link ?>" class="text-yellow-800"><u>Haz clic aquí para acceder</u></a>.
+                <br><p class="font-medium" style="font-style: italic; color: #c6910f;">Favor de llenarlo antes del:  <?php echo $fecha ?></p>
             </div> <?php
-        } else if ($estatus_expediente == 5) { // En caso de que el estatus sea expirado  ?>
-            <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
-                <span class="font-medium">SU EXPEDIENTE HA EXPIRADO</span> Favor de comunicarse con CH.
-            </div>   <?php
         } else if ($estatus_expediente == 4) { // En caso de que el estatus sea revisión  ?>
-            <div class="px-4 py-2 mt-1 mx-7 text-sm text-green-600 rounded-lg" style="background-color: rgb(22 163 74 / 10%)" role="alert">
-                <span class="font-medium">SU EXPEDIENTE SE ENCUENTRA EN REVISIÓN</span> 
+            <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
+                <span class="font-medium">SU EXPEDIENTE SE ENCUENTRA INCOMPLETO.  </span>  <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
+                <br><p class="font-medium" style="font-style: italic; color: #ff0200;">Favor de llenar todos los datos obligatorios antes del:  <?php echo $fecha ?></p>
             </div>   <?php
         }
-    }   ?>  
+    }
+       ?>  
     
     <div class="mt-4">
     <div class=" bg-white overflow-hidden shadow-xl rounded-lg" style="background-image: url(../src/img/Atomos-Sinttecom.png); background-size: cover; background-position:center; background-repeat:no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">      
