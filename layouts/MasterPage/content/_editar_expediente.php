@@ -965,7 +965,7 @@
                                              <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                           </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fecha_estatus" name="fecha_estatus" value="<?php echo is_null($edit->eestatus_fecha) ? '' : $edit->eestatus_fecha; ?>" placeholder="Fecha de estatus" autocomplete="off">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fecha_estatus" name="fecha_estatus" placeholder="Fecha de estatus" autocomplete="off">
                                     </div>
                                  </div>
                                  <div x-show.important="open">
