@@ -904,6 +904,17 @@ class expedientes {
         
         
         $crud -> store('token_expediente', ["expedientes_id" => $id, "token" => $token, "link" => $links, "exp_date" => $expDate]);
+
+    /** 
+     * & AQUI SE CAMBIA EL ESTATUS DEL EXPEDIENTE A "ASIGNADO"
+     */
+        $check_exp = $object->_db->prepare("SELECT expedientes.id  FROM expedientes WHERE expedientes.users_id = :user_id");
+        $check_exp->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
+        $check_exp->execute();
+        $SelectId = $check_exp->fetch(PDO::FETCH_ASSOC);
+        $id_expediente = $SelectId['id'];
+        $crud -> update('expedientes', ['estatus_expediente' => 3], "id=:idexpediente", [':idexpediente' => $id_expediente]);
+   
     }
 
     public static function Eliminar_Token($eliminar_token){
@@ -929,7 +940,7 @@ class expedientes {
         $check_table_DG = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_SESSION['id']]);
         if($check_table_DG['count'] > 0){
             $results_table_DG = $check_table_DG['data'][0];
-            $crud->update('expedientes', ['estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion], "id=:idexpediente", [':idexpediente' => $results_table_DG['id']]);
+            $crud->update('expedientes', ['estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'estatus_expediente' => 4], "id=:idexpediente", [':idexpediente' => $results_table_DG['id']]);
         }
     }
 
@@ -940,7 +951,7 @@ class expedientes {
     $check_table_DA = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_SESSION['id']]);
     if($check_table_DA['count'] > 0){
         $results_table_DA = $check_table_DA['data'][0];
-        $crud->update('expedientes', ['fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante,'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam], "id=:idexpediente", ['idexpediente' => $results_table_DA['id']]);
+        $crud->update('expedientes', ['fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante,'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'estatus_expediente' => 4], "id=:idexpediente", ['idexpediente' => $results_table_DA['id']]);
         $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DA['id']]);
         if($checkreflab['count'] > 0){
             $results_checkreflab = $checkreflab['data'];
@@ -1052,8 +1063,7 @@ public function Insertar_expediente_datosB(){
     $check_table_DB = $crud->readWithCount('expedientes', '*', 'WHERE users_id=:userid', [':userid' => $_SESSION['id']]);
     if($check_table_DB['count'] > 0){
         $results_table_DB = $check_table_DB['data'][0];
-        $crud->update('expedientes', ['banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 
-        'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal], "id=:idexpediente", ['idexpediente' => $results_table_DB['id']]);
+        $crud->update('expedientes', ['banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal,'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'estatus_expediente' => 4], "id=:idexpediente", ['idexpediente' => $results_table_DB['id']]);
         $checkbenban = $crud->readWithCount('ben_bancarios', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DB['id']]);
         if($checkbenban['count'] > 0){
             $results_checkbenban = $checkbenban['data'];
@@ -1072,8 +1082,7 @@ public function Insertar_expediente_datosB(){
             }
         }
     }else{
-        $crud->store('expedientes', ['users_id' => $this->$_SESSION['id'], 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 
-        'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal]);
+        $crud->store('expedientes', ['users_id' => $this->$_SESSION['id'], 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'estatus_expediente' => 4]);
         $id_expediente = $object -> _db -> lastInsertId();
         if(!(is_null($this->refbanc))){
             $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
