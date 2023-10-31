@@ -2852,8 +2852,11 @@ CREATE TABLE `estatus_empleado` (
   `expedientes_id` int  NOT NULL,
   `situacion_del_empleado` varchar(100) NOT NULL,
   `estatus_del_empleado` varchar(100) NOT NULL,
+  `numero_baja` varchar(100) DEFAULT NULL,
+  `fijo_mensual` varchar(100) DEFAULT NULL,
+  `tipo_esquema` varchar(100) DEFAULT NULL,
   `motivo` varchar(100) DEFAULT NULL,
-  `fecha` date NOT NULL,
+  `fecha` varchar(100) NOT NULL,
   FOREIGN KEY (expedientes_id) REFERENCES expedientes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
