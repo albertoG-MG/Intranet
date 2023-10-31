@@ -2706,10 +2706,12 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
 -- Table structure for table `expedientes`
 --
 
-  CREATE TABLE `expedientes` (
+CREATE TABLE `expedientes` (
   `id` int  NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `users_id` int NOT NULL,
-  `num_empleado` varchar(100) DEFAULT NULL UNIQUE,
+  `numero_expediente` varchar(100) DEFAULT NULL UNIQUE,
+  `numero_nomina` varchar(100) DEFAULT NULL UNIQUE,
+  `numero_asistencia` varchar(100) DEFAULT NULL UNIQUE,
   `puesto` varchar(100) DEFAULT NULL,
   `estudios` varchar(100) DEFAULT NULL,
   `posee_correo` varchar(100) DEFAULT NULL,
@@ -2780,12 +2782,12 @@ INSERT INTO `municipios` (`Id`, `estado`, `nombre`, `clave`) VALUES
   `cuenta_nomina` varchar(100) DEFAULT NULL,
   `clabe_nomina` varchar(100) DEFAULT NULL,
   `plastico` varchar(100) DEFAULT NULL,
-  `estatus_expediente` int NOT NULL,
+  `estatus_expediente` int DEFAULT NULL,
   FOREIGN KEY (users_id) REFERENCES usuarios(id) ON DELETE CASCADE,
   FOREIGN KEY (estado_id) REFERENCES estados(id),
   FOREIGN KEY (municipio_id) REFERENCES municipios(Id),
   FOREIGN KEY (estatus_expediente) REFERENCES estatus_expediente(id)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 --
