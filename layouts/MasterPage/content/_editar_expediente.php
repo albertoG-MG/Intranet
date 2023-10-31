@@ -334,6 +334,7 @@
                                           </svg>
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="rsituaciondelempleado($el.value);" id="situacion" name="situacion">
+                                          <option value="" <?php if($edit -> esituacion_del_empleado == ""){ echo "selected"; }?>>SIN ESTATUS</option>
                                           <option value="ALTA" <?php if($edit -> esituacion_del_empleado == "ALTA"){ echo "selected"; }?>>ALTA</option>
                                           <option value="BAJA" <?php if($edit -> esituacion_del_empleado == "BAJA"){ echo "selected"; }?>>BAJA</option>
                                           <option value="PRESTADOR_DE_SERVICIOS" <?php if($edit -> esituacion_del_empleado == "PRESTADOR_DE_SERVICIOS"){ echo "selected"; }?>>PRESTADOR DE SERVICIOS</option>
@@ -342,20 +343,34 @@
                                  </div>
                                  <script>
                                     function rsituaciondelempleado(value) {
-                                       if(value == "ALTA"){
-                                       $('#estatus_empleado').html(
-                                       "<option value=\"NUEVO INGRESO\" x-init=\"statusmethod($el.value,status); open = false; baja = false; fijo = false; pago = false;  \">NUEVO INGRESO</option>"+
-                                       "<option value=\"REINGRESO\">REINGRESO</option>");
-                                       }else if(value == "BAJA"){
-                                       $('#estatus_empleado').html(
-                                       "<option value=\"FALLECIMIENTO\" x-init=\"statusmethod($el.value,status); open = false; baja = true; fijo = false; pago = false;  \">FALLECIMIENTO</option>"+
-                                       "<option value=\"ABANDONO_DE_TRABAJO\">ABANDONO DE TRABAJO</option>"+
-                                       "<option value=\"RENUNCIA_VOLUNTARIA\">RENUNCIA VOLUNTARIA</option>"+
-                                       "<option value=\"LIQUIDACION\">LIQUIDACIÓN</option>");
-                                       }else if(value == "PRESTADOR_DE_SERVICIOS"){
-                                       $('#estatus_empleado').html(
-                                       "<option value=\"FIJO\" x-init=\"statusmethod($el.value,status); open = true; baja = false; fijo = true; pago = false;   \">FIJO</option>"+
-                                                "<option value=\"ESQUEMA_DE_PAGO\">ESQUEMA DE PAGO</option>");
+                                       const estatusEmpleado = $('#estatus_empleado');
+                                       switch (value) {
+                                          case null:
+                                          case '':
+                                             estatusEmpleado.html(
+                                             '<option value="" x-init="statusmethod($el.value,status); open = false; baja = false; fijo = false; pago = false;">SIN ESTATUS</option>'
+                                             );
+                                             break;
+                                          case 'ALTA':
+                                             estatusEmpleado.html(
+                                             '<option value="NUEVO INGRESO" x-init="statusmethod($el.value,status); open = false; baja = false; fijo = false; pago = false;">NUEVO INGRESO</option>' +
+                                             '<option value="REINGRESO">REINGRESO</option>'
+                                             );
+                                             break;
+                                          case 'BAJA':
+                                             estatusEmpleado.html(
+                                             '<option value="FALLECIMIENTO" x-init="statusmethod($el.value,status); open = false; baja = true; fijo = false; pago = false;">FALLECIMIENTO</option>' +
+                                             '<option value="ABANDONO_DE_TRABAJO">ABANDONO DE TRABAJO</option>' +
+                                             '<option value="RENUNCIA_VOLUNTARIA">RENUNCIA VOLUNTARIA</option>' +
+                                             '<option value="LIQUIDACION">LIQUIDACIÓN</option>'
+                                             );
+                                             break;
+                                          case 'PRESTADOR_DE_SERVICIOS':
+                                             estatusEmpleado.html(
+                                             '<option value="FIJO" x-init="statusmethod($el.value,status); open = true; baja = false; fijo = true; pago = false;">FIJO</option>' +
+                                             '<option value="ESQUEMA_DE_PAGO">ESQUEMA DE PAGO</option>'
+                                             );
+                                             break;
                                        }
                                     }	
                                  </script>
@@ -373,49 +388,46 @@
                                  </div>
                                  <script>
                                     function statusmethod(value, statusretrieved){
-                                       if(value == statusretrieved){
-                                          $('#fecha_estatus').val("<?php echo "{$edit->eestatus_fecha}"; ?>");
+                                       if(value == null || value.trim().length === 0){
+                                          $('#fecha_estatus').val("");
+                                          $('#fecha_estatus').attr('disabled', 'true');
+                                          const elements = ["fecha_estatus", "estatus_motivo", "numero_baja", "fijo_mensual", "esquema_pago"];
+                                          for (const element of elements) {
+                                             $(`#${element}`).rules("remove");
+                                             $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                             $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                             $(`#${element}-error`).css("display", "none");
+                                          }
+                                       }else if(value == statusretrieved){
+                                          $('#fecha_estatus').removeAttr('disabled');
+                                          $('#fecha_estatus').val("<?php if ($edit->eestatus_fecha !== null) { $fecha_formateada = date('Y/m/d', strtotime($edit->eestatus_fecha)); } else {   $fecha_formateada = ''; } echo $fecha_formateada; ?>");
                                           $('#estatus_motivo').val("<?php if(!(is_null($edit -> emotivo))){ echo $edit->emotivo; }else{ echo '';}?>");
+                                          $("#fecha_estatus").rules("add", {
+                                             required: {
+                                                depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                }
+                                             },
+                                             messages: {
+                                                required: "Este campo es requerido"
+                                             }
+                                          });
                                           if(value == "NUEVO INGRESO"){
-                                             $("#estatus_motivo").rules("remove");
-                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#estatus_motivo-error").css("display", "none");
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["estatus_motivo", "numero_baja", "fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "REINGRESO"){
-                                             $("#estatus_motivo").rules("remove");
-                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#estatus_motivo-error").css("display", "none");
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["estatus_motivo", "numero_baja", "fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "FALLECIMIENTO"){
                                              $("#numero_baja").rules("add", {
                                                 required: {
@@ -433,22 +445,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#estatus_motivo").rules("remove");
-                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#estatus_motivo-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
-
+                                             const elements = ["estatus_motivo", "fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "ABANDONO_DE_TRABAJO"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -482,17 +485,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
-
+                                             const elements = ["fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "RENUNCIA_VOLUNTARIA"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -526,16 +525,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "LIQUIDACION"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -569,16 +565,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "FIJO"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -596,7 +589,6 @@
                                                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
                                                 }
                                              });
-
                                              $("#fijo_mensual").rules("add", {
                                                 required: {
                                                    depends: function(element) {
@@ -613,16 +605,13 @@
                                                    number: "Solo se permiten números y decimales"
                                                 }
                                              });
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["numero_baja", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "ESQUEMA_DE_PAGO"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -640,7 +629,6 @@
                                                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
                                                 }
                                              });
-
                                              $("#esquema_pago").rules("add", {
                                                 required: {
                                                    depends: function(element) {
@@ -651,65 +639,48 @@
                                                    required: "Este campo es requerido"
                                                 }
                                              });
-
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
+                                             const elements = ["numero_baja", "fijo_mensual"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }
                                        }else{
+                                          $('#fecha_estatus').removeAttr('disabled');
                                           var now = new Date();
                                           var day = ("0" + now.getDate()).slice(-2);
                                           var month = ("0" + (now.getMonth() + 1)).slice(-2);
-                                          var today = now.getFullYear()+"-"+(month)+"-"+(day);
+                                          var today = now.getFullYear()+"/"+(month)+"/"+(day);
                                           $('#fecha_estatus').val(today);
                                           $('#estatus_motivo').val('');
+                                          $("#fecha_estatus").rules("add", {
+                                             required: {
+                                                depends: function(element) {
+                                                   return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                                                }
+                                             },
+                                             messages: {
+                                                required: "Este campo es requerido"
+                                             }
+                                          });
                                           if(value == "NUEVO INGRESO"){
-                                             $("#estatus_motivo").rules("remove");
-                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#estatus_motivo-error").css("display", "none");
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["estatus_motivo", "numero_baja", "fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "REINGRESO"){
-                                             $("#estatus_motivo").rules("remove");
-                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#estatus_motivo-error").css("display", "none");
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["estatus_motivo", "numero_baja", "fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "FALLECIMIENTO"){
                                              $("#numero_baja").rules("add", {
                                                 required: {
@@ -727,21 +698,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#estatus_motivo").rules("remove");
-                                             $("#estatus_motivo").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#estatus_motivo").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#estatus_motivo-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["estatus_motivo", "fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "ABANDONO_DE_TRABAJO"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -775,17 +738,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
-
+                                             const elements = ["fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "RENUNCIA_VOLUNTARIA"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -819,16 +778,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "LIQUIDACION"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -862,16 +818,13 @@
                                                    digits: "Solo se permiten números"
                                                 }
                                              });
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["fijo_mensual", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "FIJO"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -889,7 +842,6 @@
                                                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
                                                 }
                                              });
-
                                              $("#fijo_mensual").rules("add", {
                                                 required: {
                                                    depends: function(element) {
@@ -906,16 +858,13 @@
                                                    number: "Solo se permiten números y decimales"
                                                 }
                                              });
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#esquema_pago").rules("remove");
-                                             $("#esquema_pago").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#esquema_pago").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#esquema_pago-error").css("display", "none");
+                                             const elements = ["numero_baja", "esquema_pago"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }else if(value == "ESQUEMA_DE_PAGO"){
                                              $("#estatus_motivo").rules("add", {
                                                 required: {
@@ -933,7 +882,6 @@
                                                    field_validation: "Solo se permiten carácteres alfabéticos y espacios"
                                                 }
                                              });
-
                                              $("#esquema_pago").rules("add", {
                                                 required: {
                                                    depends: function(element) {
@@ -944,17 +892,13 @@
                                                    required: "Este campo es requerido"
                                                 }
                                              });
-
-
-                                             $("#numero_baja").rules("remove");
-                                             $("#numero_baja").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#numero_baja").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#numero_baja-error").css("display", "none");
-
-                                             $("#fijo_mensual").rules("remove");
-                                             $("#fijo_mensual").removeClass("error border-2 border-rose-500 focus:ring-rose-600");
-                                             $("#fijo_mensual").addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
-                                             $("#fijo_mensual-error").css("display", "none");
+                                             const elements = ["numero_baja", "fijo_mensual"];
+                                             for (const element of elements) {
+                                                $(`#${element}`).rules("remove");
+                                                $(`#${element}`).removeClass("error border-2 border-rose-500 focus:ring-rose-600");
+                                                $(`#${element}`).addClass("border border-[#d1d5db] focus:ring-2 focus:ring-celeste-600");
+                                                $(`#${element}-error`).css("display", "none");
+                                             }
                                           }
                                        }
                                     }
@@ -1017,11 +961,11 @@
                                     <label class="text-[#64748b] font-semibold mb-2">FECHA DE ESTATUS</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                          <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
-                                       </svg>
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
+                                          </svg>
                                        </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="date" id="fecha_estatus" name="fecha_estatus" value="<?php echo "{$edit->eestatus_fecha}"; ?>">
+                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fecha_estatus" name="fecha_estatus" value="<?php echo is_null($edit->eestatus_fecha) ? '' : $edit->eestatus_fecha; ?>" placeholder="Fecha de estatus" autocomplete="off">
                                     </div>
                                  </div>
                                  <div x-show.important="open">
@@ -1852,6 +1796,7 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="tallapolo" name="tallapolo">
                                           <option value="">--Seleccione--</option>
+                                          <option value="XSS" <?php if($edit->etalla_polo == "XSS"){echo 'selected="selected"';} ?>>XSS</option>
                                           <option value="XS" <?php if($edit->etalla_polo == "XS"){echo 'selected="selected"';} ?>>XS</option>
                                           <option value="S" <?php if($edit->etalla_polo == "S"){echo 'selected="selected"';} ?>>S</option>
                                           <option value="M" <?php if($edit->etalla_polo == "M"){echo 'selected="selected"';} ?>>M</option>
@@ -2591,14 +2536,3 @@
       </div>
    </div>
 </div>
-<style>
-   .select2-search__field{
-    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB2ZXJzaW9uPSIxLjEiICAgaWQ9InN2ZzQ0ODUiICAgdmlld0JveD0iMCAwIDIxLjk5OTk5OSAyMS45OTk5OTkiICAgaGVpZ2h0PSIyMiIgICB3aWR0aD0iMjIiPiAgPGRlZnMgICAgIGlkPSJkZWZzNDQ4NyIgLz4gIDxtZXRhZGF0YSAgICAgaWQ9Im1ldGFkYXRhNDQ5MCI+ICAgIDxyZGY6UkRGPiAgICAgIDxjYzpXb3JrICAgICAgICAgcmRmOmFib3V0PSIiPiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+ICAgICAgICA8ZGM6dHlwZSAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4gICAgICAgIDxkYzp0aXRsZT48L2RjOnRpdGxlPiAgICAgIDwvY2M6V29yaz4gICAgPC9yZGY6UkRGPiAgPC9tZXRhZGF0YT4gIDxnICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0xMDMwLjM2MjIpIiAgICAgaWQ9ImxheWVyMSI+ICAgIDxnICAgICAgIHN0eWxlPSJvcGFjaXR5OjAuNSIgICAgICAgaWQ9ImcxNyIgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAuNCw4NjYuMjQxMzQpIj4gICAgICA8cGF0aCAgICAgICAgIGlkPSJwYXRoMTkiICAgICAgICAgZD0ibSAtNTAuNSwxNzkuMSBjIC0yLjcsMCAtNC45LC0yLjIgLTQuOSwtNC45IDAsLTIuNyAyLjIsLTQuOSA0LjksLTQuOSAyLjcsMCA0LjksMi4yIDQuOSw0LjkgMCwyLjcgLTIuMiw0LjkgLTQuOSw0LjkgeiBtIDAsLTguOCBjIC0yLjIsMCAtMy45LDEuNyAtMy45LDMuOSAwLDIuMiAxLjcsMy45IDMuOSwzLjkgMi4yLDAgMy45LC0xLjcgMy45LC0zLjkgMCwtMi4yIC0xLjcsLTMuOSAtMy45LC0zLjkgeiIgICAgICAgICBjbGFzcz0ic3Q0IiAvPiAgICAgIDxyZWN0ICAgICAgICAgaWQ9InJlY3QyMSIgICAgICAgICBoZWlnaHQ9IjUiICAgICAgICAgd2lkdGg9IjAuODk5OTk5OTgiICAgICAgICAgY2xhc3M9InN0NCIgICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjY5NjQsLTAuNzE3NiwwLjcxNzYsMC42OTY0LC0xNDIuMzkzOCwyMS41MDE1KSIgICAgICAgICB5PSIxNzYuNjAwMDEiICAgICAgICAgeD0iLTQ2LjIwMDAwMSIgLz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
-    background-repeat: no-repeat;
-    background-color: #fff;
-    background-position: 9px 11px !important;
-    padding-left: 30px;
-    box-shadow:-1px 2px 2px 0 rgb(0 0 0 / 23%) !important;
-    border-radius: 1.375rem !important;
-   }
-</style>
