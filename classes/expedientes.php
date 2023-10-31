@@ -634,6 +634,22 @@ class expedientes {
         }
     }
 
+    public static function Estatus_expediente($expediente_id, $situacion, $estatus_empleado, $estatus_fecha, $numero_baja, $fijo_mensual, $tipo_esquema, $motivo){
+        $crud = new Crud();
+        $check_estatus = $crud -> readWithCount('estatus_empleado', '*', 'WHERE expedientes_id = :expedienteid',  [':expedienteid' => $expediente_id]);
+        if($check_estatus['count'] > 0){
+            if ($situacion === null && $estatus_empleado === null && $estatus_fecha === null && $numero_baja === null && $fijo_mensual === null && $tipo_esquema === null && $motivo === null) {
+                $crud -> delete('estatus_empleado', 'expedientes_id=:expedienteid', [':expedienteid' => $id_expediente]);
+            }else{
+                $crud -> store('estatus_empleado', ['expedientes_id' => $expediente_id, 'situacion_del_empleado' => $situacion, 'estatus_del_empleado' => $estatus_empleado, 'numero_baja' => $numero_baja, 'fijo_mensual' => $fijo_mensual, 'tipo_esquema' => $tipo_esquema, 'motivo' => $motivo, 'fecha' => $estatus_fecha]);
+            }
+        }else{
+            if ($situacion !== null || $estatus_empleado !== null || $estatus_fecha !== null || $numero_baja !== null || $fijo_mensual !== null || $tipo_esquema !== null || $motivo !== null) {
+                $crud -> store('estatus_empleado', ['expedientes_id' => $expediente_id, 'situacion_del_empleado' => $situacion, 'estatus_del_empleado' => $estatus_empleado, 'numero_baja' => $numero_baja, 'fijo_mensual' => $fijo_mensual, 'tipo_esquema' => $tipo_esquema, 'motivo' => $motivo, 'fecha' => $estatus_fecha]);
+            }
+        }
+    }
+
     public static function tempnam_sfx($path, $suffix){
         do {
             $file = $path."/".mt_rand().".".$suffix;

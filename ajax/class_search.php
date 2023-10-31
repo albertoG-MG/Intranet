@@ -1336,6 +1336,130 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 					$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion);
 					//Una vez que se hayan almacenado las variables, llamar al metodo correspondiente obviamente enviando el id del expediente
 					$expediente ->Crear_expediente_datosG();
+					//Estatus
+					$situacion = null;
+					$estatus_empleado = null;
+					$estatus_fecha = null;
+					$numero_baja = null;
+					$fijo_mensual = null;
+					$tipo_esquema = null;
+					$motivo = null;
+					//SITUACIÓN, ESTATUS EMPLEADO Y MOTIVO
+					if (!empty($_POST["situacion"])) {
+						$situacion_array = array("ALTA", "BAJA", "PRESTADOR_DE_SERVICIOS");
+						if (in_array($_POST["situacion"], $situacion_array)) {
+							if($_POST["situacion"] == "ALTA"){
+								$estatus_array = array("NUEVO INGRESO", "REINGRESO");
+								if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+									$situacion = $_POST["situacion"];
+									$estatus_empleado = $_POST["estatus_empleado"];
+									$motivo = null;
+								}else if(empty($_POST["estatus_empleado"])){
+									die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+								}else{
+									die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+								}
+							}else if ($_POST["situacion"] == "BAJA") {
+								$estatus_array = array("FALLECIMIENTO", "ABANDONO_DE_TRABAJO", "RENUNCIA_VOLUNTARIA", "LIQUIDACION");
+								if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+									$estatus_empleado = $_POST["estatus_empleado"];
+									if ($estatus_empleado == "ABANDONO_DE_TRABAJO" || $estatus_empleado == "RENUNCIA_VOLUNTARIA" || $estatus_empleado == "LIQUIDACION") {
+										if (empty($_POST["motivo_estatus"])) {
+											die(json_encode(array("error", "El campo motivo del estatus es requerido")));
+										} else {
+											if (!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_estatus"])) {
+												die(json_encode(array("error", "Solo se permiten caracteres alfabéticos y espacios en el motivo del estatus")));
+											} else {
+												// Verificar que el campo numero_baja sea numérico y requerido
+												if (!empty($_POST["numero_baja"]) && is_numeric($_POST["numero_baja"])) {
+													$numero_baja = $_POST["numero_baja"];
+												} else {
+													die(json_encode(array("error", "El campo número de baja es requerido y debe ser numérico")));
+												}
+
+												$situacion = $_POST["situacion"];
+												$motivo = $_POST["motivo_estatus"];
+											}
+										}
+									} else {
+										// Verificar que el campo numero_baja sea numérico y requerido
+										if (!empty($_POST["numero_baja"]) && is_numeric($_POST["numero_baja"])) {
+											$numero_baja = $_POST["numero_baja"];
+										} else {
+											die(json_encode(array("error", "El campo número de baja es requerido y debe ser numérico")));
+										}
+										$situacion = $_POST["situacion"];
+										$estatus_empleado = $_POST["estatus_empleado"];
+										$motivo = null;
+									}
+								} elseif (empty($_POST["estatus_empleado"])) {
+									die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+								} else {
+									die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+								}
+							}else if($_POST["situacion"] == "PRESTADOR_DE_SERVICIOS"){
+								$estatus_array = array("FIJO", "ESQUEMA_DE_PAGO");
+								if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+									if($_POST["estatus_empleado"] == "FIJO"){
+										if(empty($_POST["motivo_estatus"])){
+											die(json_encode(array("error", "El campo motivo del estatus es requerido")));
+										}else{
+											if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_estatus"])){
+												die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del estatus")));
+											}else{
+												if (!empty($_POST["fijo_mensual"]) && is_numeric($_POST["fijo_mensual"])) {
+													$fijo_mensual = $_POST["fijo_mensual"];
+												} else {
+													die(json_encode(array("error", "El campo de cantidad mensual en el estatus es requerido y debe ser numérico")));
+												}
+											
+												$situacion = $_POST["situacion"];
+												$estatus_empleado = $_POST["estatus_empleado"];
+												$motivo = $_POST["motivo_estatus"];
+											}
+										}
+									}else{
+										if(empty($_POST["motivo_estatus"])){
+											die(json_encode(array("error", "El campo motivo del estatus es requerido")));
+										}else{
+											if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_estatus"])){
+												die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del estatus")));
+											}else{
+												if (!empty($_POST["tipo_esquema"])) {
+													$tipo_esquema = $_POST["tipo_esquema"];
+												} else {
+													die(json_encode(array("error", "El campo de tipo de esquema en el estatus es requerido")));
+												}				
+												$situacion = $_POST["situacion"];
+												$estatus_empleado = $_POST["estatus_empleado"];
+												$motivo = $_POST["motivo_estatus"];
+											}
+										}
+									}
+								}else if(empty($_POST["estatus_empleado"])){
+									die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+								}else{
+									die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+								}
+							}
+						}else if(empty($_POST["situacion"])){
+							die(json_encode(array("error", "El campo situación del empleado es requerido")));
+						}else{
+							die(json_encode(array("error", "El valor escogido en el dropdown situación empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+						}
+						//FECHA DEL ESTATUS
+						if(empty($_POST["estatus_fecha"])){
+							$estatus_fecha = null;
+						}else{
+							if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["estatus_fecha"])){
+								die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de estatus")));
+							}else{
+								$estatus_fecha = $_POST["estatus_fecha"];
+							}
+						}
+					}
+					//Instancia del estatus
+					Expedientes::Estatus_expediente($_POST["id_expediente"], $situacion, $estatus_empleado, $estatus_fecha, $numero_baja, $fijo_mensual, $tipo_esquema, $motivo);
 					//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 					die(json_encode(array("success", "Se han guardado los datos generales del expediente")));
 				break;
@@ -3687,6 +3811,130 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 				//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
 				$expediente ->Crear_expediente($logged_user);
+				//Estatus
+				$situacion = null;
+				$estatus_empleado = null;
+				$estatus_fecha = null;
+				$numero_baja = null;
+				$fijo_mensual = null;
+				$tipo_esquema = null;
+				$motivo = null;
+				//SITUACIÓN, ESTATUS EMPLEADO Y MOTIVO
+				if (!empty($_POST["situacion"])) {
+					$situacion_array = array("ALTA", "BAJA", "PRESTADOR_DE_SERVICIOS");
+					if (in_array($_POST["situacion"], $situacion_array)) {
+						if($_POST["situacion"] == "ALTA"){
+							$estatus_array = array("NUEVO INGRESO", "REINGRESO");
+							if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+								$situacion = $_POST["situacion"];
+								$estatus_empleado = $_POST["estatus_empleado"];
+								$motivo = null;
+							}else if(empty($_POST["estatus_empleado"])){
+								die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+							}else{
+								die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+							}
+						}else if ($_POST["situacion"] == "BAJA") {
+							$estatus_array = array("FALLECIMIENTO", "ABANDONO_DE_TRABAJO", "RENUNCIA_VOLUNTARIA", "LIQUIDACION");
+							if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+								$estatus_empleado = $_POST["estatus_empleado"];
+								if ($estatus_empleado == "ABANDONO_DE_TRABAJO" || $estatus_empleado == "RENUNCIA_VOLUNTARIA" || $estatus_empleado == "LIQUIDACION") {
+									if (empty($_POST["motivo_estatus"])) {
+										die(json_encode(array("error", "El campo motivo del estatus es requerido")));
+									} else {
+										if (!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_estatus"])) {
+											die(json_encode(array("error", "Solo se permiten caracteres alfabéticos y espacios en el motivo del estatus")));
+										} else {
+											// Verificar que el campo numero_baja sea numérico y requerido
+											if (!empty($_POST["numero_baja"]) && is_numeric($_POST["numero_baja"])) {
+												$numero_baja = $_POST["numero_baja"];
+											} else {
+												die(json_encode(array("error", "El campo número de baja es requerido y debe ser numérico")));
+											}
+
+											$situacion = $_POST["situacion"];
+											$motivo = $_POST["motivo_estatus"];
+										}
+									}
+								} else {
+									// Verificar que el campo numero_baja sea numérico y requerido
+									if (!empty($_POST["numero_baja"]) && is_numeric($_POST["numero_baja"])) {
+										$numero_baja = $_POST["numero_baja"];
+									} else {
+										die(json_encode(array("error", "El campo número de baja es requerido y debe ser numérico")));
+									}
+									$situacion = $_POST["situacion"];
+									$estatus_empleado = $_POST["estatus_empleado"];
+									$motivo = null;
+								}
+							} elseif (empty($_POST["estatus_empleado"])) {
+								die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+							} else {
+								die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+							}
+						}else if($_POST["situacion"] == "PRESTADOR_DE_SERVICIOS"){
+							$estatus_array = array("FIJO", "ESQUEMA_DE_PAGO");
+							if (in_array($_POST["estatus_empleado"], $estatus_array)) {
+								if($_POST["estatus_empleado"] == "FIJO"){
+									if(empty($_POST["motivo_estatus"])){
+										die(json_encode(array("error", "El campo motivo del estatus es requerido")));
+									}else{
+										if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_estatus"])){
+											die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del estatus")));
+										}else{
+											if (!empty($_POST["fijo_mensual"]) && is_numeric($_POST["fijo_mensual"])) {
+												$fijo_mensual = $_POST["fijo_mensual"];
+											} else {
+												die(json_encode(array("error", "El campo de cantidad mensual en el estatus es requerido y debe ser numérico")));
+											}
+										
+											$situacion = $_POST["situacion"];
+											$estatus_empleado = $_POST["estatus_empleado"];
+											$motivo = $_POST["motivo_estatus"];
+										}
+									}
+								}else{
+									if(empty($_POST["motivo_estatus"])){
+										die(json_encode(array("error", "El campo motivo del estatus es requerido")));
+									}else{
+										if(!preg_match("/^[a-zA-Z\x{00C0}-\x{00FF}]+([\s][a-zA-Z\x{00C0}-\x{00FF}]+)*$/u", $_POST["motivo_estatus"])){
+											die(json_encode(array("error", "Solo se permiten carácteres alfabéticos y espacios en el motivo del estatus")));
+										}else{
+											if (!empty($_POST["tipo_esquema"])) {
+												$tipo_esquema = $_POST["tipo_esquema"];
+											} else {
+												die(json_encode(array("error", "El campo de tipo de esquema en el estatus es requerido")));
+											}				
+											$situacion = $_POST["situacion"];
+											$estatus_empleado = $_POST["estatus_empleado"];
+											$motivo = $_POST["motivo_estatus"];
+										}
+									}
+								}
+							}else if(empty($_POST["estatus_empleado"])){
+								die(json_encode(array("error", "El campo estatus del empleado es requerido")));
+							}else{
+								die(json_encode(array("error", "El valor escogido en el dropdown estatus del empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+							}
+						}
+					}else if(empty($_POST["situacion"])){
+						die(json_encode(array("error", "El campo situación del empleado es requerido")));
+					}else{
+						die(json_encode(array("error", "El valor escogido en el dropdown situación empleado está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+					}
+					//FECHA DEL ESTATUS
+					if(empty($_POST["estatus_fecha"])){
+						$estatus_fecha = null;
+					}else{
+						if(!preg_match("/^\d{4}\/\d{2}\/\d{2}$/", $_POST["estatus_fecha"])){
+							die(json_encode(array("error", "Por favor, ingrese una fecha válida en la fecha de estatus")));
+						}else{
+							$estatus_fecha = $_POST["estatus_fecha"];
+						}
+					}
+				}
+				//Instancia del estatus
+				Expedientes::Estatus_expediente($_POST["id_expediente"], $situacion, $estatus_empleado, $estatus_fecha, $numero_baja, $fijo_mensual, $tipo_esquema, $motivo);
 				//Cuando termine, envía al usuario la notificación de que el proceso fue un éxito
 				die(json_encode(array("success", "Se ha editado el expediente")));
 			break;
