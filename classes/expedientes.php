@@ -879,7 +879,7 @@ class expedientes {
         $object = new connection_database();
         $token = bin2hex(random_bytes(16));
         date_default_timezone_set("America/Monterrey");
-        $expFormat = mktime(date("H")+23, date("i"), date("s"), date("m") ,date("d"), date("Y"));
+        $expFormat = mktime(date("H"), date("i"), date("s"), date("m") ,date("d")+7, date("Y"));
         $expDate = date("Y-m-d H:i:s",$expFormat);
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $path = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
