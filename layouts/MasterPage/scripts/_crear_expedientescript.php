@@ -2962,6 +2962,7 @@
 
     //Muestra la leyenda no hay resultados si el select2 se queda sin opciones
     $('#user').on('select2:open', function (e) {
+        $(".select2-search__field").attr('placeholder', 'Búscar...').css('color', '#000').css('padding-left', '30px');
         waitForElm('.select2-results__options').then((elm) => {
             if ( $('.select2-results__options.select2-results__options--nested > *').length == 0 ) {
                 var usuarios_group = $('#user').find('optgroup[label=Usuarios]');
