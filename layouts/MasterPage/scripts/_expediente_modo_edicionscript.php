@@ -2,7 +2,15 @@
 <script>
 
 //Revisa que el token no este expirado
-<?php if($fetch_token_user->exp_date >= $curDate){ ?>
+<?php   
+    $check_exp = $object->_db->prepare("SELECT expedientes.id  FROM expedientes WHERE expedientes.users_id = :user_id");
+    $check_exp->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
+    $check_exp->execute();
+    $SelectId = $check_exp->fetch(PDO::FETCH_ASSOC);
+    $Editarid = $SelectId['id'];
+
+
+if($fetch_token_user->exp_date >= $curDate){ ?>
 
     //Variable global que nos permite acceder al menú desde cualquier función.
     let menuExpedientes = [];
@@ -663,8 +671,11 @@
                             }
                         },
                         remote: {
-                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/validacion/expedientes/checkemail.php" : false,
-                            type: "GET",
+                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/validacion/expedientes/checkeditemail.php" : false,
+                            type: "POST",
+                            data: {
+                                "editarid": <?php echo $Editarid; ?>
+                            },
                             beforeSend: function () {
                                 if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
                                     $('#loader-correo').removeClass('hidden');

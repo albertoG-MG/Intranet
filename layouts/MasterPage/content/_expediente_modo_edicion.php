@@ -110,11 +110,11 @@
                                     <div class="group flex mt-3 items-center">
                                        <input id="option-correo-personal-1" type="radio" name="posee_correo" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-1" aria-describedby="option-correo-personal-1" <?php echo $edit->eposee_correo === 'SI' ? 'checked' : ''; ?>>
                                        <label for="option-correo-personal-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                       Sí
+                                       SI
                                        </label>
                                        <input id="option-correo-personal-2" type="radio" name="posee_correo" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-correo-personal-2" aria-describedby="option-correo-personal-2" <?php echo ($edit->eposee_correo === 'NO' || $edit->eposee_correo === null) ? 'checked' : ''; ?>>
                                        <label for="option-correo-personal-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                       No
+                                       NO
                                        </label>
                                     </div>
                                  </div>
@@ -264,11 +264,11 @@
                                     <div class="group flex mt-3 items-center">
                                        <input id="option-telmov-1" type="radio" name="tel_movil" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php echo $edit->eposee_telmov === 'SI' ? 'checked' : ''; ?>>
                                        <label for="option-telmov-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                       Sí
+                                       SI
                                        </label>
                                        <input id="option-telmov-2" type="radio" name="tel_movil" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php echo ($edit->eposee_telmov === 'NO' || $edit->eposee_telmov === null) ? 'checked' : ''; ?>>
                                        <label for="option-telmov-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                       No
+                                       NO
                                        </label>
                                     </div>
                                  </div>
@@ -295,11 +295,11 @@
                                  <div class="group flex mt-3 items-center">
                                     <input id="option-casa-1" type="radio" name="casa" value="si" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php echo $edit->ecasa_propia === 'SI' ? 'checked' : ''; ?>>
                                     <label for="option-casa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                    Sí
+                                    SI
                                     </label>
                                     <input id="option-casa-2" type="radio" name="casa" value="no" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php echo ($edit->ecasa_propia === 'NO' || $edit->ecasa_propia === null) ? 'checked' : ''; ?>>
                                     <label for="option-casa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                    No
+                                    NO
                                     </label>
                                  </div>
                               </div>
@@ -326,11 +326,11 @@
                                     <div class="group flex mt-3 items-center">
                                        <input id="option-retencion-1" type="radio" name="retencion" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php echo $edit->eposee_retencion === 'SI' ? 'checked' : ''; ?>>
                                        <label for="option-retencion-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                       Sí
+                                       SI
                                        </label>
                                        <input id="option-retencion-2" type="radio" name="retencion" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php echo ($edit->eposee_retencion === 'NO' || $edit->eposee_retencion === null) ? 'checked' : ''; ?>>
                                        <label for="option-retencion-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                       No
+                                       NO
                                        </label>
                                     </div>
                                  </div>
@@ -505,7 +505,7 @@
                                           <div class="text-[#000] font-bold mb-2">Primer referencia</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                              <div class="grid grid-cols-1">
-                                                <label class="text-[#64748b] font-semibold">NOMBRE (s)</label>
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
                                                 <div class="group flex">
                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -589,7 +589,7 @@
                                           <div class="text-[#000] font-bold mb-2">Segunda referencia</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                              <div class="grid grid-cols-1">
-                                                <label class="text-[#64748b] font-semibold">NOMBRE (s)</label>
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
                                                 <div class="group flex">
                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -673,7 +673,7 @@
                                           <div class="text-[#000] font-bold mb-2">Tercer referencia</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                              <div class="grid grid-cols-1">
-                                                <label class="text-[#64748b] font-semibold">NOMBRE (s)</label>
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
                                                 <div class="group flex">
                                                    <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                       <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -806,7 +806,7 @@
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">NOMBRE (s)</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">NOMBRE (S)</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -850,18 +850,18 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion" name="emergencia_relacion">
                                           <option value="">--Selecciona--</option>
-                                          <option value="PADRE" <?php if($edit->eemergencia_relacion == "PADRE"){echo 'selected="selected"';}?>>Padre</option>
-                                          <option value="MADRE" <?php if($edit->eemergencia_relacion == "MADRE"){echo 'selected="selected"';} ?>>Madre</option>
-                                          <option value="HERMANO" <?php if($edit->eemergencia_relacion == "HERMANO"){echo 'selected="selected"';} ?>>Hermano</option>
-                                          <option value="HERMANA" <?php if($edit->eemergencia_relacion == "HERMANA"){echo 'selected="selected"';} ?>>Hermana</option>
-                                          <option value="CONYUGE" <?php if($edit->eemergencia_relacion == "CONYUGE"){echo 'selected="selected"';} ?>>Cónyuge</option>
-                                          <option value="PAREJA" <?php if($edit->eemergencia_relacion == "PAREJA"){echo 'selected="selected"';} ?>>Pareja</option>
-                                          <option value="AMIGO" <?php if($edit->eemergencia_relacion == "AMIGO"){echo 'selected="selected"';} ?>>Amigo</option>
-                                          <option value="AMIGA" <?php if($edit->eemergencia_relacion == "AMIGA"){echo 'selected="selected"';} ?>>Amiga</option>
-                                          <option value="VECINO" <?php if($edit->eemergencia_relacion == "VECINO"){echo 'selected="selected"';} ?>>Vecino</option>
-                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>Compañero de trabajo</option>
-                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>Compañera de trabajo</option>
-                                          <option value="OTRO" <?php if($edit->eemergencia_relacion == "OTRO"){echo 'selected="selected"';} ?>>Otro</option>
+                                          <option value="PADRE" <?php if($edit->eemergencia_relacion == "PADRE"){echo 'selected="selected"';}?>>PADRE</option>
+                                          <option value="MADRE" <?php if($edit->eemergencia_relacion == "MADRE"){echo 'selected="selected"';} ?>>MADRE</option>
+                                          <option value="HERMANO" <?php if($edit->eemergencia_relacion == "HERMANO"){echo 'selected="selected"';} ?>>HERMANO</option>
+                                          <option value="HERMANA" <?php if($edit->eemergencia_relacion == "HERMANA"){echo 'selected="selected"';} ?>>HERMANA</option>
+                                          <option value="CONYUGE" <?php if($edit->eemergencia_relacion == "CONYUGE"){echo 'selected="selected"';} ?>>CONYUGE</option>
+                                          <option value="PAREJA" <?php if($edit->eemergencia_relacion == "PAREJA"){echo 'selected="selected"';} ?>>PAREJA</option>
+                                          <option value="AMIGO" <?php if($edit->eemergencia_relacion == "AMIGO"){echo 'selected="selected"';} ?>>AMIGO</option>
+                                          <option value="AMIGA" <?php if($edit->eemergencia_relacion == "AMIGA"){echo 'selected="selected"';} ?>>AMIGA</option>
+                                          <option value="VECINO" <?php if($edit->eemergencia_relacion == "VECINO"){echo 'selected="selected"';} ?>>VECINO</option>
+                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERO DE TRABAJO</option>
+                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERA DE TRABAJO</option>
+                                          <option value="OTRO" <?php if($edit->eemergencia_relacion == "OTRO"){echo 'selected="selected"';} ?>>OTRO</option>
                                        </select>
                                     </div>
                                  </div>
@@ -883,7 +883,7 @@
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                  <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">NOMBRE (s)</label>
+                                    <label class="text-[#64748b] font-semibold mb-2">NOMBRE (S)</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -927,18 +927,18 @@
                                        </div>
                                        <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion2" name="emergencia_relacion2">
                                           <option value="">--Selecciona--</option>
-                                          <option value="PADRE" <?php if($edit->eemergencia_relacion2 == "PADRE"){echo 'selected="selected"';} ?>>Padre</option>
-                                          <option value="MADRE" <?php if($edit->eemergencia_relacion2 == "MADRE"){echo 'selected="selected"';} ?>>Madre</option>
-                                          <option value="HERMANO" <?php if($edit->eemergencia_relacion2 == "HERMANO"){echo 'selected="selected"';} ?>>Hermano</option>
-                                          <option value="HERMANA" <?php if($edit->eemergencia_relacion2 == "HERMANA"){echo 'selected="selected"';} ?>>Hermana</option>
-                                          <option value="CONYUGE" <?php if($edit->eemergencia_relacion2 == "CONYUGE"){echo 'selected="selected"';} ?>>Cónyuge</option>
-                                          <option value="PAREJA" <?php if($edit->eemergencia_relacion2 == "PAREJA"){echo 'selected="selected"';} ?>>Pareja</option>
-                                          <option value="AMIGO" <?php if($edit->eemergencia_relacion2 == "AMIGO"){echo 'selected="selected"';} ?>>Amigo</option>
-                                          <option value="AMIGA" <?php if($edit->eemergencia_relacion2 == "AMIGA"){echo 'selected="selected"';} ?>>Amiga</option>
-                                          <option value="VECINO" <?php if($edit->eemergencia_relacion2 == "VECINO"){echo 'selected="selected"';} ?>>Vecino</option>
-                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>Compañero de trabajo</option>
-                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>Compañera de trabajo</option>
-                                          <option value="OTRO" <?php if($edit->eemergencia_relacion2 == "OTRO"){echo 'selected="selected"';} ?>>Otro</option>
+                                          <option value="PADRE" <?php if($edit->eemergencia_relacion2 == "PADRE"){echo 'selected="selected"';} ?>>PADRE</option>
+                                          <option value="MADRE" <?php if($edit->eemergencia_relacion2 == "MADRE"){echo 'selected="selected"';} ?>>MADRE</option>
+                                          <option value="HERMANO" <?php if($edit->eemergencia_relacion2 == "HERMANO"){echo 'selected="selected"';} ?>>HERMANO</option>
+                                          <option value="HERMANA" <?php if($edit->eemergencia_relacion2 == "HERMANA"){echo 'selected="selected"';} ?>>HERMANA</option>
+                                          <option value="CONYUGE" <?php if($edit->eemergencia_relacion2 == "CONYUGE"){echo 'selected="selected"';} ?>>CONYUGE</option>
+                                          <option value="PAREJA" <?php if($edit->eemergencia_relacion2 == "PAREJA"){echo 'selected="selected"';} ?>>PAREJA</option>
+                                          <option value="AMIGO" <?php if($edit->eemergencia_relacion2 == "AMIGO"){echo 'selected="selected"';} ?>>AMIGO</option>
+                                          <option value="AMIGA" <?php if($edit->eemergencia_relacion2 == "AMIGA"){echo 'selected="selected"';} ?>>AMIGA</option>
+                                          <option value="VECINO" <?php if($edit->eemergencia_relacion2 == "VECINO"){echo 'selected="selected"';} ?>>VECINO</option>
+                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>COPAÑERO DE TRABAJO</option>
+                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERA DE TRABAJO</option>
+                                          <option value="OTRO" <?php if($edit->eemergencia_relacion2 == "OTRO"){echo 'selected="selected"';} ?>>OTRO</option>
                                        </select>
                                     </div>
                                  </div>
@@ -1002,18 +1002,18 @@
                                     <div class="group flex mt-3 items-center">
                                        <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php echo $edit->efam_dentro_empresa === 'SI' ? 'checked' : ''; ?>>
                                        <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                          Sí
+                                          SI
                                        </label>
                                        <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php echo ($edit->efam_dentro_empresa === 'NO' || $edit->efam_dentro_empresa === null) ? 'checked' : ''; ?>>
                                        <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                          No
+                                          NO
                                        </label>
                                     </div>
                                  </div>
                                  <div x-show.important="open">
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                        <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">NOMBRE(s)</label>
+                                          <label class="text-[#64748b] font-semibold mb-2">NOMBRE(S)</label>
                                           <div class="group flex">
                                              <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                 <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1086,7 +1086,7 @@
                                           <div class="text-[#000] font-bold mb-2">Primer beneficiario</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">NOMBRE (s)</label>
+                                             <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1162,7 +1162,7 @@
                                              </div>
                                           </div>
                                           </div>
-                                          <div class="grid grid-cols-1">
+                                          <div class="gap-5 grid-cols-1 items-start mt-5 mx-7">
                                              <label class="text-[#64748b] font-semibold">PORCENTAJE DE DERECHO</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -1180,10 +1180,10 @@
                                     <!-- Referencia 2 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#64748b] font-semibold mb-2">Segundo beneficiario</div>
+                                          <div class="text-[#000] font-bold mb-2">Segundo beneficiario</div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">NOMBRE (s)</label>
+                                             <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                                    <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1259,7 +1259,7 @@
                                              </div>
                                           </div>
                                           </div>
-                                          <div class="grid grid-cols-1">
+                                          <div class="gap-5 grid-cols-1 items-start mt-5 mx-7">
                                              <label class="text-[#64748b] font-semibold">PORCENTAJE DE DERECHO</label>
                                              <div class="group flex">
                                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
