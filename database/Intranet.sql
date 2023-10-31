@@ -4476,6 +4476,124 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Function structure called `calculo_vacaciones`
+--
+
+DELIMITER $$
+  CREATE FUNCTION calculo_vacaciones
+  (fecha_vacaciones DATE)
+  RETURNS INT DETERMINISTIC
+  BEGIN
+    DECLARE años INT unsigned;
+    DECLARE dias INT unsigned;
+    DECLARE acum INT unsigned;
+    DECLARE acum2 INT unsigned;
+    DECLARE counter INT unsigned;
+    SET años = (SELECT TIMESTAMPDIFF(year,fecha_vacaciones, NOW()));
+    IF años = 0 THEN
+      SET dias = 0;
+    ELSEIF años = 1 THEN
+      SET dias = 12;
+    ELSEIF años = 2 THEN
+      SET dias = 14;
+    ELSEIF años = 3 THEN
+      SET dias = 16;
+    ELSEIF años = 4 THEN
+      SET dias = 18;
+    ELSEIF años = 5 THEN
+      SET dias = 20;
+    ELSE
+      SET acum = 6;
+      SET acum2 = 10;
+      SET counter = 0;
+      SET dias = 20;
+      WHILE counter = 0 DO
+        IF(acum > años AND años < acum2) THEN
+          SET counter = 1;
+        ELSE
+          SET dias = dias + 2;
+          SET acum = acum + 5;
+          SET acum2 = acum2 + 5;
+        END IF;
+      END WHILE;
+    END IF;
+    RETURN dias;
+  END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Function structure called `calculo_aniversario`
+--
+
+DELIMITER $$
+  CREATE FUNCTION calculo_aniversario(fecha_inicio_empleo DATE)
+  RETURNS INT DETERMINISTIC
+  BEGIN
+    DECLARE años_empleado INT unsigned;
+    
+    SET años_empleado = (SELECT TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()));
+    
+    RETURN años_empleado;
+  END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Function structure called `fecha_tres_meses_antes_aniversario`
+--
+
+DELIMITER $$
+  CREATE FUNCTION fecha_tres_meses_antes_aniversario(fecha_inicio_empleo DATE)
+  RETURNS DATE DETERMINISTIC
+  BEGIN
+    DECLARE fecha_aniversario DATE;
+    DECLARE fecha_anterior DATE;  -- Declarar la variable fecha_anterior
+    
+    SET fecha_aniversario = DATE_ADD(fecha_inicio_empleo, INTERVAL TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()) YEAR);
+    SET fecha_anterior = DATE_SUB(fecha_aniversario, INTERVAL 3 MONTH);
+    
+    RETURN fecha_anterior;
+  END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Function structure called `calculo_vacaciones_siguiente_anio`
+--
+
+DELIMITER $$
+  CREATE FUNCTION calculo_vacaciones_siguiente_anio(fecha_vacaciones DATE)
+  RETURNS INT DETERMINISTIC
+  BEGIN
+    DECLARE anos INT UNSIGNED;
+    DECLARE dias INT UNSIGNED;
+	  DECLARE base_dias INT UNSIGNED;
+    SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_vacaciones, NOW()));
+    IF anos = 0 THEN
+      -- No se han cumplido 1 año, no hay días de vacaciones
+      SET dias = 0;
+    ELSEIF anos = 1 THEN
+      -- Primer año, asigna días de vacaciones (por ejemplo, 12 días)
+      SET dias = 14;
+    ELSEIF anos > 1 AND anos <= 5 THEN
+      -- A partir del segundo año, asigna 2 días adicionales por año
+      SET dias = 14 + (anos - 1) * 2;
+	  ELSE
+		  SET base_dias = 20 + (FLOOR((anos - 1) / 5) * 2);
+      SET dias = base_dias + 2;
+    END IF;
+
+    RETURN dias;
+  END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `serverside_user_superadministrador`
 --
 DROP TABLE IF EXISTS `serverside_user_superadministrador`;
