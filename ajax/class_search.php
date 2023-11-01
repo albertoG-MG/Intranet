@@ -7684,7 +7684,9 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 		$expediente = new Expedientes($_SESSION['id'], null, null, null, null, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, null, null, null, null, null, null, null, null, null, null, null, null, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, null, null, null, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, null, null, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, null, null, null, null, $arraypapeleria);
 		$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 		//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
-		$expediente ->Submit_tokenexpediente($logged_user);
+		$delete_array = $_POST["delete_switch_array_json"];
+		$delete_array = json_decode($delete_array, true);
+		$expediente ->Submit_tokenexpediente($logged_user, $delete_array);
 		die(json_encode(array("success", "Se ha editado el expediente")));
 
 	}else{

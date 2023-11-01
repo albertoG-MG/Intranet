@@ -1218,7 +1218,7 @@ public static function Editar_tokenbenbanc($id_expediente, $ref_banc) {
     $crud->update('ben_bancarios', $row, 'expediente_id=:idexpediente', [':idexpediente' => $id_expediente]);
 }
 
-public function Submit_tokenexpediente($logged_user){
+public function Submit_tokenexpediente($logged_user, $delete){
     $crud = new crud();
         $object = new connection_database();
         $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
@@ -1281,25 +1281,63 @@ public function Submit_tokenexpediente($logged_user){
             $checktipospapeleria -> execute();
             $counttipospapeleria = $checktipospapeleria -> rowCount();
             foreach ($this->arraypapeleria as $i => $documento) {
-                if (!empty($documento)) {
-                    $crud = new crud();
-                    $papeleria = $i;
-                    $filename = $documento["name"];
-                    $location = "../src/documents/";
-                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                    $uploadfile = Expedientes::tempnam_sfx($location, $ext);
-                    
-                    if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
+                $crud = new crud();
+                $papeleria = $i;
+                $check_papeleria_exist = $crud -> readWithCount('papeleria_empleado', '*', 'WHERE expediente_id=:expedienteid AND tipo_archivo=:archivo', [':expedienteid' => $results_expediente['id'], ':archivo' => $papeleria]);
+                if($check_papeleria_exist['count'] == 0){
+                    if (!empty($documento)) {
+                        $filename = $documento["name"];
+                        $location = "../src/documents/";
+                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+                        if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
+                            date_default_timezone_set("America/Monterrey");
+                            $fecha_subida = date('y-m-d h:i:s');
+                            $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                        }
+                    }
+                }else{
+                    $fetch_papeleria = $check_papeleria_exist['data'][0];
+                    if(isset($fetch_papeleria['nombre_archivo']) && isset($fetch_papeleria['identificador']) && isset($documento) && isset($documento["name"])){
+                        $directory = "../src/documents/";
+                        $path = "../src/documents/".$fetch_papeleria['identificador'];
+                        $ext = pathinfo($documento["name"], PATHINFO_EXTENSION);
+                        $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
                         date_default_timezone_set("America/Monterrey");
-                        $fecha_subida = date('y-m-d h:i:s');
-                        $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                        $date = date('Y-m-d H:i:s');
+                        if(move_uploaded_file($documento['tmp_name'],$uploadfile)){
+                            $crud->update('papeleria_empleado', ['nombre_archivo' => $documento["name"],
+                            'identificador' => basename($uploadfile), 'fecha_subida' => $date], "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $papeleria, 'idexpediente' => $results_expediente['id']]);
+                            if(file_exists($path)){
+                                $crud->store('historial_papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'viejo_nombre_archivo' => $fetch_papeleria['nombre_archivo'], 'viejo_identificador' => $fetch_papeleria['identificador'], 'vieja_fecha_subida' => $fetch_papeleria['fecha_subida']]);
+                            }
+                        }
+                    }else if(isset($fetch_papeleria['nombre_archivo']) && isset($fetch_papeleria['identificador']) && !(isset($documento)) && !(isset($documento["name"]))){
+                        if($delete[$papeleria] == "true"){
+                            $directory = "../src/documents/";
+                            $path = "../src/documents/".$fetch_papeleria['identificador'];
+                            if(!file_exists($path)){
+                                $crud -> delete('papeleria_empleado', "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $papeleria, ":idexpediente" => $results_expediente['id']]);
+                            }else{
+                                unlink($directory.$fetch_papeleria['identificador']);
+                                $crud -> delete('papeleria_empleado', "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $papeleria, ":idexpediente" => $results_expediente['id']]);
+                            }
+                        }
+                    }else if(!isset($fetch_papeleria['nombre_archivo']) && !isset($fetch_papeleria['identificador']) && isset($documento) && isset($documento["name"])){
+                        $directory = "../src/documents/";
+                        $ext = pathinfo($documento["name"], PATHINFO_EXTENSION);
+                        $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
+                        date_default_timezone_set("America/Monterrey");
+                        $date = date('Y-m-d H:i:s');
+                        if(move_uploaded_file($documento['tmp_name'],$uploadfile)){
+                            $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $documento["name"],
+                            'identificador' => basename($uploadfile), 'fecha_subida' => $date]);
+                        }
                     }
                 }
             }
             date_default_timezone_set("America/Monterrey");
-            $fecha_estatus = date('Y-m-d');
-            $crud -> store('estatus_empleado', ['expedientes_id' => $results_expediente['id'], 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
-        }else{
+ }else{
             $crud->store('expedientes', ['users_id' => $_SESSION['id'], 'numero_expediente' => $this->numero_expediente, 'numero_nomina' => $this->numero_nomina, 'numero_asistencia' => $this->asistencia_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]);
             $id_expediente = $object -> _db -> lastInsertId();
             if(!(is_null($this->referencias))){
@@ -1332,9 +1370,7 @@ public function Submit_tokenexpediente($logged_user){
                 }
             }
             date_default_timezone_set("America/Monterrey");
-            $fecha_estatus = date('Y-m-d');
-            $crud -> store('estatus_empleado', ['expedientes_id' => $id_expediente, 'situacion_del_empleado' => "ALTA", 'estatus_del_empleado' => "NUEVO INGRESO", 'fecha' => $fecha_estatus]);
-        }
+  }
     }
 
 }

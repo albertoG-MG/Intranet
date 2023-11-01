@@ -4269,6 +4269,76 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log y envía una nueva notificación al usuario sobre el token enviado `log_notificaciones_expedientes_enviado`
+--
+DELIMITER $$
+
+CREATE TRIGGER log_notificaciones_expediente_enviado
+AFTER UPDATE ON expedientes
+FOR EACH ROW
+BEGIN
+    IF NEW.estatus_expediente = 6 THEN
+        INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, expediente_id, accion)
+        SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.id, "ACTUALIZAR" 
+        FROM usuarios 
+        WHERE NEW.users_id = usuarios.id;
+
+        INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+        VALUES (NEW.users_id, "Expedientes", "Expediente enviado", "Su expediente se envió correctamente a revisión, se te notificará cuando tu expediente sea aprovado/rechazado.", "0");
+    END IF;
+END$$
+
+DELIMITER ;
+-- --------------------------------------------------------
+--
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log y envía una nueva notificación al usuario sobre el token aprobado `log_notificaciones_expedientes_aprobado`
+--
+DELIMITER $$
+
+CREATE TRIGGER log_notificaciones_expediente_aprobado
+AFTER UPDATE ON expedientes
+FOR EACH ROW
+BEGIN
+    IF NEW.estatus_expediente = 1 THEN
+        INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, expediente_id, accion)
+        SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.id, "ACTUALIZAR" 
+        FROM usuarios 
+        WHERE NEW.users_id = usuarios.id;
+
+        INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+        VALUES (NEW.users_id, "Expedientes", "Expediente aprobado", "¡Su expediente ha sido aprobado! Puede consultar su información en su perfil.", "0");
+    END IF;
+END$$
+
+DELIMITER ;
+-- --------------------------------------------------------
+--
+
+--
+-- Estructura para el trigger que guarda el evento de insertar de la tabla expedientes en la tabla_expedientes_log y envía una nueva notificación al usuario sobre el token rechazado `log_notificaciones_expedientes_rechazado`
+--
+DELIMITER $$
+
+CREATE TRIGGER log_notificaciones_expediente_rechazado
+AFTER UPDATE ON expedientes
+FOR EACH ROW
+BEGIN
+    IF NEW.estatus_expediente = 2 THEN
+        INSERT INTO tabla_expedientes_log (logged_usuario, data_usuario, expediente_id, accion)
+        SELECT COALESCE(@logged_user, CURRENT_USER()), CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat), NEW.id, "ACTUALIZAR" 
+        FROM usuarios 
+        WHERE NEW.users_id = usuarios.id;
+
+        INSERT INTO alerta_notificaciones (notificado_a, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus)
+        VALUES (NEW.users_id, "Expedientes", "Expediente rechazado", "¡Su expediente ha sido rechazado! .", "0");
+    END IF;
+END$$
+
+DELIMITER ;
+-- --------------------------------------------------------
+
 -- Estructura para el trigger que inserta en la tabla alerta_notificaciones cuando se asigna un token a un expediente 
 --
 
