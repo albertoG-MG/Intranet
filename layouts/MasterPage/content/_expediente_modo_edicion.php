@@ -28,6 +28,12 @@
                         </div>
                      </div>
                   </div>
+
+                  <div class="bg-white p-3 shadow-md rounded-b">
+                     <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
+                        <b>NOTA: </b> Todos los campos que cuentan con un asterisco (<label style="color:red;"> *</label>) son de caracter <B>OBLIGATORIO</B><br>
+                         Para que su expediente sea revisado por el departamento de CH es necesario llenar todos estos campos.
+                     </div>
                   <div class="bg-white p-3 shadow-md rounded-b">
                   <?php if($fetch_token_user->exp_date >= $curDate){ ?>
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 mt-5 gap-3'>
@@ -502,7 +508,7 @@
                                     <!-- Referencia 1 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#000] font-bold mb-2">Primer referencia</div>
+                                          <div class="text-[#000] font-bold mb-2">Primer referencia  <label style="color:red;"> *</label></div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                              <div class="grid grid-cols-1">
                                                 <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
@@ -1083,7 +1089,7 @@
                                     <!-- Referencia 1 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#000] font-bold mb-2">Primer beneficiario</div>
+                                          <div class="text-[#000] font-bold mb-2">Primer beneficiario  <label style="color:red;"> *</label></div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
@@ -1274,6 +1280,7 @@
                                     </div>
                                  </div>
                               </div>
+                              <?php if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){ ?>
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-celeste mt-5 font-semibold">Cuenta bancaria personal <label style="color:red;"> *</label></h2>
                                  <span class="text-[#64748b]">En esta sección se encuentran las credenciales bancarias personales del empleado.</span>
@@ -1325,6 +1332,7 @@
                                     </div>
                                  </div>
                               </div>
+                              <?php } ?>
                               <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior2" name="anterior2" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>

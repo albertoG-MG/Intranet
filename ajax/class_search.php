@@ -6795,6 +6795,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$refbanc = null;
 	}
 
+if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 	//CUENTA BANCARIA PERSONAL
 	if(empty($_POST["banco_personal"])){
 		$banco_personal = null;
@@ -6837,6 +6838,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$plastico_personal = $_POST["plastico_personal"];
 		}
 	}
+}else{
+	$banco_personal = null;
+	$cuenta_personal = null;
+	$clabe_personal = null;
+	$plastico_personal = null;
+}
 
 
 			$expediente = new Expedientes($_SESSION['id'], null, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal,null,null,null,null);
@@ -7575,6 +7582,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$refbanc = null;
 	}
 
+	if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 	//CUENTA BANCARIA PERSONAL
 	if(empty($_POST["banco_personal"])){
 		$banco_personal = null;
@@ -7617,6 +7625,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$plastico_personal = $_POST["plastico_personal"];
 		}
 	}
+}else{
+	$banco_personal = null;
+	$cuenta_personal = null;
+	$clabe_personal = null;
+	$plastico_personal = null;
+}
 /** 
 		=============================================     TERMINA LA VALIDACIÓN DE LOS DATOS BANCARIOS 			=============================================
 */
