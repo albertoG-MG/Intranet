@@ -908,13 +908,7 @@ class expedientes {
     /** 
      * & AQUI SE CAMBIA EL ESTATUS DEL EXPEDIENTE A "ASIGNADO"
      */
-        $check_exp = $object->_db->prepare("SELECT expedientes.id  FROM expedientes WHERE expedientes.users_id = :user_id");
-        $check_exp->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
-        $check_exp->execute();
-        $SelectId = $check_exp->fetch(PDO::FETCH_ASSOC);
-        $id_expediente = $SelectId['id'];
-        $crud -> update('expedientes', ['estatus_expediente' => 3], "id=:idexpediente", [':idexpediente' => $id_expediente]);
-   
+        $crud -> update('expedientes', ['estatus_expediente' => 3], "id=:idexpediente", [':idexpediente' => $id]);
     }
 
     public static function Eliminar_Token($eliminar_token){
