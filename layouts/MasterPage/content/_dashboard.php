@@ -13,36 +13,62 @@
 
     <?php
     /* 
-    &  MENSAJE QUE MUESTRA EL ESTATUS DE TU EXPEDIENTE 
+    & ------------------ APARTADO DE MENSAJES SOBRE TU EXPEDIENTE ----------------------------
     */ 
-    $check_estatus = $object->_db->prepare("SELECT expedientes.estatus_expediente, token_expediente.link, token_expediente.exp_date  FROM expedientes INNER JOIN token_expediente ON expedientes.id = token_expediente.expedientes_id WHERE expedientes.users_id = :user_id");
+
+    //Consulta para revisar el estatus expediente
+    $check_estatus = $object->_db->prepare("SELECT expedientes.estatus_expediente, token_expediente.link, token_expediente.exp_date, expedientes.id as expediente_id  FROM expedientes INNER JOIN token_expediente ON expedientes.id = token_expediente.expedientes_id WHERE expedientes.users_id = :user_id");
     $check_estatus->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
     $check_estatus->execute();
-    
     $SelectEstatus = $check_estatus->fetch(PDO::FETCH_ASSOC);
+
     if ($SelectEstatus !== false) { // Si se encontraron resultados
         $estatus_expediente = $SelectEstatus['estatus_expediente'];
         $link = $SelectEstatus['link'];
         $exp_date = $SelectEstatus['exp_date'];
+        $idExpediente = $SelectEstatus['expediente_id'];
+
+        //Consulta para revisar la cantidad de papeleria_empleado
+        $papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid WHERE tipo_papeleria.nombre NOT IN('EVALUACION PSICOMETRICA' , 'COMPROBANTE DE ESTUDIOS' , 'CARTA DE RECOMENDACION LABORAL' , 'CARTA DE RECOMENDACION PERSONAL' , 'AVISO DE RETENCION CREDITO INFONAVIT' , 'ACTA DE MATRIMONIO' , 'IMAGEN DE DATOS BANCARIOS' , 'CONTRATO DETERMINADO' , 'PRESTADOR DE SERVICIOS' , 'CONVENIO DE CONFIDENCIALIDAD' , 'CONTRATO INDETERMINADO' , 'ALTA DE IMSS' , 'CONTRATO NOMINA BANCARIA' , 'REGLAMENTO INTERIOR DEL TRABAJO' , 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS' , 'MODIFICACION SALARIAL', 'BAJA ANTE IMSS') order by id asc");
+        $papeleria->execute(array(':expedienteid' => $idExpediente));
+        $array_papeleria = $papeleria -> fetchAll(PDO::FETCH_ASSOC);
 
         $fecha = date("d/m/Y", strtotime($exp_date)); // Obtener la fecha sin horas y en formato d-m-y
     
-        if ($estatus_expediente == 3) {  // En caso de que el estatus sea asignado   
 
-        ?>
+        //Condición para mostrar el mensaje de expediente incompleto o asignado
+        if ($estatus_expediente == 3) {  // En caso de que el estatus sea asignado   ?>
+                <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
+                    <span class="font-medium"> SE LE ASIGNO UN EXPEDIENTE. </span>  <a href="<?php echo $link ?>" class="text-yellow-800"><u>Haz clic aquí para acceder</u></a>.
+                    <br><p class="font-medium" style="font-style: italic; color: #c6910f;">Favor de llenarlo antes del:  <?php echo $fecha ?></p>
+                </div> <?php
+             } else if ($estatus_expediente == 4) { // En caso de que el estatus sea revisión  ?>
+                <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
+                <svg class="w-5 h-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13,2V4C17.39,4.54 20.5,8.53 19.96,12.92C19.5,16.56 16.64,19.43 13,19.88V21.88C18.5,21.28 22.45,16.34 21.85,10.85C21.33,6.19 17.66,2.5 13,2M11,2C9.04,2.18 7.19,2.95 5.67,4.2L7.1,5.74C8.22,4.84 9.57,4.26 11,4.06V2.06M4.26,5.67C3,7.19 2.24,9.04 2.05,11H4.05C4.24,9.58 4.8,8.23 5.69,7.1L4.26,5.67M2.06,13C2.26,14.96 3.03,16.81 4.27,18.33L5.69,16.9C4.81,15.77 4.24,14.42 4.06,13H2.06M7.06,18.37L5.67,19.74C7.18,21 9.04,21.79 11,22V20C9.58,19.82 8.23,19.25 7.1,18.37H7.06M13,13V7H11V13H13M13,17V15H11V17H13Z" /></svg>
+                    <span class="font-medium">SU EXPEDIENTE SE ENCUENTRA INCOMPLETO.  </span> <?php echo count($array_papeleria) ?> <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
+                    <br><p class="font-medium" style="font-style: italic; color: #ff0200;">Favor de llenar todos los datos obligatorios antes del:  <?php echo $fecha ?></p>
+                </div>   <?php
 
-            <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
-                <span class="font-medium">SE LE ASIGNO UN EXPEDIENTE. </span>  <a href="<?php echo $link ?>" class="text-yellow-800"><u>Haz clic aquí para acceder</u></a>.
-                <br><p class="font-medium" style="font-style: italic; color: #c6910f;">Favor de llenarlo antes del:  <?php echo $fecha ?></p>
-            </div> <?php
-        } else if ($estatus_expediente == 4) { // En caso de que el estatus sea revisión  ?>
-            <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
-                <span class="font-medium">SU EXPEDIENTE SE ENCUENTRA INCOMPLETO.  </span>  <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
-                <br><p class="font-medium" style="font-style: italic; color: #ff0200;">Favor de llenar todos los datos obligatorios antes del:  <?php echo $fecha ?></p>
-            </div>   <?php
-        }
+                    //Condición para mandar el mensaje de papelería incompleta
+                    if (count($array_papeleria) < 7 ) {   ?>
+                        <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg  bg-red-50" role="alert">
+                            <span class="font-medium">Tiene papelería pendiente de subir en su expediente.</span> 
+                        </div> <?php
+                    } else if (count($array_papeleria) < 8 && Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico") { // En caso de que el empleado sea técnico  ?>
+                        <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
+                            <span class="font-medium">Tiene papelería pendiente de subir en su expediente.</span>  
+                        </div>   <?php
+                    }
+                }
+
     }
+
+    
+/*
+  & --------------------------------  FIN APARTADO DE MENSAJES SOBRE TU EXPEDIENTE -------------------------
+ */   
        ?>  
+       
     
     <div class="mt-4">
     <div class=" bg-white overflow-hidden shadow-xl rounded-lg" style="background-image: url(../src/img/Atomos-Sinttecom.png); background-size: cover; background-position:center; background-repeat:no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">      
