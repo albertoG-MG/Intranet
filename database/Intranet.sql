@@ -4546,17 +4546,24 @@ DELIMITER ;
 --
 
 DELIMITER $$
-  CREATE FUNCTION fecha_tres_meses_antes_aniversario(fecha_inicio_empleo DATE)
-  RETURNS DATE DETERMINISTIC
-  BEGIN
-    DECLARE fecha_aniversario DATE;
-    DECLARE fecha_anterior DATE;  -- Declarar la variable fecha_anterior
-    
-    SET fecha_aniversario = DATE_ADD(fecha_inicio_empleo, INTERVAL TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()) YEAR);
-    SET fecha_anterior = DATE_SUB(fecha_aniversario, INTERVAL 3 MONTH);
-    
-    RETURN fecha_anterior;
-  END$$
+	CREATE FUNCTION fecha_tres_meses_antes_aniversario(fecha_inicio_empleo DATE)
+	RETURNS DATE DETERMINISTIC
+	BEGIN
+		DECLARE fecha_aniversario_actual DATE;
+		DECLARE fecha_aniversario_siguiente DATE;
+		DECLARE fecha_anterior DATE;
+		
+		-- Obtén la fecha del aniversario del año actual
+		SET fecha_aniversario_actual = DATE_ADD(fecha_inicio_empleo, INTERVAL TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()) YEAR);
+		
+		-- Obtén la fecha del aniversario del próximo año
+		SET fecha_aniversario_siguiente = DATE_ADD(fecha_aniversario_actual, INTERVAL 1 YEAR);
+		
+		-- Retrocede 3 meses desde el aniversario del próximo año
+		SET fecha_anterior = DATE_SUB(fecha_aniversario_siguiente, INTERVAL 3 MONTH);
+		
+		RETURN fecha_anterior;
+	END$$
 DELIMITER ;
 
 -- --------------------------------------------------------
