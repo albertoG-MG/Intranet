@@ -4594,6 +4594,44 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Function structure called `calculo_vacaciones_anio_anterior`
+--
+
+DELIMITER $$
+CREATE FUNCTION calculo_vacaciones_anio_anterior(fecha_vacaciones DATE)
+RETURNS INT DETERMINISTIC
+	BEGIN
+		DECLARE anos INT UNSIGNED;
+		DECLARE dias INT UNSIGNED;
+		DECLARE base_dias INT UNSIGNED;
+    DECLARE ajuste INT UNSIGNED;
+		SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_vacaciones, NOW()));
+		IF anos <= 1 THEN
+			-- No se han cumplido 1 año o es el primer año, no hay días de vacaciones en el año anterior
+			SET dias = 0;
+		ELSEIF anos = 2 THEN
+			-- A partir del segundo año, asigna días de vacaciones del año anterior (por ejemplo, 12 días)
+			SET dias = 12;
+		ELSEIF anos >= 3 AND anos <= 6 THEN
+			-- A partir del tercer año y sexto año, asigna 2 días adicionales por año en el año anterior
+			SET dias = 12 + (anos - 2) * 2;
+			IF dias > 18 + (6 - 3) * 2 THEN
+				SET dias = 18 + (6 - 3) * 2;
+			END IF;
+		ELSE	
+			 -- A partir del séptimo año, se aplica una regla de ajuste cada 5 años
+			 SET base_dias = 20;  -- Número base de días a partir del sexto año
+			 SET ajuste = FLOOR((anos - 6) / 5) * 2;  -- Ajuste cada 5 años
+			 SET dias = base_dias + ajuste;
+		END IF;
+
+		RETURN dias;
+	END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `serverside_user_superadministrador`
 --
 DROP TABLE IF EXISTS `serverside_user_superadministrador`;
