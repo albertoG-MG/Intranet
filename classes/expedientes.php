@@ -531,7 +531,7 @@ class expedientes {
 	 * *	Metodo encargado para crear expedientes desde el botón de guardado final
 	 * *    =========================================================================
 	*/
-    public function Crear_expediente($logged_user){
+    public function Crear_expediente($logged_user, $delete = array()){
         $crud = new crud();
         $object = new connection_database();
         $set_logged_user = $object -> _db -> prepare("SET @logged_user = :loggeduser");
@@ -578,18 +578,58 @@ class expedientes {
             $checktipospapeleria -> execute();
             $counttipospapeleria = $checktipospapeleria -> rowCount();
             foreach ($this->arraypapeleria as $i => $documento) {
-                if (!empty($documento)) {
-                    $crud = new crud();
-                    $papeleria = $i;
-                    $filename = $documento["name"];
-                    $location = "../src/documents/";
-                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                    $uploadfile = Expedientes::tempnam_sfx($location, $ext);
-                    
-                    if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
+                $crud = new crud();
+                $papeleria = $i;
+                $check_papeleria_exist = $crud -> readWithCount('papeleria_empleado', '*', 'WHERE expediente_id=:expedienteid AND tipo_archivo=:archivo', [':expedienteid' => $results_expediente['id'], ':archivo' => $papeleria]);
+                if($check_papeleria_exist['count'] == 0){
+                    if (!empty($documento)) {
+                        $filename = $documento["name"];
+                        $location = "../src/documents/";
+                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                        $uploadfile = Expedientes::tempnam_sfx($location, $ext);
+                        if (move_uploaded_file($documento['tmp_name'], $uploadfile)) {
+                            date_default_timezone_set("America/Monterrey");
+                            $fecha_subida = date('y-m-d h:i:s');
+                            $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                        }
+                    }
+                }else{
+                    $fetch_papeleria = $check_papeleria_exist['data'][0];
+                    if(isset($fetch_papeleria['nombre_archivo']) && isset($fetch_papeleria['identificador']) && isset($documento) && isset($documento["name"])){
+                        $directory = "../src/documents/";
+                        $path = "../src/documents/".$fetch_papeleria['identificador'];
+                        $ext = pathinfo($documento["name"], PATHINFO_EXTENSION);
+                        $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
                         date_default_timezone_set("America/Monterrey");
-                        $fecha_subida = date('y-m-d h:i:s');
-                        $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $filename, 'identificador' => basename($uploadfile), 'fecha_subida' => $fecha_subida]);
+                        $date = date('Y-m-d H:i:s');
+                        if(move_uploaded_file($documento['tmp_name'],$uploadfile)){
+                            $crud->update('papeleria_empleado', ['nombre_archivo' => $documento["name"],
+                            'identificador' => basename($uploadfile), 'fecha_subida' => $date], "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $papeleria, 'idexpediente' => $results_expediente['id']]);
+                            if(file_exists($path)){
+                                $crud->store('historial_papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'viejo_nombre_archivo' => $fetch_papeleria['nombre_archivo'], 'viejo_identificador' => $fetch_papeleria['identificador'], 'vieja_fecha_subida' => $fetch_papeleria['fecha_subida']]);
+                            }
+                        }
+                    }else if(isset($fetch_papeleria['nombre_archivo']) && isset($fetch_papeleria['identificador']) && !(isset($documento)) && !(isset($documento["name"]))){
+                        if($delete[$papeleria] == "true"){
+                            $directory = "../src/documents/";
+                            $path = "../src/documents/".$fetch_papeleria['identificador'];
+                            if(!file_exists($path)){
+                                $crud -> delete('papeleria_empleado', "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $papeleria, ":idexpediente" => $results_expediente['id']]);
+                            }else{
+                                unlink($directory.$fetch_papeleria['identificador']);
+                                $crud -> delete('papeleria_empleado', "tipo_archivo=:tipo AND expediente_id=:idexpediente", [":tipo" => $papeleria, ":idexpediente" => $results_expediente['id']]);
+                            }
+                        }
+                    }else if(!isset($fetch_papeleria['nombre_archivo']) && !isset($fetch_papeleria['identificador']) && isset($documento) && isset($documento["name"])){
+                        $directory = "../src/documents/";
+                        $ext = pathinfo($documento["name"], PATHINFO_EXTENSION);
+                        $uploadfile = Expedientes::tempnam_sfx($directory, $ext);
+                        date_default_timezone_set("America/Monterrey");
+                        $date = date('Y-m-d H:i:s');
+                        if(move_uploaded_file($documento['tmp_name'],$uploadfile)){
+                            $crud->store('papeleria_empleado', ['expediente_id' => $results_expediente['id'], 'tipo_archivo' => $papeleria, 'nombre_archivo' => $documento["name"],
+                            'identificador' => basename($uploadfile), 'fecha_subida' => $date]);
+                        }
                     }
                 }
             }

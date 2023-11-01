@@ -3810,7 +3810,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$expediente = new Expedientes($select2, $numero_expediente, $numero_nomina, $asistencia_empleado, $puesto, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, $posee_telempresa, $marcacion, $serie, $sim, $numred, $modelotel, $marcatel, $imei, $posee_laptop, $marca_laptop, $modelo_laptop, $serie_laptop, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, $salario_contrato, $salario_fechaalta, $observaciones, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, $capacitacion, $antidoping, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, $banco_nomina, $cuenta_nomina, $clabe_nomina, $plastico, $arraypapeleria);
 				$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 				//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
-				$expediente ->Crear_expediente($logged_user);
+				$delete_array = $_POST["delete_switch_array_json"];
+				$delete_array = json_decode($delete_array, true);
+				$expediente ->Crear_expediente($logged_user, $delete_array);
 				//Estatus
 				$situacion = null;
 				$estatus_empleado = null;
