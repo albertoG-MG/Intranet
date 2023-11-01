@@ -3273,7 +3273,7 @@
                     var array = $.parseJSON(response);
 					if (array[0] == "success") {
                         Swal.fire({
-                            title: "Expediente Creado",
+                            title: "Expediente Editado",
                             text: array[1],
                             icon: "success"
                         }).then(function() {
