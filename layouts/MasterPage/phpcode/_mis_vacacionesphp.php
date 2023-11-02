@@ -297,9 +297,9 @@
                     $acumulador_dias = $acumulador_dias - $fetch_sum_vacaciones->dias_solicitados;
                 }else{
                     $acumulador_dias = 0;
+                    $vacaciones_dias = 0;
                 }
                 $dias_restantes = $acumulador_dias;
-                $vacaciones_dias = 0;
             //El else en caso de que el usuario tenga vacaciones disponibles
             }else{
                 //Checar si es el aniversario
@@ -314,14 +314,14 @@
                     $check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
                     $fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
 
-                    $vacaciones_dias = $dias_anterior_anio;
-
                     //Verifica si el usuario ya se gasto sus vacaciones del año actual antes del aniversario
                     $dias_restantes  = $dias_anterior_anio - $fetch_sum_vacaciones->dias_solicitados;
                     if($dias_restantes <= 0){
                         $acumulador_dias = $dias_restantes + $dias_vacaciones;
+                        $vacaciones_dias = $dias_vacaciones;
                     }else{
                         $acumulador_dias = $dias_restantes;
+                        $vacaciones_dias = $dias_anterior_anio;
                     }
                     $dias_restantes = $acumulador_dias;
                 }else{
@@ -334,7 +334,6 @@
 
                     //Verifica si el usuario ya se gasto sus vacaciones del año actual antes del aniversario
                     $dias_restantes  = $dias_vacaciones - $fetch_sum_vacaciones->dias_solicitados;
-
                 }
             }                      
         }
