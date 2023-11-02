@@ -5317,16 +5317,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			return abs(round($diff / 86400));
 		}
 
-		function check_negative($value){
-			if (isset($value)){
-				if (substr(strval($value), 0, 1) == "-"){
-					return true;
-				}else{
-					return false;
-				}
-			}
-		}
-
 		if(empty($_POST["periodo_vacaciones"])){
 			die(json_encode(array("error", "El período vacacional no puede estar vacío")));
 		}else if(!preg_match("/^\d{4}\/\d{2}\/\d{2}+[\s]-[\s]\d{4}\/\d{2}\/\d{2}$/", $_POST["periodo_vacaciones"])){
@@ -5349,51 +5339,105 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		//Se calcula las vacaciones disponibles
 		$fecha_estatus = $fetch_status -> estatus_fecha;
-		$hoy =  date("Y-m-d");
+		//Convertir la fecha de estatus en un objeto datetime
+		$fecha_estatus = new DateTime($fecha_estatus);
 
-		$d1 = new DateTime($hoy);
-		$d2 = new DateTime($fecha_estatus);
-		$diff = $d2->diff($d1);
-		if($diff->y == 0) {
-			$vacaciones = 0;
-		}else if($diff->y == 1) {
-			$vacaciones=12;
-		}else if($diff->y == 2){
-			$vacaciones=14;
-		}else if($diff->y == 3){
-			$vacaciones=16;
-		}else if($diff->y == 4){
-			$vacaciones=18;
-		}else if($diff->y == 5){
-			$vacaciones=20;
+
+		$aniversario = $object ->_db -> prepare("SELECT calculo_aniversario_fecha(:fecha_estatus) AS aniversario");
+    	$aniversario -> execute(array(':fecha_estatus' => $fecha_estatus));
+        $aniversary = $aniversario->fetchColumn();
+
+		//Sacar los días restantes en caso de que el usuario tenga vacaciones disponibles
+        //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
+        $getVacaciones = $object -> _db -> prepare("SELECT calculo_vacaciones(:fecha_estatus) AS dias_vacaciones");
+        $getVacaciones -> execute(array(':fecha_estatus' => $fecha_estatus));
+		$dias_vacaciones = $getVacaciones->fetchColumn();
+
+		// Obtener la fecha de 3 meses antes del aniversario
+		$aniversario_3_meses = $object->_db->prepare("SELECT fecha_tres_meses_antes_aniversario(:fecha_estatus) AS aniversario_3_meses");
+		$aniversario_3_meses->execute(array(':fecha_estatus' => $fecha_estatus));
+		$fecha_aniversario_3_meses = $aniversario_3_meses->fetchColumn();
+
+		//Esta función obtiene las vacaciones del siguiente año
+		$getVacacionesSiguienteanio = $object -> _db -> prepare("SELECT calculo_vacaciones_siguiente_anio(:fecha_estatus) AS vacaciones_siguiente_anio");
+		$getVacacionesSiguienteanio -> execute(array(':fecha_estatus' => $fecha_estatus));
+		$dias_siguiente_anio = $getVacacionesSiguienteanio->fetchColumn();
+
+		//Esta función obtiene las vacaciones del año pasado
+		$getVacacionesanioAnterior = $object -> _db -> prepare("SELECT calculo_vacaciones_anio_anterior(:fecha_estatus) AS vacaciones_anterior_anio");
+		$getVacacionesanioAnterior -> execute(array(':fecha_estatus' => $fecha_estatus));
+		$dias_anterior_anio = $getVacacionesanioAnterior->fetchColumn();
+
+		$acumulador_dias = 0;
+        $vacaciones_dias = 0;
+
+		if ($dias_vacaciones == 0) {
+			//Checar si el empleado ya esta dentro del rango de 3 meses
+			$fecha_aniversario_3_meses = new DateTime($fecha_aniversario_3_meses);
+			$diffYears = $fecha_estatus->format('Y') - $fecha_aniversario_3_meses->format('Y');
+			$diffMonths = $fecha_estatus->format('m') - $fecha_aniversario_3_meses->format('m');
+			$totalDiffMonths = $diffYears * 12 + $diffMonths;
+
+			if ($totalDiffMonths <= 3) {
+			//Si el empleado ya cumplió los 3 meses antes del aniversario debemos asignar los siguiente días de vacaciones al acumulador
+				$acumulador_dias = $dias_siguiente_anio;
+				$vacaciones_dias = $dias_siguiente_anio;
+				//Checa todas las solicitudes que el usuario ha hecho en el transcurso del año
+				$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
+				$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+				$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
+
+				//Calcula los días restantes del empleado
+				$acumulador_dias = $acumulador_dias - $fetch_sum_vacaciones->dias_solicitados;
+			}else{
+				$acumulador_dias = 0;
+			}
+			$dias_restantes = $acumulador_dias;
+			$vacaciones_dias = 0;
+		//El else en caso de que el usuario tenga vacaciones disponibles
 		}else{
-			$acum=6;
-			$acum2=10;
-			$vacaciones=20;
-			$counter=0;
-			do {
-				if(($acum > $diff->y) && ($diff->y < $acum2)){
-					$counter++;
+			//Checar si es el aniversario
+			$fecha_aniversario_3_meses = new DateTime($fecha_aniversario_3_meses);
+			$diffYears = $fecha_estatus->format('Y') - $fecha_aniversario_3_meses->format('Y');
+			$diffMonths = $fecha_estatus->format('m') - $fecha_aniversario_3_meses->format('m');
+			$totalDiffMonths = $diffYears * 12 + $diffMonths;
+			
+			if ($totalDiffMonths <= 3) {
+				//Checa todas las solicitudes que el usuario ha hecho en el transcurso del año
+				$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
+				$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+				$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
+
+				$vacaciones_dias = $dias_anterior_anio;
+
+				//Verifica si el usuario ya se gasto sus vacaciones del año actual antes del aniversario
+				$dias_restantes  = $dias_anterior_anio - $fetch_sum_vacaciones->dias_solicitados;
+				if($dias_restantes <= 0){
+					$acumulador_dias = $dias_restantes + $dias_vacaciones;
 				}else{
-					$vacaciones = $vacaciones + 2;
-					$acum = $acum + 5;
-					$acum2 = $acum2 + 5;
+					$acumulador_dias = $dias_restantes;
 				}
-			} while($counter <= 1);
+				$dias_restantes = $acumulador_dias;
+			}else{
+				//Checa todas las solicitudes que el usuario ha hecho en el transcurso del año
+				$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
+				$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
+				$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
+				
+				$vacaciones_dias = $dias_vacaciones;
+
+				//Verifica si el usuario ya se gasto sus vacaciones del año actual antes del aniversario
+				$dias_restantes  = $dias_vacaciones - $fetch_sum_vacaciones->dias_solicitados;
+
+			}
 		}
 
-		//Se calculan los días ya usados y se obtienen las vacaciones restantes
-		$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
-		$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
-		$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
 
-		$dias_restantes = $vacaciones - $fetch_sum_vacaciones -> dias_solicitados;
 		$dias_restantes = $dias_restantes - $days;
 
-		if(check_negative($dias_restantes)){
-			die(json_encode(array("error", "El número de días solicitados sobrepasa el número de vacaciones restantes")));
+		if($dias_restantes <= 0){
+			die(json_encode(array("error", "El número de días solicitados sobrepasa el número de vacaciones restantes ó simplemente no tienes vacaciones disponibles")));
 		}
-
 
 		switch($_POST["method"]){
             case "store":
@@ -5402,8 +5446,8 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$check_update_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
 				$check_update_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
 				$fetch_update_sum_vacaciones = $check_update_vacaciones -> fetch(PDO::FETCH_OBJ);
-				$new_dias_restantes = $vacaciones - $fetch_update_sum_vacaciones -> dias_solicitados;
-                die(json_encode(array("success", "Se ha subido su solicitud de vacaciones!", $new_dias_restantes)));
+				$new_dias_restantes = $dias_restantes - $fetch_update_sum_vacaciones -> dias_solicitados;
+                die(json_encode(array("success", "Se ha subido su solicitud de vacaciones!", $new_dias_restantes, $vacaciones_dias)));
             break;
         }
 	}

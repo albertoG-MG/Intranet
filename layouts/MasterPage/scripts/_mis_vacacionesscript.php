@@ -542,6 +542,7 @@
                                                 var table = $('#datatable').DataTable();
                                                 table.ajax.reload();
                                                 $("#dias_restantes").html(array[2]+ " día(s)");
+                                                $("#vacaciones_disponibles").html(array[3]+ " días");
                                             });
                                         }else if(array[0] == "error"){
                                             Swal.fire({
