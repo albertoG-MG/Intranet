@@ -4671,7 +4671,7 @@ DELIMITER $$
     SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_vacaciones, NOW()));
     IF anos = 0 THEN
       -- No se han cumplido 1 año, no hay días de vacaciones
-      SET dias = 0;
+      SET dias = 12;
     ELSEIF anos = 1 THEN
       -- Primer año, asigna días de vacaciones (por ejemplo, 12 días)
       SET dias = 14;
