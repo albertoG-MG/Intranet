@@ -203,8 +203,6 @@
     $countexpediente = $checkifhasexpediente -> rowCount();
     
     if($countexpediente > 0){
-        $fecha_estatus;
-        $hoy =  date("Y-m-d");
 
         $check_information = $object->_db->prepare("SELECT expedientes.id as expid, expedientes.users_id as userid, expedientes.numero_expediente as enumero_expediente, expedientes.estudios as eestudios, expedientes.puesto as epuesto, expedientes.posee_correo as eposee_correo, expedientes.correo_adicional as ecorreo_adicional, expedientes.calle as ecalle, expedientes.num_interior as enum_interior, expedientes.num_exterior as enum_exterior, expedientes.colonia as ecolonia, expedientes.estado_id as eestado, expedientes.municipio_id as emunicipio, expedientes.codigo as ecodigo, expedientes.tel_dom as etel_dom, expedientes.posee_telmov as eposee_telmov, expedientes.tel_mov as etel_mov, expedientes.posee_telempresa as eposee_telempresa, expedientes.marcacion as emarcacion, expedientes.serie as eserie, expedientes.sim as esim, expedientes.numerored_empresa as enumred, expedientes.modelotel_empresa as modeltel, expedientes.marcatel_empresa as marcatel, expedientes.imei as eimei, expedientes.posee_laptop as eposee_laptop, expedientes.marca_laptop as emarca_laptop, expedientes.modelo_laptop as emodelo_laptop, expedientes.serie_laptop as eserie_laptop, expedientes.casa_propia as ecasa_propia, expedientes.ecivil as eecivil, expedientes.posee_retencion as eposee_retencion, expedientes.monto_mensual as emonto_mensual, expedientes.fecha_nacimiento as efecha_nacimiento, expedientes.fecha_inicioc as efecha_inicioc, expedientes.fecha_alta as efecha_alta, expedientes.salario_contrato as esalario_contrato, expedientes.salario_fechaalta as esalario_fechaalta, expedientes.observaciones as eobservaciones, expedientes.curp as ecurp, expedientes.nss as enss, expedientes.rfc as erfc, expedientes.tipo_identificacion as etipo_identificacion, expedientes.num_identificacion as enum_identificacion, expedientes.capacitacion as ecapacitacion, expedientes.fecha_enuniforme as efecha_enuniforme, expedientes.cantidad_polo as ecantidad_polo, expedientes.talla_polo as etalla_polo, expedientes.emergencia_nombre as eemergencia_nombre, expedientes.emergencia_apellidopat as eemergencia_appelidopat, expedientes.emergencia_apellidomat as eemergencia_appelidomat, expedientes.emergencia_relacion as eemergencia_relacion, expedientes.emergencia_telefono as eemergencia_telefono, expedientes.emergencia_nombre2 as eemergencia_nombre2, expedientes.emergencia_apellidopat2 as eemergencia_appelidopat2, expedientes.emergencia_apellidomat2 as eemergencia_appelidomat2, expedientes.emergencia_relacion2 as eemergencia_relacion2, expedientes.emergencia_telefono2 as eemergencia_telefono2, expedientes.resultado_antidoping as eresultado_antidoping, expedientes.tipo_sangre as etipo_sangre, expedientes.vacante as evacante, expedientes.fam_dentro_empresa as efam_dentro_empresa, expedientes.fam_nombre as efam_nombre,expedientes.fam_apellidopat as efam_apellidopat, expedientes.fam_apellidomat as efam_apellidomat, expedientes.banco_personal as ebanco_personal, expedientes.cuenta_personal as ecuenta_personal, expedientes.clabe_personal as eclabe_personal, expedientes.plastico_personal as eplastico_personal, expedientes.banco_nomina as ebanco_nomina, expedientes.cuenta_nomina as ecuenta_nomina, expedientes.clabe_nomina as eclabe_nomina, expedientes.plastico as eplastico, estatus_empleado.situacion_del_empleado as esituacion_del_empleado, estatus_empleado.estatus_del_empleado as eestatus_del_empleado, estatus_empleado.motivo as emotivo, estatus_empleado.fecha as eestatus_fecha from expedientes inner join usuarios on usuarios.id=expedientes.users_id left join estatus_empleado on estatus_empleado.expedientes_id = expedientes.id where usuarios.id=:userid");
         $check_information -> execute(array(':userid' => $_SESSION["id"]));
@@ -212,58 +210,9 @@
 
         if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){
             
-            /*
-            function get_next_anniversary($anniversary) {
-                $date = new DateTime($anniversary);
-                $date->modify('+' . date('Y') - $date->format('Y') . ' years');
-                if($date < new DateTime()) {
-                    $date->modify('+1 year');
-                }
-            
-                return $date->format('Y/m/d');
-            }
-            
-            $fecha_vencimiento = get_next_anniversary($fetch_information->eestatus_fecha);
-
-            $var = $fecha_vencimiento;
-            $fecha_format = str_replace('/', '-', $var);
-            $fecha_format = strtotime("-1 year", strtotime($fecha_format));
-            $fecha_format = date('Y-m-d', $fecha_format);
-
-            $checkDate = $fecha_vencimiento;
-            $checkAnniversary = strtotime($checkDate);
-            if(date('m-d') == date('m-d', $checkAnniversary)) {
-                $prepareStatement = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE users_id=:userid AND estatus!=4 AND fecha_solicitud < :fechasolicitud");
-                $prepareStatement -> execute(array(':userid' => $_SESSION['id'], ':fechasolicitud' => $fecha_format));
-                $countSolicitudes = $prepareStatement -> rowCount();
-                if ($countSolicitudes > 0){
-                    $fetchSolicitudes = $prepareStatement -> fetchAll(PDO::FETCH_ASSOC);
-                    foreach($fetchSolicitudes as $key => $value){
-
-
-                        $insertStatement = $object -> _db -> prepare("INSERT INTO historial_solicitud_vacaciones(users_id, periodo_solicitado, dias_solicitados, fecha_solicitud, estatus) VALUES(:iduser, :periodo, :dias, :fecha, :estatus)");
-                        $insertStatement -> execute(array(':iduser' => $value['users_id'], ':periodo' => $value['periodo_solicitado'], ':dias' => $value['dias_solicitados'], ':fecha' => $value['fecha_solicitud'], ':estatus' => $value['estatus']));
-                        $deleteStatement = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE id=:idsolicitud");
-                        $deleteStatement -> execute(array(':idsolicitud' => $value["id"]));
-                    }
-                }
-                $deleteall_statement = $object -> _db -> prepare("SELECT * FROM solicitud_vacaciones WHERE users_id=:iduser AND estatus=4 AND fecha_solicitud < :fechasolicitud");
-                $deleteall_statement -> execute(array(":iduser" => $_SESSION["id"], ':fechasolicitud' => $fecha_format));
-                $deletecount_statement = $deleteall_statement -> rowCount();
-                if($deletecount_statement > 0){
-                    $fetchDeleteRequest = $deleteall_statement -> fetchAll(PDO::FETCH_ASSOC);
-                    foreach($fetchDeleteRequest as $llave => $valor){
-                        $deleteRequests = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE id=:solicitudid");
-                        $deleteRequests -> execute(array("solicitudid" => $valor["id"]));
-                    }
-                }
-            }
-            */
-            
-            
             //Esta función obtiene el calculo de aniversario según la fecha de antiguedad
             
-            $aniversario = $object ->_db -> prepare("SELECT calculo_aniversario(:fecha_estatus) AS aniversario");
+            $aniversario = $object ->_db -> prepare("SELECT calculo_aniversario_fecha(:fecha_estatus) AS aniversario");
             $aniversario -> execute(array(':fecha_estatus' => $fetch_information -> eestatus_fecha));
             $aniversary = $aniversario->fetchColumn();
             
@@ -302,6 +251,37 @@
 
             //Convertir la fecha de estatus en un objeto datetime
             $fecha_estatus = new DateTime($fetch_information->eestatus_fecha);
+
+            //Aquí se eliminan las vacaciones al cumplir el aniversario
+            // Obtén la fecha actual
+            $fecha_actual = new DateTime();
+            if ($fecha_actual == new DateTime($aniversary)) {
+                //Checamos si es el primer aniversario del empleado
+                $primerAniversario = new DateTime($fetch_information->eestatus_fecha);
+                $primerAniversario->add(new DateInterval('P1Y'));
+                if ($fecha_actual >= $primerAniversario) {
+                    // Consulta para seleccionar y luego insertar las solicitudes con estatus 1 en el historial
+                    $select_solicitudes = $object->_db->prepare("SELECT * FROM solicitud_vacaciones WHERE users_id = :userid AND fecha_solicitud < :fecha AND estatus = 1");
+                    $select_solicitudes->execute(array(':userid' => $_SESSION['id'], ':fecha' => $fecha_aniversario_3_meses));
+
+                    // Insertamos las solicitudes con estatus 1 en el historial
+                    $insertStatement = $object->_db->prepare("INSERT INTO historial_solicitud_vacaciones(users_id, periodo_solicitado, dias_solicitados, fecha_solicitud, estatus) VALUES(:iduser, :periodo, :dias, :fecha, :estatus)");
+
+                    while ($solicitud = $select_solicitudes->fetch(PDO::FETCH_ASSOC)) {
+                        $insertStatement->execute(array(
+                            ':iduser' => $solicitud['users_id'],
+                            ':periodo' => $solicitud['periodo_solicitado'],
+                            ':dias' => $solicitud['dias_solicitados'],
+                            ':fecha' => $solicitud['fecha_solicitud'],
+                            ':estatus' => $solicitud['estatus']
+                        ));
+                    }
+
+                    // Consulta para eliminar las solicitudes anteriores a 3 meses antes del aniversario del empleado
+                    $delete_solicitudes = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE users_id = :userid AND fecha_solicitud < :fecha");
+                    $delete_solicitudes -> execute(array(':userid' => $_SESSION['id'], ':fecha' => $fecha_aniversario_3_meses));
+                }
+            }
 
             $acumulador_dias = 0;
 
