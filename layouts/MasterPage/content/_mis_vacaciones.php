@@ -152,7 +152,10 @@
                                 Fecha de aniversario
                             </div>
                             <?php if($countexpediente > 0){ ?>
-                                <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ ?>
+                                <?php if($fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "NUEVO INGRESO" || $fetch_information -> esituacion_del_empleado == "ALTA" && $fetch_information -> eestatus_del_empleado == "REINGRESO"){ 
+                                    $fecha_vencimiento = strtotime("+1 year", strtotime($aniversary));
+                                    $fecha_vencimiento = date('Y-m-d', $fecha_vencimiento);     
+                                ?>
                                     <span class="px-4 py-2"><?php echo $fecha_vencimiento; ?></span>
                                 <?php }else{ ?>
                                     <span class="px-4 py-2">N/A</span>
