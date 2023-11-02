@@ -5445,6 +5445,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$check_update_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
 				$fetch_update_sum_vacaciones = $check_update_vacaciones -> fetch(PDO::FETCH_OBJ);
 				$new_dias_restantes = $vacaciones_dias - $fetch_update_sum_vacaciones -> dias_solicitados;
+				if($new_dias_restantes <= 1 && $vacaciones_dias == $dias_vacaciones){
+					$new_dias_restantes = $new_dias_restantes + $dias_vacaciones - 2;
+				}
                 die(json_encode(array("success", "Se ha subido su solicitud de vacaciones!", $new_dias_restantes, $vacaciones_dias)));
             break;
         }
