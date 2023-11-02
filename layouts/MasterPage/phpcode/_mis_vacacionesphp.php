@@ -222,17 +222,8 @@
             //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
             $getVacaciones = $object -> _db -> prepare("SELECT calculo_vacaciones(:fecha_estatus) AS dias_vacaciones");
             $getVacaciones -> execute(array(':fecha_estatus' => $fecha_estatus));
-
             //Hacemos un fetch de las siguientes días de vacaciones
             $dias_vacaciones = $getVacaciones->fetchColumn();
-
-            //Checa todas las solicitudes que el usuario ha hecho en el transcurso del año
-            $check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
-            $check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
-            $fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
-
-            //Calcula los días restantes del empleado
-            $dias_restantes = $dias_vacaciones - $fetch_sum_vacaciones->dias_solicitados;
 
             // Obtener la fecha de 3 meses antes del aniversario
             $aniversario_3_meses = $object->_db->prepare("SELECT fecha_tres_meses_antes_aniversario(:fecha_estatus) AS aniversario_3_meses");
