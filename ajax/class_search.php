@@ -5339,9 +5339,6 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		//Se calcula las vacaciones disponibles
 		$fecha_estatus = $fetch_status -> estatus_fecha;
-		//Convertir la fecha de estatus en un objeto datetime
-		$fecha_estatus = new DateTime($fecha_estatus);
-
 
 		$aniversario = $object ->_db -> prepare("SELECT calculo_aniversario_fecha(:fecha_estatus) AS aniversario");
     	$aniversario -> execute(array(':fecha_estatus' => $fecha_estatus));
@@ -5367,6 +5364,9 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$getVacacionesanioAnterior = $object -> _db -> prepare("SELECT calculo_vacaciones_anio_anterior(:fecha_estatus) AS vacaciones_anterior_anio");
 		$getVacacionesanioAnterior -> execute(array(':fecha_estatus' => $fecha_estatus));
 		$dias_anterior_anio = $getVacacionesanioAnterior->fetchColumn();
+
+		//Convertir la fecha de estatus en un objeto datetime
+		$fecha_estatus = new DateTime($fecha_estatus);
 
 		$acumulador_dias = 0;
         $vacaciones_dias = 0;
