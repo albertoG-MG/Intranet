@@ -51,7 +51,7 @@
 
             } else if ($estatus_expediente == 4) { // En caso de que el estatus sea revisión  ?>
                 <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
-                  <span class="font-medium"><b>SU EXPEDIENTE SE ENCUENTRA INCOMPLETO. </b> </span> <?php echo count($array_papeleria) ?> <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
+                  <span class="font-medium"><b>SU EXPEDIENTE SE ENCUENTRA INCOMPLETO. </b> </span> <?php echo count($array_papeleria_tecnico) ?> <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
                     <br><p class="font-medium" style="font-style: italic; color: #ff0200;">Favor de llenar todos los datos obligatorios antes del:  <?php echo $fecha ?></p>
                 </div>   <?php
 

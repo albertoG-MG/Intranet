@@ -1227,20 +1227,6 @@ public function Submit_tokenexpediente($logged_user, $delete){
         if($check_expediente['count'] > 0){
             $results_expediente = $check_expediente['data'][0];
             $crud->update('expedientes', ['users_id' => $_SESSION['id'], 'numero_expediente' => $this->numero_expediente, 'numero_nomina' => $this->numero_nomina, 'numero_asistencia' => $this->asistencia_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico], "id=:expedienteid", [':expedienteid' => $results_expediente["id"]]);
-            if (!empty($_POST["estudios"]) && !empty($_POST["posee_correo"]) && !empty($_POST["calle"]) && !empty($_POST["nexterior"]) && !empty($_POST["colonia"]) && !empty($_POST["estado"]) && !empty($_POST["estadotext"]) && !empty($_POST["municipio"]) && !empty($_POST["municipiotext"]) && !empty($_POST["codigo"]) && !empty($_POST["radio"]) && !empty($_POST["ecivil"]) && !empty($_POST["posee_retencion"]) && !empty($_POST["fechanac"]) && !empty($_POST["curp"]) && !empty($_POST["nss"]) && !empty($_POST["rfc"]) && !empty($_POST["identificacion"]) && !empty($_POST["numeroidentificacion"]) && !empty($_POST["numeroreferenciaslab"]) && !empty($_POST["emergencianom"]) && !empty($_POST["emergenciaapat"]) && !empty($_POST["emergenciaamat"]) && !empty($_POST["emergenciarelacion"]) && !empty($_POST["emergenciatelefono"]) && !empty($_POST["emergencianom2"]) && !empty($_POST["emergenciaapat2"]) && !empty($_POST["emergenciaamat2"]) && !empty($_POST["emergenciarelacion2"]) && !empty($_POST["emergenciatelefono2"]) && !empty($_POST["numeroreferenciasban"])) 
-		    {
-                if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){ //Campos únicos de tecnicos
-                    if (!empty($_POST["banco_personal"]) && !empty($_POST["cuenta_personal"]) && !empty($_POST["clabe_personal"]) && !empty($_POST["plastico_personal"])) {
-                        $crud -> update('expedientes', ['estatus_expediente' => 6], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
-                    }
-                }else{ //En caso de no ser tecnico
-                        $crud -> update('expedientes', ['estatus_expediente' => 6], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
-                    }
-                
-               
-            }else{ //En caso de no tener los campos obligatorios llenos se guarda como "En revisión"
-                $crud -> update('expedientes', ['estatus_expediente' => 4], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
-            }
 
             //revisa las ref laborales
             $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
@@ -1337,6 +1323,34 @@ public function Submit_tokenexpediente($logged_user, $delete){
                 }
             }
             date_default_timezone_set("America/Monterrey");
+
+        /** 
+        * & ---------------------  REVISIÓN DE CAMPOS Y DOCUMENTOS PARA SABER SI EL EXPEDIENTE ESTA COMPLETO ------------------------------------------------
+        */
+            //CONSULTA PARA CONTAR PAPELERÍA OBLIGATORIA DE LOS EMPLEADOS
+            $papeleria = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24) AND expediente_id = :expedienteid");
+            $papeleria->execute(array(':expedienteid' =>  $results_expediente['id']));
+            $array_papeleria = $papeleria->fetchAll(PDO::FETCH_ASSOC);
+            
+            //CONSULTA PARA CONTAR LA PAPELERÍA OBLIGATORIA DE LOS TECNICOS
+            $papeleria_tecnico = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24) AND expediente_id = :expedienteid");
+            $papeleria_tecnico->execute(array(':expedienteid' =>  $results_expediente['id']));
+            $array_papeleria_tecnico = $papeleria_tecnico->fetchAll(PDO::FETCH_ASSOC);
+
+            //Condición para saber si los campos obligatorios no estan vacios
+            if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico" && count($array_papeleria_tecnico) == 8 && !empty($_POST["estudios"]) && !empty($_POST["posee_correo"]) && !empty($_POST["calle"]) && !empty($_POST["nexterior"]) && !empty($_POST["colonia"]) && !empty($_POST["estado"]) && !empty($_POST["estadotext"]) && !empty($_POST["municipio"]) && !empty($_POST["municipiotext"]) && !empty($_POST["codigo"]) && !empty($_POST["radio"]) && !empty($_POST["ecivil"]) && !empty($_POST["posee_retencion"]) && !empty($_POST["fechanac"]) && !empty($_POST["curp"]) && !empty($_POST["nss"]) && !empty($_POST["rfc"]) && !empty($_POST["identificacion"]) && !empty($_POST["numeroidentificacion"]) && !empty($_POST["numeroreferenciaslab"]) && !empty($_POST["emergencianom"]) && !empty($_POST["emergenciaapat"]) && !empty($_POST["emergenciaamat"]) && !empty($_POST["emergenciarelacion"]) && !empty($_POST["emergenciatelefono"]) && !empty($_POST["emergencianom2"]) && !empty($_POST["emergenciaapat2"]) && !empty($_POST["emergenciaamat2"]) && !empty($_POST["emergenciarelacion2"]) && !empty($_POST["emergenciatelefono2"]) && !empty($_POST["numeroreferenciasban"]) && !empty($_POST["banco_personal"]) && !empty($_POST["cuenta_personal"]) && !empty($_POST["clabe_personal"]) && !empty($_POST["plastico_personal"]))
+            { 
+                $crud -> update('expedientes', ['estatus_expediente' => 6], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
+
+            }else if(Roles::FetchSessionRol($_SESSION['rol']) != "Tecnico" && count($array_papeleria) == 7 && !empty($_POST["estudios"]) && !empty($_POST["posee_correo"]) && !empty($_POST["calle"]) && !empty($_POST["nexterior"]) && !empty($_POST["colonia"]) && !empty($_POST["estado"]) && !empty($_POST["estadotext"]) && !empty($_POST["municipio"]) && !empty($_POST["municipiotext"]) && !empty($_POST["codigo"]) && !empty($_POST["radio"]) && !empty($_POST["ecivil"]) && !empty($_POST["posee_retencion"]) && !empty($_POST["fechanac"]) && !empty($_POST["curp"]) && !empty($_POST["nss"]) && !empty($_POST["rfc"]) && !empty($_POST["identificacion"]) && !empty($_POST["numeroidentificacion"]) && !empty($_POST["numeroreferenciaslab"]) && !empty($_POST["emergencianom"]) && !empty($_POST["emergenciaapat"]) && !empty($_POST["emergenciaamat"]) && !empty($_POST["emergenciarelacion"]) && !empty($_POST["emergenciatelefono"]) && !empty($_POST["emergencianom2"]) && !empty($_POST["emergenciaapat2"]) && !empty($_POST["emergenciaamat2"]) && !empty($_POST["emergenciarelacion2"]) && !empty($_POST["emergenciatelefono2"]) && !empty($_POST["numeroreferenciasban"])){ //En caso de no ser empleado
+                            $crud -> update('expedientes', ['estatus_expediente' => 6], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
+
+            }else{ //En caso de no tener los campos obligatorios llenos se guarda como "En revisión"
+                    $crud -> update('expedientes', ['estatus_expediente' => 4], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
+            }
+        /** 
+        * & --------------------- ---------------------------------------------------------------------------------------------------------------------------------
+        */
  }else{
             $crud->store('expedientes', ['users_id' => $_SESSION['id'], 'numero_expediente' => $this->numero_expediente, 'numero_nomina' => $this->numero_nomina, 'numero_asistencia' => $this->asistencia_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico]);
             $id_expediente = $object -> _db -> lastInsertId();
@@ -1370,6 +1384,33 @@ public function Submit_tokenexpediente($logged_user, $delete){
                 }
             }
             date_default_timezone_set("America/Monterrey");
+    /** 
+    * & ---------------------  REVISIÓN DE CAMPOS Y DOCUMENTOS PARA SABER SI EL EXPEDIENTE ESTA COMPLETO ------------------------------------------------
+    */
+        //CONSULTA PARA CONTAR PAPELERÍA OBLIGATORIA DE LOS EMPLEADOS
+        $papeleria = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24) AND expediente_id = :expedienteid");
+        $papeleria->execute(array(':expedienteid' =>  $results_expediente['id']));
+        $array_papeleria = $papeleria->fetchAll(PDO::FETCH_ASSOC);
+        
+        //CONSULTA PARA CONTAR LA PAPELERÍA OBLIGATORIA DE LOS TECNICOS
+        $papeleria_tecnico = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24) AND expediente_id = :expedienteid");
+        $papeleria_tecnico->execute(array(':expedienteid' =>  $results_expediente['id']));
+        $array_papeleria_tecnico = $papeleria_tecnico->fetchAll(PDO::FETCH_ASSOC);
+
+        //Condición para saber si los campos obligatorios no estan vacios
+        if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico" && count($array_papeleria_tecnico) == 8 && !empty($_POST["estudios"]) && !empty($_POST["posee_correo"]) && !empty($_POST["calle"]) && !empty($_POST["nexterior"]) && !empty($_POST["colonia"]) && !empty($_POST["estado"]) && !empty($_POST["estadotext"]) && !empty($_POST["municipio"]) && !empty($_POST["municipiotext"]) && !empty($_POST["codigo"]) && !empty($_POST["radio"]) && !empty($_POST["ecivil"]) && !empty($_POST["posee_retencion"]) && !empty($_POST["fechanac"]) && !empty($_POST["curp"]) && !empty($_POST["nss"]) && !empty($_POST["rfc"]) && !empty($_POST["identificacion"]) && !empty($_POST["numeroidentificacion"]) && !empty($_POST["numeroreferenciaslab"]) && !empty($_POST["emergencianom"]) && !empty($_POST["emergenciaapat"]) && !empty($_POST["emergenciaamat"]) && !empty($_POST["emergenciarelacion"]) && !empty($_POST["emergenciatelefono"]) && !empty($_POST["emergencianom2"]) && !empty($_POST["emergenciaapat2"]) && !empty($_POST["emergenciaamat2"]) && !empty($_POST["emergenciarelacion2"]) && !empty($_POST["emergenciatelefono2"]) && !empty($_POST["numeroreferenciasban"]) && !empty($_POST["banco_personal"]) && !empty($_POST["cuenta_personal"]) && !empty($_POST["clabe_personal"]) && !empty($_POST["plastico_personal"]))
+        { 
+            $crud -> update('expedientes', ['estatus_expediente' => 6], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
+
+        }else if(Roles::FetchSessionRol($_SESSION['rol']) != "Tecnico" && count($array_papeleria) == 7 && !empty($_POST["estudios"]) && !empty($_POST["posee_correo"]) && !empty($_POST["calle"]) && !empty($_POST["nexterior"]) && !empty($_POST["colonia"]) && !empty($_POST["estado"]) && !empty($_POST["estadotext"]) && !empty($_POST["municipio"]) && !empty($_POST["municipiotext"]) && !empty($_POST["codigo"]) && !empty($_POST["radio"]) && !empty($_POST["ecivil"]) && !empty($_POST["posee_retencion"]) && !empty($_POST["fechanac"]) && !empty($_POST["curp"]) && !empty($_POST["nss"]) && !empty($_POST["rfc"]) && !empty($_POST["identificacion"]) && !empty($_POST["numeroidentificacion"]) && !empty($_POST["numeroreferenciaslab"]) && !empty($_POST["emergencianom"]) && !empty($_POST["emergenciaapat"]) && !empty($_POST["emergenciaamat"]) && !empty($_POST["emergenciarelacion"]) && !empty($_POST["emergenciatelefono"]) && !empty($_POST["emergencianom2"]) && !empty($_POST["emergenciaapat2"]) && !empty($_POST["emergenciaamat2"]) && !empty($_POST["emergenciarelacion2"]) && !empty($_POST["emergenciatelefono2"]) && !empty($_POST["numeroreferenciasban"])){ //En caso de no ser empleado
+                        $crud -> update('expedientes', ['estatus_expediente' => 6], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
+
+        }else{ //En caso de no tener los campos obligatorios llenos se guarda como "En revisión"
+                $crud -> update('expedientes', ['estatus_expediente' => 4], "id=:idexpediente", [':idexpediente' => $results_expediente['id']]);
+        }
+    /** 
+    * & --------------------- ---------------------------------------------------------------------------------------------------------------------------------
+    */
   }
     }
 
