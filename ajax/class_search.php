@@ -5433,7 +5433,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		$dias_restantes = $dias_restantes - $days;
 
-		if($dias_restantes <= 0){
+		if($dias_restantes < 0){
 			die(json_encode(array("error", "El número de días solicitados sobrepasa el número de vacaciones restantes ó simplemente no tienes vacaciones disponibles")));
 		}
 
