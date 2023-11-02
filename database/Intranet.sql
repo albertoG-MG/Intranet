@@ -4612,6 +4612,25 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Function structure called `calculo_aniversario_fecha`
+--
+
+DELIMITER $$
+  CREATE FUNCTION calculo_aniversario_fecha(fecha_inicio_empleo DATE)
+  RETURNS DATE DETERMINISTIC
+  BEGIN
+      DECLARE fecha_aniversario DATE;
+
+      -- Calcula la fecha del aniversario del año actual
+      SET fecha_aniversario = DATE_ADD(fecha_inicio_empleo, INTERVAL TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()) YEAR);
+
+      RETURN fecha_aniversario;
+  END$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Function structure called `fecha_tres_meses_antes_aniversario`
 --
 
