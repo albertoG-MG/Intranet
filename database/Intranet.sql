@@ -4551,7 +4551,7 @@ DELIMITER ;
 
 DELIMITER $$
   CREATE FUNCTION calculo_vacaciones
-  (fecha_vacaciones DATE)
+  (fecha_3_meses_aniversario DATE)
   RETURNS INT DETERMINISTIC
   BEGIN
     DECLARE años INT unsigned;
@@ -4559,35 +4559,38 @@ DELIMITER $$
     DECLARE acum INT unsigned;
     DECLARE acum2 INT unsigned;
     DECLARE counter INT unsigned;
-    SET años = (SELECT TIMESTAMPDIFF(year,fecha_vacaciones, NOW()));
-    IF años = 0 THEN
-      SET dias = 0;
-    ELSEIF años = 1 THEN
-      SET dias = 12;
-    ELSEIF años = 2 THEN
-      SET dias = 14;
-    ELSEIF años = 3 THEN
-      SET dias = 16;
-    ELSEIF años = 4 THEN
-      SET dias = 18;
-    ELSEIF años = 5 THEN
-      SET dias = 20;
-    ELSE
-      SET acum = 6;
-      SET acum2 = 10;
-      SET counter = 0;
-      SET dias = 20;
-      WHILE counter = 0 DO
-        IF(acum > años AND años < acum2) THEN
-          SET counter = 1;
-        ELSE
-          SET dias = dias + 2;
-          SET acum = acum + 5;
-          SET acum2 = acum2 + 5;
-        END IF;
-      END WHILE;
-    END IF;
-    RETURN dias;
+	  DECLARE fecha_actual DATE;
+	  SET fecha_actual = CURDATE();
+	  SET años = (SELECT TIMESTAMPDIFF(year,fecha_3_meses_aniversario, NOW()));
+	
+	  IF fecha_actual >= fecha_3_meses_aniversario THEN
+		  SET dias = 12;
+	  END IF;
+	
+	  IF años = 1 THEN
+		  SET dias = 14;
+	  ELSEIF años = 2 THEN
+		  SET dias = 16;
+	  ELSEIF años = 3 THEN
+		  SET dias = 18;
+	  ELSEIF años = 4 THEN
+		  SET dias = 20;
+	  ELSE
+		  SET acum = 5;
+		  SET acum2 = 9;
+		  SET counter = 0;
+		  SET dias = 20;
+		  WHILE counter = 0 DO
+			  IF(acum > años AND años < acum2) THEN
+				  SET counter = 1;
+			  ELSE
+				  SET dias = dias + 2;
+				  SET acum = acum + 5;
+				  SET acum2 = acum2 + 5;
+			  END IF;
+		  END WHILE;
+	  END IF;
+	  RETURN dias;
   END$$
 DELIMITER ;
 
