@@ -4620,9 +4620,22 @@ DELIMITER $$
   RETURNS DATE DETERMINISTIC
   BEGIN
       DECLARE fecha_aniversario DATE;
+      DECLARE fecha_actual DATE;
+      DECLARE anio_inicial INT;
+
+      -- Obtiene la fecha actual
+      SET fecha_actual = NOW();
+
+      -- Obtiene el año en que el empleado inició
+      SET anio_inicial = YEAR(fecha_inicio_empleo);
 
       -- Calcula la fecha del aniversario del año actual
-      SET fecha_aniversario = DATE_ADD(fecha_inicio_empleo, INTERVAL TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()) YEAR);
+      SET fecha_aniversario = STR_TO_DATE(CONCAT(YEAR(fecha_actual), '-', MONTH(fecha_inicio_empleo), '-', DAY(fecha_inicio_empleo)), '%Y-%m-%d');
+
+      -- Si la fecha actual ya pasó el aniversario de este año, ajusta al próximo año
+      IF fecha_actual > fecha_aniversario THEN
+          SET fecha_aniversario = STR_TO_DATE(CONCAT(YEAR(fecha_actual) + 1, '-', MONTH(fecha_inicio_empleo), '-', DAY(fecha_inicio_empleo)), '%Y-%m-%d');
+      END IF;
 
       RETURN fecha_aniversario;
   END$$
@@ -4638,16 +4651,15 @@ DELIMITER $$
   CREATE FUNCTION fecha_tres_meses_antes_aniversario(fecha_inicio_empleo DATE)
   RETURNS DATE DETERMINISTIC
   BEGIN
-      DECLARE fecha_aniversario_actual DATE;
-      DECLARE fecha_anterior DATE;
+      DECLARE fecha_proximo_aniversario DATE;
       
-      -- Obtén la fecha del aniversario del año actual
-      SET fecha_aniversario_actual = DATE_ADD(fecha_inicio_empleo, INTERVAL TIMESTAMPDIFF(YEAR, fecha_inicio_empleo, NOW()) YEAR);
+      -- Calcula el próximo aniversario después de la fecha de inicio
+      SET fecha_proximo_aniversario = DATE_ADD(fecha_inicio_empleo, INTERVAL 1 YEAR);
       
-      -- Retrocede 3 meses desde el aniversario del año actual
-      SET fecha_anterior = DATE_SUB(fecha_aniversario_actual, INTERVAL 3 MONTH);
+      -- Retrocede 3 meses desde el próximo aniversario
+      SET fecha_proximo_aniversario = DATE_SUB(fecha_proximo_aniversario, INTERVAL 3 MONTH);
       
-      RETURN fecha_anterior;
+      RETURN fecha_proximo_aniversario;
   END$$
 DELIMITER ;
 
