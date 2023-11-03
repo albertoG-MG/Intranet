@@ -5340,45 +5340,43 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		//Se calcula las vacaciones disponibles
 		$fecha_estatus = $fetch_status -> estatus_fecha;
 
-		$aniversario = $object ->_db -> prepare("SELECT calculo_aniversario_fecha(:fecha_estatus) AS aniversario");
-    	$aniversario -> execute(array(':fecha_estatus' => $fecha_estatus));
-        $aniversary = $aniversario->fetchColumn();
-
 		//Sacar los días restantes en caso de que el usuario tenga vacaciones disponibles
         //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
         $getVacaciones = $object -> _db -> prepare("SELECT calculo_vacaciones(:fecha_estatus) AS dias_vacaciones");
         $getVacaciones -> execute(array(':fecha_estatus' => $fecha_estatus));
-		$dias_vacaciones = $getVacaciones->fetchColumn();
+        $dias_vacaciones = $getVacaciones->fetchColumn();
 
 		// Obtener la fecha de 3 meses antes del aniversario
 		$aniversario_3_meses = $object->_db->prepare("SELECT fecha_tres_meses_antes_aniversario(:fecha_estatus) AS aniversario_3_meses");
-		$aniversario_3_meses->execute(array(':fecha_estatus' => $fecha_estatus));
-		$fecha_aniversario_3_meses = $aniversario_3_meses->fetchColumn();
+        $aniversario_3_meses->execute(array(':fecha_estatus' => $fecha_estatus));
+        $fecha_aniversario_3_meses = $aniversario_3_meses->fetchColumn();
+
+		//Esta función obtiene el calculo de aniversario según la fecha de antiguedad
+		$aniversario = $object ->_db -> prepare("SELECT calculo_aniversario_siguiente(:fecha_estatus) AS aniversario");
+		$aniversario -> execute(array(':fecha_estatus' => $fecha_aniversario_3_meses));
+		$aniversary = $aniversario->fetchColumn();
 
 		//Esta función obtiene las vacaciones del siguiente año
 		$getVacacionesSiguienteanio = $object -> _db -> prepare("SELECT calculo_vacaciones_siguiente_anio(:fecha_estatus) AS vacaciones_siguiente_anio");
-		$getVacacionesSiguienteanio -> execute(array(':fecha_estatus' => $fecha_estatus));
-		$dias_siguiente_anio = $getVacacionesSiguienteanio->fetchColumn();
+        $getVacacionesSiguienteanio -> execute(array(':fecha_estatus' => $fecha_estatus));
+        $dias_siguiente_anio = $getVacacionesSiguienteanio->fetchColumn();
 
 		//Esta función obtiene las vacaciones del año pasado
 		$getVacacionesanioAnterior = $object -> _db -> prepare("SELECT calculo_vacaciones_anio_anterior(:fecha_estatus) AS vacaciones_anterior_anio");
-		$getVacacionesanioAnterior -> execute(array(':fecha_estatus' => $fecha_estatus));
-		$dias_anterior_anio = $getVacacionesanioAnterior->fetchColumn();
+        $getVacacionesanioAnterior -> execute(array(':fecha_estatus' => $fecha_estatus));
+        $dias_anterior_anio = $getVacacionesanioAnterior->fetchColumn();
 
 		//Convertir la fecha de estatus en un objeto datetime
 		$fecha_estatus = new DateTime($fecha_estatus);
 
 		$acumulador_dias = 0;
-        $vacaciones_dias = 0;
+		$vacaciones_dias = 0;
 
 		if ($dias_vacaciones == 0) {
-			//Checar si el empleado ya esta dentro del rango de 3 meses
-			$fecha_aniversario_3_meses = new DateTime($fecha_aniversario_3_meses);
-			$diffYears = $fecha_estatus->format('Y') - $fecha_aniversario_3_meses->format('Y');
-			$diffMonths = $fecha_estatus->format('m') - $fecha_aniversario_3_meses->format('m');
-			$totalDiffMonths = $diffYears * 12 + $diffMonths;
+			//Checar el aniversario de 3 meses del empleado
+			$fecha_3_meses_aniversario = new DateTime($fecha_aniversario_3_meses);
 
-			if ($totalDiffMonths <= 3) {
+			if ($fecha_actual >= $fecha_3_meses_aniversario) {
 			//Si el empleado ya cumplió los 3 meses antes del aniversario debemos asignar los siguiente días de vacaciones al acumulador
 				$acumulador_dias = $dias_siguiente_anio;
 				$vacaciones_dias = $dias_siguiente_anio;
@@ -5391,18 +5389,15 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				$acumulador_dias = $acumulador_dias - $fetch_sum_vacaciones->dias_solicitados;
 			}else{
 				$acumulador_dias = 0;
-				$vacaciones_dias = 0;
 			}
 			$dias_restantes = $acumulador_dias;
+			$vacaciones_dias = 0;
 		//El else en caso de que el usuario tenga vacaciones disponibles
 		}else{
 			//Checar si es el aniversario
-			$fecha_aniversario_3_meses = new DateTime($fecha_aniversario_3_meses);
-			$diffYears = $fecha_estatus->format('Y') - $fecha_aniversario_3_meses->format('Y');
-			$diffMonths = $fecha_estatus->format('m') - $fecha_aniversario_3_meses->format('m');
-			$totalDiffMonths = $diffYears * 12 + $diffMonths;
+			$aniversary_anios = new DateTime($aniversary);
 			
-			if ($totalDiffMonths <= 3) {
+			if ($fecha_actual >= $aniversary_anios) {
 				//Checa todas las solicitudes que el usuario ha hecho en el transcurso del año
 				$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
 				$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
@@ -5411,11 +5406,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 				//Verifica si el usuario ya se gasto sus vacaciones del año actual antes del aniversario
 				$dias_restantes  = $dias_anterior_anio - $fetch_sum_vacaciones->dias_solicitados;
 				if($dias_restantes <= 0){
-					$acumulador_dias = $dias_restantes + $dias_vacaciones;
 					$vacaciones_dias = $dias_vacaciones;
+					$acumulador_dias = $dias_restantes + $dias_vacaciones;
 				}else{
-					$acumulador_dias = $dias_restantes;
 					$vacaciones_dias = $dias_anterior_anio;
+					$acumulador_dias = $dias_restantes;
 				}
 				$dias_restantes = $acumulador_dias;
 			}else{
@@ -5428,6 +5423,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 				//Verifica si el usuario ya se gasto sus vacaciones del año actual antes del aniversario
 				$dias_restantes  = $dias_vacaciones - $fetch_sum_vacaciones->dias_solicitados;
+
 			}
 		}
 
