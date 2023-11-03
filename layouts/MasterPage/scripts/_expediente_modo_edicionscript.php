@@ -729,6 +729,12 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
+                        },
+                        minlength: {
+                            depends: function(element) {
+                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
+                            },
+                            param: 5
                         }
                     },
                     teldom: {
@@ -1678,7 +1684,8 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
                     },
                     codigo: {
-                        digits: 'Solo se permiten números'
+                        digits: 'Solo se permiten números',
+                        minlength: 'Solo puedes ingresar como mínimo 5 números'
                     },
                     teldom: {
                         digits: 'Solo se permiten números',

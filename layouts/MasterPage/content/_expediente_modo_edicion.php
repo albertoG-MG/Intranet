@@ -150,7 +150,7 @@
                                              <p class="text-green-600">Correo electrónico válido y disponible</p>
                                           </li>
                                        </div>
-                                       <div id="correoadicional_help" class="text-[#64748b]">
+                                       <div id="correoadicional_help" class="text-[#64748b]" style="font-style: oblique;">
                                           El correo electrónico adicional no se utilizará para las notificaciones ni para las diversas funciones del sistema.
                                        </div>
                                     </div>
@@ -769,23 +769,15 @@
                                           <path fill="currentColor" d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="fechauniforme" name="fechauniforme" autocomplete="off">
+                                    <input  class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600"  type="text" id="fechauniforme" name="fechauniforme" autocomplete="off" disabled readonly>
                                  </div>
+                                 <div id="correoadicional_help" class="text-[#64748b]" style="font-style: oblique;">
+                                          Campo solo para CH.
+                                       </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                 <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">CANTIDAD (CAMISA)</label>
-                                    <div class="group flex">
-                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
-                                          </svg>
-                                       </div>
-                                       <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="cantidadpolo" name="cantidadpolo" value="<?php if($edit->ecantidad_polo !== null){ echo "{$edit->ecantidad_polo}"; } ?>" placeholder="Cantidad">
-                                    </div>
-                                 </div>
-                                 <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">TALLA (CAMISA)</label>
+                              <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">TALLA (CAMISA)  <label style="color:red;"> *</label></label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -803,6 +795,20 @@
                                           <option value="XXXL" <?php if($edit->etalla_polo == "XXXL"){echo 'selected="selected"';} ?>>XXXL</option>
                                        </select>
                                     </div>
+                                 </div>
+                                 <div class="grid grid-cols-1">
+                                    <label class="text-[#64748b] font-semibold mb-2">CANTIDAD (CAMISA)</label>
+                                    <div class="group flex">
+                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                             <path fill="currentColor" d="M16,21H8A1,1 0 0,1 7,20V12.07L5.7,13.07C5.31,13.46 4.68,13.46 4.29,13.07L1.46,10.29C1.07,9.9 1.07,9.27 1.46,8.88L7.34,3H9C9.29,4.8 10.4,6.37 12,7.25C13.6,6.37 14.71,4.8 15,3H16.66L22.54,8.88C22.93,9.27 22.93,9.9 22.54,10.29L19.71,13.12C19.32,13.5 18.69,13.5 18.3,13.12L17,12.12V20A1,1 0 0,1 16,21" />
+                                          </svg>
+                                       </div>
+                                       <input  class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600"  type="text" id="cantidadpolo" name="cantidadpolo" value="<?php if($edit->ecantidad_polo !== null){ echo "{$edit->ecantidad_polo}"; } ?>" placeholder="Cantidad" disabled readonly>
+                                    </div>
+                                    <div id="correoadicional_help" class="text-[#64748b]" style="font-style: oblique;">
+                                          Campo solo para CH.
+                                       </div>
                                  </div>
                               </div>
                               <div class="flex flex-col mt-5 mx-7">
