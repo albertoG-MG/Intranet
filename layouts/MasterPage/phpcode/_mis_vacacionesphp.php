@@ -276,10 +276,10 @@
             $vacaciones_dias = 0;
 
             if ($dias_vacaciones == 0) {
-                //Checar el aniversario de 3 meses del empleado
-                $fecha_3_meses_aniversario = new DateTime($fecha_aniversario_3_meses);
+                //Checar si es el aniversario
+                $aniversary_anios = new DateTime($aniversary);
 
-                if ($fecha_actual >= $fecha_3_meses_aniversario) {
+                if ($fecha_actual >= $aniversary_anios) {
                 //Si el empleado ya cumplió los 3 meses antes del aniversario debemos asignar los siguiente días de vacaciones al acumulador
                     $acumulador_dias = $dias_siguiente_anio;
                     $vacaciones_dias = $dias_siguiente_anio;
