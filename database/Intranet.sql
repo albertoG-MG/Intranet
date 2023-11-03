@@ -4670,29 +4670,31 @@ DELIMITER ;
 --
 
 DELIMITER $$
-  CREATE FUNCTION calculo_vacaciones_siguiente_anio(fecha_vacaciones DATE)
+  CREATE FUNCTION calculo_vacaciones_siguiente_anio(fecha_3_meses_aniversario DATE)
   RETURNS INT DETERMINISTIC
   BEGIN
     DECLARE anos INT UNSIGNED;
     DECLARE dias INT UNSIGNED;
-	  DECLARE base_dias INT UNSIGNED;
-    SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_vacaciones, NOW()));
-    IF anos = 0 THEN
-      -- No se han cumplido 1 año, no hay días de vacaciones
-      SET dias = 12;
-    ELSEIF anos = 1 THEN
-      -- Primer año, asigna días de vacaciones (por ejemplo, 12 días)
-      SET dias = 14;
-    ELSEIF anos > 1 AND anos <= 5 THEN
-      -- A partir del segundo año, asigna 2 días adicionales por año
-      SET dias = 14 + (anos - 1) * 2;
+	  DECLARE fecha_actual DATE;
+	  SET fecha_actual = CURDATE();
+	
+	  IF fecha_actual >= fecha_3_meses_aniversario THEN
+		  SET dias = 14;
+	  ELSE	
+		  SET dias = 12;
+	  END IF;
+	
+    SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_3_meses_aniversario, NOW()));
+	
+	  IF anos = 1 THEN
+		  SET dias = 16;
+    ELSEIF anos > 1 AND anos <=4 THEN
+		  SET dias = 16 + (anos - 1) * 2;
 	  ELSE
-		  SET base_dias = 20 + (FLOOR((anos - 1) / 5) * 2);
-      SET dias = base_dias + 2;
-    END IF;
-
-    RETURN dias;
-  END$$
+		  SET dias = 24 + (FLOOR((anos - 5) / 5) * 2);
+	  END IF;
+	  RETURN dias;
+  END$$	
 DELIMITER ;
 
 -- --------------------------------------------------------
