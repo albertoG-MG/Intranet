@@ -4612,32 +4612,29 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Function structure called `calculo_aniversario_fecha`
+-- Function structure called `calculo_aniversario_siguiente`
 --
 
 DELIMITER $$
-  CREATE FUNCTION calculo_aniversario_fecha(fecha_inicio_empleo DATE)
-  RETURNS DATE DETERMINISTIC
+  CREATE FUNCTION calculo_aniversario_siguiente(fecha_inicio_empleo DATE)
+  RETURNS DATE
+  DETERMINISTIC
   BEGIN
-      DECLARE fecha_aniversario DATE;
-      DECLARE fecha_actual DATE;
-      DECLARE anio_inicial INT;
+      DECLARE fechaActual DATE;
+      DECLARE anioActual INT;
+      DECLARE mesInicio INT;
+      DECLARE diaInicio INT;
 
-      -- Obtiene la fecha actual
-      SET fecha_actual = NOW();
+      SET fechaActual = NOW();
+      SET anioActual = YEAR(fechaActual);
+      SET mesInicio = MONTH(fecha_inicio_empleo);
+      SET diaInicio = DAY(fecha_inicio_empleo);
 
-      -- Obtiene el año en que el empleado inició
-      SET anio_inicial = YEAR(fecha_inicio_empleo);
-
-      -- Calcula la fecha del aniversario del año actual
-      SET fecha_aniversario = STR_TO_DATE(CONCAT(YEAR(fecha_actual), '-', MONTH(fecha_inicio_empleo), '-', DAY(fecha_inicio_empleo)), '%Y-%m-%d');
-
-      -- Si la fecha actual ya pasó el aniversario de este año, ajusta al próximo año
-      IF fecha_actual > fecha_aniversario THEN
-          SET fecha_aniversario = STR_TO_DATE(CONCAT(YEAR(fecha_actual) + 1, '-', MONTH(fecha_inicio_empleo), '-', DAY(fecha_inicio_empleo)), '%Y-%m-%d');
+      IF anioActual = YEAR(fecha_inicio_empleo) THEN
+          RETURN DATE_FORMAT(CONCAT(anioActual, '-', mesInicio, '-', diaInicio), '%Y-%m-%d');
+      ELSE
+          RETURN DATE_FORMAT(CONCAT(anioActual, '-', mesInicio, '-', diaInicio), '%Y-%m-%d');
       END IF;
-
-      RETURN fecha_aniversario;
   END$$
 DELIMITER ;
 
