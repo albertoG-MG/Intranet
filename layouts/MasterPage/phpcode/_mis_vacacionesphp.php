@@ -212,12 +212,6 @@
             
             $fecha_estatus = $fetch_information->eestatus_fecha;
 
-            //Sacar los días restantes en caso de que el usuario tenga vacaciones disponibles
-            //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
-            $getVacaciones = $object -> _db -> prepare("SELECT calculo_vacaciones(:fecha_estatus) AS dias_vacaciones");
-            $getVacaciones -> execute(array(':fecha_estatus' => $fecha_estatus));
-            $dias_vacaciones = $getVacaciones->fetchColumn();
-
             // Obtener la fecha de 3 meses antes del aniversario
             $aniversario_3_meses = $object->_db->prepare("SELECT fecha_tres_meses_antes_aniversario(:fecha_estatus) AS aniversario_3_meses");
             $aniversario_3_meses->execute(array(':fecha_estatus' => $fecha_estatus));
@@ -228,14 +222,20 @@
             $aniversario -> execute(array(':fecha_estatus' => $fecha_aniversario_3_meses));
             $aniversary = $aniversario->fetchColumn();
 
+            //Sacar los días restantes en caso de que el usuario tenga vacaciones disponibles
+            //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
+            $getVacaciones = $object -> _db -> prepare("SELECT calculo_vacaciones(:fecha_estatus) AS dias_vacaciones");
+            $getVacaciones -> execute(array(':fecha_estatus' => $fecha_aniversario_3_meses));
+            $dias_vacaciones = $getVacaciones->fetchColumn();
+
             //Esta función obtiene las vacaciones del siguiente año
             $getVacacionesSiguienteanio = $object -> _db -> prepare("SELECT calculo_vacaciones_siguiente_anio(:fecha_estatus) AS vacaciones_siguiente_anio");
-            $getVacacionesSiguienteanio -> execute(array(':fecha_estatus' => $fecha_estatus));
+            $getVacacionesSiguienteanio -> execute(array(':fecha_estatus' => $fecha_aniversario_3_meses));
             $dias_siguiente_anio = $getVacacionesSiguienteanio->fetchColumn();
 
             //Esta función obtiene las vacaciones del año pasado
             $getVacacionesanioAnterior = $object -> _db -> prepare("SELECT calculo_vacaciones_anio_anterior(:fecha_estatus) AS vacaciones_anterior_anio");
-            $getVacacionesanioAnterior -> execute(array(':fecha_estatus' => $fecha_estatus));
+            $getVacacionesanioAnterior -> execute(array(':fecha_estatus' => $fecha_aniversario_3_meses));
             $dias_anterior_anio = $getVacacionesanioAnterior->fetchColumn();
 
             //Convertir la fecha de estatus en un objeto datetime
