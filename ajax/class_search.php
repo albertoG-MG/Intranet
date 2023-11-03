@@ -5339,6 +5339,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 
 		//Se calcula las vacaciones disponibles
 		$fecha_estatus = $fetch_status -> estatus_fecha;
+		$fecha_actual = new DateTime();
 
 		//Sacar los días restantes en caso de que el usuario tenga vacaciones disponibles
         //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
