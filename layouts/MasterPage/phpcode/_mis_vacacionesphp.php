@@ -245,31 +245,26 @@
             // Obtén la fecha actual
             $fecha_actual = new DateTime();
             if ($fecha_actual == new DateTime($aniversary)) {
-                //Checamos si es el primer aniversario del empleado
-                $primerAniversario = new DateTime($fetch_information->eestatus_fecha);
-                $primerAniversario->add(new DateInterval('P1Y'));
-                if ($fecha_actual >= $primerAniversario) {
-                    // Consulta para seleccionar y luego insertar las solicitudes con estatus 1 en el historial
-                    $select_solicitudes = $object->_db->prepare("SELECT * FROM solicitud_vacaciones WHERE users_id = :userid AND fecha_solicitud < :fecha AND estatus = 1");
-                    $select_solicitudes->execute(array(':userid' => $_SESSION['id'], ':fecha' => $fecha_aniversario_3_meses));
+                // Consulta para seleccionar y luego insertar las solicitudes con estatus 1 en el historial
+                $select_solicitudes = $object->_db->prepare("SELECT * FROM solicitud_vacaciones WHERE users_id = :userid AND fecha_solicitud < :fecha AND estatus = 1");
+                $select_solicitudes->execute(array(':userid' => $_SESSION['id'], ':fecha' => $aniversary));
 
-                    // Insertamos las solicitudes con estatus 1 en el historial
-                    $insertStatement = $object->_db->prepare("INSERT INTO historial_solicitud_vacaciones(users_id, periodo_solicitado, dias_solicitados, fecha_solicitud, estatus) VALUES(:iduser, :periodo, :dias, :fecha, :estatus)");
+                // Insertamos las solicitudes con estatus 1 en el historial
+                $insertStatement = $object->_db->prepare("INSERT INTO historial_solicitud_vacaciones(users_id, periodo_solicitado, dias_solicitados, fecha_solicitud, estatus) VALUES(:iduser, :periodo, :dias, :fecha, :estatus)");
 
-                    while ($solicitud = $select_solicitudes->fetch(PDO::FETCH_ASSOC)) {
-                        $insertStatement->execute(array(
-                            ':iduser' => $solicitud['users_id'],
-                            ':periodo' => $solicitud['periodo_solicitado'],
-                            ':dias' => $solicitud['dias_solicitados'],
-                            ':fecha' => $solicitud['fecha_solicitud'],
-                            ':estatus' => $solicitud['estatus']
-                        ));
-                    }
-
-                    // Consulta para eliminar las solicitudes anteriores a 3 meses antes del aniversario del empleado
-                    $delete_solicitudes = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE users_id = :userid AND fecha_solicitud < :fecha");
-                    $delete_solicitudes -> execute(array(':userid' => $_SESSION['id'], ':fecha' => $fecha_aniversario_3_meses));
+                while ($solicitud = $select_solicitudes->fetch(PDO::FETCH_ASSOC)) {
+                    $insertStatement->execute(array(
+                        ':iduser' => $solicitud['users_id'],
+                        ':periodo' => $solicitud['periodo_solicitado'],
+                        ':dias' => $solicitud['dias_solicitados'],
+                        ':fecha' => $solicitud['fecha_solicitud'],
+                        ':estatus' => $solicitud['estatus']
+                    ));
                 }
+
+                // Consulta para eliminar las solicitudes anteriores a 3 meses antes del aniversario del empleado
+                $delete_solicitudes = $object -> _db -> prepare("DELETE FROM solicitud_vacaciones WHERE users_id = :userid AND fecha_solicitud < :fecha");
+                $delete_solicitudes -> execute(array(':userid' => $_SESSION['id'], ':fecha' => $aniversary));
             }
 
             $acumulador_dias = 0;
