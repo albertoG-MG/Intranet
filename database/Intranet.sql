@@ -4567,7 +4567,11 @@ DELIMITER $$
 	  IF fecha_actual >= fecha_3_meses_anio_actual THEN
 		  SET dias = 12;
 	  ELSE
-		  SET dias = 0;
+		IF(fecha_actual >= fecha_3_meses_aniversario) THEN
+			SET dias = 12;
+		ELSE
+			SET dias = 0;
+		END IF;
 	  END IF;
 	
 	  SET años = (SELECT TIMESTAMPDIFF(year,fecha_3_meses_aniversario, NOW()));
