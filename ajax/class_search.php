@@ -5438,14 +5438,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
             case "store":
                 $vacas = new Vacaciones($periodo_vacaciones);
                 $vacas->CrearSolicitudVacaciones($_SESSION['id'], $days, $jefe_array);
-				$check_update_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
-				$check_update_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
-				$fetch_update_sum_vacaciones = $check_update_vacaciones -> fetch(PDO::FETCH_OBJ);
-				$new_dias_restantes = $vacaciones_dias - $fetch_update_sum_vacaciones -> dias_solicitados;
-				if($new_dias_restantes <= 1 && $vacaciones_dias == $dias_vacaciones){
-					$new_dias_restantes = $new_dias_restantes + $dias_vacaciones - 2;
-				}
-                die(json_encode(array("success", "Se ha subido su solicitud de vacaciones!", $new_dias_restantes, $vacaciones_dias)));
+                die(json_encode(array("success", "Se ha subido su solicitud de vacaciones!")));
             break;
         }
 	}

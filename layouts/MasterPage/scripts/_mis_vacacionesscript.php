@@ -541,8 +541,7 @@
                                                 $('#submit-vacaciones').html("<button class='button btn-celeste text-white rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 ' id='guardar_general' name='guardar_general' type='submit'>Solicitar vacaciones</button>");
                                                 var table = $('#datatable').DataTable();
                                                 table.ajax.reload();
-                                                $("#dias_restantes").html(array[2]+ " día(s)");
-                                                $("#vacaciones_disponibles").html(array[3]+ " días");
+                                                window.location.href="mis_vacaciones.php";
                                             });
                                         }else if(array[0] == "error"){
                                             Swal.fire({
