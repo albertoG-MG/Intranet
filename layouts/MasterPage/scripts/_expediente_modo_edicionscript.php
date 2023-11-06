@@ -1,8 +1,7 @@
 
 <script>
-    var Guardardocs = false;
-    var Guardarfinal = false;
-
+    var Guardardocs = "false";
+    var Guardarfinal = "false";
 //Revisa que el token no este expirado
 <?php   
     $check_exp = $object->_db->prepare("SELECT expedientes.id  FROM expedientes WHERE expedientes.users_id = :user_id");
@@ -12,7 +11,8 @@
     $Editarid = $SelectId['id'];
 
 
-if($fetch_token_user->exp_date >= $curDate){ ?>
+    if($fetch_token_user->exp_date >= $curDate){ 
+?>
 
     //Variable global que nos permite acceder al menú desde cualquier función.
     let menuExpedientes = [];
@@ -26,7 +26,8 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
     let delete_switch_array  = {};
 
 	//Empieza la configuración del menú
-    menuExpedientes = [{
+    menuExpedientes = [
+        {
 			id: 'datosG',
 			triggerMenu: document.querySelector('#datosG-tab'),
 			targetMenu: document.querySelector('#datosG')
@@ -100,7 +101,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
         });	
     });
     //Termina la configuración del estado y municipio
-    <?php } ?>
+<?php } ?>
 
 	$(document).ready(function() {
         //Revisa que el token no este expirado
@@ -1391,7 +1392,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                     }
                 },
                 messages: {
-                    empresa: {
+                    estudios: {
                         required: 'Este campo es requerido'
                     },
                     posee_correo: {
@@ -1667,22 +1668,27 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR'
                     },
                     infb_rporcentaje2:{
+                        required: 'Este campo es requerido',
                         required: 'Este campo es requerido'
                     },
                     banco_personal: {
+                         required: 'Este campo es requerido',
                         field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
                     },
                     cuenta_personal: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'No puede ser menor a 10 dígitos',
                         maxlength: 'No puede ser mayor a 10 dígitos'
                     },
                     clabe_personal: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'No puede ser menor a 18 dígitos',
                         maxlength: 'No puede ser mayor a 18 dígitos'
                     },
                     plastico_personal: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'No puede ser menor a 16 dígitos',
                         maxlength: 'No puede ser mayor a 16 dígitos'
@@ -1723,7 +1729,8 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                                 '</button>');
                                 DatosB();
                             }else if (pestañaActiva.id === "documentos"){
-                                if(Guardardocs = true){
+                                if(Guardardocs == "true"){
+                                    Guardardocs = "false";
                                     $('#submit-papeleria').html(
                                     '<button disabled type="button" id="guardarDocs" name="guardarDocs" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
                                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
@@ -1733,8 +1740,8 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                                         'Cargando...'+
                                     '</button>');
                                     Papeleria();
-                                    $('#submit-papeleria').prop('disabled', false);
-                                }else if(Guardarfinal = true){
+                                }else if(Guardarfinal == "true"){
+                                    Guardarfinal = "false";
                                     $('#submit-button').html(
                                     '<button disabled type="button" id="finish" name="finish" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
                                         '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
@@ -1744,7 +1751,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                                         'Cargando...'+
                                     '</button>');
                                     SubmitChanges();
-                                    $('#submit-button').prop('disabled', false);
                                 }
                             }
 
@@ -1803,7 +1809,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
 
         $(document).on('click', '#guardarDocs', function(e) {
             e.preventDefault();    
-            guardarDocs = true;
+            Guardardocs = "true";
             var formularioEsValido = $('#Guardar').valid();
             if (formularioEsValido) {
                 $('#Guardar').submit();
@@ -1812,7 +1818,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
 
         $(document).on('click', '#finish', function(e) {
             e.preventDefault();
-            Guardarfinal = true;   
+            Guardarfinal = "true";   
             var formularioEsValido = $('#Guardar').valid();
             if (formularioEsValido) {
                 $('#Guardar').submit();
@@ -1840,7 +1846,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                 }
             });
         }
-
         // Añadir reglas adicionales cuando haces clic en el botón con ID 'finish'
         $("#finish").on("click", function() {
             $("#estudios").rules("add", {

@@ -39,6 +39,17 @@
         $papeleria_tecnico->execute(array(':expedienteid' => $idExpediente));
         $array_papeleria_tecnico = $papeleria_tecnico->fetchAll(PDO::FETCH_ASSOC);
 
+        //CONSULTA PARA TRAER LOS CAMPOS DEL EXPEDIENTE
+        $expedientes = $object->_db->prepare("SELECT estudios, calle, num_exterior,colonia, estado_id, municipio_id, codigo, tel_dom, ecivil, fecha_nacimiento, curp, nss, rfc, tipo_identificacion, num_identificacion, talla_polo, emergencia_nombre, emergencia_apellidopat, emergencia_apellidomat, emergencia_relacion, emergencia_telefono,  emergencia_nombre2, emergencia_apellidopat2, emergencia_apellidomat2, emergencia_relacion2, emergencia_telefono2, banco_personal, cuenta_personal, clabe_personal, plastico_personal FROM expedientes WHERE id = :expedienteid");
+        $expedientes->execute(array(':expedienteid' => $idExpediente));
+        $array_expedientes = $expedientes->fetchAll(PDO::FETCH_ASSOC);
+
+        
+        //CONSULTA PARA TRAER LOS BENEFICIARIOS BANCARIOS
+        $ben_ban = $object->_db->prepare("SELECT * FROM ben_bancarios WHERE expediente_id = :expedienteid");
+        $ben_ban->execute(array(':expedienteid' => $idExpediente));
+        $array_benban = $ben_ban->fetchAll(PDO::FETCH_ASSOC);
+
         $fecha = date("d/m/Y", strtotime($exp_date)); // Obtener la fecha sin horas y en formato d/m/y
     
 
@@ -49,25 +60,73 @@
                     <br><p class="font-medium" style="font-style: italic; color: #c6910f;">Favor de llenarlo antes del:  <?php echo $fecha ?></p>
                 </div> <?php
 
-            } else if ($estatus_expediente == 4) { // En caso de que el estatus sea revisión  ?>
-                <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
-                  <span class="font-medium"><b>SU EXPEDIENTE SE ENCUENTRA INCOMPLETO. </b> </span> <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
-                    <br><p class="font-medium" style="font-style: italic; color: #ff0200;">Favor de llenar todos los datos obligatorios antes del:  <?php echo $fecha ?></p>
-                </div>   <?php
+        } else if ($estatus_expediente == 4) { // En caso de que el estatus sea revisión  ?>
+            <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
+                <span class="font-medium"><b>SU EXPEDIENTE SE ENCUENTRA INCOMPLETO. </b> </span> <a href="<?php echo $link ?>" class="text-red-700"><u>Haz clic aquí para acceder</u></a>.
+                <br><p class="font-medium" style="font-style: italic; color: #ff0200;">Favor de llenar todos los datos obligatorios antes del:  <?php echo $fecha ?></p>
+            </div>   <?php
 
-                    //Condición para mandar el mensaje de papelería incompleta
-                    if (Roles::FetchSessionRol($_SESSION['rol']) != "Tecnico" && count($array_papeleria) < 7 ) {   ?>
-                        <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg  bg-red-50" role="alert">
-                            <span class="font-medium"><b> Tiene papelería pendiente de subir en su expediente.</b></span> 
-                        </div> <?php
-                    } 
-                    
-                    if ( Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico" && count($array_papeleria_tecnico) < 8) { // En caso de que el empleado sea técnico  ?>
-                        <div class="px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50 " role="alert">
-                            <span class="font-medium"> <b>Tiene papelería pendiente de subir en su expediente. </b></span>  
-                        </div>   <?php
-                    }
+            //MENSAJES DEPENDIENTO LAS SECCIONES QUE TE FALTAN POR LLENAR -------------------------
+
+                //Condición para mandar el mensaje de papelería incompleta
+                if (Roles::FetchSessionRol($_SESSION['rol']) != "Tecnico" && count($array_papeleria) < 7 ) {   ?>
+                    <div class="flex items-center px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-700" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7" /></svg>
+                      <span class="font-semibold">Tiene <b>papelería</b> pendientes de subir en su expediente.</span>  
+                    </div>  
+                    <?php
+                } 
+                
+                if ( Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico" && count($array_papeleria_tecnico) < 8) { // En caso de que el empleado sea técnico  ?>
+                    <div class="flex items-center px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-700" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7" /></svg>
+                      <span class="font-semibold">Tiene <b>papelería</b> pendientes de subir en su expediente.</span>  
+                    </div>  
+                    <?php
                 }
+ 
+                //Condición para DATOS ADICIONALES incompletos
+                if (empty($array_expedientes[0]['estudios']) || empty($array_expedientes[0]['calle']) || empty($array_expedientes[0]['num_exterior']) || empty($array_expedientes[0]['colonia']) || empty($array_expedientes[0]['estado_id']) || empty($array_expedientes[0]['municipio_id']) || empty($array_expedientes[0]['codigo']) || empty($array_expedientes[0]['tel_dom']) || empty($array_expedientes[0]['ecivil']) || empty($array_expedientes[0]['estudios']) || empty($array_expedientes[0]['fecha_nacimiento']) || empty($array_expedientes[0]['curp']) || empty($array_expedientes[0]['nss']) || empty($array_expedientes[0]['rfc']) || empty($array_expedientes[0]['tipo_identificacion']) || empty($array_expedientes[0]['num_identificacion'])) {
+                    ?>
+                    <div class="flex items-center px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-700" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7" /></svg>
+                      <span class="font-semibold">Tiene <b>datos generales</b> pendientes de llenar en su expediente.</span>  
+                    </div>
+                <?php
+                }
+
+                //Condición para DATOS GENERALES incompletos
+                if (empty($array_expedientes[0]['talla_polo']) || empty($array_expedientes[0]['emergencia_nombre']) || empty($array_expedientes[0]['emergencia_apellidopat']) || empty($array_expedientes[0]['emergencia_apellidomat']) || empty($array_expedientes[0]['emergencia_relacion']) || empty($array_expedientes[0]['emergencia_telefono']) || empty($array_expedientes[0]['emergencia_nombre2']) || empty($array_expedientes[0]['emergencia_apellidopat2']) || empty($array_expedientes[0]['emergencia_apellidomat2']) || empty($array_expedientes[0]['emergencia_relacion2']) || empty($array_expedientes[0]['emergencia_telefono2'])) {
+                    ?> 
+                    <div class="flex items-center px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-700" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7" /></svg>
+                     <span class="font-semibold">Tiene <b>datos adicionales</b> pendientes de llenar en su expediente.</span>  
+                    </div>  
+                    <?php
+                }
+
+                //Condición para DATOS GENERALES incompletos de los tecnicos
+                if ( Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico" && count($array_benban) == 0) {
+                    if (empty($array_expedientes[0]['cuenta_personal']) || empty($array_expedientes[0]['clabe_personal']) || empty($array_expedientes[0]['banco_personal']) || empty($array_expedientes[0]['plastico_personal'])) {
+                        ?> 
+                        <div class="flex items-center px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-700" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7" /></svg>
+                             <span class="font-semibold">Tiene <b>datos bancarios</b> pendientes de llenar en su expediente.</span>  
+                        </div>  
+                        <?php
+                    }
+
+                }else if( Roles::FetchSessionRol($_SESSION['rol']) != "Tecnico" && count($array_benban) == 0){
+                    ?> 
+                    <div class="flex items-center px-4 py-2 mt-1 mx-7 text-sm text-red-700 rounded-lg bg-red-50" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-700" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.27,3L3,8.27V15.73L8.27,21H15.73C17.5,19.24 21,15.73 21,15.73V8.27L15.73,3M9.1,5H14.9L19,9.1V14.9L14.9,19H9.1L5,14.9V9.1M11,15H13V17H11V15M11,7H13V13H11V7" /></svg>
+                        <span class="font-semibold">Tiene <b>datos bancarios</b> pendientes de llenar en su expediente.</span>  
+                    </div>  
+                    <?php
+
+                }
+            //--------------------------------------------------------------------------------------
+        }
     }
 
 /*
@@ -86,7 +145,7 @@
                                     $path = __DIR__ . "/../../../src/img/imgs_uploaded/".$profile -> foto;
                                     if(!file_exists($path)){
                             ?>
-                                        <img class="w-32 h-32 object-cover" style= "border-radius: 35rem !important;" src="../src/img/logo_alertas.png">
+                                        <img class="w-32 h-32 object-cover" style= "border-radius: 35rem !important;" src="../src/img/default-user.png">
                             <?php
                                     }else{
                             ?>
