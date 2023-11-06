@@ -112,18 +112,26 @@
 		<link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
 	</head>
 	
-	<body class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background: url('../src/img/wallpaper.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+	<body class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5"  style="background: url('../src/img/fondo-hexagonos.png') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
 		<div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
-			<div class="w-full py-10 px-5 md:px-10">
+			<div class="w-full bg-white py-10 px-5 md:px-10">
 				<h1 class="font-bold text-3xl text-gray-900">Formulario de cambio de contraseña temporal</h1>
 				<p class="text-slate-500">Llena el siguiente formulario para cambiar tu contraseña</p>
                 <form id="Guardar" class="my-10">
+				<div class='grid grid-cols-1 mt-5 mx-7'>
+						<label class="uppercase md:text-sm text-xs text-light font-semibold" style="color: rgb(255 147 27) !important;">Contraseña actual</label>
+						<div class="group flex">
+							<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5" style="color: rgb(255 147 27) !important;" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+							<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="password" id="current_password" name="current_password" placeholder="Contraseña actual">
+						</div>
+					</div>
+					<div class="my-3 h-px bg-slate-200 mb-10"></div>
                     <div x-data="{showen:true}" class='grid grid-cols-1 mt-5 mx-7'>
                         <div x-show="showen">
-                            <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña</label>
+                            <label class="uppercase md:text-sm text-xs text-light font-semibold" style="color: rgb(255 147 27) !important;">Nueva Contraseña</label>
                             <div class="group flex" x-data="{isshow:false}">
-								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
-        						<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="Contraseña">
+								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5" style="color: rgb(255 147 27) !important;" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+        						<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password" name="password" placeholder="Contraseña nueva">
 								<button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
 									<svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -151,10 +159,10 @@
                     </div>
                     <div x-data="{showen:true}" class='grid grid-cols-1 mt-5 mx-7'>
                         <div x-show="showen">
-                            <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Confirmar contraseña</label>
+                            <label class="uppercase md:text-sm text-xs text-light font-semibold" style="color: rgb(255 147 27) !important;">Confirmar contraseña</label>
                             <div class="group flex" x-data="{isshow:false}">
-								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
-        						<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password_confirm" name="password_confirm" placeholder="Contraseña">
+								<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5" style="color: rgb(255 147 27) !important;" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
+        						<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" x-bind:type="isshow ? 'text' : 'password'" type="password" id="password_confirm" name="password_confirm" placeholder="Confirmar contraseña nueva ">
 								<button type="button" @click="isshow=!isshow" class="z-30 mt-1 text-gray-600">
 									<svg x-show="!isshow" aria-hidden="true" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -173,15 +181,8 @@
 							<li>Nota: Se hara una verificación a la contraseña para evitar el uso de palabras comunes, contraseñas repetidas y evitar su uso por 365 días.</li>
                         </ul>
                     </div>
-					<div class='grid grid-cols-1 mt-5 mx-7'>
-						<label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Contraseña actual</label>
-						<div class="group flex">
-							<div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg></div>
-							<input class="w-full -ml-10 pl-10 -mr-10 pr-10 py-2 px-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" type="password" id="current_password" name="current_password" placeholder="Contraseña">
-						</div>
-					</div>
                     <div id="submit-button">
-                        <button class="block w-full max-w-xs mx-auto btn-celeste hover:bg-celeste-700 focus:bg-celeste-700 text-white rounded-lg px-3 py-3 font-semibold cursor-pointer mt-5">Guardar</button>
+                        <button class="mt-6 block w-full max-w-xs mx-auto hover:bg-celeste-700 focus:bg-celeste-700 text-white rounded-lg px-3 py-3 font-semibold" style="box-shadow: 4px 3px 4px 0px #c1c1c1; background: linear-gradient(170deg , #ff7800 -12%, #ffad2a 84%);">Guardar</button>
                     </div>
 				</form>
 			</div>
