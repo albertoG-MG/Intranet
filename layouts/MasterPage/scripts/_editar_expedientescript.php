@@ -854,20 +854,6 @@
                             }
                         }
                     },
-                    ninterior: {
-                        digits: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    nexterior: {
-                        digits: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
                     colonia: {
                         location_validation: {
                             depends: function(element) {
@@ -1812,12 +1798,6 @@
                     },
                     calle: {
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
-                    },
-                    ninterior: {
-                        digits: 'Solo se permiten números'
-                    },
-                    nexterior: {
-                        digits: 'Solo se permiten números'
                     },
                     colonia: {
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'

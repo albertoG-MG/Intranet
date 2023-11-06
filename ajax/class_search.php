@@ -754,12 +754,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			if(empty($_POST["ninterior"])){
 				$ninterior = null; // Si no se proporciona el número interior, lo establecemos como nulo.
 			}else{
-				if(!preg_match("/^[0-9]*$/", $_POST["ninterior"])){
-					// Si se proporciona un número interior, verificamos si solo contiene dígitos.
-					die(json_encode(array("error", "Solo se permiten números en el número interior")));
-				}else{
-					$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
-				}
+				$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
 			}
 
 			// NÚMERO EXTERIOR
@@ -767,12 +762,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			if(empty($_POST["nexterior"])){
 				$nexterior = null; // Si no se proporciona el número exterior, lo establecemos como nulo.
 			}else{
-				if(!preg_match("/^[0-9]*$/", $_POST["nexterior"])){
-					// Si se proporciona un número exterior, verificamos si solo contiene dígitos.
-					die(json_encode(array("error", "Solo se permiten números en el número exterior")));
-				}else{
-					$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
-				}
+				$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
 			}
 
 			// COLONIA
@@ -2593,12 +2583,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if(empty($_POST["ninterior"])){
 			$ninterior = null; // Si no se proporciona el número interior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["ninterior"])){
-				// Si se proporciona un número interior, verificamos si solo contiene dígitos.
-				die(json_encode(array("error", "Solo se permiten números en el número interior")));
-			}else{
-				$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
-			}
+			$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
 		}
 
 		// NÚMERO EXTERIOR
@@ -2606,12 +2591,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		if(empty($_POST["nexterior"])){
 			$nexterior = null; // Si no se proporciona el número exterior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["nexterior"])){
-				// Si se proporciona un número exterior, verificamos si solo contiene dígitos.
-				die(json_encode(array("error", "Solo se permiten números en el número exterior")));
-			}else{
-				$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
-			}
+			$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
 		}
 
 		// COLONIA
@@ -6139,25 +6119,19 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		// NÚMERO INTERIOR
+		// Checa si está vacío
 		if(empty($_POST["ninterior"])){
-			$ninterior = null; 
+			$ninterior = null; // Si no se proporciona el número interior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["ninterior"])){
-				die(json_encode(array("error", "Solo se permiten números en el número interior")));
-			}else{
-				$ninterior = $_POST["ninterior"];
-			}
+			$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
 		}
 
 		// NÚMERO EXTERIOR
+		//Checa si está vacío
 		if(empty($_POST["nexterior"])){
-			$nexterior = null; 
+			$nexterior = null; // Si no se proporciona el número exterior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["nexterior"])){
-				die(json_encode(array("error", "Solo se permiten números en el número exterior")));
-			}else{
-				$nexterior = $_POST["nexterior"]; 
-			}
+			$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
 		}
 
 		// COLONIA
@@ -7040,25 +7014,19 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 		}
 
 		// NÚMERO INTERIOR
+		// Checa si está vacío
 		if(empty($_POST["ninterior"])){
-			$ninterior = null; 
+			$ninterior = null; // Si no se proporciona el número interior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["ninterior"])){
-				die(json_encode(array("error", "Solo se permiten números en el número interior")));
-			}else{
-				$ninterior = $_POST["ninterior"];
-			}
+			$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
 		}
 
 		// NÚMERO EXTERIOR
+		//Checa si está vacío
 		if(empty($_POST["nexterior"])){
-			$nexterior = null; 
+			$nexterior = null; // Si no se proporciona el número exterior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["nexterior"])){
-				die(json_encode(array("error", "Solo se permiten números en el número exterior")));
-			}else{
-				$nexterior = $_POST["nexterior"]; 
-			}
+			$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
 		}
 
 		// COLONIA
@@ -7869,25 +7837,19 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 		}
 
 		// NÚMERO INTERIOR
+		// Checa si está vacío
 		if(empty($_POST["ninterior"])){
-			$ninterior = null; 
+			$ninterior = null; // Si no se proporciona el número interior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["ninterior"])){
-				die(json_encode(array("error", "Solo se permiten números en el número interior")));
-			}else{
-				$ninterior = $_POST["ninterior"];
-			}
+			$ninterior = $_POST["ninterior"]; // Asignamos el número interior si pasa la validación.
 		}
 
 		// NÚMERO EXTERIOR
+		//Checa si está vacío
 		if(empty($_POST["nexterior"])){
-			$nexterior = null; 
+			$nexterior = null; // Si no se proporciona el número exterior, lo establecemos como nulo.
 		}else{
-			if(!preg_match("/^[0-9]*$/", $_POST["nexterior"])){
-				die(json_encode(array("error", "Solo se permiten números en el número exterior")));
-			}else{
-				$nexterior = $_POST["nexterior"]; 
-			}
+			$nexterior = $_POST["nexterior"]; // Asignamos el número exterior si pasa la validación.
 		}
 
 		// COLONIA
