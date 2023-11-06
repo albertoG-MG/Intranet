@@ -14,7 +14,9 @@
       <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
          <div class="col-span-12 lg:col-span-4">
             <div class="relative min-w-[1px] flex flex-col text-[#64748b] rounded-lg bg-white p-4 sm:p-5" style="box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow) !important; --tw-shadow: 0 3px 10px 0 rgb(48 46 56/6%) !important; --tw-shadow-colored: 0 3px 10px 0 var(--tw-shadow-color) !important;">
-               <div class="flex items-center space-x-4">
+            <?php if ( Roles::FetchSessionRol($_SESSION["rol"]) != "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) != "Administrador") { ?> 
+  
+            <div class="flex items-center space-x-4">
                   <div class="relative inline-flex shrink-0 h-14 w-14">
                      <?php
                         if($profile -> nombre_foto != null && $profile -> foto != null){
@@ -36,6 +38,8 @@
                         ?>
                   </div>
                   <div>
+
+                  <?php  } ?>  
                      <h3 class="text-base font-medium text-slate-700" id="profile-name" style="word-break: break-word;">
                         <?php echo $profile->nombre. " " .$profile->apellido_pat. " " .$profile->apellido_mat;?>
                      </h3>
@@ -93,6 +97,8 @@
                   <div class="block bg-transparent rounded-lg" id="general" role="tabpanel" aria-labelledby="general-tab">
                      <div class="p-4 sm:p-5">
                         <form id="formGeneral">
+
+                        <?php if ( Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?> 
                            <div class="grid grid-cols-1 mt-5 mx-7">
                               <label class="text-[#64748b] font-semibold">Avatar</label>
                               <div class='flex items-center justify-center w-full'>
@@ -117,57 +123,42 @@
                                  Eliminar
                               </button>
                            </div>
+                           <?php } ?>
                            <div class="my-7 h-px bg-slate-200"></div>
                            <div class="grid grid-cols-1 mt-5 mx-7">
-                              <label class="text-[#64748b] font-semibold mb-2">
+                              <label class="text-[#000] font-semibold mb-2">
                               Nombre
                               </label>
                               <div class="group flex">
                                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                                       <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
-                                    </svg>
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nombre" name="nombre" placeholder="i.e. José Juan" aria-describedby="nombre_help" value="<?php echo $_SESSION["nombre"]; ?>">
-                              </div>
-                              <div id="nombre_help" class="text-[#64748b]">
-                                 Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 rounded-md linea" id="nombre" name="nombre" aria-describedby="nombre_help" value="<?php echo $_SESSION["nombre"]; ?>" disabled readonly>
                               </div>
                            </div>
                            <div class="grid grid-cols-1 mt-5 mx-7">
-                              <label class="text-[#64748b] font-semibold mb-2">
+                              <label class="text-[#000] font-semibold mb-2">
                               Apellido paterno
                               </label>
                               <div class="group flex">
                                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                                       <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
-                                    </svg>
+
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apellido_pat" name="apellido_pat" placeholder="i.e. Caballero-Plasencia" aria-describedby="apellido_pat_help" value="<?php echo $_SESSION["apellidopat"]; ?>">
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md linea" id="apellido_pat" name="apellido_pat" aria-describedby="apellido_pat_help" value="<?php echo $_SESSION["apellidopat"]; ?>" disabled readonly> 
                               </div>
-                              <div id="apellido_pat_help" class="text-[#64748b]">
-                                 Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
-                              </div>
+
                            </div>
                            <div class="grid grid-cols-1 mt-5 mx-7">
-                              <label class="text-[#64748b] font-semibold mb-2">
+                              <label class="text-[#000] font-semibold mb-2">
                               Apellido materno
                               </label>
                               <div class="group flex">
                                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24">
-                                       <path fill="currentColor" d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
-                                    </svg>
                                  </div>
-                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apellido_mat" name="apellido_mat" placeholder="i.e. Plasencia'Ramírez" aria-describedby="apellido_mat_help" value="<?php echo $_SESSION["apellidomat"]; ?>">
-                              </div>
-                              <div id="apellido_mat_help" class="text-[#64748b]">
-                                 Se permite la letra ñ, acentos, guiones(-) y apóstrofes.
+                                 <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md linea" id="apellido_mat" name="apellido_mat" aria-describedby="apellido_mat_help" value="<?php echo $_SESSION["apellidomat"]; ?>" disabled readonly>
                               </div>
                            </div>
                            <div class="grid grid-cols-1 mt-5 mx-7">
-                              <label class="text-[#64748b] font-semibold mb-2">
+                              <label class="text-[#000] font-semibold mb-2">
                               Correo
                               </label>
                               <div class="group flex">
@@ -350,10 +341,10 @@
                               <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
                                  <div class="flex-1 flex flex-col mt-5">
                                     <div class="text-[#64748b] font-semibold">
-                                       Número de empleado:
+                                       Número de expediente:
                                     </div>
                                     <span>
-                                    <?php if($view->enum_empleado == null){ echo "No hay datos"; }else{echo "{$view->enum_empleado}";} ?>
+                                    <?php if($view->enum_expediente == null){ echo "No hay datos"; }else{echo "{$view->enum_empleado}";} ?>
                                     </span>
                                  </div>
                                  <div class="flex-1 flex flex-col mt-5">
@@ -1215,17 +1206,21 @@
 			</div>
 		</div>
       <style>
-    		.btn-celeste{
-		background-color: #00a3ff  !important;
-		border: none !important;
-		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
-		font-weight: 500 !important;
-		border-bottom: #fff 9px;
-	}
-	
-		.btn-celeste:hover{
-		background-color: #008eff !important;
-	}
+.btn-celeste{
+   background-color: #00a3ff  !important;
+   border: none !important;
+   box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
+   font-weight: 500 !important;
+   border-bottom: #fff 9px;
+}
+
+.btn-celeste:hover{
+   background-color: #008eff !important;
+}
+
+.linea{
+   border-bottom: 2px solid #a7a6a6 !important;
+}
     </style>
 	</div>
 <?php } ?>
