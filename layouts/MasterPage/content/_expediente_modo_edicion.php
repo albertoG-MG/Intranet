@@ -1444,8 +1444,11 @@
                               <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior3" name="anterior3" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>
+                                 <div id="submit-papeleria">
+                                    <button type="button" id="guardarDocs" name="guardarDocs" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none ">Guardar progreso</button>
+                                 </div>
                                  <div id="submit-button">   
-                                    <button type="button" id="finish" name="finish" class="button btn_slide slide_drch rounded-md h-11 px-8 py-2 focus:ring-2">Guardar</button>
+                                    <button type="button" id="finish" name="finish" class="button btn-vacio rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none">Enviar expediente</button>
                                  </div>
                               </div>
                            </div>

@@ -1,5 +1,7 @@
 
 <script>
+    var Guardardocs = false;
+    var Guardarfinal = false;
 
 //Revisa que el token no este expirado
 <?php   
@@ -103,7 +105,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
 	$(document).ready(function() {
         //Revisa que el token no este expirado
         <?php if($fetch_token_user->exp_date >= $curDate){ ?>
-
 
         var dt = new Date();
         dt.setDate(dt.getDate() - 1);
@@ -609,50 +610,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                 },
                 //Inicializamos en la primera pestaña que es Datos generales
                 rules: {
-                    user: {
-                        required: true
-                    },
-                    numempleado: {
-                        num_empleado: {
-                            depends: function(element) {
-                                return (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        remote: {
-                            url: (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") ? "../ajax/expedientes/check_num_empleado.php" : false,
-                            type: "GET",
-                            beforeSend: function () {
-                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
-                                    $('#loader-numempleado').removeClass('hidden');
-                                    $('#correct-numempleado').addClass('hidden');
-                                }
-                            },
-                            complete: function(data) {
-                                if (pestañaActiva.id == "datosG" || pestañaActiva.id == "documentos") {
-                                    if (data.responseText == "true") {
-                                        $('#loader-numempleado').delay(3000).queue(function(next){ $(this).addClass('hidden');    next();  });
-                                        $('#correct-numempleado').delay(3000).queue(function(next){ $(this).removeClass('hidden');    next();  });
-                                    } else {
-                                        $('#loader-numempleado').addClass('hidden');
-                                        $('#correct-numempleado').addClass('hidden');
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    puesto: {
-                        minlength: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            },
-                            param: 4
-                        },
-                        field_validation: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
                     posee_correo:{
                         required: {
                             depends: function(element) {
@@ -787,140 +744,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                             param: 10
                         }
                     },
-                    tel_movil_empresa:{
-                        required: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    marcacion: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        digits: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    serie: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        alphanumeric: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    sim: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        digits: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    numred: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        digits: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    modelotel: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        model_validation: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    marcatel: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        field_validation: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    imei: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        digits: {
-                            depends: function(element) {
-                                return  $("input[name='tel_movil_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    laptop_empresa: {
-                        required: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    marca_laptop: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        field_validation: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    modelo_laptop: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        model_validation: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    serie_laptop: {
-                        required: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        alphanumeric: {
-                            depends: function(element) {
-                                return  $("input[name='laptop_empresa']:checked").val() === "si" && (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
                     casa:{
                         required: {
                             depends: function(element) {
@@ -949,27 +772,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                     },
                     fechanac:{
                         mayor18: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    salario_contrato:{
-                        number:{
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    salario_fechaalta:{
-                        number: {
-                            depends: function(element) {
-                                return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    observaciones:{
-                        field_validation:{
                             depends: function(element) {
                                 return (pestañaActiva.id === "datosG" || pestañaActiva.id == "documentos");
                             }
@@ -1586,83 +1388,11 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                             },
                             param: 16
                         }
-                    },
-                    banco_nomina: {
-                        field_validation: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            }
-                        }
-                    },
-                    cuenta_nomina: {
-                        digits: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            },
-                            param: 10
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            },
-                            param: 10
-                        }
-                    },
-                    clabe_nomina: {
-                        digits: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            },
-                            param: 18
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            },
-                            param: 18
-                        }
-                    },
-                    plastico: {
-                        digits: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            }
-                        },
-                        minlength: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            },
-                            param: 16
-                        },
-                        maxlength: {
-                            depends: function(element) {
-                                return  (pestañaActiva.id === "datosB" || pestañaActiva.id == "documentos");
-                            },
-                            param: 16
-                        }
                     }
                 },
                 messages: {
-                    user: {
+                    empresa: {
                         required: 'Este campo es requerido'
-                    },
-                    numempleado: {
-                        num_empleado:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado inválido"; },
-                        remote:function () {$('#loader-numempleado').addClass('hidden'); $('#correct-numempleado').addClass('hidden'); $("#numempleado").removeData("previousValue"); return "Número de empleado repetido"; }
-                    },
-                    puesto: {
-                        minlength: 'El puesto debe de contener 4 caracteres como mínimo',
-                        field_validation:'Solo se permiten carácteres alfabéticos y espacios'
                     },
                     posee_correo: {
                         required: 'Este campo es requerido'
@@ -1672,22 +1402,33 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         email_verification:function () {$('#loader-correo').addClass('hidden'); $('#correct-correo').addClass('hidden'); $("#correo_adicional").removeData("previousValue"); return "Asegúrese que el texto ingresado este en formato de email"; }
                     },
                     calle: {
+                        required: 'Este campo es requerido',
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
                     },
                     ninterior: {
                         digits: 'Solo se permiten números'
                     },
                     nexterior: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números'
                     },
                     colonia: {
+                        required: 'Este campo es requerido',
                         location_validation: 'Solo se permiten carácteres alfanúmericos, puntos, guiones intermedios y espacios'
                     },
+                    estado: {
+                        required: 'Este campo es requerido',
+                       },
+                    municipio: {
+                        required: 'Este campo es requerido',
+                    },
                     codigo: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'Solo puedes ingresar como mínimo 5 números'
                     },
                     teldom: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'Solo puedes ingresar como mínimo 10 números',
                         maxlength: 'Solo puedes ingresar como máximo 10 números'
@@ -1701,51 +1442,8 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         minlength: 'Solo puedes ingresar como mínimo 10 números',
                         maxlength:'Solo puedes ingresar como máximo 10 números'
                     },
-                    tel_movil_empresa: {
-                        required: 'Este campo es requerido'
-                    },
-                    marcacion: {
-                        required: "Este campo es requerido",
-                        digits: "Solo se permiten números"
-                    },
-                    serie: {
-                        required: "Este campo es requerido",
-                        alphanumeric: "Solo se permiten carácteres alfanúmericos"
-                    },
-                    sim: {
-                        required: "Este campo es requerido",
-                        digits: "Solo se permiten números"
-                    },
-                    numred: {
-                        required: "Este campo es requerido",
-                        digits: "Solo se permiten números"
-                    },
-                    modelotel: {
-                        required: "Este campo es requerido",
-                        model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
-                    },
-                    marcatel: {
-                        required: "Este campo es requerido",
-                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
-                    },
-                    imei: {
-                        required: "Este campo es requerido",
-                        digits: "Solo se permiten números"
-                    },
-                    laptop_empresa: {
-                        required: 'Este campo es requerido'
-                    },
-                    marca_laptop: {
-                        required: "Este campo es requerido",
-                        field_validation: "Solo se permiten carácteres alfabéticos y espacios"
-                    },
-                    modelo_laptop: {
-                        required: "Por favor, ingrese el modelo de la laptop",
-                        model_validation: "Solo se permiten carácteres alfanúmericos, guiones intermedios y espacios"
-                    },
-                    serie_laptop: {
-                        required: "Este campo es requerido",
-                        alphanumeric: "Solo se permiten carácteres alfanúmericos"
+                    ecivil: {
+                        required: 'Este campo es requerido',
                     },
                     casa: {
                         required: 'Este campo es requerido'
@@ -1758,28 +1456,26 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         number: "Solo se permiten números y decimales"
                     },
                     fechanac: {
+                        required: 'Este campo es requerido',
                         mayor18: 'Debes tener por lo menos 18 años para aplicar'
                     },
-                    salario_contrato: {
-                        number: 'Solo se permiten números y decimales'
-                    },
-                    salario_fechaalta: {
-                        number: 'Solo se permiten números y decimales'
-                    },
-                    observaciones: {
-                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                    },
                     curp: {
+                        required: 'Este campo es requerido',
                         curp_validation: 'Solo puede contener letras y números, debe tener 18 caracteres y debe de cumplir con el siguiente formato: ABDC123456HJKNPLR',
                     },
                     nss: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'Solo puedes ingresar como mínimo 11 números',
                         maxlength: 'Solo puedes ingresar como máximo 11 números'
                     },
                     rfc: {
+                        required: 'Este campo es requerido',
                         rfc_validation: 'Solo puede contener letras y números, debe tener 12 caracteres y debe de cumplir con el siguiente formato: ABCD123456789',
                     },
+                    identificacion: {
+                        required: 'Este campo es requerido',
+                       },
                     numeroidentificacion: {
                         required: 'Este campo es requerido',
                         validateINE: 'El INE debe tener exactamente 13 caracteres alfanuméricos',
@@ -1787,6 +1483,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         validateCedula: 'La cédula debe tener entre 7 y 10 dígitos numéricos'
                     },
                     numReferencias: {
+                        required: 'Este campo es requerido',
                         refvalplus3: 'Solo se permiten hasta 3 referencias laborales'
                     },
                     infa_rnombre1: {
@@ -1856,33 +1553,50 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         digits: 'Solo se permiten números',
                         notOnlyZero: 'Favor de ingresar una cantidad válida'
                     },
+                    tallapolo: {
+                        required: 'Este campo es requerido'
+                    },
                     emergencia_nom: {
+                        required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     },
                     emergencia_nom2: {
+                        required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     },
                     emergencia_appat: {
+                        required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     },
                     emergencia_appat2: {
+                        required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     },
                     emergencia_apmat: {
+                        required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     },
                     emergencia_apmat2: {
+                        required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
                     },
                     emergencia_tel: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'Solo puedes ingresar como mínimo 10 números',
                         maxlength: 'Solo puedes ingresar como máximo 10 números'
                     },
                     emergencia_tel2: {
+                        required: 'Este campo es requerido',
                         digits: 'Solo se permiten números',
                         minlength: 'Solo puedes ingresar como mínimo 10 números',
                         maxlength: 'Solo puedes ingresar como máximo 10 números'
+                    },
+                    emergencia_relacion: {
+                        required: 'Este campo es requerido'
+                    },
+                    emergencia_relacion2: {
+                        required: 'Este campo es requerido'
                     },
                     empresa: {
                         required: 'Este campo es requerido'
@@ -1898,6 +1612,10 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                     amfam: {
                         required: 'Este campo es requerido',
                         names_validation: 'Solo se permiten caracteres alfabéticos, guiones intermedios, apóstrofes y espacios'
+                    },
+                    numBeneficiariosBancarios:{
+                        required: 'Este campo es requerido',
+                        notOnlyZero: 'Ingrese al menos un beneficiario'
                     },
                     infb_rnombre1: {
                         required: 'Este campo es requerido',
@@ -1968,24 +1686,6 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                         digits: 'Solo se permiten números',
                         minlength: 'No puede ser menor a 16 dígitos',
                         maxlength: 'No puede ser mayor a 16 dígitos'
-                    },
-                    banco_nomina: {
-                        field_validation: 'Solo se permiten carácteres alfabéticos y espacios'
-                    },
-                    cuenta_nomina: {
-                        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 10 dígitos',
-                        maxlength: 'No puede ser mayor a 10 dígitos'
-                    },
-                    clabe_nomina: {
-                        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 18 dígitos',
-                        maxlength: 'No puede ser mayor a 18 dígitos'
-                    },
-                    plastico: {
-                        digits: 'Solo se permiten números',
-                        minlength: 'No puede ser menor a 16 dígitos',
-                        maxlength: 'No puede ser mayor a 16 dígitos'
                     }
                 },
                 submitHandler: function(form) {
@@ -1995,7 +1695,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
 			                if (pestañaActiva.id === "datosG"){
                                 $('#submit-DG').html(
                                 '<button disabled type="button" id="guardarDG" name="guardarDG" class="button btn_slide slide_drch  border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
-                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                     '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                     '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
                                     '</svg>'+
@@ -2005,7 +1705,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                             } else if (pestañaActiva.id === "datosA"){
                                 $('#submit-DA').html(
                                 '<button disabled type="button" id="guardarDA" name="guardarDA" class="button btn_slide slide_drch rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
-                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                     '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                     '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
                                     '</svg>'+
@@ -2015,24 +1715,39 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                             } else if (pestañaActiva.id === "datosB"){
                                 $('#submit-DB').html(
                                 '<button disabled type="button" id="guardarDB" name="guardarDB" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
-                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                                     '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
                                     '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
                                     '</svg>'+
                                     'Cargando...'+
                                 '</button>');
                                 DatosB();
-                            } else if (pestañaActiva.id === "documentos"){
-                                $('#submit-button').html(
-                                '<button disabled type="button" id="finish" name="finish" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
-                                    '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
-                                    '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
-                                    '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
-                                    '</svg>'+
-                                    'Cargando...'+
-                                '</button>');
-                                SubmitChanges();
+                            }else if (pestañaActiva.id === "documentos"){
+                                if(Guardardocs = true){
+                                    $('#submit-papeleria').html(
+                                    '<button disabled type="button" id="guardarDocs" name="guardarDocs" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
+                                        '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                        '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                        '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                        '</svg>'+
+                                        'Cargando...'+
+                                    '</button>');
+                                    Papeleria();
+                                    $('#submit-papeleria').prop('disabled', false);
+                                }else if(Guardarfinal = true){
+                                    $('#submit-button').html(
+                                    '<button disabled type="button" id="finish" name="finish" class="button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none">'+
+                                        '<svg aria-hidden="true" role="status" class="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+                                        '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>'+
+                                        '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>'+
+                                        '</svg>'+
+                                        'Cargando...'+
+                                    '</button>');
+                                    SubmitChanges();
+                                    $('#submit-button').prop('disabled', false);
+                                }
                             }
+
 		                }else{
 			                Swal.fire({
 				                title: "Ocurrió un error",
@@ -2086,8 +1801,18 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
             }
         });
 
+        $(document).on('click', '#guardarDocs', function(e) {
+            e.preventDefault();    
+            guardarDocs = true;
+            var formularioEsValido = $('#Guardar').valid();
+            if (formularioEsValido) {
+                $('#Guardar').submit();
+            }
+        });
+
         $(document).on('click', '#finish', function(e) {
-            e.preventDefault();   
+            e.preventDefault();
+            Guardarfinal = true;   
             var formularioEsValido = $('#Guardar').valid();
             if (formularioEsValido) {
                 $('#Guardar').submit();
@@ -2096,25 +1821,114 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
 
         //MUNICIPIOS
         if($('#estado').val() != ""){
-                var state = $('#estado').val();
-                var data = {
-                    id:state,
-                    idExpediente: <?php echo ($fetch_token_user -> idExpediente); ?>
-                };
-            
-                $.ajax({
-                    url: '../ajax/expedientes/municipios.php',
-                    type:'POST',
-                    data: data,
-                    dataType: 'html',
-                    success: function(data){
-                        $('#imunicipio').html(data);
-                    },
-                    error: function (data) {
-                        $("#ajax-error").text('Fail to send request');
-                    }
-                });
-            }
+            var state = $('#estado').val();
+            var data = {
+                id:state,
+                idExpediente: <?php echo ($fetch_token_user -> idExpediente); ?>
+            };
+        
+            $.ajax({
+                url: '../ajax/expedientes/municipios.php',
+                type:'POST',
+                data: data,
+                dataType: 'html',
+                success: function(data){
+                    $('#imunicipio').html(data);
+                },
+                error: function (data) {
+                    $("#ajax-error").text('Fail to send request');
+                }
+            });
+        }
+
+        // Añadir reglas adicionales cuando haces clic en el botón con ID 'finish'
+        $("#finish").on("click", function() {
+            $("#estudios").rules("add", {
+                required: true,
+            });
+            $("#calle").rules("add", {
+                required: true,
+            });
+            $("#nexterior").rules("add", {
+                required: true,
+            });
+            $("#colonia").rules("add", {
+                required: true,
+            });
+            $("#estado").rules("add", {
+                required: true,
+            });
+            $("#municipio").rules("add", {
+                required: true,
+            });
+            $("#codigo").rules("add", {
+                required: true,
+            });
+            $("#teldom").rules("add", {
+                required: true,
+            });
+            $("#ecivil").rules("add", {
+                required: true,
+            });
+            $("#fechanac").rules("add", {
+                required: true,
+            });
+            $("#curp").rules("add", {
+                required: true,
+            });
+            $("#nss").rules("add", {
+                required: true,
+            });
+            $("#rfc").rules("add", {
+                required: true,
+            });
+            $("#identificacion").rules("add", {
+                required: true,
+            });
+            $("#numeroidentificacion").rules("add", {
+                required: true,
+            });
+            $("#numReferencias").rules("add", {
+                required: true,
+            });
+            $("#tallapolo").rules("add", {
+                required: true,
+            });
+            $("#emergencia_nom").rules("add", {
+                required: true,
+            });
+            $("#emergencia_nom2").rules("add", {
+                required: true,
+            });
+            $("#emergencia_appat").rules("add", {
+                required: true,
+            });
+            $("#emergencia_appat2").rules("add", {
+                required: true,
+            });
+            $("#emergencia_apmat").rules("add", {
+                required: true,
+            });
+            $("#emergencia_apmat2").rules("add", {
+                required: true,
+            });
+            $("#emergencia_relacion").rules("add", {
+                required: true,
+            });
+            $("#emergencia_relacion2").rules("add", {
+                required: true,
+            });
+            $("#emergencia_tel").rules("add", {
+                required: true,
+            });
+            $("#emergencia_tel2").rules("add", {
+                required: true,
+            });
+            $("#numBeneficiariosBancarios").rules("add", {
+                required: true,
+                notOnlyZero: 0
+            });
+        });
   <?php } ?>
     });
 
@@ -2225,7 +2039,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                     var array = $.parseJSON(response);
 					if (array[0] == "success") {
                         Swal.fire({
-                            title: "Expediente Almacenado",
+                            title: "Datos generales almacenados.",
                             text: array[1],
                             icon: "success"
                         }).then(function() {
@@ -2339,7 +2153,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                     var array = $.parseJSON(response);
 					if (array[0] == "success") {
                         Swal.fire({
-                            title: "Expediente Almacenado",
+                            title: "Datos adicionales almacenados",
                             text: array[1],
                             icon: "success"
                         }).then(function() {
@@ -2424,7 +2238,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                 var array = $.parseJSON(response);
                 if (array[0] == "success") {
                     Swal.fire({
-                        title: "Expediente Almacenado",
+                        title: "Datos bancarios almacenados.",
                         text: array[1],
                         icon: "success"
                     }).then(function() {
@@ -2455,6 +2269,78 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
         }
     });
 }
+
+function Papeleria(){
+        window.addEventListener('beforeunload', unloadHandler);
+        var fd = new FormData();
+    
+
+        /*File uploads*/
+        <?php 
+            foreach($papeleria as $fetchpapeleria){
+                echo "var papeleria{$fetchpapeleria['id']} = $('#infp_papeleria{$fetchpapeleria['id']}')[0].files[0];";
+            }
+        ?> 
+        let delete_switch_array_json = JSON.stringify(delete_switch_array);
+        var pestaña = "documentos";
+        var app = "expediente_modo_edicion_papeleria";
+    
+        /*FD appends*/
+     
+        /*File uploads*/
+        <?php 
+            foreach($papeleria as $fetchpapeleria){
+                echo "fd.append('papeleria{$fetchpapeleria['id']}', papeleria{$fetchpapeleria['id']});";
+            } 
+        ?>
+        fd.append('delete_switch_array_json', delete_switch_array_json);
+        fd.append('pestaña', pestaña);
+        fd.append('app', app);
+    
+    
+        /*Ajax*/
+        $.ajax({
+            type: "POST",
+            url: "../ajax/class_search.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                setTimeout(function(){
+                    var array = $.parseJSON(response);
+					if (array[0] == "success") {
+                        Swal.fire({
+                            title: "Papelería almacenada",
+                            text: array[1],
+                            icon: "success"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-papeleria').html("<button class='button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none' id='guardarDocs' name='guardarDocs' type='submit'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "error") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-papeleria').html("<button class='button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none' id='guardarDocs' name='guardarDocs' type='submit'>Guardar progreso</button>");
+                        });
+                    }else if (array[0] == "forbidden") {
+                        Swal.fire({
+                            title: "Error",
+                            text: array[1],
+                            icon: "error"
+                        }).then(function() {
+                            window.removeEventListener('beforeunload', unloadHandler);
+                            $('#submit-papeleria').html("<button disabled class='button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none' id='guardarDA' name='guardarDA' type='button'>Guardar progreso</button>");
+                            window.location.href = "dashboard.php";
+                        });
+                    }
+				},3000);
+            }
+        });
+    }
 
     function SubmitChanges(){
         window.addEventListener('beforeunload', unloadHandler);
@@ -2567,7 +2453,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
         ?> 
         let delete_switch_array_json = JSON.stringify(delete_switch_array);
         var pestaña = "documentos";
-        var app = "expediente_modo_edicion";
+        var app = "expediente_modo_edicion_final";
     
         /*FD appends*/
     
@@ -2656,12 +2542,12 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                     var array = $.parseJSON(response);
 					if (array[0] == "success") {
                         Swal.fire({
-                            title: "Expediente Almacenado",
+                            title: "Expediente Enviados",
                             text: array[1],
                             icon: "success"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-button').html("<button class='button btn-vacio rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none ' id='finish' name='finish' type='submit'>Enviar expediente</button>");
                         });
                     }else if (array[0] == "error") {
                         Swal.fire({
@@ -2670,7 +2556,7 @@ if($fetch_token_user->exp_date >= $curDate){ ?>
                             icon: "error"
                         }).then(function() {
                             window.removeEventListener('beforeunload', unloadHandler);
-                            $('#submit-button').html("<button class='button  btn_slide slide_drch border rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none' id='finish' name='finish' type='submit'>Guardar</button>");
+                            $('#submit-button').html("<button class='button btn-vacio rounded-md h-11 px-8 py-2 focus:ring-2 focus:outline-none ' id='finish' name='finish' type='submit'>Enviar expediente</button>");
                         });
                     }else if (array[0] == "forbidden") {
                         Swal.fire({
