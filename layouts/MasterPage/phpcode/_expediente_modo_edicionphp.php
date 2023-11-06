@@ -65,6 +65,11 @@
     if ($ben_bancarios_count > 0) {
         $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    $bringuser = $object -> _db -> prepare("SELECT usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, usuarios.correo as correo, departamentos.departamento as departamento FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id LEFT JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE expedientes.id=:expedienteid"); 
+    $bringuser -> bindParam('expedienteid', $id_expediente, PDO::PARAM_INT); 
+    $bringuser -> execute();
+    $selected = $bringuser->fetch(PDO::FETCH_OBJ);
     
     /* PAPELERÍA  */
     

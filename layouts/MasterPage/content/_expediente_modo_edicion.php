@@ -107,7 +107,7 @@
                                           <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                                        </svg>
                                     </div>
-                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="correo_usuario" name="correo_usuario" placeholder="Correo" readonly>
+                                    <input class="w-full -ml-10 pl-10 py-2 h-11 border border-gray-200 bg-gray-200 text-gray-900 rounded-md focus:ring-2 focus:ring-celeste-600" type="text" id="correo_usuario" name="correo_usuario" placeholder="Correo" value=" <?php echo "{$selected->correo}" ?>" readonly>
                                  </div>
                               </div>
                               <div x-data="{ open: <?php echo $edit->eposee_correo === 'SI' ? 'true' : 'false'; ?> }">

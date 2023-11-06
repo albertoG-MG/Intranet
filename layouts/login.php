@@ -119,7 +119,7 @@ function check_login_attempts($user, $object) {
     <link rel="stylesheet" href="../src/css/materialdesignicons.min.css">
 </head>
 
-<body>
+<body class="contenedor">
     <div class="container-image min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5" style="background: url('../src/img/fondo-hexagonos.png') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
         <div class=" text-gray-500 shadow-xl w-full overflow-hidden" style="z-index:5; border-radius: 9px !important; max-width:1000px">
             <div class="md:flex w-full">
@@ -371,6 +371,45 @@ function check_login_attempts($user, $object) {
   100% {
       background-position: 0% 50%;
   }
+}
+
+
+.contenedor{
+    overflow-x: hidden;
+    overflow-y:auto;
+}
+.contenedor::-webkit-scrollbar {
+    -webkit-appearance: none;
+    
+}
+.contenedor::-webkit-scrollbar:vertical {
+    width:12px;
+}
+
+.contenedor::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.contenedor::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.contenedor::-webkit-scrollbar-thumb {
+    background: #c1c1c182;
+    /* background: linear-gradient(262deg, #ffa8079c 44%, #ff970e99 65%, #ffa807ba 40%); */
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.contenedor::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(256deg , #F7941E 63%, #fff 106%,#ffa807ba 3%);
+    /* background: linear-gradient(262deg, #ffa8079c 44%, #ff970e99 65%, #ffa807ba 40%); */
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.contenedor::-webkit-scrollbar-track {
+    border-radius: 10px;  
 }
     </style>
 </html>
