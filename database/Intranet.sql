@@ -4520,50 +4520,46 @@ DELIMITER $$
     DECLARE acum2 INT unsigned;
     DECLARE counter INT unsigned;
 	  DECLARE fecha_actual DATE;
-	  DECLARE fecha_3_meses_anio_actual DATE;
+	  DECLARE fecha_aniversario_futuro DATE;
+    DECLARE fecha_aniversario_pasado DATE;
 	  SET fecha_actual = CURDATE();
+	  SET fecha_aniversario_futuro = DATE_ADD(fecha_actual, INTERVAL 1 YEAR);
+    SET fecha_aniversario_pasado = DATE_SUB(fecha_aniversario_futuro, INTERVAL 3 MONTH);
 	  
-	  IF YEAR(CURDATE()) < YEAR(fecha_3_meses_aniversario)	THEN
-		SET fecha_3_meses_anio_actual = CONCAT(YEAR(fecha_3_meses_aniversario), '-', MONTH(fecha_3_meses_aniversario), '-', DAY(fecha_3_meses_aniversario));
+	  IF fecha_3_meses_aniversario >= fecha_aniversario_pasado THEN
+		  set dias=0;
 	  ELSE
-		SET fecha_3_meses_anio_actual = CONCAT(YEAR(CURDATE()), '-', MONTH(fecha_3_meses_aniversario), '-', DAY(fecha_3_meses_aniversario));
-	  END IF;
-	
-	  IF fecha_actual >= fecha_3_meses_anio_actual THEN
-		  SET dias = 12;
-	  ELSE
-		IF(fecha_actual >= fecha_3_meses_aniversario) THEN
-			SET dias = 12;
-		ELSE
-			SET dias = 0;
-		END IF;
-	  END IF;
-	
-	  SET años = (SELECT TIMESTAMPDIFF(year,fecha_3_meses_aniversario, NOW()));
-	
-	  IF años != 0 THEN
-		  IF años = 1 THEN
-			  SET dias = 14;
-		  ELSEIF años = 2 THEN
-			  SET dias = 16;
-		  ELSEIF años = 3 THEN
-			  SET dias = 18;
-		  ELSEIF años = 4 THEN
-			  SET dias = 20;
+		  SET años = (SELECT TIMESTAMPDIFF(year,fecha_3_meses_aniversario, NOW()));
+		  IF años != 0 THEN
+			  IF años = 1 THEN
+				  SET dias = 14;
+			  ELSEIF años = 2 THEN
+				  SET dias = 16;
+			  ELSEIF años = 3 THEN
+				  SET dias = 18;
+			  ELSEIF años = 4 THEN
+				  SET dias = 20;
+			  ELSE
+				  SET acum = 5;
+				  SET acum2 = 9;
+				  SET counter = 0;
+				  SET dias = 20;
+				  WHILE counter = 0 DO
+					  IF(acum > años AND años < acum2) THEN
+						  SET counter = 1;
+					  ELSE
+						  SET dias = dias + 2;
+						  SET acum = acum + 5;
+						  SET acum2 = acum2 + 5;
+					  END IF;
+				  END WHILE;
+			  END IF;
 		  ELSE
-			  SET acum = 5;
-			  SET acum2 = 9;
-			  SET counter = 0;
-			  SET dias = 20;
-			  WHILE counter = 0 DO
-				  IF(acum > años AND años < acum2) THEN
-					  SET counter = 1;
-				  ELSE
-					  SET dias = dias + 2;
-					  SET acum = acum + 5;
-					  SET acum2 = acum2 + 5;
-				  END IF;
-			  END WHILE;
+			  IF fecha_actual >= fecha_3_meses_aniversario THEN
+				  SET dias = 12;
+			  ELSE
+				  SET dias = 0;
+			  END IF;
 		  END IF;
 	  END IF;
 	  RETURN dias;
@@ -4595,25 +4591,24 @@ DELIMITER ;
 --
 
 DELIMITER $$
-  CREATE FUNCTION calculo_aniversario_siguiente(fecha_inicio_empleo DATE)
+  CREATE FUNCTION calculo_aniversario_siguiente(fecha_3_meses_aniversario DATE)
   RETURNS DATE
   DETERMINISTIC
   BEGIN
-      DECLARE fechaActual DATE;
-      DECLARE anioActual INT;
-      DECLARE mesInicio INT;
-      DECLARE diaInicio INT;
+    DECLARE anioActual INT;
+    DECLARE mesInicio INT;
+    DECLARE diaInicio INT;
 
-      SET fechaActual = NOW();
-      SET anioActual = YEAR(fechaActual);
-      SET mesInicio = MONTH(fecha_inicio_empleo);
-      SET diaInicio = DAY(fecha_inicio_empleo);
+    SET mesInicio = MONTH(fecha_3_meses_aniversario);
+    SET diaInicio = DAY(fecha_3_meses_aniversario);
 
-      IF anioActual = YEAR(fecha_inicio_empleo) THEN
-          RETURN DATE_FORMAT(CONCAT(anioActual, '-', mesInicio, '-', diaInicio), '%Y-%m-%d');
-      ELSE
-          RETURN DATE_FORMAT(CONCAT(anioActual, '-', mesInicio, '-', diaInicio), '%Y-%m-%d');
-      END IF;
+    IF CURDATE() >= fecha_3_meses_aniversario THEN
+		SET anioActual = YEAR(CURDATE()) + 1;
+    ELSE
+		SET anioActual = YEAR(CURDATE());
+    END IF;
+
+    RETURN DATE_FORMAT(CONCAT(anioActual, '-', mesInicio, '-', diaInicio), '%Y-%m-%d');
   END$$
 DELIMITER ;
 
