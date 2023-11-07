@@ -30,12 +30,12 @@
         $idExpediente = $SelectEstatus['expediente_id'];
 
         //CONSULTA PARA CONTAR PAPELERÍA OBLIGATORIA DE LOS EMPLEADOS
-        $papeleria = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24) AND expediente_id = :expedienteid");
+        $papeleria = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,25) AND expediente_id = :expedienteid");
         $papeleria->execute(array(':expedienteid' => $idExpediente));
         $array_papeleria = $papeleria->fetchAll(PDO::FETCH_ASSOC);
         
         //CONSULTA PARA CONTAR LA PAPELERÍA OBLIGATORIA DE LOS TECNICOS
-        $papeleria_tecnico = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24) AND expediente_id = :expedienteid");
+        $papeleria_tecnico = $object->_db->prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE tipo_archivo NOT IN (2, 7, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24,25) AND expediente_id = :expedienteid");
         $papeleria_tecnico->execute(array(':expedienteid' => $idExpediente));
         $array_papeleria_tecnico = $papeleria_tecnico->fetchAll(PDO::FETCH_ASSOC);
 
