@@ -4521,7 +4521,12 @@ DELIMITER $$
 	  DECLARE fecha_actual DATE;
 	  DECLARE fecha_3_meses_anio_actual DATE;
 	  SET fecha_actual = CURDATE();
-	  SET fecha_3_meses_anio_actual = CONCAT(YEAR(CURDATE())+1, '-', MONTH(fecha_3_meses_aniversario), '-', DAY(fecha_3_meses_aniversario));
+	  
+	  IF YEAR(CURDATE()) < YEAR(fecha_3_meses_aniversario)	THEN
+		SET fecha_3_meses_anio_actual = CONCAT(YEAR(fecha_3_meses_aniversario), '-', MONTH(fecha_3_meses_aniversario), '-', DAY(fecha_3_meses_aniversario));
+	  ELSE
+		SET fecha_3_meses_anio_actual = CONCAT(YEAR(CURDATE()), '-', MONTH(fecha_3_meses_aniversario), '-', DAY(fecha_3_meses_aniversario));
+	  END IF;
 	
 	  IF fecha_actual >= fecha_3_meses_anio_actual THEN
 		  SET dias = 12;
