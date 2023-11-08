@@ -186,10 +186,10 @@
                 $count_jerarquia = $check_jerarquia -> rowCount(); ?>
          <?php if($count_jerarquia > 0) {?>      
          <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso a incidencias") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") { ?>
-        <?php if(basename($_SERVER['PHP_SELF']) == 'Mis_incidencias.php' || basename($_SERVER['PHP_SELF']) == 'ver_documento_vinculado.php'){?>
-            <a href="Mis_incidencias.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+        <?php if(basename($_SERVER['PHP_SELF']) == 'mis_incidencias.php' || basename($_SERVER['PHP_SELF']) == 'ver_documento_vinculado.php'){?>
+            <a href="mis_incidencias.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
                 <?php }else{ ?>
-                    <a href="Mis_incidencias.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                    <a href="mis_incidencias.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
                 <?php } ?>
                     <p class="ml-4" style="color: white;">Mis Incidencias</p>
             </a>
