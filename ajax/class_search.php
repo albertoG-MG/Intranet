@@ -5354,26 +5354,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		$vacaciones_dias = 0;
 
 		if ($dias_vacaciones == 0) {
-			//Checar si es el aniversario
-			$aniversary_anios = new DateTime($aniversary);
-
-			if ($fecha_actual >= $aniversary_anios) {
-			//Si el empleado ya cumplió los 3 meses antes del aniversario debemos asignar los siguiente días de vacaciones al acumulador
-				$acumulador_dias = $dias_siguiente_anio;
-				$vacaciones_dias = $dias_siguiente_anio;
-				//Checa todas las solicitudes que el usuario ha hecho en el transcurso del año
-				$check_solicitudes_vacaciones = $object -> _db -> prepare("SELECT COALESCE(SUM(dias_solicitados),0) AS dias_solicitados FROM solicitud_vacaciones where users_id=:userid AND (estatus=4 OR estatus=1)");
-				$check_solicitudes_vacaciones -> execute(array(':userid' => $_SESSION["id"]));
-				$fetch_sum_vacaciones = $check_solicitudes_vacaciones -> fetch(PDO::FETCH_OBJ);
-
-				//Calcula los días restantes del empleado
-				$acumulador_dias = $acumulador_dias - $fetch_sum_vacaciones->dias_solicitados;
-			}else{
-				$acumulador_dias = 0;
-			}
 			$dias_restantes = $acumulador_dias;
-			$vacaciones_dias = 0;
-		//El else en caso de que el usuario tenga vacaciones disponibles
 		}else{
 			//Checar si es el aniversario
 			$aniversary_anios = new DateTime($aniversary);
