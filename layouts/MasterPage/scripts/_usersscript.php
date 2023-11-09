@@ -2,13 +2,12 @@
     document.addEventListener("DOMContentLoaded", function() {
         $("#datatable").DataTable({
             responsive: true,
-            "lengthChange": false,
             "ordering": false,
             "sPaginationType": "listboxWithButtons",
             language: {
                 search: ""
             },
-            dom: '<"top"fB>rt<"bottom"ip><"clear">',
+            dom: '<"top"fB>rt<"bottom"lip><"clear">',
             buttons: [
 
             ],
