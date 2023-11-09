@@ -42,9 +42,9 @@
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=0;
-                                         var evaluation = table.column(4);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(true);
-                                         var estatus = table.column(5);
+                                         var estatus = table.column(6);
                                          estatus.visible(false);
 										 table.column().cells().invalidate().render();
                                          table.columns.adjust().responsive.recalc();
@@ -78,9 +78,9 @@
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
-                                         var evaluation = table.column(4);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
-                                         var estatus = table.column(5);
+                                         var estatus = table.column(6);
                                          estatus.visible(true);
 										 table.column().cells().invalidate().render();
                                          table.columns.adjust().responsive.recalc();
@@ -114,9 +114,9 @@
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
-                                         var evaluation = table.column(4);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
-                                         var estatus = table.column(5);
+                                         var estatus = table.column(6);
                                          estatus.visible(true);
 										 table.column().cells().invalidate().render();
                                          table.columns.adjust().responsive.recalc();
@@ -150,9 +150,9 @@
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
-                                         var evaluation = table.column(4);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
-                                         var estatus = table.column(5);
+                                         var estatus = table.column(6);
                                          estatus.visible(true);
 										 table.column().cells().invalidate().render();
                                          table.columns.adjust().responsive.recalc();
@@ -186,9 +186,9 @@
 										 const obj = JSON.parse(response);
 										 table.rows.add(obj).draw();
 										 evaluation_buttons=1;
-                                         var evaluation = table.column(4);
+                                         var evaluation = table.column(5);
                                          evaluation.visible(false);
-                                         var estatus = table.column(5);
+                                         var estatus = table.column(6);
                                          estatus.visible(true);
 										 table.column().cells().invalidate().render();
                                          table.columns.adjust().responsive.recalc();
@@ -214,6 +214,7 @@
                 {"data": "solicitud_id", visible: false, searchable: false},
                 {"data": "nombre"},
                 {"data": "periodo"},
+                {"data": "dias"},
                 {"data": "fecha_solicitud"},
                 {"data": "estatus_id", searchable: false},
                 {"data": "id_estatus", visible: false}
@@ -248,13 +249,24 @@
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
-                                "<span>" + row["fecha_solicitud"] + "</span>" +
+                                "<span>" + row["dias"] + "</span>" +
                             "</div>"
                         );
                     }
                 },
                 {
                     target: [4],
+                    className:"border-white",
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row["fecha_solicitud"] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [5],
                     className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         if(evaluation_buttons == 0){
@@ -265,7 +277,7 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [6],
                     className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         if(row["id_estatus"] == 4){
