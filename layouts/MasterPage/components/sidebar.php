@@ -303,6 +303,16 @@
                     <p class="ml-4" style="color: white;">Evaluar Vacaciones</p>
                 </a>
             <?php } ?>
+
+            <?php if (Permissions::CheckPermissions($_SESSION["id"], "Acceso al historial de vacaciones del empleado") == "true" || Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador"){ ?>
+                <?php if(basename($_SERVER['PHP_SELF']) == 'mi_historial_vacaciones.php' ){?>   
+                <a href="mi_historial_vacaciones.php" class="flex items-center p-2 pl-11 w-full transition duration-75 bg-gray-700 bg-opacity-25 text-gray-100">
+                <?php }else{ ?>
+                    <a href="mi_historial_vacaciones.php" class="flex items-center p-2 pl-11 w-full transition duration-75 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <?php } ?>
+                    <p class="ml-4" style="color: white;">Mi historial de vacaciones</p>
+                </a>
+            <?php } ?>
         </li>
     </ul>
     <?php } ?>
