@@ -4812,6 +4812,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serve
 --
 DROP TABLE IF EXISTS `serverside_historial_vacaciones`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_historial_vacaciones`  AS SELECT `historial_solicitud_vacaciones`.`id` AS `id`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `historial_solicitud_vacaciones`.`periodo_solicitado` AS `periodo`, `historial_solicitud_vacaciones`.`fecha_solicitud` AS `fecha_solicitud`, `historial_solicitud_vacaciones`.`estatus` AS `estatus` FROM (`historial_solicitud_vacaciones` join `usuarios` on((`usuarios`.`id` = `historial_solicitud_vacaciones`.`users_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=CURRENT_USER SQL SECURITY DEFINER VIEW `serverside_historial_vacaciones`  AS SELECT `historial_solicitud_vacaciones`.`id` AS `id`, concat(`usuarios`.`nombre`,' ',`usuarios`.`apellido_pat`,' ',`usuarios`.`apellido_mat`) AS `nombre`, `historial_solicitud_vacaciones`.`periodo_solicitado` AS `periodo`, `historial_solicitud_vacaciones`.`dias_solicitados` AS `dias`, `historial_solicitud_vacaciones`.`fecha_solicitud` AS `fecha_solicitud`, `historial_solicitud_vacaciones`.`estatus` AS `estatus` FROM (`historial_solicitud_vacaciones` join `usuarios` on((`usuarios`.`id` = `historial_solicitud_vacaciones`.`users_id`))) ;
 
 -- --------------------------------------------------------
