@@ -21,6 +21,7 @@
                                         <th>Solicitud_id</th>
                                         <th class="py-3 text-left all">Nombre</th>
                                         <th class="py-3 text-center desktop">Periodo</th>
+                                        <th class="py-3 text-center desktop">dias</th>
                                         <th class="py-3 text-center desktop">Fecha solicitud</th>
                                         <th class="py-3 text-center desktop">Estatus</th>
                                         <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>

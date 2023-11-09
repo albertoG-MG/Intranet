@@ -214,7 +214,7 @@
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                                                var action = table.column(5);
+                                                var action = table.column(6);
                                                 action.visible(false);
                                             <?php } ?>
                                             table.clear().draw();
@@ -245,7 +245,7 @@
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                                                var action = table.column(5);
+                                                var action = table.column(6);
                                                 action.visible(true);
                                                 ButtonEdit = 1;
                                             <?php } ?>
@@ -277,7 +277,7 @@
                                         success: function(response) {
                                             var table = $('#datatable').DataTable();
                                             <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
-                                                var action = table.column(5);
+                                                var action = table.column(6);
                                                 action.visible(true);
                                                 ButtonEdit = 2;
                                             <?php } ?>
@@ -321,6 +321,7 @@
                 {"data": "solicitud_id", visible: false, searchable: false},
                 {"data": "nombre"},
                 {"data": "periodo_solicitado"},
+                {"data": "dias"},
                 {"data": "fecha_solicitud"},
                 {"data": "estatus"}<?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ echo ","; } ?>
                 <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
@@ -356,13 +357,24 @@
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
-                                "<span>" + row["fecha_solicitud"] + "</span>" +
+                                "<span>" + row["dias"] + "</span>" +
                             "</div>"
                         );
                     }
                 },
                 {
                     target: [4],
+                    className:"border-white",
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row["fecha_solicitud"] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [5],
                     className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         if(row["estatus"] == 4){
@@ -394,7 +406,7 @@
                 }<?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ echo ","; } ?>
                 <?php if((Roles::FetchSessionRol($_SESSION["rol"]) == "Superadministrador" || Roles::FetchSessionRol($_SESSION["rol"]) == "Administrador") || (Permissions::CheckPermissions($_SESSION["id"], "Ver todas las vacaciones") == "true" && Permissions::CheckPermissions($_SESSION["id"], "Editar estatus de las vacaciones") == "true")){ ?>
                     {
-                        target: [5],
+                        target: [6],
                         className:"border-white bg-white",
                         render: function (data, type, row) {
                             if(row["estatus"] == 4){
