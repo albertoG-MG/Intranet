@@ -222,6 +222,11 @@
             $aniversario -> execute(array(':fecha_estatus' => $fecha_aniversario_3_meses));
             $aniversary = $aniversario->fetchColumn();
 
+            //Se utiliza la misma función pero para la fecha de vencimiento
+            $fecha_vencimiento_query = $object ->_db -> prepare("SELECT calculo_aniversario_siguiente(:estatus_fecha) AS aniversario_estatus");
+            $fecha_vencimiento_query -> execute(array(':estatus_fecha' => $fecha_estatus));
+            $fecha_vencimiento = $fecha_vencimiento_query->fetchColumn();
+
             //Sacar los días restantes en caso de que el usuario tenga vacaciones disponibles
             //Esta consulta obtiene las vacaciones del empleado según el año de antiguedad
             $getVacaciones = $object -> _db -> prepare("SELECT calculo_vacaciones(:fecha_estatus) AS dias_vacaciones");
