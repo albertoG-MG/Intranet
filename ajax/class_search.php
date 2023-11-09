@@ -6557,14 +6557,11 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		// Relación
-		$emergencia_relacion_array = array("PADRE", "MADRE", "HERMANO", "HERMANA", "CONYUGE", "PAREJA", "AMIGO", "AMIGA", "VECINO", "COMPAÑERO_DE_TRABAJO", "COMPAÑERA_DE_TRABAJO", "OTRO");
-
-		if (in_array($_POST["emergenciarelacion"], $emergencia_relacion_array)) {
-			$emergenciarelacion = $_POST["emergenciarelacion"];
-		} else if (empty($_POST["emergenciarelacion"])) {
+	
+		if (empty($_POST["emergenciarelacion"])) {
 			$emergenciarelacion = null;
 		} else {
-			die(json_encode(array("error", "El valor escogido en el dropdown de relacion de el primer contacto está modificado, por favor, vuelva a poner el valor original en el dropdown")));
+			$emergenciarelacion = $_POST["emergenciarelacion"];
 		}
 
 		// Teléfono
@@ -6620,15 +6617,12 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 		}
 
 		// Relación
-		$emergencia_relacion_array2 = array("PADRE", "MADRE", "HERMANO", "HERMANA", "CONYUGE", "PAREJA", "AMIGO", "AMIGA", "VECINO", "COMPAÑERO_DE_TRABAJO", "COMPAÑERA_DE_TRABAJO", "OTRO");
-
-		if (in_array($_POST["emergenciarelacion2"], $emergencia_relacion_array2)) {
-			$emergenciarelacion2 = $_POST["emergenciarelacion2"];
-		} else if (empty($_POST["emergenciarelacion2"])) {
+			
+		if (empty($_POST["emergenciarelacion2"])) {
 			$emergenciarelacion2 = null;
 		} else {
-			die(json_encode(array("error", "El valor escogido en el dropdown de relacion de el segundo contacto está modificado, por favor, vuelva a poner el valor original en el dropdown")));
-		}
+			$emergenciarelacion2 = $_POST["emergenciarelacion2"];
+			}
 
 		// Teléfono
 		if(empty($_POST["emergenciatelefono2"])){

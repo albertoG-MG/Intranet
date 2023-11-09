@@ -2106,12 +2106,20 @@
         var emergencianom = $("#emergencia_nom").val();
         var emergenciaapat = $("#emergencia_appat").val();
         var emergenciaamat = $("#emergencia_apmat").val();
-        var emergenciarelacion = $("#emergencia_relacion").val();
+         if($("#emergencia_relacion").val() === "OTRO" || $("#textrelacion").val() != ""){ 
+            var emergenciarelacion = $("#textrelacion").val();
+         }else{  
+            var emergenciarelacion = $("#emergencia_relacion").val();
+        }
         var emergenciatelefono = $("#emergencia_tel").val();
         var emergencianom2 = $("#emergencia_nom2").val();
         var emergenciaapat2 = $("#emergencia_appat2").val();
         var emergenciaamat2 = $("#emergencia_apmat2").val();
-        var emergenciarelacion2 = $("#emergencia_relacion2").val();
+        if($("#emergencia_relacion2").val() === "OTRO" || $("#textrelacion2").val() != "" ){ 
+            var emergenciarelacion2 = $("#textrelacion2").val();
+         }else{  
+            var emergenciarelacion2 = $("#emergencia_relacion2").val();
+        }
         var emergenciatelefono2 = $("#emergencia_tel2").val();
         var tipo_sangre = $("#tipo_sangre").val();
         var vacante = $("#vacante").val();
