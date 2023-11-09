@@ -66,6 +66,32 @@
         $fetch_ben_bancarios = $ben_bancarios->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /*FAMILIARES*/
+    $fetch_familiares = [];
+    $query = 
+    "SELECT 
+    COALESCE(nombre1, nombre2, nombre3, nombre4, nombre5) AS nombre,
+    COALESCE(apellido_pat1, apellido_pat2, apellido_pat3, apellido_pat4, apellido_pat5) AS apellido_pat,
+    COALESCE(apellido_mat1, apellido_mat2, apellido_mat3, apellido_mat4, apellido_mat5) AS apellido_mat 
+    FROM   familiares  WHERE  expediente_id = :expedienteid 
+        AND 
+        (
+            COALESCE(nombre1, nombre2, nombre3, nombre4, nombre5) IS NOT NULL 
+            OR 
+            COALESCE(apellido_pat1, apellido_pat2, apellido_mat3, apellido_mat4, apellido_mat5) IS NOT NULL 
+            OR 
+            COALESCE(apellido_mat1, apellido_mat2, apellido_mat3, apellido_mat4, apellido_mat5) IS NOT NULL
+        );
+    ";
+
+    $familiares = $object->_db->prepare($query);
+    $familiares->execute(array(':expedienteid' =>   $id_expediente ));
+    $familiares_count = $familiares->rowCount();
+
+    if ($familiares_count > 0) {
+        $fetch_familiares = $familiares->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     $bringuser = $object -> _db -> prepare("SELECT usuarios.nombre as nombre, usuarios.apellido_pat as apellido_pat, usuarios.apellido_mat as apellido_mat, usuarios.correo as correo, departamentos.departamento as departamento FROM expedientes INNER JOIN usuarios ON expedientes.users_id=usuarios.id LEFT JOIN departamentos ON departamentos.id=usuarios.departamento_id WHERE expedientes.id=:expedienteid"); 
     $bringuser -> bindParam('expedienteid', $id_expediente, PDO::PARAM_INT); 
     $bringuser -> execute();

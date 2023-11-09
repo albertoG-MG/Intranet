@@ -545,34 +545,58 @@
                                              </div>
                                           </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                             <div class="grid grid-cols-1">
-                                                <label class="text-[#64748b] font-semibold">RELACION</label>
-                                                <div class="group flex">
-                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                         <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
-                                                      </svg>
+                                             <?php if ( empty($referencias_count >= 1 && $fetch_referencias[0]["relacion"])  || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISOR" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISORA" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "COLEGA" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADO" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADA" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTOR" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTORA" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "CLIENTE" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESOR" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESORA" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDOR" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDORA" || $referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MIEMBRO DE UN COMITE") { ?>   
+                                                <div x-data="{ combo_reflabrelacion: true, text_reflabrelacion: false}">
+                                                   <?php  }else{  ?>
+                                                <div x-data="{ combo_reflabrelacion: false, text_reflabrelacion: true}">
+                                                   <?php  }  ?>
+                                                   <div x-show="combo_reflabrelacion">
+                                                      <div class="grid grid-cols-1">   
+                                                         <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                         <div class="group flex">
+                                                            <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                               <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                  <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                               </svg>
+                                                            </div>
+                                                            <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){text_reflabrelacion = true; combo_reflabrelacion = false;}else if($el.value != 'OTRO'){text_reflabrelacion = false; combo_reflabrelacion = true;}" id="infb_rrelacion1" name="infb_rrelacion1">
+                                                            <option value="SUPERVISOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISOR") ? 'selected' : ''; ?>>SUPERVISOR</option>
+                                                            <option value="SUPERVISORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISORA") ? 'selected' : ''; ?>>SUPERVISORA</option>
+                                                            <option value="COLEGA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "COLEGA") ? 'selected' : ''; ?>>COLEGA</option>
+                                                            <option value="SUBORDINADO" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADO") ? 'selected' : ''; ?>>SUBORDINADO</option>
+                                                            <option value="SUBORDINADA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADA") ? 'selected' : ''; ?>>SUBORDINADA</option>
+                                                            <option value="MENTOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTOR") ? 'selected' : ''; ?>>MENTOR</option>
+                                                            <option value="MENTORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTORA") ? 'selected' : ''; ?>>MENTORA</option>
+                                                            <option value="CLIENTE" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "CLIENTE") ? 'selected' : ''; ?>>CLIENTE</option>
+                                                            <option value="PROFESOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESOR") ? 'selected' : ''; ?>>PROFESOR</option>
+                                                            <option value="PROFESORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESORA") ? 'selected' : ''; ?>>PROFESORA</option>
+                                                            <option value="DEPARTAMENTO DE PERSONAL" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "DEPARTAMENTO DE PERSONAL") ? 'selected' : ''; ?>>DEPARTAMENTO DE PERSONAL</option>
+                                                            <option value="PROVEEDOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDOR") ? 'selected' : ''; ?>>PROVEEDOR</option>
+                                                            <option value="PROVEEDORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDORA") ? 'selected' : ''; ?>>PROVEEDORA</option>
+                                                            <option value="MIEMBRO DE UN COMITE" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MIEMBRO DE UN COMITE") ? 'selected' : ''; ?>>MIEMBRO DE UN COMITÉ</option>
+                                                            <option value="OTRO" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                         </select>
+                                                         </div>
+                                                      </div>
+                                                   </div>                         
+                                                   <div  x-show="text_reflabrelacion">
+                                                      <div class="flex items-end">
+                                                         <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                            <div class="group flex">
+                                                               <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                  <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                     <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                                  </svg>
+                                                               </div>
+                                                             <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="text_reflabrelacion" name="text_reflabrelacion" value="<?php echo ($referencias_count >= 1) ? $fetch_referencias[0]["relacion"][0]["apellido_mat"] : '';?>" placeholder="Relación">
+                                                            </div>
+                                                         </div>
+                                                         <svg  height="64px" width="64px" class="h-12 w-8" x-on:click="text_reflabrelacion = false, combo_reflabrelacion = true"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.6 505.6" xml:space="preserve" fill="#ff0000" stroke="#ff0000" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ff1900;" d="M494.4,301.6c-4.4-4.4-10-8.8-16.4-8.8H339.6c-13.2,0-26.4,14.4-26.4,27.6V344 c0,13.2,13.6,21.2,26.4,21.2h48.8c-33.2,40-82.8,64.4-136,64.4c-98,0-178-79.2-178-177.2S154,74.8,252.4,74.8 c73.6,0,140.4,46.4,166.4,114.8c6.8,18.4,27.6,27.6,46,20.8c18.4-6.8,27.6-27.6,20.8-46C449.2,68.4,355.6,4,252.8,4 C115.6,4,4,115.6,4,252.8s110.8,248.8,248,248.8c68,0,129.2-28,177.2-75.2v32c0,13.2,12.4,22.4,25.6,22.4h23.6 c13.2,0,23.2-9.6,23.2-22.4V344.8V320C501.2,313.6,498.8,306,494.4,301.6z"></path> <path style="fill:#ff1900;" d="M252.8,23.6c54.4,0,106,19.6,146.4,53.2c0.4,0.4,1.2,0.8,1.6,1.6c0,0,16.8,14.4,28.4,28.4 c16,19.2,28.8,40.8,38,64.8c1.6,4,1.2,8.4-0.4,12c-1.6,4-4.8,6.8-8.8,8.4c-2,0.8-3.6,1.2-5.6,1.2c-6.4,0-12.4-4-14.8-10 C408.8,106.8,334.4,55.6,252.8,55.6C144,55.6,55.2,144.4,55.2,253.2c0,108.8,88.8,197.6,197.6,197.6c58.4,0,113.2-25.6,151.2-70.4 c4.8-6,6-14,2.8-21.2c-3.2-6.8-10.4-11.6-18-11.6h-50.4c-2,0-5.2-2-5.2-4V320c0-1.2,2-4,2.4-4.4s2.8-2.8,4-2.8H478 c1.2,0,1.6,2.4,2.4,2.8c0.4,0.4,0.8,3.2,0.8,4.4v24.8V458c0,2-0.8,2.4-3.2,2.4h-23.6c-2,0-5.6-0.4-5.6-2.4v-32c0-8-4-15.2-11.6-18.4 c-2.4-0.8-4.4-1.6-7.2-1.6c-5.2,0-10,2-14,6c-43.2,44-102.8,69.2-164,69.2C125.6,481.2,22.8,378.4,22.8,252 C23.6,126.4,126.4,23.6,252.8,23.6"></path> <path style="fill:#ff1900;" d="M326.4,298.4l-45.6-45.6l67.6-67.6c4.4-4.4,4.4-12,0-16.4l-11.2-11.2c-4.4-4.4-12-4.4-16.4,0 l-67.6,67.6l-67.6-67.6c-4.4-4.4-12-4.4-16.4,0L158,168.8c-4.4,4.4-4.4,12,0,16.4l67.6,67.6L158,320.4c-4.4,4.4-4.4,12,0,16.4 l11.2,11.2c4.4,4.4,12,4.4,16.4,0l67.6-67.2l62.4,62.4"></path> <path d="M252,505.6C113.2,505.6,0,392,0,252.8C0,113.2,113.6,0,252.8,0c104.4,0,199.6,65.6,236.4,163.2c7.6,20.4-2.4,43.2-22.8,51.2 c-20.4,7.6-43.2-2.4-51.2-22.8c-25.6-67.2-90.8-112-162.4-112c-96,0-174,78-174,174s78,174.4,174,174.4c49.2,0,94.8-19.6,127.2-54.4 h-40c-15.6,0-30.4-14-30.4-29.2v-23.6c0-16,16-27.6,30.4-27.6h138.4c7.2,0,14,2.8,19.2,8s8,12,8,19.6v138 c0,14.4-11.2,30.4-27.2,30.4h-23.6c-14.8,0-29.6-15.2-29.6-30.4v-22.4C375.6,481.6,316,505.6,252,505.6z M252.8,8 C117.6,8,8,118,8,252.8C8,388,117.6,497.6,252,497.6c64.8,0,125.2-25.6,174.4-74c1.2-1.2,2.8-1.6,4.4-0.8c1.6,0.8,2.4,2,2.4,3.6v32 c0,11.2,10.8,22.4,21.6,22.4h23.6c10.8,0,19.2-12,19.2-22.4v-138c0-5.6-2-10.4-5.6-14l0,0c-3.6-3.6-8.4-5.6-13.6-5.6H340 c-10.4,0-22.4,8.4-22.4,19.6V344c0,10.4,11.2,21.2,22.4,21.2h48.8c1.6,0,2.8,0.8,3.6,2.4s0.4,3.2-0.4,4.4c-34,40.8-84.8,64-139.2,64 c-100.4,0-182-81.6-182-182.4c0-100.4,81.6-182,182-182c75.2,0,143.6,47.2,170,117.2c6,16.4,24.4,24.4,40.8,18.4 s24.4-24.4,18.4-40.8C446,71.2,354,8,252.8,8z"></path> <path d="M252.8,486C124.4,486,19.6,381.2,19.6,252.8S124.4,19.6,252.8,19.6l0,0c54,0,106.8,19.2,148.8,54l1.6,1.6 c1.6,1.6,2,4,0.4,5.6s-4,2-5.6,0.4l-1.6-1.2c-40.8-33.6-91.6-52-143.6-52l0,0c-124,0-225.2,101.2-225.2,225.2 s101.2,225.2,225.2,225.2c60,0,118.8-24.8,161.2-68c4.4-4.8,10.4-7.2,16.8-7.2c2.8,0,5.6,0.4,8.4,1.6c8.8,3.6,14,12,14,22v33.6 l0.4,0.8h23.6v-0.4v-140H339.6c-0.4,0-1.2,0-2,0.4c-0.4,0-0.4,0.4-0.8,0.4v21.6c0.4,0.4,0.8,0.4,1.2,0.4h50.4 c9.2,0,17.6,5.2,21.6,13.6s2.4,18.4-3.6,25.2C368,428,311.6,454,252.4,454c-111.2,0-201.6-90.4-201.6-201.6 C50.8,198.8,71.6,148,110,110c38-38,88.8-59.2,142.4-59.2l0,0c83.2,0,158.8,52.4,188.4,130c1.6,4.4,6,7.6,11.2,7.6 c1.6,0,2.8-0.4,4-0.8c2.8-1.2,5.2-3.2,6.4-6.4c1.2-2.8,1.2-6,0.4-9.2c-8.8-23.2-21.2-44.4-37.2-63.6c-1.6-1.6-1.2-4.4,0.4-5.6 c1.6-1.6,4.4-1.2,5.6,0.4c16.4,20,29.6,42,38.8,66c2,4.8,1.6,10.4-0.4,15.2s-6,8.4-11.2,10.4c-2.4,0.8-4.8,1.2-7.2,1.2 c-8,0-15.6-5.2-18.4-12.8C404.8,108.4,332,58.4,252,58.4c-51.6,0-100.4,20-136.8,56.8C78.4,152,58.4,200.4,58.4,252 c0,106.8,86.8,193.6,193.6,193.6c57.2,0,110.8-25.2,148-68.8c4-4.8,4.8-11.2,2.4-16.8c-2.4-5.6-8-9.2-14.4-9.2h-50.4 c-3.6,0-9.2-3.2-9.2-8v-23.6c0-3.2,2.8-4.8,3.6-5.6c2-2,6-2,6.8-2h138.4c2.8,0,4,1.2,5.2,2c1.6,1.6,2,3.6,2,5.2v140 c0,4.8-2.8,8.4-7.2,8.4h-24.8c-4.8,0-8-4.8-8-8.8v-33.6c0-6.8-3.2-12.4-9.2-14.4c-2-0.8-3.6-1.2-5.6-1.2c-4,0-8,1.6-11.2,4.8 C375.6,460.4,314.8,486,252.8,486z"></path> <path d="M177.2,356L177.2,356c-4,0-8-1.6-11.2-4.4l-11.2-11.2c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l64.8-64.8l-64.8-64.8 c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l11.2-11.2c6-6,16-6,22,0l64.8,64.8l64.8-64.8c6-6,16-6,22,0l11.2,11.2 c2.8,2.8,4.4,6.8,4.4,11.2c0,4-1.6,8-4.4,11.2L286,253.2l42.8,42.8c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0L277.6,256 c-0.8-0.8-1.2-1.6-1.2-2.8s0.4-2,1.2-2.8l67.6-67.6c1.6-1.6,2.4-3.2,2.4-5.6s-0.8-4-2.4-5.6L334,160.4c-2.8-2.8-8-2.8-10.8,0 L255.6,228c-1.6,1.6-4,1.6-5.6,0l-67.6-67.6c-2.8-2.8-8-2.8-10.8,0l-11.2,11.2c-1.6,1.6-2.4,3.2-2.4,5.6s0.8,4,2.4,5.6l67.6,67.6 c0.8,0.8,1.2,1.6,1.2,2.8s-0.4,2-1.2,2.8l-67.6,67.6c-1.6,1.6-2.4,3.2-2.4,5.6c0,2,0.8,4,2.4,5.6l11.2,11.2c1.6,1.6,3.2,2.4,5.6,2.4 l0,0c2,0,4-0.8,5.6-2.4l67.6-67.6c1.6-1.6,4-1.6,5.6,0l60,60c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0l-57.2-57.2l-64.8,64.8 C185.2,354.4,181.6,356,177.2,356z"></path> </g></svg>  
+                                                      </div>
                                                    </div>
-                                                   <select name="infa_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
-                                                      <option value="">--Selecciona--</option>
-                                                      <option value="SUPERVISOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISOR") ? 'selected' : ''; ?>>SUPERVISOR</option>
-                                                      <option value="SUPERVISORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUPERVISORA") ? 'selected' : ''; ?>>SUPERVISORA</option>
-                                                      <option value="COLEGA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "COLEGA") ? 'selected' : ''; ?>>COLEGA</option>
-                                                      <option value="SUBORDINADO" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADO") ? 'selected' : ''; ?>>SUBORDINADO</option>
-                                                      <option value="SUBORDINADA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "SUBORDINADA") ? 'selected' : ''; ?>>SUBORDINADA</option>
-                                                      <option value="MENTOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTOR") ? 'selected' : ''; ?>>MENTOR</option>
-                                                      <option value="MENTORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MENTORA") ? 'selected' : ''; ?>>MENTORA</option>
-                                                      <option value="CLIENTE" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "CLIENTE") ? 'selected' : ''; ?>>CLIENTE</option>
-                                                      <option value="PROFESOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESOR") ? 'selected' : ''; ?>>PROFESOR</option>
-                                                      <option value="PROFESORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROFESORA") ? 'selected' : ''; ?>>PROFESORA</option>
-                                                      <option value="DEPARTAMENTO DE PERSONAL" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "DEPARTAMENTO DE PERSONAL") ? 'selected' : ''; ?>>DEPARTAMENTO DE PERSONAL</option>
-                                                      <option value="PROVEEDOR" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDOR") ? 'selected' : ''; ?>>PROVEEDOR</option>
-                                                      <option value="PROVEEDORA" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "PROVEEDORA") ? 'selected' : ''; ?>>PROVEEDORA</option>
-                                                      <option value="MIEMBRO DE UN COMITE" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "MIEMBRO DE UN COMITE") ? 'selected' : ''; ?>>MIEMBRO DE UN COMITÉ</option>
-                                                      <option value="OTRO" <?php echo ($referencias_count >= 1 && $fetch_referencias[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
-                                                   </select>
                                                 </div>
-                                             </div>
+
                                              <div class="grid grid-cols-1">
                                                 <label class="text-[#64748b] font-semibold">TELEFONO</label>
                                                 <div class="group flex">
@@ -852,31 +876,57 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                 <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
-                                    <div class="group flex">
-                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
-                                          </svg>
+                                 <?php if ($edit->eemergencia_relacion == '' || $edit->eemergencia_relacion == 'PADRE' || $edit->eemergencia_relacion == 'MADRE' || $edit->eemergencia_relacion == 'HERMANO' || $edit->eemergencia_relacion == 'HERMANA' || $edit->eemergencia_relacion == 'CONYUGE' || $edit->eemergencia_relacion == 'PAREJA' || $edit->eemergencia_relacion == 'AMIGO' || $edit->eemergencia_relacion == 'AMIGA' || $edit->eemergencia_relacion == 'VECINO' || $edit->eemergencia_relacion == 'COMPAÑERO DE TRABAJO' || $edit->eemergencia_relacion == 'COMPAÑERA DE TRABAJO') { ?>   
+                                   <div x-data="{ comborelacion: true, textrelacion: false}">
+                                   <?php  }else{  ?>
+                                       <div x-data="{ comborelacion: false, textrelacion: true}">
+                                    <?php  }  ?>
+                                       <div x-show="comborelacion">
+                                          <div class="grid grid-cols-1">   
+                                             <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                             <div class="group flex">
+                                                <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                   </svg>
+                                                </div>
+                                                <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){textrelacion = true; comborelacion = false;}else if($el.value != 'OTRO'){textrelacion = false; comborelacion = true;}" id="emergencia_relacion" name="emergencia_relacion">
+                                                   <option value="">--Selecciona--</option>
+                                                   <option value="PADRE" <?php if($edit->eemergencia_relacion == "PADRE"){echo 'selected="selected"';}?>>PADRE</option>
+                                                   <option value="MADRE" <?php if($edit->eemergencia_relacion == "MADRE"){echo 'selected="selected"';} ?>>MADRE</option>
+                                                   <option value="HERMANO" <?php if($edit->eemergencia_relacion == "HERMANO"){echo 'selected="selected"';} ?>>HERMANO</option>
+                                                   <option value="HERMANA" <?php if($edit->eemergencia_relacion == "HERMANA"){echo 'selected="selected"';} ?>>HERMANA</option>
+                                                   <option value="CONYUGE" <?php if($edit->eemergencia_relacion == "CONYUGE"){echo 'selected="selected"';} ?>>CONYUGE</option>
+                                                   <option value="PAREJA" <?php if($edit->eemergencia_relacion == "PAREJA"){echo 'selected="selected"';} ?>>PAREJA</option>
+                                                   <option value="AMIGO" <?php if($edit->eemergencia_relacion == "AMIGO"){echo 'selected="selected"';} ?>>AMIGO</option>
+                                                   <option value="AMIGA" <?php if($edit->eemergencia_relacion == "AMIGA"){echo 'selected="selected"';} ?>>AMIGA</option>
+                                                   <option value="VECINO" <?php if($edit->eemergencia_relacion == "VECINO"){echo 'selected="selected"';} ?>>VECINO</option>
+                                                   <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERO DE TRABAJO</option>
+                                                   <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERA DE TRABAJO</option>
+                                                   <option value="OTRO" >OTRO</option>
+                                                </select>
+                                             </div>
+                                          </div>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion" name="emergencia_relacion">
-                                          <option value="">--Selecciona--</option>
-                                          <option value="PADRE" <?php if($edit->eemergencia_relacion == "PADRE"){echo 'selected="selected"';}?>>PADRE</option>
-                                          <option value="MADRE" <?php if($edit->eemergencia_relacion == "MADRE"){echo 'selected="selected"';} ?>>MADRE</option>
-                                          <option value="HERMANO" <?php if($edit->eemergencia_relacion == "HERMANO"){echo 'selected="selected"';} ?>>HERMANO</option>
-                                          <option value="HERMANA" <?php if($edit->eemergencia_relacion == "HERMANA"){echo 'selected="selected"';} ?>>HERMANA</option>
-                                          <option value="CONYUGE" <?php if($edit->eemergencia_relacion == "CONYUGE"){echo 'selected="selected"';} ?>>CONYUGE</option>
-                                          <option value="PAREJA" <?php if($edit->eemergencia_relacion == "PAREJA"){echo 'selected="selected"';} ?>>PAREJA</option>
-                                          <option value="AMIGO" <?php if($edit->eemergencia_relacion == "AMIGO"){echo 'selected="selected"';} ?>>AMIGO</option>
-                                          <option value="AMIGA" <?php if($edit->eemergencia_relacion == "AMIGA"){echo 'selected="selected"';} ?>>AMIGA</option>
-                                          <option value="VECINO" <?php if($edit->eemergencia_relacion == "VECINO"){echo 'selected="selected"';} ?>>VECINO</option>
-                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERO DE TRABAJO</option>
-                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERA DE TRABAJO</option>
-                                          <option value="OTRO" <?php if($edit->eemergencia_relacion == "OTRO"){echo 'selected="selected"';} ?>>OTRO</option>
-                                       </select>
+                                       
+                                       <div  x-show="textrelacion">
+                                          <div class="flex items-end">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                <div class="group flex">
+                                                      <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                         <svg styñe="pointer-events: none" x-on:click="{ comborelacion2 = false, textrelacion2 = true }" class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                         </svg>
+                                                      </div>
+                                                   <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="textrelacion" name="textrelacion" value="<?php if($edit->eemergencia_relacion !== null){ echo "{$edit->eemergencia_relacion}"; }?>" placeholder="Relación">
+                                                </div>
+                                             </div>
+                                                 <svg  height="64px" width="64px" class="h-12 w-8" x-on:click="textrelacion = false, comborelacion = true"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.6 505.6" xml:space="preserve" fill="#ff0000" stroke="#ff0000" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ff1900;" d="M494.4,301.6c-4.4-4.4-10-8.8-16.4-8.8H339.6c-13.2,0-26.4,14.4-26.4,27.6V344 c0,13.2,13.6,21.2,26.4,21.2h48.8c-33.2,40-82.8,64.4-136,64.4c-98,0-178-79.2-178-177.2S154,74.8,252.4,74.8 c73.6,0,140.4,46.4,166.4,114.8c6.8,18.4,27.6,27.6,46,20.8c18.4-6.8,27.6-27.6,20.8-46C449.2,68.4,355.6,4,252.8,4 C115.6,4,4,115.6,4,252.8s110.8,248.8,248,248.8c68,0,129.2-28,177.2-75.2v32c0,13.2,12.4,22.4,25.6,22.4h23.6 c13.2,0,23.2-9.6,23.2-22.4V344.8V320C501.2,313.6,498.8,306,494.4,301.6z"></path> <path style="fill:#ff1900;" d="M252.8,23.6c54.4,0,106,19.6,146.4,53.2c0.4,0.4,1.2,0.8,1.6,1.6c0,0,16.8,14.4,28.4,28.4 c16,19.2,28.8,40.8,38,64.8c1.6,4,1.2,8.4-0.4,12c-1.6,4-4.8,6.8-8.8,8.4c-2,0.8-3.6,1.2-5.6,1.2c-6.4,0-12.4-4-14.8-10 C408.8,106.8,334.4,55.6,252.8,55.6C144,55.6,55.2,144.4,55.2,253.2c0,108.8,88.8,197.6,197.6,197.6c58.4,0,113.2-25.6,151.2-70.4 c4.8-6,6-14,2.8-21.2c-3.2-6.8-10.4-11.6-18-11.6h-50.4c-2,0-5.2-2-5.2-4V320c0-1.2,2-4,2.4-4.4s2.8-2.8,4-2.8H478 c1.2,0,1.6,2.4,2.4,2.8c0.4,0.4,0.8,3.2,0.8,4.4v24.8V458c0,2-0.8,2.4-3.2,2.4h-23.6c-2,0-5.6-0.4-5.6-2.4v-32c0-8-4-15.2-11.6-18.4 c-2.4-0.8-4.4-1.6-7.2-1.6c-5.2,0-10,2-14,6c-43.2,44-102.8,69.2-164,69.2C125.6,481.2,22.8,378.4,22.8,252 C23.6,126.4,126.4,23.6,252.8,23.6"></path> <path style="fill:#ff1900;" d="M326.4,298.4l-45.6-45.6l67.6-67.6c4.4-4.4,4.4-12,0-16.4l-11.2-11.2c-4.4-4.4-12-4.4-16.4,0 l-67.6,67.6l-67.6-67.6c-4.4-4.4-12-4.4-16.4,0L158,168.8c-4.4,4.4-4.4,12,0,16.4l67.6,67.6L158,320.4c-4.4,4.4-4.4,12,0,16.4 l11.2,11.2c4.4,4.4,12,4.4,16.4,0l67.6-67.2l62.4,62.4"></path> <path d="M252,505.6C113.2,505.6,0,392,0,252.8C0,113.2,113.6,0,252.8,0c104.4,0,199.6,65.6,236.4,163.2c7.6,20.4-2.4,43.2-22.8,51.2 c-20.4,7.6-43.2-2.4-51.2-22.8c-25.6-67.2-90.8-112-162.4-112c-96,0-174,78-174,174s78,174.4,174,174.4c49.2,0,94.8-19.6,127.2-54.4 h-40c-15.6,0-30.4-14-30.4-29.2v-23.6c0-16,16-27.6,30.4-27.6h138.4c7.2,0,14,2.8,19.2,8s8,12,8,19.6v138 c0,14.4-11.2,30.4-27.2,30.4h-23.6c-14.8,0-29.6-15.2-29.6-30.4v-22.4C375.6,481.6,316,505.6,252,505.6z M252.8,8 C117.6,8,8,118,8,252.8C8,388,117.6,497.6,252,497.6c64.8,0,125.2-25.6,174.4-74c1.2-1.2,2.8-1.6,4.4-0.8c1.6,0.8,2.4,2,2.4,3.6v32 c0,11.2,10.8,22.4,21.6,22.4h23.6c10.8,0,19.2-12,19.2-22.4v-138c0-5.6-2-10.4-5.6-14l0,0c-3.6-3.6-8.4-5.6-13.6-5.6H340 c-10.4,0-22.4,8.4-22.4,19.6V344c0,10.4,11.2,21.2,22.4,21.2h48.8c1.6,0,2.8,0.8,3.6,2.4s0.4,3.2-0.4,4.4c-34,40.8-84.8,64-139.2,64 c-100.4,0-182-81.6-182-182.4c0-100.4,81.6-182,182-182c75.2,0,143.6,47.2,170,117.2c6,16.4,24.4,24.4,40.8,18.4 s24.4-24.4,18.4-40.8C446,71.2,354,8,252.8,8z"></path> <path d="M252.8,486C124.4,486,19.6,381.2,19.6,252.8S124.4,19.6,252.8,19.6l0,0c54,0,106.8,19.2,148.8,54l1.6,1.6 c1.6,1.6,2,4,0.4,5.6s-4,2-5.6,0.4l-1.6-1.2c-40.8-33.6-91.6-52-143.6-52l0,0c-124,0-225.2,101.2-225.2,225.2 s101.2,225.2,225.2,225.2c60,0,118.8-24.8,161.2-68c4.4-4.8,10.4-7.2,16.8-7.2c2.8,0,5.6,0.4,8.4,1.6c8.8,3.6,14,12,14,22v33.6 l0.4,0.8h23.6v-0.4v-140H339.6c-0.4,0-1.2,0-2,0.4c-0.4,0-0.4,0.4-0.8,0.4v21.6c0.4,0.4,0.8,0.4,1.2,0.4h50.4 c9.2,0,17.6,5.2,21.6,13.6s2.4,18.4-3.6,25.2C368,428,311.6,454,252.4,454c-111.2,0-201.6-90.4-201.6-201.6 C50.8,198.8,71.6,148,110,110c38-38,88.8-59.2,142.4-59.2l0,0c83.2,0,158.8,52.4,188.4,130c1.6,4.4,6,7.6,11.2,7.6 c1.6,0,2.8-0.4,4-0.8c2.8-1.2,5.2-3.2,6.4-6.4c1.2-2.8,1.2-6,0.4-9.2c-8.8-23.2-21.2-44.4-37.2-63.6c-1.6-1.6-1.2-4.4,0.4-5.6 c1.6-1.6,4.4-1.2,5.6,0.4c16.4,20,29.6,42,38.8,66c2,4.8,1.6,10.4-0.4,15.2s-6,8.4-11.2,10.4c-2.4,0.8-4.8,1.2-7.2,1.2 c-8,0-15.6-5.2-18.4-12.8C404.8,108.4,332,58.4,252,58.4c-51.6,0-100.4,20-136.8,56.8C78.4,152,58.4,200.4,58.4,252 c0,106.8,86.8,193.6,193.6,193.6c57.2,0,110.8-25.2,148-68.8c4-4.8,4.8-11.2,2.4-16.8c-2.4-5.6-8-9.2-14.4-9.2h-50.4 c-3.6,0-9.2-3.2-9.2-8v-23.6c0-3.2,2.8-4.8,3.6-5.6c2-2,6-2,6.8-2h138.4c2.8,0,4,1.2,5.2,2c1.6,1.6,2,3.6,2,5.2v140 c0,4.8-2.8,8.4-7.2,8.4h-24.8c-4.8,0-8-4.8-8-8.8v-33.6c0-6.8-3.2-12.4-9.2-14.4c-2-0.8-3.6-1.2-5.6-1.2c-4,0-8,1.6-11.2,4.8 C375.6,460.4,314.8,486,252.8,486z"></path> <path d="M177.2,356L177.2,356c-4,0-8-1.6-11.2-4.4l-11.2-11.2c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l64.8-64.8l-64.8-64.8 c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l11.2-11.2c6-6,16-6,22,0l64.8,64.8l64.8-64.8c6-6,16-6,22,0l11.2,11.2 c2.8,2.8,4.4,6.8,4.4,11.2c0,4-1.6,8-4.4,11.2L286,253.2l42.8,42.8c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0L277.6,256 c-0.8-0.8-1.2-1.6-1.2-2.8s0.4-2,1.2-2.8l67.6-67.6c1.6-1.6,2.4-3.2,2.4-5.6s-0.8-4-2.4-5.6L334,160.4c-2.8-2.8-8-2.8-10.8,0 L255.6,228c-1.6,1.6-4,1.6-5.6,0l-67.6-67.6c-2.8-2.8-8-2.8-10.8,0l-11.2,11.2c-1.6,1.6-2.4,3.2-2.4,5.6s0.8,4,2.4,5.6l67.6,67.6 c0.8,0.8,1.2,1.6,1.2,2.8s-0.4,2-1.2,2.8l-67.6,67.6c-1.6,1.6-2.4,3.2-2.4,5.6c0,2,0.8,4,2.4,5.6l11.2,11.2c1.6,1.6,3.2,2.4,5.6,2.4 l0,0c2,0,4-0.8,5.6-2.4l67.6-67.6c1.6-1.6,4-1.6,5.6,0l60,60c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0l-57.2-57.2l-64.8,64.8 C185.2,354.4,181.6,356,177.2,356z"></path> </g></svg>  
+                                          </div>
+                                       </div>
                                     </div>
-                                 </div>
+
                                  <div class="grid grid-cols-1">
                                     <label class="text-[#64748b] font-semibold mb-2">TELEFONO</label>
                                     <div class="group flex">
@@ -929,31 +979,56 @@
                                  </div>
                               </div>
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                 <div class="grid grid-cols-1">
-                                    <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
-                                    <div class="group flex">
-                                       <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                          <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
-                                          </svg>
+                                 <?php if ($edit->eemergencia_relacion2 == '' || $edit->eemergencia_relacion2 == 'PADRE' || $edit->eemergencia_relacion2 == 'MADRE' || $edit->eemergencia_relacion2 == 'HERMANO' || $edit->eemergencia_relacion2 == 'HERMANA' || $edit->eemergencia_relacion2 == 'CONYUGE' || $edit->eemergencia_relacion2 == 'PAREJA' || $edit->eemergencia_relacion2 == 'AMIGO' || $edit->eemergencia_relacion2 == 'AMIGA' || $edit->eemergencia_relacion2 == 'VECINO' || $edit->eemergencia_relacion2 == 'COMPAÑERO DE TRABAJO' || $edit->eemergencia_relacion2 == 'COMPAÑERA DE TRABAJO') { ?>   
+                                   <div x-data="{ comborelacion2: true, textrelacion2: false}">
+                                   <?php  }else{  ?>
+                                       <div x-data="{ comborelacion2: false, textrelacion2: true}">
+                                    <?php  }  ?>
+                                       <div x-show="comborelacion2">
+                                          <div class="grid grid-cols-1">   
+                                             <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                             <div class="group flex">
+                                                <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                   </svg>
+                                                </div>
+                                                <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){textrelacion2 = true; comborelacion2 = false;}else if($el.value != 'OTRO'){textrelacion2 = false; comborelacion2 = true;}" id="emergencia_relacion2" name="emergencia_relacion2">
+                                                   <option value="">--Selecciona--</option>
+                                                   <option value="PADRE" <?php if($edit->eemergencia_relacion2 == "PADRE"){echo 'selected="selected"';}?>>PADRE</option>
+                                                   <option value="MADRE" <?php if($edit->eemergencia_relacion2 == "MADRE"){echo 'selected="selected"';} ?>>MADRE</option>
+                                                   <option value="HERMANO" <?php if($edit->eemergencia_relacion2 == "HERMANO"){echo 'selected="selected"';} ?>>HERMANO</option>
+                                                   <option value="HERMANA" <?php if($edit->eemergencia_relacion2 == "HERMANA"){echo 'selected="selected"';} ?>>HERMANA</option>
+                                                   <option value="CONYUGE" <?php if($edit->eemergencia_relacion2 == "CONYUGE"){echo 'selected="selected"';} ?>>CONYUGE</option>
+                                                   <option value="PAREJA" <?php if($edit->eemergencia_relacion2 == "PAREJA"){echo 'selected="selected"';} ?>>PAREJA</option>
+                                                   <option value="AMIGO" <?php if($edit->eemergencia_relacion2 == "AMIGO"){echo 'selected="selected"';} ?>>AMIGO</option>
+                                                   <option value="AMIGA" <?php if($edit->eemergencia_relacion2 == "AMIGA"){echo 'selected="selected"';} ?>>AMIGA</option>
+                                                   <option value="VECINO" <?php if($edit->eemergencia_relacion2 == "VECINO"){echo 'selected="selected"';} ?>>VECINO</option>
+                                                   <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERO DE TRABAJO</option>
+                                                   <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERA DE TRABAJO</option>
+                                                   <option value="OTRO" >OTRO</option>
+                                                </select>
+                                             </div>
+                                          </div>
                                        </div>
-                                       <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" id="emergencia_relacion2" name="emergencia_relacion2">
-                                          <option value="">--Selecciona--</option>
-                                          <option value="PADRE" <?php if($edit->eemergencia_relacion2 == "PADRE"){echo 'selected="selected"';} ?>>PADRE</option>
-                                          <option value="MADRE" <?php if($edit->eemergencia_relacion2 == "MADRE"){echo 'selected="selected"';} ?>>MADRE</option>
-                                          <option value="HERMANO" <?php if($edit->eemergencia_relacion2 == "HERMANO"){echo 'selected="selected"';} ?>>HERMANO</option>
-                                          <option value="HERMANA" <?php if($edit->eemergencia_relacion2 == "HERMANA"){echo 'selected="selected"';} ?>>HERMANA</option>
-                                          <option value="CONYUGE" <?php if($edit->eemergencia_relacion2 == "CONYUGE"){echo 'selected="selected"';} ?>>CONYUGE</option>
-                                          <option value="PAREJA" <?php if($edit->eemergencia_relacion2 == "PAREJA"){echo 'selected="selected"';} ?>>PAREJA</option>
-                                          <option value="AMIGO" <?php if($edit->eemergencia_relacion2 == "AMIGO"){echo 'selected="selected"';} ?>>AMIGO</option>
-                                          <option value="AMIGA" <?php if($edit->eemergencia_relacion2 == "AMIGA"){echo 'selected="selected"';} ?>>AMIGA</option>
-                                          <option value="VECINO" <?php if($edit->eemergencia_relacion2 == "VECINO"){echo 'selected="selected"';} ?>>VECINO</option>
-                                          <option value="COMPAÑERO_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERO_DE_TRABAJO"){echo 'selected="selected"';} ?>>COPAÑERO DE TRABAJO</option>
-                                          <option value="COMPAÑERA_DE_TRABAJO" <?php if($edit->eemergencia_relacion2 == "COMPAÑERA_DE_TRABAJO"){echo 'selected="selected"';} ?>>COMPAÑERA DE TRABAJO</option>
-                                          <option value="OTRO" <?php if($edit->eemergencia_relacion2 == "OTRO"){echo 'selected="selected"';} ?>>OTRO</option>
-                                       </select>
+                                       
+                                       <div  x-show="textrelacion2">
+                                          <div class="flex items-end">
+                                          <div class="grid grid-cols-1">
+                                             <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                             <div class="group flex">
+                                                   <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                      </svg>
+                                                   </div>
+                                                <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="textrelacion2" name="textrelacion2" value="<?php if($edit->eemergencia_relacion2 !== null){ echo "{$edit->eemergencia_relacion2}"; }?>" placeholder="Relación">
+                                             </div>
+                                             </div>
+                                              <svg  height="64px" width="64px" class="h-12 w-8" x-on:click="textrelacion2 = false, comborelacion2 = true"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.6 505.6" xml:space="preserve" fill="#ff0000" stroke="#ff0000" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ff1900;" d="M494.4,301.6c-4.4-4.4-10-8.8-16.4-8.8H339.6c-13.2,0-26.4,14.4-26.4,27.6V344 c0,13.2,13.6,21.2,26.4,21.2h48.8c-33.2,40-82.8,64.4-136,64.4c-98,0-178-79.2-178-177.2S154,74.8,252.4,74.8 c73.6,0,140.4,46.4,166.4,114.8c6.8,18.4,27.6,27.6,46,20.8c18.4-6.8,27.6-27.6,20.8-46C449.2,68.4,355.6,4,252.8,4 C115.6,4,4,115.6,4,252.8s110.8,248.8,248,248.8c68,0,129.2-28,177.2-75.2v32c0,13.2,12.4,22.4,25.6,22.4h23.6 c13.2,0,23.2-9.6,23.2-22.4V344.8V320C501.2,313.6,498.8,306,494.4,301.6z"></path> <path style="fill:#ff1900;" d="M252.8,23.6c54.4,0,106,19.6,146.4,53.2c0.4,0.4,1.2,0.8,1.6,1.6c0,0,16.8,14.4,28.4,28.4 c16,19.2,28.8,40.8,38,64.8c1.6,4,1.2,8.4-0.4,12c-1.6,4-4.8,6.8-8.8,8.4c-2,0.8-3.6,1.2-5.6,1.2c-6.4,0-12.4-4-14.8-10 C408.8,106.8,334.4,55.6,252.8,55.6C144,55.6,55.2,144.4,55.2,253.2c0,108.8,88.8,197.6,197.6,197.6c58.4,0,113.2-25.6,151.2-70.4 c4.8-6,6-14,2.8-21.2c-3.2-6.8-10.4-11.6-18-11.6h-50.4c-2,0-5.2-2-5.2-4V320c0-1.2,2-4,2.4-4.4s2.8-2.8,4-2.8H478 c1.2,0,1.6,2.4,2.4,2.8c0.4,0.4,0.8,3.2,0.8,4.4v24.8V458c0,2-0.8,2.4-3.2,2.4h-23.6c-2,0-5.6-0.4-5.6-2.4v-32c0-8-4-15.2-11.6-18.4 c-2.4-0.8-4.4-1.6-7.2-1.6c-5.2,0-10,2-14,6c-43.2,44-102.8,69.2-164,69.2C125.6,481.2,22.8,378.4,22.8,252 C23.6,126.4,126.4,23.6,252.8,23.6"></path> <path style="fill:#ff1900;" d="M326.4,298.4l-45.6-45.6l67.6-67.6c4.4-4.4,4.4-12,0-16.4l-11.2-11.2c-4.4-4.4-12-4.4-16.4,0 l-67.6,67.6l-67.6-67.6c-4.4-4.4-12-4.4-16.4,0L158,168.8c-4.4,4.4-4.4,12,0,16.4l67.6,67.6L158,320.4c-4.4,4.4-4.4,12,0,16.4 l11.2,11.2c4.4,4.4,12,4.4,16.4,0l67.6-67.2l62.4,62.4"></path> <path d="M252,505.6C113.2,505.6,0,392,0,252.8C0,113.2,113.6,0,252.8,0c104.4,0,199.6,65.6,236.4,163.2c7.6,20.4-2.4,43.2-22.8,51.2 c-20.4,7.6-43.2-2.4-51.2-22.8c-25.6-67.2-90.8-112-162.4-112c-96,0-174,78-174,174s78,174.4,174,174.4c49.2,0,94.8-19.6,127.2-54.4 h-40c-15.6,0-30.4-14-30.4-29.2v-23.6c0-16,16-27.6,30.4-27.6h138.4c7.2,0,14,2.8,19.2,8s8,12,8,19.6v138 c0,14.4-11.2,30.4-27.2,30.4h-23.6c-14.8,0-29.6-15.2-29.6-30.4v-22.4C375.6,481.6,316,505.6,252,505.6z M252.8,8 C117.6,8,8,118,8,252.8C8,388,117.6,497.6,252,497.6c64.8,0,125.2-25.6,174.4-74c1.2-1.2,2.8-1.6,4.4-0.8c1.6,0.8,2.4,2,2.4,3.6v32 c0,11.2,10.8,22.4,21.6,22.4h23.6c10.8,0,19.2-12,19.2-22.4v-138c0-5.6-2-10.4-5.6-14l0,0c-3.6-3.6-8.4-5.6-13.6-5.6H340 c-10.4,0-22.4,8.4-22.4,19.6V344c0,10.4,11.2,21.2,22.4,21.2h48.8c1.6,0,2.8,0.8,3.6,2.4s0.4,3.2-0.4,4.4c-34,40.8-84.8,64-139.2,64 c-100.4,0-182-81.6-182-182.4c0-100.4,81.6-182,182-182c75.2,0,143.6,47.2,170,117.2c6,16.4,24.4,24.4,40.8,18.4 s24.4-24.4,18.4-40.8C446,71.2,354,8,252.8,8z"></path> <path d="M252.8,486C124.4,486,19.6,381.2,19.6,252.8S124.4,19.6,252.8,19.6l0,0c54,0,106.8,19.2,148.8,54l1.6,1.6 c1.6,1.6,2,4,0.4,5.6s-4,2-5.6,0.4l-1.6-1.2c-40.8-33.6-91.6-52-143.6-52l0,0c-124,0-225.2,101.2-225.2,225.2 s101.2,225.2,225.2,225.2c60,0,118.8-24.8,161.2-68c4.4-4.8,10.4-7.2,16.8-7.2c2.8,0,5.6,0.4,8.4,1.6c8.8,3.6,14,12,14,22v33.6 l0.4,0.8h23.6v-0.4v-140H339.6c-0.4,0-1.2,0-2,0.4c-0.4,0-0.4,0.4-0.8,0.4v21.6c0.4,0.4,0.8,0.4,1.2,0.4h50.4 c9.2,0,17.6,5.2,21.6,13.6s2.4,18.4-3.6,25.2C368,428,311.6,454,252.4,454c-111.2,0-201.6-90.4-201.6-201.6 C50.8,198.8,71.6,148,110,110c38-38,88.8-59.2,142.4-59.2l0,0c83.2,0,158.8,52.4,188.4,130c1.6,4.4,6,7.6,11.2,7.6 c1.6,0,2.8-0.4,4-0.8c2.8-1.2,5.2-3.2,6.4-6.4c1.2-2.8,1.2-6,0.4-9.2c-8.8-23.2-21.2-44.4-37.2-63.6c-1.6-1.6-1.2-4.4,0.4-5.6 c1.6-1.6,4.4-1.2,5.6,0.4c16.4,20,29.6,42,38.8,66c2,4.8,1.6,10.4-0.4,15.2s-6,8.4-11.2,10.4c-2.4,0.8-4.8,1.2-7.2,1.2 c-8,0-15.6-5.2-18.4-12.8C404.8,108.4,332,58.4,252,58.4c-51.6,0-100.4,20-136.8,56.8C78.4,152,58.4,200.4,58.4,252 c0,106.8,86.8,193.6,193.6,193.6c57.2,0,110.8-25.2,148-68.8c4-4.8,4.8-11.2,2.4-16.8c-2.4-5.6-8-9.2-14.4-9.2h-50.4 c-3.6,0-9.2-3.2-9.2-8v-23.6c0-3.2,2.8-4.8,3.6-5.6c2-2,6-2,6.8-2h138.4c2.8,0,4,1.2,5.2,2c1.6,1.6,2,3.6,2,5.2v140 c0,4.8-2.8,8.4-7.2,8.4h-24.8c-4.8,0-8-4.8-8-8.8v-33.6c0-6.8-3.2-12.4-9.2-14.4c-2-0.8-3.6-1.2-5.6-1.2c-4,0-8,1.6-11.2,4.8 C375.6,460.4,314.8,486,252.8,486z"></path> <path d="M177.2,356L177.2,356c-4,0-8-1.6-11.2-4.4l-11.2-11.2c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l64.8-64.8l-64.8-64.8 c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l11.2-11.2c6-6,16-6,22,0l64.8,64.8l64.8-64.8c6-6,16-6,22,0l11.2,11.2 c2.8,2.8,4.4,6.8,4.4,11.2c0,4-1.6,8-4.4,11.2L286,253.2l42.8,42.8c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0L277.6,256 c-0.8-0.8-1.2-1.6-1.2-2.8s0.4-2,1.2-2.8l67.6-67.6c1.6-1.6,2.4-3.2,2.4-5.6s-0.8-4-2.4-5.6L334,160.4c-2.8-2.8-8-2.8-10.8,0 L255.6,228c-1.6,1.6-4,1.6-5.6,0l-67.6-67.6c-2.8-2.8-8-2.8-10.8,0l-11.2,11.2c-1.6,1.6-2.4,3.2-2.4,5.6s0.8,4,2.4,5.6l67.6,67.6 c0.8,0.8,1.2,1.6,1.2,2.8s-0.4,2-1.2,2.8l-67.6,67.6c-1.6,1.6-2.4,3.2-2.4,5.6c0,2,0.8,4,2.4,5.6l11.2,11.2c1.6,1.6,3.2,2.4,5.6,2.4 l0,0c2,0,4-0.8,5.6-2.4l67.6-67.6c1.6-1.6,4-1.6,5.6,0l60,60c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0l-57.2-57.2l-64.8,64.8 C185.2,354.4,181.6,356,177.2,356z"></path> </g></svg>  
+                                          </div>
+                                       </div>
                                     </div>
-                                 </div>
                                  <div class="grid grid-cols-1">
                                     <label class="text-[#64748b] font-semibold mb-2">TELEFONO</label>
                                     <div class="group flex">
@@ -1008,53 +1083,236 @@
                                     </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: <?php echo $edit->efam_dentro_empresa === 'SI' ? 'true' : 'false';?> }">
-                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">¿TIENE FAMILIARES DENTRO DE LA EMPRESA?</label>
-                                    <div class="group flex mt-3 items-center">
-                                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php echo $edit->efam_dentro_empresa === 'SI' ? 'checked' : ''; ?>>
-                                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                          SI
-                                       </label>
-                                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php echo ($edit->efam_dentro_empresa === 'NO' || $edit->efam_dentro_empresa === null) ? 'checked' : ''; ?>>
-                                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                          NO
-                                       </label>
+                                 <div x-data="{ numfamiliares: <?php if($familiares_count == 0){ echo 0; }else if($familiares_count == 1){ echo 1; }else if($familiares_count == 2){ echo 2; }else if($familiares_count == 3){ echo 3; }else if($familiares_count == 4){ echo 4; }else if($familiares_count == 5){ echo 5; }?> }">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">¿TIENE FAMILIARES DENTRO DE LA EMPRESA?</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
+                                             </svg>
+                                          </div>
+                                          <select id="numfamiliares" name="numfamiliares" x-model="numfamiliares" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
+                                             <option value="0">SIN FAMILIARES</option>
+                                             <option value="1">UN FAMILIAR</option>
+                                             <option value="2">DOS FAMILIARES</option>
+                                             <option value="3">TRES FAMILIARES</option>
+                                             <option value="4">CUATRO FAMILIARES</option>
+                                             <option value="5">CINCO FAMILIARES</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 <div x-show="numfamiliares >= 1">
+                                    <!-- Referencia 1 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Primer familiar  <label style="color:red;"> *</label></div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre1" value="<?php echo ($familiares_count >= 1) ? $fetch_familiares[0]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat1" value="<?php echo ($familiares_count >= 1) ? $fetch_familiares[0]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat1" value="<?php echo ($familiares_count >= 1) ? $fetch_familiares[0]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
                                     </div>
                                  </div>
-                                 <div x-show.important="open">
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                       <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">NOMBRE(S)</label>
-                                          <div class="group flex">
-                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                </svg>
+                                 <div x-show="numfamiliares >= 2">
+                                    <!-- Referencia 2 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Segunda familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre2" value="<?php echo ($familiares_count >= 2) ? $fetch_familiares[1]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" value="<?php echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_nombre : ''; ?>" placeholder="Nombre">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat2" value="<?php echo ($familiares_count >= 2) ? $fetch_familiares[1]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat2" value="<?php echo ($familiares_count >= 2) ? $fetch_familiares[1]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">APELLIDO PATERNO</label>
-                                          <div class="group flex">
-                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                </svg>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 3">
+                                    <!-- Referencia 3 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Tercer familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre3" value="<?php echo ($familiares_count >= 3) ? $fetch_familiares[2]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" value="<?php echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_apellidopat : ''; ?>" placeholder="Apellido paterno">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat3" value="<?php echo ($familiares_count >= 3) ? $fetch_familiares[2]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat3" value="<?php echo ($familiares_count >= 3) ? $fetch_familiares[2]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">APELLIDO MATERNO</label>
-                                          <div class="group flex">
-                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                </svg>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 4">
+                                    <!-- Referencia 4 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Cuarto familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre4" value="<?php echo ($familiares_count >= 4) ? $fetch_familiares[3]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" value="<?php echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_apellidomat : ''; ?>" placeholder="Apellido materno">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat4" value="<?php echo ($familiares_count >= 4) ? $fetch_familiares[3]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat4" value="<?php echo ($familiares_count >= 4) ? $fetch_familiares[3]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 5">
+                                    <!-- Referencia 5 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Quinto familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre5" value="<?php echo ($familiares_count >= 5) ? $fetch_familiares[4]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat5" value="<?php echo ($familiares_count >= 5) ? $fetch_familiares[4]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat5" value="<?php echo ($familiares_count >= 5) ? $fetch_familiares[4]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -1072,7 +1330,7 @@
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosB" role="tabpanel" aria-labelledby="datosB-tab">
                               <div class="flex flex-col mt-5 mx-7">
                                  <h2 class="text-2xl text-celeste font-semibold">Beneficiarios bancarios <label style="color:red;"> *</label></h2>
-                                 <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente. <b> Nota: los beneficiarios deben ser mayores de 18 años. </b></span>
+                                 <span class="text-[#64748b]">El beneficiario es la persona ante la cual, una entidad financiera se obliga a cumplir una prestación establecida en el contrato que celebró con su cliente. <b><br> Nota: los beneficiarios deben ser mayores de 18 años. </b></span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ numBeneficiariosBancarios: <?php if($ben_bancarios_count == 0){ echo 0; }else if($ben_bancarios_count == 1){ echo 1; }else if($ben_bancarios_count == 2){ echo 2; }?> }">
@@ -1085,9 +1343,9 @@
                                           </svg>
                                        </div>
                                        <select id="numBeneficiariosBancarios" name="numBeneficiariosBancarios" x-model="numBeneficiariosBancarios" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
-                                          <option value="0">No tengo beneficiarios</option>
-                                          <option value="1">Un beneficiario</option>
-                                          <option value="2">Dos beneficiarios</option>
+                                          <option value="0">NO TENGO BENEFICIARIOS</option>
+                                          <option value="1">UN BENEFICIARIO</option>
+                                          <option value="2">DOS BENEFICIARIOS</option>
                                        </select>
                                     </div>
                                  </div>
@@ -1132,25 +1390,49 @@
                                           </div>
                                           </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">RELACION</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
-                                                   </svg>
+                                          <?php if ( empty($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"])  || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'PADRE' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'MADRE' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'CONYUGE' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'HIJO' ||$ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'HIJA' ) { ?>   
+                                                <div x-data="{ combo_benbanrelacion: true, text_benbanrelacion: false}">
+                                                   <?php  }else{  ?>
+                                                <div x-data="{ combo_benbanrelacion: false, text_benbanrelacion: true}">
+                                                   <?php  }  ?>
+                                                   <div x-show="combo_benbanrelacion">
+                                                      <div class="grid grid-cols-1">   
+                                                         <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                         <div class="group flex">
+                                                            <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                               <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                  <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                               </svg>
+                                                            </div>
+                                                            <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){text_benbanrelacion = true; combo_benbanrelacion = false;}else if($el.value != 'OTRO'){text_benbanrelacion = false; combo_benbanrelacion = true;}" id="infb_rrelacion1" name="infb_rrelacion1">
+                                                            <option value="">--Selecciona--</option>
+                                                            <option value="PADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
+                                                            <option value="MADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
+                                                            <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
+                                                            <option value="HIJO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
+                                                            <option value="HIJA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
+                                                            <option value="OTRO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                             </select>
+                                                         </div>
+                                                      </div>
+                                                   </div>                         
+                                                   <div  x-show="text_benbanrelacion">
+                                                      <div class="flex items-end">
+                                                         <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                            <div class="group flex">
+                                                               <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                  <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                     <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                                  </svg>
+                                                               </div>
+                                                             <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="text_benbanrelacion" name="text_benbanrelacion" value="<?php echo ($ben_bancarios_count >= 1) ? $fetch_ben_bancarios[0]["apellido_mat"] : '';?>" placeholder="Relación">
+                                                            </div>
+                                                         </div>
+                                                         <svg  height="64px" width="64px" class="h-12 w-8" x-on:click="text_benbanrelacion = false, combo_benbanrelacion = true"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.6 505.6" xml:space="preserve" fill="#ff0000" stroke="#ff0000" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ff1900;" d="M494.4,301.6c-4.4-4.4-10-8.8-16.4-8.8H339.6c-13.2,0-26.4,14.4-26.4,27.6V344 c0,13.2,13.6,21.2,26.4,21.2h48.8c-33.2,40-82.8,64.4-136,64.4c-98,0-178-79.2-178-177.2S154,74.8,252.4,74.8 c73.6,0,140.4,46.4,166.4,114.8c6.8,18.4,27.6,27.6,46,20.8c18.4-6.8,27.6-27.6,20.8-46C449.2,68.4,355.6,4,252.8,4 C115.6,4,4,115.6,4,252.8s110.8,248.8,248,248.8c68,0,129.2-28,177.2-75.2v32c0,13.2,12.4,22.4,25.6,22.4h23.6 c13.2,0,23.2-9.6,23.2-22.4V344.8V320C501.2,313.6,498.8,306,494.4,301.6z"></path> <path style="fill:#ff1900;" d="M252.8,23.6c54.4,0,106,19.6,146.4,53.2c0.4,0.4,1.2,0.8,1.6,1.6c0,0,16.8,14.4,28.4,28.4 c16,19.2,28.8,40.8,38,64.8c1.6,4,1.2,8.4-0.4,12c-1.6,4-4.8,6.8-8.8,8.4c-2,0.8-3.6,1.2-5.6,1.2c-6.4,0-12.4-4-14.8-10 C408.8,106.8,334.4,55.6,252.8,55.6C144,55.6,55.2,144.4,55.2,253.2c0,108.8,88.8,197.6,197.6,197.6c58.4,0,113.2-25.6,151.2-70.4 c4.8-6,6-14,2.8-21.2c-3.2-6.8-10.4-11.6-18-11.6h-50.4c-2,0-5.2-2-5.2-4V320c0-1.2,2-4,2.4-4.4s2.8-2.8,4-2.8H478 c1.2,0,1.6,2.4,2.4,2.8c0.4,0.4,0.8,3.2,0.8,4.4v24.8V458c0,2-0.8,2.4-3.2,2.4h-23.6c-2,0-5.6-0.4-5.6-2.4v-32c0-8-4-15.2-11.6-18.4 c-2.4-0.8-4.4-1.6-7.2-1.6c-5.2,0-10,2-14,6c-43.2,44-102.8,69.2-164,69.2C125.6,481.2,22.8,378.4,22.8,252 C23.6,126.4,126.4,23.6,252.8,23.6"></path> <path style="fill:#ff1900;" d="M326.4,298.4l-45.6-45.6l67.6-67.6c4.4-4.4,4.4-12,0-16.4l-11.2-11.2c-4.4-4.4-12-4.4-16.4,0 l-67.6,67.6l-67.6-67.6c-4.4-4.4-12-4.4-16.4,0L158,168.8c-4.4,4.4-4.4,12,0,16.4l67.6,67.6L158,320.4c-4.4,4.4-4.4,12,0,16.4 l11.2,11.2c4.4,4.4,12,4.4,16.4,0l67.6-67.2l62.4,62.4"></path> <path d="M252,505.6C113.2,505.6,0,392,0,252.8C0,113.2,113.6,0,252.8,0c104.4,0,199.6,65.6,236.4,163.2c7.6,20.4-2.4,43.2-22.8,51.2 c-20.4,7.6-43.2-2.4-51.2-22.8c-25.6-67.2-90.8-112-162.4-112c-96,0-174,78-174,174s78,174.4,174,174.4c49.2,0,94.8-19.6,127.2-54.4 h-40c-15.6,0-30.4-14-30.4-29.2v-23.6c0-16,16-27.6,30.4-27.6h138.4c7.2,0,14,2.8,19.2,8s8,12,8,19.6v138 c0,14.4-11.2,30.4-27.2,30.4h-23.6c-14.8,0-29.6-15.2-29.6-30.4v-22.4C375.6,481.6,316,505.6,252,505.6z M252.8,8 C117.6,8,8,118,8,252.8C8,388,117.6,497.6,252,497.6c64.8,0,125.2-25.6,174.4-74c1.2-1.2,2.8-1.6,4.4-0.8c1.6,0.8,2.4,2,2.4,3.6v32 c0,11.2,10.8,22.4,21.6,22.4h23.6c10.8,0,19.2-12,19.2-22.4v-138c0-5.6-2-10.4-5.6-14l0,0c-3.6-3.6-8.4-5.6-13.6-5.6H340 c-10.4,0-22.4,8.4-22.4,19.6V344c0,10.4,11.2,21.2,22.4,21.2h48.8c1.6,0,2.8,0.8,3.6,2.4s0.4,3.2-0.4,4.4c-34,40.8-84.8,64-139.2,64 c-100.4,0-182-81.6-182-182.4c0-100.4,81.6-182,182-182c75.2,0,143.6,47.2,170,117.2c6,16.4,24.4,24.4,40.8,18.4 s24.4-24.4,18.4-40.8C446,71.2,354,8,252.8,8z"></path> <path d="M252.8,486C124.4,486,19.6,381.2,19.6,252.8S124.4,19.6,252.8,19.6l0,0c54,0,106.8,19.2,148.8,54l1.6,1.6 c1.6,1.6,2,4,0.4,5.6s-4,2-5.6,0.4l-1.6-1.2c-40.8-33.6-91.6-52-143.6-52l0,0c-124,0-225.2,101.2-225.2,225.2 s101.2,225.2,225.2,225.2c60,0,118.8-24.8,161.2-68c4.4-4.8,10.4-7.2,16.8-7.2c2.8,0,5.6,0.4,8.4,1.6c8.8,3.6,14,12,14,22v33.6 l0.4,0.8h23.6v-0.4v-140H339.6c-0.4,0-1.2,0-2,0.4c-0.4,0-0.4,0.4-0.8,0.4v21.6c0.4,0.4,0.8,0.4,1.2,0.4h50.4 c9.2,0,17.6,5.2,21.6,13.6s2.4,18.4-3.6,25.2C368,428,311.6,454,252.4,454c-111.2,0-201.6-90.4-201.6-201.6 C50.8,198.8,71.6,148,110,110c38-38,88.8-59.2,142.4-59.2l0,0c83.2,0,158.8,52.4,188.4,130c1.6,4.4,6,7.6,11.2,7.6 c1.6,0,2.8-0.4,4-0.8c2.8-1.2,5.2-3.2,6.4-6.4c1.2-2.8,1.2-6,0.4-9.2c-8.8-23.2-21.2-44.4-37.2-63.6c-1.6-1.6-1.2-4.4,0.4-5.6 c1.6-1.6,4.4-1.2,5.6,0.4c16.4,20,29.6,42,38.8,66c2,4.8,1.6,10.4-0.4,15.2s-6,8.4-11.2,10.4c-2.4,0.8-4.8,1.2-7.2,1.2 c-8,0-15.6-5.2-18.4-12.8C404.8,108.4,332,58.4,252,58.4c-51.6,0-100.4,20-136.8,56.8C78.4,152,58.4,200.4,58.4,252 c0,106.8,86.8,193.6,193.6,193.6c57.2,0,110.8-25.2,148-68.8c4-4.8,4.8-11.2,2.4-16.8c-2.4-5.6-8-9.2-14.4-9.2h-50.4 c-3.6,0-9.2-3.2-9.2-8v-23.6c0-3.2,2.8-4.8,3.6-5.6c2-2,6-2,6.8-2h138.4c2.8,0,4,1.2,5.2,2c1.6,1.6,2,3.6,2,5.2v140 c0,4.8-2.8,8.4-7.2,8.4h-24.8c-4.8,0-8-4.8-8-8.8v-33.6c0-6.8-3.2-12.4-9.2-14.4c-2-0.8-3.6-1.2-5.6-1.2c-4,0-8,1.6-11.2,4.8 C375.6,460.4,314.8,486,252.8,486z"></path> <path d="M177.2,356L177.2,356c-4,0-8-1.6-11.2-4.4l-11.2-11.2c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l64.8-64.8l-64.8-64.8 c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l11.2-11.2c6-6,16-6,22,0l64.8,64.8l64.8-64.8c6-6,16-6,22,0l11.2,11.2 c2.8,2.8,4.4,6.8,4.4,11.2c0,4-1.6,8-4.4,11.2L286,253.2l42.8,42.8c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0L277.6,256 c-0.8-0.8-1.2-1.6-1.2-2.8s0.4-2,1.2-2.8l67.6-67.6c1.6-1.6,2.4-3.2,2.4-5.6s-0.8-4-2.4-5.6L334,160.4c-2.8-2.8-8-2.8-10.8,0 L255.6,228c-1.6,1.6-4,1.6-5.6,0l-67.6-67.6c-2.8-2.8-8-2.8-10.8,0l-11.2,11.2c-1.6,1.6-2.4,3.2-2.4,5.6s0.8,4,2.4,5.6l67.6,67.6 c0.8,0.8,1.2,1.6,1.2,2.8s-0.4,2-1.2,2.8l-67.6,67.6c-1.6,1.6-2.4,3.2-2.4,5.6c0,2,0.8,4,2.4,5.6l11.2,11.2c1.6,1.6,3.2,2.4,5.6,2.4 l0,0c2,0,4-0.8,5.6-2.4l67.6-67.6c1.6-1.6,4-1.6,5.6,0l60,60c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0l-57.2-57.2l-64.8,64.8 C185.2,354.4,181.6,356,177.2,356z"></path> </g></svg>  
+                                                      </div>
+                                                   </div>
                                                 </div>
-                                                <select name="infb_rrelacion1" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
-                                                   <option value="">--Selecciona--</option>
-                                                   <option value="PADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
-                                                   <option value="MADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
-                                                   <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
-                                                   <option value="HIJO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
-                                                   <option value="HIJA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
-                                                   <option value="OTRO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
-                                                </select>
-                                             </div>
-                                          </div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">RFC</label>
                                              <div class="group flex">
@@ -1229,25 +1511,49 @@
                                           </div>
                                           </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                          <div class="grid grid-cols-1">
-                                             <label class="text-[#64748b] font-semibold">RELACION</label>
-                                             <div class="group flex">
-                                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                   <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"></path>
-                                                   </svg>
+                                          <?php if ( empty($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"])  || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'PADRE' || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'MADRE' || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'CONYUGE' || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'HIJO' ||$ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'HIJA' ) { ?>   
+                                                <div x-data="{ combo_benbanrelacion2: true, text_benbanrelacion2: false}">
+                                                   <?php  }else{  ?>
+                                                <div x-data="{ combo_benbanrelacion2: false, text_benbanrelacion2: true}">
+                                                   <?php  }  ?>
+                                                   <div x-show="combo_benbanrelacion2">
+                                                      <div class="grid grid-cols-1">   
+                                                         <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                         <div class="group flex">
+                                                            <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                               <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                  <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                               </svg>
+                                                            </div>
+                                                            <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" x-on:change="if($el.value == 'OTRO'){text_benbanrelacion2 = true; combo_benbanrelacion2 = false;}else if($el.value != 'OTRO'){text_benbanrelacion2 = false; combo_benbanrelacion2 = true;}" id="infb_rrelacion2" name="infb_rrelacion2">
+                                                            <option value="">--Selecciona--</option>
+                                                            <option value="PADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
+                                                            <option value="MADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
+                                                            <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
+                                                            <option value="HIJO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
+                                                            <option value="HIJA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
+                                                            <option value="OTRO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                             </select>
+                                                         </div>
+                                                      </div>
+                                                   </div>                         
+                                                   <div  x-show="text_benbanrelacion2">
+                                                      <div class="flex items-end">
+                                                         <div class="grid grid-cols-1">
+                                                            <label class="text-[#64748b] font-semibold mb-2">RELACION</label>
+                                                            <div class="group flex">
+                                                               <div  class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                                  <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                     <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
+                                                                  </svg>
+                                                               </div>
+                                                             <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="text_benbanrelacion2" name="text_benbanrelacion2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["apellido_mat"] : '';?>" placeholder="Relación">
+                                                            </div>
+                                                         </div>
+                                                         <svg  height="64px" width="64px" class="h-12 w-8" x-on:click="text_benbanrelacion2 = false, combo_benbanrelacion2 = true"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.6 505.6" xml:space="preserve" fill="#ff0000" stroke="#ff0000" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ff1900;" d="M494.4,301.6c-4.4-4.4-10-8.8-16.4-8.8H339.6c-13.2,0-26.4,14.4-26.4,27.6V344 c0,13.2,13.6,21.2,26.4,21.2h48.8c-33.2,40-82.8,64.4-136,64.4c-98,0-178-79.2-178-177.2S154,74.8,252.4,74.8 c73.6,0,140.4,46.4,166.4,114.8c6.8,18.4,27.6,27.6,46,20.8c18.4-6.8,27.6-27.6,20.8-46C449.2,68.4,355.6,4,252.8,4 C115.6,4,4,115.6,4,252.8s110.8,248.8,248,248.8c68,0,129.2-28,177.2-75.2v32c0,13.2,12.4,22.4,25.6,22.4h23.6 c13.2,0,23.2-9.6,23.2-22.4V344.8V320C501.2,313.6,498.8,306,494.4,301.6z"></path> <path style="fill:#ff1900;" d="M252.8,23.6c54.4,0,106,19.6,146.4,53.2c0.4,0.4,1.2,0.8,1.6,1.6c0,0,16.8,14.4,28.4,28.4 c16,19.2,28.8,40.8,38,64.8c1.6,4,1.2,8.4-0.4,12c-1.6,4-4.8,6.8-8.8,8.4c-2,0.8-3.6,1.2-5.6,1.2c-6.4,0-12.4-4-14.8-10 C408.8,106.8,334.4,55.6,252.8,55.6C144,55.6,55.2,144.4,55.2,253.2c0,108.8,88.8,197.6,197.6,197.6c58.4,0,113.2-25.6,151.2-70.4 c4.8-6,6-14,2.8-21.2c-3.2-6.8-10.4-11.6-18-11.6h-50.4c-2,0-5.2-2-5.2-4V320c0-1.2,2-4,2.4-4.4s2.8-2.8,4-2.8H478 c1.2,0,1.6,2.4,2.4,2.8c0.4,0.4,0.8,3.2,0.8,4.4v24.8V458c0,2-0.8,2.4-3.2,2.4h-23.6c-2,0-5.6-0.4-5.6-2.4v-32c0-8-4-15.2-11.6-18.4 c-2.4-0.8-4.4-1.6-7.2-1.6c-5.2,0-10,2-14,6c-43.2,44-102.8,69.2-164,69.2C125.6,481.2,22.8,378.4,22.8,252 C23.6,126.4,126.4,23.6,252.8,23.6"></path> <path style="fill:#ff1900;" d="M326.4,298.4l-45.6-45.6l67.6-67.6c4.4-4.4,4.4-12,0-16.4l-11.2-11.2c-4.4-4.4-12-4.4-16.4,0 l-67.6,67.6l-67.6-67.6c-4.4-4.4-12-4.4-16.4,0L158,168.8c-4.4,4.4-4.4,12,0,16.4l67.6,67.6L158,320.4c-4.4,4.4-4.4,12,0,16.4 l11.2,11.2c4.4,4.4,12,4.4,16.4,0l67.6-67.2l62.4,62.4"></path> <path d="M252,505.6C113.2,505.6,0,392,0,252.8C0,113.2,113.6,0,252.8,0c104.4,0,199.6,65.6,236.4,163.2c7.6,20.4-2.4,43.2-22.8,51.2 c-20.4,7.6-43.2-2.4-51.2-22.8c-25.6-67.2-90.8-112-162.4-112c-96,0-174,78-174,174s78,174.4,174,174.4c49.2,0,94.8-19.6,127.2-54.4 h-40c-15.6,0-30.4-14-30.4-29.2v-23.6c0-16,16-27.6,30.4-27.6h138.4c7.2,0,14,2.8,19.2,8s8,12,8,19.6v138 c0,14.4-11.2,30.4-27.2,30.4h-23.6c-14.8,0-29.6-15.2-29.6-30.4v-22.4C375.6,481.6,316,505.6,252,505.6z M252.8,8 C117.6,8,8,118,8,252.8C8,388,117.6,497.6,252,497.6c64.8,0,125.2-25.6,174.4-74c1.2-1.2,2.8-1.6,4.4-0.8c1.6,0.8,2.4,2,2.4,3.6v32 c0,11.2,10.8,22.4,21.6,22.4h23.6c10.8,0,19.2-12,19.2-22.4v-138c0-5.6-2-10.4-5.6-14l0,0c-3.6-3.6-8.4-5.6-13.6-5.6H340 c-10.4,0-22.4,8.4-22.4,19.6V344c0,10.4,11.2,21.2,22.4,21.2h48.8c1.6,0,2.8,0.8,3.6,2.4s0.4,3.2-0.4,4.4c-34,40.8-84.8,64-139.2,64 c-100.4,0-182-81.6-182-182.4c0-100.4,81.6-182,182-182c75.2,0,143.6,47.2,170,117.2c6,16.4,24.4,24.4,40.8,18.4 s24.4-24.4,18.4-40.8C446,71.2,354,8,252.8,8z"></path> <path d="M252.8,486C124.4,486,19.6,381.2,19.6,252.8S124.4,19.6,252.8,19.6l0,0c54,0,106.8,19.2,148.8,54l1.6,1.6 c1.6,1.6,2,4,0.4,5.6s-4,2-5.6,0.4l-1.6-1.2c-40.8-33.6-91.6-52-143.6-52l0,0c-124,0-225.2,101.2-225.2,225.2 s101.2,225.2,225.2,225.2c60,0,118.8-24.8,161.2-68c4.4-4.8,10.4-7.2,16.8-7.2c2.8,0,5.6,0.4,8.4,1.6c8.8,3.6,14,12,14,22v33.6 l0.4,0.8h23.6v-0.4v-140H339.6c-0.4,0-1.2,0-2,0.4c-0.4,0-0.4,0.4-0.8,0.4v21.6c0.4,0.4,0.8,0.4,1.2,0.4h50.4 c9.2,0,17.6,5.2,21.6,13.6s2.4,18.4-3.6,25.2C368,428,311.6,454,252.4,454c-111.2,0-201.6-90.4-201.6-201.6 C50.8,198.8,71.6,148,110,110c38-38,88.8-59.2,142.4-59.2l0,0c83.2,0,158.8,52.4,188.4,130c1.6,4.4,6,7.6,11.2,7.6 c1.6,0,2.8-0.4,4-0.8c2.8-1.2,5.2-3.2,6.4-6.4c1.2-2.8,1.2-6,0.4-9.2c-8.8-23.2-21.2-44.4-37.2-63.6c-1.6-1.6-1.2-4.4,0.4-5.6 c1.6-1.6,4.4-1.2,5.6,0.4c16.4,20,29.6,42,38.8,66c2,4.8,1.6,10.4-0.4,15.2s-6,8.4-11.2,10.4c-2.4,0.8-4.8,1.2-7.2,1.2 c-8,0-15.6-5.2-18.4-12.8C404.8,108.4,332,58.4,252,58.4c-51.6,0-100.4,20-136.8,56.8C78.4,152,58.4,200.4,58.4,252 c0,106.8,86.8,193.6,193.6,193.6c57.2,0,110.8-25.2,148-68.8c4-4.8,4.8-11.2,2.4-16.8c-2.4-5.6-8-9.2-14.4-9.2h-50.4 c-3.6,0-9.2-3.2-9.2-8v-23.6c0-3.2,2.8-4.8,3.6-5.6c2-2,6-2,6.8-2h138.4c2.8,0,4,1.2,5.2,2c1.6,1.6,2,3.6,2,5.2v140 c0,4.8-2.8,8.4-7.2,8.4h-24.8c-4.8,0-8-4.8-8-8.8v-33.6c0-6.8-3.2-12.4-9.2-14.4c-2-0.8-3.6-1.2-5.6-1.2c-4,0-8,1.6-11.2,4.8 C375.6,460.4,314.8,486,252.8,486z"></path> <path d="M177.2,356L177.2,356c-4,0-8-1.6-11.2-4.4l-11.2-11.2c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l64.8-64.8l-64.8-64.8 c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l11.2-11.2c6-6,16-6,22,0l64.8,64.8l64.8-64.8c6-6,16-6,22,0l11.2,11.2 c2.8,2.8,4.4,6.8,4.4,11.2c0,4-1.6,8-4.4,11.2L286,253.2l42.8,42.8c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0L277.6,256 c-0.8-0.8-1.2-1.6-1.2-2.8s0.4-2,1.2-2.8l67.6-67.6c1.6-1.6,2.4-3.2,2.4-5.6s-0.8-4-2.4-5.6L334,160.4c-2.8-2.8-8-2.8-10.8,0 L255.6,228c-1.6,1.6-4,1.6-5.6,0l-67.6-67.6c-2.8-2.8-8-2.8-10.8,0l-11.2,11.2c-1.6,1.6-2.4,3.2-2.4,5.6s0.8,4,2.4,5.6l67.6,67.6 c0.8,0.8,1.2,1.6,1.2,2.8s-0.4,2-1.2,2.8l-67.6,67.6c-1.6,1.6-2.4,3.2-2.4,5.6c0,2,0.8,4,2.4,5.6l11.2,11.2c1.6,1.6,3.2,2.4,5.6,2.4 l0,0c2,0,4-0.8,5.6-2.4l67.6-67.6c1.6-1.6,4-1.6,5.6,0l60,60c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0l-57.2-57.2l-64.8,64.8 C185.2,354.4,181.6,356,177.2,356z"></path> </g></svg>  
+                                                      </div>
+                                                   </div>
                                                 </div>
-                                                <select name="infb_rrelacion2" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
-                                                   <option value="">--Selecciona--</option>
-                                                   <option value="PADRE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
-                                                   <option value="MADRE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
-                                                   <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
-                                                   <option value="HIJO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
-                                                   <option value="HIJA" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
-                                                   <option value="OTRO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
-                                                </select>
-                                             </div>
-                                          </div>
                                           <div class="grid grid-cols-1">
                                              <label class="text-[#64748b] font-semibold">RFC</label>
                                              <div class="group flex">

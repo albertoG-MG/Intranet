@@ -2843,6 +2843,31 @@ CREATE TABLE `ben_bancarios` (
 
 -- --------------------------------------------------------
 
+-- Table structure for table `familiares`
+--
+CREATE TABLE `familiares` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `expediente_id` int NOT NULL,
+  `nombre1` varchar(100) DEFAULT NULL,
+  `apellido_pat1` varchar(100) DEFAULT NULL,
+  `apellido_mat1` varchar(100) DEFAULT NULL,
+  `nombre2` varchar(100) DEFAULT NULL,
+  `apellido_pat2` varchar(100) DEFAULT NULL,
+  `apellido_mat2` varchar(100) DEFAULT NULL,
+  `nombre3` varchar(100) DEFAULT NULL,
+  `apellido_pat3` varchar(100) DEFAULT NULL,
+  `apellido_mat3` varchar(100) DEFAULT NULL,
+  `nombre4` varchar(100) DEFAULT NULL,
+  `apellido_pat4` varchar(100) DEFAULT NULL,
+  `apellido_mat4` varchar(100) DEFAULT NULL,
+  `nombre5` varchar(100) DEFAULT NULL,
+  `apellido_pat5` varchar(100) DEFAULT NULL,
+  `apellido_mat5` varchar(100) DEFAULT NULL,
+  FOREIGN KEY (expediente_id) REFERENCES expedientes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `estatus_empleado`
 --
