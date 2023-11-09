@@ -160,10 +160,12 @@ INSERT INTO `permisos` (`id`, `nombre`, `categoria_id`) VALUES
 (37, 'Acceso a vacaciones', 8),
 (38, 'Ver todas las vacaciones', 8),
 (39, 'Acceso al historial de vacaciones', 8),
-(40, 'Editar estatus de las vacaciones', 8),
-(41, 'Acceso a solicitud vacaciones', 9),
-(42, 'Acceso a subroles', 10),
-(43, 'Categorias', 11);
+(40, 'Acceso al historial de vacaciones del empleado', 8),
+(41, 'Editar estatus de las vacaciones', 8),
+(42, 'Exportar reporte de vacaciones', 8),
+(43, 'Acceso a solicitud vacaciones', 9),
+(44, 'Acceso a subroles', 10),
+(45, 'Categorias', 11);
 
 -- --------------------------------------------------------
 
