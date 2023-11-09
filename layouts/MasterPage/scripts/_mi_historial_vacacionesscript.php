@@ -9,9 +9,16 @@
                 search: ""
             },
             dom: '<"top"f>rt<"bottom"ip><"clear">',
-            "processing": true,
-            "serverSide": true,
-            "sAjaxSource": '../config/mi_historial_vacaciones.php',
+            "ajax":{
+                "url": "../config/mi_historial_vacaciones.php",
+                "type": "POST",
+                "dataSrc": "",
+                "data":{
+                    "rol": <?php echo $_SESSION["rol"]; ?>,
+                    "sessionid": <?php echo $_SESSION["id"]; ?>
+
+                }
+            },
             "initComplete": () => {
                 var table = $('#datatable').DataTable();
                 $("#datatable").show();
