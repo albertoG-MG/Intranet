@@ -52,6 +52,7 @@
                                         <th>Solicitud_id</th>
                                         <th class="py-3 text-left all">Nombre</th>
                                         <th class="py-3 text-center desktop">Periodo</th>
+                                        <th class="py-3 text-center desktop">dias</th>
                                         <th class="py-3 text-center desktop">Fecha solicitud</th>
                                         <th class="py-3 text-center desktop">Estatus</th>
                                         <th class="py-3 text-center min-tablet"></th>

@@ -36,6 +36,7 @@
                 {data: [2]},
                 {data: [3]},
                 {data: [4]},
+                {data: [5]},
                 {data: null, searchable: false}
             ],
             "columnDefs": 
@@ -77,25 +78,36 @@
                     target: [4],
                     className:"border-white",
                     render: function (data, type, row) {
-                        if(row[4] == 4){
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[4] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [5],
+                    className:"border-white",
+                    render: function (data, type, row) {
+                        if(row[5] == 4){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Pendiente</span>" +
                                 "</div>"
                             );
-                        }else if(row[4] == 3){
+                        }else if(row[5] == 3){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Rechazada</span>" +
                                 "</div>"
                             ); 
-                        }else if(row[4] == 2){
+                        }else if(row[5] == 2){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Cancelada</span>" +
                                 "</div>"
                             ); 
-                        }else if(row[4] == 1){
+                        }else if(row[5] == 1){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Aprobada</span>" +
@@ -105,7 +117,7 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [6],
                     className:"border-white dt-tituloR",
                     render: function (data, type, row) {
                         return (
