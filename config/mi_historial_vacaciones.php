@@ -6,7 +6,7 @@
 
     $id = $_POST["sessionid"];
 
-    $consulta = 'SELECT historial_solicitud_vacaciones.id AS id, concat(usuarios.nombre,' ',usuarios.apellido_pat,' ',usuarios.apellido_mat) AS nombre, historial_solicitud_vacaciones.periodo_solicitado AS periodo, historial_solicitud_vacaciones.dias_solicitados AS dias, historial_solicitud_vacaciones.fecha_solicitud AS fecha_solicitud, historial_solicitud_vacaciones.estatus AS estatus FROM historial_solicitud_vacaciones INNER JOIN usuarios on usuarios.id = historial_solicitud_vacaciones.users_id WHERE usuarios.id=:sessionid';
+    $consulta = 'SELECT historial_solicitud_vacaciones.id AS id, concat(usuarios.nombre," ",usuarios.apellido_pat," ",usuarios.apellido_mat) AS nombre, historial_solicitud_vacaciones.periodo_solicitado AS periodo, historial_solicitud_vacaciones.dias_solicitados AS dias, historial_solicitud_vacaciones.fecha_solicitud AS fecha_solicitud, historial_solicitud_vacaciones.estatus AS estatus FROM historial_solicitud_vacaciones INNER JOIN usuarios on usuarios.id = historial_solicitud_vacaciones.users_id WHERE usuarios.id=:sessionid';
     $resultado = $object->_db->prepare($consulta);
     $resultado -> bindParam('sessionid', $id, PDO::PARAM_INT);
     $resultado->execute();
