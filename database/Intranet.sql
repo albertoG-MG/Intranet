@@ -4715,25 +4715,30 @@ DELIMITER $$
     DECLARE anos INT UNSIGNED;
     DECLARE dias INT UNSIGNED;
 	  DECLARE fecha_actual DATE;
-	  DECLARE fecha_3_meses_anio_actual DATE;
+	  DECLARE fecha_aniversario_futuro DATE;
+    DECLARE fecha_aniversario_pasado DATE;
 	  SET fecha_actual = CURDATE();
-	  SET fecha_3_meses_anio_actual = CONCAT(YEAR(CURDATE()), '-', MONTH(fecha_3_meses_aniversario), '-', DAY(fecha_3_meses_aniversario));
+	  SET fecha_aniversario_futuro = DATE_ADD(fecha_actual, INTERVAL 1 YEAR);
+    SET fecha_aniversario_pasado = DATE_SUB(fecha_aniversario_futuro, INTERVAL 3 MONTH);
 	
-	  IF fecha_actual >= fecha_3_meses_anio_actual THEN
-		  SET dias = 14;
-	  ELSE	
+	  IF fecha_3_meses_aniversario >= fecha_aniversario_pasado THEN
 		  SET dias = 12;
-	  END IF;
-	
-    SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_3_meses_aniversario, NOW()));
-	
-	  IF anos != 0 THEN
-		  IF anos = 1 THEN
-			  SET dias = 16;
-		  ELSEIF anos > 1 AND anos <=4 THEN
-			  SET dias = 16 + (anos - 1) * 2;
+	  ELSE
+		  SET anos = (SELECT TIMESTAMPDIFF(YEAR, fecha_3_meses_aniversario, NOW()));
+		  IF anos != 0 THEN
+			  IF anos = 1 THEN
+				  SET dias = 16;
+			  ELSEIF anos > 1 AND anos <=4 THEN
+				  SET dias = 16 + (anos - 1) * 2;
+			  ELSE
+				  SET dias = 24 + (FLOOR((anos - 5) / 5) * 2);
+			  END IF;
 		  ELSE
-			  SET dias = 24 + (FLOOR((anos - 5) / 5) * 2);
+			  IF fecha_actual >= fecha_3_meses_aniversario THEN
+				  SET dias = 14;
+			  ELSE	
+				  SET dias = 12;
+			  END IF;
 		  END IF;
 	  END IF;
 	  RETURN dias;
