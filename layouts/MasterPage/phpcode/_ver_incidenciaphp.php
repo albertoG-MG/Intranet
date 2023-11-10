@@ -101,6 +101,12 @@
         }
     }
 
+    //Traemos el comentario del estatus
+    $check_coment = $object -> _db -> prepare('SELECT comentario AS comentario_estatus FROM accion_incidencias WHERE incidencias_id=:incidenciaid');
+    $check_coment -> execute(array(":incidenciaid" => $verid));
+    $fetch_coment = $check_coment -> fetch(PDO::FETCH_OBJ);
+    
+
     //Checar que tipo de incidencia es
     $check_tipo = $object -> _db -> prepare('SELECT DISTINCT CASE WHEN incidencias.id_permiso_reglamentario is NOT NULL THEN CASE WHEN permisos_reglamentarios.permiso_r = "OTRO" OR permisos_reglamentarios.permiso_r = "HOME_OFFICE" THEN "PERMISO REGLAMENTARIO ND" ELSE "PERMISO REGLAMENTARIO D" END WHEN incidencias.id_permiso_no_reglamentario is NOT NULL THEN CASE WHEN permisos_no_reglamentarios.permiso_nr = "AUSENCIA" THEN "PERMISO NO REGLAMENTARIO A" ELSE "PERMISO NO REGLAMENTARIO G" END ELSE "INCAPACIDAD" END AS tipo_permiso  FROM incidencias LEFT JOIN permisos_reglamentarios ON permisos_reglamentarios.id=incidencias.id_permiso_reglamentario LEFT JOIN permisos_no_reglamentarios ON permisos_no_reglamentarios.id=incidencias.id_permiso_no_reglamentario LEFT JOIN incapacidades ON incapacidades.id=incidencias.id_incapacidades WHERE incidencias.id=:incidenciaid');
     $check_tipo -> execute(array(":incidenciaid" => $verid));

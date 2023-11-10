@@ -111,6 +111,16 @@
                     </span>
                   </div>
                 </div>
+                <div class="flex flex-col mx-7 text-yellow-800 bg-yellow-50  rounded-lg" role="alert">
+                  <div class="flex-1 flex flex-col mt-5">
+                    <div class="text-[#64748b] font-semibold">
+                      Observaciones y/o comentarios del estatus:
+                    </div>
+                    <span>
+                      <?php if($fetch_coment->comentario_estatus == null){ echo "Sin datos"; }else{ echo $fetch_coment->comentario_estatus; } ?>
+                    </span>
+                  </div>
+                </div>
                 <div class="mt-12 h-px bg-slate-200"></div>
                 <div class="flex flex-col mx-7">
                   <div class="flex-1 flex flex-col mt-5">
@@ -197,6 +207,16 @@
                     </div>
                     <span>
                       <?php if($fetch_information->observaciones_permiso_r == null){ echo "Sin datos"; }else{ echo $fetch_information->observaciones_permiso_r; } ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col mx-7 text-yellow-800 bg-yellow-50  rounded-lg" role="alert">
+                  <div class="flex-1 flex flex-col mt-5">
+                    <div class="text-[#64748b] font-semibold">
+                      Observaciones y/o comentarios del estatus:
+                    </div>
+                    <span>
+                      <?php if($fetch_coment->comentario_estatus == null){ echo "Sin datos"; }else{ echo $fetch_coment->comentario_estatus; } ?>
                     </span>
                   </div>
                 </div>
@@ -294,6 +314,16 @@
                     </div>
                     <span>
                       <?php if($fetch_information->observaciones_permiso_nr == null){ echo "Sin datos"; }else{ echo $fetch_information->observaciones_permiso_nr; } ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col mx-7 text-yellow-800 bg-yellow-50  rounded-lg" role="alert">
+                  <div class="flex-1 flex flex-col mt-5">
+                    <div class="text-[#64748b] font-semibold">
+                      Observaciones y/o comentarios del estatus:
+                    </div>
+                    <span>
+                      <?php if($fetch_coment->comentario_estatus == null){ echo "Sin datos"; }else{ echo $fetch_coment->comentario_estatus; } ?>
                     </span>
                   </div>
                 </div>
@@ -395,6 +425,16 @@
                     </div>
                     <span>
                       <?php if($fetch_information->observaciones_permiso_nr == null){ echo "Sin datos"; }else{ echo $fetch_information->observaciones_permiso_nr; } ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col mx-7 text-yellow-800 bg-yellow-50  rounded-lg" role="alert">
+                  <div class="flex-1 flex flex-col mt-5">
+                    <div class="text-[#64748b] font-semibold">
+                      Observaciones y/o comentarios del estatus:
+                    </div>
+                    <span>
+                      <?php if($fetch_coment->comentario_estatus == null){ echo "Sin datos"; }else{ echo $fetch_coment->comentario_estatus; } ?>
                     </span>
                   </div>
                 </div>
@@ -514,6 +554,16 @@
                     </div>
                     <span>
                       <?php if($fetch_information->observaciones_incapacidad == null){ echo "Sin datos"; }else{ echo $fetch_information->observaciones_incapacidad; } ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col mx-7 text-yellow-800 bg-yellow-50  rounded-lg" role="alert">
+                  <div class="flex-1 flex flex-col mt-5">
+                    <div class="text-[#64748b] font-semibold">
+                      Observaciones y/o comentarios del estatus:
+                    </div>
+                    <span>
+                      <?php if($fetch_coment->comentario_estatus == null){ echo "Sin datos"; }else{ echo $fetch_coment->comentario_estatus; } ?>
                     </span>
                   </div>
                 </div>
