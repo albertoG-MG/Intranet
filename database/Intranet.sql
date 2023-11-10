@@ -4109,27 +4109,48 @@ DELIMITER ;
 --
 
 DELIMITER $$
-CREATE TRIGGER insertar_transicion_estatus_notificacion_incidencia
-AFTER INSERT ON accion_incidencias FOR EACH ROW
-BEGIN
+  CREATE TRIGGER insertar_transicion_estatus_notificacion_incidencia
+  AFTER INSERT ON accion_incidencias FOR EACH ROW
+  BEGIN
 
-	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
-	SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
-	SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
-	SET @count_usuario = (SELECT count(*) FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
-	SET @ch = (SELECT id FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+	  SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_incidencias INNER JOIN usuarios ON usuarios.id = accion_incidencias.evaluado_por WHERE accion_incidencias.incidencias_id=NEW.incidencias_id);
+	  SET @notificado_a = (SELECT usuarios.id FROM accion_incidencias INNER JOIN incidencias ON incidencias.id = accion_incidencias.incidencias_id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias INNER JOIN usuarios ON usuarios.id=solicitudes_incidencias.users_id WHERE accion_incidencias.incidencias_id = NEW.incidencias_id);
+	  SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
+	  SET @count_usuario = (SELECT count(*) FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+	  SET @ch = (SELECT id FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+	  SET @count_martha = (SELECT count(*) FROM usuarios WHERE username='martha.delcampo' OR correo='martha.delcampo@sinttecom.com');
+	  SET @martha = (SELECT id FROM usuarios WHERE username='martha.delcampo' OR correo='martha.delcampo@sinttecom.com');
+	  SET @count_jorge = (SELECT count(*) FROM usuarios WHERE username='jorge.garza' OR correo='jorge.garza@sinttecom.com');
+	  SET @jorge = (SELECT id FROM usuarios WHERE username='jorge.garza' OR correo='jorge.garza@sinttecom.com');
+	  SET @count_debanhi = (SELECT count(*) FROM usuarios WHERE username='debanhi.contreras' OR correo='reclutamiento@sinttecom.com');
+	  SET @debanhi = (SELECT id FROM usuarios WHERE username='debanhi.contreras' OR correo='reclutamiento@sinttecom.com');
 	
-	INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
+	  INSERT INTO transicion_estatus_incidencia(incidencias_id, estatus_actual, estatus_siguiente) SELECT incidencias.id, solicitudes_incidencias.estatus, accion_incidencias.tipo_de_accion FROM accion_incidencias INNER JOIN incidencias ON accion_incidencias.incidencias_id=incidencias.id INNER JOIN solicitudes_incidencias ON solicitudes_incidencias.id=incidencias.id_solicitud_incidencias WHERE accion_incidencias.incidencias_id=NEW.incidencias_id;
 	
-	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias", "Solicitud de incidencia evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+	  VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias", "Solicitud de incidencia evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
 	
-	IF (@count_usuario > 0 ) THEN
-		INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		VALUES (@ch, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
-	END IF;	
-END;
-$$
+	  IF (@count_martha > 0 ) THEN
+		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		  VALUES (@martha, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	  END IF;	
+	
+	  IF (@count_jorge > 0 ) THEN
+		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		  VALUES (@jorge, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	  END IF;	
+	
+	  IF (@count_debanhi > 0 ) THEN
+		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		  VALUES (@debanhi, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	  END IF;	
+	
+	  IF (@count_usuario > 0 ) THEN
+		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		  VALUES (@ch, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+	  END IF;	
+  END;
+  $$
 DELIMITER ;
 
 -- --------------------------------------------------------
