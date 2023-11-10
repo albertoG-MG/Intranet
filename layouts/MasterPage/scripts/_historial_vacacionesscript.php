@@ -35,22 +35,24 @@
                     }
                 }
             ],
-            "processing": true,
-            "serverSide": true,
-            "sAjaxSource": '../config/serverside_historial_vacaciones.php',
+            "ajax":{
+                "url": "../config/historial_vacaciones.php",
+                "type": "POST",
+                "dataSrc": ""
+            },
             "initComplete": () => {
                 var table = $('#datatable').DataTable();
                 $("#datatable").show();
                 table.columns.adjust().draw();
             },
             "columns": [
-                {data: [0], visible: false, searchable: false},
-                {data: [1]},
-                {data: [2]},
-                {data: [3]},
-                {data: [4]},
-                {data: [5]},
-                {data: null, searchable: false}
+                {"data": "id", visible: false, searchable: false},
+                {"data": "nombre"},
+                {"data": "periodo"},
+                {"data": "dias"},
+                {"data": "fecha_solicitud"},
+                {"data": "estatus"},
+                {"data": null, searchable:false}
             ],
             "columnDefs": 
             [
@@ -60,7 +62,7 @@
                     render: function (data, type, row) {
                         return(
                             "<div class='text-left'>" +
-                                "<span>" + row[1] + "</span>" +
+                                "<span>" + row["nombre"] + "</span>" +
                             "</div>"
                         );
                     }
@@ -71,7 +73,7 @@
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
-                                "<span>" + row[2] + "</span>" +
+                                "<span>" + row["periodo"] + "</span>" +
                             "</div>"
                         );
                     }
@@ -82,7 +84,7 @@
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
-                                "<span>" + row[3] + "</span>" +
+                                "<span>" + row["dias"] + "</span>" +
                             "</div>"
                         );
                     }
@@ -93,7 +95,7 @@
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
-                                "<span>" + row[4] + "</span>" +
+                                "<span>" + row["fecha_solicitud"] + "</span>" +
                             "</div>"
                         );
                     }
@@ -102,25 +104,25 @@
                     target: [5],
                     className:"border-white",
                     render: function (data, type, row) {
-                        if(row[5] == 4){
+                        if(row["estatus"] == 4){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Pendiente</span>" +
                                 "</div>"
                             );
-                        }else if(row[5] == 3){
+                        }else if(row["estatus"] == 3){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Rechazada</span>" +
                                 "</div>"
                             ); 
-                        }else if(row[5] == 2){
+                        }else if(row["estatus"] == 2){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Cancelada</span>" +
                                 "</div>"
                             ); 
-                        }else if(row[5] == 1){
+                        }else if(row["estatus"] == 1){
                             return (
                                 "<div class='text-left lg:text-center'>" +
                                     "<span>Aprobada</span>" +
