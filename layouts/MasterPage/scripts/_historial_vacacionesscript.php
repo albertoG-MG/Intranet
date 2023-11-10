@@ -260,6 +260,7 @@
                 contentType: false,
                 success: function(data) {
                     var table = $('#datatable').DataTable();
+                    table.column(6).visible(false);
                     table.clear().draw();
                     const obj = JSON.parse(data);
                     table.rows.add(obj).draw();
@@ -293,8 +294,7 @@
 
 </script>
 <style>
-
-.dataTables_wrapper .dataTables_filter{
+    .dataTables_wrapper .dataTables_filter{
         float:left;
         text-align:left;
         padding-bottom:13px;
@@ -356,7 +356,7 @@
 			padding-left: 30px;
 	}
 
-    		.btn-celeste{
+    .btn-celeste{
 		background-color: #00a3ff  !important;
 		border: none !important;
 		box-shadow: 3px 3px 4px 0px rgb(0 0 0 / 22%) !important;
@@ -364,7 +364,7 @@
 		border-bottom: #fff 9px;
 	}
 	
-		.btn-celeste:hover{
+	.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
 
@@ -377,4 +377,4 @@
         border-color: transparent;
         color: #fff;
     }
-    </style>
+</style>
