@@ -86,6 +86,7 @@ class expedientes {
     public $nomfam;
     public $apellidopatfam;
     public $apellidomatfam;
+    public $familiares;
     public $refbanc;
     public $banco_personal;
     public $cuenta_personal;
@@ -113,7 +114,7 @@ class expedientes {
 	 * *    =======================================================================================================================================================================================
 	*/
 
-    public function __construct($select2, $numero_expediente = null, $numero_nomina = null,  $asistencia_empleado = null, $puesto = null, $estudios = null, $posee_correo = null, $correo_adicional = null, $calle = null, $ninterior = null, $nexterior = null, $colonia = null, $estado = null, $municipio = null, $codigo = null, $teldom = null, $posee_telmov = null, $telmov = null, $posee_telempresa = null, $marcacion = null, $serie = null, $sim = null, $numred = null, $modelotel = null, $marcatel = null, $imei = null, $posee_laptop = null, $marca_laptop = null, $modelo_laptop = null, $serie_laptop = null, $casa_propia = null, $ecivil = null, $posee_retencion = null, $monto_mensual = null, $fechanac = null, $fechacon = null, $fechaalta = null, $salario_contrato = null, $salario_fechaalta = null, $observaciones = null, $curp = null, $nss = null, $rfc = null, $identificacion = null, $numeroidentificacion = null, $referencias = null, $fechauniforme = null, $cantidadpolo = null, $tallapolo = null, $emergencianom = null, $emergenciaapat = null, $emergenciaamat = null, $emergenciarelacion = null, $emergenciatelefono = null, $emergencianom2 = null, $emergenciaapat2 = null, $emergenciaamat2 = null, $emergenciarelacion2 = null, $emergenciatelefono2 = null, $capacitacion = null, $antidoping = null, $tipo_sangre = null, $vacante = null, $radio2 = null, $nomfam = null, $apellidopatfam = null, $apellidomatfam = null, $refbanc = null, $banco_personal = null, $cuenta_personal = null, $clabe_personal = null, $plastico_personal = null, $banco_nomina = null, $cuenta_nomina = null, $clabe_nomina = null, $plastico = null, $arraypapeleria = null) {
+    public function __construct($select2, $numero_expediente = null, $numero_nomina = null,  $asistencia_empleado = null, $puesto = null, $estudios = null, $posee_correo = null, $correo_adicional = null, $calle = null, $ninterior = null, $nexterior = null, $colonia = null, $estado = null, $municipio = null, $codigo = null, $teldom = null, $posee_telmov = null, $telmov = null, $posee_telempresa = null, $marcacion = null, $serie = null, $sim = null, $numred = null, $modelotel = null, $marcatel = null, $imei = null, $posee_laptop = null, $marca_laptop = null, $modelo_laptop = null, $serie_laptop = null, $casa_propia = null, $ecivil = null, $posee_retencion = null, $monto_mensual = null, $fechanac = null, $fechacon = null, $fechaalta = null, $salario_contrato = null, $salario_fechaalta = null, $observaciones = null, $curp = null, $nss = null, $rfc = null, $identificacion = null, $numeroidentificacion = null, $referencias = null, $fechauniforme = null, $cantidadpolo = null, $tallapolo = null, $emergencianom = null, $emergenciaapat = null, $emergenciaamat = null, $emergenciarelacion = null, $emergenciatelefono = null, $emergencianom2 = null, $emergenciaapat2 = null, $emergenciaamat2 = null, $emergenciarelacion2 = null, $emergenciatelefono2 = null, $capacitacion = null, $antidoping = null, $tipo_sangre = null, $vacante = null, $radio2 = null, $nomfam = null, $apellidopatfam = null, $apellidomatfam = null,$familiares = null,  $refbanc = null, $banco_personal = null, $cuenta_personal = null, $clabe_personal = null, $plastico_personal = null, $banco_nomina = null, $cuenta_nomina = null, $clabe_nomina = null, $plastico = null, $arraypapeleria = null) {
         $this->select2 = $select2;
         $this->numero_expediente = $numero_expediente;
         $this->numero_nomina = $numero_nomina;
@@ -181,6 +182,7 @@ class expedientes {
         $this->nomfam = $nomfam;
         $this->apellidopatfam = $apellidopatfam;
         $this->apellidomatfam = $apellidomatfam;
+        $this->familiares = $familiares;
         $this->refbanc = $refbanc;
         $this->banco_personal = $banco_personal;
         $this->cuenta_personal = $cuenta_personal;
@@ -992,110 +994,62 @@ class expedientes {
     if($check_table_DA['count'] > 0){
         $results_table_DA = $check_table_DA['data'][0];
         $crud->update('expedientes', ['fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante,'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'estatus_expediente' => 4], "id=:idexpediente", ['idexpediente' => $results_table_DA['id']]);
+
         $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DA['id']]);
         if($checkreflab['count'] > 0){
             $results_checkreflab = $checkreflab['data'];
             if(is_null($this->referencias)){
                 $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
             }else{
+                $crud -> delete('ref_laborales', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
                 $jsonData = stripslashes(html_entity_decode($this->referencias));
                 $ref = json_decode($jsonData);
-                expedientes::Insertar_reflaborales($results_table_DA['id'], $ref);
-                $results_table_DA = $referencias->fetchAll(PDO::FETCH_ASSOC);
+                expedientes::Crear_reflaborales($results_table_DA['id'], $ref);
             }
         }else{
             if(!(is_null($this->referencias))){
                 $jsonData = stripslashes(html_entity_decode($this->referencias));
                 $ref = json_decode($jsonData);
-                expedientes::Insertar_tokenreflaborales($results_table_DA['id'], $ref);
+                expedientes::Crear_reflaborales($results_table_DA['id'], $ref);
+            }
+        }
+
+        $checkfam = $crud->readWithCount('familiares', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DA['id']]);
+        if($checkfam['count'] > 0){
+            $results_checkfam = $checkfam['data'];
+            if(is_null($this->familiares)){
+                $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
+            }else{
+                $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
+                $jsonData = stripslashes(html_entity_decode($this->familiares));
+                $fam = json_decode($jsonData);
+                expedientes::Insertar_familiares($results_table_DA['id'], $fam);
+            }
+        }else{
+            if(!(is_null($this->familiares))){
+                $jsonData = stripslashes(html_entity_decode($this->familiares));
+                $fam = json_decode($jsonData);
+                expedientes::Insertar_familiares($results_table_DA['id'], $fam);
             }
         }
     }
 }
 
-public static function Insertar_tokenreflaborales($id_expediente, $ref) {
+public static function Insertar_familiares($id_expediente, $fam) {
     $crud = new crud();
+    $row = ['expediente_id' => $id_expediente];
 
-    // Insertar el valor de expediente_id una vez
-    $expediente_id = $id_expediente;
-
-    // Crear un arreglo para una fila de datos
-    $row = [
-        'nombre1' => null,
-        'apellido_pat1' => null,
-        'apellido_mat1' => null,
-        'relacion1' => null,
-        'telefono1' => null,
-        'nombre2' => null,
-        'apellido_pat2' => null,
-        'apellido_mat2' => null,
-        'relacion2' => null,
-        'telefono2' => null,
-        'nombre3' => null,
-        'apellido_pat3' => null,
-        'apellido_mat3' => null,
-        'relacion3' => null,
-        'telefono3' => null,
-        'expediente_id' => $expediente_id
-    ];
-
-    // Llenar el arreglo con los valores de las referencias
-    for ($indice = 1; $indice <= 3; $indice++) {
-        if (isset($ref[$indice - 1])) {
-            $referencia = $ref[$indice - 1];
-            $row['nombre' . $indice] = $referencia->nombre;
-            $row['apellido_pat' . $indice] = $referencia->apellidopat;
-            $row['apellido_mat' . $indice] = $referencia->apellidomat;
-            $row['relacion' . $indice] = $referencia->relacion;
-            $row['telefono' . $indice] = $referencia->telefono;
+    for ($indice = 1; $indice <= 5; $indice++) {
+        if (isset($fam[$indice - 1])) {
+            $familiare = $fam[$indice - 1];
+            $row['nombre' . $indice] = $familiare->nombre;
+            $row['apellido_pat' . $indice] = $familiare->apellidopat;
+            $row['apellido_mat' . $indice] = $familiare->apellidomat;
         }
     }
 
-    // Insertar una fila en la base de datos
-    $crud->store('ref_laborales', $row);
+    $crud->store('familiares', $row);
 }
-
-public static function Insertar_reflaborales($id_expediente, $ref) {
-    $crud = new crud();
-
-    // Insertar el valor de expediente_id una vez
-    $expediente_id = $id_expediente;
-
-    // Crear un arreglo para una fila de datos
-    $row = [
-        'nombre1' => null,
-        'apellido_pat1' => null,
-        'apellido_mat1' => null,
-        'relacion1' => null,
-        'telefono1' => null,
-        'nombre2' => null,
-        'apellido_pat2' => null,
-        'apellido_mat2' => null,
-        'relacion2' => null,
-        'telefono2' => null,
-        'nombre3' => null,
-        'apellido_pat3' => null,
-        'apellido_mat3' => null,
-        'relacion3' => null,
-        'telefono3' => null,
-        'expediente_id' => $expediente_id
-    ];
-
-    // Llenar el arreglo con los valores de las referencias
-    for ($indice = 1; $indice <= 3; $indice++) {
-        if (isset($ref[$indice - 1])) {
-            $referencia = $ref[$indice - 1];
-            $row['nombre' . $indice] = $referencia->nombre;
-            $row['apellido_pat' . $indice] = $referencia->apellidopat;
-            $row['apellido_mat' . $indice] = $referencia->apellidomat;
-            $row['relacion' . $indice] = $referencia->relacion;
-            $row['telefono' . $indice] = $referencia->telefono;
-        }
-    }
-
-    // Insertar una fila en la base de datos
-    $crud->update('ref_laborales', $row, 'expediente_id=:idexpediente', [':idexpediente' => $id_expediente]);
-} 
 
 public function Insertar_expediente_datosB(){
     $crud = new crud();
@@ -1298,6 +1252,25 @@ public function Submit_tokenexpediente($logged_user, $delete){
         if($check_expediente['count'] > 0){
             $results_expediente = $check_expediente['data'][0];
             $crud->update('expedientes', ['users_id' => $_SESSION['id'], 'numero_expediente' => $this->numero_expediente, 'numero_nomina' => $this->numero_nomina, 'numero_asistencia' => $this->asistencia_empleado, 'puesto' => $this->puesto, 'estudios' => $this->estudios, 'posee_correo' => $this->posee_correo, 'correo_adicional' => $this->correo_adicional, 'calle' => $this->calle, 'num_interior' => $this->ninterior, 'num_exterior' => $this->nexterior, 'colonia' => $this->colonia, 'estado_id' => $this->estado, 'municipio_id' => $this->municipio, 'codigo' => $this->codigo, 'tel_dom' => $this->teldom, 'posee_telmov' => $this->posee_telmov, 'tel_mov' => $this->telmov, 'posee_telempresa' => $this->posee_telempresa, 'marcacion' => $this->marcacion, 'serie' => $this->serie, 'sim' => $this->sim, 'numerored_empresa' => $this->numred, 'modelotel_empresa' => $this->modelotel, 'marcatel_empresa' => $this->marcatel, 'imei' => $this->imei, 'posee_laptop' => $this->posee_laptop, 'marca_laptop' => $this->marca_laptop, 'modelo_laptop' => $this->modelo_laptop, 'serie_laptop' => $this->serie_laptop, 'casa_propia' => $this->casa_propia, 'ecivil' => $this->ecivil, 'posee_retencion' => $this->posee_retencion, 'monto_mensual' => $this->monto_mensual, 'fecha_nacimiento' => $this->fechanac, 'fecha_inicioc' => $this->fechacon, 'fecha_alta' => $this->fechaalta, 'salario_contrato' => $this->salario_contrato, 'salario_fechaalta' => $this->salario_fechaalta, 'observaciones' => $this->observaciones, 'curp' => $this->curp, 'nss' => $this->nss, 'rfc' => $this->rfc, 'tipo_identificacion' => $this->identificacion, 'num_identificacion' => $this->numeroidentificacion, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono, 'emergencia_nombre2' => $this->emergencianom2, 'emergencia_apellidopat2' => $this->emergenciaapat2, 'emergencia_apellidomat2' => $this->emergenciaamat2, 'emergencia_relacion2' => $this->emergenciarelacion2, 'emergencia_telefono2' => $this->emergenciatelefono2, 'capacitacion' => $this->capacitacion, 'resultado_antidoping' => $this->antidoping, 'tipo_sangre' => $this->tipo_sangre, 'vacante' => $this->vacante, 'fam_dentro_empresa' => $this->radio2, 'fam_nombre' => $this->nomfam, 'fam_apellidopat' => $this->apellidopatfam, 'fam_apellidomat' => $this->apellidomatfam, 'banco_personal' => $this->banco_personal, 'cuenta_personal' => $this->cuenta_personal, 'clabe_personal' => $this->clabe_personal, 'plastico_personal' => $this->plastico_personal, 'banco_nomina' => $this->banco_nomina, 'cuenta_nomina' => $this->cuenta_nomina, 'clabe_nomina' => $this->clabe_nomina, 'plastico' => $this->plastico], "id=:expedienteid", [':expedienteid' => $results_expediente["id"]]);
+            //Revisa los familiares
+            $checkfam = $crud->readWithCount('familiares', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
+            if($checkfam['count'] > 0){
+                $results_checkfam = $checkfam['data'];
+                if(is_null($this->familiares)){
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
+                }else{
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $familiares = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_expediente['id'], $familiares);
+                }
+            }else{
+                if(!(is_null($this->familiares))){
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $familiares = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_expediente['id'], $familiares);
+                }
+            }
 
             //revisa las ref laborales
             $checkreflab = $crud->readWithCount('ref_laborales', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);

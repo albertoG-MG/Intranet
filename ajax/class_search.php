@@ -6427,10 +6427,10 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	*/
 
 	}else if($_POST["pestaña"] == "DatosA"){
-		if(isset($_POST["numeroreferenciaslab"], $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], 
+		if(isset($_POST["numeroreferenciaslab"],$_POST["numerofamiliares"], $_POST["fechauniforme"], $_POST["cantidadpolo"], $_POST["tallapolo"], 
 		$_POST["emergencianom"], $_POST["emergenciaapat"], $_POST["emergenciaamat"], $_POST["emergenciarelacion"], $_POST["emergenciatelefono"], $_POST["emergencianom2"], 
 		$_POST["emergenciaapat2"], $_POST["emergenciaamat2"], $_POST["emergenciarelacion2"], $_POST["emergenciatelefono2"], 
-		$_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"])){
+		$_POST["tipo_sangre"], $_POST["vacante"], $_POST["radio2"], $_POST["nomfam"], $_POST["apellidopatfam"], $_POST["apellidomatfam"],$_POST["numerofamiliares"])){
 			
 /** 
 	 +  =============================================== 		INICIA LA VALIDACIÓN DE LOS DATOS ADICIONALES		=============================================== 
@@ -6476,6 +6476,44 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$referencias = null;
 		}
 
+					
+		// FAMILIARES
+		if (!empty($_POST["numerofamiliares"])) {
+			if (preg_match("/^\d$/", $_POST["numerofamiliares"])) {
+				$familiares_decoded = json_decode($_POST["familiares"], true);
+		
+				// Verifica que el número de familiares coincida con la cantidad real
+				if (is_array($familiares_decoded) && count($familiares_decoded) == $_POST["numerofamiliares"]) {
+					$familiar_contador = 1;
+					foreach ($familiares_decoded as &$familiar) {
+						if (empty($familiar["nombre"]) || empty($familiar["apellidopat"]) || empty($familiar["apellidomat"])) {
+							die(json_encode(array("error", "Existen campos vacíos en los familiares, por favor, verifique la información")));
+						} else {
+							//validaciones
+							if (!preg_match("/^[\pL\s'-]+$/u", $familiar["nombre"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el nombre del familiar " . $familiar_contador)));
+							} else if (!preg_match("/^[\pL\s]+$/u", $familiar["apellidopat"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido paterno del familiar " . $familiar_contador)));
+							} else if (!preg_match("/^[\pL\s]+$/u", $familiar["apellidomat"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido materno del familiar " . $familiar_contador)));
+							} 
+						}
+						$familiar["nombre"] = mb_strtoupper(quitarAcentos($familiar["nombre"], 'UTF-8'));
+						$familiar["apellidopat"] = mb_strtoupper(quitarAcentos($familiar["apellidopat"], 'UTF-8'));
+						$familiar["apellidomat"] = mb_strtoupper(quitarAcentos($familiar["apellidomat"], 'UTF-8'));
+
+						$familiar_contador++;
+					}
+					$familiares = json_encode($familiares_decoded); // Convierte el arreglo de vuelta a JSON
+				} else {
+					die(json_encode(array("error", "El número de familiares ingresado no coincide con el enviado, por favor, verifique la información")));
+				}
+			} else {
+				die(json_encode(array("error", "Solo se permite un número de un solo dígito en el campo de número de familiares")));
+			}
+		} else {
+			$familiares = null;
+		}
 		// FECHA DE ENTREGA DE UNIFORME
 		if (empty($_POST["fechauniforme"])) {
 			$fechauniforme = null;
@@ -6691,6 +6729,7 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 			$radio2 = $_POST["radio2"];
 			$radio2 = mb_strtoupper($radio2, 'UTF-8');
 			$radio2 = quitarAcentos($radio2);
+			$radio2 = null;
 			$nomfam = null;
 			$apellidopatfam = null;
 			$apellidomatfam = null;
@@ -6700,15 +6739,14 @@ if(isset($_POST["app"]) && $_POST["app"] == "usuario"){
 	 +  =============================================== 		TERMINA LA VALIDACIÓN DE LOS DATOS ADICIONALES		=============================================== 
 */
 
-			$expediente = new Expedientes($_SESSION['id'], null,null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, null, null, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam);
-			$expediente ->Crear_expediente_datosA();
+			$expediente = new Expedientes($_SESSION['id'], null,null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, null, null, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidomatfam, $familiares);
+			$expediente ->Insertar_expediente_datosA();
 			die(json_encode(array("success", "Se han guardado exitosamente los datos adicionales")));
 
 		}else{
 			die(json_encode(array("error", "Faltan variables requeridas en la solicitud.")));
 		}
 
-	
 	}else if($_POST["pestaña"] == "DatosB"){
 		if(isset( $_POST["numeroreferenciasban"], $_POST["banco_personal"], $_POST["cuenta_personal"], $_POST["clabe_personal"], 
 		$_POST["plastico_personal"])){
@@ -6832,7 +6870,7 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 }
 
 
-			$expediente = new Expedientes($_SESSION['id'], null, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal,null,null,null,null);
+			$expediente = new Expedientes($_SESSION['id'], null, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal,null,null,null,null);
 			$expediente ->Insertar_expediente_datosB();
 			die(json_encode(array("success", "Se han guardado los datos bancarios del expediente")));
 }else{
@@ -6897,7 +6935,7 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 		===============================================				TERMINA LA VALIDACIÓN DE LA PAPELERÍA RECIBIDA   		===============================================
 		*/
 
-		$expediente = new Expedientes($_SESSION['id'], null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $arraypapeleria);
+		$expediente = new Expedientes($_SESSION['id'], null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $arraypapeleria);
 		$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 		//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
 		$delete_array = $_POST["delete_switch_array_json"];
@@ -8126,6 +8164,43 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 		+ ============================================= EMPIEZA LA VALIDACIÓN DE LOS DATOS ADICIONALES =============================================
 		*/
 
+		// FAMILIARES
+		if (!empty($_POST["numerofamiliares"])) {
+			if (preg_match("/^\d$/", $_POST["numerofamiliares"])) {
+				$familiares_decoded = json_decode($_POST["familiares"], true);
+		
+				// Verifica que el número de familiares coincida con la cantidad real
+				if (is_array($familiares_decoded) && count($familiares_decoded) == $_POST["numerofamiliares"]) {
+					$familiar_contador = 1;
+					foreach ($familiares_decoded as &$familiar) {
+						if (empty($familiar["nombre"]) || empty($familiar["apellidopat"]) || empty($familiar["apellidomat"])) {
+							die(json_encode(array("error", "Existen campos vacíos en los familiares, por favor, verifique la información")));
+						} else {
+							//validaciones
+							if (!preg_match("/^[\pL\s'-]+$/u", $familiar["nombre"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el nombre del familiar " . $familiar_contador)));
+							} else if (!preg_match("/^[\pL\s]+$/u", $familiar["apellidopat"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido paterno del familiar " . $familiar_contador)));
+							} else if (!preg_match("/^[\pL\s]+$/u", $familiar["apellidomat"])) {
+								die(json_encode(array("error", "Solo se permiten carácteres alfabéticos, guiones intermedios, apóstrofes y espacios en el apellido materno del familiar " . $familiar_contador)));
+							} 
+						}
+						$familiar["nombre"] = mb_strtoupper(quitarAcentos($familiar["nombre"], 'UTF-8'));
+						$familiar["apellidopat"] = mb_strtoupper(quitarAcentos($familiar["apellidopat"], 'UTF-8'));
+						$familiar["apellidomat"] = mb_strtoupper(quitarAcentos($familiar["apellidomat"], 'UTF-8'));
+
+						$familiar_contador++;
+					}
+					$familiares = json_encode($familiares_decoded); // Convierte el arreglo de vuelta a JSON
+				} else {
+					die(json_encode(array("error", "El número de familiares ingresado no coincide con el enviado, por favor, verifique la información")));
+				}
+			} else {
+				die(json_encode(array("error", "Solo se permite un número de un solo dígito en el campo de número de familiares")));
+			}
+		} else {
+			$familiares = null;
+		}
 		// REFERENCIAS LABORALES
 		if (!empty($_POST["numeroreferenciaslab"])) {
 			if (preg_match("/^\d$/", $_POST["numeroreferenciaslab"])) {
@@ -8554,7 +8629,7 @@ if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico"){
 		===============================================				TERMINA LA VALIDACIÓN DE LA PAPELERÍA RECIBIDA   		===============================================
 		*/
 
-		$expediente = new Expedientes($_SESSION['id'], null, null, null, null, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, null, null, null, null, null, null, null, null, null, null, null, null, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, null, null, null, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, null, null, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, null, null, null, null, $arraypapeleria);
+		$expediente = new Expedientes($_SESSION['id'], null, null, null, null, $estudios, $posee_correo, $correo_adicional, $calle, $ninterior, $nexterior, $colonia, $estado, $municipio, $codigo, $teldom, $posee_telmov, $telmov, null, null, null, null, null, null, null, null, null, null, null, null, $casa_propia, $ecivil, $posee_retencion, $monto_mensual, $fechanac, $fechacon, $fechaalta, null, null, null, $curp, $nss, $rfc, $identificacion, $numeroidentificacion, $referencias, $fechauniforme, $cantidadpolo, $tallapolo, $emergencianom, $emergenciaapat, $emergenciaamat, $emergenciarelacion, $emergenciatelefono, $emergencianom2, $emergenciaapat2, $emergenciaamat2, $emergenciarelacion2, $emergenciatelefono2, null, null, $tipo_sangre, $vacante, $radio2, $nomfam, $apellidopatfam, $apellidopatfam, $familiares, $refbanc, $banco_personal, $cuenta_personal, $clabe_personal, $plastico_personal, null, null, null, null, $arraypapeleria);
 		$logged_user = $_SESSION['nombre']. ' ' .$_SESSION['apellidopat']. ' ' .$_SESSION['apellidomat'];
 		//Una vez que se hayan almacenado las variables, llama al metodo para editar el expediente
 		$delete_array = $_POST["delete_switch_array_json"];

@@ -9,11 +9,17 @@
     $check_exp->execute();
     $SelectId = $check_exp->fetch(PDO::FETCH_ASSOC);
     $Editarid = $SelectId['id'];
-
-
     if($fetch_token_user->exp_date >= $curDate){ 
 ?>
 
+/* <?php if($GET['pestaña'] == "papeleria"){ ?>*/
+    let menuExpedientes = [];
+    let pestañaActiva = {
+        id: 'documentos',
+        triggerMenu: $('#documentos-tab'),
+        targetMenu: $('#documentos')
+    };
+/*<?php } ?>*/
     //Variable global que nos permite acceder al menú desde cualquier función.
     let menuExpedientes = [];
     let pestañaActiva = {
@@ -1950,6 +1956,7 @@
                 notOnlyZero: 0
             });
         });
+
   <?php } ?>
     });
 
@@ -2099,7 +2106,8 @@
         window.addEventListener('beforeunload', unloadHandler);
         var fd = new FormData();
 
-        var numeroreferenciaslab = $("#numReferencias").val();
+        var numeroreferenciaslab = $("#numReferencias").val();  
+        var numerofamiliares = $("#numfamiliares").val();
         var fechauniforme = $("#fechauniforme").val();
         var cantidadpolo = $("#cantidadpolo").val();
         var tallapolo = $("#tallapolo").val();
@@ -2144,6 +2152,21 @@
                 telefono: rtelefono
             });
         }
+
+        /*Familiares*/
+        var fam = [];
+        for (var i = 1; i <= numerofamiliares; i++) {
+            var fnombre = $("input[name=infc_rnombre" + i + "]").val();
+            var fapellidopat = $("input[name=infc_rapellidopat" + i + "]").val();
+            var fapellidomat = $("input[name=infc_rapellidomat" + i + "]").val();
+
+
+            fam.push({
+                nombre: fnombre,
+                apellidopat: fapellidopat,
+                apellidomat: fapellidomat
+            });
+        }
         var pestaña = "DatosA";
         var app="expediente_modo_edicion";
         
@@ -2167,7 +2190,9 @@
         fd.append('nomfam', nomfam);
         fd.append('apellidopatfam', apellidopatfam);
         fd.append('apellidomatfam', apellidomatfam);
+        fd.append('numerofamiliares', numerofamiliares);
         fd.append('referencias', JSON.stringify(reflab));
+        fd.append('familiares', JSON.stringify(fam));
         fd.append('pestaña', pestaña);
         fd.append('app', app);
 
