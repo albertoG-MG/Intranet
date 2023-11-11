@@ -259,4 +259,8 @@
         border-color: transparent;
         color: #fff;
     }
+
+    .dataTables_wrapper.no-footer{
+        margin-top: 1.25rem !important;
+    }
 </style>
