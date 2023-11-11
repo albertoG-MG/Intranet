@@ -114,6 +114,9 @@
     });
     
     $(document).ready(function() {
+
+        $('input[name="periodo_buscar"]').daterangepicker({ showDropdowns: true, parentEl: "main", "locale": { "format": "YYYY/MM/DD", "applyLabel": "Aceptar", "cancelLabel": "Cancelar", "daysOfWeek": ["Dom","Lun", "Mar", "Mie", "Jue", "Vie", "Sab"], "monthNames": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]}, applyButtonClasses: "button btn-celeste px-3 py-3 text-white rounded-md focus:ring-2 focus:outline-none focus:ring-[#27ceeb]/50 hover:bg-celeste-500 active:bg-celeste-700", cancelClass: "button bg-white border border-gray-300 text-gray-600 rounded-md outline-none px-3 py-3 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100" });
+
         $('.dataTables_filter input[type="search"]').
         attr('placeholder', 'Buscar...').attr('class', 'search w-full rounded-lg text-gray-600 font-medium focus:outline-none focus:ring-2 focus:ring-celeste-600');
         
@@ -125,6 +128,32 @@
         <?php 
             } 
         ?>
+
+        $('#periodo_buscar').on('apply.daterangepicker', function(ev, picker) {
+            var fd = new FormData();
+            var fecha_inicio = picker.startDate.format('YYYY/MM/DD');
+            var fecha_fin = picker.endDate.format('YYYY/MM/DD');
+            fd.append('fecha_inicio', fecha_inicio);
+            fd.append('fecha_fin', fecha_fin);
+            $.ajax({
+                url: '../ajax/filtros/mi_suma_vacaciones_periodo/mi_suma_vacaciones_periodo.php',
+                type: 'POST',
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    var table = $('#datatable').DataTable();
+                    table.clear().draw();
+                    const obj = JSON.parse(data);
+                    table.rows.add(obj).draw();
+                    table.column().cells().invalidate().render();
+                    table.columns.adjust().responsive.recalc();
+                },
+                error: function(data) {
+                    $("#ajax-error").text('Fail to send request');
+                }
+            });        
+        });
 
         function check_user_logged(){
             return new Promise((resolve, reject) => {
@@ -220,4 +249,14 @@
 	.btn-celeste:hover{
 		background-color: #008eff !important;
 	}
+
+    main{
+        position:relative !important;
+    }
+
+    .daterangepicker td.active, .daterangepicker td.active:hover{
+        background-color:  #00a3ff !important;
+        border-color: transparent;
+        color: #fff;
+    }
 </style>
