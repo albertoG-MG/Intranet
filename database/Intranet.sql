@@ -2945,7 +2945,8 @@ INSERT INTO `tipo_papeleria` (`id`, `nombre`) VALUES
 (22, 'REGLAMENTO INTERIOR DEL TRABAJO'),
 (23, 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS'),
 (24, 'MODIFICACION SALARIAL'),
-(25, 'BAJA ANTE IMSS');
+(25, 'BAJA ANTE IMSS'),
+(26, 'AVISO DE SUSPENSIÓN DE INFONAVIT');
 
 -- --------------------------------------------------------
 

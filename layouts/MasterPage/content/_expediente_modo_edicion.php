@@ -1459,7 +1459,13 @@
                                                             <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
                                                             <option value="HIJO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
                                                             <option value="HIJA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
-                                                            <option value="OTRO">OTRO</option>
+                                                            <option value="HERMANO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HERMANO") ? 'selected' : ''; ?>>HERMANO</option>
+                                                            <option value="HERMANA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "HERMANA") ? 'selected' : ''; ?>>HERMANA</option>
+                                                            <option value="TIO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "TIO") ? 'selected' : ''; ?>>TIO</option>
+                                                            <option value="TIA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "TIA") ? 'selected' : ''; ?>>TIA</option>
+                                                            <option value="ABUELO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "ABUELO") ? 'selected' : ''; ?>>ABUELO</option>
+                                                            <option value="ABUELA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "ABUELA") ? 'selected' : ''; ?>>ABUELA</option>
+                                                            <option value="OTRO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
                                                              </select>
                                                          </div>
                                                       </div>
@@ -1575,12 +1581,18 @@
                                                             </div>
                                                             <select class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600"  id="infb_rrelacion2" name="infb_rrelacion2">
                                                             <option value="">--Selecciona--</option>
-                                                            <option value="PADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
-                                                            <option value="MADRE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
-                                                            <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
-                                                            <option value="HIJO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
-                                                            <option value="HIJA" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
-                                                            <option value="OTRO" <?php echo ($ben_bancarios_count >= 1 && $fetch_ben_bancarios[1]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
+                                                            <option value="PADRE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "PADRE") ? 'selected' : ''; ?>>PADRE</option>
+                                                            <option value="MADRE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "MADRE") ? 'selected' : ''; ?>>MADRE</option>
+                                                            <option value="CONYUGE" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "CONYUGE") ? 'selected' : ''; ?>>CONYUGE</option>
+                                                            <option value="HIJO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HIJO") ? 'selected' : ''; ?>>HIJO</option>
+                                                            <option value="HIJA" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HIJA") ? 'selected' : ''; ?>>HIJA</option>
+                                                            <option value="HERMANO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HERMANO") ? 'selected' : ''; ?>>HERMANO</option>
+                                                            <option value="HERMANA" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "HERMANA") ? 'selected' : ''; ?>>HERMANA</option>
+                                                            <option value="TIO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "TIO") ? 'selected' : ''; ?>>TIO</option>
+                                                            <option value="TIA" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "TIA") ? 'selected' : ''; ?>>TIA</option>
+                                                            <option value="ABUELO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "ABUELO") ? 'selected' : ''; ?>>ABUELO</option>
+                                                            <option value="ABUELA" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "ABUELA") ? 'selected' : ''; ?>>ABUELA</option>
+                                                            <option value="OTRO" <?php echo ($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"] === "OTRO") ? 'selected' : ''; ?>>OTRO</option>
                                                              </select>
                                                          </div>
                                                       </div>

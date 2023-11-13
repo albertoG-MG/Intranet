@@ -11,15 +11,6 @@
     $Editarid = $SelectId['id'];
     if($fetch_token_user->exp_date >= $curDate){ 
 ?>
-
-/* <?php if($GET['pestaña'] == "papeleria"){ ?>*/
-    let menuExpedientes = [];
-    let pestañaActiva = {
-        id: 'documentos',
-        triggerMenu: $('#documentos-tab'),
-        targetMenu: $('#documentos')
-    };
-/*<?php } ?>*/
     //Variable global que nos permite acceder al menú desde cualquier función.
     let menuExpedientes = [];
     let pestañaActiva = {
