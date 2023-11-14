@@ -1389,58 +1389,241 @@
                                     </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: false }">
-			                     <div class="grid grid-cols-1 mt-5 mx-7">
-				                    <label class="text-[#64748b] font-semibold mb-2">¿TIENE FAMILIARES DENTRO DE LA EMPRESA?</label>
-				                    <div class="group flex mt-3 items-center">
-				                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1">
-				                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-				                       Sí
-				                       </label>
-				                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" checked="">
-				                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-				                       No
-				                       </label>
-				                    </div>
-			                     </div>
-			                     <div x-show.important="open">
-				                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                    <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">NOMBRE(s)</label>
+                              <div x-data="{ numfamiliares: 0 }">
+                                     <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label for="numfamiliares" class="text-[#64748b] font-semibold mb-2">¿TIENE FAMILIARES DENTRO DE LA EMPRESA?</label>
                                        <div class="group flex">
                                           <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                              <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                                <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
                                              </svg>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" placeholder="Nombre">
+                                          <select id="numfamiliares" name="numfamiliares" x-model="numfamiliares" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
+                                             <option value="0">SIN FAMILIARES</option>
+                                             <option value="1">UN FAMILIAR</option>
+                                             <option value="2">DOS FAMILIARES</option>
+                                             <option value="3">TRES FAMILIARES</option>
+                                             <option value="4">CUATRO FAMILIARES</option>
+                                             <option value="5">CINCO FAMILIARES</option>
+                                          </select>
                                        </div>
                                     </div>
-                                    <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">APELLIDO PATERNO</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                             </svg>
+                                 <div x-show="numfamiliares >= 1">
+                                    <!-- Referencia 1 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Primer familiar  <label style="color:red;"> *</label></div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre1" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat1" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat1" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" placeholder="Apellido paterno">
                                        </div>
                                     </div>
-                                    <div class="grid grid-cols-1">
-				                           <label class="text-[#64748b] font-semibold mb-2">APELLIDO MATERNO</label>
-                                       <div class="group flex">
-                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                             <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                             </svg>
+                                 </div>
+                                 <div x-show="numfamiliares >= 2">
+                                    <!-- Referencia 2 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Segunda familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre2" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat2"  placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat2"  placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
-                                          <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" placeholder="Apellido materno">
                                        </div>
                                     </div>
-				                     </div>
-			                     </div>
-		                     </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 3">
+                                    <!-- Referencia 3 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Tercer familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre3" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat3"  placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat3"  placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 4">
+                                    <!-- Referencia 4 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Cuarto familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre4"  placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat4"  placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat4"  placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 5">
+                                    <!-- Referencia 5 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Quinto familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre5"  placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat5"  placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat5"  placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
                            <div class="mt-12 h-px bg-slate-200"></div>
                               <div class="flex flex-col-reverse items-center gap-3 md:flex-row md:justify-end md:space-x-2 mx-7 mt-5">
                                  <button type="button" id="anterior" name="anterior" class="button bg-white border border-gray-300 text-gray-600 rounded-md outline-none h-11 px-8 py-2 focus:ring-2 focus:outline-none focus:ring-[#d1d5db]/50 hover:bg-gray-50 active:bg-gray-100">Anterior</button>

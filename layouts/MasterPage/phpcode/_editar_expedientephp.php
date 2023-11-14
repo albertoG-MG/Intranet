@@ -239,6 +239,33 @@
         $fetch_referencias = $referencias_laborales->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /* FAMILIARES */
+    $fetch_familiares = [];
+    $query = "SELECT nombre1 AS nombre, apellido_pat1 AS apellido_pat, apellido_mat1 AS apellido_mat FROM familiares WHERE expediente_id = :expedienteid AND (nombre1 IS NOT NULL OR apellido_pat1 IS NOT NULL OR apellido_mat1 IS NOT NULL) 
+
+    UNION ALL 
+
+    SELECT nombre2 AS nombre, apellido_pat2 AS apellido_pat, apellido_mat2 AS apellido_mat FROM familiares WHERE expediente_id = :expedienteid AND (nombre2 IS NOT NULL OR apellido_pat2 IS NOT NULL OR apellido_mat2 IS NOT NULL) 
+
+    UNION ALL 
+
+    SELECT nombre3 AS nombre, apellido_pat3 AS apellido_pat, apellido_mat3 AS apellido_mat FROM familiares  WHERE expediente_id = :expedienteid AND (nombre3 IS NOT NULL OR apellido_pat3 IS NOT NULL OR apellido_mat3 IS NOT NULL) 
+
+    UNION ALL 
+
+    SELECT nombre4 AS nombre, apellido_pat4 AS apellido_pat, apellido_mat4 AS apellido_mat FROM familiares WHERE expediente_id = :expedienteid AND (nombre4 IS NOT NULL OR apellido_pat4 IS NOT NULL OR apellido_mat4 IS NOT NULL) 
+
+    UNION ALL
+        SELECT nombre5 AS nombre, apellido_pat5 AS apellido_pat, apellido_mat5 AS apellido_mat FROM familiares WHERE expediente_id = :expedienteid AND (nombre5 IS NOT NULL OR apellido_pat5 IS NOT NULL OR apellido_mat5 IS NOT NULL);";
+
+    $familiares = $object->_db->prepare($query);
+    $familiares->execute(array(':expedienteid' => $Editarid));
+    $familiares_count = $familiares->rowCount();
+
+    if ($familiares_count > 0) {
+        $fetch_familiares = $familiares->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     /*REFERENCIAS BANCARIAS*/
     $fetch_ben_bancarios = [];
     $query = "SELECT nombre1 AS nombre, apellido_pat1 AS apellido_pat, apellido_mat1 AS apellido_mat, relacion1 AS relacion, rfc1 AS rfc, curp1 AS curp, porcentaje1 AS porcentaje FROM ben_bancarios WHERE expediente_id = :expedienteid AND (nombre1 IS NOT NULL OR apellido_pat1 IS NOT NULL OR apellido_mat1 IS NOT NULL OR relacion1 IS NOT NULL OR rfc1 IS NOT NULL OR curp1 IS NOT NULL OR porcentaje1 IS NOT NULL) UNION ALL SELECT nombre2 AS nombre, apellido_pat2 AS apellido_pat, apellido_mat2 AS apellido_mat, relacion2 AS relacion, rfc2 AS rfc, curp2 AS curp, porcentaje2 AS porcentaje FROM ben_bancarios WHERE expediente_id = :expedienteid AND (nombre2 IS NOT NULL OR apellido_pat2 IS NOT NULL OR apellido_mat2 IS NOT NULL OR relacion2 IS NOT NULL OR rfc2 IS NOT NULL OR curp2 IS NOT NULL OR porcentaje2 IS NOT NULL);";

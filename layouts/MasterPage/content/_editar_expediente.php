@@ -40,9 +40,60 @@
                      </div>
                   </div>
                   <div class="bg-white p-3 shadow-md rounded-b">
+                  <div class="flex items-center"> 
                      <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
-                        <b>EDITAR EXPEDIENTE: </b>El formulario se divide en varias secciones o pestañas para organizar la información. Cada sección contiene un conjunto específico de datos que el usuario debe completar. La característica clave aquí es que no es necesario completar todo el formulario de una vez; en su lugar, el usuario puede guardar los datos de cada sección individualmente sin necesidad de llenar todas las secciones antes de avanzar. <b> Nota: </b> El botón de guardar progreso no es consecutivo, esto significa que los datos se almacenan por separado en función de la pestaña en la que se encuentra el usuario. 
-                     </div>
+                        <b>EDITAR EXPEDIENTE: </b>El formulario se divide en varias secciones o pestañas para organizar la información. Cada sección contiene un conjunto específico de datos que el usuario debe completar. La característica clave aquí es que no es necesario completar todo el formulario de una vez; en su lugar, el usuario puede guardar los datos de cada sección individualmente sin necesidad de llenar todas las secciones antes de avanzar.
+                        </div>
+                        <button id="revisarDatos" class="button btn-vacio rounded-md h-11 px-8 py-2 ml-4">Revisar</button>
+                  </div>
+                  <script>
+
+
+                  document.getElementById('revisarDatos').addEventListener('click', function() {
+                     var camposGenerales = { calle: 'Calle', nexterior: 'Número Exterior', colonia: 'Colonia', estado: 'Estado', municipio: 'Municipio', codigo: 'Código Postal', teldom: 'Teléfono Domicilio', ecivil: 'Estado Civil', fechanac: 'Fecha de Nacimiento', curp: 'CURP', nss: 'Número de Seguro Social', rfc: 'RFC', identificacion: 'Identificación'};
+                     var camposAdicionales = { tallapolo: 'Talla de Polo', emergencia_nom: 'Nombre de Emergencia', emergencia_nom2: 'Segundo Nombre de Emergencia', emergencia_appat: 'Apellido Paterno de Emergencia', emergencia_appat2: 'Segundo Apellido de Emergencia', emergencia_apmat: 'Apellido Materno de Emergencia', emergencia_apmat2: 'Segundo Apellido Materno de Emergencia', emergencia_relacion: 'Relación de Emergencia', emergencia_relacion2: 'Segunda Relación de Emergencia', emergencia_tel: 'Teléfono de Emergencia', emergencia_tel2: 'Segundo Teléfono de Emergencia'};
+                     var camposBancarios = { numBeneficiariosBancarios: 'Número de Beneficiarios Bancarios'};
+                     var mensaje = "";
+
+                     if (pestañaActiva.id === 'datosG') {
+                        mensaje = revisarCampos(camposGenerales);
+                     } else if (pestañaActiva.id === 'datosA') {
+                        mensaje = revisarCampos(camposAdicionales);
+                     } else if (pestañaActiva.id === 'datosB') {
+                        mensaje = revisarCampos(camposBancarios);
+                     } else if (pestañaActiva.id === 'documentos') {
+                        
+                     } 
+
+                     if (mensaje !== "") {
+                        Swal.fire({
+                              title: 'Faltan los siguientes campos:',
+                              html: mensaje,
+                              confirmButtonText: 'Aceptar',
+                              customClass: {
+                              popup: 'fondo-white',
+                              title: 'titulo-sweat',
+                              content: 'content-sweat',
+                              confirmButton: 'sombra-btn'
+                           }
+                        });
+                     }
+
+                     function revisarCampos(campos) {
+                        var camposFaltantes = "";
+                        for (var campoId in campos) {
+                              var campoElement = document.getElementById(campoId);
+                              if (campoElement.value === null || campoElement.value.trim() === '' || campoElement.value == 0) {
+                                 campoElement.classList.remove('focus:ring-2', 'focus:ring-celeste-600', 'border-[#d1d5db]');
+                                 campoElement.classList.add('focus:ring-rose-600', 'border-4', 'border-red-01', 'focus:border-transparent');
+                                 campoElement.focus();
+                                 camposFaltantes += `${campos[campoId]}<br>`;
+                              }
+                        }
+                        return camposFaltantes;
+                     }
+                  });
+                  </script>
                      
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 mt-5 gap-3'>
                         <li role="presentation" class="w-full md:w-max">
@@ -2037,53 +2088,236 @@
                                     </select>
                                  </div>
                               </div>
-                              <div x-data="{ open: <?php echo $edit->efam_dentro_empresa === 'SI' ? 'true' : 'false';?> }">
-                                 <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label class="text-[#64748b] font-semibold mb-2">¿TIENE FAMILIARES DENTRO DE LA EMPRESA?</label>
-                                    <div class="group flex mt-3 items-center">
-                                       <input id="option-empresa-1" type="radio" name="empresa" value="si" x-on:click="open = true" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-1" aria-describedby="option-1" <?php echo $edit->efam_dentro_empresa === 'SI' ? 'checked' : ''; ?>>
-                                       <label for="option-empresa-1" class="text-sm font-medium text-gray-900 ml-2 block" style="flex-basis:30px">
-                                          Sí
-                                       </label>
-                                       <input id="option-empresa-2" type="radio" name="empresa" value="no" x-on:click="open = false" class="h-4 w-4 border-gray-300 text-celeste-600 focus:ring-2 focus:outline-none focus:ring-celeste-600" aria-labelledby="option-2" aria-describedby="option-2" <?php echo ($edit->efam_dentro_empresa === 'NO' || $edit->efam_dentro_empresa === null) ? 'checked' : ''; ?>>
-                                       <label for="option-empresa-2" class="text-sm font-medium text-gray-900 ml-2 block">
-                                          No
-                                       </label>
+                                 <div x-data="{ numfamiliares: <?php if($familiares_count == 0){ echo 0; }else if($familiares_count == 1){ echo 1; }else if($familiares_count == 2){ echo 2; }else if($familiares_count == 3){ echo 3; }else if($familiares_count == 4){ echo 4; }else if($familiares_count == 5){ echo 5; }?> }">
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                       <label for="numfamiliares" class="text-[#64748b] font-semibold mb-2">¿TIENE FAMILIARES DENTRO DE LA EMPRESA?</label>
+                                       <div class="group flex">
+                                          <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                             <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path>
+                                             </svg>
+                                          </div>
+                                          <select id="numfamiliares" name="numfamiliares" x-model="numfamiliares" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600">
+                                             <option value="0">SIN FAMILIARES</option>
+                                             <option value="1">UN FAMILIAR</option>
+                                             <option value="2">DOS FAMILIARES</option>
+                                             <option value="3">TRES FAMILIARES</option>
+                                             <option value="4">CUATRO FAMILIARES</option>
+                                             <option value="5">CINCO FAMILIARES</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 <div x-show="numfamiliares >= 1">
+                                    <!-- Referencia 1 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Primer familiar  <label style="color:red;"> *</label></div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre1" value="<?php echo ($familiares_count >= 1) ? $fetch_familiares[0]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat1" value="<?php echo ($familiares_count >= 1) ? $fetch_familiares[0]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat1" value="<?php echo ($familiares_count >= 1) ? $fetch_familiares[0]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
                                     </div>
                                  </div>
-                                 <div x-show.important="open">
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
-                                       <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">NOMBRE(s)</label>
-                                          <div class="group flex">
-                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                </svg>
+                                 <div x-show="numfamiliares >= 2">
+                                    <!-- Referencia 2 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Segunda familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre2" value="<?php echo ($familiares_count >= 2) ? $fetch_familiares[1]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="nomfam" name="nomfam" value="<?php echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_nombre : ''; ?>" placeholder="Nombre">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat2" value="<?php echo ($familiares_count >= 2) ? $fetch_familiares[1]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat2" value="<?php echo ($familiares_count >= 2) ? $fetch_familiares[1]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">APELLIDO PATERNO</label>
-                                          <div class="group flex">
-                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                </svg>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 3">
+                                    <!-- Referencia 3 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Tercer familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre3" value="<?php echo ($familiares_count >= 3) ? $fetch_familiares[2]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="apfam" name="apfam" value="<?php echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_apellidopat : ''; ?>" placeholder="Apellido paterno">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat3" value="<?php echo ($familiares_count >= 3) ? $fetch_familiares[2]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat3" value="<?php echo ($familiares_count >= 3) ? $fetch_familiares[2]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="grid grid-cols-1">
-                                          <label class="text-[#64748b] font-semibold mb-2">APELLIDO MATERNO</label>
-                                          <div class="group flex">
-                                             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                   <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                                                </svg>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 4">
+                                    <!-- Referencia 4 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Cuarto familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre4" value="<?php echo ($familiares_count >= 4) ? $fetch_familiares[3]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
                                              </div>
-                                             <input class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="amfam" name="amfam" value="<?php echo $edit->efam_dentro_empresa === 'SI' ? $edit->efam_apellidomat : ''; ?>" placeholder="Apellido materno">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat4" value="<?php echo ($familiares_count >= 4) ? $fetch_familiares[3]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat4" value="<?php echo ($familiares_count >= 4) ? $fetch_familiares[3]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div x-show="numfamiliares >= 5">
+                                    <!-- Referencia 5 -->
+                                    <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
+                                       <div class="md:col-span-1">
+                                          <div class="text-[#000] font-bold mb-2">Quinto familiar</div>
+                                          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rnombre5" value="<?php echo ($familiares_count >= 5) ? $fetch_familiares[4]["nombre"] : ''; ?>" placeholder="Nombre (s)" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO PATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidopat5" value="<?php echo ($familiares_count >= 5) ? $fetch_familiares[4]["apellido_pat"] : ''; ?>" placeholder="Apellido paterno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
+                                             <div class="grid grid-cols-1">
+                                                <label class="text-[#64748b] font-semibold">APELLIDO MATERNO</label>
+                                                <div class="group flex">
+                                                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                                      <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                         <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="infc_rapellidomat5" value="<?php echo ($familiares_count >= 5) ? $fetch_familiares[4]["apellido_mat"] : ''; ?>" placeholder="Apellido materno" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] outline-none focus:ring-2 focus:ring-celeste-600">
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -2437,7 +2671,20 @@
                                     </thead>
                                     <tbody class="block md:table-row-group">
                                        <?php foreach ($papeleria as $fetchtipopapeleria) { ?>
-                                          <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
+                                          <tr id="tp<?php echo $fetchtipopapeleria['id'] ?>" class="border border-grey-500 md:border-none block md:table-row" style="<?php
+                                          if($fetchtipopapeleria['id'] == 1 || $fetchtipopapeleria['id'] == 3 || $fetchtipopapeleria['id'] == 4 || $fetchtipopapeleria['id'] == 5 || $fetchtipopapeleria['id'] == 6 || $fetchtipopapeleria['id'] == 7 || $fetchtipopapeleria['id'] == 8 || $fetchtipopapeleria['id'] == 9 || $fetchtipopapeleria['id'] == 10){
+                                             $papeleria_obligatoria = $object -> _db -> prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE expediente_id = :expedienteid AND tipo_archivo=:archivo");
+                                             $papeleria_obligatoria -> execute(array(':expedienteid' => $Editarid, ':archivo' => $fetchtipopapeleria["id"]));
+                                             $count_papeleria_obligatoria = $papeleria_obligatoria -> rowCount();
+                                             if($count_papeleria_obligatoria > 0){
+                                                echo "background-color:white !important";
+                                             }else{
+                                                echo "font-style: italic; color: #d70000;  background-color: #ffecec3d !important;";
+                                             }
+                                          }else{
+                                             echo "background-color:white !important";
+                                          }
+                                       ?>"> 
                                              <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                 <span class="inline-block md:hidden font-bold">Nombre</span>
                                                 <p><?php echo ucfirst(strtolower($fetchtipopapeleria["nombre"])); ?></p>
