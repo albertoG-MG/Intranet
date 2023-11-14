@@ -29,10 +29,61 @@
                      </div>
                   </div>
                   <div class="bg-white p-3 shadow-md rounded-b">
-                  <div class="px-4 py-2 mt-1 mx-7 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
-                     <b>NOTA: </b> Todos los campos que cuentan con un asterisco (<label style="color:red;"> *</label>) son de carácter <b>OBLIGATORIO</b><br>
-                     Para que su expediente sea revisado por el departamento de CH es necesario llenar todos estos campos.
-                  </div>           
+                  <div class="flex items-center">
+                     <div class="px-4 py-2 ml-4 mt-1 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert">
+                        <p><b>NOTA: </b> Todos los campos que cuentan con un asterisco (<label style="color:red;"> *</label>) son de carácter <b>OBLIGATORIO</b><br>
+                           Para que su expediente sea revisado por el departamento de CH es necesario llenar todos estos campos. </p>
+                     </div> 
+                     <button id="revisarDatos" class="button btn-vacio rounded-md h-11 px-8 py-2 ml-4">Revisar Datos</button>
+                  </div>
+                  <script>
+
+
+                  document.getElementById('revisarDatos').addEventListener('click', function() {
+                     var camposGenerales = { calle: 'Calle', nexterior: 'Número Exterior', colonia: 'Colonia', estado: 'Estado', municipio: 'Municipio', codigo: 'Código Postal', teldom: 'Teléfono Domicilio', ecivil: 'Estado Civil', fechanac: 'Fecha de Nacimiento', curp: 'CURP', nss: 'Número de Seguro Social', rfc: 'RFC', identificacion: 'Identificación'};
+                     var camposAdicionales = { tallapolo: 'Talla de Polo', emergencia_nom: 'Nombre de Emergencia', emergencia_nom2: 'Segundo Nombre de Emergencia', emergencia_appat: 'Apellido Paterno de Emergencia', emergencia_appat2: 'Segundo Apellido de Emergencia', emergencia_apmat: 'Apellido Materno de Emergencia', emergencia_apmat2: 'Segundo Apellido Materno de Emergencia', emergencia_relacion: 'Relación de Emergencia', emergencia_relacion2: 'Segunda Relación de Emergencia', emergencia_tel: 'Teléfono de Emergencia', emergencia_tel2: 'Segundo Teléfono de Emergencia'};
+                     var camposBancarios = { numBeneficiariosBancarios: 'Número de Beneficiarios Bancarios'};
+                     var mensaje = "";
+
+                     if (pestañaActiva.id === 'datosG') {
+                        mensaje = revisarCampos(camposGenerales);
+                     } else if (pestañaActiva.id === 'datosA') {
+                        mensaje = revisarCampos(camposAdicionales);
+                     } else if (pestañaActiva.id === 'datosB') {
+                        mensaje = revisarCampos(camposBancarios);
+                     } else if (pestañaActiva.id === 'documentos') {
+                        
+                     } 
+
+                     if (mensaje !== "") {
+                        Swal.fire({
+                              title: 'Faltan los siguientes campos:',
+                              html: mensaje,
+                              confirmButtonText: 'Aceptar',
+                              customClass: {
+                              popup: 'fondo-white',
+                              title: 'titulo-sweat',
+                              content: 'content-sweat',
+                              confirmButton: 'sombra-btn'
+                           }
+                        });
+                     }
+
+                     function revisarCampos(campos) {
+                        var camposFaltantes = "";
+                        for (var campoId in campos) {
+                              var campoElement = document.getElementById(campoId);
+                              if (campoElement.value === null || campoElement.value.trim() === '' || campoElement.value == 0) {
+                                 campoElement.classList.remove('focus:ring-2', 'focus:ring-celeste-600', 'border-[#d1d5db]');
+                                 campoElement.classList.add('focus:ring-rose-600', 'border-4', 'border-red-01', 'focus:border-transparent');
+                                 campoElement.focus();
+                                 camposFaltantes += `${campos[campoId]}<br>`;
+                              }
+                        }
+                        return camposFaltantes;
+                     }
+                  });
+                  </script>
                   <div class="bg-white p-3 shadow-md rounded-b">
                   <?php if($fetch_token_user->exp_date >= $curDate){ ?>
                      <ul id='menu' class='flex flex-col items-center md:flex-row md:flex-wrap w-full px-7 mt-5 gap-3'>
@@ -482,13 +533,13 @@
                            </div>
                            <div class="hidden bg-transparent rounded-lg tab-pane" id="datosA" role="tabpanel" aria-labelledby="datosA-tab">
                               <div class="flex flex-col mt-5 mx-7">
-                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Referencias laborales <label style="color:red;"> *</label></h2>
+                                 <h2 class="text-2xl text-celeste font-semibold mt-5">Referencias laborales</h2>
                                  <span class="text-[#64748b]">Opinión de terceros sobre el desempeño laboral del empleado.</span>
                                  <div class="my-3 h-px bg-celeste"></div>
                               </div>
                               <div x-data="{ numReferencias: <?php if($referencias_count == 0){ echo 0; }else if($referencias_count == 1){ echo 1; }else if($referencias_count == 2){ echo 2; }else if($referencias_count == 3){ echo 3; }?> }">
                                  <div class="grid grid-cols-1 mt-5 mx-7">
-                                    <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">NUMERO DE REFERENCIAS LABORALES <label style="color:red;"> *</label></label>
+                                    <label for="numReferencias" class="text-[#64748b] font-semibold mb-2">NUMERO DE REFERENCIAS LABORALES</label>
                                     <div class="group flex">
                                        <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                           <svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -507,7 +558,7 @@
                                     <!-- Referencia 1 -->
                                     <div class="grid grid-cols-1 gap-5 md:gap-8 mt-5 mx-7 items-start border-t border-[#d1d5db] pt-5">
                                        <div class="md:col-span-1">
-                                          <div class="text-[#000] font-bold mb-2">Primer referencia  <label style="color:red;"> *</label></div>
+                                          <div class="text-[#000] font-bold mb-2">Primer referencia </div>
                                           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7 items-start">
                                              <div class="grid grid-cols-1">
                                                 <label class="text-[#64748b] font-semibold">NOMBRE (S)</label>
@@ -1441,7 +1492,7 @@
                                           <?php if ( empty($ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"])  || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'OTRO' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'PADRE' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'MADRE' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'CONYUGE' || $ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'HIJO' ||$ben_bancarios_count >= 1 && $fetch_ben_bancarios[0]["relacion"]  === 'HIJA' ) { ?>   
                                                 <div x-data="{ combo_benbanrelacion: true, text_benbanrelacion: false}">
                                                    <?php  }else{  ?>
-                                                <div x-data="{ combo_benbanrelacion: false, text_benbanrelacion: true}">
+                                                <div x-data="{ combo_benbanrelacion: true, text_benbanrelacion: false}">
                                                    <?php  }  ?>
                                                    <div x-show="combo_benbanrelacion">
                                                       <div class="grid grid-cols-1">   
@@ -1568,7 +1619,7 @@
                                           <?php if ( empty($ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"])  || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'OTRO'  || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'PADRE' || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'MADRE' || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'CONYUGE' || $ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'HIJO' ||$ben_bancarios_count >= 2 && $fetch_ben_bancarios[1]["relacion"]  === 'HIJA' ) { ?>   
                                                 <div x-data="{ combo_benbanrelacion2: true, text_benbanrelacion2: false}">
                                                    <?php  }else{  ?>
-                                                <div x-data="{ combo_benbanrelacion2: false, text_benbanrelacion2: true}">
+                                                <div x-data="{ combo_benbanrelacion2: true, text_benbanrelacion2: false}">
                                                    <?php  }  ?>
                                                    <div x-show="combo_benbanrelacion2">
                                                       <div class="grid grid-cols-1">   
@@ -1607,7 +1658,7 @@
                                                                      <path fill="currentColor" d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" />
                                                                   </svg>
                                                                </div>
-                                                             <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="text_benbanrelacion2" name="text_benbanrelacion2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["apellido_mat"] : '';?>" placeholder="Relación">
+                                                             <input style="width: 90% !important;" class="w-full -ml-10 pl-10 py-2 h-11 border rounded-md border-[#d1d5db] focus:ring-2 focus:ring-celeste-600" type="text" id="text_benbanrelacion2" name="text_benbanrelacion2" value="<?php echo ($ben_bancarios_count >= 2) ? $fetch_ben_bancarios[1]["relacion"] : '';?>" placeholder="Relación">
                                                             </div>
                                                          </div>
                                                          <svg  height="64px" width="64px" class="h-12 w-8" x-on:click="text_benbanrelacion2 = false, combo_benbanrelacion2 = true"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.6 505.6" xml:space="preserve" fill="#ff0000" stroke="#ff0000" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ff1900;" d="M494.4,301.6c-4.4-4.4-10-8.8-16.4-8.8H339.6c-13.2,0-26.4,14.4-26.4,27.6V344 c0,13.2,13.6,21.2,26.4,21.2h48.8c-33.2,40-82.8,64.4-136,64.4c-98,0-178-79.2-178-177.2S154,74.8,252.4,74.8 c73.6,0,140.4,46.4,166.4,114.8c6.8,18.4,27.6,27.6,46,20.8c18.4-6.8,27.6-27.6,20.8-46C449.2,68.4,355.6,4,252.8,4 C115.6,4,4,115.6,4,252.8s110.8,248.8,248,248.8c68,0,129.2-28,177.2-75.2v32c0,13.2,12.4,22.4,25.6,22.4h23.6 c13.2,0,23.2-9.6,23.2-22.4V344.8V320C501.2,313.6,498.8,306,494.4,301.6z"></path> <path style="fill:#ff1900;" d="M252.8,23.6c54.4,0,106,19.6,146.4,53.2c0.4,0.4,1.2,0.8,1.6,1.6c0,0,16.8,14.4,28.4,28.4 c16,19.2,28.8,40.8,38,64.8c1.6,4,1.2,8.4-0.4,12c-1.6,4-4.8,6.8-8.8,8.4c-2,0.8-3.6,1.2-5.6,1.2c-6.4,0-12.4-4-14.8-10 C408.8,106.8,334.4,55.6,252.8,55.6C144,55.6,55.2,144.4,55.2,253.2c0,108.8,88.8,197.6,197.6,197.6c58.4,0,113.2-25.6,151.2-70.4 c4.8-6,6-14,2.8-21.2c-3.2-6.8-10.4-11.6-18-11.6h-50.4c-2,0-5.2-2-5.2-4V320c0-1.2,2-4,2.4-4.4s2.8-2.8,4-2.8H478 c1.2,0,1.6,2.4,2.4,2.8c0.4,0.4,0.8,3.2,0.8,4.4v24.8V458c0,2-0.8,2.4-3.2,2.4h-23.6c-2,0-5.6-0.4-5.6-2.4v-32c0-8-4-15.2-11.6-18.4 c-2.4-0.8-4.4-1.6-7.2-1.6c-5.2,0-10,2-14,6c-43.2,44-102.8,69.2-164,69.2C125.6,481.2,22.8,378.4,22.8,252 C23.6,126.4,126.4,23.6,252.8,23.6"></path> <path style="fill:#ff1900;" d="M326.4,298.4l-45.6-45.6l67.6-67.6c4.4-4.4,4.4-12,0-16.4l-11.2-11.2c-4.4-4.4-12-4.4-16.4,0 l-67.6,67.6l-67.6-67.6c-4.4-4.4-12-4.4-16.4,0L158,168.8c-4.4,4.4-4.4,12,0,16.4l67.6,67.6L158,320.4c-4.4,4.4-4.4,12,0,16.4 l11.2,11.2c4.4,4.4,12,4.4,16.4,0l67.6-67.2l62.4,62.4"></path> <path d="M252,505.6C113.2,505.6,0,392,0,252.8C0,113.2,113.6,0,252.8,0c104.4,0,199.6,65.6,236.4,163.2c7.6,20.4-2.4,43.2-22.8,51.2 c-20.4,7.6-43.2-2.4-51.2-22.8c-25.6-67.2-90.8-112-162.4-112c-96,0-174,78-174,174s78,174.4,174,174.4c49.2,0,94.8-19.6,127.2-54.4 h-40c-15.6,0-30.4-14-30.4-29.2v-23.6c0-16,16-27.6,30.4-27.6h138.4c7.2,0,14,2.8,19.2,8s8,12,8,19.6v138 c0,14.4-11.2,30.4-27.2,30.4h-23.6c-14.8,0-29.6-15.2-29.6-30.4v-22.4C375.6,481.6,316,505.6,252,505.6z M252.8,8 C117.6,8,8,118,8,252.8C8,388,117.6,497.6,252,497.6c64.8,0,125.2-25.6,174.4-74c1.2-1.2,2.8-1.6,4.4-0.8c1.6,0.8,2.4,2,2.4,3.6v32 c0,11.2,10.8,22.4,21.6,22.4h23.6c10.8,0,19.2-12,19.2-22.4v-138c0-5.6-2-10.4-5.6-14l0,0c-3.6-3.6-8.4-5.6-13.6-5.6H340 c-10.4,0-22.4,8.4-22.4,19.6V344c0,10.4,11.2,21.2,22.4,21.2h48.8c1.6,0,2.8,0.8,3.6,2.4s0.4,3.2-0.4,4.4c-34,40.8-84.8,64-139.2,64 c-100.4,0-182-81.6-182-182.4c0-100.4,81.6-182,182-182c75.2,0,143.6,47.2,170,117.2c6,16.4,24.4,24.4,40.8,18.4 s24.4-24.4,18.4-40.8C446,71.2,354,8,252.8,8z"></path> <path d="M252.8,486C124.4,486,19.6,381.2,19.6,252.8S124.4,19.6,252.8,19.6l0,0c54,0,106.8,19.2,148.8,54l1.6,1.6 c1.6,1.6,2,4,0.4,5.6s-4,2-5.6,0.4l-1.6-1.2c-40.8-33.6-91.6-52-143.6-52l0,0c-124,0-225.2,101.2-225.2,225.2 s101.2,225.2,225.2,225.2c60,0,118.8-24.8,161.2-68c4.4-4.8,10.4-7.2,16.8-7.2c2.8,0,5.6,0.4,8.4,1.6c8.8,3.6,14,12,14,22v33.6 l0.4,0.8h23.6v-0.4v-140H339.6c-0.4,0-1.2,0-2,0.4c-0.4,0-0.4,0.4-0.8,0.4v21.6c0.4,0.4,0.8,0.4,1.2,0.4h50.4 c9.2,0,17.6,5.2,21.6,13.6s2.4,18.4-3.6,25.2C368,428,311.6,454,252.4,454c-111.2,0-201.6-90.4-201.6-201.6 C50.8,198.8,71.6,148,110,110c38-38,88.8-59.2,142.4-59.2l0,0c83.2,0,158.8,52.4,188.4,130c1.6,4.4,6,7.6,11.2,7.6 c1.6,0,2.8-0.4,4-0.8c2.8-1.2,5.2-3.2,6.4-6.4c1.2-2.8,1.2-6,0.4-9.2c-8.8-23.2-21.2-44.4-37.2-63.6c-1.6-1.6-1.2-4.4,0.4-5.6 c1.6-1.6,4.4-1.2,5.6,0.4c16.4,20,29.6,42,38.8,66c2,4.8,1.6,10.4-0.4,15.2s-6,8.4-11.2,10.4c-2.4,0.8-4.8,1.2-7.2,1.2 c-8,0-15.6-5.2-18.4-12.8C404.8,108.4,332,58.4,252,58.4c-51.6,0-100.4,20-136.8,56.8C78.4,152,58.4,200.4,58.4,252 c0,106.8,86.8,193.6,193.6,193.6c57.2,0,110.8-25.2,148-68.8c4-4.8,4.8-11.2,2.4-16.8c-2.4-5.6-8-9.2-14.4-9.2h-50.4 c-3.6,0-9.2-3.2-9.2-8v-23.6c0-3.2,2.8-4.8,3.6-5.6c2-2,6-2,6.8-2h138.4c2.8,0,4,1.2,5.2,2c1.6,1.6,2,3.6,2,5.2v140 c0,4.8-2.8,8.4-7.2,8.4h-24.8c-4.8,0-8-4.8-8-8.8v-33.6c0-6.8-3.2-12.4-9.2-14.4c-2-0.8-3.6-1.2-5.6-1.2c-4,0-8,1.6-11.2,4.8 C375.6,460.4,314.8,486,252.8,486z"></path> <path d="M177.2,356L177.2,356c-4,0-8-1.6-11.2-4.4l-11.2-11.2c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l64.8-64.8l-64.8-64.8 c-2.8-2.8-4.4-6.8-4.4-11.2c0-4,1.6-8,4.4-11.2l11.2-11.2c6-6,16-6,22,0l64.8,64.8l64.8-64.8c6-6,16-6,22,0l11.2,11.2 c2.8,2.8,4.4,6.8,4.4,11.2c0,4-1.6,8-4.4,11.2L286,253.2l42.8,42.8c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0L277.6,256 c-0.8-0.8-1.2-1.6-1.2-2.8s0.4-2,1.2-2.8l67.6-67.6c1.6-1.6,2.4-3.2,2.4-5.6s-0.8-4-2.4-5.6L334,160.4c-2.8-2.8-8-2.8-10.8,0 L255.6,228c-1.6,1.6-4,1.6-5.6,0l-67.6-67.6c-2.8-2.8-8-2.8-10.8,0l-11.2,11.2c-1.6,1.6-2.4,3.2-2.4,5.6s0.8,4,2.4,5.6l67.6,67.6 c0.8,0.8,1.2,1.6,1.2,2.8s-0.4,2-1.2,2.8l-67.6,67.6c-1.6,1.6-2.4,3.2-2.4,5.6c0,2,0.8,4,2.4,5.6l11.2,11.2c1.6,1.6,3.2,2.4,5.6,2.4 l0,0c2,0,4-0.8,5.6-2.4l67.6-67.6c1.6-1.6,4-1.6,5.6,0l60,60c1.6,1.6,1.6,4,0,5.6s-4,1.6-5.6,0l-57.2-57.2l-64.8,64.8 C185.2,354.4,181.6,356,177.2,356z"></path> </g></svg>  
@@ -1724,8 +1775,25 @@
                                        </tr>
                                     </thead>
                                     <tbody class="block md:table-row-group">
-                                       <?php foreach ($papeleria as $fetchtipopapeleria) { ?>
+                                          <?php foreach ($papeleria as $fetchtipopapeleria) { ?>
+                                             <?php if(true){ ?>
+                                          <tr id="tp<?php echo $fetchtipopapeleria['id'] ?>" class="border border-grey-500 md:border-none block md:table-row" style="<?php
+                                          if($fetchtipopapeleria['id'] == 1 || $fetchtipopapeleria['id'] == 3 || $fetchtipopapeleria['id'] == 4 || $fetchtipopapeleria['id'] == 5 || $fetchtipopapeleria['id'] == 6 || $fetchtipopapeleria['id'] == 7 || $fetchtipopapeleria['id'] == 8 || $fetchtipopapeleria['id'] == 9 || $fetchtipopapeleria['id'] == 10 || $fetchtipopapeleria['id'] == 15){
+                                             $papeleria_obligatoria = $object -> _db -> prepare("SELECT tipo_archivo FROM papeleria_empleado WHERE expediente_id = :expedienteid AND tipo_archivo=:archivo");
+                                             $papeleria_obligatoria -> execute(array(':expedienteid' => $fetch_expediente -> id, ':archivo' => $fetchtipopapeleria["id"]));
+                                             $count_papeleria_obligatoria = $papeleria_obligatoria -> rowCount();
+                                             if($count_papeleria_obligatoria > 0){
+                                                echo "background-color:white !important";
+                                             }else{
+                                                echo "font-style: italic; color: #d70000;  background-color: #ffecec3d !important;";
+                                             }
+                                          }else{
+                                             echo "background-color:white !important";
+                                          }
+                                       ?>">
+                                         <?php  }else{ ?> 
                                           <tr class="bg-white border border-grey-500 md:border-none block md:table-row">
+                                          <?php  } ?> 
                                              <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                                 <span class="inline-block md:hidden font-bold">Nombre</span>
                                                 <p><?php echo ucfirst(strtolower($fetchtipopapeleria["nombre"])); ?></p>

@@ -36,7 +36,8 @@
                             <table class="w-full" id="datatable" style="display:none; word-break: break-word;">
                                 <thead>
                                 <tr class="text-white uppercase text-sm leading-normal" style="font-size: 13px !important; background-color: #000000bd !important;">                                 
-                                        <th class="py-3 text-left all border-white dt-tituloL">Nombre</th>
+                                        <th class="py-3 text-left all border-white dt-tituloL">id</th>
+                                        <th class="py-3 text-left all border-white">Nombre</th>
                                         <th class="py-3 text-left desktop border-white">Correo</th>
                                         <th>Foto_identificador</th>
                                         <th class="py-3 text-center desktop border-white">Dep.</th>

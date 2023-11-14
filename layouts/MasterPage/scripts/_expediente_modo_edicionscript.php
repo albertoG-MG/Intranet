@@ -74,7 +74,6 @@
 	});
 	//Termina la configuración del menú
 
-
     //Empieza la configuración del estado y municipio
     $('#estado').on('change', function(event) {
         event.preventDefault();
@@ -2628,5 +2627,22 @@ function Papeleria(){
     main{
 		position:relative !important;
 	}
+    .border-red-01{
+        border-color: #ff0000;
+        outline: none !important;
+    }
 
+    .fondo-white{
+    background-color: #ffffffd1;
+    }
+    .sombra-btn{
+    box-shadow: 3px 2px 3px #c1c1c1;
+    }
+    .titulo-sweat{
+    font-family: sans-serif;
+    }
+    .content-sweat{
+    font-size: smaller;
+    font-weight: 500;
+    }
 </style>

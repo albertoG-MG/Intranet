@@ -108,13 +108,16 @@
         $counttipospapeleria = $checktipospapeleria -> rowCount();
         $papeleria = $checktipospapeleria->fetchAll();
         $buscar_papeleria="true";
-        }else{
-            $checktipospapeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid WHERE tipo_papeleria.nombre NOT IN('EVALUACION PSICOMETRICA', 'IMAGEN DE DATOS BANCARIOS' , 'CONTRATO DETERMINADO' , 'PRESTADOR DE SERVICIOS' , 'CONVENIO DE CONFIDENCIALIDAD' , 'CONTRATO INDETERMINADO' , 'ALTA DE IMSS' , 'CONTRATO NOMINA BANCARIA' , 'REGLAMENTO INTERIOR DEL TRABAJO' , 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS' , 'MODIFICACION SALARIAL', 'BAJA ANTE IMSS') order by id asc");
-            $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);
-            $checktipospapeleria->execute(array(':expedienteid' => $fetch_token_user->idExpediente));
-            $counttipospapeleria = $checktipospapeleria->rowCount();
-            $papeleria = $checktipospapeleria->fetchAll();
-            $buscar_papeleria = "true";
-            
-        }
+    }else{
+        $checktipospapeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid WHERE tipo_papeleria.nombre NOT IN('EVALUACION PSICOMETRICA', 'IMAGEN DE DATOS BANCARIOS' , 'CONTRATO DETERMINADO' , 'PRESTADOR DE SERVICIOS' , 'CONVENIO DE CONFIDENCIALIDAD' , 'CONTRATO INDETERMINADO' , 'ALTA DE IMSS' , 'CONTRATO NOMINA BANCARIA' , 'REGLAMENTO INTERIOR DEL TRABAJO' , 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS' , 'MODIFICACION SALARIAL', 'BAJA ANTE IMSS') order by id asc");
+        $checktipospapeleria->setFetchMode(PDO::FETCH_ASSOC);
+        $checktipospapeleria->execute(array(':expedienteid' => $fetch_token_user->idExpediente));
+        $counttipospapeleria = $checktipospapeleria->rowCount();
+        $papeleria = $checktipospapeleria->fetchAll();
+        $buscar_papeleria = "true";            
+    }
+
+    $expediente_id = $object -> _db -> prepare("SELECT expedientes.id as id FROM token_expediente INNER JOIN expedientes ON expedientes.id=token_expediente.expedientes_id WHERE token_expediente.token=:token");
+    $expediente_id -> execute(array(':token' => $token));
+    $fetch_expediente = $expediente_id -> fetch(PDO::FETCH_OBJ);      
 ?>

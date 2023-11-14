@@ -27,12 +27,23 @@
                 {data: [3]},
                 {data: [4]},
                 {data: [5]},
-                {data: [6], searchable: false},
+                {data: [6]},
+                {data: null}
             ],
             "columnDefs": 
             [
                 {
                     target: [0],
+                    render: function (data, type, row) {
+                        return (
+                            "<div class='text-left lg:text-center'>" +
+                                "<span>" + row[6] + "</span>" +
+                            "</div>"
+                        );
+                    }
+                },
+                {
+                    target: [1],
                     render: function (data, type, row) {
                         if(row[2] === null){
                             return(
@@ -52,7 +63,7 @@
                     }
                 },
                 {
-                    target: [1],
+                    target: [3],
                     render: function (data, type, row) {
                         var email = row[1].split("@");
                         return(
@@ -64,7 +75,7 @@
                     }
                 },
                 {
-                    target: [3],
+                    target: [4],
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -74,7 +85,7 @@
                     }
                 },
                 {
-                    target: [4],
+                    target: [5],
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -84,7 +95,7 @@
                     }
                 },
                 {
-                    target: [5],
+                    target: [6],
                     render: function (data, type, row) {
                         return (
                             "<div class='text-left lg:text-center'>" +
@@ -94,7 +105,7 @@
                     }
                 },
                 {
-                    target: [6],
+                    target: [7],
                     render: function (data, type, row) {
                         return (
                             "<div class='flex item-center justify-start md:justify-center gap-3'>" +
