@@ -263,6 +263,25 @@ class expedientes {
                     expedientes::Crear_reflaborales($results_table_DA['id'], $ref);
                 }
             }
+
+            $checkfam = $crud->readWithCount('familiares', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_table_DA['id']]);
+            if($checkfam['count'] > 0){
+                $results_checkfam = $checkfam['data'];
+                if(is_null($this->familiares)){
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
+                }else{
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_table_DA['id']]);
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $fam = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_table_DA['id'], $fam);
+                }
+            }else{
+                if(!(is_null($this->familiares))){
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $fam = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_table_DA['id'], $fam);
+                }
+            }
         }else{
             $crud->store('expedientes', ['users_id' => $this->select2, 'fecha_enuniforme' => $this->fechauniforme, 'cantidad_polo' => $this->cantidadpolo, 'talla_polo' => $this->tallapolo, 'emergencia_nombre' => $this->emergencianom, 
             'emergencia_apellidopat' => $this->emergenciaapat, 'emergencia_apellidomat' => $this->emergenciaamat, 'emergencia_relacion' => $this->emergenciarelacion, 'emergencia_telefono' => $this->emergenciatelefono,
@@ -274,6 +293,11 @@ class expedientes {
                 $jsonData = stripslashes(html_entity_decode($this->referencias));
                 $ref = json_decode($jsonData);
                 expedientes::Crear_reflaborales($id_expediente, $ref);
+            }
+            if(!(is_null($this->familiares))){
+                $jsonData = stripslashes(html_entity_decode($this->familiares));
+                $fam = json_decode($jsonData);
+                expedientes::Insertar_familiares($id_expediente, $fam);
             }
         }
     }
@@ -559,6 +583,26 @@ class expedientes {
                     expedientes::Crear_reflaborales($results_expediente['id'], $ref);
                 }
             }
+
+            $checkfam = $crud->readWithCount('familiares', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
+            if($checkfam['count'] > 0){
+                $results_checkfam = $checkfam['data'];
+                if(is_null($this->familiares)){
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
+                }else{
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $fam = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_expediente['id'], $fam);
+                }
+            }else{
+                if(!(is_null($this->familiares))){
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $fam = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_expediente['id'], $fam);
+                }
+            }
+
             $checkbenban = $crud->readWithCount('ben_bancarios', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
             if($checkbenban['count'] > 0){
                 $results_checkbenban = $checkbenban['data'];
@@ -653,6 +697,11 @@ class expedientes {
                 $jsonData2 = stripslashes(html_entity_decode($this->refbanc));
                 $refbanc = json_decode($jsonData2);
                 expedientes::Crear_benbanc($id_expediente, $refbanc);
+            }
+            if(!(is_null($this->familiares))){
+                $jsonData3 = stripslashes(html_entity_decode($this->familiares));
+                $fam = json_decode($jsonData3);
+                expedientes::Insertar_familiares($id_expediente, $fam);
             }
             $checktipospapeleria = $object -> _db -> prepare("SELECT * FROM tipo_papeleria");
             $checktipospapeleria -> execute();
@@ -1290,6 +1339,25 @@ public function Submit_tokenexpediente($logged_user, $delete){
                     expedientes::Crear_reflaborales($results_expediente['id'], $ref);
                 }
             }
+            $checkfam = $crud->readWithCount('familiares', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
+            if($checkfam['count'] > 0){
+                $results_checkfam = $checkfam['data'];
+                if(is_null($this->familiares)){
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
+                }else{
+                    $crud -> delete('familiares', 'expediente_id=:idexpediente', ['idexpediente' => $results_expediente['id']]);
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $fam = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_expediente['id'], $fam);
+                }
+            }else{
+                if(!(is_null($this->familiares))){
+                    $jsonData = stripslashes(html_entity_decode($this->familiares));
+                    $fam = json_decode($jsonData);
+                    expedientes::Insertar_familiares($results_expediente['id'], $fam);
+                }
+            }
+
             $checkbenban = $crud->readWithCount('ben_bancarios', '*', 'WHERE expediente_id=:expedienteid', [':expedienteid' => $results_expediente['id']]);
             if($checkbenban['count'] > 0){
                 $results_checkbenban = $checkbenban['data'];

@@ -2422,7 +2422,8 @@
         var antidoping = $("#antidoping").val();
         var tipo_sangre = $("#tipo_sangre").val();
         var vacante = $("#vacante").val();
-        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
+        var numerofamiliares = $("#numfamiliares").val();
+        var radio2 = $("input[name=empresa]:checked", "#Guardar").val();    
         var nomfam = $("#nomfam").val();
         var apellidopatfam = $("#apfam").val();
         var apellidomatfam = $("#amfam").val();
@@ -2441,6 +2442,21 @@
                 apellidomat: rapellidomat,
                 relacion: rrelacion,
                 telefono: rtelefono
+            });
+        }
+
+        /*Familiares*/
+        var fam = [];
+        for (var i = 1; i <= numerofamiliares; i++) {
+            var fnombre = $("input[name=infc_rnombre" + i + "]").val();
+            var fapellidopat = $("input[name=infc_rapellidopat" + i + "]").val();
+            var fapellidomat = $("input[name=infc_rapellidomat" + i + "]").val();
+
+
+            fam.push({
+                nombre: fnombre,
+                apellidopat: fapellidopat,
+                apellidomat: fapellidomat
             });
         }
         var pestaña = "DatosA";
@@ -2468,11 +2484,13 @@
         fd.append('antidoping', antidoping);
         fd.append('tipo_sangre', tipo_sangre);
         fd.append('vacante', vacante);
+        fd.append('numerofamiliares', numerofamiliares);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
         fd.append('apellidopatfam', apellidopatfam);
         fd.append('apellidomatfam', apellidomatfam);
         fd.append('referencias', JSON.stringify(reflab));
+        fd.append('familiares', JSON.stringify(fam));
         fd.append('pestaña', pestaña);
         fd.append('method', method);
         fd.append('app', app);
@@ -2706,6 +2724,7 @@
         var antidoping = $("#antidoping").val();
         var tipo_sangre = $("#tipo_sangre").val();
         var vacante = $("#vacante").val();
+        var numerofamiliares = $("#numfamiliares").val();
         var radio2 = $("input[name=empresa]:checked", "#Guardar").val();
         var nomfam = $("#nomfam").val();
         var apellidopatfam = $("#apfam").val();
@@ -2759,6 +2778,21 @@
                 rfc: brrfc,
                 curp: brcurp,
                 porcentaje: brporcentaje
+            });
+        }
+
+         /*Familiares*/
+         var fam = [];
+        for (var i = 1; i <= numerofamiliares; i++) {
+            var fnombre = $("input[name=infc_rnombre" + i + "]").val();
+            var fapellidopat = $("input[name=infc_rapellidopat" + i + "]").val();
+            var fapellidomat = $("input[name=infc_rapellidomat" + i + "]").val();
+
+
+            fam.push({
+                nombre: fnombre,
+                apellidopat: fapellidopat,
+                apellidomat: fapellidomat
             });
         }
     
@@ -2842,6 +2876,7 @@
         fd.append('antidoping', antidoping);
         fd.append('tipo_sangre', tipo_sangre);
         fd.append('vacante', vacante);
+        fd.append('numerofamiliares', numerofamiliares);
         fd.append('radio2', radio2);
         fd.append('nomfam', nomfam);
         fd.append('apellidopatfam', apellidopatfam);
@@ -2861,6 +2896,7 @@
         /*Referencias*/
         fd.append('referencias', JSON.stringify(reflab));
         fd.append('refbanc', JSON.stringify(refbanc));
+        fd.append('familiares', JSON.stringify(fam));
     
         /*File uploads*/
         <?php 

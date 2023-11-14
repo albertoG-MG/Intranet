@@ -4131,29 +4131,30 @@ DELIMITER $$
 	  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
 	  VALUES (@notificado_a, NEW.evaluado_por, "Solicitud incidencias", "Solicitud de incidencia evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu incidencia. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
 	
-	  IF (@count_martha > 0 ) THEN
-		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		  VALUES (@martha, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
-	  END IF;	
-	
-	  IF (@count_jorge > 0 ) THEN
-		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		  VALUES (@jorge, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
-	  END IF;	
-	
-	  IF (@count_debanhi > 0 ) THEN
-		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		  VALUES (@debanhi, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
-	  END IF;	
-	
-	  IF (@count_usuario > 0 ) THEN
-		  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-		  VALUES (@ch, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
-	  END IF;	
+	  IF(NEW.tipo_de_accion = 1) THEN
+		  IF (@count_martha > 0 ) THEN
+			  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			  VALUES (@martha, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+		  END IF;	
+		
+		  IF (@count_jorge > 0 ) THEN
+			  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			  VALUES (@jorge, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+		  END IF;	
+		
+		  IF (@count_debanhi > 0 ) THEN
+			  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			  VALUES (@debanhi, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+		  END IF;	
+		
+		  IF (@count_usuario > 0 ) THEN
+			  INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+			  VALUES (@ch, NEW.evaluado_por, "Solicitud incidencias", "Se ha evaluado una solicitud de incidencia", CONCAT('El usuario ', @enviado_por, ' ha evaluado una incidencia de ', @nombre_notificado, '. Haz clic aquí para ver más información'), "0", CONCAT('ver_incidencia.php?idIncidencia=', NEW.incidencias_id));
+		  END IF;	
+	   END IF;
   END;
   $$
 DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -4548,28 +4549,53 @@ DELIMITER ;
 -- Estructura para el trigger que inserta en la historial_accion_vacaciones, actualiza el estatus de la solicitud de vacaciones y envia una notificación al usuario que envío una solicitud de vacaciones
 --
 
+
 DELIMITER $$
-CREATE TRIGGER update_transicion_estatus_notificacion_vacaciones
-AFTER UPDATE ON accion_vacaciones FOR EACH ROW
-BEGIN
+	CREATE TRIGGER insertar_transicion_estatus_notificaciones_vacaciones
+	AFTER INSERT ON accion_vacaciones FOR EACH ROW
+	BEGIN
+		SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_vacaciones INNER JOIN usuarios ON usuarios.id = accion_vacaciones.evaluado_por WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+		SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
+		SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+		SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
+		SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
+		SET @count_usuario = (SELECT count(*) FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+		SET @ch = (SELECT id FROM usuarios WHERE username='servicios_al_colaborador' OR correo='servicios_al_colaborador@sinttecom.com');
+		SET @count_martha = (SELECT count(*) FROM usuarios WHERE username='martha.delcampo' OR correo='martha.delcampo@sinttecom.com');
+		SET @martha = (SELECT id FROM usuarios WHERE username='martha.delcampo' OR correo='martha.delcampo@sinttecom.com');
+		SET @count_jorge = (SELECT count(*) FROM usuarios WHERE username='jorge.garza' OR correo='jorge.garza@sinttecom.com');
+		SET @jorge = (SELECT id FROM usuarios WHERE username='jorge.garza' OR correo='jorge.garza@sinttecom.com');
+		SET @count_debanhi = (SELECT count(*) FROM usuarios WHERE username='debanhi.contreras' OR correo='reclutamiento@sinttecom.com');
+		SET @debanhi = (SELECT id FROM usuarios WHERE username='debanhi.contreras' OR correo='reclutamiento@sinttecom.com');
 	
-	SET @enviado_por = (SELECT CONCAT(usuarios.nombre, ' ', usuarios.apellido_pat, ' ', usuarios.apellido_mat) FROM accion_vacaciones INNER JOIN usuarios ON usuarios.id = accion_vacaciones.evaluado_por WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
-	SET @notificado_a = (SELECT usuarios.id FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id = accion_vacaciones.id_solicitud_vacaciones INNER JOIN usuarios ON usuarios.id=solicitud_vacaciones.users_id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones);
-	SET @periodo = (SELECT solicitud_vacaciones.periodo_solicitado FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
-	SET @fecha = (SELECT solicitud_vacaciones.fecha_solicitud FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON solicitud_vacaciones.id=accion_vacaciones.id_solicitud_vacaciones WHERE accion_vacaciones.id_solicitud_vacaciones = NEW.id_solicitud_vacaciones);
-	SET @nombre_notificado = (SELECT CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) FROM usuarios WHERE id=@notificado_a);
+		INSERT INTO transicion_estatus_vacaciones(id_solicitud_vacaciones, estatus_actual, estatus_siguiente) SELECT solicitud_vacaciones.id, solicitud_vacaciones.estatus, accion_vacaciones.tipo_de_accion FROM accion_vacaciones INNER JOIN solicitud_vacaciones ON accion_vacaciones.id_solicitud_vacaciones=solicitud_vacaciones.id WHERE accion_vacaciones.id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
 	
-	INSERT INTO historial_accion_vacaciones(solicitud_id, tipo_de_accion, comentario, evaluado_por) VALUES (OLD.id_solicitud_vacaciones, OLD.tipo_de_accion, OLD.comentario, OLD.evaluado_por);
+		INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+		VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones", "Solicitud de vacaciones evaluada", CONCAT('El usuario ', @enviado_por, ' ha evaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
 
-	UPDATE transicion_estatus_vacaciones SET estatus_actual = OLD.tipo_de_accion, estatus_siguiente = NEW.tipo_de_accion WHERE id_solicitud_vacaciones=NEW.id_solicitud_vacaciones;
-	
-	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-	VALUES (@notificado_a, NEW.evaluado_por, "Solicitud vacaciones reevaluada", "Solicitud de vacaciones reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado tu solicitud de vacaciones con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");	
-
-	INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
-	VALUES (OLD.evaluado_por, NEW.evaluado_por, "Solicitud vacaciones reevaluada", "Solicitud de vacaciones reevaluada", CONCAT('El usuario ', @enviado_por, ' ha reevaluado la solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
-END;
-$$
+		IF(NEW.tipo_de_accion = 1) THEN
+			IF (@count_martha > 0 ) THEN
+				INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+				VALUES (@martha, NEW.evaluado_por, "Solicitud vacaciones", "Se ha evaluado una solicitud de vacaciones", CONCAT('El usuario ', @enviado_por, ' ha evaluado una solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+			END IF;	
+		
+			IF (@count_jorge > 0 ) THEN
+				INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+				VALUES (@jorge, NEW.evaluado_por, "Solicitud vacaciones", "Se ha evaluado una solicitud de vacaciones", CONCAT('El usuario ', @enviado_por, ' ha evaluado una solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+			END IF;	
+		
+			IF (@count_debanhi > 0 ) THEN
+				INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+				VALUES (@debanhi, NEW.evaluado_por, "Solicitud vacaciones", "Se ha evaluado una solicitud de vacaciones", CONCAT('El usuario ', @enviado_por, ' ha evaluado una solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+			END IF;	
+		
+			IF (@count_usuario > 0 ) THEN
+				INSERT INTO alerta_notificaciones (notificado_a, enviado_por, tipo_alerta, alerta_titulo, alerta_mensaje, alerta_estatus, link)
+				VALUES (@ch, NEW.evaluado_por, "Solicitud vacaciones", "Se ha evaluado una solicitud de vacaciones", CONCAT('El usuario ', @enviado_por, ' ha evaluado una solicitud de vacaciones de ', @nombre_notificado ,' con el periodo solicitado que va desde: ', @periodo , ' con fecha de expedeción en: ', @fecha , '. Haz clic aquí para ver más información'), "0", "vacaciones.php");
+			END IF;
+		END IF;
+	END;
+	$$
 DELIMITER ;
 
 -- --------------------------------------------------------

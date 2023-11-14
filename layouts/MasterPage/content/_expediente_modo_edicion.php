@@ -37,8 +37,6 @@
                      <button id="revisarDatos" class="button btn-vacio rounded-md h-11 px-8 py-2 ml-4">Revisar Datos</button>
                   </div>
                   <script>
-
-
                   document.getElementById('revisarDatos').addEventListener('click', function() {
                      var camposGenerales = { calle: 'Calle', nexterior: 'Número Exterior', colonia: 'Colonia', estado: 'Estado', municipio: 'Municipio', codigo: 'Código Postal', teldom: 'Teléfono Domicilio', ecivil: 'Estado Civil', fechanac: 'Fecha de Nacimiento', curp: 'CURP', nss: 'Número de Seguro Social', rfc: 'RFC', identificacion: 'Identificación'};
                      var camposAdicionales = { tallapolo: 'Talla de Polo', emergencia_nom: 'Nombre de Emergencia', emergencia_nom2: 'Segundo Nombre de Emergencia', emergencia_appat: 'Apellido Paterno de Emergencia', emergencia_appat2: 'Segundo Apellido de Emergencia', emergencia_apmat: 'Apellido Materno de Emergencia', emergencia_apmat2: 'Segundo Apellido Materno de Emergencia', emergencia_relacion: 'Relación de Emergencia', emergencia_relacion2: 'Segunda Relación de Emergencia', emergencia_tel: 'Teléfono de Emergencia', emergencia_tel2: 'Segundo Teléfono de Emergencia'};
@@ -46,13 +44,29 @@
                      var mensaje = "";
 
                      if (pestañaActiva.id === 'datosG') {
-                        mensaje = revisarCampos(camposGenerales);
+                        var { camposFaltantes, countcampos } = revisarCampos(camposGenerales);
+                        if( countcampos> 0){
+                           mensaje = camposFaltantes;
+                        }else{
+                           mensaje = "SUS DATOS GENERALES ESTAN COMPLETOS";
+                        }
+                       
                      } else if (pestañaActiva.id === 'datosA') {
-                        mensaje = revisarCampos(camposAdicionales);
+                        var { camposFaltantes, countcampos } = revisarCampos(camposAdicionales);
+                        if(countcampos > 0){
+                           mensaje = camposFaltantes;
+                     }else{
+                           mensaje = "SUS DATOS ADICIONALES ESTAN COMPLETOS";
+                        }
                      } else if (pestañaActiva.id === 'datosB') {
-                        mensaje = revisarCampos(camposBancarios);
+                        var { camposFaltantes, countcampos } = revisarCampos(camposBancarios);
+                        if(countcampos > 0){
+                           mensaje = camposFaltantes;
+                     }else{
+                           mensaje = "SUS DATOS BANCARIOS ESTAN COMPLETOS";
+                        }
                      } else if (pestañaActiva.id === 'documentos') {
-                        
+                        mensaje = "Favor de subir los documentos marcados en rojo, en caso de no tener su documentación esta completa.";
                      } 
 
                      if (mensaje !== "") {
@@ -71,6 +85,7 @@
 
                      function revisarCampos(campos) {
                         var camposFaltantes = "";
+                        var countcampos = 0;
                         for (var campoId in campos) {
                               var campoElement = document.getElementById(campoId);
                               if (campoElement.value === null || campoElement.value.trim() === '' || campoElement.value == 0) {
@@ -78,9 +93,10 @@
                                  campoElement.classList.add('focus:ring-rose-600', 'border-4', 'border-red-01', 'focus:border-transparent');
                                  campoElement.focus();
                                  camposFaltantes += `${campos[campoId]}<br>`;
+                                 countcampos = countcampos +1;
                               }
                         }
-                        return camposFaltantes;
+                        return { camposFaltantes, countcampos };
                      }
                   });
                   </script>
