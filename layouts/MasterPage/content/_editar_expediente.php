@@ -53,7 +53,6 @@
                      var camposAdicionales = { tallapolo: 'Talla de Polo', emergencia_nom: 'Nombre de Emergencia', emergencia_nom2: 'Segundo Nombre de Emergencia', emergencia_appat: 'Apellido Paterno de Emergencia', emergencia_appat2: 'Segundo Apellido de Emergencia', emergencia_apmat: 'Apellido Materno de Emergencia', emergencia_apmat2: 'Segundo Apellido Materno de Emergencia', emergencia_relacion: 'Relación de Emergencia', emergencia_relacion2: 'Segunda Relación de Emergencia', emergencia_tel: 'Teléfono de Emergencia', emergencia_tel2: 'Segundo Teléfono de Emergencia'};
                      var camposBancarios = { numBeneficiariosBancarios: 'Número de Beneficiarios Bancarios'};
                      var mensaje = "";
-
                      if (pestañaActiva.id === 'datosG') {
                         var { camposFaltantes, countcampos } = revisarCampos(camposGenerales);
                         if( countcampos> 0){
@@ -77,7 +76,7 @@
                            mensaje = "LOS DATOS BANCARIOS ESTAN COMPLETOS";
                         }
                      } else if (pestañaActiva.id === 'documentos') {
-                        mensaje = "Los documentos faltantes se marcan en rojo, en caso de no tener los documentos karcados estan completos";
+                        mensaje = "Los documentos faltantes se marcan en rojo, en caso de no tener los documentos marcados estan completos";
                      } 
 
                      if (mensaje !== "") {
