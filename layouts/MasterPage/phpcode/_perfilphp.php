@@ -82,13 +82,21 @@ while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
 }
 $json2 = json_encode($array2, JSON_UNESCAPED_UNICODE);
 
-/*PAPELERIAS*/
-$array3 = [];
-$papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo AS nombre_archivo, papeleria_empleado.identificador AS identificador, papeleria_empleado.fecha_subida AS fecha_subida FROM expedientes JOIN papeleria_empleado ON expedientes.id = papeleria_empleado.expediente_id RIGHT JOIN tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo AND expedientes.users_id=:sessionid ORDER BY id ASC");
-$papeleria->execute(array(':sessionid' => $_SESSION["id"]));
-
-while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
-	$array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'identificador'=>$papel->identificador, 'fecha_subida'=>$papel->fecha_subida);
+/*PAPELERIAS*/ 
+if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico") {
+	$array3 = [];
+	$papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.FROM expedientes JOIN papeleria_empleado ON expedientes.id = papeleria_empleado.expediente_id RIGHT JOIN tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo AND expedientes.users_id=:sessionid  and papeleria_empleado.expediente_id = :expedienteid WHERE tipo_papeleria.nombre NOT IN('EVALUACION PSICOMETRICA' , 'CONTRATO DETERMINADO' , 'PRESTADOR DE SERVICIOS' , 'CONVENIO DE CONFIDENCIALIDAD' , 'CONTRATO INDETERMINADO' , 'ALTA DE IMSS' , 'CONTRATO NOMINA BANCARIA' , 'REGLAMENTO INTERIOR DEL TRABAJO' , 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS' , 'MODIFICACION SALARIAL', 'BAJA ANTE IMSS') order by id asc");
+	$papeleria->execute(array(':sessionid' => $_SESSION["id"]));
+	while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
+		$array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'identificador'=>$papel->identificador, 'fecha_subida'=>$papel->fecha_subida);
+	}
+}else{
+	$array3 = [];
+	$papeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM expedientes JOIN papeleria_empleado ON expedientes.id = papeleria_empleado.expediente_id RIGHT JOIN tipo_papeleria ON tipo_papeleria.id=papeleria_empleado.tipo_archivo AND expedientes.users_id=:sessionid  WHERE tipo_papeleria.nombre NOT IN('EVALUACION PSICOMETRICA', 'IMAGEN DE DATOS BANCARIOS' , 'CONTRATO DETERMINADO' , 'PRESTADOR DE SERVICIOS' , 'CONVENIO DE CONFIDENCIALIDAD' , 'CONTRATO INDETERMINADO' , 'ALTA DE IMSS' , 'CONTRATO NOMINA BANCARIA' , 'REGLAMENTO INTERIOR DEL TRABAJO' , 'CARTA RESPONSIVA DE EQUIPOS ASIGNADOS' , 'MODIFICACION SALARIAL', 'BAJA ANTE IMSS') order by id asc");
+	$papeleria->execute(array(':sessionid' => $_SESSION["id"]));   
+	while ($papel = $papeleria->fetch(PDO::FETCH_OBJ)) { 
+		$array3[]=array('id'=>$papel->id,'nombre'=>$papel->nombre,'nombre_archivo'=>$papel->nombre_archivo, 'identificador'=>$papel->identificador, 'fecha_subida'=>$papel->fecha_subida);
+	}        
 }
 
 /*CHECA SI EL USUARIO LOGGEADO TIENE NODOS*/
