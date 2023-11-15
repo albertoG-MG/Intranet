@@ -4,13 +4,20 @@
         var goce_sueldo=0;
         $("#datatable").DataTable({
             responsive:true,
-            "lengthChange": false,
             "ordering": false,
-            "sPaginationType": "listboxWithButtons",
+            "sPaginationType": "numbers",
             language: {
-                        search: ""
+                search: "",
+                "lengthMenu": "Mostrar _MENU_ registros",
+                        "zeroRecords": "No se encontraron resultados",
+                        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        paginate: {
+                            previous: "Anterior",
+                            next: "Siguiente"
+                        }
             },
-            dom: '<"grid grid-cols-1"f>Brt<"bottom"ip><"clear">',
+            dom: '<"grid grid-cols-1"f>Brt<"bottom"lip><"clear">',
             buttons: [
                 {
                     text: "Filtrar por:",
@@ -1365,4 +1372,39 @@
     background-color: black !important;
     color: white !important;
     }
+
+.dataTables_length select {
+    width: 87px !important;
+    box-shadow: 1px 2px 0px !important;
+    width: 70px !important;
+}
+
+.dataTables_length label {
+    margin-right: 10px; 
+    font-size: 14px; 
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current{
+  color: #fff !important;
+  float: left !important;
+  padding: 8px 16px !important;
+  text-decoration: none !important;
+  transition: background-color .3s !important;
+  margin: 0 4px !important;
+  background: #000 !important;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  position:relative;
+  border-radius: 100px !important;
+}
+
+.paginate_button{
+  float: left !important;
+  padding: 8px 16px !important;
+  text-decoration: none !important;
+  transition: background-color .3s !important;
+  margin: 0 4px !important;
+  border-radius: 100px !important;
+}
     </style>
