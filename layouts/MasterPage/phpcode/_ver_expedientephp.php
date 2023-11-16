@@ -242,6 +242,8 @@
     
     $referencias_laborales = $crud -> readWithCount('ref_laborales', 'nombre1, apellido_pat1, apellido_mat1, relacion1, telefono1, nombre2, apellido_pat2, apellido_mat2, relacion2, telefono2, nombre3, apellido_pat3, apellido_mat3, relacion3, telefono3', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $Verid]);
     $referencias_bancarias = $crud -> readWithCount('ben_bancarios', 'nombre1, apellido_pat1, apellido_mat1, relacion1, rfc1, curp1, porcentaje1, nombre2, apellido_pat2, apellido_mat2, relacion2, rfc2, curp2, porcentaje2', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $Verid]);
+    $familiar = $crud -> readWithCount('familiares', 'nombre1, apellido_pat1, apellido_mat1, nombre2, apellido_pat2, apellido_mat2,  nombre3, apellido_pat3, apellido_mat3, nombre4, apellido_pat4, apellido_mat4, nombre5, apellido_pat5, apellido_mat5', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $Verid]);
+
 
     /*PAPELERIA*/
     $checktipospapeleria = $object->_db->prepare("SELECT tipo_papeleria.id as id, tipo_papeleria.nombre as nombre, papeleria_empleado.nombre_archivo as nombre_archivo, papeleria_empleado.tipo_archivo as tipo_archivo, papeleria_empleado.identificador as identificador, papeleria_empleado.fecha_subida as fecha_subida FROM tipo_papeleria left join papeleria_empleado on tipo_papeleria.id = papeleria_empleado.tipo_archivo and papeleria_empleado.expediente_id = :expedienteid order by id asc");

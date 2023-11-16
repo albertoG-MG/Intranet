@@ -261,6 +261,28 @@
       font-weight: 500;
   }
 
+
+  .btn_gray_slide {
+    color: #c1c1c1 !important;
+    border: 2px solid #c1c1c1 !important;
+    border-radius: 0px;
+    padding: 18px 36px;
+    display: inline-block;
+    font-weight: 500;
+
+    cursor: pointer;
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+  }
+  
+  .slide_gray_drch:hover {
+      box-shadow: inset 400px 0 0 0 #c1c1c1 !important;
+      font-weight: 400;
+      color: white !important;
+      font-weight: 500;
+  }
+
   /** 
   *&  //Estilo para los botones de siguiente en expedientes 
   */ 

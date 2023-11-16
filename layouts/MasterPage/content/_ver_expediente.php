@@ -769,43 +769,28 @@
                      <div class="flex flex-col mx-7">
                         <div class="flex-1 flex flex-col mt-5">
                            <div class="text-[#64748b] font-semibold">
-                              ¿Tiene familiares en la empresa?:
+                              Familiares dentro de la empresa:
                            </div>
-                           <span>
-                           <?php if($ver->efam_dentro_empresa == null){ echo "No hay datos"; }else{echo "{$ver->efam_dentro_empresa}";} ?>
-                           </span>
-                        </div>
-                     </div>
-                     <div x-data="{ showfamiliar:  <?php echo ($ver->efam_dentro_empresa == "NO" || $ver->efam_dentro_empresa === null) ? "false" : "true"; ?>}">
-                        <div x-show="showfamiliar">
-                           <div class="flex flex-col lg:flex-row lg:flex-wrap lg:space-x-7 mx-7">
-                              <div class="flex-1 flex flex-col mt-5">
-                                 <div class="text-[#64748b] font-semibold">
-                                    Nombre del familiar:
+                           <?php if (empty($familiar['data'])): ?>
+                              <p>No cuenta con familiares dentro de la empresa</p>
+                           <?php else: ?>
+                              <?php foreach ($familiar['data'] as $item): ?>
+                                 <div class="bg-gray-200 p-4 rounded mb-4">
+                                    <div class="grid grid-cols-2 gap-4">
+                                       <?php for ($i = 1; $i <= 5; $i++): ?>
+                                          <div>
+                                          <p class="font-semibold">Familiar <?php echo $i; ?></p>
+                                          <p>Nombre: <?php echo $item['nombre' . $i] ? $item['nombre' . $i] : 'No hay datos'; ?>
+                                             <?php echo $item['apellido_pat' . $i] ?>
+                                             <?php echo $item['apellido_mat' . $i] ?>
+                                          </p>
+                                       </div>
+
+                                       <?php endfor; ?>
+                                    </div>
                                  </div>
-                                 <span>
-                                 <?php echo ($ver->efam_dentro_empresa == "NO" || $ver->efam_dentro_empresa === null) ? "No hay datos" : $ver->efam_nombre; ?>
-                                 </span>
-                              </div>
-                              <div class="flex-1 flex flex-col mt-5">
-                                 <div class="text-[#64748b] font-semibold">
-                                    Apellido paterno del familiar:
-                                 </div>
-                                 <span>
-                                 <?php echo ($ver->efam_dentro_empresa == "NO" || $ver->efam_dentro_empresa === null) ? "No hay datos" : $ver->efam_apellidopat; ?>
-                                 </span>
-                              </div>
-                           </div>
-                           <div class="flex flex-col mx-7">
-                              <div class="flex-1 flex flex-col mt-5">
-                                 <div class="text-[#64748b] font-semibold">
-                                    Apellido materno del familiar:
-                                 </div>
-                                 <span>
-                                 <?php echo ($ver->efam_dentro_empresa == "NO" || $ver->efam_dentro_empresa === null) ? "No hay datos" : $ver->efam_apellidomat; ?>
-                                 </span>
-                              </div>
-                           </div>
+                              <?php endforeach; ?>
+                           <?php endif; ?>
                         </div>
                      </div>
                      <div class="flex flex-col mt-5 mx-7">

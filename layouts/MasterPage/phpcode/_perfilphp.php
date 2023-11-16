@@ -4,6 +4,7 @@ include_once __DIR__ . "/../../../classes/expedientes.php";
 $object = new connection_database();
     
 session_start();
+    $crud = new Crud();
 
 if ($_SESSION['loggedin'] != true) {
     $_SESSION['redirectURL'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -81,6 +82,30 @@ while ($row_datos = $datos_bancarios->fetch(PDO::FETCH_OBJ)) {
 	$contador_array2++;
 }
 $json2 = json_encode($array2, JSON_UNESCAPED_UNICODE);
+
+/* FAMILIARES*/
+$array4 = [];
+$contador_array4 = 0;
+$familiares = $object->_db->prepare("select expedientes.id as idExpediente, familiares.nombre1 as familiaresnom, familiares.apellido_pat1 as familiaresappat, familiares.apellido_mat1 as familiaresapmat from familiares inner join expedientes on expedientes.id=familiares.expediente_id inner join usuarios on usuarios.id=expedientes.users_id where usuarios.id =:sessionid");
+$familiares->bindParam("sessionid", $_SESSION["id"], PDO::PARAM_INT);
+$familiares->execute();
+$cont_familiares = $familiares->rowCount();
+$fetch_familiares = $familiares->fetch(PDO::FETCH_OBJ);
+while ($row_datos = $familiares->fetch(PDO::FETCH_OBJ)) {
+	$array4[$contador_array4] = ($row_datos->familiaresnom);
+	$contador_array4++;
+	$array4[$contador_array4] = ($row_datos->familiaresappat);
+	$contador_array4++;
+	$array4[$contador_array4] = ($row_datos->familiaresapmat);
+	$contador_array4++;
+}
+$json4 = json_encode($array4, JSON_UNESCAPED_UNICODE);
+
+
+$idExpediente = ($fetch_familiares-> idExpediente);
+//Select para oestrar los familiares
+$familiar = $crud -> readWithCount('familiares', 'nombre1, apellido_pat1, apellido_mat1, nombre2, apellido_pat2, apellido_mat2,  nombre3, apellido_pat3, apellido_mat3, nombre4, apellido_pat4, apellido_mat4, nombre5, apellido_pat5, apellido_mat5', 'WHERE expediente_id = :expedienteid', [':expedienteid' => $idExpediente]);
+
 
 /*PAPELERIAS*/ 
 if(Roles::FetchSessionRol($_SESSION['rol']) == "Tecnico") {
